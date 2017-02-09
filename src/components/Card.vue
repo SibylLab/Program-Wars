@@ -71,6 +71,13 @@ export default {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border: 0px solid #000000;
+
+    padding: 20px 0px 20px 0px;
 }
 
 h1, h2 {
