@@ -70,6 +70,7 @@ export default {
 <style scoped>
 #player-info-panel {
     background-color: #ccc;
+    padding-bottom: 25px;
 }
 
 h1, h2 {

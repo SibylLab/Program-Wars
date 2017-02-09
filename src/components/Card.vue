@@ -65,6 +65,12 @@ export default {
 #card{
     background-color: #cff;
     min-width: 150px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 h1, h2 {
@@ -96,8 +102,8 @@ a {
 }
 
 .selected {
-    -webkit-box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
-    -moz-box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
-    box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
+  -webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
+  -moz-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
+  box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
 }
 </style>

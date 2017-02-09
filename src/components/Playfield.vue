@@ -1,7 +1,7 @@
 <template>
-  <div id="playfield">
+  <div id="playfield" :class="playfieldClass">
     <h1>{{ title }}</h1>
-    <p>{{ trueOrFalse }}</p>
+    <h1>{{ trueOrFalse }}</h1>
     <ul id="example-1">
         <li v-for="stack in stacks">
             <stack v-on:cardActive="cardActive"></stack>
@@ -20,7 +20,6 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       title: 'Playfield',
-      trueOrFalse: false,
       stacks: [
           { id: '001', elements: [], value: 0 }
       ],
@@ -28,7 +27,22 @@ export default {
     }
   },
   computed: {
-
+    trueOrFalse () {
+      if (this.trueFalse) {
+        return 'TRUE'
+      } else {
+        return 'FALSE'
+      }
+    },
+    playfieldClass () {
+      if (this.trueFalse) {
+        console.log(true)
+        return 'light'
+      } else {
+        console.log(false)
+        return 'dark'
+      }
+    }
   },
   components: {
     'stack': Stack
@@ -70,5 +84,14 @@ li {
 
 a {
   color: #42b983;
+}
+
+#playfield.dark {
+  background-color: #666;
+  color: #fff;
+}
+
+#playfield.light {
+  background-color: #eee;
 }
 </style>
