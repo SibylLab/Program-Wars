@@ -1,6 +1,6 @@
 # programming-wars
 
-> A Vue.js project
+> CPSC 3720 Programming Project, web based educational card game
 
 ## Build Setup
 
