@@ -4,7 +4,7 @@
     <h1>{{ trueOrFalse }}</h1>
     <ul id="example-1">
         <li v-for="stack in stacks">
-            <stack v-on:cardActive="cardActive"></stack>
+            <stack :playfieldBoolean="trueFalse"></stack>
         </li>
     </ul>
   </div>
@@ -23,7 +23,7 @@ export default {
       stacks: [
           { id: '001', elements: [], value: 0 }
       ],
-      activeCard: {}
+      test: 'default'
     }
   },
   computed: {
@@ -53,9 +53,6 @@ export default {
     },
     deselectAll () {
 
-    },
-    cardActive (card) {
-      this.activeCard = card
     }
   }
 }

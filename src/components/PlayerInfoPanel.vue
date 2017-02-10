@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { bus } from './Bus';
 import Card from './Card'
 
 export default {
@@ -23,7 +24,7 @@ export default {
           { id: '002', type: 'Rx', value: 0, selected: false },
           { id: '003', type: 'G', value: 2, selected: false },
           { id: '004', type: 'I', value: 1, selected: false },
-          { id: '005', type: 'V', value: 3, selected: false }
+          { id: '005', type: 'V', value: 3, selected: false },
       ]
     }
   },
@@ -43,11 +44,11 @@ export default {
     'card': Card
   },
   methods: {
-    cardClicked (cardId) {
+    cardClicked (c) {
       // alert('cardId of clicked card is ' + cardId)
 
       for (var card of this.cards) {
-        if (card.id === cardId) {
+        if (card.id === c.id) {
           card.selected = !card.selected
         } else {
           card.selected = false
@@ -58,11 +59,35 @@ export default {
     },
     deselectAll () {
       document.removeEventListener('click', this.hide)
+      bus.$emit('cardDeselected')
+
       for (var card of this.cards) {
         card.selected = false
       }
+    },
+    removeCard (cardId) {
+      console.log(cardId)
+      console.log('FUCKTHISSHIT')
+      console.log(this)
+      console.log(this.cards)
+      this.cards = this.cards.filter(card => card.id !== cardId)
+      //var filteredAry = ary.filter(e => e !== 'seven')
+
+
     }
-  }
+  },
+  created: function () {
+
+    bus.$on('activeCardAddedToStack', (cardId) => {
+      // a card was selected
+      console.log('active card successfully added to stack, deslect and remove from hand')
+      console.log(cardId)
+      console.log(this.cards)
+      this.removeCard(cardId)
+      //this.$options.methods.removeCard(cardId)
+    })
+
+  },
 }
 </script>
 

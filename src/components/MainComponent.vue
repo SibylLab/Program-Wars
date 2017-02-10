@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <player-info-panel></player-info-panel>
     <div id="flexcontainer">
-      <playfield :trueFalse="true"></playfield>
+      <playfield v-bind:trueFalse="true"></playfield>
       <playfield :trueFalse="false"></playfield>
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
   name: 'main-component',
   data () {
     return {
-      msg: 'Welcome to Programming Wars'
+      msg: 'Welcome to Programming Wars!!'
     }
   },
   components: {
