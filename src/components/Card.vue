@@ -78,6 +78,8 @@ export default {
     border: 0px solid #000000;
 
     padding: 20px 0px 20px 0px;
+    margin: 20px 0px 20px 0px;
+
 }
 
 h1, h2 {
