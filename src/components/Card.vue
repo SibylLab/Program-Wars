@@ -1,5 +1,5 @@
 <template>
-  <div id="card" :class="cardCss" @click="cardClicked ()" @click.stop>
+  <div id="card" :class="cardCss" v-on:click="cardClicked ()" @click.stop>
     <h1>{{ title }}</h1>
     <span :class="typeCss"> {{ cardData.type }} </span>
     <br>
@@ -8,13 +8,15 @@
 </template>
 
 <script>
+import { bus } from './Bus'
+
+
 export default {
   name: 'Card',
   props: ['cardData'],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      title: 'Card',
       valueCss: 'value',
       typeCss: 'type'
     }
@@ -26,12 +28,31 @@ export default {
       if (this.cardData.selected) {
         classString = classString + ' selected'
       }
+
+      if (this.cardData.value === '+') {
+        classString = classString + ' addCard'
+      } else if (this.cardData.category === 'stack') {
+       classString = classString + ' stack'
+     }
+
       return classString
+    },
+    title () {
+      if (this.cardData.category !== 'stack') {
+        return 'Card'
+      } else {
+        return ''
+      }
     }
   },
   methods: {
     cardClicked () {
-      this.$emit('cardClicked', this.cardData.id)
+
+      this.$emit('cardClicked', this.cardData)
+
+      if (this.cardData.value !== '+') {
+        bus.$emit('cardClickedStack', this.cardData)
+      }
 
       // Emit an event here that a specific card was selected
       // handle the event in the parent so that other cards can be deselected
@@ -63,6 +84,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #card{
+
+
     background-color: #cff;
     min-width: 150px;
     -webkit-touch-callout: none;
@@ -78,9 +101,11 @@ export default {
     border: 0px solid #000000;
 
     padding: 20px 0px 20px 0px;
-    margin: 20px 0px 20px 0px;
 
+    margin: 10px 0px 10px 0px;
 }
+
+
 
 h1, h2 {
   font-weight: normal;
@@ -114,5 +139,49 @@ a {
   -webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
   -moz-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
   box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
+}
+
+#card.stack {
+
+
+    align-content: center;
+
+    background-color: #fcf;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+  -webkit-border-radius: 2px;
+  -webkit-border-top-left-radius: 4px;
+  -moz-border-radius: 2px;
+  -moz-border-radius-topleft: 4px;
+  border-radius: 2px;
+  border-top-left-radius: 4px;
+
+  border-style: solid;
+  border-width: thin;
+
+
+
+}
+
+#card.addCard {
+
+  border-style: dashed;
+  border-width: thin;
+}
+
+#card.addCard .value, #card.addCard .type {
+  font-weight: normal;
+  font-size: 1em;
+}
+
+#card.stack .value, #card.stack .type {
+  font-weight: bold;
+  font-size: 1.5em;
 }
 </style>

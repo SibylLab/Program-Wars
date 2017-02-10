@@ -1,23 +1,29 @@
 <template>
   <div id="stack" :class="stackCss" @click="stackClicked ()" @click.stop>
     <h1>{{ title }}</h1>
-    <!-- <span :class="typeCss"> {{ cardData.type }} </span>
-    <br>
-    <span :class="valueCss"> {{ cardData.value }} </span> -->
+    <ul id="example-1">
+        <li v-for="card in cards">
+            <card :cardData="card" v-on:cardClicked="cardClickedInStack"></card>
+        </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import { bus } from './Bus';
+import Card from './Card'
+
+
 export default {
   name: 'Stack',
-  props: ['unknown'],
+  props: ['playfieldBoolean', 'stackId'],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       title: 'Stack',
-      valueCss: 'value',
-      typeCss: 'type',
-      id: '001'
+      cards: [{value:'+', category: 'stack', type: 'Add to your stack!'}],
+      id: this.stackId,
+      activeCard: undefined
     }
   },
   computed: {
@@ -25,9 +31,28 @@ export default {
       return 'stack'
     }
   },
+  created: function () {
+
+    bus.$on('cardClickedStack', (card) => {
+      // a card was selected
+
+      if (card.category !== 'stack') {
+        console.log('hello '+ card.id + ' ' + card.value + ' ' + card.type )
+        this.activeCard = Object.assign({}, card);
+
+        this.activeCard.category = 'stack'
+        this.activeCard.selected = false
+      }
+    })
+
+    bus.$on('cardDeselected', () => {
+      // a card was selected
+      this.activeCard = undefined
+    })
+  },
   methods: {
-    stackClicked () {
-      this.$emit('stackClicked', this.stack.id)
+    cardAddClicked () {
+      this.$emit('cardAddClicked', this.id)
 
       // Emit an event here that a specific card was selected
       // handle the event in the parent so that other cards can be deselected
@@ -50,8 +75,38 @@ export default {
       // document.removeEventListener('click', this.hide)
       // this.cardCss = 'card'
       // this.cardData.selected = false
+    },
+    stackClicked () {
+      console.log('The stack knows a card was clicked')
+    },
+    cardClickedInStack(card) {
+      console.log('card in stack was clicked')
+      console.log(card)
+
+      if (this.activeCard !== undefined && card.value === '+' ) {
+
+        // do logic here that check if the move is valid
+        console.log(event)
+        if (this.playfieldBoolean) {
+          this.cards.unshift(this.activeCard)
+        } else {
+          this.cards.push(this.activeCard)
+        }
+
+        bus.$emit('activeCardAddedToStack', this.activeCard.id )
+        this.activeCard = undefined
+
+        this.$emit('cardAdded', this.stackId)
+
+        bus.$emit('cardDeselected')
+
+
+      }
     }
 
+  },
+  components: {
+    'card': Card
   }
 }
 </script>
@@ -61,6 +116,8 @@ export default {
 #stack{
     background-color: #cff;
     min-width: 150px;
+    min-height: 50px;
+    color: #000;
 }
 
 h1, h2 {
