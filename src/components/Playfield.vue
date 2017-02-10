@@ -1,10 +1,10 @@
 <template>
-  <div id="playfield" :class="playfieldClass">
+  <div id="playfield" :class="playfieldClass" >
     <h1>{{ title }}</h1>
     <h1>{{ trueOrFalse }}</h1>
     <ul id="example-1">
         <li v-for="stack in stacks">
-            <stack :playfieldBoolean="trueFalse"></stack>
+            <stack :playfieldBoolean="trueFalse" :stackId="stack.id" @cardAdded="cardAdded"></stack>
         </li>
     </ul>
   </div>
@@ -21,8 +21,9 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       title: 'Playfield',
       stacks: [
-          { id: '001', elements: [], value: 0 }
+          { id: 1, elements: [], value: 0 , cardCount: 0}
       ],
+      numberOfStacks: 1,
       test: 'default'
     }
   },
@@ -51,6 +52,29 @@ export default {
     addToStack () {
       // alert('cardId of clicked card is ' + cardId)
     },
+    cardAdded (id) {
+      console.log('trying to add a new stack ' + id)
+      var emptyStackExists = false
+
+      for (var stack of this.stacks) {
+        if (stack.id === id) {
+          stack.cardCount += 1
+
+        }
+
+      }
+
+      for (var stack of this.stacks) {
+        if (stack.cardCount === 0) {
+          emptyStackExists = true
+        }
+      }
+
+      if (!emptyStackExists) {
+        this.numberOfStacks += 1
+        this.stacks.push({ id: this.numberOfStacks, elements: [], value: 0, cardCount: 0})
+      }
+    },
     deselectAll () {
 
     }
@@ -75,7 +99,7 @@ ul {
 }
 
 li {
-  display: inline-block;
+  /*display: inline-block;*/
   margin: 0 10px;
 }
 

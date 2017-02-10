@@ -16,13 +16,13 @@ import Card from './Card'
 
 export default {
   name: 'Stack',
-  props: ['playfieldBoolean'],
+  props: ['playfieldBoolean', 'stackId'],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       title: 'Stack',
       cards: [{value:'+', category: 'stack', type: 'Add to your stack!'}],
-      id: '001',
+      id: this.stackId,
       activeCard: undefined
     }
   },
@@ -84,6 +84,8 @@ export default {
       console.log(card)
 
       if (this.activeCard !== undefined && card.value === '+' ) {
+
+        // do logic here that check if the move is valid
         console.log(event)
         if (this.playfieldBoolean) {
           this.cards.unshift(this.activeCard)
@@ -93,6 +95,12 @@ export default {
 
         bus.$emit('activeCardAddedToStack', this.activeCard.id )
         this.activeCard = undefined
+
+        this.$emit('cardAdded', this.stackId)
+
+        bus.$emit('cardDeselected')
+
+
       }
     }
 
