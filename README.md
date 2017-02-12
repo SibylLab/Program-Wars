@@ -2,7 +2,29 @@
 
 > CPSC 3720 Programming Project, web based educational card game
 
-## Build Setup
+## Quick Start
+
+> Install latest Node runtime
+
+[Node JS Website] (https://nodejs.org/en/)
+* make sure you have at least version 6 for the new ES6 features to be enabled
+
+* Clone the repo, inside the project folder (directory where package.json is) and run:
+
+``` bash
+npm install
+```
+This will install all the package dependiencies for the project.
+
+* Run localhost hosted:
+``` bash
+npm run dev
+```
+
+* go to http://localhost:8080 to view the dev version of the program
+
+
+## General Build Setup
 
 ``` bash
 # install dependencies
