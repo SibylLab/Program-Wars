@@ -3,7 +3,7 @@
     <h1>{{ title }}</h1>
     <ul id="example-1">
         <li v-for="card in cards">
-            <card :cardData="card" v-on:cardClicked="cardClickedInStack"></card>
+            <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)"></card>
         </li>
     </ul>
   </div>
@@ -33,7 +33,7 @@ export default {
   },
   created: function () {
 
-    bus.$on('cardClickedStack', (card) => {
+    bus.$on('cardClickedStack', (event, card) => {
       // a card was selected
 
       if (card.category !== 'stack') {
@@ -79,7 +79,7 @@ export default {
     stackClicked () {
       console.log('The stack knows a card was clicked')
     },
-    cardClickedInStack(card) {
+    cardClickedInStack(event, card) {
       console.log('card in stack was clicked')
       console.log(card)
 

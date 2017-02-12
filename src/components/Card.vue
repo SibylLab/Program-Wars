@@ -1,5 +1,5 @@
 <template>
-  <div id="card" :class="cardCss" v-on:click="cardClicked ()" @click.stop>
+  <div id="card" :class="cardCss" v-on:click="cardClicked ($event)" @click.stop>
     <h1>{{ title }}</h1>
     <span :class="typeCss"> {{ cardData.type }} </span>
     <br>
@@ -46,12 +46,12 @@ export default {
     }
   },
   methods: {
-    cardClicked () {
+    cardClicked (e) {
 
       this.$emit('cardClicked', this.cardData)
 
       if (this.cardData.value !== '+') {
-        bus.$emit('cardClickedStack', this.cardData)
+        bus.$emit('cardClickedStack', e, this.cardData)
       }
 
       // Emit an event here that a specific card was selected
