@@ -20,12 +20,13 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       title: 'Player Info Panel',
       cards: [
-          { id: '001', type: 'I', value: 3, selected: false },
-          { id: '002', type: 'Rx', value: 0, selected: false },
-          { id: '003', type: 'G', value: 2, selected: false },
-          { id: '004', type: 'I', value: 1, selected: false },
-          { id: '005', type: 'V', value: 3, selected: false },
-      ]
+          { id: 1, type: 'I', value: 3, selected: false },
+          { id: 2, type: 'Rx', value: 0, selected: false },
+          { id: 3, type: 'G', value: 2, selected: false },
+          { id: 4, type: 'I', value: 1, selected: false },
+          { id: 5, type: 'V', value: 3, selected: false },
+      ],
+      idCounter: 6,
     }
   },
   computed: {
@@ -67,13 +68,49 @@ export default {
     },
     removeCard (cardId) {
       console.log(cardId)
-      console.log('FUCKTHISSHIT')
       console.log(this)
       console.log(this.cards)
       this.cards = this.cards.filter(card => card.id !== cardId)
       //var filteredAry = ary.filter(e => e !== 'seven')
 
 
+    },
+    generateRandomCard() {
+      let types = ['V', 'I', 'Rx', 'R', 'G']
+
+      let typeRand = this.getRandomInt(0, 5)
+
+      let newCardType = types[typeRand]
+      let newCardValue;
+      switch (newCardType) {
+        case 'V':
+            newCardValue = this.getRandomInt(1, 5)
+              break;
+        case 'I':
+          newCardValue = this.getRandomInt(1, 5)
+          break;
+        case 'Rx':
+          newCardValue = 0
+          break;
+        case 'G':
+          newCardValue = this.getRandomInt(1, 5)
+          break;
+        case 'R':
+          newCardValue = this.getRandomInt(1, 5)
+          break;
+
+      }
+      let cardId = this.idCounter
+      this.idCounter += 1
+
+      return {id: cardId, value: newCardValue, type: newCardType, selected: false}
+
+
+    },
+    getRandomInt(min, max) {
+      min = Math.ceil(min);
+       max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min;
     }
   },
   created: function () {
@@ -84,6 +121,7 @@ export default {
       console.log(cardId)
       console.log(this.cards)
       this.removeCard(cardId)
+      this.cards.unshift(this.generateRandomCard())
       //this.$options.methods.removeCard(cardId)
     })
 

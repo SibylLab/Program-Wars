@@ -2,9 +2,16 @@
   <div id="stack" :class="stackCss" @click="stackClicked ()" @click.stop>
     <h1>{{ title }}</h1>
     <ul id="example-1">
-        <li v-for="card in cards">
+      <button v-if="!playfieldBoolean"  class="btn btn-primary" :class="buttonStyle" v-on:click="addToStackClicked">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
+
+      <li v-for="card in cards">
             <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)"></card>
         </li>
+      <button v-if="playfieldBoolean"  class="btn btn-primary" :class="buttonStyle" v-on:click="addToStackClicked">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
     </ul>
   </div>
 </template>
@@ -21,7 +28,7 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       title: 'Stack',
-      cards: [{value:'+', category: 'stack', type: 'Add to your stack!'}],
+      cards: [],
       id: this.stackId,
       activeCard: undefined
     }
@@ -29,6 +36,13 @@ export default {
   computed: {
     stackCss () {
       return 'stack'
+    },
+    buttonStyle () {
+        if (this.activeCard !== undefined) {
+            return 'selected'
+        } else {
+            return ''
+        }
     }
   },
   created: function () {
@@ -88,9 +102,9 @@ export default {
         // do logic here that check if the move is valid
         console.log(event)
         if (this.playfieldBoolean) {
-          this.cards.unshift(this.activeCard)
-        } else {
           this.cards.push(this.activeCard)
+        } else {
+          this.cards.unshift(this.activeCard)
         }
 
         bus.$emit('activeCardAddedToStack', this.activeCard.id )
@@ -101,6 +115,28 @@ export default {
         bus.$emit('cardDeselected')
 
 
+      }
+    },
+    addToStackClicked(event) {
+      console.log('card in stack was clicked')
+      console.log(card)
+
+      if (this.activeCard !== undefined) {
+
+        // do logic here that check if the move is valid
+        console.log(event)
+        if (this.playfieldBoolean) {
+          this.cards.push(this.activeCard)
+        } else {
+          this.cards.unshift(this.activeCard)
+        }
+
+        bus.$emit('activeCardAddedToStack', this.activeCard.id)
+        this.activeCard = undefined
+
+        this.$emit('cardAdded', this.stackId)
+
+        bus.$emit('cardDeselected')
       }
     }
 
@@ -153,4 +189,6 @@ a {
     -moz-box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
     box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
 }
+
+
 </style>
