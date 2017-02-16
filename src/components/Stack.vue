@@ -51,17 +51,21 @@ export default {
       // a card was selected
 
       if (card.category !== 'stack') {
-        console.log('hello '+ card.id + ' ' + card.value + ' ' + card.type )
-        this.activeCard = Object.assign({}, card);
+        console.log('hello '+ card.id + ' ' + card.value + ' ' + card.type + ' --- ' + card.selected )
+        if (card.selected === true) {
+          this.activeCard = Object.assign({}, card);
 
-        this.activeCard.category = 'stack'
-        this.activeCard.selected = false
+          this.activeCard.category = 'stack'
+          this.activeCard.selected = false
+        }
+
       }
     })
 
     bus.$on('cardDeselected', () => {
       // a card was selected
       this.activeCard = undefined
+      console.log('no active card selected')
     })
   },
   methods: {

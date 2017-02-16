@@ -51,10 +51,14 @@ export default {
       for (var card of this.cards) {
         if (card.id === c.id) {
           card.selected = !card.selected
+          if (!card.selected) {
+            bus.$emit('cardDeselected')
+          }
         } else {
           card.selected = false
         }
       }
+
 
       setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
     },
