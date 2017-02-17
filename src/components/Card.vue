@@ -1,5 +1,5 @@
 <template>
-  <div id="card" :class="cardCss" v-on:click="cardClicked ($event)" @click.stop>
+  <div id="card" :class="cardCss" v-on:click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged" @ontouchstart="cardDragged">
     <h1>{{ title }}</h1>
     <span :class="typeCss"> {{ cardData.type }} </span>
     <br>
@@ -75,6 +75,13 @@ export default {
       // document.removeEventListener('click', this.hide)
       // this.cardCss = 'card'
       // this.cardData.selected = false
+    },
+    cardDragged(e) {
+      console.log('A card is being dragged')
+      this.$emit('setActiveCard', this.cardData)
+      bus.$emit('cardClickedStack', e, this.cardData)
+
+
     }
 
   }

@@ -3,7 +3,7 @@
     <h1>{{ title }}</h1>
     <ul id="example-1">
         <li v-for="card in cards">
-            <card :cardData="card" v-on:cardClicked="cardClicked"></card>
+            <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
         </li>
     </ul>
   </div>
@@ -115,6 +115,24 @@ export default {
       min = Math.ceil(min);
        max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min;
+    },
+    setActiveCard(c) {
+
+      for (var card of this.cards) {
+        if (card.id === c.id) {
+          card.selected = !card.selected
+          if (!card.selected) {
+            bus.$emit('cardDeselected')
+          }
+        } else {
+          card.selected = false
+        }
+      }
+
+
+      setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
+
+      console.log('active card set by dragging')
     }
   },
   created: function () {

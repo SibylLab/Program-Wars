@@ -1,5 +1,5 @@
 <template>
-  <div id="stack" :class="stackCss" @click="stackClicked ()" @click.stop>
+  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked ()" @click.stop>
     <h1>{{ title }}</h1>
     <ul id="example-1">
       <button v-if="!playfieldBoolean"  class="btn btn-primary" :class="buttonStyle" v-on:click="addToStackClicked">
@@ -136,6 +136,28 @@ export default {
         }
 
         bus.$emit('activeCardAddedToStack', this.activeCard.id)
+        this.activeCard = undefined
+
+        this.$emit('cardAdded', this.stackId)
+
+        bus.$emit('cardDeselected')
+      }
+    },
+    drop (e) {
+      console.log('You dropped a card on a stack', e)
+
+      if (this.activeCard !== undefined) {
+
+        // do logic here that check if the move is valid
+        console.log(event)
+        if (this.playfieldBoolean) {
+          this.cards.push(this.activeCard)
+        } else {
+          this.cards.unshift(this.activeCard)
+        }
+
+        bus.$emit('activeCardAddedToStack', this.activeCard.id)
+
         this.activeCard = undefined
 
         this.$emit('cardAdded', this.stackId)
