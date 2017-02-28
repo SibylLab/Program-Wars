@@ -1,11 +1,15 @@
 <template>
   <div id="player-info-panel">
     <h1>{{ title }}</h1>
+    <h1>Player {{ currentplayerturn }}, It's Your Turn!</h1>
     <ul id="example-1">
-        <li v-for="card in cards">
+        <li v-for="card in hand">
             <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
         </li>
     </ul>
+    <button class="btn btn-primary endTurnButton" :class="buttonStyle" v-on:click="endTurn">
+    End Your Turn
+    </button>
   </div>
 </template>
 
@@ -19,13 +23,6 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       title: 'Player Info Panel',
-      cards: [
-          { id: 1, type: 'I', value: 3, selected: false },
-          { id: 2, type: 'Rx', value: 0, selected: false },
-          { id: 3, type: 'G', value: 2, selected: false },
-          { id: 4, type: 'I', value: 1, selected: false },
-          { id: 5, type: 'V', value: 3, selected: false },
-      ],
       idCounter: 6,
     }
   },
@@ -39,12 +36,32 @@ export default {
       }
 
       return selectedCard
+    },
+    hand() {
+        let hands = []
+        hands = this.$store.getters.getCurrentPlayerHand
+
+        console.log(hands)
+
+        if (hands.length === 0){
+          return hands
+        } else {
+            console.log('this should not run')
+            return hands[0].cards
+        }
+    },
+    currentplayerturn() {
+        let activePlayer =  this.$store.getters.currentplayerturn
+        return activePlayer + 1
     }
   },
   components: {
     'card': Card
   },
   methods: {
+    endTurn() {
+      this.$store.commit('endTurn')
+    },
     cardClicked (c) {
       // alert('cardId of clicked card is ' + cardId)
 
@@ -175,4 +192,9 @@ li {
 a {
   color: #42b983;
 }
+
+  .endTurnButton {
+    width: 200px;
+    height: 100px;
+  }
 </style>
