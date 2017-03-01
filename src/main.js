@@ -6,7 +6,6 @@ import router from './router'
 
 import { store }  from './store/store'
 
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

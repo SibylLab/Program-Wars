@@ -13,11 +13,12 @@ export default {
           })
         },
         getCurrentPlayerHand(state) {
-          return state.hands.filter(hand => {
-            return hand.playerId === state.activePlayer
-          })
+          return Object.assign({}, state.hands.find(hand => hand.playerId === state.activePlayer))
         },
         currentplayerturn(state) {
           return state.activePlayer
+        },
+        maxplayers(state) {
+          return state.players.length
         }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="card" :class="cardCss" v-on:click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged" @ontouchstart="cardDragged">
+  <div id="card" :class="cardCss" v-on:click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
     <h1>{{ title }}</h1>
     <span :class="typeCss"> {{ cardData.type }} </span>
     <br>

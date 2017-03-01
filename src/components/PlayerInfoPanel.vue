@@ -7,7 +7,7 @@
             <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
         </li>
     </ul>
-    <button class="btn btn-primary endTurnButton" :class="buttonStyle" v-on:click="endTurn">
+    <button class="btn btn-primary endTurnButton" v-on:click="endTurn">
     End Your Turn
     </button>
   </div>
@@ -38,16 +38,16 @@ export default {
       return selectedCard
     },
     hand() {
-        let hands = []
-        hands = this.$store.getters.getCurrentPlayerHand
 
-        console.log(hands)
+        let hand = this.$store.getters.getCurrentPlayerHand
 
-        if (hands.length === 0){
-          return hands
+        console.log(hand)
+
+        if (hand === null){
+          return []
         } else {
             console.log('this should not run')
-            return hands[0].cards
+            return hand.cards
         }
     },
     currentplayerturn() {
@@ -60,21 +60,13 @@ export default {
   },
   methods: {
     endTurn() {
-      this.$store.commit('endTurn')
+      this.$store.commit('endTurn', this.$store.getters.maxplayers)
     },
     cardClicked (c) {
       // alert('cardId of clicked card is ' + cardId)
+      console.log(c.id)
 
-      for (var card of this.cards) {
-        if (card.id === c.id) {
-          card.selected = !card.selected
-          if (!card.selected) {
-            bus.$emit('cardDeselected')
-          }
-        } else {
-          card.selected = false
-        }
-      }
+      this.$store.commit('selectCard', c)
 
 
       setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
@@ -88,12 +80,9 @@ export default {
       }
     },
     removeCard (cardId) {
-      console.log(cardId)
-      console.log(this)
-      console.log(this.cards)
-      this.cards = this.cards.filter(card => card.id !== cardId)
-      //var filteredAry = ary.filter(e => e !== 'seven')
-
+      console.log("Remove card function called")
+      console.log("Card id : ", cardId)
+      this.$store.commit('removeCard', cardId)
 
     },
     generateRandomCard() {
@@ -135,17 +124,7 @@ export default {
     },
     setActiveCard(c) {
 
-      for (var card of this.cards) {
-        if (card.id === c.id) {
-          card.selected = !card.selected
-          if (!card.selected) {
-            bus.$emit('cardDeselected')
-          }
-        } else {
-          card.selected = false
-        }
-      }
-
+      this.$store.commit('selectCard', c)
 
       setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
 
@@ -157,10 +136,13 @@ export default {
     bus.$on('activeCardAddedToStack', (cardId) => {
       // a card was selected
       console.log('active card successfully added to stack, deslect and remove from hand')
+
       console.log(cardId)
-      console.log(this.cards)
       this.removeCard(cardId)
-      this.cards.unshift(this.generateRandomCard())
+
+      this.$store.commit('addCardToHand')
+
+      //this.cards.unshift(this.generateRandomCard())
       //this.$options.methods.removeCard(cardId)
     })
 
