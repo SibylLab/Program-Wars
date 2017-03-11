@@ -20,5 +20,16 @@ export default {
         },
         maxplayers(state) {
           return state.players.length
+        },
+        topCard(state){//added way to draw the top card from the deck -Lance
+          if(!state.deck.cards.length()){
+            return state.deck.cards.draw();
+          }
+          else(
+            console.log('The deck was empty, that shouldnt have happened...')
+          )
+        },
+        currentPlayerName(state) {
+          return state.players.find(player => player.id === state.activePlayer).name;
         }
 }

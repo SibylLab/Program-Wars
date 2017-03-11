@@ -92,38 +92,44 @@ export default {
           hand.cards = newCards
 
         },
-        addCardToDeck(state, card){
-          state.deck.push(card)
+        addCardToDeck(state, card){//changed this to have cards
+          state.deck.cards.push(card);
         },
         shuffleTheDeck(state) {
+          state.deck.shuffle();
           // shuffle the deck
-          for (let i = state.deck.length; i; i--) {
-            let j = Math.floor(Math.random() * i);
-            [state.deck[i - 1], state.deck[j]] = [state.deck[j], state.deck[i - 1]];
-          }
+          // for (let i = state.deck.length; i; i--) {
+          //   let j = Math.floor(Math.random() * i);
+          //   [state.deck[i - 1], state.deck[j]] = [state.deck[j], state.deck[i - 1]];
+          // }
 
         },
         addHandToPlayer(state, playerId) {
           let hand = {
             id: uuidV1(),
             playerId: playerId,
+            cards: []
+          };
+          let localState = state;
+          let cardsTemp = [];
+          for(let i = 0; i < 5; i++){//Changed pop() to draw() using function in deck.js -Lance
+            cardsTemp.push(localState.deck.draw());
+            console.log('deckSize:'+localState.deck.cards.length);
           }
+          state = localState;
+          hand.cards = cardsTemp;
 
-          let cardsTemp = []
-          for(var i = 0; i < 5; i++){
-            cardsTemp.push(state.deck.pop())
-          }
+          state.hands.push(hand);
 
-          hand.cards = cardsTemp
-
-          state.hands.push(hand)
-
-          state.players.find(player => player.id === playerId).hand = hand.id
+          state.players.find(player => player.id === playerId).hand = hand.id;
 
         },
         addCardToHand(state) {
 
           state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.pop())
+        },
+        initDeck(state){
+          state.deck.initDeck();
         }
 
 

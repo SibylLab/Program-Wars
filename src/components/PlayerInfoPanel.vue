@@ -1,7 +1,7 @@
 <template>
   <div id="player-info-panel">
     <h1>{{ title }}</h1>
-    <h1>Player {{ currentplayerturn }}, It's Your Turn!</h1>
+    <h1>Player {{ currentPlayerName }}, It's Your Turn!</h1>
     <ul id="example-1">
         <li v-for="card in hand">
             <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     selectedCard () {
-      var selectedCard
+      var selectedCard;
       for (var card in this.cards) {
         if (card.selected === true) {
           selectedCard = card
@@ -46,13 +46,17 @@ export default {
         if (hand === null){
           return []
         } else {
-            console.log('this should not run')
+            console.log('Coo...')
             return hand.cards
         }
     },
     currentplayerturn() {
-        let activePlayer =  this.$store.getters.currentplayerturn
-        return activePlayer + 1
+      let activePlayer = this.$store.getters.currentplayerturn
+      return activePlayer + 1
+    },
+    currentPlayerName() {
+        let playerName = this.$store.getters.currentPlayerName;
+        return playerName;
     }
   },
   components: {
@@ -85,7 +89,7 @@ export default {
       this.$store.commit('removeCard', cardId)
 
     },
-    generateRandomCard() {
+    generateRandomCard() { //should be getting card from the deck.
       let types = ['V', 'I', 'Rx', 'R', 'G']
 
       let typeRand = this.getRandomInt(0, 5)
@@ -136,7 +140,6 @@ export default {
     bus.$on('activeCardAddedToStack', (cardId) => {
       // a card was selected
       console.log('active card successfully added to stack, deslect and remove from hand')
-
       console.log(cardId)
       this.removeCard(cardId)
 

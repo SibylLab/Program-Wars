@@ -124,14 +124,31 @@ export default {
     addToStackClicked(event) {
       console.log('card in stack was clicked')
       console.log(card)
+      let flag = false;
+      switch (this,activeCard.type){
+        case 'I':
+            if(this.cards.length() == 0){
+                flag = true;
+            }
+            break;
+        case 'R':
+            break;
+        case 'Rx':
+            break;
+        case 'G': //THis will have different functionality then just adding a card.
+            break;
+        case 'V':
+            break;
+        default:
+            flag = false;
+            break;
 
-      if (this.activeCard !== undefined) {
-
-        // do logic here that check if the move is valid
+      }
+      if(flag) {
         console.log(event)
         if (this.playfieldBoolean) {
           this.cards.push(this.activeCard)
-        } else {
+        } else { //THis order is weird...
           this.cards.unshift(this.activeCard)
         }
 
@@ -142,6 +159,9 @@ export default {
 
         bus.$emit('cardDeselected')
       }
+      else{
+
+      }
     },
     drop (e) {
       console.log('You dropped a card on a stack', e)
@@ -149,6 +169,7 @@ export default {
       if (this.activeCard !== undefined) {
 
         // do logic here that check if the move is valid
+
         console.log(event)
         if (this.playfieldBoolean) {
           this.cards.push(this.activeCard)

@@ -80,8 +80,6 @@ export default {
       console.log('A card is being dragged')
       this.$emit('setActiveCard', this.cardData)
       bus.$emit('cardClickedStack', e, this.cardData)
-
-
     }
 
   }
