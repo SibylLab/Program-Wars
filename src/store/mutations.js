@@ -18,27 +18,6 @@ export default {
             state.todos.push(todo)
 
         },
-        removeTodo(state, todoId) {
-          const updateTodo = state.todos.find(td => td.id === todoId)
-          console.log(todoId)
-
-          updateTodo.deleted = true;
-
-        },
-        toggleComplete(state, todoId) {
-          const updateTodo = state.todos.find(td => td.id === todoId)
-
-          console.log(todoId)
-
-          updateTodo.complete = !updateTodo.complete;
-
-        },
-        restoreTodo(state, todoId) {
-          const updateTodo = state.todos.find(td => td.id === todoId)
-          console.log(todoId)
-
-          updateTodo.deleted = false;
-        },
         setCurrentPlayer(state, playerId) {
           state.activePlayer = playerId
 
@@ -60,9 +39,7 @@ export default {
               delete state.hands[state.hands.indexOf(h)];
             }
           }
-
           state.hands.push(hand)
-
         },
         selectCard(state, c) {
           let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
@@ -77,20 +54,12 @@ export default {
               if (!card.selected) {
                 bus.$emit('cardDeselected')
               } else {
-                state.activeCard = c.id
+                state.activeCard = c
               }
             } else {
               card.selected = false
             }
           }
-        },
-        removeCard(state, cId) {
-          let newCards = state.hands.find(hand => hand.playerId === state.activePlayer).cards.filter(card => card.id !== cId)
-
-          let hand =  state.hands.find(hand => hand.playerId === state.activePlayer)
-
-          hand.cards = newCards
-
         },
         addCardToDeck(state, card){//changed this to have cards
           state.deck.cards.push(card);
@@ -106,7 +75,7 @@ export default {
         },
         addHandToPlayer(state, playerId) {
           let hand = {
-            id: uuidV1(),
+            handId: uuidV1(),
             playerId: playerId,
             cards: []
           };
@@ -130,7 +99,52 @@ export default {
         },
         initDeck(state){
           state.deck.initDeck();
-        }
+        },
+        addStackToPlayer(state, payload) {
+          console.log(' addStackToPlayer mutation called ')
 
+          console.log(payload.playerId)
+          console.log("Payload: ", payload)
+
+          let stack = {}
+          // { stackId:1,
+          //   //   playerId:1,
+          //   //   boolSide: true,
+          //   //   cards: [
+          //   //     new Card(0, 'I')
+          //   //   ],
+          //   //   score: 0
+          //   // }
+          stack.stackId = uuidV1();
+          stack.playerId = payload.playerId;
+          stack.boolSide = payload.boolSide;
+          stack.cards = [];
+          stack.score = 0;
+
+          state.stacks.push(stack)
+        },
+        addCardToStack(state, payload) {
+          // this is undefined
+          console.log("add card to stack mutation called")
+          console.log("payload ", payload)
+          let stackToAdd = state.stacks.find(st => st.stackId === payload.stackId)
+          console.log("stack to add: ", stackToAdd)
+          payload.card.selected = false;
+          stackToAdd.cards.push(payload.card)
+          console.log("stack to add: ", stackToAdd)
+
+
+        },
+        setActiveCard(state, payload) {
+          state.activeCard = payload.cardId;
+        },
+        setActiveCardUndefined(state) {
+          state.activeCard = undefined;
+        },
+        removeActiveCardFromHand(state) {
+          let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
+          let playerHandUpdated = playerHand.cards.filter(card => card.id !== state.activeCard.id)
+          state.hands.find(hand => hand.playerId === state.activePlayer).cards = playerHandUpdated
+        }
 
 }

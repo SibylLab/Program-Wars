@@ -13,7 +13,7 @@ import { bus } from './Bus'
 
 export default {
   name: 'Card',
-  props: ['cardData'],
+  props: ['cardData', 'inStack'],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
@@ -29,9 +29,8 @@ export default {
         classString = classString + ' selected'
       }
 
-      if (this.cardData.value === '+') {
-        classString = classString + ' addCard'
-      } else if (this.cardData.category === 'stack') {
+
+      if (this.inStack) {
        classString = classString + ' stack'
      }
 

@@ -20,44 +20,11 @@ export const store = new Vuex.Store({
           new Player(2,'Josh',2,0),
           new Player(3,'Lance',3,0),
           new Player(4,'Shaun',4,0)
-          /*{
-            id: 0,
-            name: "player1",
-            hand: 0,
-            score: 0
-          },
-          {
-            id: 1,
-            name: "player2",
-            hand: 1,
-            score: 0
-          },
-          {
-            id: 2,
-            name: "player2",
-            hand: 2,
-            score: 0
-          },
-          {
-            id: 3,
-            name: "player2",
-            hand: 3,
-            score: 0
-          }*/
-          ],
+        ],
         stacks: [
-          /*{ stackId:1,
-            playerId:1,
-            boolSide: true,
-            cards: [
-              new Card(0, 'I')
-            ],
-            score: 0
-          }*/
         ],
         deck: new Deck(),
         hands: [
-
         ],
         currentTurn: 'phase',
         activeSide: true,

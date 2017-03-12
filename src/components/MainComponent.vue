@@ -3,8 +3,8 @@
     <h1>{{ msg }}</h1>
     <player-info-panel></player-info-panel>
     <div id="flexcontainer">
-      <playfield v-bind:trueFalse="true"></playfield>
-      <playfield :trueFalse="false"></playfield>
+      <playfield v-bind:trueFalse="true" :playerId="currentPlayerId"></playfield>
+      <playfield :trueFalse="false" :playerId="currentPlayerId"></playfield>
     </div>
   </div>
 </template>
@@ -29,13 +29,25 @@ export default {
   methods: {
     initGame(){
         this.$store.commit('initDeck');
+
     },
     fillHands() {
-        for(let i = 0; i < this.$store.getters.maxplayers; i++) {
-          this.$store.commit('addHandToPlayer', i)
+        for(let player of this.$store.getters.getPlayers) {
+          this.$store.commit('addHandToPlayer', player.id)
         }
+    },
+    addStacksToPlayers() {
+      for(let player of this.$store.getters.getPlayers) {
+        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true})
+        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false})
+      }
     }
 },
+  computed: {
+    currentPlayerId() {
+      return this.$store.getters.getCurrentPlayerId;
+    }
+  },
   components: {
     'player-info-panel': PlayerInfoPanel,
     'playfield': Playfield
@@ -44,13 +56,8 @@ export default {
       //TODO: Should have startup game modal thing here.
       this.initGame()
       this.fillHands()
+      this.addStacksToPlayers()
 
-//      while(true) {
-//          console.log("game loop started")
-//
-//
-//
-//      }
   }
 }
 </script>

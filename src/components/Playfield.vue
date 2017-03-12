@@ -4,7 +4,7 @@
     <h1>{{ trueOrFalse }}</h1>
     <ul id="example-1">
         <li v-for="stack in stacks">
-            <stack :playfieldBoolean="trueFalse" :stackId="stack.id" @cardAdded="cardAdded"></stack>
+            <stack :playfieldBoolean="trueFalse" :stackId="stack.stackId" @cardAdded="cardAdded" :playerId="playerId"></stack>
         </li>
     </ul>
   </div>
@@ -15,14 +15,11 @@ import Stack from './Stack'
 
 export default {
   name: 'Playfield',
-  props: ['trueFalse'],
+  props: ['trueFalse', 'playerId'],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       title: 'Playfield',
-      stacks: [
-          { id: 1, elements: [], value: 0 , cardCount: 0}
-      ],
       numberOfStacks: 1,
       test: 'default'
     }
@@ -43,6 +40,9 @@ export default {
         console.log(false)
         return 'dark'
       }
+    },
+    stacks() {
+        return this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse )
     }
   },
   components: {

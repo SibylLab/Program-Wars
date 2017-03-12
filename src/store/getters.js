@@ -15,7 +15,7 @@ export default {
         getCurrentPlayerHand(state) {
           return Object.assign({}, state.hands.find(hand => hand.playerId === state.activePlayer))
         },
-        currentplayerturn(state) {
+        getCurrentPlayerId(state) {
           return state.activePlayer
         },
         maxplayers(state) {
@@ -29,7 +29,20 @@ export default {
             console.log('The deck was empty, that shouldnt have happened...')
           )
         },
-        currentPlayerName(state) {
+        currentPlayerName(state)
+        {
           return state.players.find(player => player.id === state.activePlayer).name;
+        },
+        getCurrentPlayerStacks(state) {
+          return state.stacks.filter(st => st.playerId === state.activePlayer)
+        },
+        getActiveCard(state) {
+          return state.activeCard
+        },
+        getStacks(state) {
+          return state.stacks
+        },
+        getPlayers(state) {
+          return state.players
         }
 }

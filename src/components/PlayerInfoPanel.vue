@@ -2,6 +2,7 @@
   <div id="player-info-panel">
     <h1>{{ title }}</h1>
     <h1>Player {{ currentPlayerName }}, It's Your Turn!</h1>
+
     <ul id="example-1">
         <li v-for="card in hand">
             <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
@@ -79,7 +80,7 @@ export default {
       document.removeEventListener('click', this.hide)
       bus.$emit('cardDeselected')
 
-      for (var card of this.cards) {
+      for (let card of this.hand) {
         card.selected = false
       }
     },
