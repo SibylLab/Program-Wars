@@ -3,8 +3,8 @@
     <h1>{{ msg }}</h1>
     <player-info-panel></player-info-panel>
     <div id="flexcontainer">
-      <playfield v-bind:trueFalse="true"></playfield>
-      <playfield :trueFalse="false"></playfield>
+      <playfield v-bind:trueFalse="true" :playerId="currentPlayerId"></playfield>
+      <playfield :trueFalse="false" :playerId="currentPlayerId"></playfield>
     </div>
   </div>
 </template>
@@ -120,6 +120,15 @@ export default {
 
       this.$store.commit('shuffleTheDeck')
 
+      for (let player of this.$store.getters.getPlayers) {
+        console.log("player: ", player)
+        console.log("player id: ", player.id )
+        this.$store.commit('addStackToPlayer', {boolSide:false, playerId:player.id})
+        this.$store.commit('addStackToPlayer', {boolSide:true, playerId:player.id})
+
+      }
+
+
     },
     fillHands() {
         for(let i = 0; i < this.$store.getters.maxplayers; i++) {
@@ -127,6 +136,11 @@ export default {
         }
     }
 },
+  computed: {
+    currentPlayerId() {
+      return this.$store.getters.getCurrentPlayerId;
+    }
+  },
   components: {
     'player-info-panel': PlayerInfoPanel,
     'playfield': Playfield

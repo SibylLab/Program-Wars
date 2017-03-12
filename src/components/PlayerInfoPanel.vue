@@ -1,7 +1,7 @@
 <template>
   <div id="player-info-panel">
     <h1>{{ title }}</h1>
-    <h1>Player {{ currentplayerturn }}, It's Your Turn!</h1>
+    <h1>Player {{ getCurrentPlayerId }}, It's Your Turn!</h1>
     <ul id="example-1">
         <li v-for="card in hand">
             <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
@@ -50,8 +50,8 @@ export default {
             return hand.cards
         }
     },
-    currentplayerturn() {
-        let activePlayer =  this.$store.getters.currentplayerturn
+    getCurrentPlayerId() {
+        let activePlayer =  this.$store.getters.getCurrentPlayerId
         return activePlayer + 1
     }
   },

@@ -24,29 +24,29 @@ export const store = new Vuex.Store({
             name: "player2",
             hand: 1,
             score: 0
-          },
-          {
-            id: 2,
-            name: "player2",
-            hand: 1,
-            score: 0
-          },
-          {
-            id: 3,
-            name: "player2",
-            hand: 1,
-            score: 0
           }
+          // {
+          //   id: 2,
+          //   name: "player2",
+          //   hand: 1,
+          //   score: 0
+          // },
+          // {
+          //   id: 3,
+          //   name: "player2",
+          //   hand: 1,
+          //   score: 0
+          // }
         ],
         stacks: [
-          { stackId:1,
-            playerId:1,
-            boolSide: true,
-            cards: [
-              new Card(0, 'I')
-            ],
-            score: 0
-          }
+          // { stackId:1,
+          //   playerId:1,
+          //   boolSide: true,
+          //   cards: [
+          //     new Card(0, 'I')
+          //   ],
+          //   score: 0
+          // }
         ],
         deck: [
 

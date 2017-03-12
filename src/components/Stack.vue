@@ -1,5 +1,5 @@
 <template>
-  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked ()" @click.stop>
+  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked()" @click.stop>
     <h1>{{ title }}</h1>
     <ul id="example-1">
       <button v-if="!playfieldBoolean"  class="btn btn-primary" :class="buttonStyle" v-on:click="addToStackClicked">
@@ -7,8 +7,8 @@
       </button>
 
       <li v-for="card in cards">
-            <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)"></card>
-        </li>
+            <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
+      </li>
       <button v-if="playfieldBoolean"  class="btn btn-primary" :class="buttonStyle" v-on:click="addToStackClicked">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
@@ -23,42 +23,46 @@ import Card from './Card'
 
 export default {
   name: 'Stack',
-  props: ['playfieldBoolean', 'stackId'],
+  props: ['playfieldBoolean', 'stackId', 'playerId'],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       title: 'Stack',
-      cards: [],
       id: this.stackId,
-      activeCard: undefined
     }
   },
   computed: {
+    cards () {
+
+      if (this.$store.getters.getCurrentPlayerStacks.length !== 0) {
+        let stack = this.$store.getters.getCurrentPlayerStacks.find(stack => stack.stackId === this.stackId)
+        console.log("stack: ", stack)
+        if (stack !== undefined) {
+            return stack.cards
+        } else {
+            return []
+        }
+      }
+
+    },
+    currentPlayer () {
+
+    },
     stackCss () {
       return 'stack'
-    },
-    buttonStyle () {
-        if (this.activeCard !== undefined) {
-            return 'selected'
-        } else {
-            return ''
-        }
     }
   },
   created: function () {
-
     bus.$on('cardClickedStack', (event, card) => {
       // a card was selected
-
       if (card.category !== 'stack') {
-        console.log('hello '+ card.id + ' ' + card.value + ' ' + card.type + ' --- ' + card.selected )
+        console.log('hello ' + card.id + ' ' + card.value + ' ' + card.type + ' --- ' + card.selected)
         if (card.selected === true) {
           this.activeCard = Object.assign({}, card);
 
           this.activeCard.category = 'stack'
           this.activeCard.selected = false
         }
-
       }
     })
 
@@ -72,104 +76,46 @@ export default {
     cardAddClicked () {
       this.$emit('cardAddClicked', this.id)
 
-      // Emit an event here that a specific card was selected
-      // handle the event in the parent so that other cards can be deselected
-
-      // this should not be done here, should be done in the parent
-      // and then the class would be a computed property that is based
-      // on the selected: property
-      // if (this.cardData.selected) {
-      //   this.cardCss = 'card'
-      //   this.cardData.selected = false
-      // } else {
-      //   this.cardCss = 'card selected'
-      //   this.cardData.selected = true
-      // }
-      // global click event, do this in the parent
-      // setTimeout(() => document.addEventListener('click', this.hide), 0)
     },
     hide () {
-      // do this in parent
-      // document.removeEventListener('click', this.hide)
-      // this.cardCss = 'card'
-      // this.cardData.selected = false
+
     },
     stackClicked () {
       console.log('The stack knows a card was clicked')
     },
     cardClickedInStack(event, card) {
       console.log('card in stack was clicked')
-      console.log(card)
-
-      if (this.activeCard !== undefined && card.value === '+' ) {
-
-        // do logic here that check if the move is valid
-        console.log(event)
-        if (this.playfieldBoolean) {
-          this.cards.push(this.activeCard)
-        } else {
-          this.cards.unshift(this.activeCard)
-        }
-
-        bus.$emit('activeCardAddedToStack', this.activeCard.id )
-        this.activeCard = undefined
-
-        this.$emit('cardAdded', this.stackId)
-
-        bus.$emit('cardDeselected')
 
 
-      }
     },
-    addToStackClicked(event) {
-      console.log('card in stack was clicked')
-      console.log(card)
+  addToStackClicked(event) {
+    console.log('add to stack was clicked')
 
-      if (this.activeCard !== undefined) {
+    if (this.$store.getters.getActiveCard !== undefined) {
+      console.log('active card is not undefined')
 
-        // do logic here that check if the move is valid
-        console.log(event)
-        if (this.playfieldBoolean) {
-          this.cards.push(this.activeCard)
-        } else {
-          this.cards.unshift(this.activeCard)
-        }
+      console.log('current active card: ' + this.$store.getters.getActiveCard)
 
-        bus.$emit('activeCardAddedToStack', this.activeCard.id)
-        this.activeCard = undefined
-
-        this.$emit('cardAdded', this.stackId)
-
-        bus.$emit('cardDeselected')
+      if (this.$store.getters.getActiveCard.type === 'I') {
+        console.log('the current active card is instruction')
+        console.log('current active card: ' + this.$store.getters.getActiveCard)
+        this.$store.commit('addStackToPlayer', {boolSide:this.playfieldBoolean, playerId:this.playerId})
+        this.$store.commit('addCardToStack', {stackId:this.stackId, card:this.$store.getters.getActiveCard})
+      } else {
+          // TODO: logic check for current top of the stack and type of ActiveCard
       }
-    },
-    drop (e) {
-      console.log('You dropped a card on a stack', e)
 
-      if (this.activeCard !== undefined) {
-
-        // do logic here that check if the move is valid
-        console.log(event)
-        if (this.playfieldBoolean) {
-          this.cards.push(this.activeCard)
-        } else {
-          this.cards.unshift(this.activeCard)
-        }
-
-        bus.$emit('activeCardAddedToStack', this.activeCard.id)
-
-        this.activeCard = undefined
-
-        this.$emit('cardAdded', this.stackId)
-
-        bus.$emit('cardDeselected')
-      }
     }
+  },
+  drop (e) {
+    console.log('You dropped a card on a stack', e)
 
+
+  }
   },
   components: {
     'card': Card
-  }
+  },
 }
 </script>
 

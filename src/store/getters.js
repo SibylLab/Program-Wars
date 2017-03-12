@@ -15,10 +15,22 @@ export default {
         getCurrentPlayerHand(state) {
           return Object.assign({}, state.hands.find(hand => hand.playerId === state.activePlayer))
         },
-        currentplayerturn(state) {
+        getCurrentPlayerId(state) {
           return state.activePlayer
         },
         maxplayers(state) {
           return state.players.length
+        },
+        getCurrentPlayerStacks(state) {
+          return state.stacks.filter(st => st.playerId === state.activePlayer)
+        },
+        getActiveCard(state) {
+          return state.activeCard
+        },
+        getStacks(state) {
+          return state.stacks
+        },
+        getPlayers(state) {
+          return state.players
         }
 }
