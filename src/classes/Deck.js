@@ -7,6 +7,7 @@ export default class Deck {
     //this.initDeck();
   };
   cards = [];
+  discard_cards = []
   //cardId = 0;
   initDeck() {
     // generate Instruction cards

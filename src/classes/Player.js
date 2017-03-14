@@ -7,5 +7,6 @@ export default class Player {
     this.hand = hand;
     this.score = score;
     this.id = id;
+
   }
 }

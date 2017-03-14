@@ -2,6 +2,8 @@
   <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked()" @click.stop>
     <h1>{{ title }}</h1>
     <ul id="example-1">
+      <span v-if="!playfieldBoolean">Stack Score: {{ score }}</span>
+
       <button v-if="!playfieldBoolean"  class="btn btn-primary" :class="buttonStyle" v-on:click="addToStackClicked">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
@@ -12,6 +14,8 @@
       <button v-if="playfieldBoolean"  class="btn btn-primary" :class="buttonStyle" v-on:click="addToStackClicked">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
+      <span v-if="playfieldBoolean">Stack Score: {{ score }}</span>
+
     </ul>
   </div>
 </template>
@@ -50,6 +54,12 @@ export default {
     },
     stackCss () {
       return 'stack'
+    },
+    score() {
+        let thisStack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
+         console.log("this stacks score: ", thisStack.calculateStackScore())
+         thisStack.calculateStackScore()
+          return thisStack.score
     }
   },
   created: function () {
@@ -102,7 +112,6 @@ export default {
         // get the stack data model that goes with this stack component
         let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
 
-
         switch (activeCard.type) {
           case 'I':
               console.log('the current active card is instruction')
@@ -115,8 +124,10 @@ export default {
                 this.$store.commit('removeActiveCardFromHand')
 
                 // the previous stack has an instruction card, give the player a new empty stack
-                this.$store.commit('addStackToPlayer', {boolSide: this.playfieldBoolean, playerId: this.playerId})
+                this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
                 bus.$emit('cardDeselected')
+                this.$store.commit('setHasPlayed', {hasPlayed:true})
+
 
               } else {
                   // TODO: the stack is not empty, cannot add instuction card, display help message explaining
@@ -130,7 +141,7 @@ export default {
               console.log('the current active card is repetition')
               console.log('current active card: ' + this.$store.getters.getActiveCard)
 
-              if (thisStack.topCard().type === 'I' || thisStack.topCard().type === 'G') {
+              if (thisStack.stackTopCard().type === 'I' || thisStack.stackTopCard().type === 'G') {
 
                 this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
 
@@ -138,6 +149,8 @@ export default {
 
                 // the previous stack has an instruction card, give the player a new empty stack
                 bus.$emit('cardDeselected')
+                this.$store.commit('setHasPlayed', {hasPlayed:true})
+
 
               } else {
                 // TODO: the stack does not have instruction or group card on top, cannot add repetition card, display help message explaining
@@ -154,7 +167,7 @@ export default {
             console.log('the current active card is a variable')
             console.log('current active card: ' + this.$store.getters.getActiveCard)
 
-            if (thisStack.topCard().type === 'R' && thisStack.topCard().value === 1) {
+            if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1 ) {
 
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
 
@@ -162,6 +175,21 @@ export default {
 
               // the previous stack has an instruction card, give the player a new empty stack
               bus.$emit('cardDeselected')
+
+              this.$store.commit('setHasPlayed', {hasPlayed:true})
+
+
+            } else if (thisStack.stackTopCard().type === 'V' && thisStack.stackTopCard().value < activeCard.value) {
+
+                // remove the existing variable card from the stack and add it to the discard pile
+                this.$store.commit('stackDiscard', {stackId: this.stackId})
+
+                this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
+
+              this.$store.commit('removeActiveCardFromHand')
+
+              this.$store.commit('setHasPlayed', {hasPlayed:true})
+
 
             } else {
               // TODO: the stack does not have instruction or group card on top, cannot add repetition card, display help message explaining

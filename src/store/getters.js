@@ -44,5 +44,11 @@ export default {
         },
         getPlayers(state) {
           return state.players
+        },
+        getDiscard(state) {
+          return state.deck.discard_cards
+        },
+        getHasPlayed(state) {
+          return state.activeHasPlayed
         }
 }

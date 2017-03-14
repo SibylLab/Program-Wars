@@ -55,6 +55,12 @@ export default class Stack {
 
   }
 
+  // this function returns the top card of a stack and then removes it from the stack
+  popTopCard() {
+
+    return this.cards.pop()
+  }
+
   //this function returns a reference to the last card of the stack cards array
   stackBottomCard() {
 

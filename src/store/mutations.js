@@ -2,6 +2,8 @@ const uuidV1 = require('uuid/v1');
 
 import { bus } from '../components/Bus';
 
+import Stack from '../classes/Stack'
+
 
 export default {
         addPlayer(state, todoString) {
@@ -95,7 +97,7 @@ export default {
         },
         addCardToHand(state) {
 
-          state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.pop())
+          state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.cards.pop())
         },
         initDeck(state){
           state.deck.initDeck();
@@ -124,11 +126,10 @@ export default {
           stack.score = 0;
           */
 
-          let stack = new Stack(payload.playerId, payload.boolSide);
 
           // new Stack()
 
-          state.stacks.push(stack)
+          state.stacks.push(new Stack(payload.playerId, payload.boolSide))
         },
         addCardToStack(state, payload) {
           // this is undefined
@@ -161,6 +162,15 @@ export default {
           let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
           let playerHandUpdated = playerHand.cards.filter(card => card.id !== state.activeCard.id)
           state.hands.find(hand => hand.playerId === state.activePlayer).cards = playerHandUpdated
+        },
+        stackDiscard(state, payload) {
+          let card = state.stacks.find(stack => stack.stackId === payload.stackId).popTopCard()
+
+          state.deck.discard_cards.push(card)
+        },
+        setHasPlayed(state, payload) {
+          state.activeHasPlayed = payload.hasPlayed
         }
+
 
 }

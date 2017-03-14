@@ -2,6 +2,8 @@
   <div id="playfield" :class="playfieldClass" >
     <h1>{{ title }}</h1>
     <h1>{{ trueOrFalse }}</h1>
+    <h1>Total Playfield Score: {{ score }}</h1>
+
     <ul id="example-1">
         <li v-for="stack in stacks">
             <stack :playfieldBoolean="trueFalse" :stackId="stack.stackId" @cardAdded="cardAdded" :playerId="playerId"></stack>
@@ -42,13 +44,24 @@ export default {
       }
     },
     stacks() {
-        return this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse )
+      return this.getStackList();
+    },
+    score() {
+        let stackList = this.getStackList()
+         let score = 0;
+        for (let stack of stackList) {
+            score += stack.score
+        }
+        return score
     }
   },
   components: {
     'stack': Stack
   },
   methods: {
+    getStackList() {
+      return this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)
+    },
     addToStack () {
       // alert('cardId of clicked card is ' + cardId)
     },

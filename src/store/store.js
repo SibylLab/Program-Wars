@@ -29,6 +29,7 @@ export const store = new Vuex.Store({
         currentTurn: 'phase',
         activeSide: true,
         activePlayer: 0,
+        activeHasPlayed: false,
         currentId: 0,
         activeCard: undefined
     },

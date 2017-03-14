@@ -1,17 +1,20 @@
 <template>
-  <div id="player-info-panel">
-    <h1>{{ title }}</h1>
-    <h1>Player {{ currentPlayerName }}, It's Your Turn!</h1>
+    <div id="player-info-panel">
+      <h1>{{ title }}</h1>
+      <h1>Player {{ currentPlayerName }}, It's Your Turn!</h1>
 
-    <ul id="example-1">
-        <li v-for="card in hand">
-            <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
-        </li>
-    </ul>
-    <button class="btn btn-primary endTurnButton" v-on:click="endTurn">
-    End Your Turn
-    </button>
-  </div>
+      <ul id="example-1">
+          <li v-for="card in hand">
+              <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
+          </li>
+      </ul>
+      <button class="btn btn-primary endTurnButton" :disabled="endTurnEnabled" v-on:click="endTurn">
+        End Your Turn
+      </button>
+      <button class="btn btn-primary" v-on:click="displayDiscard">
+        Show Discarded Cards
+      </button>
+    </div>
 </template>
 
 <script>
@@ -47,7 +50,6 @@ export default {
         if (hand === null){
           return []
         } else {
-            console.log('Coo...')
             return hand.cards
         }
     },
@@ -58,13 +60,37 @@ export default {
     currentPlayerName() {
         let playerName = this.$store.getters.currentPlayerName;
         return playerName;
+    },
+    endTurnEnabled() {
+        let hasPlayed = this.$store.getters.getHasPlayed
+        if (hasPlayed) {
+            return false
+        } else {
+            return true
+        }
     }
   },
   components: {
     'card': Card
   },
   methods: {
+    displayDiscard() {
+        let string = ''
+        let discardList = this.$store.getters.getDiscard
+        if (discardList.length === 0) {
+          alert('There are no cards in the discard pile')
+        } else {
+          string += 'Cards in the discard pile: \n'
+          for (let card of discardList) {
+            string = card.value + ' ' + card.type + ' --- ' + '\n'
+          }
+          alert(string)
+        }
+
+    },
     endTurn() {
+      this.$store.commit('setHasPlayed', {hasPlayed:false})
+
       this.$store.commit('endTurn', this.$store.getters.maxplayers)
     },
     cardClicked (c) {
@@ -72,7 +98,6 @@ export default {
       console.log(c.id)
 
       this.$store.commit('selectCard', c)
-
 
       setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
     },
@@ -150,7 +175,11 @@ export default {
       //this.$options.methods.removeCard(cardId)
     })
 
+
   },
+  beforeUpdate: function () {
+
+  }
 }
 </script>
 
@@ -182,5 +211,9 @@ a {
   .endTurnButton {
     width: 200px;
     height: 100px;
+  }
+
+  .enabled {
+
   }
 </style>
