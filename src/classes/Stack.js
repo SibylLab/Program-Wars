@@ -45,7 +45,7 @@ export default class Stack {
 
     //set the value of the stack
     this.score = tempScore;
-    //here is a comment
+    //here is a comment, a longer comment, and more
   }
 
   //this function returns a reference to the first (bottom) card of the stack cards array
