@@ -51,14 +51,14 @@ export default class Stack {
   //this function returns a reference to the first (bottom) card of the stack cards array
   stackTopCard () {
 
-    return this.cards.shift();
+    return this.cards[this.cards.length - 1];
 
   }
 
   //this function returns a reference to the last card of the stack cards array
   stackBottomCard() {
 
-    return this.cards.unshift();
+    return this.cards[0];
 
   }
 
