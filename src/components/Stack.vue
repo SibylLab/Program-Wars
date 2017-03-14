@@ -88,29 +88,101 @@ export default {
 
 
     },
-    addToStackClicked(event) {
-          console.log('add to stack was clicked')
+    addToStack() {
+      console.log('add to stack was clicked')
 
-          if (this.$store.getters.getActiveCard !== undefined) {
-            console.log('active card is not undefined')
+      if (this.$store.getters.getActiveCard !== undefined) {
+        console.log('active card is not undefined')
 
-            console.log('current active card: ' + this.$store.getters.getActiveCard)
+        console.log('current active card: ' + this.$store.getters.getActiveCard)
 
-            if (this.$store.getters.getActiveCard.type === 'I') {
+        // get the active card from the store
+        let activeCard = this.$store.getters.getActiveCard
+        // get the stack data model that goes with this stack component
+        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
+
+
+        switch (activeCard.type) {
+          case 'I':
               console.log('the current active card is instruction')
               console.log('current active card: ' + this.$store.getters.getActiveCard)
-              this.$store.commit('addStackToPlayer', {boolSide: this.playfieldBoolean, playerId: this.playerId})
+
+              if (thisStack.cards.length === 0) {
+
+                this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
+
+                this.$store.commit('removeActiveCardFromHand')
+
+                // the previous stack has an instruction card, give the player a new empty stack
+                this.$store.commit('addStackToPlayer', {boolSide: this.playfieldBoolean, playerId: this.playerId})
+                bus.$emit('cardDeselected')
+
+              } else {
+                  // TODO: the stack is not empty, cannot add instuction card, display help message explaining
+                  // TODO: implement help message popups
+                  // for now, showing alert
+                  alert("You cannot add an instruction card to a non-empty stack. Try adding that card to a different stack. ")
+              }
+              break;
+          case 'R':
+
+              console.log('the current active card is repetition')
+              console.log('current active card: ' + this.$store.getters.getActiveCard)
+
+              if (thisStack.topCard().type === 'I' || thisStack.topCard().type === 'G') {
+
+                this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
+
+                this.$store.commit('removeActiveCardFromHand')
+
+                // the previous stack has an instruction card, give the player a new empty stack
+                bus.$emit('cardDeselected')
+
+              } else {
+                // TODO: the stack does not have instruction or group card on top, cannot add repetition card, display help message explaining
+                // TODO: implement help message popups
+                // for now, showing alert
+                alert("You cannot add a repetition card to a stack without an Instruction or Group card. Try adding that card to a stack with an Instruction or Group card.")
+              }
+
+
+            break;
+
+          case 'V':
+
+            console.log('the current active card is a variable')
+            console.log('current active card: ' + this.$store.getters.getActiveCard)
+
+            if (thisStack.topCard().type === 'R' && thisStack.topCard().value === 1) {
+
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
 
               this.$store.commit('removeActiveCardFromHand')
 
-
+              // the previous stack has an instruction card, give the player a new empty stack
               bus.$emit('cardDeselected')
+
             } else {
-              // TODO: logic check for current top of the stack and type of ActiveCard
+              // TODO: the stack does not have instruction or group card on top, cannot add repetition card, display help message explaining
+              // TODO: implement help message popups
+              // for now, showing alert
+              alert("You cannot add a variable card to a stack without a Variable (Rx) repetition card. Try adding that card to a stack with an variable Repetition Card (Rx).")
             }
-          }
-        },
+
+
+              break;
+
+          default:
+              console.log('unknown card type')
+              break;
+
+        }
+
+      }
+    },
+    addToStackClicked(event) {
+         this.addToStack()
+    },
     drop (e) {
       console.log('a card was dragged to the stack')
 

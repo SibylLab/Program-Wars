@@ -1,9 +1,9 @@
 <template>
   <div id="card" :class="cardCss" v-on:click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
     <h1>{{ title }}</h1>
-    <span :class="typeCss"> {{ cardData.type }} </span>
+    <span :class="typeCss"> {{ cardType }} </span>
     <br>
-    <span :class="valueCss"> {{ cardData.value }} </span>
+    <span :class="valueCss"> {{ cardValue }} </span>
   </div>
 </template>
 
@@ -29,7 +29,6 @@ export default {
         classString = classString + ' selected'
       }
 
-
       if (this.inStack) {
        classString = classString + ' stack'
      }
@@ -41,6 +40,20 @@ export default {
         return 'Card'
       } else {
         return ''
+      }
+    },
+    cardType(){
+        if(this.cardData.type === 'R' && this.cardData.value === 1){
+            return 'Rx'
+        }else{
+            return this.cardData.type
+        }
+    },
+    cardValue(){
+      if(this.cardData.type === 'R' && this.cardData.value === 1){
+        return '_'
+      }else{
+        return this.cardData.value
       }
     }
   },

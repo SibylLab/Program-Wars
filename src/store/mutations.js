@@ -121,6 +121,8 @@ export default {
           stack.cards = [];
           stack.score = 0;
 
+          // new Stack()
+
           state.stacks.push(stack)
         },
         addCardToStack(state, payload) {

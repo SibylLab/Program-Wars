@@ -32,7 +32,7 @@ export default class Deck {
     // generate variable repetition cards
     for (let i = 0; i < 5; i++) {
       //this.$store.commit('addCardToDeck', new Card(this.cardId, 0, 'Rx'));
-      this.cards.push(new Card(cardId, 0, 'Rx'));
+      this.cards.push(new Card(cardId, 1, 'R'));
       cardId++;
     }
 

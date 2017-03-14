@@ -89,7 +89,7 @@ export default {
       console.log("Card id : ", cardId)
       this.$store.commit('removeCard', cardId)
 
-    },
+    }/*,
     generateRandomCard() { //should be getting card from the deck.
       let types = ['V', 'I', 'Rx', 'R', 'G']
 
@@ -105,7 +105,7 @@ export default {
           newCardValue = this.getRandomInt(1, 5)
           break;
         case 'Rx':
-          newCardValue = 0
+          newCardValue = 1
           break;
         case 'G':
           newCardValue = this.getRandomInt(1, 5)
@@ -121,7 +121,7 @@ export default {
       return {id: cardId, value: newCardValue, type: newCardType, selected: false}
 
 
-    },
+    }*/,
     getRandomInt(min, max) {
       min = Math.ceil(min);
        max = Math.floor(max);
