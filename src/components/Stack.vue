@@ -70,6 +70,7 @@ export default {
       // a card was selected
       this.activeCard = undefined
       console.log('no active card selected')
+      //this is a test again
     })
   },
   methods: {

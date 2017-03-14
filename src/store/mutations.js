@@ -106,9 +106,11 @@ export default {
           console.log(payload.playerId)
           console.log("Payload: ", payload)
 
+          //changed this code to use the new stack constructor
+          /*
           let stack = {}
           // { stackId:1,
-          //   //   playerId:1,
+          //   //   playerId:1,t
           //   //   boolSide: true,
           //   //   cards: [
           //   //     new Card(0, 'I')
@@ -120,6 +122,9 @@ export default {
           stack.boolSide = payload.boolSide;
           stack.cards = [];
           stack.score = 0;
+          */
+
+          let stack = new Stack(payload.playerId, payload.boolSide);
 
           // new Stack()
 
@@ -132,8 +137,17 @@ export default {
           let stackToAdd = state.stacks.find(st => st.stackId === payload.stackId)
           console.log("stack to add: ", stackToAdd)
           payload.card.selected = false;
-          stackToAdd.cards.push(payload.card)
+
+          //changed to use new method defined in Stack.js
+          //stackToAdd.cards.push(payload.card)
+          stackToAdd.addCardToStack(payload.card);
           console.log("stack to add: ", stackToAdd)
+          //calculate the score of the stack once a card is added
+          stackToAdd.calculateStackScore();
+          //display this for logging purpose
+          console.log("score of the stack: ", stackToAdd.score);
+
+          //display the score of the stack calculated thusfar
 
 
         },
