@@ -222,7 +222,7 @@ export default {
         this.addToStack()
     },
     drop (e) {
-      console.log('a card was dragged to the stack____')
+      console.log('a card was dragged to the stack')
 
       this.addToStack()
 
