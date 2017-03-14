@@ -50,5 +50,9 @@ export default {
         },
         getHasPlayed(state) {
           return state.activeHasPlayed
+        },
+        getgameState(state) {
+          return state.currentGameState
         }
 }
+

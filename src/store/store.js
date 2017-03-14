@@ -26,7 +26,7 @@ export const store = new Vuex.Store({
         deck: new Deck(),
         hands: [
         ],
-        currentTurn: 'phase',
+        currentGameState: 'newGame',
         activeSide: true,
         activePlayer: 0,
         activeHasPlayed: false,

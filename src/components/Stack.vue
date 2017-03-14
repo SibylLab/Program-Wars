@@ -55,6 +55,9 @@ export default {
     stackCss () {
       return 'stack'
     },
+    buttonStyle() {
+      return ''
+    },
     score() {
         let thisStack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
          console.log("this stacks score: ", thisStack.calculateStackScore())
@@ -114,50 +117,53 @@ export default {
 
         switch (activeCard.type) {
           case 'I':
-              console.log('the current active card is instruction')
-              console.log('current active card: ' + this.$store.getters.getActiveCard)
+            console.log('the current active card is instruction')
+            console.log('current active card: ' + this.$store.getters.getActiveCard)
 
-              if (thisStack.cards.length === 0) {
+            if (thisStack.cards.length === 0) {
 
-                this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
+              this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
 
-                this.$store.commit('removeActiveCardFromHand')
+              this.$store.commit('removeActiveCardFromHand')
 
-                // the previous stack has an instruction card, give the player a new empty stack
-                this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
-                bus.$emit('cardDeselected')
-                this.$store.commit('setHasPlayed', {hasPlayed:true})
+              // the previous stack has an instruction card, give the player a new empty stack
+              this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
+              bus.$emit('cardDeselected')
+              this.$store.commit('setHasPlayed', {hasPlayed: true})
 
 
-              } else {
-                  // TODO: the stack is not empty, cannot add instuction card, display help message explaining
-                  // TODO: implement help message popups
-                  // for now, showing alert
-                  alert("You cannot add an instruction card to a non-empty stack. Try adding that card to a different stack. ")
-              }
-              break;
+            } else {
+              // TODO: the stack is not empty, cannot add instuction card, display help message explaining
+              // TODO: implement help message popups
+              // for now, showing alert
+              alert("You cannot add an instruction card to a non-empty stack. Try adding that card to a different stack. ")
+            }
+            break;
           case 'R':
 
-              console.log('the current active card is repetition')
-              console.log('current active card: ' + this.$store.getters.getActiveCard)
+            console.log('the current active card is repetition')
+            console.log('current active card: ' + this.$store.getters.getActiveCard)
 
-              if (thisStack.stackTopCard().type === 'I' || thisStack.stackTopCard().type === 'G') {
+            if (thisStack.cards.length === 0) {
+              alert("You cannot add a repetition card to a stack without an instruction card. Try adding that card to a stack with an instruction card.")
 
-                this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
+            } else if (thisStack.stackTopCard().type === 'I' || thisStack.stackTopCard().type === 'G') {
 
-                this.$store.commit('removeActiveCardFromHand')
+              this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
 
-                // the previous stack has an instruction card, give the player a new empty stack
-                bus.$emit('cardDeselected')
-                this.$store.commit('setHasPlayed', {hasPlayed:true})
+              this.$store.commit('removeActiveCardFromHand')
+
+              // the previous stack has an instruction card, give the player a new empty stack
+              bus.$emit('cardDeselected')
+              this.$store.commit('setHasPlayed', {hasPlayed: true})
 
 
-              } else {
-                // TODO: the stack does not have instruction or group card on top, cannot add repetition card, display help message explaining
-                // TODO: implement help message popups
-                // for now, showing alert
-                alert("You cannot add a repetition card to a stack without an Instruction or Group card. Try adding that card to a stack with an Instruction or Group card.")
-              }
+            } else {
+              // TODO: the stack does not have instruction or group card on top, cannot add repetition card, display help message explaining
+              // TODO: implement help message popups
+              // for now, showing alert
+              alert("You cannot add a repetition card to a stack without an Instruction or Group card. Try adding that card to a stack with an Instruction or Group card.")
+            }
 
 
             break;
@@ -166,8 +172,10 @@ export default {
 
             console.log('the current active card is a variable')
             console.log('current active card: ' + this.$store.getters.getActiveCard)
+          if (thisStack.cards.length === 0) {
+            alert("You cannot add a variable card to a stack without an instruction card. Try adding that card to a stack with an instruction card.")
 
-            if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1 ) {
+          } else if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1 ) {
 
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
 
@@ -210,31 +218,15 @@ export default {
       }
     },
     addToStackClicked(event) {
-         this.addToStack()
+        console.log('the add to stack button was clicked')
+        this.addToStack()
     },
     drop (e) {
       console.log('a card was dragged to the stack')
 
-      if (this.$store.getters.getActiveCard !== undefined) {
-        console.log('active card is not undefined')
-
-        console.log('current active card: ' + this.$store.getters.getActiveCard)
-
-        if (this.$store.getters.getActiveCard.type === 'I') {
-          console.log('the current active card is instruction')
-          console.log('current active card: ' + this.$store.getters.getActiveCard)
-          this.$store.commit('addStackToPlayer', {boolSide: this.playfieldBoolean, playerId: this.playerId})
-          this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
-
-          this.$store.commit('removeActiveCardFromHand')
+      this.addToStack()
 
 
-          bus.$emit('cardDeselected')
-        } else {
-          // TODO: logic check for current top of the stack and type of ActiveCard
-        }
-
-      }
     }
   },
   components: {

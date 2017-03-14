@@ -148,7 +148,7 @@ export default {
           //display this for logging purpose
           console.log("score of the stack: ", stackToAdd.score);
 
-          //display the score of the stack calculated thusfar
+          //display the score of the stack calculated
 
 
         },
@@ -162,14 +162,24 @@ export default {
           let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
           let playerHandUpdated = playerHand.cards.filter(card => card.id !== state.activeCard.id)
           state.hands.find(hand => hand.playerId === state.activePlayer).cards = playerHandUpdated
+
+          // we removed the active card from the active player hand, lets set activeCard state to undefined as well
+          state.activeCard = undefined
         },
         stackDiscard(state, payload) {
           let card = state.stacks.find(stack => stack.stackId === payload.stackId).popTopCard()
 
           state.deck.discard_cards.push(card)
         },
+        discardSelectedCard(state) {
+          let tempActiveCard = state.activeCard
+          state.deck.discard_cards.push(tempActiveCard)
+        },
         setHasPlayed(state, payload) {
           state.activeHasPlayed = payload.hasPlayed
+        },
+        setGameState(state, payload) {
+          state.currentGameState = payload.gameState
         }
 
 

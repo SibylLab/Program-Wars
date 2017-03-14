@@ -59,39 +59,32 @@ export default {
   },
   methods: {
     cardClicked (e) {
+      console.log('a card was clicked')
+      if (this.$store.getters.getHasPlayed === false) {
+        this.$emit('cardClicked', this.cardData)
 
-      this.$emit('cardClicked', this.cardData)
-
-      if (this.cardData.value !== '+') {
-        bus.$emit('cardClickedStack', e, this.cardData)
+        if (this.cardData.value !== '+') {
+          bus.$emit('cardClickedStack', e, this.cardData)
+        }
+      } else {
+          console.log('but the active player has already played, not setting active card')
       }
 
-      // Emit an event here that a specific card was selected
-      // handle the event in the parent so that other cards can be deselected
 
-      // this should not be done here, should be done in the parent
-      // and then the class would be a computed property that is based
-      // on the selected: property
-      // if (this.cardData.selected) {
-      //   this.cardCss = 'card'
-      //   this.cardData.selected = false
-      // } else {
-      //   this.cardCss = 'card selected'
-      //   this.cardData.selected = true
-      // }
-      // global click event, do this in the parent
-      // setTimeout(() => document.addEventListener('click', this.hide), 0)
     },
     hide () {
-      // do this in parent
-      // document.removeEventListener('click', this.hide)
-      // this.cardCss = 'card'
-      // this.cardData.selected = false
+
     },
     cardDragged(e) {
       console.log('A card is being dragged')
-      this.$emit('setActiveCard', this.cardData)
-      bus.$emit('cardClickedStack', e, this.cardData)
+
+      if (this.$store.getters.getHasPlayed === false) {
+        this.$emit('setActiveCard', this.cardData)
+        bus.$emit('cardClickedStack', e, this.cardData)
+      } else {
+        console.log('but the active player has already made a play, so they cant select a card again')
+
+      }
     }
 
   }

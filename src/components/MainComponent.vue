@@ -53,12 +53,31 @@ export default {
     'playfield': Playfield
   },
   created: function () {
+
+    let gameEventLoopTimer = setInterval(() => {
+      console.log('gameEventLoop check')
+      let gameState = this.$store.getters.getgameState
+
+      if (gameState === 'startPlayerTurn') {
+        this.$store.commit('setGameState', {gameState: 'playerTurn'})
+        this.$store.commit('addCardToHand')
+      }
+
+    }, 500)
+
+
+
       //TODO: Should have startup game modal thing here.
       this.initGame()
       this.fillHands()
       this.addStacksToPlayers()
 
+      //TODO: this alert should be a start game modal for setting game mode, num of players, etc
+      alert("Welcome to a new game of Programming Wars!")
+
+      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
   }
+
 }
 </script>
 

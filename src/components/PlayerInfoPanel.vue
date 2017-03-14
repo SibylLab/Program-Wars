@@ -11,9 +11,20 @@
       <button class="btn btn-primary endTurnButton" :disabled="endTurnEnabled" v-on:click="endTurn">
         End Your Turn
       </button>
-      <button class="btn btn-primary" v-on:click="displayDiscard">
-        Show Discarded Cards
-      </button>
+      <ul>
+        <li>
+        <button class="btn btn-primary rightSide" v-on:click="discardSelected">
+          Discard Selected Card
+        </button>
+        </li>
+        <li>
+        <button class="btn btn-primary rightSide" v-on:click="displayDiscard">
+          Show Discarded Cards
+        </button>
+        </li>
+      </ul>
+
+
     </div>
 </template>
 
@@ -74,6 +85,13 @@ export default {
     'card': Card
   },
   methods: {
+      discardSelected() {
+        if (this.$store.getters.getActiveCard !== undefined) {
+          this.$store.commit('discardSelectedCard')
+          this.$store.commit('removeActiveCardFromHand')
+          this.$store.commit('setHasPlayed', { hasPlayed: true})
+        }
+      },
     displayDiscard() {
         let string = ''
         let discardList = this.$store.getters.getDiscard
@@ -92,6 +110,7 @@ export default {
       this.$store.commit('setHasPlayed', {hasPlayed:false})
 
       this.$store.commit('endTurn', this.$store.getters.maxplayers)
+      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
     },
     cardClicked (c) {
       // alert('cardId of clicked card is ' + cardId)
@@ -114,39 +133,7 @@ export default {
       console.log("Card id : ", cardId)
       this.$store.commit('removeCard', cardId)
 
-    }/*,
-    generateRandomCard() { //should be getting card from the deck.
-      let types = ['V', 'I', 'Rx', 'R', 'G']
-
-      let typeRand = this.getRandomInt(0, 5)
-
-      let newCardType = types[typeRand]
-      let newCardValue;
-      switch (newCardType) {
-        case 'V':
-            newCardValue = this.getRandomInt(1, 5)
-              break;
-        case 'I':
-          newCardValue = this.getRandomInt(1, 5)
-          break;
-        case 'Rx':
-          newCardValue = 1
-          break;
-        case 'G':
-          newCardValue = this.getRandomInt(1, 5)
-          break;
-        case 'R':
-          newCardValue = this.getRandomInt(1, 5)
-          break;
-
-      }
-      let cardId = this.idCounter
-      this.idCounter += 1
-
-      return {id: cardId, value: newCardValue, type: newCardType, selected: false}
-
-
-    }*/,
+    },
     getRandomInt(min, max) {
       min = Math.ceil(min);
        max = Math.floor(max);
@@ -176,9 +163,14 @@ export default {
     })
 
 
-  },
-  beforeUpdate: function () {
 
+
+  },
+  beforeMount: function () {
+    console.log('before Mount lifecycle method')
+  },
+  updated: function () {
+    console.log('----------------LIFECYCLE METHOD: updated')
   }
 }
 </script>
@@ -213,7 +205,8 @@ a {
     height: 100px;
   }
 
-  .enabled {
-
+  .rightSide {
+    float: right;
+    margin-top: 20px;
   }
 </style>
