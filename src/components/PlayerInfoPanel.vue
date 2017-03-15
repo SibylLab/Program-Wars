@@ -100,7 +100,7 @@ export default {
         } else {
           string += 'Cards in the discard pile: \n'
           for (let card of discardList) {
-            string = card.value + ' ' + card.type + ' --- ' + '\n'
+            string += card.value + ' ' + card.type + ' --- ' + '\n'
           }
           alert(string)
         }
