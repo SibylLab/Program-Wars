@@ -12,7 +12,7 @@ export default {
   name: 'settings-component',
   data () {
     return {
-      msg: 'Settings Page',
+      msg: 'Settings Page Again',
       idCounter:0
     }
   },
