@@ -31,7 +31,9 @@ export const store = new Vuex.Store({
         activePlayer: 0,
         activeHasPlayed: false,
         currentId: 0,
-        activeCard: undefined
+        activeCard: undefined,
+        selectedStacks: [],
+        selectedStackBoolean: undefined
     },
     getters,
     mutations,

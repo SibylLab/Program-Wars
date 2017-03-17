@@ -1,17 +1,4 @@
 export default {
-        todos(state) {
-            return state.todos.filter(todo => todo.deleted === false && todo.complete === false)
-        },
-        completedTodos(state) {
-          return state.todos.filter(todo => {
-              return todo.complete && !todo.deleted
-          })
-        },
-        deletedTodos(state) {
-          return state.todos.filter(todo => {
-              return todo.deleted
-          })
-        },
         getCurrentPlayerHand(state) {
           return Object.assign({}, state.hands.find(hand => hand.playerId === state.activePlayer))
         },
@@ -22,7 +9,7 @@ export default {
           return state.players.length
         },
         topCard(state){//added way to draw the top card from the deck -Lance
-          if(!state.deck.cards.length()){
+          if(!state.deck.cards.length){
             return state.deck.cards.draw();
           }
           else(
@@ -53,6 +40,16 @@ export default {
         },
         getgameState(state) {
           return state.currentGameState
+        },
+        getSelectedStacks(state) {
+          let selectedStacks = []
+          for (let stackId of state.selectedStacks){
+            selectedStacks.push(state.stacks.find(stack => stack.stackId === stackId))
+          }
+          return selectedStacks
+        },
+        getSelectedStacksBoolean(state) {
+          return state.selectedStackBoolean
         }
 }
 

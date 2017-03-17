@@ -180,7 +180,25 @@ export default {
         },
         setGameState(state, payload) {
           state.currentGameState = payload.gameState
-        }
+        },
+        addStackToSelected(state, payload) {
+          let stackIdExists = state.selectedStacks.find(stackId => stackId === payload.stackId)
 
+          console.log('stack exists ', stackIdExists)
+          if (stackIdExists === undefined) {
+            state.selectedStacks.push(payload.stackId)
+          } else {
+            state.selectedStacks = state.selectedStacks.filter(stackId => stackId !== payload.stackId)
+          }
+        },
+        removeAllSelectedStacks(state) {
+          state.selectedStacks = []
+        },
+        setStackSelectedBoolean(state, payload) {
+          state.selectedStackBoolean = payload.boolean
+        },
+        removeStack(state, payload) {
+          state.stacks = state.stacks.filter(s => s.stackId !== payload.stackId)
+        }
 
 }

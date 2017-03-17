@@ -6,12 +6,22 @@ export default class Deck {
   constructor(){
     //this.initDeck();
   };
+
   cards = [];
   discard_cards = []
   //cardId = 0;
+
   initDeck() {
     // generate Instruction cards
     let cardId = 0;
+
+    /// TODO START ***** FOR TESTING ONLY, PLEASE DELETE IN PRODUCTION
+    this.cards.push(new Card(109, 1, 'I'))
+    this.cards.push(new Card(110, 2, 'I'))
+    this.cards.push(new Card(111, 3, 'I'))
+    this.cards.push(new Card(112, 4, 'G'))
+    this.cards.push(new Card(113, 1, 'G'))
+    /// TODO END ***** FOR TESTING ONLY, PLEASE DELETE IN PRODUCTION
 
     for(let i = 0; i < 8; i++) {
       for (let i = 1; i < 4; i++) {
@@ -73,8 +83,10 @@ export default class Deck {
     for(let card of this.cards){
       console.log('id:'+card.id+':'+card.value);
     }
+    
     // this.$store.commit('shuffleTheDeck');
-    this.shuffle();
+    // TODO: uncommment this later TESTING //this.shuffle();
+
   };//end Init game
   draw() {
     let card = this.cards[0];//[0] is the top of the deck

@@ -23,8 +23,6 @@
         </button>
         </li>
       </ul>
-
-
     </div>
 </template>
 
@@ -74,6 +72,7 @@ export default {
     },
     endTurnEnabled() {
         let hasPlayed = this.$store.getters.getHasPlayed
+
         if (hasPlayed) {
             return false
         } else {
@@ -116,13 +115,27 @@ export default {
       // alert('cardId of clicked card is ' + cardId)
       console.log(c.id)
 
+      let prevActive = this.$store.getters.getActiveCard
+
       this.$store.commit('selectCard', c)
+      if (prevActive !== undefined) {
+        if (c.type !== 'G' || c.id !== prevActive.id) {
+          this.$store.commit('removeAllSelectedStacks')
+          this.$store.commit('setStackSelectedBoolean', {payload: undefined})
+        }
+      }
+
 
       setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
     },
     deselectAll () {
       document.removeEventListener('click', this.hide)
       bus.$emit('cardDeselected')
+
+
+      this.$store.commit('setStackSelectedBoolean', {payload: undefined})
+
+      this.$store.commit('setActiveCardUndefined')
 
       for (let card of this.hand) {
         card.selected = false
