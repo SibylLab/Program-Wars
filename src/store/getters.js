@@ -50,6 +50,9 @@ export default {
         },
         getSelectedStacksBoolean(state) {
           return state.selectedStackBoolean
+        },
+        getActiveSide(state) {
+          return state.activeSide
         }
 }
 

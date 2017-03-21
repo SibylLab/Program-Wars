@@ -1,5 +1,10 @@
 <template>
   <div class="hello">
+    <ul id="example-1">
+      <li v-for="player in players">
+        <opponent-stacks :player="player"></opponent-stacks>
+      </li>
+    </ul>
     <h1>{{ msg }}</h1>
     <player-info-panel></player-info-panel>
     <div id="flexcontainer">
@@ -14,9 +19,10 @@
 import PlayerInfoPanel from './PlayerInfoPanel'
 import Playfield from './Playfield'
 
+import OpponentStacks from './OpponentStacks'
+
 import Card from '../classes/Card'
 import Player from '../classes/Player'
-
 
 export default {
   name: 'main-component',
@@ -46,11 +52,15 @@ export default {
   computed: {
     currentPlayerId() {
       return this.$store.getters.getCurrentPlayerId;
+    },
+    players() {
+        return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
     }
   },
   components: {
     'player-info-panel': PlayerInfoPanel,
-    'playfield': Playfield
+    'playfield': Playfield,
+    'opponent-stacks': OpponentStacks
   },
   created: function () {
 
@@ -61,6 +71,28 @@ export default {
       if (gameState === 'startPlayerTurn') {
         this.$store.commit('setGameState', {gameState: 'playerTurn'})
         this.$store.commit('addCardToHand')
+
+        if (this.$store.getters.getCurrentPlayerId === 0) {
+          let j = Math.floor(Math.random() * 2);
+          console.log('coin flip result ', j)
+          if (j === 0) {
+            this.$store.commit('setActiveSide', {activeSide: true} )
+          } else {
+            this.$store.commit('setActiveSide', {activeSide: false})
+          }
+
+          let players = this.$store.getters.getPlayers
+          for (let player of players) {
+              if (player.score >= 10) {
+                  console.log('game over')
+
+                  alert('player ' + player.name + ' wins!!!!')
+                  location.reload();
+              }
+          }
+
+
+        }
       }
 
     }, 500)

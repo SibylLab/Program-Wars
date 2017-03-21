@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import { bus } from './Bus';
+
+  import { bus } from './Bus';
 import Card from './Card'
 
 
@@ -40,14 +41,25 @@ export default {
   computed: {
     cards () {
 
-      if (this.$store.getters.getCurrentPlayerStacks.length !== 0) {
-        let stack = this.$store.getters.getCurrentPlayerStacks.find(stack => stack.stackId === this.stackId)
+      if (this.playerId === this.$store.getters.getCurrentPlayerId ) {
+        if (this.$store.getters.getCurrentPlayerStacks.length !== 0) {
+          let stack = this.$store.getters.getCurrentPlayerStacks.find(stack => stack.stackId === this.stackId)
+          console.log("stack: ", stack)
+          if (stack !== undefined) {
+            return stack.cards
+          } else {
+            return []
+          }
+        }
+      } else {
+        let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
         console.log("stack: ", stack)
         if (stack !== undefined) {
-            return stack.cards
+          return stack.cards
         } else {
-            return []
+          return []
         }
+
       }
 
     },
@@ -220,7 +232,7 @@ export default {
               bus.$emit('cardDeselected')
 
               // TODO: UNCOMMENT TO MAKE TURN BUTTON WORK AGAIN
-              //this.$store.commit('setHasPlayed', {hasPlayed: true})
+              this.$store.commit('setHasPlayed', {hasPlayed: true})
 
 
             } else {
@@ -248,7 +260,7 @@ export default {
               bus.$emit('cardDeselected')
 
               // TODO: UNCOMMENT TO MAKE TURN BUTTON WORK AGAIN
-              //this.$store.commit('setHasPlayed', {hasPlayed: true})
+              this.$store.commit('setHasPlayed', {hasPlayed: true})
 
 
             } else {
@@ -289,7 +301,7 @@ export default {
 
               this.$store.commit('removeActiveCardFromHand')
 
-              //this.$store.commit('setHasPlayed', {hasPlayed:true})
+              this.$store.commit('setHasPlayed', {hasPlayed:true})
 
 
             } else {

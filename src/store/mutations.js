@@ -199,6 +199,13 @@ export default {
         },
         removeStack(state, payload) {
           state.stacks = state.stacks.filter(s => s.stackId !== payload.stackId)
+        },
+        setPlayerScore(state, payload) {
+          let player = state.players.find(player => player.id === payload.id)
+          player.score = payload.score
+        },
+        setActiveSide(state, payload) {
+          state.activeSide = payload.activeSide
         }
 
 }

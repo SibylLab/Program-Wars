@@ -97,7 +97,7 @@ export default {
 
 
     background-color: #cff;
-    min-width: 150px;
+    min-width: 100px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -110,7 +110,7 @@ export default {
     -webkit-border-radius: 5px 5px 5px 5px;
     border: 0px solid #000000;
 
-    padding: 20px 0px 20px 0px;
+    padding: 10px 0px 10px 0px;
 
     margin: 10px 0px 10px 0px;
 }
@@ -129,7 +129,7 @@ ul {
 
 li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 5px;
 }
 
 a {
@@ -138,11 +138,11 @@ a {
 
 .value {
     font-weight: bold;
-    font-size: 5em;
+    font-size: 1em;
 }
 .type {
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1em;
 }
 
 .selected {
@@ -192,6 +192,6 @@ a {
 
 #card.stack .value, #card.stack .type {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 </style>

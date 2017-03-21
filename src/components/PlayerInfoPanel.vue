@@ -22,6 +22,9 @@
           Show Discarded Cards
         </button>
         </li>
+        <li>
+          <p>Active Side is: {{ activeSide }}</p>
+        </li>
       </ul>
     </div>
 </template>
@@ -78,6 +81,9 @@ export default {
         } else {
             return true
         }
+    },
+    activeSide() {
+        return this.$store.getters.getActiveSide
     }
   },
   components: {

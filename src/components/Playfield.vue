@@ -52,6 +52,11 @@ export default {
         for (let stack of stackList) {
             score += stack.score
         }
+
+        if (this.trueFalse === this.$store.getters.getActiveSide) {
+            this.$store.commit('setPlayerScore', {id: this.playerId, score: score})
+        }
+
         return score
     }
   },
