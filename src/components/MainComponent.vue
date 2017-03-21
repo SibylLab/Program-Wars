@@ -1,16 +1,20 @@
 <template>
-  <div class="hello">
+  <div>
+  <div>
     <ul id="example-1">
       <li v-for="player in players">
         <opponent-stacks :player="player"></opponent-stacks>
       </li>
     </ul>
-    <h1>{{ msg }}</h1>
+  </div>
+    <div>
+      <h1>{{ msg }}</h1>
     <player-info-panel></player-info-panel>
     <div id="flexcontainer">
       <playfield v-bind:trueFalse="true" :playerId="currentPlayerId"></playfield>
       <playfield :trueFalse="false" :playerId="currentPlayerId"></playfield>
     </div>
+  </div>
   </div>
 </template>
 
