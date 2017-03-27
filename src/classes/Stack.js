@@ -1,13 +1,20 @@
 /**
  * Created by Josh on 2017-03-13.
  */
+
 const uuidV1 = require('uuid/v1');
 
 
 export default class Stack {
 
   //constructor for the stack object
+  /**
+   *
+   * @param playerId
+   * @param boolSide
+   */
   constructor(playerId, boolSide){
+
 
     this.stackId= uuidV1();
     this.playerId=playerId;
@@ -17,6 +24,10 @@ export default class Stack {
 
   }
   //function that takes a card as an argument and adds it to the cards array of the stack object
+  /**
+   * @function addCardToStack
+   * @param card
+   */
   addCardToStack(card) {
     this.cards.push(card);
   }
@@ -56,12 +67,20 @@ export default class Stack {
   }
 
   // this function returns the top card of a stack and then removes it from the stack
+  /**
+   *
+   * @returns {*}
+   */
   popTopCard() {
 
     return this.cards.pop()
   }
 
   //this function returns a reference to the last card of the stack cards array
+  /**
+   *
+   * @returns {*}
+   */
   stackBottomCard() {
 
     return this.cards[0];
