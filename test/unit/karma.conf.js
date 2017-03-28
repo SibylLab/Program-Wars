@@ -14,7 +14,13 @@ module.exports = function (config) {
     browsers: ['Chrome'],
     frameworks: ['mocha', 'sinon-chai', 'jasmine'],
     reporters: ['spec', 'coverage'],
-    files: ['./index.js'],
+    files: [
+      './index.js'
+      // added these, but causing issues
+      //'../../src/classes/*.js',
+      //'../../test/**/**/*.spec.js',
+      //'../../src/components/*.vue'
+    ],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']
     },
@@ -30,6 +36,7 @@ module.exports = function (config) {
       //preprocessors
       'karma-webpack',
       'karma-sourcemap-loader',
+      //'karma-babel-preprocessor',
 
       //reporters
       'karma-spec-reporter',
