@@ -1,12 +1,22 @@
 /**
- * Created by Lance on 2017-03-10.
+ * @file player.js file
+ * @author Lance on 2017-03-10.
  */
-export default class Player {
+/**
+ * @class Player
+ */
+export default class Player{
+  /**
+   * @constructor Player
+   * @param {int} id The ID of the Player
+   * @param name
+   * @param hand
+   * @param score
+   */
   constructor(id, name, hand, score) {
     this.name = name;
     this.hand = hand;
     this.score = score;
     this.id = id;
-
   }
 }
