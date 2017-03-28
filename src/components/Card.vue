@@ -36,11 +36,14 @@ export default {
       return classString
     },
     title () {
+        /*
       if (this.cardData.category !== 'stack') {
         return 'Card'
       } else {
         return ''
       }
+      */
+        return 'Card'
     },
     cardType(){
         if(this.cardData.type === 'R' && this.cardData.value === 1){
