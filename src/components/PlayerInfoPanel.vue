@@ -1,5 +1,8 @@
 <template>
     <div id="player-info-panel">
+
+      <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallbacks="() => {}"></modal>
+
       <h1>{{ title }}</h1>
       <h1>Player {{ currentPlayerName }}, It's Your Turn!</h1>
 
@@ -23,7 +26,7 @@
         </button>
         </li>
         <li>
-          <p>Active Side is: {{ activeSide }}</p>
+          <h2>Active Side is: <b>{{ activeSide }}</b></h2>
         </li>
       </ul>
     </div>
@@ -33,6 +36,9 @@
 import { bus } from './Bus';
 import Card from './Card'
 
+import Modal from './Modal'
+
+
 export default {
   name: 'PlayerInfoPanel',
   data () {
@@ -40,6 +46,10 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       title: 'Player Info Panel',
       idCounter: 6,
+      showDiscardedCards: false,
+      modalId: "discardCards",
+      modalText: "",
+      modalCards: []
     }
   },
   computed: {
@@ -87,7 +97,8 @@ export default {
     }
   },
   components: {
-    'card': Card
+    'card': Card,
+    'modal': Modal
   },
   methods: {
       discardSelected() {
@@ -101,13 +112,20 @@ export default {
         let string = ''
         let discardList = this.$store.getters.getDiscard
         if (discardList.length === 0) {
-          alert('There are no cards in the discard pile')
+          //alert('There are no cards in the discard pile')
+          this.modalText = 'There are no cards in the discard pile.'
+          $('#'+this.modalId).modal('show')
+          //'button[stackId="'+this.stackId+'"]'
+
         } else {
           string += 'Cards in the discard pile: \n'
           for (let card of discardList) {
             string += card.value + ' ' + card.type + ' --- ' + '\n'
           }
-          alert(string)
+          this.modalText = ""
+          this.modalCards = discardList
+          $('#'+this.modalId).modal('show')
+          //alert(string)
         }
 
     },

@@ -3,22 +3,34 @@ const uuidV1 = require('uuid/v1');
 import { bus } from '../components/Bus';
 
 import Stack from '../classes/Stack'
+import Player from '../classes/Player'
+import Deck from '../classes/Deck'
 
 
 export default {
-        addPlayer(state, todoString) {
-            const date = new Date
-
-            const todo = {
-                text: todoString,
-                id:   uuidV1(),
-                date: date,
-                complete: false,
-                deleted: false
+        resetState(state) {
+          state.players = []
+          state.stacks = []
+          state.deck = new Deck()
+          state.hands = []
+          state.currentGameState = 'newGame'
+          state.activeSide = true
+          state.activePlayer = 0
+          state.activeHasPlayed = false
+          state.currentId = 0
+          state.activeCard = undefined
+          state.selectedStacks = []
+          state.selectedStackBoolean = undefined
+        },
+        addPlayers(state, payload) {
+            let id = 0;
+            console.log("Beginning to add players...");
+            for(let p of payload.list){
+              console.log("Adding player "+p);
+              let pp = new Player(id,p,undefined,0);
+              state.players.push(pp);
+              id++;
             }
-
-            state.todos.push(todo)
-
         },
         setCurrentPlayer(state, playerId) {
           state.activePlayer = playerId
@@ -173,6 +185,7 @@ export default {
         },
         discardSelectedCard(state) {
           let tempActiveCard = state.activeCard
+          tempActiveCard.selected = false
           state.deck.discard_cards.push(tempActiveCard)
         },
         setHasPlayed(state, payload) {
@@ -206,6 +219,9 @@ export default {
         },
         setActiveSide(state, payload) {
           state.activeSide = payload.activeSide
+        },
+        setScoreLimit(state, payload) {
+          state.scoreLimit = payload.scoreLimit
         }
 
 }

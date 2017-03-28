@@ -1,6 +1,10 @@
 <template>
   <div>
-  <div>
+
+    <modal :modalId="modalId" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="()=> this.$router.push('/')"></modal>
+
+
+    <div v-if="gameStart">
     <ul id="example-1">
       <li v-for="player in players">
         <opponent-stacks :player="player"></opponent-stacks>
@@ -8,13 +12,13 @@
     </ul>
   </div>
     <div>
-      <h1>{{ msg }}</h1>
     <player-info-panel></player-info-panel>
     <div id="flexcontainer">
       <playfield v-bind:trueFalse="true" :playerId="currentPlayerId"></playfield>
       <playfield :trueFalse="false" :playerId="currentPlayerId"></playfield>
     </div>
-  </div>
+    </div>
+
   </div>
 </template>
 
@@ -24,6 +28,7 @@ import PlayerInfoPanel from './PlayerInfoPanel'
 import Playfield from './Playfield'
 
 import OpponentStacks from './OpponentStacks'
+import Modal from './Modal'
 
 import Card from '../classes/Card'
 import Player from '../classes/Player'
@@ -32,11 +37,30 @@ export default {
   name: 'main-component',
   data () {
     return {
-      msg: 'Welcome to Programming Wars!!',
-      idCounter:0
+      idCounter:0,
+      dataToggle: false,
+      modalTitle: "Welcome to a new game of Programming Wars!",
+      localPlayers: [],
+      newPlayer: '',
+      gameStart: false,
+      showDismissCards: false,
+      modalCards: [],
+      gameOverWinner: "",
+      gameOverText: "",
+      modalId: "gameOverModal"
     }
   },
   methods: {
+    submit() {
+        console.log(this.newPlayer)
+        if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
+          this.localPlayers.push(this.newPlayer)
+        }
+    },
+    submitPlayers() {
+      this.$store.commit('addPlayers', {list: this.localPlayers});
+      this.gameStart = true;
+    },
     initGame(){
         this.$store.commit('initDeck');
 
@@ -59,12 +83,17 @@ export default {
     },
     players() {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
+    },
+    scoreLimit() {
+        return this.$store.getters.getScoreLimit
     }
+
   },
   components: {
     'player-info-panel': PlayerInfoPanel,
     'playfield': Playfield,
-    'opponent-stacks': OpponentStacks
+    'opponent-stacks': OpponentStacks,
+    'modal': Modal
   },
   created: function () {
 
@@ -72,46 +101,67 @@ export default {
       console.log('gameEventLoop check')
       let gameState = this.$store.getters.getgameState
 
-      if (gameState === 'startPlayerTurn') {
-        this.$store.commit('setGameState', {gameState: 'playerTurn'})
+      if (gameState === 'newGame') {
+
+        $('#myModal').modal('toggle')
+        this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'})
+
+
+
+      } else if (gameState === 'initGame') {
+
+
+
+    } else if (gameState === 'startPlayerTurn') {
         this.$store.commit('addCardToHand')
+
+        this.$store.commit('setGameState', {gameState: 'midPlayerTurn'})
 
         if (this.$store.getters.getCurrentPlayerId === 0) {
           let j = Math.floor(Math.random() * 2);
           console.log('coin flip result ', j)
           if (j === 0) {
-            this.$store.commit('setActiveSide', {activeSide: true} )
+            this.$store.commit('setActiveSide', {activeSide: true})
           } else {
             this.$store.commit('setActiveSide', {activeSide: false})
           }
 
           let players = this.$store.getters.getPlayers
           for (let player of players) {
-              if (player.score >= 10) {
-                  console.log('game over')
+            if (player.score >= this.scoreLimit) {
+              console.log('game over')
 
-                  alert('player ' + player.name + ' wins!!!!')
-                  location.reload();
-              }
+              this.gameOverWinner = "Congratulations " + player.name + ", you win!"
+              this.gameOverText = player.name + " wins!"
+              $('#'+this.modalId).modal('show')
+
+              //$('').modal('show')
+
+              document.removeEventListener('click', () => {console.log('removing event listener')})
+              clearInterval(gameEventLoopTimer);
+
+              //this.$router.go(-1)
+
+
+            }
           }
-
-
         }
       }
+
 
     }, 500)
 
 
+    this.$store.commit('setGameState', {gameState: 'newGame'})
 
-      //TODO: Should have startup game modal thing here.
-      this.initGame()
-      this.fillHands()
-      this.addStacksToPlayers()
+    //TODO: Should have startup game modal thing here.
+    this.initGame()
+    this.fillHands()
+    this.addStacksToPlayers()
 
-      //TODO: this alert should be a start game modal for setting game mode, num of players, etc
-      alert("Welcome to a new game of Programming Wars!")
+    this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
 
-      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
+
   }
 
 }
