@@ -5,9 +5,6 @@
 
 const uuidV1 = require('uuid/v1');
 
-/**
- * @class Stack
- */
 export default class Stack {
 
   //constructor for the stack object
