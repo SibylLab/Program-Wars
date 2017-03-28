@@ -1,17 +1,24 @@
 /**
- * Created by Lance on 2017-03-10.
+ * @file Deck.js file
+ * @author Lance on 2017-03-10.
  */
 import Card from './Card'
 export default class Deck {
+  /**
+   * The constructor for the Deck class
+   * @constructor Deck
+   */
+
   constructor(){
     //this.initDeck();
     cards = [];
     discard_cards = [];
   };
 
-
-  //cardId = 0;
-
+  /**
+   * initDeck function to initialize the deck with a pre determined number and type of cards
+   * @memberOf Deck
+   */
   initDeck() {
     // generate Instruction cards
     let cardId = 0;
@@ -89,6 +96,12 @@ export default class Deck {
     // TODO: uncommment this later TESTING //this.shuffle();
 
   };//end Init game
+
+  /**
+   * draw function returns the card at the front (top) of the deck and removes it from the deck
+   * @memberOf Deck
+   * @returns {Card}
+   */
   draw() {
     let card = this.cards[0];//[0] is the top of the deck
     this.cards.shift();//unshift removes the first element.
@@ -96,6 +109,11 @@ export default class Deck {
     //console.log(this);
     return card;
   };
+
+  /**
+   * shuffle function that will psuedo shuffle the contents of the deck into a random order
+   * @memberOf Deck
+   */
   shuffle() {
     for (let i = this.cards.length; i; i--) {
       let j = Math.floor(Math.random() * i);
