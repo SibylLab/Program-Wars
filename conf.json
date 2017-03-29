@@ -8,7 +8,7 @@
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
-  "plugins": [],
+  "plugins": ["node_modules/jsdoc-vue"],
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false

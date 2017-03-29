@@ -26,7 +26,9 @@
 import { bus } from './Bus';
 import Card from './Card'
 
-
+/**
+ * @file Stack.vue
+ */
 export default {
   name: 'Stack',
   props: ['playfieldBoolean', 'stackId', 'playerId'],
