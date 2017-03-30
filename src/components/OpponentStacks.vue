@@ -1,23 +1,22 @@
 <template>
   <div id="playfield" >
     <h3>{{ playerName }}</h3>
-    <h3>Active Side Score: {{ score }}</h3>
-    <h3>Stacks</h3>
-    <h3>True Stacks</h3>
+    <h6>Active Side Score: {{ score }}</h6>
+    <h6>True Stacks</h6>
     <ul v-if="trueStacks.length !== 0" id="example-1">
       <li v-for="stack in trueStacks">
             <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
       </li>
     </ul>
-    <h5 v-else>There are no stacks!</h5>
+    <h6 v-else>There are no stacks!</h6>
 
-    <h3>False Stacks</h3>
+    <h6>False Stacks</h6>
     <ul v-if="falseStacks.length !== 0" id="example-2">
       <li v-for="stack in falseStacks">
         <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
       </li>
     </ul>
-    <h5 v-else>There are no stacks!</h5>
+    <h6 v-else>There are no stacks!</h6>
 
   </div>
 </template>

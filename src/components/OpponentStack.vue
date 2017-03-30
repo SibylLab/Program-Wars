@@ -1,13 +1,12 @@
 <template>
   <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked()" @click.stop>
-    <h1>{{ title }}</h1>
     <ul id="example-1">
 
       <span>Stack Score: {{ score }}</span>
 
 
-      <button v-if="activeCardIsHack" class="btn btn-primary" :class="buttonStyle" v-on:click="hackStackClicked">
-        HACK THIS STACK
+      <button v-if="activeCardIsHack" class="btn btn-danger" :class="buttonStyle" v-on:click="hackStackClicked">
+        HACK
       </button>
 
       <li v-for="card in cards">
@@ -190,10 +189,11 @@ export default {
 <style scoped>
 #stack{
     background-color: #cff;
-    min-width: 150px;
-    min-height: 50px;
+    width: 100%;
+
     color: #000;
 }
+
 
 h1, h2 {
   font-weight: normal;
@@ -203,7 +203,9 @@ h1, h2 {
 ul {
   list-style-type: none;
   padding: 0;
+  width: 100%;
 }
+
 
 li {
   display: inline-block;

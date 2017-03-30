@@ -1,22 +1,40 @@
 <template>
   <div>
+    <div id="header">
+      <p>Programming Wars</p>
+      <span id="header-buttons">
+        <button class="btn btn-primary" v-on:click="startANewGame">
+        New Game
+      </button>
+        <button class="btn btn-primary" v-on:click="showCredits">
+        Credits
+      </button>
 
+      </span>
+
+    </div>
     <modal :modalId="modalId" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="()=> this.$router.push('/')"></modal>
 
 
-    <div v-if="gameStart">
-    <ul id="example-1">
-      <li v-for="player in players">
-        <opponent-stacks :player="player"></opponent-stacks>
-      </li>
-    </ul>
-  </div>
-    <div>
+
     <player-info-panel></player-info-panel>
     <div id="flexcontainer">
-      <playfield v-bind:trueFalse="true" :playerId="currentPlayerId"></playfield>
-      <playfield :trueFalse="false" :playerId="currentPlayerId"></playfield>
-    </div>
+      <div id="player-stacks">
+        <h3>Your Stacks</h3>
+        <div id="stacks">
+          <playfield v-bind:trueFalse="true" :playerId="currentPlayerId"></playfield>
+          <playfield :trueFalse="false" :playerId="currentPlayerId"></playfield>
+        </div>
+      </div>
+
+      <div id="opponent-stacks" v-if="gameStart">
+        <h3>Opponent Stacks</h3>
+        <ul id="example-1">
+          <li v-for="player in players">
+            <opponent-stacks :player="player"></opponent-stacks>
+          </li>
+        </ul>
+      </div>
     </div>
 
   </div>
@@ -75,6 +93,12 @@ export default {
         this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true})
         this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false})
       }
+    },
+    startANewGame() {
+      this.$router.push('/')
+    },
+    showCredits() {
+
     }
 },
   computed: {
@@ -97,6 +121,8 @@ export default {
   },
   created: function () {
 
+    this.gameStart = true
+
     let gameEventLoopTimer = setInterval(() => {
       console.log('gameEventLoop check')
       let gameState = this.$store.getters.getgameState
@@ -105,7 +131,7 @@ export default {
 
         $('#myModal').modal('toggle')
         this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'})
-
+        this.gameStart = true
 
 
       } else if (gameState === 'initGame') {
@@ -169,10 +195,36 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  #header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #header > p {
+    margin: 0px;
+  }
+
 #flexcontainer {
   width: 100%;
   display: flex;
   flex-direction: row;
+}
+
+#player-stacks {
+  flex-grow: 1;
+}
+
+#opponent-stacks {
+  min-width: 30%;
+}
+
+#stacks {
+  display: flex;
+  flex-direction:row;
 }
 
 h1, h2 {

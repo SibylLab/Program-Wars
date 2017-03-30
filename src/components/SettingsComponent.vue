@@ -27,7 +27,7 @@
             </select>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="submitPlayers" data-dismiss="modal">Save changes</button>
+            <button type="button" class="btn btn-primary" @click="submitPlayers" data-dismiss="modal">Start New Game</button>
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
 
         setTimeout(() => {
           this.$router.push('game')
-        }, 250)
+        }, 550)
 
       },
       initGame(){

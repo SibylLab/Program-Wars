@@ -1,6 +1,5 @@
 <template>
   <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked()" @click.stop>
-    <h1>{{ title }}</h1>
     <ul id="example-1">
 
 

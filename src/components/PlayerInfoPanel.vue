@@ -1,34 +1,39 @@
 <template>
     <div id="player-info-panel">
 
-      <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallbacks="() => {}"></modal>
+      <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {}"></modal>
 
-      <h1>{{ title }}</h1>
-      <h1>Player {{ currentPlayerName }}, It's Your Turn!</h1>
+      <h3>{{ currentPlayerName }}, It's Your Turn!</h3>
+      <div id="flexcontainer">
 
-      <ul id="example-1">
-          <li v-for="card in hand">
-              <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
-          </li>
-      </ul>
-      <button class="btn btn-primary endTurnButton" :disabled="endTurnEnabled" v-on:click="endTurn">
+        <div id="cards">
+
+
+          <ul id="example-1">
+              <li v-for="card in hand">
+                  <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
+              </li>
+          </ul>
+          <h2>Active Side is: <b>{{ activeSide }}</b></h2>
+        </div>
+
+        <div id="controls">
+
+        <button class="btn btn-primary endTurnButton" :disabled="endTurnEnabled" v-on:click="endTurn">
         End Your Turn
       </button>
-      <ul>
-        <li>
-        <button class="btn btn-primary rightSide" v-on:click="discardSelected">
+        <button class="btn btn-warning rightSide" v-on:click="discardSelected">
           Discard Selected Card
         </button>
-        </li>
-        <li>
+
         <button class="btn btn-primary rightSide" v-on:click="displayDiscard">
           Show Discarded Cards
         </button>
-        </li>
-        <li>
-          <h2>Active Side is: <b>{{ activeSide }}</b></h2>
-        </li>
-      </ul>
+
+        </div>
+
+      </div>
+
     </div>
 </template>
 
@@ -81,7 +86,7 @@ export default {
     },
     currentPlayerName() {
         let playerName = this.$store.getters.currentPlayerName;
-        return playerName;
+        return playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
     },
     endTurnEnabled() {
         let hasPlayed = this.$store.getters.getHasPlayed
@@ -93,7 +98,8 @@ export default {
         }
     },
     activeSide() {
-        return this.$store.getters.getActiveSide
+        let activeSideString = String(this.$store.getters.getActiveSide)
+        return activeSideString.toUpperCase()
     }
   },
   components: {
@@ -214,13 +220,42 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#player-info-panel {
+
+  #flexcontainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 10px;
+    align-items: center;
+  }
+
+  #controls {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 50px;
+    flex-basis: content;
+    flex-shrink:5;
+  }
+
+  #cards {
+    flex-grow: 4;
+    align-self: flex-start;
+  }
+
+
+  #player-info-panel {
     background-color: #ccc;
-    padding-bottom: 25px;
 }
 
 h1, h2 {
   font-weight: normal;
+}
+
+h3 {
+  margin-bottom: 0px;
 }
 
 ul {

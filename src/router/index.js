@@ -10,11 +10,13 @@ export default new Router({
   routes: [
     {
       path: '/game',
+      canReuse: false,
       name: 'main-component',
       component: MainComponent
     },
     {
       path: '/',
+      canReuse: false,
       name: 'settings-component',
       component: SettingsComponent
     }

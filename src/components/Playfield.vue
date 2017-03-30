@@ -1,8 +1,7 @@
 <template>
   <div id="playfield" :class="playfieldClass" >
-    <h1>{{ title }}</h1>
-    <h1>{{ trueOrFalse }}</h1>
-    <h1>Total Playfield Score: {{ score }}</h1>
+    <h3>{{ trueOrFalse }}</h3>
+    <h5>Total Playfield Score: {{ score }}</h5>
 
     <ul id="example-1">
         <li v-for="stack in stacks">

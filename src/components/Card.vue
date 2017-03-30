@@ -1,9 +1,7 @@
 <template>
   <div id="card" :class="cardCss" v-on:click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
-    <h1>{{ title }}</h1>
-    <span :class="typeCss"> {{ cardType }} </span>
-    <br>
-    <span :class="valueCss"> {{ cardValue }} </span>
+    <span :class="typeCss">{{ cardType }}</span>
+    <span :class="valueCss">{{ cardValue }}</span>
   </div>
 </template>
 
@@ -104,7 +102,7 @@ export default {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
+    min-height: 110px;
     border-radius: 5px 5px 5px 5px;
     -moz-border-radius: 5px 5px 5px 5px;
     -webkit-border-radius: 5px 5px 5px 5px;
@@ -138,11 +136,11 @@ a {
 
 .value {
     font-weight: bold;
-    font-size: 1em;
+    font-size: 1.5em;
 }
 .type {
     font-weight: bold;
-    font-size: 1em;
+    font-size: 1.5em;
 }
 
 .selected {
@@ -164,6 +162,12 @@ a {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    padding: 0;
+    margin: 0;
+
+    min-height:50px;
+    min-width: 50px;
 
   -webkit-border-radius: 2px;
   -webkit-border-top-left-radius: 4px;
