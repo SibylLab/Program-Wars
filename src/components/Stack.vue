@@ -16,7 +16,6 @@
             <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
       </li>
 
-
     </ul>
   </div>
 </template>
@@ -24,7 +23,7 @@
 <script>
 
   import { bus } from './Bus';
-import Card from './Card'
+  import Card from './Card'
 
 /**
  * @file Stack.vue
@@ -61,9 +60,7 @@ export default {
         } else {
           return []
         }
-
       }
-
     },
     selectedStackBoolean () {
       return this.$store.getters.getSelectedStackBoolean
@@ -173,13 +170,11 @@ export default {
             this.$store.commit('removeStack', {stackId: stack.stackId})
           }
 
+          let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
 
-          // TODO: ADD GROUP CARD TO NEW STACK
+          let stack = stacks[stacks.length - 1]
 
-          let stackId = this.$store.getters.getStacks[this.$store.getters.getStacks.length - 1].stackId
-
-
-          this.$store.commit('addCardToStack', {stackId: stackId, card: this.$store.getters.getActiveCard})
+          this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard})
 
           this.$store.commit('removeActiveCardFromHand')
           this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
@@ -187,6 +182,8 @@ export default {
 
           // the previous stack has an instruction card, give the player a new empty stack
           bus.$emit('cardDeselected')
+          this.$store.commit('setHasPlayed', {hasPlayed: true})
+
         }
 
     },
