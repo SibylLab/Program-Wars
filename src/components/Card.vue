@@ -1,7 +1,9 @@
 <template>
-  <div id="card" :class="cardCss" v-on:click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
-    <span :class="typeCss">{{ cardType }}</span>
-    <span :class="valueCss">{{ cardValue }}</span>
+  <div id="card" :class="cardCss" class="panel panel-default" v-on:click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
+      <div class="panel-body flex-container">
+        <div :class="typeCss">{{ cardType }}</div>
+        <div :class="valueCss">{{ cardValue }}</div>
+      </div>
   </div>
 </template>
 
@@ -97,7 +99,7 @@ export default {
 #card{
 
 
-    background-color: #cff;
+    background-color: #fff;
     min-width: 100px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -106,17 +108,17 @@ export default {
     -ms-user-select: none;
     user-select: none;
     min-height: 110px;
-    border-radius: 5px 5px 5px 5px;
-    -moz-border-radius: 5px 5px 5px 5px;
-    -webkit-border-radius: 5px 5px 5px 5px;
     border: 0px solid #000000;
 
     padding: 10px 0px 10px 0px;
 
-    margin: 10px 0px 10px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
+.flex-container {
+  flex-direction:column;
 
+}
 
 h1, h2 {
   font-weight: normal;
@@ -157,7 +159,7 @@ a {
 
     align-content: center;
 
-    background-color: #fcf;
+    background-color: #fff;
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -171,16 +173,6 @@ a {
 
     min-height:50px;
     min-width: 50px;
-
-  -webkit-border-radius: 2px;
-  -webkit-border-top-left-radius: 4px;
-  -moz-border-radius: 2px;
-  -moz-border-radius-topleft: 4px;
-  border-radius: 2px;
-  border-top-left-radius: 4px;
-
-  border-style: solid;
-  border-width: thin;
 
 
 

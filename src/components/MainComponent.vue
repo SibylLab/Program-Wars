@@ -9,13 +9,10 @@
         <button class="btn btn-primary" v-on:click="showCredits">
         Credits
       </button>
-
       </span>
-
     </div>
-    <modal :modalId="modalId" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="()=> this.$router.push('/')"></modal>
 
-
+    <!--<modal :modalId="modalId" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="()=> this.$router.push('/')"></modal>-->
 
     <player-info-panel></player-info-panel>
     <div id="flexcontainer">
@@ -29,6 +26,8 @@
 
       <div id="opponent-stacks" v-if="gameStart">
         <h3>Opponent Stacks</h3>
+
+
         <ul id="example-1">
           <li v-for="player in players">
             <opponent-stacks :player="player"></opponent-stacks>
@@ -206,6 +205,8 @@ export default {
 
   #header > p {
     margin: 0px;
+    font-weight: bold;
+    font-size: 1.2em;
   }
 
 #flexcontainer {
@@ -220,6 +221,8 @@ export default {
 
 #opponent-stacks {
   min-width: 30%;
+  max-width: 30%;
+  flex-grow: 0;
 }
 
 #stacks {
@@ -229,6 +232,10 @@ export default {
 
 h1, h2 {
   font-weight: normal;
+}
+
+h1, h2, h3, h4, h5 {
+  margin-top: 5px;
 }
 
 ul {

@@ -3,18 +3,17 @@
 
       <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {}"></modal>
 
-      <h3>{{ currentPlayerName }}, It's Your Turn!</h3>
+      <h4><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
 
         <div id="cards">
-
 
           <ul id="example-1">
               <li v-for="card in hand">
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
-          <h2>Active Side is: <b>{{ activeSide }}</b></h2>
+          <h4 class="boolState">Active Side is: <b>{{ activeSide }}</b></h4>
         </div>
 
         <div id="controls">
@@ -250,12 +249,17 @@ export default {
     background-color: #ccc;
 }
 
+  h1, h2, h3, h4, h5 {
+    margin-top: 0px;
+  }
+
 h1, h2 {
   font-weight: normal;
 }
 
-h3 {
+h4.boolState {
   margin-bottom: 0px;
+  margin-top: 40px;
 }
 
 ul {

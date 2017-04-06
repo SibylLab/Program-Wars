@@ -9,8 +9,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
-          <span aria-hidden="true">&times;</span>
-          </button>
         </div>
         <div v-if="modalCards.length === 0" class="modal-body">
           {{ modalBody }}

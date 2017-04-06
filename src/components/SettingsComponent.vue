@@ -6,18 +6,21 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
-            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-            <span aria-hidden="true">&times;</span>
-            </button>
           </div>
-          <div class="modal-body">
-            <input type="text" placeholder="add a player..." autofocus v-model="newPlayer" v-on:keyup.enter="submit"> <button type="button" class="btn btn-primary" v-on:click="submit">Add Player</button>
-            <br>
-            Players So Far
-            <ul>
-              <li id="playerList" v-for="localPlayer in localPlayers">{{ localPlayer }}</li>
-            </ul>
-            Score to Win: <select  class="custom-select" name="select" v-model="selected">
+          <div class="modal-body flex-container">
+            <div id="addPlayer">
+              <input type="text" placeholder="Add a player..." autofocus v-model="newPlayer" v-on:keyup.enter="submit">
+              <button type="button" class="btn btn-primary" v-on:click="submit">Add Player</button>
+            </div>
+            <div id="players">
+            Players So Far:
+            <ol class="playerList">
+              <li v-for="localPlayer in localPlayers">{{ localPlayer }}</li>
+            </ol>
+            </div>
+            <div id="scoreSelect">
+            Score to Win:
+            <select class="custom-select" name="select" v-model="selected">
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
@@ -25,6 +28,7 @@
               <option value="25">25</option>
               <option value="30">30</option>
             </select>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" @click="submitPlayers" data-dismiss="modal">Start New Game</button>
@@ -134,28 +138,39 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  #flexcontainer {
+  .playerList {
+    list-style-position:inside;
+  }
+
+  .flexcontainer {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
   }
 
   h1, h2 {
     font-weight: normal;
   }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
+  ol {
+    padding: 0px;
+
   }
 
-  li {
-    display: inline-block;
-    margin: 0 10px;
+  .addPlayer {
+    /*display: block;*/
+    flex-shrink: 1;
+    align-items: center;
   }
 
-  #playerList {
-    display: block;
+  select.custom-select {
+    width: 30px;
+    align-items: center;
+  }
+
+  .players {
+    width: 50%;
   }
 
   a {

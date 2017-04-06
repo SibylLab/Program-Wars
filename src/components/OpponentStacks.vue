@@ -1,22 +1,34 @@
 <template>
   <div id="playfield" >
-    <h3>{{ playerName }}</h3>
-    <h6>Active Side Score: {{ score }}</h6>
-    <h6>True Stacks</h6>
-    <ul v-if="trueStacks.length !== 0" id="example-1">
-      <li v-for="stack in trueStacks">
-            <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
-      </li>
-    </ul>
-    <h6 v-else>There are no stacks!</h6>
 
-    <h6>False Stacks</h6>
-    <ul v-if="falseStacks.length !== 0" id="example-2">
-      <li v-for="stack in falseStacks">
-        <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
-      </li>
-    </ul>
-    <h6 v-else>There are no stacks!</h6>
+    <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" :aria-controls="'collapse'+ player.id">
+      <h3>{{ playerName }}</h3>
+      <h6>Active Side Score: {{ score }}</h6>
+    </a>
+    <div class="collapse" :id="'collapse'+ player.id">
+      <div class="well">
+        <h6>True Stacks</h6>
+        <ul v-if="trueStacks.length !== 0" id="example-1">
+          <li v-for="stack in trueStacks">
+            <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
+          </li>
+        </ul>
+        <h6 v-else>There are no stacks!</h6>
+
+        <h6>False Stacks</h6>
+        <ul v-if="falseStacks.length !== 0" id="example-2">
+          <li v-for="stack in falseStacks">
+            <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
+          </li>
+        </ul>
+        <h6 v-else>There are no stacks!</h6>
+      </div>
+    </div>
+
+
+
+
+
 
   </div>
 </template>

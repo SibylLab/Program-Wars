@@ -20,5 +20,6 @@ export default new Router({
       name: 'settings-component',
       component: SettingsComponent
     }
-  ]
+  ],
+    mode: 'history'
 })
