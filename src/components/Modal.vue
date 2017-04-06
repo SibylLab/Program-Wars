@@ -12,6 +12,9 @@
         </div>
         <div v-if="modalCards.length === 0" class="modal-body">
           {{ modalBody }}
+          <div v-if="image">
+            <img src="https://media.giphy.com/media/MGaacoiAlAti0/giphy.gif">
+          </div>
         </div>
         <div v-else class="modal-body">
           <ul id="discardList" v-for="card in modalCards">
@@ -37,7 +40,7 @@
 
   export default {
     name: 'modal',
-    props: ['modalId', 'modalTitle', 'modalBody', 'modalCards', 'modalCallback', 'modalCallback2', 'cancel'],
+    props: ['modalId', 'modalTitle', 'modalBody', 'modalCards', 'modalCallback', 'modalCallback2', 'cancel', 'image'],
     data () {
       return {
 

@@ -13,7 +13,7 @@
     </div>
 
     <modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="()=> this.$router.push('/')"></modal>
-    <modal :modalId="creditsModal" :cancel="false" :modalTitle="creditsModalTitle" :modalBody="creditsModalText" :modalCards="[]" :modalCallback="()=> {}"></modal>
+    <modal :modalId="creditsModal" :cancel="false" :modalTitle="creditsModalTitle" :modalBody="creditsModalText" :modalCards="[]" :modalCallback="()=> {}" :image="true"></modal>
 
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
@@ -36,6 +36,7 @@
       </div>
     </div>
 
+  </div>
   </div>
 </template>
 
@@ -160,6 +161,23 @@ export default {
 
         this.$store.commit('setGameState', {gameState: 'playerTurn'})
 
+        let players = this.$store.getters.getPlayers
+
+        for (let player of players) {
+          if (player.score >= this.scoreLimit) {
+            console.log('game over')
+
+            this.gameOverWinner = "Congratulations " + player.name + ", you win!"
+            this.gameOverText = player.name + " wins!"
+            $('#' + this.modalId).modal('show')
+
+            document.removeEventListener('click', () => {
+              console.log('removing event listener')
+            })
+            clearInterval(gameEventLoopTimer);
+          }
+        }
+
         if (this.$store.getters.getCurrentPlayerId === 0) {
           let j = Math.floor(Math.random() * 2);
           console.log('coin flip result ', j)
@@ -178,21 +196,6 @@ export default {
 
             this.$store.commit('setTrueFalseAnim', {startAnim: false})
 
-            let players = this.$store.getters.getPlayers
-            for (let player of players) {
-              if (player.score >= this.scoreLimit) {
-                console.log('game over')
-
-                this.gameOverWinner = "Congratulations " + player.name + ", you win!"
-                this.gameOverText = player.name + " wins!"
-                $('#' + this.modalId).modal('show')
-
-                document.removeEventListener('click', () => {
-                  console.log('removing event listener')
-                })
-                clearInterval(gameEventLoopTimer);
-              }
-            }
             this.$store.commit('setGameState', {gameState: 'playerTurn'})
 
           }, 3000);
