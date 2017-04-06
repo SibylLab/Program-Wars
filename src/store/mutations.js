@@ -164,6 +164,9 @@ export default {
 
 
         },
+        groupStacks(state, payload) {
+          state.groupStacks = payload.yesOrNo;
+        },
         setActiveCard(state, payload) {
           state.activeCard = payload.cardId;
         },
@@ -222,6 +225,9 @@ export default {
         },
         setScoreLimit(state, payload) {
           state.scoreLimit = payload.scoreLimit
+        },
+        setTrueFalseAnim(state, payload) {
+          state.trueFalseAnim = payload.startAnim
         }
 
 }

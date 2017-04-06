@@ -62,6 +62,12 @@ export default {
         },
         getScoreLimit(state) {
           return state.scoreLimit
+        },
+        groupStacks(state) {
+          return state.groupStacks
+        },
+        trueFalseAnim(state) {
+          return state.trueFalseAnim
         }
 }
 

@@ -8,6 +8,7 @@
       <button v-if="activeCardIsHack" class="btn btn-danger" :class="buttonStyle" v-on:click="hackStackClicked">
         HACK
       </button>
+      <br>
 
       <li v-for="card in cards">
             <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
@@ -61,7 +62,14 @@ export default {
     },
     activeCardIsHack() {
         if (this.$store.getters.getActiveCard !== undefined && this.$store.getters.getActiveCard.type === 'H') {
-            return true
+          let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
+            console.log("stack", stack)
+            if(stack !== undefined && stack.cards[0].type !== 'G') {
+              return true
+
+            } else {
+                return false
+            }
         } else {
             return false
         }

@@ -1,17 +1,18 @@
 <template>
-  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked()" @click.stop>
+  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" class="panel panel-default" :class="stackCss" @click="stackClicked()" @click.stop>
+    <modal :modalId="modalId2" :modalTitle="groupSelectConfirm" :modalBody="groupSelectText" :cancel="true" :modalCards="[]" :modalCallback="() => {groupStacks()}"></modal>
+
+
+    <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
+    <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
+    <span>Stack Score: {{ score }}</span>
+
+
+    <button class="btn btn-secondary" :class="buttonStyle" :stackId="this.stackId" v-on:click="addToStackClicked" type="button" data-container="body" data-placement="top" >
+      Add to Stack
+    </button>
+    <br>
     <ul id="example-1">
-
-
-      <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
-      <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId">Group Select</label>
-      <span>Stack Score: {{ score }}</span>
-
-
-      <button class="btn btn-secondary" :class="buttonStyle" :stackId="this.stackId" v-on:click="addToStackClicked" type="button" data-container="body" data-placement="top" >
-        Add to Stack
-      </button>
-
       <li v-for="card in cards">
             <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
       </li>
@@ -24,6 +25,7 @@
 
   import { bus } from './Bus';
   import Card from './Card'
+  import Modal from './Modal'
 
 /**
  * @file Stack.vue
@@ -36,10 +38,15 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       title: 'Stack',
       id: this.stackId,
-      dataContent: "hello"
+      dataContent: "hello",
+      groupSelectConfirm: "Group Stacks",
+      groupSelectText: "Would you like to group these stacks?"
     }
   },
   computed: {
+      modalId2() {
+        return this.id + "Modal"
+      },
     cards () {
 
       if (this.playerId === this.$store.getters.getCurrentPlayerId ) {
@@ -151,41 +158,76 @@ export default {
 
         let activeCardValue = this.$store.getters.getActiveCard.value
 
-        let result = undefined
-
         if (selectedStacks.length >= 2 && activeCardValue === totalScore) {
-           result = confirm("Would you like to group the selected stacks")
+           //result = confirm("Would you like to group the selected stacks")
+            $('#'+this.modalId2).modal('show')
+
         }
 
-        if (result) {
+//        if (result) {
+//
+//          for (let stack of selectedStacks) {
+//            console.log('selected stack id ', stack.stackId)
+//
+//            while (stack.cards.length !== 0) {
+//              console.log('how long is this while running', stack.stackId)
+//
+//              this.$store.commit('stackDiscard', {stackId: stack.stackId})
+//            }
+//            this.$store.commit('removeStack', {stackId: stack.stackId})
+//          }
+//
+//          let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
+//
+//          let stack = stacks[stacks.length - 1]
+//
+//          this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard})
+//
+//          this.$store.commit('removeActiveCardFromHand')
+//          this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
+//
+//
+//          // the previous stack has an instruction card, give the player a new empty stack
+//          bus.$emit('cardDeselected')
+//          this.$store.commit('setHasPlayed', {hasPlayed: true})
+//
+//          this.$store.commit('groupStacks', {yesOrNo: false})
+//
+//        }
 
-          for (let stack of selectedStacks) {
-            console.log('selected stack id ', stack.stackId)
+    },
+    groupStacks() {
+      let selectedStacks = this.$store.getters.getSelectedStacks
 
-            while (stack.cards.length !== 0) {
-              console.log('how long is this while running', stack.stackId)
+        for (let stack of selectedStacks) {
+          console.log('selected stack id ', stack.stackId)
 
-              this.$store.commit('stackDiscard', {stackId: stack.stackId})
-            }
-            this.$store.commit('removeStack', {stackId: stack.stackId})
+          while (stack.cards.length !== 0) {
+            console.log('how long is this while running', stack.stackId)
+
+            this.$store.commit('stackDiscard', {stackId: stack.stackId})
           }
-
-          let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
-
-          let stack = stacks[stacks.length - 1]
-
-          this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard})
-
-          this.$store.commit('removeActiveCardFromHand')
-          this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
-
-
-          // the previous stack has an instruction card, give the player a new empty stack
-          bus.$emit('cardDeselected')
-          this.$store.commit('setHasPlayed', {hasPlayed: true})
-
+          this.$store.commit('removeStack', {stackId: stack.stackId})
         }
 
+        console.log("<<<<<<< ", this.playerId)
+        console.log("<<<<<<<<< ", this.playfieldBoolean)
+
+        let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
+
+        let stack = stacks[stacks.length - 1]
+
+        this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard})
+
+        this.$store.commit('removeActiveCardFromHand')
+        this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
+
+
+        // the previous stack has an instruction card, give the player a new empty stack
+        bus.$emit('cardDeselected')
+        this.$store.commit('setHasPlayed', {hasPlayed: true})
+
+        this.$store.commit('groupStacks', {yesOrNo: false})
     },
     cardAddClicked () {
       this.$emit('cardAddClicked', this.id)
@@ -345,6 +387,16 @@ export default {
               console.log('unknown card type')
               break;
         }
+        let stackList = this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId)
+        let score = 0;
+        for (let stack of stackList) {
+          score += stack.score
+        }
+
+        if (this.trueFalse === this.$store.getters.getActiveSide) {
+          this.$store.commit('setPlayerScore', {id: this.playerId, score: score})
+        }
+
       }
     },
     addToStackClicked(event) {
@@ -360,7 +412,8 @@ export default {
     }
   },
   components: {
-    'card': Card
+    'card': Card,
+    'modal': Modal
   },
 }
 </script>
@@ -372,6 +425,7 @@ export default {
     min-width: 150px;
     min-height: 50px;
     color: #000;
+  margin-top: 5px;
 }
 
 h1, h2 {
@@ -382,11 +436,15 @@ h1, h2 {
 ul {
   list-style-type: none;
   padding: 0;
+  margin: 0; padding: 0;
+  margin-top: 5px;
 }
 
 li {
+  margin: 0;
+  padding: 0;
+  margin-right: 13px;
   display: inline-block;
-  margin: 0 10px;
 }
 
 a {

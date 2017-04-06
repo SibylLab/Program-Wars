@@ -21,6 +21,7 @@
           </ul>
         </div>
         <div class="modal-footer">
+          <button v-if="cancel" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary" data-dismiss="modal" @click="modalCallback">OK</button>
         </div>
       </div>
@@ -36,7 +37,7 @@
 
   export default {
     name: 'modal',
-    props: ['modalId', 'modalTitle', 'modalBody', 'modalCards', 'modalCallback'],
+    props: ['modalId', 'modalTitle', 'modalBody', 'modalCards', 'modalCallback', 'modalCallback2', 'cancel'],
     data () {
       return {
 

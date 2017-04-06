@@ -104,10 +104,20 @@ export default {
 #playfield {
     background-color: #ddd;
     width: 100%;
+    height:90%;
+    overflow-y: scroll;
+
 }
+
+
 
 h1, h2 {
   font-weight: normal;
+}
+
+h3, h5 {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 ul {
@@ -126,6 +136,10 @@ a {
 
 #playfield.dark {
   background-color: #666;
+  color: #fff;
+}
+
+#playfield.dark > h3, #playfield.dark > h5 {
   color: #fff;
 }
 

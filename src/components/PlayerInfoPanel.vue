@@ -3,7 +3,7 @@
 
       <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {}"></modal>
 
-      <h4><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
+      <h4 class="playerName"><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
 
         <div id="cards">
@@ -13,12 +13,12 @@
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
-          <h4 class="boolState">Active Side is: <b>{{ activeSide }}</b></h4>
+          <h4 class="boolState" >Active Side is: <div :class="changeTrueFalse"><b>{{ activeSide }}</b></div></h4>
         </div>
 
         <div id="controls">
 
-        <button class="btn btn-primary endTurnButton" :disabled="endTurnEnabled" v-on:click="endTurn">
+        <button class="btn btn-primary endTurnButton" :class="hasPlayed" :disabled="endTurnEnabled" v-on:click="endTurn">
         End Your Turn
       </button>
         <button class="btn btn-warning rightSide" v-on:click="discardSelected">
@@ -57,6 +57,18 @@ export default {
     }
   },
   computed: {
+      changeTrueFalse() {
+          if (this.$store.getters.trueFalseAnim)
+              return "trueFalse"
+          else
+              return ""
+      },
+      hasPlayed() {
+        if (this.$store.getters.getHasPlayed)
+            return "hasPlayed"
+        else
+            return ""
+      },
     selectedCard () {
       var selectedCard;
       for (var card in this.cards) {
@@ -160,14 +172,13 @@ export default {
     deselectAll () {
       document.removeEventListener('click', this.hide)
       bus.$emit('cardDeselected')
-
-
       this.$store.commit('setStackSelectedBoolean', {payload: undefined})
 
       this.$store.commit('setActiveCardUndefined')
-
-      for (let card of this.hand) {
-        card.selected = false
+      if(this.hand !== undefined) {
+        for (let card of this.hand) {
+          card.selected = false
+        }
       }
     },
     removeCard (cardId) {
@@ -219,6 +230,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .hasPlayed {
+    -webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
+    -moz-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
+    box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
+  }
 
   #flexcontainer {
     width: 100%;
@@ -262,6 +278,11 @@ h4.boolState {
   margin-top: 40px;
 }
 
+h4.playerName {
+  /*margin-top: 10px;*/
+  padding-top:10px;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -285,4 +306,14 @@ a {
     float: right;
     margin-top: 20px;
   }
+
+  .trueFalse {
+
+    animation: cssAnimation 3s 16 ease-in-out;
+  }
+  @keyframes cssAnimation {
+    from { -webkit-transform: rotate(0deg) scale(1) skew(0deg) translate(0px); }
+    to { -webkit-transform: rotate(720deg) scale(1) skew(0deg) translate(0px); }
+  }
+
 </style>

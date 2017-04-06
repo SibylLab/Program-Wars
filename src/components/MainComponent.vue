@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="maincontainer">
     <div id="header">
       <p>Programming Wars</p>
       <span id="header-buttons">
@@ -12,9 +12,12 @@
       </span>
     </div>
 
-    <!--<modal :modalId="modalId" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="()=> this.$router.push('/')"></modal>-->
+    <modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="()=> this.$router.push('/')"></modal>
+    <modal :modalId="creditsModal" :cancel="false" :modalTitle="creditsModalTitle" :modalBody="creditsModalText" :modalCards="[]" :modalCallback="()=> {}"></modal>
 
-    <player-info-panel></player-info-panel>
+    <div id="playerinfopanel">
+      <player-info-panel></player-info-panel>
+    </div>
     <div id="flexcontainer">
       <div id="player-stacks">
         <h3>Your Stacks</h3>
@@ -26,13 +29,10 @@
 
       <div id="opponent-stacks" v-if="gameStart">
         <h3>Opponent Stacks</h3>
-
-
-        <ul id="example-1">
-          <li v-for="player in players">
-            <opponent-stacks :player="player"></opponent-stacks>
-          </li>
-        </ul>
+        <div id="flex-opponent-stacks">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <opponent-stacks v-for="player in players" :player="player"></opponent-stacks>
+          </div>
       </div>
     </div>
 
@@ -64,10 +64,16 @@ export default {
       modalCards: [],
       gameOverWinner: "",
       gameOverText: "",
-      modalId: "gameOverModal"
+      modalId: "gameOverModal",
+      creditsModal: "creditsModal",
+      creditsModalTitle: "Programming Wars Credits and Change Log",
+
     }
   },
   methods: {
+      showCredits() {
+
+      },
     submit() {
         console.log(this.newPlayer)
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
@@ -97,11 +103,23 @@ export default {
       this.$router.push('/')
     },
     showCredits() {
+      $('#'+this.creditsModal).modal('show')
 
     }
 },
   computed: {
-    currentPlayerId() {
+    creditsModalText() {
+      let messageString =
+
+        "Code by Dustin Fowler, Jonathan Vos, Josh Vandenhoek, Lance Chisholm, Shaun Cullen \n \
+        Game Concept by Dr. John Anvik \n \
+        Change Log: \n \
+        v0.0.1\n \
+        - working prototype\n \
+        "
+      return messageString
+    },
+      currentPlayerId() {
       return this.$store.getters.getCurrentPlayerId;
     },
     players() {
@@ -145,11 +163,6 @@ export default {
         if (this.$store.getters.getCurrentPlayerId === 0) {
           let j = Math.floor(Math.random() * 2);
           console.log('coin flip result ', j)
-          if (j === 0) {
-            this.$store.commit('setActiveSide', {activeSide: true})
-          } else {
-            this.$store.commit('setActiveSide', {activeSide: false})
-          }
 
           let players = this.$store.getters.getPlayers
           for (let player of players) {
@@ -158,18 +171,29 @@ export default {
 
               this.gameOverWinner = "Congratulations " + player.name + ", you win!"
               this.gameOverText = player.name + " wins!"
-              $('#'+this.modalId).modal('show')
+              $('#' + this.modalId).modal('show')
 
-              //$('').modal('show')
-
-              document.removeEventListener('click', () => {console.log('removing event listener')})
+              document.removeEventListener('click', () => {
+                console.log('removing event listener')
+              })
               clearInterval(gameEventLoopTimer);
+            } else {
+              this.$store.commit('setTrueFalseAnim', {startAnim: true})
 
-              //this.$router.go(-1)
+              setTimeout(() => {
 
+                if (j === 0) {
+                  this.$store.commit('setActiveSide', {activeSide: true})
+                } else {
+                  this.$store.commit('setActiveSide', {activeSide: false})
+                }
 
+                this.$store.commit('setTrueFalseAnim', {startAnim: false})
+
+              }, 3000);
             }
           }
+
         }
       }
 
@@ -187,6 +211,9 @@ export default {
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
 
 
+  },
+  mounted: function() {
+
   }
 
 }
@@ -194,6 +221,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+  #maincontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    min-height: inherit;
+
+  }
+
   #header {
     width: 100%;
     display: flex;
@@ -201,6 +238,7 @@ export default {
     padding: 5px 10px;
     justify-content: space-between;
     align-items: center;
+    flex-grow:0;
   }
 
   #header > p {
@@ -208,28 +246,64 @@ export default {
     font-weight: bold;
     font-size: 1.2em;
   }
-
-#flexcontainer {
+#playerinfopanel {
+  flex-grow:0;
   width: 100%;
-  display: flex;
-  flex-direction: row;
 }
+
+/*#flexcontainer {*/
+  /*width: 100%;*/
+  /*display: flex;*/
+  /*flex-direction: row;*/
+  /*flex-grow: 1;*/
+  /*align-self: flex-end;*/
+
+  /*height: 100%;*/
+  /*overflow: auto;*/
+/*}*/
+  #flexcontainer {
+    display: flex;
+    overflow: hidden;
+    height: calc(100vh - 45px - 277.5px);
+    position: relative;
+    width: 100%;
+  }
 
 #player-stacks {
   flex-grow: 1;
+  max-height: 100%;
+  height: 100%;
+  min-height:100%;
 }
 
 #opponent-stacks {
   min-width: 30%;
   max-width: 30%;
   flex-grow: 0;
+
+}
+
+#flex-opponent-stacks {
+  overflow-y: scroll;
+  height: 87%;
+  position: relative;
+  width: 100%;
 }
 
 #stacks {
   display: flex;
   flex-direction:row;
+  max-height: 100%;
+  height: 100%;
+  flex-wrap: nowrap;
 }
+::-webkit-scrollbar {
+    display: none;
+  }
 
+#accordion {
+  height: 40%;
+}
 h1, h2 {
   font-weight: normal;
 }

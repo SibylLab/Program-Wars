@@ -34,7 +34,9 @@ export const store = new Vuex.Store({
         activeCard: undefined,
         selectedStacks: [],
         selectedStackBoolean: undefined,
-        scoreLimit: 10
+        scoreLimit: 10,
+        groupStacks: false,
+        trueFalseAnim: false
     },
     originalState: {
   players: [

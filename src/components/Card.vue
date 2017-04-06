@@ -117,6 +117,7 @@ export default {
 
 .flex-container {
   flex-direction:column;
+  padding: 0px;
 
 }
 
@@ -127,11 +128,12 @@ h1, h2 {
 
 ul {
   list-style-type: none;
+  display: inline;
   padding: 0;
 }
 
 li {
-  display: inline-block;
+  display: inline;
   margin: 0 5px;
 }
 
@@ -173,6 +175,8 @@ a {
 
     min-height:50px;
     min-width: 50px;
+
+  max-width: 20px;
 
 
 
