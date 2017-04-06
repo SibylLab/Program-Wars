@@ -1,9 +1,7 @@
 <template>
   <div id="card" :class="cardCss" v-on:click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
-    <h1>{{ title }}</h1>
-    <span :class="typeCss"> {{ cardType }} </span>
-    <br>
-    <span :class="valueCss"> {{ cardValue }} </span>
+    <span :class="typeCss">{{ cardType }}</span>
+    <span :class="valueCss">{{ cardValue }}</span>
   </div>
 </template>
 
@@ -100,20 +98,20 @@ export default {
 
 
     background-color: #cff;
-    min-width: 150px;
+    min-width: 100px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
+    min-height: 110px;
     border-radius: 5px 5px 5px 5px;
     -moz-border-radius: 5px 5px 5px 5px;
     -webkit-border-radius: 5px 5px 5px 5px;
     border: 0px solid #000000;
 
-    padding: 20px 0px 20px 0px;
+    padding: 10px 0px 10px 0px;
 
     margin: 10px 0px 10px 0px;
 }
@@ -132,7 +130,7 @@ ul {
 
 li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 5px;
 }
 
 a {
@@ -141,11 +139,11 @@ a {
 
 .value {
     font-weight: bold;
-    font-size: 5em;
+    font-size: 1.5em;
 }
 .type {
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 .selected {
@@ -167,6 +165,12 @@ a {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    padding: 0;
+    margin: 0;
+
+    min-height:50px;
+    min-width: 50px;
 
   -webkit-border-radius: 2px;
   -webkit-border-top-left-radius: 4px;
@@ -195,6 +199,6 @@ a {
 
 #card.stack .value, #card.stack .type {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 </style>

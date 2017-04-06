@@ -83,9 +83,10 @@ export default class Deck {
     for(let card of this.cards){
       console.log('id:'+card.id+':'+card.value);
     }
-    
-    // this.$store.commit('shuffleTheDeck');
-    // TODO: uncommment this later TESTING //this.shuffle();
+
+    // TODO: uncommment this later TESTING
+
+    this.shuffle();
 
   };//end Init game
   draw() {

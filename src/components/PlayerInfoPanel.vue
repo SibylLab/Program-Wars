@@ -1,34 +1,48 @@
 <template>
     <div id="player-info-panel">
-      <h1>{{ title }}</h1>
-      <h1>Player {{ currentPlayerName }}, It's Your Turn!</h1>
 
-      <ul id="example-1">
-          <li v-for="card in hand">
-              <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
-          </li>
-      </ul>
-      <button class="btn btn-primary endTurnButton" :disabled="endTurnEnabled" v-on:click="endTurn">
+      <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {}"></modal>
+
+      <h3>{{ currentPlayerName }}, It's Your Turn!</h3>
+      <div id="flexcontainer">
+
+        <div id="cards">
+
+
+          <ul id="example-1">
+              <li v-for="card in hand">
+                  <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
+              </li>
+          </ul>
+          <h2>Active Side is: <b>{{ activeSide }}</b></h2>
+        </div>
+
+        <div id="controls">
+
+        <button class="btn btn-primary endTurnButton" :disabled="endTurnEnabled" v-on:click="endTurn">
         End Your Turn
       </button>
-      <ul>
-        <li>
-        <button class="btn btn-primary rightSide" v-on:click="discardSelected">
+        <button class="btn btn-warning rightSide" v-on:click="discardSelected">
           Discard Selected Card
         </button>
-        </li>
-        <li>
+
         <button class="btn btn-primary rightSide" v-on:click="displayDiscard">
           Show Discarded Cards
         </button>
-        </li>
-      </ul>
+
+        </div>
+
+      </div>
+
     </div>
 </template>
 
 <script>
 import { bus } from './Bus';
 import Card from './Card'
+
+import Modal from './Modal'
+
 
 export default {
   name: 'PlayerInfoPanel',
@@ -37,6 +51,10 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       title: 'Player Info Panel',
       idCounter: 6,
+      showDiscardedCards: false,
+      modalId: "discardCards",
+      modalText: "",
+      modalCards: []
     }
   },
   computed: {
@@ -68,7 +86,7 @@ export default {
     },
     currentPlayerName() {
         let playerName = this.$store.getters.currentPlayerName;
-        return playerName;
+        return playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
     },
     endTurnEnabled() {
         let hasPlayed = this.$store.getters.getHasPlayed
@@ -78,10 +96,15 @@ export default {
         } else {
             return true
         }
+    },
+    activeSide() {
+        let activeSideString = String(this.$store.getters.getActiveSide)
+        return activeSideString.toUpperCase()
     }
   },
   components: {
-    'card': Card
+    'card': Card,
+    'modal': Modal
   },
   methods: {
       discardSelected() {
@@ -95,13 +118,20 @@ export default {
         let string = ''
         let discardList = this.$store.getters.getDiscard
         if (discardList.length === 0) {
-          alert('There are no cards in the discard pile')
+          //alert('There are no cards in the discard pile')
+          this.modalText = 'There are no cards in the discard pile.'
+          $('#'+this.modalId).modal('show')
+          //'button[stackId="'+this.stackId+'"]'
+
         } else {
           string += 'Cards in the discard pile: \n'
           for (let card of discardList) {
             string += card.value + ' ' + card.type + ' --- ' + '\n'
           }
-          alert(string)
+          this.modalText = ""
+          this.modalCards = discardList
+          $('#'+this.modalId).modal('show')
+          //alert(string)
         }
 
     },
@@ -190,13 +220,42 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#player-info-panel {
+
+  #flexcontainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 10px;
+    align-items: center;
+  }
+
+  #controls {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 50px;
+    flex-basis: content;
+    flex-shrink:5;
+  }
+
+  #cards {
+    flex-grow: 4;
+    align-self: flex-start;
+  }
+
+
+  #player-info-panel {
     background-color: #ccc;
-    padding-bottom: 25px;
 }
 
 h1, h2 {
   font-weight: normal;
+}
+
+h3 {
+  margin-bottom: 0px;
 }
 
 ul {

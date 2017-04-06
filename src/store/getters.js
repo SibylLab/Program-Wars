@@ -18,10 +18,16 @@ export default {
         },
         currentPlayerName(state)
         {
-          return state.players.find(player => player.id === state.activePlayer).name;
+          if(state.players.length)
+            return state.players.find(player => player.id === state.activePlayer).name;
+          else
+            return ''
         },
         getCurrentPlayerStacks(state) {
-          return state.stacks.filter(st => st.playerId === state.activePlayer)
+          if(state.stacks.length)
+            return state.stacks.filter(st => st.playerId === state.activePlayer)
+          else
+            return
         },
         getActiveCard(state) {
           return state.activeCard
@@ -50,6 +56,12 @@ export default {
         },
         getSelectedStacksBoolean(state) {
           return state.selectedStackBoolean
+        },
+        getActiveSide(state) {
+          return state.activeSide
+        },
+        getScoreLimit(state) {
+          return state.scoreLimit
         }
 }
 

@@ -9,12 +9,14 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/game',
+      canReuse: false,
       name: 'main-component',
       component: MainComponent
     },
     {
-      path: '/settings',
+      path: '/',
+      canReuse: false,
       name: 'settings-component',
       component: SettingsComponent
     }
