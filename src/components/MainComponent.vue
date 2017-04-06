@@ -51,6 +51,8 @@ import Modal from './Modal'
 import Card from '../classes/Card'
 import Player from '../classes/Player'
 
+import { bus } from './Bus';
+
 export default {
   name: 'main-component',
   data () {
@@ -139,6 +141,25 @@ export default {
   },
   created: function () {
 
+      bus.$on('checkWin', () => {
+        let players = this.$store.getters.getPlayers
+
+        for (let player of players) {
+          if (player.score >= this.scoreLimit) {
+            console.log('game over')
+
+            this.gameOverWinner = "Congratulations " + player.name + ", you win!"
+            this.gameOverText = player.name + " wins!"
+            $('#' + this.modalId).modal('show')
+
+            document.removeEventListener('click', () => {
+              console.log('removing event listener')
+            })
+            clearInterval(gameEventLoopTimer);
+          }
+        }
+      });
+
     this.gameStart = true
 
     let gameEventLoopTimer = setInterval(() => {
@@ -160,23 +181,6 @@ export default {
           this.$store.commit('addCardToHand')
 
         this.$store.commit('setGameState', {gameState: 'playerTurn'})
-
-        let players = this.$store.getters.getPlayers
-
-        for (let player of players) {
-          if (player.score >= this.scoreLimit) {
-            console.log('game over')
-
-            this.gameOverWinner = "Congratulations " + player.name + ", you win!"
-            this.gameOverText = player.name + " wins!"
-            $('#' + this.modalId).modal('show')
-
-            document.removeEventListener('click', () => {
-              console.log('removing event listener')
-            })
-            clearInterval(gameEventLoopTimer);
-          }
-        }
 
         if (this.$store.getters.getCurrentPlayerId === 0) {
           let j = Math.floor(Math.random() * 2);

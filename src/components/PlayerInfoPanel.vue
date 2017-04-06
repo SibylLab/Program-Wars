@@ -147,6 +147,8 @@ export default {
 
     },
     endTurn() {
+      bus.$emit('checkWin')
+
       this.$store.commit('setHasPlayed', {hasPlayed:false})
 
       this.$store.commit('endTurn', this.$store.getters.maxplayers)
