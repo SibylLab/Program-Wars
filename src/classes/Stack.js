@@ -1,12 +1,18 @@
 /**
- * Created by Josh on 2017-03-13.
+ * @file the card class file
+ * @author Josh on 2017-03-13.
  */
-const uuidV1 = require('uuid/v1');
 
+const uuidV1 = require('uuid/v1');
 
 export default class Stack {
 
   //constructor for the stack object
+  /**
+   * @constructor Stack
+   * @param {int} playerId The ID of the player
+   * @param {boolean} boolSide The side the stack is on
+   */
   constructor(playerId, boolSide){
 
     this.stackId= uuidV1();
@@ -17,11 +23,20 @@ export default class Stack {
 
   }
   //function that takes a card as an argument and adds it to the cards array of the stack object
+  /**
+   * addCardToStack function to add a card to the stack
+   * @memberOf Stack
+   * @param {card} card the card to be added to the stack
+   */
   addCardToStack(card) {
     this.cards.push(card);
   }
 
   //function that is meant to calculate the score of an individual stack
+  /**
+   * calculateStackScore function to calculate the score of the stack
+   * @memberOf Stack
+   */
   calculateStackScore() {
 
     //declare a temporary score
@@ -49,6 +64,11 @@ export default class Stack {
   }
 
   //this function returns a reference to the first (bottom) card of the stack cards array
+  /**
+   * stackTopCard function to return a reference to the first (bottom) card of the stack cards array
+   * @memberOf Stack
+   * @returns {card}
+   */
   stackTopCard () {
 
     return this.cards[this.cards.length - 1];
@@ -56,12 +76,22 @@ export default class Stack {
   }
 
   // this function returns the top card of a stack and then removes it from the stack
+  /**
+   * popTopCard function to return the top card of a stack and then removes it from the stack
+   * @memberOf Stack
+   * @returns {*}
+   */
   popTopCard() {
 
     return this.cards.pop()
   }
 
   //this function returns a reference to the last card of the stack cards array
+  /**
+   * stackBottomCard function returns a reference to the last card of the stack cards array
+   * @memberOf Stack
+   * @returns {*}
+   */
   stackBottomCard() {
 
     return this.cards[0];
