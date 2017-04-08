@@ -2,14 +2,17 @@
   <div id="maincontainer">
     <div id="header">
       <p>Programming Wars</p>
-      <span id="header-buttons">
+      <div id="header-buttons">
         <button class="btn btn-primary" v-on:click="startANewGame">
         New Game
       </button>
         <button class="btn btn-primary" v-on:click="showCredits">
         Credits
       </button>
-      </span>
+        <a class="btn btn-primary" href="https://github.com/sscullen/program-wars/issues/new">
+        Report Issue
+      </a>
+      </div>
     </div>
 
     <modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="()=> this.$router.push('/')"></modal>
@@ -329,6 +332,6 @@ li {
 }
 
 a {
-  color: #42b983;
+  color: #fff;
 }
 </style>
