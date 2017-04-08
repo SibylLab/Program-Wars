@@ -2,6 +2,10 @@
 
 > CPSC 3720 Programming Project, web based educational card game
 
+## Live Demo
+
+[http://programmingwars.cullen.io] (http://programmingwars.cullen.io)
+
 ## Quick Start
 
 > Install latest Node runtime
