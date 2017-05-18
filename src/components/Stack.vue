@@ -5,10 +5,19 @@
 
     <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
     <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
-    <span>Stack Score: {{ score }}</span>
+    <span style="padding: 10px">Stack Score: {{ score }}</span>
 
 
-    <button class="btn btn-secondary" :class="buttonStyle" :stackId="this.stackId" v-on:click="addToStackClicked" type="button" data-container="body" data-placement="top" >
+    <button
+      style="margin-top: 7px"
+      class="btn btn-secondary"
+      :class="buttonStyle"
+      :stackId="this.stackId"
+      @click="addToStackClicked"
+      type="button"
+      data-container="body"
+      data-placement="top"
+      data-trigger="hover">
       Add to Stack
     </button>
     <br>
@@ -35,7 +44,6 @@ export default {
   props: ['playfieldBoolean', 'stackId', 'playerId'],
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       title: 'Stack',
       id: this.stackId,
       dataContent: "hello",
@@ -248,10 +256,14 @@ export default {
       $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
 
         $('button[stackId="'+this.stackId+'"]').popover({
-        trigger: 'focus',
+        trigger: 'hover',//'focus',
         delay: { "show": 200 }
       });
 
+
+
+      //Helps with hiding the popover when no longer needed, still need a better solution.
+      $('button[stackId="'+this.stackId+'"]').popover('hide');
 
       console.log('add to stack was clicked')
 
@@ -291,6 +303,7 @@ export default {
                   $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Try adding that card to a different stack." );
 
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
+
             }
             break;
           case 'R':
@@ -329,6 +342,7 @@ export default {
                   $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an Instruction or Group card. Try adding that card to a stack with an Instruction or Group card." );
 
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
+
             }
 
 
@@ -465,6 +479,5 @@ a {
     -moz-box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
     box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
 }
-
 
 </style>

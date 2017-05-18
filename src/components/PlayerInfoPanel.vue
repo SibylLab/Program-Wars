@@ -47,7 +47,6 @@ export default {
   name: 'PlayerInfoPanel',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       title: 'Player Info Panel',
       idCounter: 6,
       showDiscardedCards: false,
