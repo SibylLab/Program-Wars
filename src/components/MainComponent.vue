@@ -9,7 +9,7 @@
         <button class="btn btn-primary" v-on:click="showCredits">
         Credits
       </button>
-        <a class="btn btn-primary" href="https://github.com/sscullen/program-wars/issues/new">
+        <a class="btn btn-primary" href="https://github.com/sscullen/program-wars/issues/new" target="_blank">
         Report Issue
       </a>
       </div>
