@@ -57,6 +57,7 @@ export default {
         },
         selectCard(state, c) {
           let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
+          bus.$emit('cardHasBeenSelected');
 
           for (var card of playerHand.cards) {
 

@@ -48,10 +48,15 @@ export default {
       id: this.stackId,
       dataContent: "hello",
       groupSelectConfirm: "Group Stacks",
-      groupSelectText: "Would you like to group these stacks?"
+      groupSelectText: "Would you like to group these stacks?",
+      dataContainer: ""
     }
   },
   computed: {
+    /*clearDataContent() {
+      bus.$on('cardSlected', () => {$('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )} )
+      return [];
+    },*/
       modalId2() {
         return this.id + "Modal"
       },
@@ -137,11 +142,16 @@ export default {
       }
     })
 
+    bus.$on('cardHasBeenSelected', () => {
+      $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
+    })
+
     bus.$on('cardDeselected', () => {
       // a card was selected
       this.activeCard = undefined
       this.$store.commit('setActiveCardUndefined')
       this.$store.commit('removeAllSelectedStacks')
+      $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
 
       console.log('no active card selected')
       //this is a test again
