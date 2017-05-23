@@ -48,15 +48,10 @@ export default {
       id: this.stackId,
       dataContent: "hello",
       groupSelectConfirm: "Group Stacks",
-      groupSelectText: "Would you like to group these stacks?",
-      dataContainer: ""
+      groupSelectText: "Would you like to group these stacks?"
     }
   },
   computed: {
-    /*clearDataContent() {
-      bus.$on('cardSlected', () => {$('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )} )
-      return [];
-    },*/
       modalId2() {
         return this.id + "Modal"
       },
@@ -263,16 +258,11 @@ export default {
 
     },
     addToStack() {
-      $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
-
-        $('button[stackId="'+this.stackId+'"]').popover({
-        trigger: 'hover',//'focus',
+      $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" );
+      $('button[stackId="'+this.stackId+'"]').popover({
+        trigger: 'hover',
         delay: { "show": 200 }
       });
-
-
-
-      //Helps with hiding the popover when no longer needed, still need a better solution.
       $('button[stackId="'+this.stackId+'"]').popover('hide');
 
       console.log('add to stack was clicked')
@@ -313,7 +303,6 @@ export default {
                   $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Try adding that card to a different stack." );
 
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
-
             }
             break;
           case 'R':
@@ -352,7 +341,6 @@ export default {
                   $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an Instruction or Group card. Try adding that card to a stack with an Instruction or Group card." );
 
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
-
             }
 
 
@@ -401,7 +389,6 @@ export default {
 
 
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
-
             }
 
 
