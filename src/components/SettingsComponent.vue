@@ -9,14 +9,15 @@
           </div>
           <div class="modal-body flex-container">
             <div id="addPlayer">
-              <input type="text" placeholder="Add a player..." v-model="newPlayer" v-on:keyup.enter="submit" autofocus>
-              <button type="button" class="btn btn-primary" v-on:click="submit">Add Player</button>
+              <input type="text" placeholder="Add a player..." v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="maxPlayer">
+              <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
             </div>
             <div id="players">
             Players So Far:
             <ol class="playerList">
               <li v-for="localPlayer in localPlayers">{{ localPlayer }}</li>
             </ol>
+              <p v-if="maxPlayer" style="color: red">Maximum Players Reached</p>
             </div>
             <div id="scoreSelect">
             Score to Win:
@@ -61,17 +62,21 @@
         newPlayer: '',
         gameStart: false,
         selected: '10',
-        noPlayers: true
+        noPlayers: true,
+        maxPlayer: false
       }
     },
     methods: {
       submit(e) {
         console.log(this.newPlayer)
+
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer);
           this.noPlayers = false;
         }
-
+        if(this.localPlayers.length >= 4) {
+          this.maxPlayer = true;
+        }
         this.newPlayer = ""
 
       },
