@@ -15,7 +15,8 @@
             <div id="players">
             Players So Far:
             <ol class="playerList">
-              <li v-for="localPlayer in localPlayers">{{ localPlayer }}</li>
+              <li v-for="(localPlayer, index) in localPlayers">{{ localPlayer }}
+                <a style="cursor:pointer; color:black" @click="removePlayer(index)"><u style="font-size: x-small; margin-left: 5px">Remove</u></a></li>
             </ol>
             </div>
             <div id="scoreSelect">
@@ -81,6 +82,13 @@
         setTimeout(() => {
           this.$router.push('game')
         }, 550)
+
+      },
+      removePlayer(e) {
+        if(this.localPlayers[e] !== '') {
+          this.localPlayers.splice(e, 1);
+        } else
+          return;
 
       },
       initGame(){
