@@ -5,7 +5,12 @@
 
       <h4 class="playerName"><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
-
+        <div id="tipBox" class="container" style="max-width: 350px; height: 280px" :cardClicked="tipsCardSelected">
+          <h5>{{ tipsCardSelected }}</h5>
+          <div class="panel panel-default">
+            <div class="panel-body">{{ tipsInfoText }}</div>
+          </div>
+        </div>
         <div id="cards">
 
           <ul id="example-1">
@@ -47,13 +52,14 @@ export default {
   name: 'PlayerInfoPanel',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       title: 'Player Info Panel',
       idCounter: 6,
       showDiscardedCards: false,
       modalId: "discardCards",
       modalText: "",
-      modalCards: []
+      modalCards: [],
+      tipsCardSelected:'Did you know?',
+      tipsInfoText: ''
     }
   },
   computed: {
@@ -148,7 +154,7 @@ export default {
     },
     endTurn() {
       bus.$emit('checkWin')
-
+      this.tipsCardSelected = this.setTipBox('default');
       this.$store.commit('setHasPlayed', {hasPlayed:false})
 
       this.$store.commit('endTurn', this.$store.getters.maxplayers)
@@ -157,7 +163,7 @@ export default {
     cardClicked (c) {
       // alert('cardId of clicked card is ' + cardId)
       console.log(c.id)
-
+      this.tipsCardSelected = this.setTipBox(c);
       let prevActive = this.$store.getters.getActiveCard
 
       this.$store.commit('selectCard', c)
@@ -170,6 +176,71 @@ export default {
 
 
       setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
+    },
+    setTipBox(c) {
+        switch(c.type) {
+          case 'I' :
+            this.tipsInfoText = 'Instruction cards are the basis of any program, ' +
+              'and are thus the basic card that any player will start a “stack” ' +
+              '(i.e. Instruction cards with modifiers placed on them) with.';
+            return 'Instruction Card'; break;
+          case 'R' :
+            this.tipsInfoText = 'Repetition cards are used to emulate the action of a loop, ' +
+              'repeating an instruction a number of times. ' +
+              'Repetition cards need an instruction card as a base before they can be played on a playfield. ' +
+              'Once played on an instruction, ' +
+              'a Repetition card multiplies the value of the underlying Instruction card by the value printed ' +
+              'on the Repetition card.';
+            return 'Repetition card'; break;
+
+          case 'V':
+            this.tipsInfoText = 'Variable cards are used in conjunction with Repetition X cards. ' +
+              'The value of the Variable card is then applied to the Repetition X card, ' +
+              'which specifies the value of X. ' +
+              'The value of X then becomes the multiplier for the underlying Instruction card.';
+            return 'Variable Card'; break;
+
+          case 'H':
+            this.tipsInfoText = 'Hack cards are a special card that players are allotted at the ' +
+              'beginning of the game. The Hack card can be played by a player on their turn with ' +
+              'the purpose of removing cards from an opposing players’ playfield. ' +
+              'When a Hack card is played, players specify a target for the Hack card, ' +
+              'and that card is discarded. If there are any modifier cards on top of the targeted card, ' +
+              'those cards are discarded from play as well. All cards are targetable by a ' +
+              'Hack card with the exception of Group cards.';
+            return 'Hack Card'; break;
+
+          case 'G' :
+            this.tipsInfoText = 'Group cards are used to emulate the notion of a function, ' +
+              'essentially aggregating a set of instructions together into one unit. ' +
+              'Group cards are played on one or more stacks of cards. ' +
+              'In order to play a Group card on one or more stacks, ' +
+              'the total point value of each of the stacks must be equal to the value of the Group card.';
+            return 'Group Card'; break;
+
+          default :
+//            this.tipsInfoText = 'Tips will be displayed here';
+//            return 'No Card Selected'; break;
+            var fact = this.setFact();
+            this.tipsInfoText = fact;
+            return 'Did you know?';
+        }
+    },
+    setFact() {
+      var num = Math.floor(Math.random() * 4) + 1;
+      console.log('num is: ' + num);
+      switch(num) {
+        case 1:
+          return 'The first high-level programming language was FORTRAN. invented in 1954 by IBM’s John Backus.'; break;
+        case 2:
+          return 'The first computer programmer was a woman'; break;
+        case 3:
+          return 'A \"Hello, World!\" program is often the first program written when learning a new programming language'; break;
+        case 4:
+          return 'Counting starts at 0, not 1'; break;
+        default:
+          return 'Default fun fact';
+      }
     },
     deselectAll () {
       document.removeEventListener('click', this.hide)
@@ -266,6 +337,11 @@ export default {
   #player-info-panel {
     background-color: #ccc;
 }
+
+  #tipBox {
+    position: relative;
+    top: -40px;
+  }
 
   h1, h2, h3, h4, h5 {
     margin-top: 0px;
