@@ -35,7 +35,6 @@ export default {
   props: ['playfieldBoolean', 'stackId', 'playerId'],
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       title: 'Stack',
       id: this.stackId,
       dataContent: "hello",

@@ -59,7 +59,13 @@ export default {
       modalText: "",
       modalCards: [],
       tipsCardSelected:'Did you know?',
-      tipsInfoText: ''
+      tipsInfoText: '',
+      facts: [
+        'The first high-level programming language was FORTRAN. invented in 1954 by IBM’s John Backus.',
+        'The first computer programmer was a woman',
+        'A \"Hello, World!\" program is often the first program written when learning a new programming language',
+        'Counting starts at 0, not 1'
+      ]
     }
   },
   computed: {
@@ -227,20 +233,8 @@ export default {
         }
     },
     setFact() {
-      var num = Math.floor(Math.random() * 4) + 1;
-      console.log('num is: ' + num);
-      switch(num) {
-        case 1:
-          return 'The first high-level programming language was FORTRAN. invented in 1954 by IBM’s John Backus.'; break;
-        case 2:
-          return 'The first computer programmer was a woman'; break;
-        case 3:
-          return 'A \"Hello, World!\" program is often the first program written when learning a new programming language'; break;
-        case 4:
-          return 'Counting starts at 0, not 1'; break;
-        default:
-          return 'Default fun fact';
-      }
+      var num = Math.floor(Math.random() * this.facts.length);
+      return this.facts[num];
     },
     deselectAll () {
       document.removeEventListener('click', this.hide)
