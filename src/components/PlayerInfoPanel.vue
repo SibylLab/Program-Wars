@@ -225,8 +225,6 @@ export default {
             return 'Group Card'; break;
 
           default :
-//            this.tipsInfoText = 'Tips will be displayed here';
-//            return 'No Card Selected'; break;
             var fact = this.setFact();
             this.tipsInfoText = fact;
             return 'Did you know?';
@@ -237,8 +235,9 @@ export default {
       return this.facts[num];
     },
     deselectAll () {
-      document.removeEventListener('click', this.hide)
-      bus.$emit('cardDeselected')
+      document.removeEventListener('click', this.hide);
+      this.tipsCardSelected = this.setTipBox('default');
+      bus.$emit('cardDeselected');
       this.$store.commit('setStackSelectedBoolean', {payload: undefined})
 
       this.$store.commit('setActiveCardUndefined')
@@ -269,7 +268,6 @@ export default {
     }
   },
   created: function () {
-
     bus.$on('activeCardAddedToStack', (cardId) => {
       // a card was selected
       console.log('active card successfully added to stack, deslect and remove from hand')
