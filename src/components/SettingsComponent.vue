@@ -9,7 +9,7 @@
           </div>
           <div class="modal-body flex-container">
             <div id="addPlayer">
-              <input type="text" placeholder="Add a player..." autofocus v-model="newPlayer" v-on:keyup.enter="submit">
+              <input type="text" placeholder="Add a player..." v-model="newPlayer" v-on:keyup.enter="submit" autofocus>
               <button type="button" class="btn btn-primary" v-on:click="submit">Add Player</button>
             </div>
             <div id="players">
@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="submitPlayers" data-dismiss="modal">Start New Game</button>
+            <button type="button" class="btn btn-primary" @click="submitPlayers" data-dismiss="modal" :disabled="noPlayers">Start New Game</button>
           </div>
         </div>
       </div>
@@ -60,14 +60,16 @@
         localPlayers: [],
         newPlayer: '',
         gameStart: false,
-        selected: '10'
+        selected: '10',
+        noPlayers: true
       }
     },
     methods: {
       submit(e) {
         console.log(this.newPlayer)
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
-          this.localPlayers.push(this.newPlayer)
+          this.localPlayers.push(this.newPlayer);
+          this.noPlayers = false;
         }
 
         this.newPlayer = ""
