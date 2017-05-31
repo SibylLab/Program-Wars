@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -9,14 +9,15 @@
           </div>
           <div class="modal-body flex-container">
             <div id="addPlayer">
-              <input type="text" placeholder="Add a player..." autofocus v-model="newPlayer" v-on:keyup.enter="submit">
-              <button type="button" class="btn btn-primary" v-on:click="submit">Add Player</button>
+              <input type="text" placeholder="Add a player..." v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="maxPlayer">
+              <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
             </div>
             <div id="players">
             Players So Far:
             <ol class="playerList">
               <li v-for="localPlayer in localPlayers">{{ localPlayer }}</li>
             </ol>
+              <p v-if="maxPlayer" style="color: red">Maximum Players Reached</p>
             </div>
             <div id="scoreSelect">
             Score to Win:
@@ -31,7 +32,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="submitPlayers" data-dismiss="modal">Start New Game</button>
+            <button type="button" class="btn btn-primary" @click="submitPlayers" data-dismiss="modal" :disabled="noPlayers">Start New Game</button>
           </div>
         </div>
       </div>
@@ -60,16 +61,22 @@
         localPlayers: [],
         newPlayer: '',
         gameStart: false,
-        selected: '10'
+        selected: '10',
+        noPlayers: true,
+        maxPlayer: false
       }
     },
     methods: {
       submit(e) {
         console.log(this.newPlayer)
-        if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
-          this.localPlayers.push(this.newPlayer)
-        }
 
+        if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
+          this.localPlayers.push(this.newPlayer);
+          this.noPlayers = false;
+        }
+        if(this.localPlayers.length >= 4) {
+          this.maxPlayer = true;
+        }
         this.newPlayer = ""
 
       },
