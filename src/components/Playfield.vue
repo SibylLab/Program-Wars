@@ -19,7 +19,6 @@ export default {
   props: ['trueFalse', 'playerId'],
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       title: 'Playfield',
       numberOfStacks: 1,
       test: 'default'

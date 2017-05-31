@@ -3,9 +3,8 @@
     <div id="header">
       <p>Programming Wars</p>
       <div id="header-buttons">
-        <button class="btn btn-primary" v-on:click="startANewGame">
-        New Game
-      </button>
+        <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
+
         <button class="btn btn-primary" v-on:click="showCredits">
         Credits
       </button>
@@ -104,9 +103,6 @@ export default {
         this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true})
         this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false})
       }
-    },
-    startANewGame() {
-      this.$router.push('/')
     },
     showCredits() {
       $('#'+this.creditsModal).modal('show')
