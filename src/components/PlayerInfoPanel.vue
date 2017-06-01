@@ -44,10 +44,7 @@
 <script>
 import { bus } from './Bus';
 import Card from './Card'
-
 import Modal from './Modal'
-import MainComponent from './MainComponent.vue'
-
 
 export default {
   name: 'PlayerInfoPanel',
