@@ -16,6 +16,7 @@ export default {
   props: ['cardData', 'inStack'],
   data () {
     return {
+      msg: 'Programming Wars',
       valueCss: 'value',
       typeCss: 'type'
     }

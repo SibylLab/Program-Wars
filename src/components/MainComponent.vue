@@ -75,7 +75,6 @@ export default {
       creditsModal: "creditsModal",
       creditsModalTitle: "Programming Wars Credits and Change Log",
       tipsToggle: true
-
     }
   },
   methods: {

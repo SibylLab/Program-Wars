@@ -4,12 +4,53 @@
  */
 import Card from './Card'
 
+const instruction1 = 8;
+const instruction2 = 8;
+const instruction3 = 8;
+const repetition2 = 2;
+const repetition3 = 2;
+const repetition4 = 2;
+const repetition5 = 2;
+const repetitionX = 5;
+const group2 = 2;
+const group3 = 4;
+const group4 = 4;
+const group5 = 2;
+const group6 = 2;
+const variable2 = 4;
+const variable3 = 4;
+const variable4 = 4;
+const variable5 = 2;
+const variable6 = 2;
+const hack = 5;
+
+const cardDeck = [
+  {type:'I', cardValue: 1, cardImg: '', howMany: instruction1},
+  {type:'I', cardValue: 2, cardImg: '', howMany: instruction2},
+  {type:'I', cardValue: 3, cardImg: '', howMany: instruction3},
+  {type:'R', cardValue: 2, cardImg: '', howMany: repetition2},
+  {type:'R', cardValue: 3, cardImg: '', howMany: repetition3},
+  {type:'R', cardValue: 4, cardImg: '', howMany: repetition4},
+  {type:'R', cardValue: 5, cardImg: '', howMany: repetition5},
+  {type:'R', cardValue: 1, cardImg: '', howMany: repetitionX},
+  {type:'G', cardValue: 2, cardImg: '', howMany: group2},
+  {type:'G', cardValue: 3, cardImg: '', howMany: group3},
+  {type:'G', cardValue: 4, cardImg: '', howMany: group4},
+  {type:'G', cardValue: 5, cardImg: '', howMany: group5},
+  {type:'G', cardValue: 6, cardImg: '', howMany: group6},
+  {type:'V', cardValue: 2, cardImg: '', howMany: variable2},
+  {type:'V', cardValue: 3, cardImg: '', howMany: variable3},
+  {type:'V', cardValue: 4, cardImg: '', howMany: variable4},
+  {type:'V', cardValue: 5, cardImg: '', howMany: variable5},
+  {type:'V', cardValue: 6, cardImg: '', howMany: variable6},
+  {type:'H', cardValue: 0, cardImg: '', howMany: hack},
+]
+
 export default class Deck {
   /**
    * The constructor for the Deck class
    * @constructor Deck
    */
-
   constructor(){
     //this.initDeck();
     this.cards = [];
@@ -21,70 +62,13 @@ export default class Deck {
    * @memberOf Deck
    */
   initDeck() {
-    // generate Instruction cards
     let cardId = 0;
-
-    for(let i = 0; i < 8; i++) {
-      for (let i = 1; i < 4; i++) {
-        //what should this be?
-        //this.$store.commit('addCardToDeck', new Card(cardId, i, 'I'));//this?
-        this.cards.push(new Card(cardId, i, 'I'));//or this?
+    for(var i = 0; i < cardDeck.length; i++){
+      for(var j = 0; j < cardDeck[i].howMany; j++) {
+        this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type));
         cardId++;
       }
     }
-    // generate fixed Repitition cards
-    for(let i = 0; i < 2; i++) {
-      for (let i = 2; i < 6; i++) {
-        //this.$store.commit('addCardToDeck', new Card(this.cardId, i, 'R'));
-        this.cards.push(new Card(cardId, i, 'R'));
-        cardId++;
-      }
-    }
-
-    // generate variable repetition cards
-    for (let i = 0; i < 5; i++) {
-      //this.$store.commit('addCardToDeck', new Card(this.cardId, 0, 'Rx'));
-      this.cards.push(new Card(cardId, 1, 'R'));
-      cardId++;
-    }
-
-    // generate fixed Repitition cards
-    for(let i = 0; i < 2; i++) {
-      for (let i = 2; i < 7; i++) {
-        //this.$store.commit('addCardToDeck', new Card(this.cardId, i, 'G'));
-        this.cards.push(new Card(cardId, i, 'G'));
-        cardId++;
-      }
-    }
-
-    // generate variables cards
-    for(let i = 0; i < 4; i++) {
-      for (let i = 2; i < 5; i++) {
-        //this.$store.commit('addCardToDeck', new Card(this.cardId, i, 'V'));
-        this.cards.push(new Card(cardId, i, 'V'));
-        cardId++;
-      }
-    }
-
-    // generate variable cards
-    for(let i = 0; i < 2; i++) {
-      for (let i = 5; i < 7; i++) {
-        //this.$store.commit('addCardToDeck', new Card(this.cardId, i, 'V'));
-        this.cards.push(new Card(cardId, i, 'V'));
-        cardId++;
-      }
-    }
-
-    for (let i = 0; i < 5; i++) {
-      //this.$store.commit('addCardToDeck', new Card(this.cardId, 0, 'H'));
-      this.cards.push(new Card(cardId, 0, 'H'));
-      cardId++;
-    }
-    console.log(this.cards.length+'End of init');
-    for(let card of this.cards){
-      console.log('id:'+card.id+':'+card.value);
-    }
-
     this.shuffle();
   };//end Init game
 
@@ -97,7 +81,6 @@ export default class Deck {
     let card = this.cards[0];//[0] is the top of the deck
     this.cards.shift();//unshift removes the first element.
     console.log(this.cards.length);
-    //console.log(this);
     return card;
   };
 
