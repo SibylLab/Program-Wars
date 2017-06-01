@@ -1,5 +1,5 @@
 <template>
-  <div id="card" :class="cardCss" class="panel panel-default" v-on:click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
+  <div id="card" :class="cardCss" class="panel panel-default" @click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
       <div class="panel-body flex-container">
         <div :class="typeCss">{{ cardType }}</div>
         <div :class="valueCss">{{ cardValue }}</div>
@@ -16,7 +16,6 @@ export default {
   props: ['cardData', 'inStack'],
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       valueCss: 'value',
       typeCss: 'type'
     }
@@ -100,20 +99,19 @@ export default {
 
 
     background-color: #fff;
-    min-width: 100px;
+    min-width: 90px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    min-height: 110px;
-    border: 0px solid #000000;
-
+    min-height: 120px;
+    border: 0px solid #000;
+    border-radius: 10px;
     padding: 10px 0px 10px 0px;
-
     margin: 0px 0px 0px 0px;
-}
+    }
 
 .flex-container {
   flex-direction:column;
