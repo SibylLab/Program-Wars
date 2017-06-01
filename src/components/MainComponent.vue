@@ -71,8 +71,7 @@ export default {
       gameOverText: "",
       modalId: "gameOverModal",
       creditsModal: "creditsModal",
-      creditsModalTitle: "Programming Wars Credits and Change Log",
-
+      creditsModalTitle: "Programming Wars Credits and Change Log"
     }
   },
   methods: {
