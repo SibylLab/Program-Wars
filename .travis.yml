@@ -11,4 +11,4 @@ install:
   - npm install karma-chrome-launcher
   - npm install karma-jasmine
 
-script: npm test  
+script: npm run unit  
