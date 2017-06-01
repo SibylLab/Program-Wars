@@ -58,7 +58,7 @@ export default {
       modalCards: [],
       tipsToggle: true,
       tipsCardSelected:'Did you know?',
-      tipsInfoText: 'There are many different programming languages, C++, Java, Javascript, Python... just to name a few',
+      tipsInfoText: 'You can toggle on or off this information window by checking the \"TUTORIAL\" box in the rop right corner. ',
       facts: [
         'The first high-level programming language was FORTRAN. invented in 1954 by IBM’s John Backus.',
         'The first computer programmer was a woman',
