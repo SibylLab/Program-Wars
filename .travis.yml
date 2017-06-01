@@ -11,5 +11,6 @@ install:
   - npm install jasmine-core --save-dev
   - npm install karma-chrome-launcher --save-dev
   - npm install karma-jasmine --save-dev
+  - npm install --global chrome-headless-launcher --save-dev
 
 script: npm run unit  
