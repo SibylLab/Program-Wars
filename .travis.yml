@@ -12,8 +12,11 @@ cache:
 
 install:
   - npm install
-  - npm install karma-chrome-launcher
-  - npm install karma-jasmine
-  - npm install karma-firefox-launcher
+  - npm install karma-firefox-launcher --save-dev
+  - npm install jasmine-core --save-dev
+  - npm install karma-chrome-launcher --save-dev
+  - npm install karma-jasmine --save-dev
+  - npm install --global chrome-headless-launcher --save-dev
+
 
 script: npm run unit

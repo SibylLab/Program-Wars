@@ -1,6 +1,7 @@
-# programming-wars
+# Program Wars
+[![Build Status](https://travis-ci.org/johnanvik/program-wars.svg?branch=master)](https://travis-ci.org/johnanvik/program-wars)
 
-> CPSC 3720 Programming Project, web based educational card game
+Program Wars is a web-based educational card game that teaches the basic concepts of programming. The game was created by Dr. John Anvik and his two sons (John and Erik) over a weekend. This web version was created as a part of a software engineering course at the University of Lethbridge.
 
 ## Live Demo
 
@@ -51,6 +52,3 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-## Current Build Status
-[![Build Status](https://travis-ci.org/johnanvik/program-wars.svg?branch=master)](https://travis-ci.org/johnanvik/program-wars)

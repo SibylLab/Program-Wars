@@ -2,7 +2,10 @@
   <div id="maincontainer">
     <div id="header">
       <p>Programming Wars</p>
-      <div id="header-buttons">
+      <div style="float: right; margin-left: 1000px">
+      <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked @click="toggleTipBox">TUTORIAL</label>
+        </div>
+        <div id="header-buttons">
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
 
         <button class="btn btn-primary" v-on:click="showCredits">
@@ -14,8 +17,8 @@
       </div>
     </div>
 
-    <modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="()=> this.$router.push('/')"></modal>
-    <modal :modalId="creditsModal" :cancel="false" :modalTitle="creditsModalTitle" :modalBody="creditsModalText" :modalCards="[]" :modalCallback="()=> {}" :image="true"></modal>
+    <modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="() => this.$router.push('/')"></modal>
+    <modal :modalId="creditsModal" :cancel="false" :modalTitle="creditsModalTitle" :modalBody="creditsModalText" :modalCards="[]" :modalCallback="() => {}" :image="true"></modal>
 
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
@@ -43,7 +46,6 @@
 </template>
 
 <script>
-
 import PlayerInfoPanel from './PlayerInfoPanel'
 import Playfield from './Playfield'
 
@@ -71,10 +73,14 @@ export default {
       gameOverText: "",
       modalId: "gameOverModal",
       creditsModal: "creditsModal",
-      creditsModalTitle: "Programming Wars Credits and Change Log"
+      creditsModalTitle: "Programming Wars Credits and Change Log",
+      tipsToggle: true
     }
   },
   methods: {
+    toggleTipBox() {
+      bus.$emit('tipsToggled');
+    },
       showCredits() {
 
       },
@@ -140,7 +146,7 @@ export default {
   created: function () {
 
       bus.$on('checkWin', () => {
-        let players = this.$store.getters.getPlayers
+        let players = this.$store.getters.getPlayers;
 
         for (let player of players) {
           if (player.score >= this.scoreLimit) {
