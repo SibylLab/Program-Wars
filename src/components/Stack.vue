@@ -5,10 +5,19 @@
 
     <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
     <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
-    <span>Stack Score: {{ score }}</span>
+    <span style="padding: 10px">Stack Score: {{ score }}</span>
 
 
-    <button class="btn btn-secondary" :class="buttonStyle" :stackId="this.stackId" v-on:click="addToStackClicked" type="button" data-container="body" data-placement="top" >
+    <button
+      style="margin-top: 7px"
+      class="btn btn-secondary"
+      :class="buttonStyle"
+      :stackId="this.stackId"
+      @click="addToStackClicked"
+      type="button"
+      data-container="body"
+      data-placement="top"
+      data-trigger="hover">
       Add to Stack
     </button>
     <br>
@@ -128,11 +137,16 @@ export default {
       }
     })
 
+    bus.$on('cardHasBeenSelected', () => {
+      $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
+    })
+
     bus.$on('cardDeselected', () => {
       // a card was selected
       this.activeCard = undefined
       this.$store.commit('setActiveCardUndefined')
       this.$store.commit('removeAllSelectedStacks')
+      $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
 
       console.log('no active card selected')
       //this is a test again
@@ -244,13 +258,12 @@ export default {
 
     },
     addToStack() {
-      $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
-
-        $('button[stackId="'+this.stackId+'"]').popover({
-        trigger: 'focus',
+      $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" );
+      $('button[stackId="'+this.stackId+'"]').popover({
+        trigger: 'hover',
         delay: { "show": 200 }
       });
-
+      $('button[stackId="'+this.stackId+'"]').popover('hide');
 
       console.log('add to stack was clicked')
 
@@ -376,7 +389,6 @@ export default {
 
 
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
-
             }
 
 
@@ -464,6 +476,5 @@ a {
     -moz-box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
     box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
 }
-
 
 </style>
