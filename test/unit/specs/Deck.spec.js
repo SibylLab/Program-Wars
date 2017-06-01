@@ -87,8 +87,8 @@ describe('Deck.js', () => {
   it('test to see if the draw function works properly', () => {
     let testDeck = new Deck()
     testDeck.initDeck()
-    let testCard = new Card(0, 1, 'I')
-    // let drawnCard = testDeck.draw()
+    //let testCard = new Card(0, 1, 'I')
+    let drawnCard = testDeck.draw()
     expect(testDeck.cards.length).to.equal(71)
     expect(typeof drawnCard).to.equal('object')
     // The deck shuffles itself when created, no way of know what the top card is
