@@ -2,6 +2,13 @@ language: node_js
 node_js:
   - "node"
 
-install: npm install 
+cache:
+  directories:
+    - "node_modules"
+
+install: 
+  - npm install
+  - npm install karma-chrome-launcher
+  - npm install karma-jasmine
 
 script: npm test  
