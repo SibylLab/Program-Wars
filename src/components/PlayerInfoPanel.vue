@@ -5,9 +5,9 @@
 
       <h4 class="playerName"><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
-        <div id="tipBox" class="container" style="max-width: 350px; height: 280px" :cardClicked="tipsCardSelected">
-          <h5>{{ tipsCardSelected }}</h5>
-          <div class="panel panel-default">
+        <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
+          <div class="panel panel-default" style="border-radius: 10px">
+            <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
             <div class="panel-body">{{ tipsInfoText }}</div>
           </div>
         </div>
@@ -44,9 +44,7 @@
 <script>
 import { bus } from './Bus';
 import Card from './Card'
-
 import Modal from './Modal'
-
 
 export default {
   name: 'PlayerInfoPanel',
@@ -58,6 +56,7 @@ export default {
       modalId: "discardCards",
       modalText: "",
       modalCards: [],
+      tipsToggle: true,
       tipsCardSelected:'Did you know?',
       tipsInfoText: 'There are many different programming languages, C++, Java, Javascript, Python... just to name a few',
       facts: [
@@ -69,6 +68,13 @@ export default {
     }
   },
   computed: {
+    displayStyle() {
+      if(this.tipsToggle) {
+        return {'display':'block'}
+      } else {
+        return {'display':'none'}
+      }
+    },
       changeTrueFalse() {
           if (this.$store.getters.trueFalseAnim)
               return "trueFalse"
@@ -278,10 +284,8 @@ export default {
 
       //this.cards.unshift(this.generateRandomCard())
       //this.$options.methods.removeCard(cardId)
-    })
-
-
-
+    });
+    bus.$on('tipsToggled', () => {this.tipsToggle = !this.tipsToggle})
 
   },
   beforeMount: function () {
@@ -332,7 +336,9 @@ export default {
 
   #tipBox {
     position: relative;
-    top: -40px;
+    top: -50px;
+    max-width: 350px;
+    height: 280px;
   }
 
   h1, h2, h3, h4, h5 {
