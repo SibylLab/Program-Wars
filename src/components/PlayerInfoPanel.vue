@@ -139,9 +139,6 @@ export default {
     'modal': Modal
   },
   methods: {
-    toggleShow() {
-      return 'none'
-    },
       discardSelected() {
         if (this.$store.getters.getActiveCard !== undefined) {
           this.$store.commit('discardSelectedCard')
