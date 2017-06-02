@@ -20,8 +20,7 @@ install:
   - npm install jasmine-core --save-dev
   - npm install karma-chrome-launcher --save-dev
   - npm install karma-jasmine --save-dev
-  - npm install --global chrome-headless-launcher --save-dev
-  - npm install istanbul --save-dev
+  - npm install --global chrome-headless-launcher --save-dev  
 
 
 script:
