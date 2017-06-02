@@ -25,8 +25,8 @@ install:
 
 
 script:
-- npm run unit
-#- istanbul cover test-main.js
+- npm run test
+- npm run cover
   
 after_success:
   - npm install -g codeclimate-test-reporter
