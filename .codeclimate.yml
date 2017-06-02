@@ -1,0 +1,11 @@
+engines:
+  fixme:
+    enabled: true
+  nodesecurity:
+    enabled: true
+   eslint:
+    enabled: true
+    
+ratings:
+   paths:
+   - "**.js"
