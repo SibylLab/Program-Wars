@@ -25,25 +25,25 @@ const variable6 = 2;
 const hack = 5;
 
 const cardDeck = [
-  {type:'I', cardValue: 1, cardImg: '', howMany: instruction1},
-  {type:'I', cardValue: 2, cardImg: '', howMany: instruction2},
-  {type:'I', cardValue: 3, cardImg: '', howMany: instruction3},
-  {type:'R', cardValue: 2, cardImg: '', howMany: repetition2},
-  {type:'R', cardValue: 3, cardImg: '', howMany: repetition3},
-  {type:'R', cardValue: 4, cardImg: '', howMany: repetition4},
-  {type:'R', cardValue: 5, cardImg: '', howMany: repetition5},
-  {type:'R', cardValue: 1, cardImg: '', howMany: repetitionX},
-  {type:'G', cardValue: 2, cardImg: '', howMany: group2},
-  {type:'G', cardValue: 3, cardImg: '', howMany: group3},
-  {type:'G', cardValue: 4, cardImg: '', howMany: group4},
-  {type:'G', cardValue: 5, cardImg: '', howMany: group5},
-  {type:'G', cardValue: 6, cardImg: '', howMany: group6},
-  {type:'V', cardValue: 2, cardImg: '', howMany: variable2},
-  {type:'V', cardValue: 3, cardImg: '', howMany: variable3},
-  {type:'V', cardValue: 4, cardImg: '', howMany: variable4},
-  {type:'V', cardValue: 5, cardImg: '', howMany: variable5},
-  {type:'V', cardValue: 6, cardImg: '', howMany: variable6},
-  {type:'H', cardValue: 0, cardImg: '', howMany: hack},
+  {type:'I', cardValue: 1, imgSrc: '../../static/I1.png', howMany: instruction1},
+  {type:'I', cardValue: 2, imgSrc: '../../static/I2.png', howMany: instruction2},
+  {type:'I', cardValue: 3, imgSrc: '../../static/I3.png', howMany: instruction3},
+  {type:'R', cardValue: 2, imgSrc: '../../static/R2.png', howMany: repetition2},
+  {type:'R', cardValue: 3, imgSrc: '../../static/R3.png', howMany: repetition3},
+  {type:'R', cardValue: 4, imgSrc: '../../static/R4.png', howMany: repetition4},
+  {type:'R', cardValue: 5, imgSrc: '../../static/R5.png', howMany: repetition5},
+  {type:'R', cardValue: 1, imgSrc: '../../static/Rx.png', howMany: repetitionX},
+  {type:'G', cardValue: 2, imgSrc: '../../static/G2.png', howMany: group2},
+  {type:'G', cardValue: 3, imgSrc: '../../static/G3.png', howMany: group3},
+  {type:'G', cardValue: 4, imgSrc: '../../static/G4.png', howMany: group4},
+  {type:'G', cardValue: 5, imgSrc: '../../static/G5.png', howMany: group5},
+  {type:'G', cardValue: 6, imgSrc: '../../static/G6.png', howMany: group6},
+  {type:'V', cardValue: 2, imgSrc: '../../static/V2.png', howMany: variable2},
+  {type:'V', cardValue: 3, imgSrc: '../../static/V3.png', howMany: variable3},
+  {type:'V', cardValue: 4, imgSrc: '../../static/V4.png', howMany: variable4},
+  {type:'V', cardValue: 5, imgSrc: '../../static/V5.png', howMany: variable5},
+  {type:'V', cardValue: 6, imgSrc: '../../static/V6.png', howMany: variable6},
+  {type:'H', cardValue: 0, imgSrc: '../../static/H.png', howMany: hack},
 ]
 
 export default class Deck {
@@ -65,7 +65,7 @@ export default class Deck {
     let cardId = 0;
     for(var i = 0; i < cardDeck.length; i++){
       for(var j = 0; j < cardDeck[i].howMany; j++) {
-        this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type));
+        this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
         cardId++;
       }
     }
