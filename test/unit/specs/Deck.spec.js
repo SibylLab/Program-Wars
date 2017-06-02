@@ -1,5 +1,5 @@
 import Deck from '../../../src/classes/Deck'
-import Card from '../../../src/classes/Card'
+// import Card from '../../../src/classes/Card'
 
 describe('Deck.js', () => {
   // test initial cards array length
@@ -87,7 +87,7 @@ describe('Deck.js', () => {
   it('test to see if the draw function works properly', () => {
     let testDeck = new Deck()
     testDeck.initDeck()
-    //let testCard = new Card(0, 1, 'I')
+    // let testCard = new Card(0, 1, 'I')
     let drawnCard = testDeck.draw()
     expect(testDeck.cards.length).to.equal(71)
     expect(typeof drawnCard).to.equal('object')
