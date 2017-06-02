@@ -10,7 +10,7 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
-    "cover": "istanbul cover cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
+    "cover": "istanbul cover cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run"
   },
   "dependencies": {
     "jsdoc-vue": "^1.0.0",
