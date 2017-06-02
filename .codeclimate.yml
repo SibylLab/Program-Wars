@@ -3,9 +3,9 @@ engines:
     enabled: true
   nodesecurity:
     enabled: true
-   eslint:
+  eslint:
     enabled: true
     
 ratings:
-   paths:
-   - "**.js"
+    paths:
+    - "**.js"
