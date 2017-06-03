@@ -15,17 +15,13 @@ cache:
     - "node_modules"
 
 install:
-  - npm install
   - npm install karma-firefox-launcher
   - npm install jasmine-core
   - npm install karma-chrome-launcher
   - npm install karma-jasmine
-  - npm install nodesecurity
-
 
 script:
 - npm run test
-- npm shrinkwrap 
   
 after_success:
   - npm install -g codeclimate-test-reporter --save-dev
