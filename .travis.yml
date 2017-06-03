@@ -28,6 +28,5 @@ script:
   
 after_success:
   - npm install -g codeclimate-test-reporter --save-dev
-  - cat ./test/unit/coverage/lcov.info
   - codeclimate-test-reporter < ./test/unit/coverage/lcov.info
   
