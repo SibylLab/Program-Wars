@@ -2,7 +2,7 @@
   <div id="maincontainer">
     <div id="header">
       <p>Programming Wars</p>
-      <div style="float: right; margin-left: 1000px">
+      <div style="margin-left: auto; padding: 0 10px 0 0">
       <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked @click="toggleTipBox">TUTORIAL</label>
         </div>
         <div id="header-buttons">
