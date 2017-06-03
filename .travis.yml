@@ -16,11 +16,11 @@ cache:
 
 install:
   - npm install
-  - npm install karma-firefox-launcher --save-dev
-  - npm install jasmine-core --save-dev
-  - npm install karma-chrome-launcher --save-dev
-  - npm install karma-jasmine --save-dev
-  - npm install --global chrome-headless-launcher --save-dev  
+  - npm install karma-firefox-launcher
+  - npm install jasmine-core
+  - npm install karma-chrome-launcher
+  - npm install karma-jasmine
+  - npm shrinkwrap
 
 
 script:
