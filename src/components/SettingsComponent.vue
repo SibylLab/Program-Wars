@@ -23,12 +23,9 @@
             <div id="scoreSelect">
             Score to Win:
             <select class="custom-select" name="select" v-model="selected">
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-              <option value="25">25</option>
-              <option value="30">30</option>
+              <option value="10">Short (score 10)</option>
+              <option value="20">Medium (score 20)</option>
+              <option value="30">Long (score 30)</option>
             </select>
             </div>
           </div>
@@ -180,7 +177,7 @@
   }
 
   select.custom-select {
-    width: 30px;
+    width: 160px;
     align-items: center;
   }
 
