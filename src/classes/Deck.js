@@ -4,14 +4,14 @@
  */
 import Card from './Card'
 
-const instruction1 = 10;
-const instruction2 = 10;
-const instruction3 = 10;
-const instruction4 = 10;
+const instruction1 = 14;
+const instruction2 = 14;
+const instruction3 = 14;
+const instruction4 = 0;
 
 const repetition2 = 6;
 const repetition3 = 6;
-const repetition4 = 6;
+const repetition4 = 0;
 const repetitionX = 6;
 
 const group2 = 2;
@@ -19,8 +19,8 @@ const group3 = 4;
 const group4 = 6;
 const group5 = 8;
 const group6 = 6;
-const group7 = 4;
-const group8 = 2;
+const group7 = 0;
+const group8 = 0;
 
 const variable2 = 6;
 const variable3 = 6;
