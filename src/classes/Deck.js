@@ -4,45 +4,53 @@
  */
 import Card from './Card'
 
-const instruction1 = 8;
-const instruction2 = 8;
-const instruction3 = 8;
-const repetition2 = 2;
-const repetition3 = 2;
-const repetition4 = 2;
-const repetition5 = 2;
-const repetitionX = 5;
+const instruction1 = 10;
+const instruction2 = 10;
+const instruction3 = 10;
+const instruction4 = 10;
+
+const repetition2 = 6;
+const repetition3 = 6;
+const repetition4 = 6;
+const repetitionX = 6;
+
 const group2 = 2;
 const group3 = 4;
-const group4 = 4;
-const group5 = 2;
-const group6 = 2;
-const variable2 = 4;
-const variable3 = 4;
+const group4 = 6;
+const group5 = 8;
+const group6 = 6;
+const group7 = 4;
+const group8 = 2;
+
+const variable2 = 6;
+const variable3 = 6;
 const variable4 = 4;
-const variable5 = 2;
-const variable6 = 2;
-const hack = 5;
+
+const hack = 6;
 
 const cardDeck = [
   {type:'I', cardValue: 1, cardImg: '', howMany: instruction1},
   {type:'I', cardValue: 2, cardImg: '', howMany: instruction2},
   {type:'I', cardValue: 3, cardImg: '', howMany: instruction3},
+  {type:'I', cardValue: 4, cardImg: '', howMany: instruction3},
+
   {type:'R', cardValue: 2, cardImg: '', howMany: repetition2},
   {type:'R', cardValue: 3, cardImg: '', howMany: repetition3},
   {type:'R', cardValue: 4, cardImg: '', howMany: repetition4},
-  {type:'R', cardValue: 5, cardImg: '', howMany: repetition5},
   {type:'R', cardValue: 1, cardImg: '', howMany: repetitionX},
+
   {type:'G', cardValue: 2, cardImg: '', howMany: group2},
   {type:'G', cardValue: 3, cardImg: '', howMany: group3},
   {type:'G', cardValue: 4, cardImg: '', howMany: group4},
   {type:'G', cardValue: 5, cardImg: '', howMany: group5},
   {type:'G', cardValue: 6, cardImg: '', howMany: group6},
+  {type:'G', cardValue: 7, cardImg: '', howMany: group7},
+  {type:'G', cardValue: 8, cardImg: '', howMany: group8},
+
   {type:'V', cardValue: 2, cardImg: '', howMany: variable2},
   {type:'V', cardValue: 3, cardImg: '', howMany: variable3},
   {type:'V', cardValue: 4, cardImg: '', howMany: variable4},
-  {type:'V', cardValue: 5, cardImg: '', howMany: variable5},
-  {type:'V', cardValue: 6, cardImg: '', howMany: variable6},
+
   {type:'H', cardValue: 0, cardImg: '', howMany: hack},
 ]
 
