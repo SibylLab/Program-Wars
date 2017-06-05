@@ -17,8 +17,8 @@ const repetitionX = 6;
 const group2 = 2;
 const group3 = 4;
 const group4 = 6;
-const group5 = 8;
-const group6 = 6;
+const group5 = 4;
+const group6 = 2;
 const group7 = 0;
 const group8 = 0;
 
