@@ -32,7 +32,7 @@ const cardDeck = [
   {type:'I', cardValue: 1, cardImg: '', howMany: instruction1},
   {type:'I', cardValue: 2, cardImg: '', howMany: instruction2},
   {type:'I', cardValue: 3, cardImg: '', howMany: instruction3},
-  {type:'I', cardValue: 4, cardImg: '', howMany: instruction3},
+  {type:'I', cardValue: 4, cardImg: '', howMany: instruction4},
 
   {type:'R', cardValue: 2, cardImg: '', howMany: repetition2},
   {type:'R', cardValue: 3, cardImg: '', howMany: repetition3},
