@@ -16,7 +16,7 @@ describe('Deck.js', () => {
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck()
-    expect(testDeck.cards.length).to.equal(72)
+    expect(testDeck.cards.length).to.equal(100)
   })
   // test the number of 'I' cards, should be 36 but is 27 right now
   it('test that initDeck is putting in the correct number of instruction cards', () => {
@@ -29,7 +29,7 @@ describe('Deck.js', () => {
         instructionCounter++
       }
     }
-    expect(instructionCounter).to.equal(24)
+    expect(instructionCounter).to.equal(42)
   })
   // test the number of R cards
   it('test that the number of R cards is correct', () => {
@@ -42,7 +42,7 @@ describe('Deck.js', () => {
         repetitionCounter++
       }
     }
-    expect(repetitionCounter).to.equal(13)
+    expect(repetitionCounter).to.equal(18)
   })
   // test the number of Rx cards
   it('test the number of Rx cards in the deck', () => {
@@ -55,7 +55,7 @@ describe('Deck.js', () => {
         rxCounter++
       }
     }
-    expect(rxCounter).to.equal(5)
+    expect(rxCounter).to.equal(6)
   })
   // test the number of variable cards in the deck
   it('test the number of Variable cards in the deck', () => {
@@ -81,7 +81,7 @@ describe('Deck.js', () => {
         hackCounter++
       }
     }
-    expect(hackCounter).to.equal(5)
+    expect(hackCounter).to.equal(6)
   })
   // test to see if the draw function draws the card from the top of the deck
   it('test to see if the draw function works properly', () => {
