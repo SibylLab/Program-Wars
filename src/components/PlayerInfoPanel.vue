@@ -2,6 +2,14 @@
     <div id="player-info-panel" :hasPlayed="hasPlayed">
 
       <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards"></modal>
+      <div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            </button>
+              <h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>
+          </div>
+        </div>
+      </div>
 
       <h4 class="playerName" ><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
@@ -80,6 +88,8 @@ export default {
       hasPlayed() {
         if (this.$store.getters.getHasPlayed) {
           this.endTurn();
+          $('#playerTurn').modal();
+          setTimeout(function() {$('#playerTurn').modal('hide');}, 1000);
           return "hasPlayed"
         }
         else
