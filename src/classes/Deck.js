@@ -9,11 +9,6 @@ const instruction2 = 14;
 const instruction3 = 14;
 const instruction4 = 0;
 
-const repetition2 = 6;
-const repetition3 = 6;
-const repetition4 = 0;
-const repetitionX = 6;
-
 const group2 = 2;
 const group3 = 4;
 const group4 = 6;
@@ -22,9 +17,14 @@ const group6 = 2;
 const group7 = 0;
 const group8 = 0;
 
-const variable2 = 6;
-const variable3 = 6;
-const variable4 = 4;
+const repetition2 = 8;
+const repetition3 = 8;
+const repetition4 = 0;
+const repetitionX = 8;
+
+const variable2 = 4;
+const variable3 = 4;
+const variable4 = 2;
 
 const hack = 6;
 
