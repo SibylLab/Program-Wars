@@ -1,5 +1,6 @@
 <template>
   <div id="maincontainer">
+    <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></rules-modal>
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
@@ -7,13 +8,10 @@
         </div>
         <div id="header-buttons">
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
+        <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
+        <button class="btn btn-primary" @click="showCredits">Credits</button>
 
-        <button class="btn btn-primary" v-on:click="showCredits">
-        Credits
-      </button>
-        <a class="btn btn-primary" href="https://github.com/sscullen/program-wars/issues/new" target="_blank">
-        Report Issue
-      </a>
+        <a class="btn btn-primary" href="https://github.com/sscullen/program-wars/issues/new" target="_blank">Report Issue</a>
       </div>
     </div>
 
@@ -51,6 +49,7 @@ import Playfield from './Playfield'
 
 import OpponentStacks from './OpponentStacks'
 import Modal from './Modal'
+import RulesModal from './RulesModal.vue'
 
 import Card from '../classes/Card'
 import Player from '../classes/Player'
@@ -74,16 +73,13 @@ export default {
       modalId: "gameOverModal",
       creditsModal: "creditsModal",
       creditsModalTitle: "Programming Wars Credits and Change Log",
-      tipsToggle: true
+      tipsToggle: true,
     }
   },
   methods: {
     toggleTipBox() {
       bus.$emit('tipsToggled');
     },
-      showCredits() {
-
-      },
     submit() {
         console.log(this.newPlayer)
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
@@ -111,7 +107,6 @@ export default {
     },
     showCredits() {
       $('#'+this.creditsModal).modal('show')
-
     }
 },
   computed: {
@@ -141,7 +136,8 @@ export default {
     'player-info-panel': PlayerInfoPanel,
     'playfield': Playfield,
     'opponent-stacks': OpponentStacks,
-    'modal': Modal
+    'modal': Modal,
+    'rules-modal': RulesModal
   },
   created: function () {
 
