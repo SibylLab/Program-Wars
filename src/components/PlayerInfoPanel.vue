@@ -175,7 +175,6 @@ export default {
     cardClicked (c) {
       // alert('cardId of clicked card is ' + cardId)
       console.log(c.id)
-      bus.$emit('currentCardIs', c);
       this.tipsCardSelected = this.setTipBox(c);
       let prevActive = this.$store.getters.getActiveCard
 
@@ -186,12 +185,6 @@ export default {
           this.$store.commit('setStackSelectedBoolean', {payload: undefined})
         }
       }
-      if(c.type === 'H') {
-        console.log('HACK');
-      }
-
-
-      setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
     },
     setTipBox(c) {
         switch(c.type) {
@@ -271,9 +264,6 @@ export default {
     setActiveCard(c) {
 
       this.$store.commit('selectCard', c)
-
-      setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
-
       console.log('active card set by dragging')
     }
   },
