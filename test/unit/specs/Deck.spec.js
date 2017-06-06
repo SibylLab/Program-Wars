@@ -7,17 +7,20 @@ describe('Deck.js', () => {
     let testDeck = new Deck()
     expect(testDeck.cards.length).to.equal(0)
   })
+
   // test initial discard_cards array length
   it('test if the initial discard_cards array is empty', () => {
     let testDeck = new Deck()
     expect(testDeck.discard_cards.length).to.equal(0)
   })
+
   // test initDeck function
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck()
     expect(testDeck.cards.length).to.equal(100)
   })
+
   // test the number of 'I' cards, should be 36 but is 27 right now
   it('test that initDeck is putting in the correct number of instruction cards', () => {
     let testDeck = new Deck()
@@ -31,6 +34,7 @@ describe('Deck.js', () => {
     }
     expect(instructionCounter).to.equal(42)
   })
+
   // test the number of R cards
   it('test that the number of R cards is correct', () => {
     let testDeck = new Deck()
@@ -42,8 +46,9 @@ describe('Deck.js', () => {
         repetitionCounter++
       }
     }
-    expect(repetitionCounter).to.equal(18)
+    expect(repetitionCounter).to.equal(24)
   })
+
   // test the number of Rx cards
   it('test the number of Rx cards in the deck', () => {
     let testDeck = new Deck()
@@ -55,8 +60,9 @@ describe('Deck.js', () => {
         rxCounter++
       }
     }
-    expect(rxCounter).to.equal(6)
+    expect(rxCounter).to.equal(8)
   })
+
   // test the number of variable cards in the deck
   it('test the number of Variable cards in the deck', () => {
     let testDeck = new Deck()
@@ -68,8 +74,9 @@ describe('Deck.js', () => {
         varCounter++
       }
     }
-    expect(varCounter).to.equal(16)
+    expect(varCounter).to.equal(10)
   })
+
   // test the number of hack cards in the deck
   it('test the number of hack cards in the deck', () => {
     let testDeck = new Deck()
@@ -83,6 +90,7 @@ describe('Deck.js', () => {
     }
     expect(hackCounter).to.equal(6)
   })
+
   // test to see if the draw function draws the card from the top of the deck
   it('test to see if the draw function works properly', () => {
     let testDeck = new Deck()
@@ -90,12 +98,14 @@ describe('Deck.js', () => {
     //let testCard = new Card(0, 1, 'I')
     let drawnCard = testDeck.draw()
     expect(testDeck.cards.length).to.equal(99)
+
     expect(typeof drawnCard).to.equal('object')
     // The deck shuffles itself when created, no way of know what the top card is
     // expect(drawnCard.id).to.equal(testCard.id)
     // expect(drawnCard.value).to.equal(testCard.value)
     // expect(drawnCard.type).to.equal(testCard.type)
   })
+
   // test the shuffle function
   it('test to see if the shuffle function works', () => {
     let testDeck = new Deck()
