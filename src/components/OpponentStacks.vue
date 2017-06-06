@@ -70,8 +70,6 @@ export default {
   data () {
     return {
       title: 'Opponent Stacks',
-      hackIsActive: false,
-      currentCard: this.$store.getters.getActiveCard
     }
   },
   computed: {
