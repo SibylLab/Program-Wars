@@ -86,9 +86,11 @@ export default {
      return this.player.score
     }
   },
+
   components: {
       'opponent-stack': OpponentStack
   },
+
   methods: {
     hackStack(e) {
       console.log('hack attempted on stack', e)

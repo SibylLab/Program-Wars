@@ -185,9 +185,6 @@ export default {
           this.$store.commit('setStackSelectedBoolean', {payload: undefined})
         }
       }
-
-
-      setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
     },
     setTipBox(c) {
         switch(c.type) {
@@ -267,9 +264,6 @@ export default {
     setActiveCard(c) {
 
       this.$store.commit('selectCard', c)
-
-      setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
-
       console.log('active card set by dragging')
     }
   },
