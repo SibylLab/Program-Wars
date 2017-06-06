@@ -8,7 +8,7 @@
         </a>
       </h4>
     </div>
-    <div :id="'collapse'+ player.id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div :id="'collapse'+ player.id" class="panel-collapse" :class="collapseState" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
         <div class="well">
           <h6>True Stacks</h6>
@@ -70,6 +70,8 @@ export default {
   data () {
     return {
       title: 'Opponent Stacks',
+      hackIsActive: false,
+      currentCard: this.$store.getters.getActiveCard
     }
   },
   computed: {
@@ -84,11 +86,25 @@ export default {
     },
     score() {
      return this.player.score
+    },
+    collapseState() {
+      if(this.$store.getters.getActiveCard !== undefined) {
+        return {
+          'collapse in': this.$store.getters.getActiveCard.type === 'H',
+          collapse: this.$store.getters.getActiveCard.type !== 'H'
+        }
+      } else {
+        return {
+          collapse: true
+        }
+      }
     }
   },
+
   components: {
       'opponent-stack': OpponentStack
   },
+
   methods: {
     hackStack(e) {
       console.log('hack attempted on stack', e)

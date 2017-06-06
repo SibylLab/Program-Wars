@@ -175,6 +175,7 @@ export default {
     cardClicked (c) {
       // alert('cardId of clicked card is ' + cardId)
       console.log(c.id)
+      bus.$emit('currentCardIs', c);
       this.tipsCardSelected = this.setTipBox(c);
       let prevActive = this.$store.getters.getActiveCard
 
@@ -184,6 +185,9 @@ export default {
           this.$store.commit('removeAllSelectedStacks')
           this.$store.commit('setStackSelectedBoolean', {payload: undefined})
         }
+      }
+      if(c.type === 'H') {
+        console.log('HACK');
       }
 
 
