@@ -97,7 +97,8 @@
 </template>
 
 <script>
-  $('#rulesModal').modal('hide');
+  export default {
+  }
 </script>
 
 <style scoped>
