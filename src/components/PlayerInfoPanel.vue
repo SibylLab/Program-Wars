@@ -1,12 +1,12 @@
 <template>
-    <div id="player-info-panel">
+    <div id="player-info-panel" :hasPlayed="hasPlayed">
 
-      <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {}"></modal>
+      <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards"></modal>
 
-      <h4 class="playerName"><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
+      <h4 class="playerName" ><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
         <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
-          <div class="panel panel-default" style="border-radius: 10px">
+          <div class="panel panel-default" style="border-radius: 10px" >
             <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
             <div class="panel-body">{{ tipsInfoText }}</div>
           </div>
@@ -18,19 +18,15 @@
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
-          <h4 class="boolState" >Active Side is: <div :class="changeTrueFalse"><b>{{ activeSide }}</b></div></h4>
+          <h4 class="boolState">Active Side is: <div :class="changeTrueFalse"><b>{{ activeSide }}</b></div></h4>
         </div>
 
         <div id="controls">
-
-        <button class="btn btn-primary endTurnButton" :class="hasPlayed" :disabled="endTurnEnabled" v-on:click="endTurn">
-        End Your Turn
-      </button>
-        <button class="btn btn-warning rightSide" v-on:click="discardSelected">
+        <button class="btn btn-warning rightSide" @click="discardSelected">
           Discard Selected Card
         </button>
 
-        <button class="btn btn-primary rightSide" v-on:click="displayDiscard">
+        <button class="btn btn-primary rightSide" @click="displayDiscard">
           Show Discarded Cards
         </button>
 
@@ -82,21 +78,13 @@ export default {
               return ""
       },
       hasPlayed() {
-        if (this.$store.getters.getHasPlayed)
-            return "hasPlayed"
+        if (this.$store.getters.getHasPlayed) {
+          this.endTurn();
+          return "hasPlayed"
+        }
         else
             return ""
       },
-    selectedCard () {
-      var selectedCard;
-      for (var card in this.cards) {
-        if (card.selected === true) {
-          selectedCard = card
-        }
-      }
-
-      return selectedCard
-    },
     hand() {
 
         let hand = this.$store.getters.getCurrentPlayerHand
@@ -116,15 +104,6 @@ export default {
     currentPlayerName() {
         let playerName = this.$store.getters.currentPlayerName;
         return playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
-    },
-    endTurnEnabled() {
-        let hasPlayed = this.$store.getters.getHasPlayed
-
-        if (hasPlayed) {
-            return false
-        } else {
-            return true
-        }
     },
     activeSide() {
         let activeSideString = String(this.$store.getters.getActiveSide)
@@ -299,12 +278,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .hasPlayed {
-    -webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
-    -moz-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
-    box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
-  }
-
   #flexcontainer {
     width: 100%;
     display: flex;
@@ -316,12 +289,12 @@ export default {
   #controls {
     display: flex;
     flex-direction: column;
-    padding: 0px;
     justify-content: space-between;
     align-items: center;
     padding-right: 50px;
     flex-basis: content;
     flex-shrink:5;
+    margin-top: -120px;
   }
 
   #cards {
@@ -372,12 +345,6 @@ li {
 a {
   color: #42b983;
 }
-
-  .endTurnButton {
-    width: 200px;
-    height: 100px;
-  }
-
   .rightSide {
     float: right;
     margin-top: 20px;
