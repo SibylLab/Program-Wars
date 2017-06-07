@@ -2,14 +2,13 @@
     <div id="player-info-panel" :hasPlayed="hasPlayed">
 
       <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards"></modal>
-      <div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            </button>
-              <h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>
-          </div>
-        </div>
-      </div>
+      <!--<div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">-->
+        <!--<div class="modal-dialog" role="document">-->
+          <!--<div class="modal-content">-->
+              <!--<h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <h4 class="playerName" ><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
@@ -50,6 +49,9 @@ import { bus } from './Bus';
 import Card from './Card'
 import Modal from './Modal'
 
+//Time in sec for the modal to stay up
+const displayTime = 1.5;
+
 export default {
   name: 'PlayerInfoPanel',
   data () {
@@ -88,8 +90,11 @@ export default {
       hasPlayed() {
         if (this.$store.getters.getHasPlayed) {
           this.endTurn();
-          $('#playerTurn').modal();
-          setTimeout(function() {$('#playerTurn').modal('hide');}, 1000);
+//          bus.$on('playerWins', () => {playerWins = true;});
+//          if(!playerWins){
+//            $('#playerTurn').modal();
+//            setTimeout(function() {$('#playerTurn').modal('hide');}, displayTime*1000);
+//          }
           return "hasPlayed"
         }
         else
@@ -360,6 +365,10 @@ a {
     margin-top: 20px;
   }
 
+.yourTurn {
+  position: absolute;
+  top: 350px;
+}
   .trueFalse {
 
     animation: cssAnimation 3s 16 ease-in-out;
