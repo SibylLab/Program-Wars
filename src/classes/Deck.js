@@ -4,29 +4,29 @@
  */
 import Card from './Card'
 
-const instruction1 = 14;
-const instruction2 = 14;
-const instruction3 = 14;
+const instruction1 = 7;
+const instruction2 = 7;
+const instruction3 = 7;
 const instruction4 = 0;
 
-const group2 = 2;
-const group3 = 4;
-const group4 = 6;
-const group5 = 4;
-const group6 = 2;
+const group2 = 1;
+const group3 = 2;
+const group4 = 3;
+const group5 = 2;
+const group6 = 1;
 const group7 = 0;
 const group8 = 0;
 
-const repetition2 = 8;
-const repetition3 = 8;
+const repetition2 = 4;
+const repetition3 = 4;
 const repetition4 = 0;
-const repetitionX = 8;
+const repetitionX = 4;
 
-const variable2 = 4;
-const variable3 = 4;
-const variable4 = 2;
+const variable2 = 2;
+const variable3 = 2;
+const variable4 = 1;
 
-const hack = 6;
+const hack = 3;
 
 const cardDeck = [
   {type:'I', cardValue: 1, cardImg: '', howMany: instruction1},
@@ -69,12 +69,14 @@ export default class Deck {
    * initDeck function to initialize the deck with a pre determined number and type of cards
    * @memberOf Deck
    */
-  initDeck() {
+  initDeck(value) {
     let cardId = 0;
-    for(var i = 0; i < cardDeck.length; i++){
-      for(var j = 0; j < cardDeck[i].howMany; j++) {
-        this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type));
-        cardId++;
+    for(let k = 0; k < value; k++) {
+      for (var i = 0; i < cardDeck.length; i++) {
+        for (var j = 0; j < cardDeck[i].howMany; j++) {
+          this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type));
+          cardId++;
+        }
       }
     }
     this.shuffle();
