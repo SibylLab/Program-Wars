@@ -85,7 +85,6 @@ export default {
 
       },
     submit() {
-        console.log(this.newPlayer)
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer)
         }
@@ -150,8 +149,6 @@ export default {
 
         for (let player of players) {
           if (player.score >= this.scoreLimit) {
-            console.log('game over')
-
             this.gameOverWinner = "Congratulations " + player.name + ", you win!"
             this.gameOverText = player.name + " wins!"
             $('#' + this.modalId).modal('show')
@@ -167,32 +164,19 @@ export default {
     this.gameStart = true
 
     let gameEventLoopTimer = setInterval(() => {
-      console.log('gameEventLoop check')
       let gameState = this.$store.getters.getgameState
-
       if (gameState === 'newGame') {
-
         $('#myModal').modal('toggle')
         this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'})
         this.gameStart = true
-
-
       } else if (gameState === 'initGame') {
-
-
       } else if (gameState === 'startPlayerTurn') {
-
           this.$store.commit('addCardToHand')
-
         this.$store.commit('setGameState', {gameState: 'playerTurn'})
 
         if (this.$store.getters.getCurrentPlayerId === 0) {
           let j = Math.floor(Math.random() * 2);
-          console.log('coin flip result ', j)
-
-
           this.$store.commit('setTrueFalseAnim', {startAnim: true})
-
           if (j === 0) {
             this.$store.commit('setActiveSide', {activeSide: true})
           } else {

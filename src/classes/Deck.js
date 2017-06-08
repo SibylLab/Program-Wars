@@ -90,7 +90,6 @@ export default class Deck {
   draw() {
     let card = this.cards[0];//[0] is the top of the deck
     this.cards.shift();//unshift removes the first element.
-    console.log(this.cards.length);
     return card;
   };
 

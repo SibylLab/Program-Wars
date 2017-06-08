@@ -30,35 +30,6 @@
       </div>
     </div>
   </div>
-
-  <!---->
-  <!--<div id="playfield" >-->
-    <!--<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">-->
-    <!--<a role="button" data-toggle="collapse" :href="'#collapse' + player.id" aria-expanded="false" :aria-controls="'collapse'+ player.id">-->
-      <!--<h3>{{ playerName }}</h3>-->
-      <!--<h6>Active Side Score: {{ score }}</h6>-->
-    <!--</a>-->
-    <!--<div class="collapse" :id="'collapse'+ player.id">-->
-      <!--<div class="well">-->
-        <!--<h6>True Stacks</h6>-->
-        <!--<ul v-if="trueStacks.length !== 0" id="example-1">-->
-          <!--<li v-for="stack in trueStacks">-->
-            <!--<opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>-->
-          <!--</li>-->
-        <!--</ul>-->
-        <!--<h6 v-else>There are no stacks!</h6>-->
-
-        <!--<h6>False Stacks</h6>-->
-        <!--<ul v-if="falseStacks.length !== 0" id="example-2">-->
-          <!--<li v-for="stack in falseStacks">-->
-            <!--<opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>-->
-          <!--</li>-->
-        <!--</ul>-->
-        <!--<h6 v-else>There are no stacks!</h6>-->
-      <!--</div>-->
-    <!--</div>-->
-
-  </div>
 </template>
 
 <script>
@@ -72,6 +43,7 @@ export default {
       title: 'Opponent Stacks',
     }
   },
+
   computed: {
     playerName () {
       return this.player.name
@@ -93,7 +65,6 @@ export default {
 
   methods: {
     hackStack(e) {
-      console.log('hack attempted on stack', e)
     }
   }
 }
