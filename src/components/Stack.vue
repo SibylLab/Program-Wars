@@ -257,7 +257,7 @@ export default {
 
             } else {
               // for now, showing alert
-                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Try adding that card to a different stack." );
+                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Try adding that card to a new stack." );
 
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
             }
@@ -281,7 +281,12 @@ export default {
               this.$store.commit('setHasPlayed', {hasPlayed: true})
 
 
-            } else {
+            }else if(thisStack.stackTopCard().type === 'R') {
+              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to another repetition card. Try adding that card to a stack with an Instruction or Group card." );
+              $('button[stackId="'+this.stackId+'"]').popover('toggle')
+
+            }
+            else {
 
                   $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an Instruction or Group card. Try adding that card to a stack with an Instruction or Group card." );
 
@@ -297,7 +302,7 @@ export default {
             console.log('current active card: ' + this.$store.getters.getActiveCard)
           if (thisStack.cards.length === 0) {
 
-                $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a variable card to a stack without an instruction card. Try adding that card to a stack with an instruction card." );
+                $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
 
 
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
@@ -326,7 +331,7 @@ export default {
 
 
             } else {
-                $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a variable card to a stack without a Variable (Rx) repetition card. Try adding that card to a stack with an variable Repetition Card (Rx)." );
+                $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
 
 
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
@@ -334,6 +339,15 @@ export default {
 
 
               break;
+
+          case 'H':
+            $('button[stackId="'+this.stackId+'"]').attr("data-content", "Hack cards are not played on a stack, you must open the opponent's stack to hack them." );
+            $('button[stackId="'+this.stackId+'"]').popover('toggle');
+            break;
+
+          case 'G':
+            $('button[stackId="'+this.stackId+'"]').attr("data-content", "Group cards are not played on a stack, click the checkbox(s) to group the cards together (the combined value of the stack(s) must equal the value of the group card)." );
+            $('button[stackId="'+this.stackId+'"]').popover('toggle');
 
           default:
               console.log('unknown card type')
