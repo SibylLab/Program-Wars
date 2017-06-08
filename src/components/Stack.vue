@@ -257,7 +257,7 @@ export default {
 
             } else {
               // for now, showing alert
-                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Try adding that card to a new stack." );
+                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Instead add the card to a new stack" );
 
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
             }
@@ -268,7 +268,7 @@ export default {
             console.log('current active card: ' + this.$store.getters.getActiveCard)
 
             if (thisStack.cards.length === 0) {
-              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an instruction card. Try adding that card to a stack with an instruction card." );
+              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card." );
               $('button[stackId="'+this.stackId+'"]').popover('toggle')
             } else if (thisStack.stackTopCard().type === 'I' || thisStack.stackTopCard().type === 'G') {
 
@@ -282,13 +282,13 @@ export default {
 
 
             }else if(thisStack.stackTopCard().type === 'R') {
-              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to another repetition card. Try adding that card to a stack with an Instruction or Group card." );
+              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to another repetition card. Instead add the card to a stack with an Instruction or Group card." );
               $('button[stackId="'+this.stackId+'"]').popover('toggle')
 
             }
             else {
 
-                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an Instruction or Group card. Try adding that card to a stack with an Instruction or Group card." );
+                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an Instruction or Group card. Instead add the card to a stack with an Instruction or Group card." );
 
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
             }
@@ -346,7 +346,7 @@ export default {
             break;
 
           case 'G':
-            $('button[stackId="'+this.stackId+'"]').attr("data-content", "Group cards are not played on a stack, click the checkbox(s) to group the cards together (the combined value of the stack(s) must equal the value of the group card)." );
+            $('button[stackId="'+this.stackId+'"]').attr("data-content", "Group cards are not played on a stack. Click the checkbox(es) to select the cards to group together. The total of the selected card(s) must equal the value of the group card." );
             $('button[stackId="'+this.stackId+'"]').popover('toggle');
 
           default:
