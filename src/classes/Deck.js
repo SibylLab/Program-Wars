@@ -70,7 +70,6 @@ export default class Deck {
    * @memberOf Deck
    */
   initDeck(value) {
-    console.log(value)
     let cardId = 0;
     for(let k = 0; k < value; k++) {
       for (var i = 0; i < cardDeck.length; i++) {
