@@ -165,7 +165,7 @@ export default {
 
         let activeCardValue = this.$store.getters.getActiveCard.value
 
-        if (selectedStacks.length >= 2 && activeCardValue === totalScore) {
+        if (selectedStacks.length >= 1 && activeCardValue === totalScore) {
             $('#'+this.modalId2).modal('show')
         }
     },
