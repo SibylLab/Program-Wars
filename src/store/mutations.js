@@ -113,7 +113,7 @@ export default {
           state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.cards.pop())
         },
         initDeck(state){
-          state.deck.initDeck();
+          state.deck.initDeck(state.players.length);
         },
         addStackToPlayer(state, payload) {
           console.log(' addStackToPlayer mutation called ')

@@ -114,8 +114,7 @@ export default {
       return activePlayer + 1
     },
     currentPlayerName() {
-        let playerName = this.$store.getters.currentPlayerName;
-        return playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
+      return this.$store.getters.currentPlayerName;
     },
     endTurnEnabled() {
         let hasPlayed = this.$store.getters.getHasPlayed
@@ -185,9 +184,6 @@ export default {
           this.$store.commit('setStackSelectedBoolean', {payload: undefined})
         }
       }
-
-
-      setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
     },
     setTipBox(c) {
         switch(c.type) {
@@ -267,9 +263,6 @@ export default {
     setActiveCard(c) {
 
       this.$store.commit('selectCard', c)
-
-      setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
-
       console.log('active card set by dragging')
     }
   },
