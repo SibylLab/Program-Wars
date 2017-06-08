@@ -25,7 +25,8 @@
         </div>
         <div class="modal-footer">
           <button v-if="cancel" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="modalCallback">OK</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="okBtn">OK</button>
+
         </div>
       </div>
     </div>
@@ -36,6 +37,7 @@
 
   import { bus } from './Bus';
   import Card from './Card'
+  import Router from '../router/index'
 
 
   export default {
@@ -53,7 +55,14 @@
 
     },
     methods: {
-
+      okBtn() {
+        console.log(this.modalId);
+        if(this.modalId === 'creditsModal') {
+          return ''
+        } else {
+            this.$router.push('/')
+        }
+      }
     },
     components: {
         'card': Card

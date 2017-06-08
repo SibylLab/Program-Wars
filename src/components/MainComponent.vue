@@ -1,5 +1,14 @@
 <template>
   <div id="maincontainer">
+
+    <div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <h4 class="modal-title">{{ activePlayer }}, It's Your Turn</h4>
+        </div>
+      </div>
+    </div>
+
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
@@ -74,16 +83,14 @@ export default {
       modalId: "gameOverModal",
       creditsModal: "creditsModal",
       creditsModalTitle: "Programming Wars Credits and Change Log",
-      tipsToggle: true
+      tipsToggle: true,
+      activePlayer: ''
     }
   },
   methods: {
     toggleTipBox() {
       bus.$emit('tipsToggled');
     },
-      showCredits() {
-
-      },
     submit() {
         console.log(this.newPlayer)
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
@@ -151,6 +158,7 @@ export default {
         for (let player of players) {
           if (player.score >= this.scoreLimit) {
             console.log('game over')
+            bus.$emit('playerWins');
 
             this.gameOverWinner = "Congratulations " + player.name + ", you win!"
             this.gameOverText = player.name + " wins!"
@@ -160,6 +168,9 @@ export default {
               console.log('removing event listener')
             })
             clearInterval(gameEventLoopTimer);
+          } else {
+            this.activePlayer = this.$store.getters.currentPlayerName;
+            $('#playerTurn').modal();
           }
         }
       });
