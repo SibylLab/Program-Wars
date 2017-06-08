@@ -96,8 +96,7 @@ export default {
         }
     },
     currentPlayerName() {
-        let playerName = this.$store.getters.currentPlayerName;
-        return playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
+      return this.$store.getters.currentPlayerName;
     },
     endTurnEnabled() {
         let hasPlayed = this.$store.getters.getHasPlayed

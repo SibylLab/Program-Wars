@@ -97,7 +97,7 @@ export default {
         },
 
         initDeck(state){
-          state.deck.initDeck();
+          state.deck.initDeck(state.players.length);
         },
 
         addStackToPlayer(state, payload) {
