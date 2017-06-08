@@ -65,9 +65,7 @@
       }
     },
     methods: {
-      submit(e) {
-        console.log(this.newPlayer)
-
+      submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer);
           this.noPlayers = false;
@@ -126,23 +124,8 @@
       'opponent-stacks': OpponentStacks
     },
     created: function () {
-
-
       this.$store.commit('resetState')
-
-//      let reload = setTimeout(() => {
-//        location.reload(true)
-//
-//      }, 250)
-
-      let gameEventLoopTimer = setTimeout(() => {
-        $('#myModal').modal('show')
-
-      }, 750)
-
-
-
-
+      setTimeout(() => {$('#myModal').modal('show')}, 750)
     }
 
   }
@@ -171,7 +154,6 @@
   }
 
   .addPlayer {
-    /*display: block;*/
     flex-shrink: 1;
     align-items: center;
   }

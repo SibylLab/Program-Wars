@@ -34,11 +34,9 @@ export default {
     },
     playfieldClass () {
       if (this.trueFalse) {
-        console.log(true)
         return 'light'
       } else {
-        console.log(false)
-        return 'dark'
+          return 'dark'
       }
     },
     stacks() {
@@ -50,11 +48,9 @@ export default {
         for (let stack of stackList) {
             score += stack.score
         }
-
         if (this.trueFalse === this.$store.getters.getActiveSide) {
             this.$store.commit('setPlayerScore', {id: this.playerId, score: score})
         }
-
         return score
     }
   },
@@ -65,19 +61,13 @@ export default {
     getStackList() {
       return this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)
     },
-    addToStack () {
-      // alert('cardId of clicked card is ' + cardId)
-    },
     cardAdded (id) {
-      console.log('trying to add a new stack ' + id)
       var emptyStackExists = false
 
       for (var stack of this.stacks) {
         if (stack.id === id) {
           stack.cardCount += 1
-
         }
-
       }
 
       for (var stack of this.stacks) {
@@ -91,11 +81,9 @@ export default {
         this.stacks.push({ id: this.numberOfStacks, elements: [], value: 0, cardCount: 0})
       }
     },
-    deselectAll () {
-
-    }
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -107,8 +95,6 @@ export default {
     overflow-y: scroll;
 
 }
-
-
 
 h1, h2 {
   font-weight: normal;
@@ -125,7 +111,6 @@ ul {
 }
 
 li {
-  /*display: inline-block;*/
   margin: 0 10px;
 }
 
