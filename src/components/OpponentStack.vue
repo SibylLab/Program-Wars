@@ -162,7 +162,6 @@ export default {
               // the previous stack has an instruction card, give the player a new empty stack
               bus.$emit('cardDeselected')
 
-              // TODO: UNCOMMENT TO MAKE TURN BUTTON WORK AGAIN
               this.$store.commit('setHasPlayed', {hasPlayed: true})
 
             break;
