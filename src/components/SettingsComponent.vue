@@ -65,7 +65,7 @@
       }
     },
     methods: {
-      submit(e) {
+      submit() {
         console.log(this.newPlayer)
 
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
