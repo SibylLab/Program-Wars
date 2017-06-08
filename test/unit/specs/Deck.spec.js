@@ -14,14 +14,21 @@ describe('Deck.js', () => {
     expect(testDeck.discard_cards.length).to.equal(0)
   })
 
-  // test initDeck function
+  // test initDeck function 1 player
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
     expect(testDeck.cards.length).to.equal(50)
   })
 
-  // test the number of 'I' cards, should be 36 but is 27 right now
+  // test initDeck function 3 players
+  it('test the initDeck function for number of cards', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(3)
+    expect(testDeck.cards.length).to.equal(150)
+  })
+
+  // test the number of 'I' cards 1 player
   it('test that initDeck is putting in the correct number of instruction cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
@@ -35,7 +42,21 @@ describe('Deck.js', () => {
     expect(instructionCounter).to.equal(21)
   })
 
-  // test the number of R cards
+  // test the number of 'I' cards 3 players
+  it('test that initDeck is putting in the correct number of instruction cards', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(3)
+    let cardsArray = testDeck.cards
+    let instructionCounter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'I') {
+        instructionCounter++
+      }
+    }
+    expect(instructionCounter).to.equal(63)
+  })
+
+  // test the number of R cards 1 player
   it('test that the number of R cards is correct', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
@@ -49,7 +70,21 @@ describe('Deck.js', () => {
     expect(repetitionCounter).to.equal(12)
   })
 
-  // test the number of Rx cards
+  // test the number of R cards 3 player
+  it('test that the number of R cards is correct', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(3)
+    let cardsArray = testDeck.cards
+    let repetitionCounter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'R') {
+        repetitionCounter++
+      }
+    }
+    expect(repetitionCounter).to.equal(36)
+  })
+
+  // test the number of Rx cards 1 player
   it('test the number of Rx cards in the deck', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
@@ -63,7 +98,21 @@ describe('Deck.js', () => {
     expect(rxCounter).to.equal(4)
   })
 
-  // test the number of variable cards in the deck
+  // test the number of Rx cards 3 players
+  it('test the number of Rx cards in the deck', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(3)
+    let cardsArray = testDeck.cards
+    let rxCounter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'R' && idx.value === 1) {
+        rxCounter++
+      }
+    }
+    expect(rxCounter).to.equal(12)
+  })
+
+  // test the number of variable cards in the deck 1 player
   it('test the number of Variable cards in the deck', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
@@ -77,7 +126,21 @@ describe('Deck.js', () => {
     expect(varCounter).to.equal(5)
   })
 
-  // test the number of hack cards in the deck
+  // test the number of variable cards in the deck 3 players
+  it('test the number of Variable cards in the deck', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(3)
+    let cardsArray = testDeck.cards
+    let varCounter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'V') {
+        varCounter++
+      }
+    }
+    expect(varCounter).to.equal(15)
+  })
+
+  // test the number of hack cards in the deck 1 player
   it('test the number of hack cards in the deck', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
@@ -89,6 +152,20 @@ describe('Deck.js', () => {
       }
     }
     expect(hackCounter).to.equal(3)
+  })
+
+  // test the number of hack cards in the deck 3 players
+  it('test the number of hack cards in the deck', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(3)
+    let cardsArray = testDeck.cards
+    let hackCounter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'H') {
+        hackCounter++
+      }
+    }
+    expect(hackCounter).to.equal(9)
   })
 
   // test to see if the draw function draws the card from the top of the deck
