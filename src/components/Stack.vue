@@ -60,7 +60,6 @@ export default {
       if (this.playerId === this.$store.getters.getCurrentPlayerId ) {
         if (this.$store.getters.getCurrentPlayerStacks.length !== 0) {
           let stack = this.$store.getters.getCurrentPlayerStacks.find(stack => stack.stackId === this.stackId)
-          console.log("stack: ", stack)
           if (stack !== undefined) {
             return stack.cards
           } else {
@@ -69,7 +68,6 @@ export default {
         }
       } else {
         let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
-        console.log("stack: ", stack)
         if (stack !== undefined) {
           return stack.cards
         } else {
@@ -91,7 +89,6 @@ export default {
     },
     score() {
         let thisStack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
-         console.log("this stacks score: ", thisStack.calculateStackScore())
          thisStack.calculateStackScore();
           return thisStack.score;
     },
@@ -126,7 +123,6 @@ export default {
   created: function () {
     bus.$on('cardClickedStack', (event, card) => {
       if (card.category !== 'stack') {
-        console.log('hello ' + card.id + ' ' + card.value + ' ' + card.type + ' --- ' + card.selected)
         if (card.selected === true) {
           this.activeCard = Object.assign({}, card);
           this.activeCard.category = 'stack'
@@ -173,49 +169,29 @@ export default {
       let selectedStacks = this.$store.getters.getSelectedStacks
 
         for (let stack of selectedStacks) {
-          console.log('selected stack id ', stack.stackId)
-
           while (stack.cards.length !== 0) {
-            console.log('how long is this while running', stack.stackId)
-
             this.$store.commit('stackDiscard', {stackId: stack.stackId})
           }
           this.$store.commit('removeStack', {stackId: stack.stackId})
         }
-
-        console.log("<<<<<<< ", this.playerId)
-        console.log("<<<<<<<<< ", this.playfieldBoolean)
-
         let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
-
         let stack = stacks[stacks.length - 1]
-
         this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard})
-
         this.$store.commit('removeActiveCardFromHand')
         this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
 
-
-        // the previous stack has an instruction card, give the player a new empty stack
         bus.$emit('cardDeselected')
         this.$store.commit('setHasPlayed', {hasPlayed: true})
-
         this.$store.commit('groupStacks', {yesOrNo: false})
     },
     cardAddClicked () {
       this.$emit('cardAddClicked', this.id)
-
     },
     hide () {
-
     },
     stackClicked () {
-      console.log('The stack knows a card was clicked')
     },
     cardClickedInStack(event, card) {
-      console.log('card in stack was clicked')
-
-
     },
     addToStack() {
       $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" );
@@ -224,67 +200,37 @@ export default {
         delay: { "show": 200 }
       });
       $('button[stackId="'+this.stackId+'"]').popover('hide');
-
-      console.log('add to stack was clicked')
-
       if (this.$store.getters.getActiveCard !== undefined) {
-        console.log('active card is not undefined')
-
-        console.log('current active card: ' + this.$store.getters.getActiveCard)
-
-        // get the active card from the store
         let activeCard = this.$store.getters.getActiveCard
-        // get the stack data model that goes with this stack component
         let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
 
         switch (activeCard.type) {
           case 'I':
-            console.log('the current active card is instruction')
-            console.log('current active card: ' + this.$store.getters.getActiveCard)
-
             if (thisStack.cards.length === 0) {
-
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
-
               this.$store.commit('removeActiveCardFromHand')
-
-              // the previous stack has an instruction card, give the player a new empty stack
               this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
               bus.$emit('cardDeselected')
-
               this.$store.commit('setHasPlayed', {hasPlayed: true})
-
-
             } else {
-              // for now, showing alert
-                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Try adding that card to a different stack." );
-
+                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Instead add the card to a new stack" );
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
             }
             break;
           case 'R':
-
-            console.log('the current active card is repetition')
-            console.log('current active card: ' + this.$store.getters.getActiveCard)
-
             if (thisStack.cards.length === 0) {
-              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an instruction card. Try adding that card to a stack with an instruction card." );
+              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card." );
               $('button[stackId="'+this.stackId+'"]').popover('toggle')
             } else if (thisStack.stackTopCard().type === 'I' || thisStack.stackTopCard().type === 'G') {
-
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
-
               this.$store.commit('removeActiveCardFromHand')
-
               bus.$emit('cardDeselected')
-
               this.$store.commit('setHasPlayed', {hasPlayed: true})
-
-
+            }else if(thisStack.stackTopCard().type === 'R') {
+              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to another repetition card. Instead add the card to a stack with an Instruction or Group card." );
+              $('button[stackId="'+this.stackId+'"]').popover('toggle')
             } else {
-
-                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an Instruction or Group card. Try adding that card to a stack with an Instruction or Group card." );
-
+                  $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an Instruction or Group card. Instead add the card to a stack with an Instruction or Group card." );
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
             }
 
@@ -292,51 +238,40 @@ export default {
             break;
 
           case 'V':
-
             console.log('the current active card is a variable')
             console.log('current active card: ' + this.$store.getters.getActiveCard)
           if (thisStack.cards.length === 0) {
-
-                $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a variable card to a stack without an instruction card. Try adding that card to a stack with an instruction card." );
-
-
+                $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
           } else if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1 ) {
-
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
-
               this.$store.commit('removeActiveCardFromHand')
-
-              // the previous stack has an instruction card, give the player a new empty stack
               bus.$emit('cardDeselected')
-
               this.$store.commit('setHasPlayed', {hasPlayed:true})
-
 
             } else if (thisStack.stackTopCard().type === 'V' && thisStack.stackTopCard().value < activeCard.value) {
-
-                // remove the existing variable card from the stack and add it to the discard pile
                 this.$store.commit('stackDiscard', {stackId: this.stackId})
-
                 this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
-
-              this.$store.commit('removeActiveCardFromHand')
-
-              this.$store.commit('setHasPlayed', {hasPlayed:true})
-
+                this.$store.commit('removeActiveCardFromHand')
+                this.$store.commit('setHasPlayed', {hasPlayed:true})
 
             } else {
-                $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a variable card to a stack without a Variable (Rx) repetition card. Try adding that card to a stack with an variable Repetition Card (Rx)." );
-
-
+                $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
             }
-
-
               break;
 
+          case 'H':
+            $('button[stackId="'+this.stackId+'"]').attr("data-content", "Hack cards are not played on a stack, you must open the opponent's stack to hack them." );
+            $('button[stackId="'+this.stackId+'"]').popover('toggle');
+            break;
+
+          case 'G':
+            $('button[stackId="'+this.stackId+'"]').attr("data-content", "Group cards are not played on a stack. Click the checkbox(es) to select the cards to group together. The total of the selected card(s) must equal the value of the group card." );
+            $('button[stackId="'+this.stackId+'"]').popover('toggle');
+
           default:
-              console.log('unknown card type')
+              return '';
               break;
         }
         let stackList = this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId)
@@ -351,16 +286,11 @@ export default {
 
       }
     },
-    addToStackClicked(event) {
-        console.log('the add to stack button was clicked')
+    addToStackClicked() {
         this.addToStack()
     },
-    drop (e) {
-      console.log('a card was dragged to the stack')
-
+    drop () {
       this.addToStack()
-
-
     }
   },
   components: {

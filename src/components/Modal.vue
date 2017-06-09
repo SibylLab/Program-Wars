@@ -41,20 +41,6 @@
   export default {
     name: 'modal',
     props: ['modalId', 'modalTitle', 'modalBody', 'modalCards', 'modalCallback', 'modalCallback2', 'cancel', 'image'],
-    data () {
-      return {
-
-      }
-    },
-    computed: {
-
-    },
-    created: function () {
-
-    },
-    methods: {
-
-    },
     components: {
         'card': Card
     }

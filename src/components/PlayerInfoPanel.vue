@@ -72,9 +72,9 @@ export default {
       if(this.tipsToggle) {
         return {'display':'block'}
       } else {
-        return {'display':'none'}
-      }
-    },
+          return {'display':'none'}
+        }
+      },
       changeTrueFalse() {
           if (this.$store.getters.trueFalseAnim)
               return "trueFalse"
@@ -87,31 +87,13 @@ export default {
         else
             return ""
       },
-    selectedCard () {
-      var selectedCard;
-      for (var card in this.cards) {
-        if (card.selected === true) {
-          selectedCard = card
-        }
-      }
-
-      return selectedCard
-    },
     hand() {
-
-        let hand = this.$store.getters.getCurrentPlayerHand
-
-        console.log(hand)
-
+        let hand = this.$store.getters.getCurrentPlayerHand;
         if (hand === null){
           return []
         } else {
             return hand.cards
         }
-    },
-    currentplayerturn() {
-      let activePlayer = this.$store.getters.currentplayerturn
-      return activePlayer + 1
     },
     currentPlayerName() {
       return this.$store.getters.currentPlayerName;
@@ -146,10 +128,8 @@ export default {
         let string = ''
         let discardList = this.$store.getters.getDiscard
         if (discardList.length === 0) {
-          //alert('There are no cards in the discard pile')
           this.modalText = 'There are no cards in the discard pile.'
           $('#'+this.modalId).modal('show')
-          //'button[stackId="'+this.stackId+'"]'
 
         } else {
           string += 'Cards in the discard pile: \n'
@@ -159,7 +139,6 @@ export default {
           this.modalText = ""
           this.modalCards = discardList
           $('#'+this.modalId).modal('show')
-          //alert(string)
         }
 
     },
@@ -172,8 +151,6 @@ export default {
       this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
     },
     cardClicked (c) {
-      // alert('cardId of clicked card is ' + cardId)
-      console.log(c.id)
       this.tipsCardSelected = this.setTipBox(c);
       let prevActive = this.$store.getters.getActiveCard
 
@@ -250,10 +227,7 @@ export default {
       }
     },
     removeCard (cardId) {
-      console.log("Remove card function called")
-      console.log("Card id : ", cardId)
       this.$store.commit('removeCard', cardId)
-
     },
     getRandomInt(min, max) {
       min = Math.ceil(min);
@@ -261,31 +235,15 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
     setActiveCard(c) {
-
       this.$store.commit('selectCard', c)
-      console.log('active card set by dragging')
     }
   },
   created: function () {
     bus.$on('activeCardAddedToStack', (cardId) => {
-      // a card was selected
-      console.log('active card successfully added to stack, deslect and remove from hand')
-      console.log(cardId)
       this.removeCard(cardId)
-
       this.$store.commit('addCardToHand')
-
-      //this.cards.unshift(this.generateRandomCard())
-      //this.$options.methods.removeCard(cardId)
     });
     bus.$on('tipsToggled', () => {this.tipsToggle = !this.tipsToggle})
-
-  },
-  beforeMount: function () {
-    console.log('before Mount lifecycle method')
-  },
-  updated: function () {
-    console.log('----------------LIFECYCLE METHOD: updated')
   }
 }
 </script>
