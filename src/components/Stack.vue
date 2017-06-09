@@ -183,6 +183,7 @@ export default {
         bus.$emit('cardDeselected')
         this.$store.commit('setHasPlayed', {hasPlayed: true})
         this.$store.commit('groupStacks', {yesOrNo: false})
+        bus.$emit('playerHasPlayed');
     },
     cardAddClicked () {
       this.$emit('cardAddClicked', this.id)
@@ -274,16 +275,9 @@ export default {
               return '';
               break;
         }
-        let stackList = this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId)
-        let score = 0;
-        for (let stack of stackList) {
-          score += stack.score
-        }
-
-        if (this.trueFalse === this.$store.getters.getActiveSide) {
-          this.$store.commit('setPlayerScore', {id: this.playerId, score: score})
-        }
-
+      }
+      if(this.$store.getters.getHasPlayed) {
+        bus.$emit('playerHasPlayed');
       }
     },
     addToStackClicked() {

@@ -21,6 +21,7 @@ export default {
           state.activeCard = undefined
           state.selectedStacks = []
           state.selectedStackBoolean = undefined
+          state.winner = false
         },
 
         addPlayers(state, payload) {
@@ -185,5 +186,9 @@ export default {
 
         setTrueFalseAnim(state, payload) {
           state.trueFalseAnim = payload.startAnim
+        },
+
+        setWinner(state, payload){
+          state.winner = payload;
         }
 }

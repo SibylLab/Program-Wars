@@ -141,7 +141,9 @@ export default {
               return '';
               break;
         }
-
+        if(this.$store.getters.getHasPlayed) {
+          bus.$emit('playerHasPlayed');
+        }
       }
     },
     hackStackClicked() {

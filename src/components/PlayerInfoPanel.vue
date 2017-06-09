@@ -2,6 +2,14 @@
     <div id="player-info-panel">
 
       <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {}"></modal>
+      <div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            </button>
+            <h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>
+          </div>
+        </div>
+      </div>
 
       <h4 class="playerName"><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
@@ -22,10 +30,6 @@
         </div>
 
         <div id="controls">
-
-        <button class="btn btn-primary endTurnButton" :class="hasPlayed" :disabled="endTurnEnabled" v-on:click="endTurn">
-        End Your Turn
-      </button>
         <button class="btn btn-warning rightSide" v-on:click="discardSelected">
           Discard Selected Card
         </button>
@@ -122,6 +126,7 @@ export default {
           this.$store.commit('discardSelectedCard')
           this.$store.commit('removeActiveCardFromHand')
           this.$store.commit('setHasPlayed', { hasPlayed: true})
+          bus.$emit('playerHasPlayed')
         }
       },
     displayDiscard() {
@@ -145,10 +150,13 @@ export default {
     endTurn() {
       bus.$emit('checkWin')
       this.tipsCardSelected = this.setTipBox('default');
-      this.$store.commit('setHasPlayed', {hasPlayed:false})
-
-      this.$store.commit('endTurn', this.$store.getters.maxplayers)
-      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
+      this.$store.commit('setHasPlayed', {hasPlayed:false});
+      this.$store.commit('endTurn', this.$store.getters.maxplayers);
+      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'});
+      if(!(this.$store.getters.getWinner)) {
+          $('#playerTurn').modal();
+          setTimeout(function () {$('#playerTurn').modal('hide');}, 1500);
+      }
     },
     cardClicked (c) {
       this.tipsCardSelected = this.setTipBox(c);
@@ -243,7 +251,10 @@ export default {
       this.removeCard(cardId)
       this.$store.commit('addCardToHand')
     });
-    bus.$on('tipsToggled', () => {this.tipsToggle = !this.tipsToggle})
+    bus.$on('tipsToggled', () => {this.tipsToggle = !this.tipsToggle});
+    bus.$on('playerHasPlayed', () => {
+      setTimeout(() => {this.endTurn();}, 1)
+      })
   }
 }
 </script>
@@ -273,6 +284,7 @@ export default {
     padding-right: 50px;
     flex-basis: content;
     flex-shrink:5;
+    margin-top: -120px;
   }
 
   #cards {
@@ -290,6 +302,11 @@ export default {
     top: -50px;
     max-width: 350px;
     height: 280px;
+  }
+
+  #playerTurn {
+    position: absolute;
+    top: 350px;
   }
 
   h1, h2, h3, h4, h5 {
