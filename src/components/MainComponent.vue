@@ -142,9 +142,9 @@ export default {
 
       bus.$on('checkWin', () => {
         let players = this.$store.getters.getPlayers;
-
         for (let player of players) {
           if (player.score >= this.scoreLimit) {
+            this.$store.commit('setWinner', true);
             this.gameOverWinner = "Congratulations " + player.name + ", you win!"
             this.gameOverText = player.name + " wins!"
             $('#' + this.modalId).modal('show')
