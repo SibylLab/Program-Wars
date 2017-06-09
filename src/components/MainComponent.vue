@@ -11,7 +11,7 @@
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" @click="showCredits">Credits</button>
 
-        <a class="btn btn-primary" href="https://github.com/sscullen/program-wars/issues/new" target="_blank">Report Issue</a>
+        <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
       </div>
     </div>
 
