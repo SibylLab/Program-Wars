@@ -14,18 +14,10 @@ import Deck from '../classes/Deck'
 
 export const store = new Vuex.Store({
     state: {
-        players: [
-          /*new Player(0,'Jon',0,0),
-          new Player(1,'Dustin',1,0),
-          new Player(2,'Josh',2,0),
-          new Player(3,'Lance',3,0),
-          new Player(4,'Shaun',4,0)*/
-        ],
-        stacks: [
-        ],
+        players: [],
+        stacks: [],
         deck: new Deck(),
-        hands: [
-        ],
+        hands: [],
         currentGameState: 'newGame',
         activeSide: true,
         activePlayer: 0,
@@ -39,14 +31,10 @@ export const store = new Vuex.Store({
         trueFalseAnim: false
     },
     originalState: {
-      players: [
-
-      ],
-        stacks: [
-      ],
+      players: [],
+        stacks: [],
         deck: new Deck(),
-        hands: [
-      ],
+        hands: [],
         currentGameState: 'newGame',
         activeSide: true,
         activePlayer: 0,

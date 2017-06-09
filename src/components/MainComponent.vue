@@ -81,7 +81,6 @@ export default {
       bus.$emit('tipsToggled');
     },
     submit() {
-        console.log(this.newPlayer)
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer)
         }
@@ -146,8 +145,6 @@ export default {
 
         for (let player of players) {
           if (player.score >= this.scoreLimit) {
-            console.log('game over')
-
             this.gameOverWinner = "Congratulations " + player.name + ", you win!"
             this.gameOverText = player.name + " wins!"
             $('#' + this.modalId).modal('show')
@@ -163,32 +160,19 @@ export default {
     this.gameStart = true
 
     let gameEventLoopTimer = setInterval(() => {
-      console.log('gameEventLoop check')
       let gameState = this.$store.getters.getgameState
-
       if (gameState === 'newGame') {
-
         $('#myModal').modal('toggle')
         this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'})
         this.gameStart = true
-
-
       } else if (gameState === 'initGame') {
-
-
       } else if (gameState === 'startPlayerTurn') {
-
           this.$store.commit('addCardToHand')
-
         this.$store.commit('setGameState', {gameState: 'playerTurn'})
 
         if (this.$store.getters.getCurrentPlayerId === 0) {
           let j = Math.floor(Math.random() * 2);
-          console.log('coin flip result ', j)
-
-
           this.$store.commit('setTrueFalseAnim', {startAnim: true})
-
           if (j === 0) {
             this.$store.commit('setActiveSide', {activeSide: true})
           } else {
@@ -208,8 +192,6 @@ export default {
       }
     }, 500);
 
-
-    //TODO: Should have startup game modal thing here.
     this.initGame()
     this.fillHands()
     this.addStacksToPlayers()
@@ -228,52 +210,41 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-  #maincontainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    min-height: inherit;
+#maincontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  min-height: inherit;
 
   }
 
-  #header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    padding: 5px 10px;
-    justify-content: space-between;
-    align-items: center;
-    flex-grow:0;
+#header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow:0;
   }
 
-  #header > p {
-    margin: 0px;
-    font-weight: bold;
-    font-size: 1.2em;
+#header > p {
+  margin: 0px;
+  font-weight: bold;
+  font-size: 1.2em;
   }
 #playerinfopanel {
   flex-grow:0;
   width: 100%;
 }
-
-/*#flexcontainer {*/
-  /*width: 100%;*/
-  /*display: flex;*/
-  /*flex-direction: row;*/
-  /*flex-grow: 1;*/
-  /*align-self: flex-end;*/
-
-  /*height: 100%;*/
-  /*overflow: auto;*/
-/*}*/
-  #flexcontainer {
-    display: flex;
-    overflow: hidden;
-    height: calc(100vh - 45px - 277.5px);
-    position: relative;
-    width: 100%;
-  }
+#flexcontainer {
+  display: flex;
+  overflow: hidden;
+  height: calc(100vh - 45px - 277.5px);
+  position: relative;
+  width: 100%;
+}
 
 #player-stacks {
   flex-grow: 1;
