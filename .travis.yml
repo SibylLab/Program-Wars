@@ -10,9 +10,8 @@ notifications:
 addons:
   code_climate:
     repo_token: 814d39d2092e7f3b870f9a455dad28295a4aa15e611472ecca5a6ae547a536f6
-
-ssh_known_hosts:
-   -cullen.io
+  ssh_known_hosts:
+   - cullen.io
 
 before_script:
 - export DISPLAY=:99.0
@@ -35,8 +34,8 @@ after_success:
 - npm install -g codeclimate-test-reporter --save-dev
 - codeclimate-test-reporter < ./test/unit/coverage/lcov.info
 - openssl aes-256-cbc -K $encrypted_d5e0ba2980d8_key -iv $encrypted_d5e0ba2980d8_iv
-  -in deploy_rsa.enc -out deploy_rsa.pem -d
-  - eval "$(ssh-agent -s)"
-  - chmod 600 deploy_rsa.pem
-  - git remove add deploy ssh://git@cullen.io/var/repo/programwars.git    
-  - git push deploy 
+-in deploy_rsa.enc -out deploy_rsa.pem -d
+- eval "$(ssh-agent -s)"
+- chmod 600 deploy_rsa.pem
+- git remote add deploy ssh://git@cullen.io/var/repo/programwars.git    
+- git push deploy 
