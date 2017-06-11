@@ -36,5 +36,6 @@ after_success:
 - openssl aes-256-cbc -K $encrypted_d5e0ba2980d8_key -iv $encrypted_d5e0ba2980d8_iv -in deploy_rsa.enc -out deploy_rsa.pem -d
 - eval "$(ssh-agent -s)"
 - chmod 600 deploy_rsa.pem
+- ssh-add deploy_key2.pem
 - git remote add deploy ssh://git@cullen.io/var/repo/programwars.git    
 - git push deploy 
