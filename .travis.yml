@@ -40,6 +40,3 @@ after_success:
   - chmod 600 deploy_rsa.pem
   - git remove add deploy ssh://git@cullen.io/var/repo/programwars.git    
   - git push deploy 
-
-  on:
-    branch: master
