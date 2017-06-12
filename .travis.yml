@@ -32,4 +32,4 @@ after_success:
 - ssh-add deploy_rsa
 - git remote add deploy ssh://git@cullen.io/var/repo/programwars.git
 - git push deploy
-before_install:
+
