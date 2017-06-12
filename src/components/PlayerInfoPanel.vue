@@ -2,6 +2,14 @@
     <div id="player-info-panel">
 
       <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {}"></modal>
+      <div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            </button>
+            <h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>
+          </div>
+        </div>
+      </div>
 
       <h4 class="playerName"><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
@@ -22,10 +30,6 @@
         </div>
 
         <div id="controls">
-
-        <button class="btn btn-primary endTurnButton" :class="hasPlayed" :disabled="endTurnEnabled" v-on:click="endTurn">
-        End Your Turn
-      </button>
         <button class="btn btn-warning rightSide" v-on:click="discardSelected">
           Discard Selected Card
         </button>
@@ -72,9 +76,9 @@ export default {
       if(this.tipsToggle) {
         return {'display':'block'}
       } else {
-        return {'display':'none'}
-      }
-    },
+          return {'display':'none'}
+        }
+      },
       changeTrueFalse() {
           if (this.$store.getters.trueFalseAnim)
               return "trueFalse"
@@ -87,35 +91,16 @@ export default {
         else
             return ""
       },
-    selectedCard () {
-      var selectedCard;
-      for (var card in this.cards) {
-        if (card.selected === true) {
-          selectedCard = card
-        }
-      }
-
-      return selectedCard
-    },
     hand() {
-
-        let hand = this.$store.getters.getCurrentPlayerHand
-
-        console.log(hand)
-
+        let hand = this.$store.getters.getCurrentPlayerHand;
         if (hand === null){
           return []
         } else {
             return hand.cards
         }
     },
-    currentplayerturn() {
-      let activePlayer = this.$store.getters.currentplayerturn
-      return activePlayer + 1
-    },
     currentPlayerName() {
-        let playerName = this.$store.getters.currentPlayerName;
-        return playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
+      return this.$store.getters.currentPlayerName;
     },
     endTurnEnabled() {
         let hasPlayed = this.$store.getters.getHasPlayed
@@ -141,16 +126,15 @@ export default {
           this.$store.commit('discardSelectedCard')
           this.$store.commit('removeActiveCardFromHand')
           this.$store.commit('setHasPlayed', { hasPlayed: true})
+          bus.$emit('playerHasPlayed')
         }
       },
     displayDiscard() {
         let string = ''
         let discardList = this.$store.getters.getDiscard
         if (discardList.length === 0) {
-          //alert('There are no cards in the discard pile')
           this.modalText = 'There are no cards in the discard pile.'
           $('#'+this.modalId).modal('show')
-          //'button[stackId="'+this.stackId+'"]'
 
         } else {
           string += 'Cards in the discard pile: \n'
@@ -160,21 +144,21 @@ export default {
           this.modalText = ""
           this.modalCards = discardList
           $('#'+this.modalId).modal('show')
-          //alert(string)
         }
 
     },
     endTurn() {
       bus.$emit('checkWin')
       this.tipsCardSelected = this.setTipBox('default');
-      this.$store.commit('setHasPlayed', {hasPlayed:false})
-
-      this.$store.commit('endTurn', this.$store.getters.maxplayers)
-      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
+      this.$store.commit('setHasPlayed', {hasPlayed:false});
+      this.$store.commit('endTurn', this.$store.getters.maxplayers);
+      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'});
+      if(!(this.$store.getters.getWinner)) {
+          $('#playerTurn').modal();
+          setTimeout(function () {$('#playerTurn').modal('hide');}, 1500);
+      }
     },
     cardClicked (c) {
-      // alert('cardId of clicked card is ' + cardId)
-      console.log(c.id)
       this.tipsCardSelected = this.setTipBox(c);
       let prevActive = this.$store.getters.getActiveCard
 
@@ -185,9 +169,6 @@ export default {
           this.$store.commit('setStackSelectedBoolean', {payload: undefined})
         }
       }
-
-
-      setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
     },
     setTipBox(c) {
         switch(c.type) {
@@ -254,10 +235,7 @@ export default {
       }
     },
     removeCard (cardId) {
-      console.log("Remove card function called")
-      console.log("Card id : ", cardId)
       this.$store.commit('removeCard', cardId)
-
     },
     getRandomInt(min, max) {
       min = Math.ceil(min);
@@ -265,34 +243,18 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
     setActiveCard(c) {
-
       this.$store.commit('selectCard', c)
-
-      setTimeout(() => document.addEventListener('click', this.deselectAll), 0)
-
-      console.log('active card set by dragging')
     }
   },
   created: function () {
     bus.$on('activeCardAddedToStack', (cardId) => {
-      // a card was selected
-      console.log('active card successfully added to stack, deslect and remove from hand')
-      console.log(cardId)
       this.removeCard(cardId)
-
       this.$store.commit('addCardToHand')
-
-      //this.cards.unshift(this.generateRandomCard())
-      //this.$options.methods.removeCard(cardId)
     });
-    bus.$on('tipsToggled', () => {this.tipsToggle = !this.tipsToggle})
-
-  },
-  beforeMount: function () {
-    console.log('before Mount lifecycle method')
-  },
-  updated: function () {
-    console.log('----------------LIFECYCLE METHOD: updated')
+    bus.$on('tipsToggled', () => {this.tipsToggle = !this.tipsToggle});
+    bus.$on('playerHasPlayed', () => {
+      setTimeout(() => {this.endTurn();}, 1)
+      })
   }
 }
 </script>
@@ -322,6 +284,7 @@ export default {
     padding-right: 50px;
     flex-basis: content;
     flex-shrink:5;
+    margin-top: -120px;
   }
 
   #cards {
@@ -339,6 +302,11 @@ export default {
     top: -50px;
     max-width: 350px;
     height: 280px;
+  }
+
+  #playerTurn {
+    position: absolute;
+    top: 350px;
   }
 
   h1, h2, h3, h4, h5 {

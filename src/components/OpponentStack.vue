@@ -41,7 +41,6 @@ export default {
       if (this.playerId === this.$store.getters.getCurrentPlayerId ) {
         if (this.$store.getters.getCurrentPlayerStacks.length !== 0) {
           let stack = this.$store.getters.getCurrentPlayerStacks.find(stack => stack.stackId === this.stackId)
-          console.log("stack: ", stack)
           if (stack !== undefined) {
             return stack.cards
           } else {
@@ -50,7 +49,6 @@ export default {
         }
       } else {
         let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
-        console.log("stack: ", stack)
         if (stack !== undefined) {
           return stack.cards
         } else {
@@ -63,10 +61,8 @@ export default {
     activeCardIsHack() {
         if (this.$store.getters.getActiveCard !== undefined && this.$store.getters.getActiveCard.type === 'H') {
           let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
-            console.log("stack", stack)
             if(stack !== undefined && stack.cards[0].type !== 'G') {
               return true
-
             } else {
                 return false
             }
@@ -82,7 +78,6 @@ export default {
     },
     score() {
         let thisStack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
-         console.log("this stacks score: ", thisStack.calculateStackScore())
          thisStack.calculateStackScore()
           return thisStack.score
     },
@@ -100,7 +95,6 @@ export default {
     bus.$on('cardClickedStack', (event, card) => {
       // a card was selected
       if (card.category !== 'stack') {
-        console.log('hello ' + card.id + ' ' + card.value + ' ' + card.type + ' --- ' + card.selected)
         if (card.selected === true) {
           this.activeCard = Object.assign({}, card);
 
@@ -111,13 +105,9 @@ export default {
     })
 
     bus.$on('cardDeselected', () => {
-      // a card was selected
       this.activeCard = undefined
       this.$store.commit('setActiveCardUndefined')
       this.$store.commit('removeAllSelectedStacks')
-
-      console.log('no active card selected')
-      //this is a test again
     })
   },
   methods: {
@@ -126,65 +116,41 @@ export default {
 
     },
     hide () {
-
     },
     stackClicked () {
-      console.log('The stack knows a card was clicked')
     },
     cardClickedInStack(event, card) {
-      console.log('card in stack was clicked')
-
-
     },
     addToStack() {
-      console.log('add to stack was clicked')
 
       if (this.$store.getters.getActiveCard !== undefined) {
-        console.log('active card is not undefined')
-
-        console.log('current active card: ' + this.$store.getters.getActiveCard)
-
-        // get the active card from the store
         let activeCard = this.$store.getters.getActiveCard
         // get the stack data model that goes with this stack component
         let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
 
         switch (activeCard.type) {
           case 'H':
-            console.log('the current active card is hack')
-            console.log('current active card: ' + this.$store.getters.getActiveCard)
-
               this.$store.commit('stackDiscard', {stackId: this.stackId})
               this.$store.commit('removeStack', {stackId: this.stackId})
-
               this.$store.commit('removeActiveCardFromHand')
-
               // the previous stack has an instruction card, give the player a new empty stack
               bus.$emit('cardDeselected')
-
-              // TODO: UNCOMMENT TO MAKE TURN BUTTON WORK AGAIN
               this.$store.commit('setHasPlayed', {hasPlayed: true})
-
             break;
-
           default:
-              console.log('unknown card type')
+              return '';
               break;
-
         }
-
+        if(this.$store.getters.getHasPlayed) {
+          bus.$emit('playerHasPlayed');
+        }
       }
     },
-    hackStackClicked(event) {
-        console.log('the hack stack button was clicked')
+    hackStackClicked() {
         this.addToStack()
     },
-    drop (e) {
-      console.log('a card was dragged to the stack')
-
+    drop () {
       this.addToStack()
-
-
     }
   },
   components: {

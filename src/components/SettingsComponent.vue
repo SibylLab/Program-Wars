@@ -23,12 +23,9 @@
             <div id="scoreSelect">
             Score to Win:
             <select class="custom-select" name="select" v-model="selected">
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-              <option value="25">25</option>
-              <option value="30">30</option>
+              <option value="10">Short (score 10)</option>
+              <option value="20">Medium (score 20)</option>
+              <option value="30">Long (score 30)</option>
             </select>
             </div>
           </div>
@@ -68,9 +65,7 @@
       }
     },
     methods: {
-      submit(e) {
-        console.log(this.newPlayer)
-
+      submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer);
           this.noPlayers = false;
@@ -129,23 +124,8 @@
       'opponent-stacks': OpponentStacks
     },
     created: function () {
-
-
       this.$store.commit('resetState')
-
-//      let reload = setTimeout(() => {
-//        location.reload(true)
-//
-//      }, 250)
-
-      let gameEventLoopTimer = setTimeout(() => {
-        $('#myModal').modal('show')
-
-      }, 750)
-
-
-
-
+      setTimeout(() => {$('#myModal').modal('show')}, 750)
     }
 
   }
@@ -174,13 +154,12 @@
   }
 
   .addPlayer {
-    /*display: block;*/
     flex-shrink: 1;
     align-items: center;
   }
 
   select.custom-select {
-    width: 30px;
+    width: 160px;
     align-items: center;
   }
 

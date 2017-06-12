@@ -68,6 +68,9 @@ export default {
         },
         trueFalseAnim(state) {
           return state.trueFalseAnim
+        },
+        getWinner(state) {
+          return state.winner
         }
 }
 

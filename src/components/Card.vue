@@ -61,7 +61,6 @@ export default {
   },
   methods: {
     cardClicked (e) {
-      console.log('a card was clicked')
       if (this.$store.getters.getHasPlayed === false) {
         this.$emit('cardClicked', this.cardData)
 
@@ -69,7 +68,7 @@ export default {
           bus.$emit('cardClickedStack', e, this.cardData)
         }
       } else {
-          console.log('but the active player has already played, not setting active card')
+        return '';
       }
 
 
@@ -78,14 +77,11 @@ export default {
 
     },
     cardDragged(e) {
-      console.log('A card is being dragged')
-
       if (this.$store.getters.getHasPlayed === false) {
         this.$emit('setActiveCard', this.cardData)
         bus.$emit('cardClickedStack', e, this.cardData)
       } else {
-        console.log('but the active player has already made a play, so they cant select a card again')
-
+        return '';
       }
     }
 
