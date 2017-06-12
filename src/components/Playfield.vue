@@ -1,5 +1,5 @@
 <template>
-  <div id="playfield" :class="playfieldClass" >
+  <div id="playfield" :class="playfieldClass">
     <h3>{{ trueOrFalse }}</h3>
     <h5>Total Playfield Score: {{ score }}</h5>
 
