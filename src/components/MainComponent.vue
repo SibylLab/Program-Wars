@@ -25,8 +25,8 @@
       <div id="player-stacks">
         <h3>Your Stacks</h3>
         <div id="stacks">
-          <playfield :trueFalse="true" :playerId="currentPlayerId" :style="trueHighlighted" class="playfieldSides"></playfield>
-          <playfield :trueFalse="false" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
+          <playfield :trueFalse="true" :activeColour="this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="trueHighlighted" class="playfieldSides"></playfield>
+          <playfield :trueFalse="false" :activeColour="!this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
         </div>
       </div>
 
@@ -126,7 +126,7 @@ export default {
       }
     },
     highlighted() {
-        return 'box-shadow: 0 0 15px 10px gray';
+        return 'box-shadow: 0 0 15px 10px forestgreen';
     }
   },
   components: {
@@ -304,4 +304,5 @@ li {
 a {
   color: #fff;
 }
+
 </style>
