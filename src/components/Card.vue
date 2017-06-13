@@ -1,15 +1,11 @@
 <template>
   <div id="card" :class="cardCss" class="panel panel-default" @click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
-      <div class="panel-body flex-container">
-        <div :class="typeCss">{{ cardType }}</div>
-        <div :class="valueCss">{{ cardValue }}</div>
-      </div>
+    <img :src="cardGraphics" alt="Instruction Card (Value 1)">
   </div>
 </template>
 
 <script>
 import { bus } from './Bus'
-
 
 export default {
   name: 'Card',
@@ -22,6 +18,9 @@ export default {
     }
   },
   computed: {
+    cardGraphics() {
+      return this.cardData.cardImg;
+    },
     cardCss () {
       let classString = 'card'
 
@@ -106,7 +105,7 @@ export default {
     min-height: 120px;
     border: 0px solid #000;
     border-radius: 10px;
-    padding: 10px 0px 10px 0px;
+    /*padding: 10px 0px 10px 0px;*/
     margin: 0px 0px 0px 0px;
     }
 

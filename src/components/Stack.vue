@@ -22,7 +22,7 @@
     </button>
     <br>
     <ul id="example-1">
-      <li v-for="card in cards">
+      <li v-for="card in cards" style="zoom: 60%; margin: 4px">
             <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
       </li>
 
