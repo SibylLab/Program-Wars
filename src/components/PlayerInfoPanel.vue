@@ -5,7 +5,6 @@
       <div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            </button>
             <h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>
           </div>
         </div>

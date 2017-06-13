@@ -1,7 +1,10 @@
 <template>
   <div id="maincontainer">
+
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
+    <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></winner-modal>
+
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
@@ -16,7 +19,7 @@
       </div>
     </div>
 
-    <modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="() => this.$router.push('/')"></modal>
+    <!--<modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="() => this.$router.push('/')"></modal>-->
 
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
@@ -51,6 +54,7 @@ import OpponentStacks from './OpponentStacks'
 import Modal from './Modal'
 import RulesModal from './RulesModal.vue'
 import CreditsModal from './CreditsModal.vue'
+import WinnerModal from './WinnerModal.vue'
 
 import Card from '../classes/Card'
 import Player from '../classes/Player'
@@ -118,27 +122,29 @@ export default {
     'opponent-stacks': OpponentStacks,
     'modal': Modal,
     'rules-modal': RulesModal,
-    'credits-modal': CreditsModal
+    'credits-modal': CreditsModal,
+    'winner-modal': WinnerModal
   },
   created: function () {
 
-      bus.$on('checkWin', () => {
-        let players = this.$store.getters.getPlayers;
+//      bus.$on('checkWin', () => {
+//        let players = this.$store.getters.getPlayers;
+//
+//        for (let player of players) {
+//          if (player.score >= this.$store.getters.getScoreLimit) {
+//            $('.winner').modal('show');
+//            this.gameOverWinner = player.name
+//            this.gameOverText = player.name + " wins!"
+////            $('#' + this.modalId).modal('show');
+//            this.$store.commit('setWinner', true);
 
-        for (let player of players) {
-          if (player.score >= this.$store.getters.getScoreLimit) {
-            this.gameOverWinner = "Congratulations " + player.name + ", you win!"
-            this.gameOverText = player.name + " wins!"
-            $('#' + this.modalId).modal('show');
-            this.$store.commit('setWinner', true);
-
-            document.removeEventListener('click', () => {
-              console.log('removing event listener')
-            })
-            clearInterval(gameEventLoopTimer);
-          }
-        }
-      });
+//            document.removeEventListener('click', () => {
+//              console.log('removing event listener')
+//            })
+//            clearInterval(gameEventLoopTimer);
+//          }
+//        }
+//      });
 
     this.gameStart = true
 
