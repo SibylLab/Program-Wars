@@ -1,6 +1,7 @@
 <template>
   <div id="maincontainer">
-    <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></rules-modal>
+    <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
+    <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
@@ -9,14 +10,13 @@
         <div id="header-buttons">
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
-        <button class="btn btn-primary" @click="showCredits">Credits</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
 
         <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
       </div>
     </div>
 
     <modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="() => this.$router.push('/')"></modal>
-    <modal :modalId="creditsModal" :cancel="false" :modalTitle="creditsModalTitle" :modalBody="creditsModalText" :modalCards="[]" :modalCallback="() => {}" :image="true"></modal>
 
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
@@ -50,6 +50,7 @@ import Playfield from './Playfield'
 import OpponentStacks from './OpponentStacks'
 import Modal from './Modal'
 import RulesModal from './RulesModal.vue'
+import CreditsModal from './CreditsModal.vue'
 
 import Card from '../classes/Card'
 import Player from '../classes/Player'
@@ -71,8 +72,6 @@ export default {
       gameOverWinner: "",
       gameOverText: "",
       modalId: "gameOverModal",
-      creditsModal: "creditsModal",
-      creditsModalTitle: "Programming Wars Credits and Change Log",
       tipsToggle: true,
     }
   },
@@ -103,28 +102,14 @@ export default {
         this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true})
         this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false})
       }
-    },
-    showCredits() {
-      $('#'+this.creditsModal).modal('show')
     }
 },
   computed: {
-    creditsModalText() {
-      let messageString =
-
-        "Code by Dustin Fowler, Jonathan Vos, Josh Vandenhoek, Lance Chisholm, Shaun Cullen \n \
-        Game Concept by Dr. John Anvik \n \
-        Change Log: \n \
-        v0.0.1\n \
-        - working prototype\n \
-        "
-      return messageString
-    },
-      currentPlayerId() {
+    currentPlayerId() {
       return this.$store.getters.getCurrentPlayerId;
     },
     players() {
-        return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
+      return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
     }
   },
   components: {
@@ -132,7 +117,8 @@ export default {
     'playfield': Playfield,
     'opponent-stacks': OpponentStacks,
     'modal': Modal,
-    'rules-modal': RulesModal
+    'rules-modal': RulesModal,
+    'credits-modal': CreditsModal
   },
   created: function () {
 
@@ -197,11 +183,7 @@ export default {
 
 
   },
-  mounted: function() {
-
-  }
-
-}
+ }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
