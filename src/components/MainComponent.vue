@@ -143,7 +143,8 @@ export default {
           if (player.score >= this.$store.getters.getScoreLimit) {
             this.gameOverWinner = "Congratulations " + player.name + ", you win!"
             this.gameOverText = player.name + " wins!"
-            $('#' + this.modalId).modal('show')
+            $('#' + this.modalId).modal('show');
+            this.$store.commit('setWinner', true);
 
             document.removeEventListener('click', () => {
               console.log('removing event listener')
