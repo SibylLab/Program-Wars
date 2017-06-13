@@ -1,5 +1,5 @@
 import Deck from '../../../src/classes/Deck'
-import Card from '../../../src/classes/Card'
+// import Card from '../../../src/classes/Card'
 
 describe('Deck.js', () => {
   // test initial cards array length
