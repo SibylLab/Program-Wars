@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: indianred">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: royalblue">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -169,5 +169,9 @@
 
   a {
     color: #42b983;
+  }
+
+  #myModal{
+    background-image: url("../../static/backgroundImg/helloWorld.png");
   }
 </style>
