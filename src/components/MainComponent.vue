@@ -124,6 +124,12 @@ export default {
         if(val === true && this.factsToggle === false) {
             this.factsToggle = true;
         }
+        if(val === false) {
+            bus.$emit('tutorialOff');
+        }
+        if(val) {
+          bus.$emit('tutorialOn');
+        }
         this.$store.commit('setTips', {tutorial: val, fact: this.factsToggle});
     },
     factsToggle(val) {

@@ -260,6 +260,13 @@ export default {
     bus.$on('playerHasPlayed', () => {
       setTimeout(() => {this.endTurn();}, 1)
       })
+    bus.$on('tutorialOff', () => {
+        this.tipsCardSelected = this.setTipBox('default');
+    })
+    bus.$on('tutorialOn', () => {
+        let c = this.$store.getters.getActiveCard;
+        this.tipsCardSelected = this.setTipBox(c);
+    })
   }
 }
 </script>
