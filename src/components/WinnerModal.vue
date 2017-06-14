@@ -8,14 +8,16 @@
           <h3 class="modal-title"><b>Congratulations {{ winner }}!!</b></h3>
         </div>
         <div class="modal-body">
-          <h5>{{ winner }} is the winner with a score of {{ winnerScore }}</h5>
-          <div style="width: 50%; margin: 0 auto 0 auto;">
-            <ul>
-              <li v-for="players in runnerUp">{{ players.name }}, score: {{ players.score }}</li>
+          <div style="border: 4px ridge darkblue; padding: 5px; border-radius: 5px; background-color: royalblue;">
+            <h5 style="color: white">{{ winner }} is the winner with a score of {{ winnerScore }}</h5>
+          </div>
+          <div>
+            <ul style="list-style-type: none; padding: 10px; margin: 0 15px 0 15px;">
+              <li v-for="players in runnerUp">{{ players.name }} ({{ players.score }})</li>
             </ul>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float: right"><router-link to="/">Close</router-link></button>
+            <button class="btn btn-secondary" style="float: right"><router-link to="/">Close</router-link></button>
           </div>
         </div>
       </div>
