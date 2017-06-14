@@ -5,7 +5,8 @@
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
-      <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked @click="toggleTipBox">TUTORIAL</label>
+      <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
+        <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
@@ -25,12 +26,12 @@
       <div id="player-stacks">
         <h3>Your Stacks</h3>
         <div id="stacks">
-          <playfield v-bind:trueFalse="true" :playerId="currentPlayerId"></playfield>
-          <playfield :trueFalse="false" :playerId="currentPlayerId"></playfield>
+          <playfield :trueFalse="true" :activeColour="this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="trueHighlighted" class="playfieldSides"></playfield>
+          <playfield :trueFalse="false" :activeColour="!this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
         </div>
       </div>
 
-      <div id="opponent-stacks" v-if="gameStart">
+      <div id="opponent-stacks" v-if="gameStart" style="margin: 10px">
         <h3>Opponent Stacks</h3>
         <div id="flex-opponent-stacks">
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -73,12 +74,10 @@ export default {
       gameOverText: "",
       modalId: "gameOverModal",
       tipsToggle: true,
+      factsToggle: true,
     }
   },
   methods: {
-    toggleTipBox() {
-      bus.$emit('tipsToggled');
-    },
     submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer)
@@ -109,7 +108,24 @@ export default {
       return this.$store.getters.getCurrentPlayerId;
     },
     players() {
-      return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
+        return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
+    },
+    trueHighlighted() {
+      if(this.$store.getters.getActiveSide) {
+        return this.highlighted;
+      } else {
+        return ''
+      }
+    },
+    falseHighlighted() {
+      if(!(this.$store.getters.getActiveSide)) {
+        return this.highlighted;
+      } else {
+        return ''
+      }
+    },
+    highlighted() {
+        return 'box-shadow: 0 0 15px 10px forestgreen';
     }
   },
   components: {
@@ -119,6 +135,26 @@ export default {
     'modal': Modal,
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal
+  },
+  watch: {
+    tipsToggle(val) {
+        if(val === true && this.factsToggle === false) {
+            this.factsToggle = true;
+        }
+        if(val === false) {
+            bus.$emit('tutorialOff');
+        }
+        if(val) {
+          bus.$emit('tutorialOn');
+        }
+        this.$store.commit('setTips', {tutorial: val, fact: this.factsToggle});
+    },
+    factsToggle(val) {
+        if(val === false) {
+            this.tipsToggle = false;
+        }
+        this.$store.commit('setTips', {tutorial: this.tipsToggle, fact: val});
+    }
   },
   created: function () {
 
@@ -180,8 +216,6 @@ export default {
     this.addStacksToPlayers()
 
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
-
-
   },
  }
 </script>
@@ -260,6 +294,12 @@ export default {
 #accordion {
   height: 40%;
 }
+
+.playfieldSides{
+  padding: 8px;
+  margin: 0 10px 0 10px;
+  border-radius: 5px;
+}
 h1, h2 {
   font-weight: normal;
 }
@@ -281,4 +321,5 @@ li {
 a {
   color: #fff;
 }
+
 </style>
