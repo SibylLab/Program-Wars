@@ -22,7 +22,6 @@
                   <p>The basic elements of a program are simple to understand, but can be used to create complex
                     computer programs. In this fun, fast-paced game you try to complete a simple program before
                     the opponent player.</p>
-                  <div><a class="btn btn-default btnNext" style="float: right;"><b> next > </b></a></div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="cardType">
                   <h4>Card Types</h4>
@@ -87,9 +86,8 @@
                           card.</li>
                       </ul></li>
                   </ul>
-                  </ul>
                 </div>
-                <div role="tabpanel" class="tab-pane active" id="endOfGame">
+                <div role="tabpanel" class="tab-pane" id="endOfGame">
                   <h4>End of Game</h4>
                   <p>The game ends when the Boolean coin is flipped and your ‘running’ program
                     totals the set score limit or more instructions.</p>
@@ -98,7 +96,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;">Close</button>
           </div>
         </div>
       </div>
@@ -108,12 +106,10 @@
 
 <script>
 
-  $('.btnNext').click(function(){
-    $('.nav-tabs > .active').next('li').find('a').trigger('click');
-  });
-
   export default {
+
   }
+
 </script>
 
 <style scoped>
