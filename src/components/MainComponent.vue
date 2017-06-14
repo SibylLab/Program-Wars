@@ -5,7 +5,8 @@
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
-      <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked @click="toggleTipBox">TUTORIAL</label>
+      <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
+        <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
@@ -73,12 +74,10 @@ export default {
       gameOverText: "",
       modalId: "gameOverModal",
       tipsToggle: true,
+      factsToggle: true,
     }
   },
   methods: {
-    toggleTipBox() {
-      bus.$emit('tipsToggled');
-    },
     submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer)
@@ -136,6 +135,26 @@ export default {
     'modal': Modal,
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal
+  },
+  watch: {
+    tipsToggle(val) {
+        if(val === true && this.factsToggle === false) {
+            this.factsToggle = true;
+        }
+        if(val === false) {
+            bus.$emit('tutorialOff');
+        }
+        if(val) {
+          bus.$emit('tutorialOn');
+        }
+        this.$store.commit('setTips', {tutorial: val, fact: this.factsToggle});
+    },
+    factsToggle(val) {
+        if(val === false) {
+            this.tipsToggle = false;
+        }
+        this.$store.commit('setTips', {tutorial: this.tipsToggle, fact: val});
+    }
   },
   created: function () {
 
@@ -197,8 +216,6 @@ export default {
     this.addStacksToPlayers()
 
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
-
-
   },
  }
 </script>

@@ -54,8 +54,10 @@ export default {
       modalText: "",
       modalCards: [],
       tipsToggle: true,
+      factsToggle: true,
       tipsCardSelected:'Did you know?',
-      tipsInfoText: 'You can toggle on or off this information window by checking the \"TUTORIAL\" box in the rop right corner. ',
+      tipsInfoText: 'You can toggle on or off this information window by checking the \"FUN FACTS\" box in the top right corner. ' +
+      'You can also turn off the tutorials but keep the fun facts by checking the \"TUTORIAL\" box.',
       facts: [
         'The first high-level programming language was FORTRAN. invented in 1954 by IBM’s John Backus.',
         'The first computer programmer was a woman',
@@ -66,7 +68,7 @@ export default {
   },
   computed: {
     displayStyle() {
-      if(this.tipsToggle) {
+      if(this.$store.getters.getTips.fact) {
         return {'display':'block'}
       } else {
           return {'display':'none'}
@@ -134,7 +136,11 @@ export default {
       }
     },
     cardClicked (c) {
-      this.tipsCardSelected = this.setTipBox(c);
+      if(this.$store.getters.getTips.tutorial) {
+        this.tipsCardSelected = this.setTipBox(c);
+      } else {
+          this.tipsCardSelected = this.setTipBox('default');
+      }
       let prevActive = this.$store.getters.getActiveCard
 
       this.$store.commit('selectCard', c)
@@ -224,10 +230,16 @@ export default {
       this.removeCard(cardId)
       this.$store.commit('addCardToHand')
     });
-    bus.$on('tipsToggled', () => {this.tipsToggle = !this.tipsToggle});
     bus.$on('playerHasPlayed', () => {
       setTimeout(() => {this.endTurn();}, 1)
       })
+    bus.$on('tutorialOff', () => {
+        this.tipsCardSelected = this.setTipBox('default');
+    })
+    bus.$on('tutorialOn', () => {
+        let c = this.$store.getters.getActiveCard;
+        this.tipsCardSelected = this.setTipBox(c);
+    })
   }
 }
 </script>

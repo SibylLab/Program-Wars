@@ -22,6 +22,8 @@ export default {
           state.selectedStacks = []
           state.selectedStackBoolean = undefined
           state.winner = false
+          state.tips.tutorial = true
+          state.tips.fact = true
         },
 
         addPlayers(state, payload) {
@@ -190,5 +192,9 @@ export default {
 
         setWinner(state, payload){
           state.winner = payload;
+        },
+        setTips(state, payload) {
+          state.tips.tutorial = payload.tutorial;
+          state.tips.fact = payload.fact;
         }
 }
