@@ -195,6 +195,7 @@ export default {
     cardClickedInStack(event, card) {
     },
     addToStack() {
+
       $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" );
       $('button[stackId="'+this.stackId+'"]').popover({
         trigger: 'hover',
