@@ -25,12 +25,12 @@
       <div id="player-stacks">
         <h3>Your Stacks</h3>
         <div id="stacks">
-          <playfield v-bind:trueFalse="true" :playerId="currentPlayerId"></playfield>
-          <playfield :trueFalse="false" :playerId="currentPlayerId"></playfield>
+          <playfield :trueFalse="true" :activeColour="this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="trueHighlighted" class="playfieldSides"></playfield>
+          <playfield :trueFalse="false" :activeColour="!this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
         </div>
       </div>
 
-      <div id="opponent-stacks" v-if="gameStart">
+      <div id="opponent-stacks" v-if="gameStart" style="margin: 10px">
         <h3>Opponent Stacks</h3>
         <div id="flex-opponent-stacks">
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -109,7 +109,24 @@ export default {
       return this.$store.getters.getCurrentPlayerId;
     },
     players() {
-      return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
+        return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
+    },
+    trueHighlighted() {
+      if(this.$store.getters.getActiveSide) {
+        return this.highlighted;
+      } else {
+        return ''
+      }
+    },
+    falseHighlighted() {
+      if(!(this.$store.getters.getActiveSide)) {
+        return this.highlighted;
+      } else {
+        return ''
+      }
+    },
+    highlighted() {
+        return 'box-shadow: 0 0 15px 10px forestgreen';
     }
   },
   components: {
@@ -260,6 +277,12 @@ export default {
 #accordion {
   height: 40%;
 }
+
+.playfieldSides{
+  padding: 8px;
+  margin: 0 10px 0 10px;
+  border-radius: 5px;
+}
 h1, h2 {
   font-weight: normal;
 }
@@ -281,4 +304,5 @@ li {
 a {
   color: #fff;
 }
+
 </style>

@@ -170,4 +170,8 @@
   a {
     color: #42b983;
   }
+
+  #myModal{
+    background-image: url("../../static/backgroundImg/helloWorld.png");
+  }
 </style>
