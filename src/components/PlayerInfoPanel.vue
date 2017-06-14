@@ -257,8 +257,6 @@ export default {
       this.removeCard(cardId)
       this.$store.commit('addCardToHand')
     });
-    bus.$on('tipsToggled', () => {this.tipsToggle = !this.tipsToggle});
-    bus.$on('factsToggled', () => {this.factsToggle = !this.factsToggle});
     bus.$on('playerHasPlayed', () => {
       setTimeout(() => {this.endTurn();}, 1)
       })
