@@ -14,14 +14,9 @@
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-          <button class="btn btn-warning" @click="testingMutator">TESTING</button>
-
         <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
       </div>
     </div>
-
-    <!--<modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="() => this.$router.push('/')"></modal>-->
-
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
     </div>
@@ -81,9 +76,6 @@ export default {
     }
   },
   methods: {
-    testingMutator() {
-      this.$store.commit('setPlayerScores');
-    },
     toggleTipBox() {
       bus.$emit('tipsToggled');
     },
@@ -130,26 +122,6 @@ export default {
     'winner-modal': WinnerModal
   },
   created: function () {
-
-//      bus.$on('checkWin', () => {
-//        let players = this.$store.getters.getPlayers;
-//
-//        for (let player of players) {
-//          if (player.score >= this.$store.getters.getScoreLimit) {
-//            $('.winner').modal('show');
-//            this.gameOverWinner = player.name
-//            this.gameOverText = player.name + " wins!"
-////            $('#' + this.modalId).modal('show');
-//            this.$store.commit('setWinner', true);
-
-//            document.removeEventListener('click', () => {
-//              console.log('removing event listener')
-//            })
-//            clearInterval(gameEventLoopTimer);
-//          }
-//        }
-//      });
-
     this.gameStart = true
 
     let gameEventLoopTimer = setInterval(() => {

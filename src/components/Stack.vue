@@ -144,8 +144,7 @@ export default {
   },
   methods: {
     stackSelected() {
-//      this.$store.commit('addStackToSelected', {stackId: this.stackId})
-      this.$store.commit('addStackToSelected', {stackId: this.stackId, boolean: this.playfieldBoolean})
+      this.$store.commit('addStackToSelected', {stackId: this.stackId})
 
       this.$store.commit('setStackSelectedBoolean', {boolean: this.playfieldBoolean})
 
@@ -196,7 +195,6 @@ export default {
     cardClickedInStack(event, card) {
     },
     addToStack() {
-
       $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" );
       $('button[stackId="'+this.stackId+'"]').popover({
         trigger: 'hover',
