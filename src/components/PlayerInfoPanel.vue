@@ -125,6 +125,7 @@ export default {
           this.$store.commit('discardSelectedCard')
           this.$store.commit('removeActiveCardFromHand')
           this.$store.commit('setHasPlayed', { hasPlayed: true})
+          this.$store.commit('setPlayerScores');
           bus.$emit('playerHasPlayed')
         }
       },

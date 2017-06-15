@@ -144,7 +144,8 @@ export default {
   },
   methods: {
     stackSelected() {
-      this.$store.commit('addStackToSelected', {stackId: this.stackId})
+//      this.$store.commit('addStackToSelected', {stackId: this.stackId})
+      this.$store.commit('addStackToSelected', {stackId: this.stackId, boolean: this.playfieldBoolean})
 
       this.$store.commit('setStackSelectedBoolean', {boolean: this.playfieldBoolean})
 
@@ -240,8 +241,6 @@ export default {
             break;
 
           case 'V':
-            console.log('the current active card is a variable')
-            console.log('current active card: ' + this.$store.getters.getActiveCard)
           if (thisStack.cards.length === 0) {
                 $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
@@ -278,6 +277,7 @@ export default {
         }
       }
       if(this.$store.getters.getHasPlayed) {
+        this.$store.commit('setPlayerScores');
         bus.$emit('playerHasPlayed');
       }
     },

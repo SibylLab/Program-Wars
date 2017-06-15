@@ -1,7 +1,8 @@
 <template>
   <div id="playfield" :class="playfieldClass" >
     <h3>{{ trueOrFalse }}</h3>
-    <h5>Total Playfield Score: {{ score }}</h5>
+    <!--<h5>Total Playfield Score: {{ score }}</h5>-->
+    <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
 
     <ul id="example-1">
         <li v-for="stack in stacks">
@@ -43,16 +44,49 @@ export default {
       return this.getStackList();
     },
     score() {
-        let stackList = this.getStackList()
-         let score = 0;
-        for (let stack of stackList) {
-            score += stack.score
-        }
-        if (this.trueFalse === this.$store.getters.getActiveSide) {
-            this.$store.commit('setPlayerScore', {id: this.playerId, score: score})
-        }
-        return score
+//      if(this.trueFale) {
+//        console.log(this.$store.getters.getPlayers[this.playerId].trueScore)
+////        return this.$store.getters.getPlayers[this.playerId].trueScore;
+//        return 6;
+//      } else {
+//        return this.$store.getters.getPlayers[this.playerId].falseScore;
+//      }
+      return {trueScore: this.$store.getters.getPlayers[this.playerId].trueScore,
+              falseScore: this.$store.getters.getPlayers[this.playerId].falseScore}
+//      this.$store.commit('setPlayerScores');
     }
+//      let stackList = this.getStackList()
+//      let trueScore = 0;
+//      let falseScore = 0;
+//      for (let stack of stackList) {
+//        if(stack.boolSide) {
+//          trueScore += stack.score
+//        } else {
+//          falseScore += stack.score
+//        }
+//      }
+//      this.$store.commit('setPlayerScore', {id: this.playerId, trueScore: trueScore, falseScore: falseScore})
+////      if (this.trueFalse === this.$store.getters.getActiveSide) {
+////        this.$store.commit('setPlayerScore', {id: this.playerId, score: trueScore})
+////      }
+//      if(this.trueFalse) {
+//        return trueScore;
+//      } else {
+//        return falseScore;
+//      }
+//    }
+
+//        let stackList = this.getStackList()
+//         let score = 0;
+//        for (let stack of stackList) {
+//          console.log(stack)
+//            score += stack.score
+//        }
+//        if (this.trueFalse === this.$store.getters.getActiveSide) {
+//            this.$store.commit('setPlayerScore', {id: this.playerId, score: score})
+//        }
+//        return score
+//    }
   },
   components: {
     'stack': Stack

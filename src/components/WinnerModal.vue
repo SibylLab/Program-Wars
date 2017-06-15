@@ -13,7 +13,7 @@
           </div>
           <div>
             <ul style="list-style-type: none; padding: 10px; margin: 0 15px 0 15px;">
-              <li v-for="players in runnerUp">{{ players.name }} ({{ players.score }})</li>
+              <li v-for="players in runnerUp">{{ players.name }} ({{ players.trueScore }})</li>
             </ul>
           </div>
           <div class="modal-footer">
@@ -42,14 +42,21 @@
         let players = this.$store.getters.getPlayers;
 
         for (let player of players) {
-          if (player.score >= this.$store.getters.getScoreLimit) {
+          let score = 0;
+          if(this.$store.getters.getActiveSide) {
+            score = player.trueScore;
+          } else {
+            score = player.falseScore;
+          }
+          if (score >= this.$store.getters.getScoreLimit) {
             $('.winner').modal('show');
             this.winner = player.name;
-            this.winnerScore = player.score;
+            this.winnerScore = score;
             this.$store.commit('setWinner', true);
+            this.runnerUp = [];
             for(let looser of players) {
               if(looser.name != this.winner) {
-                this.runnerUp.push({name: looser.name, score: looser.score});
+                this.runnerUp.push({name: looser.name, trueScore: looser.trueScore, falseScore : looser.falseScore});
               }
             }
           }

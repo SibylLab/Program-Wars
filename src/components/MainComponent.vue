@@ -14,6 +14,7 @@
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
+          <button class="btn btn-warning" @click="testingMutator">TESTING</button>
 
         <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
       </div>
@@ -80,6 +81,9 @@ export default {
     }
   },
   methods: {
+    testingMutator() {
+      this.$store.commit('setPlayerScores');
+    },
     toggleTipBox() {
       bus.$emit('tipsToggled');
     },
@@ -167,6 +171,7 @@ export default {
           } else {
             this.$store.commit('setActiveSide', {activeSide: false})
           }
+          bus.$emit('checkWin');
 
           setTimeout(() => {
 
