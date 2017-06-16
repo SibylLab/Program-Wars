@@ -2,6 +2,9 @@
   <div id="maincontainer">
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
+    <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></hack-modal>
+
+
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
@@ -9,6 +12,7 @@
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
+          <button class="btn btn-danger" data-toggle="modal" data-target=".hack">HACK test</button>
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
@@ -52,6 +56,7 @@ import OpponentStacks from './OpponentStacks'
 import Modal from './Modal'
 import RulesModal from './RulesModal.vue'
 import CreditsModal from './CreditsModal.vue'
+import HackModal from './HackModal.vue'
 
 import Card from '../classes/Card'
 import Player from '../classes/Player'
@@ -134,7 +139,8 @@ export default {
     'opponent-stacks': OpponentStacks,
     'modal': Modal,
     'rules-modal': RulesModal,
-    'credits-modal': CreditsModal
+    'credits-modal': CreditsModal,
+    'hack-modal': HackModal
   },
   watch: {
     tipsToggle(val) {
