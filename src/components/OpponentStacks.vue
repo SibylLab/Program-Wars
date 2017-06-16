@@ -4,7 +4,8 @@
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" :href="'#collapse' + player.id" aria-expanded="false" :aria-controls="'collapse'+ player.id">
           <h3>{{ playerName }}</h3>
-          <h6>Active Side Score: {{ score }}</h6>
+          <h6>True Side Score: {{ score.trueScore }}</h6>
+          <h6>False Side Score: {{ score.falseScore }}</h6>
         </a>
       </h4>
     </div>
@@ -55,7 +56,8 @@ export default {
       return this.$store.getters.getStacks.filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === false)
     },
     score() {
-     return this.player.score
+      return  {trueScore: this.player.trueScore,
+              falseScore: this.player.falseScore};
     }
   },
 
