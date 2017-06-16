@@ -1,7 +1,7 @@
 <template>
   <div id="playfield" :class="playfieldClass">
     <h3>{{ trueOrFalse }}</h3>
-    <h5>Total Playfield Score: {{ score }}</h5>
+    <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
 
     <ul id="example-1">
         <li v-for="stack in stacks">
@@ -43,15 +43,8 @@ export default {
       return this.getStackList();
     },
     score() {
-        let stackList = this.getStackList()
-         let score = 0;
-        for (let stack of stackList) {
-            score += stack.score
-        }
-        if (this.trueFalse === this.$store.getters.getActiveSide) {
-            this.$store.commit('setPlayerScore', {id: this.playerId, score: score})
-        }
-        return score
+      return {trueScore: this.$store.getters.getPlayers[this.playerId].trueScore,
+              falseScore: this.$store.getters.getPlayers[this.playerId].falseScore};
     }
   },
   components: {
