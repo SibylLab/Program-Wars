@@ -4,7 +4,7 @@
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
-    :winner="winner" :runnerUp="runnerUp"></winner-modal>
+    :winner="winner" :playerList="playerList" :winnerScore="winnerScore"></winner-modal>
 
     <div id="header">
       <p>Programming Wars</p>
@@ -74,8 +74,9 @@ export default {
       gameOverText: "",
       modalId: "gameOverModal",
       tipsToggle: true,
-      runnerUp: [],
-      winner: []
+      playerList: [],
+      winner: '',
+      winnerScore: 0
     }
   },
   methods: {
@@ -126,24 +127,24 @@ export default {
   },
   created: function () {
     bus.$on('checkWin', () => {
-      let players = this.$store.getters.getPlayers;
-
-      for (let player of players) {
+      this.playerList = this.$store.getters.getPlayers;
+      let highScore = 0;
+      for (let player of this.playerList) {
         let score = 0;
-        if(this.$store.getters.getActiveSide) {
+        if (this.$store.getters.getActiveSide) {
           score = player.trueScore;
         } else {
           score = player.falseScore;
         }
         if (score >= this.$store.getters.getScoreLimit) {
-          $('.winner').modal('show');
-          this.winner.name = player.name;
-          this.winner.score = score;
-          this.$store.commit('setWinner', true);
-            this.runnerUp = [];
-          for(let looser of players) {
-            this.runnerUp.push({name: looser.name, trueScore: looser.trueScore, falseScore : looser.falseScore});
+          if(score > highScore) {
+            highScore = score;
+            this.winner = player.name;
+            this.winnerScore = score;
           }
+          console.log(highScore)
+          $('.winner').modal('show');
+          this.$store.commit('setWinner', true);
         }
       }
     });
