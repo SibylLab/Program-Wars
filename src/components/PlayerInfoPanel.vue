@@ -1,7 +1,6 @@
 <template>
     <div id="player-info-panel">
 
-      <modal modalId="discardCards" modalTitle="Cards in the Discard Pile" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {}"></modal>
       <div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -10,7 +9,6 @@
         </div>
       </div>
 
-      <h4 class="playerName"><b>{{ currentPlayerName }}</b>, It's Your Turn!</h4>
       <div id="flexcontainer">
         <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
           <div class="panel panel-default" style="border-radius: 10px">
@@ -21,6 +19,7 @@
         <div id="cards">
 
           <ul id="example-1">
+            <h4 class="modal-title"><b>{{ currentPlayerName }}</b>, It's Your Turn</h4>
               <li v-for="card in hand">
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
@@ -29,14 +28,9 @@
         </div>
 
         <div id="controls">
-        <button class="btn btn-warning rightSide" v-on:click="discardSelected">
-          Discard Selected Card
+        <button class="btn btn-success btn-lg rightSide" v-on:click="discardSelected">
+          Discard <br/> Selected Card
         </button>
-
-        <button class="btn btn-primary rightSide" v-on:click="displayDiscard">
-          Show Discarded Cards
-        </button>
-
         </div>
 
       </div>
@@ -60,8 +54,10 @@ export default {
       modalText: "",
       modalCards: [],
       tipsToggle: true,
+      factsToggle: true,
       tipsCardSelected:'Did you know?',
-      tipsInfoText: 'You can toggle on or off this information window by checking the \"TUTORIAL\" box in the rop right corner. ',
+      tipsInfoText: 'You can toggle on or off this information window by checking the \"FUN FACTS\" box in the top right corner. ' +
+      'You can also turn off the tutorials but keep the fun facts by checking the \"TUTORIAL\" box.',
       facts: [
         'The first high-level programming language was FORTRAN. invented in 1954 by IBM’s John Backus.',
         'The first computer programmer was a woman',
@@ -72,7 +68,7 @@ export default {
   },
   computed: {
     displayStyle() {
-      if(this.tipsToggle) {
+      if(this.$store.getters.getTips.fact) {
         return {'display':'block'}
       } else {
           return {'display':'none'}
@@ -129,24 +125,6 @@ export default {
           bus.$emit('playerHasPlayed')
         }
       },
-    displayDiscard() {
-        let string = ''
-        let discardList = this.$store.getters.getDiscard
-        if (discardList.length === 0) {
-          this.modalText = 'There are no cards in the discard pile.'
-          $('#'+this.modalId).modal('show')
-
-        } else {
-          string += 'Cards in the discard pile: \n'
-          for (let card of discardList) {
-            string += card.value + ' ' + card.type + ' --- ' + '\n'
-          }
-          this.modalText = ""
-          this.modalCards = discardList
-          $('#'+this.modalId).modal('show')
-        }
-
-    },
     endTurn() {
       bus.$emit('checkWin')
       this.tipsCardSelected = this.setTipBox('default');
@@ -159,7 +137,11 @@ export default {
       }
     },
     cardClicked (c) {
-      this.tipsCardSelected = this.setTipBox(c);
+      if(this.$store.getters.getTips.tutorial) {
+        this.tipsCardSelected = this.setTipBox(c);
+      } else {
+          this.tipsCardSelected = this.setTipBox('default');
+      }
       let prevActive = this.$store.getters.getActiveCard
 
       this.$store.commit('selectCard', c)
@@ -194,12 +176,10 @@ export default {
             return 'Variable Card'; break;
 
           case 'H':
-            this.tipsInfoText = 'Hack cards are a special card that players are allotted at the ' +
-              'beginning of the game. The Hack card can be played by a player on their turn with ' +
-              'the purpose of removing cards from an opposing players’ playfield. ' +
+            this.tipsInfoText = 'The Hack card can be played with ' +
+              'the purpose of removing cards from an opponent\'s stack. ' +
               'When a Hack card is played, players specify a target for the Hack card, ' +
-              'and that card is discarded. If there are any modifier cards on top of the targeted card, ' +
-              'those cards are discarded from play as well. All cards are targetable by a ' +
+              'and that stack is discarded. All cards are targetable by a ' +
               'Hack card with the exception of Group cards.';
             return 'Hack Card'; break;
 
@@ -207,7 +187,7 @@ export default {
             this.tipsInfoText = 'Group cards are used to emulate the notion of a function, ' +
               'essentially aggregating a set of instructions together into one unit. ' +
               'Group cards are played on one or more stacks of cards. ' +
-              'In order to play a Group card on one or more stacks, ' +
+              'In order to play a Group card ' +
               'the total point value of each of the stacks must be equal to the value of the Group card.';
             return 'Group Card'; break;
 
@@ -251,10 +231,16 @@ export default {
       this.removeCard(cardId)
       this.$store.commit('addCardToHand')
     });
-    bus.$on('tipsToggled', () => {this.tipsToggle = !this.tipsToggle});
     bus.$on('playerHasPlayed', () => {
       setTimeout(() => {this.endTurn();}, 1)
       })
+    bus.$on('tutorialOff', () => {
+        this.tipsCardSelected = this.setTipBox('default');
+    })
+    bus.$on('tutorialOn', () => {
+        let c = this.$store.getters.getActiveCard;
+        this.tipsCardSelected = this.setTipBox(c);
+    })
   }
 }
 </script>
@@ -299,7 +285,7 @@ export default {
 
   #tipBox {
     position: relative;
-    top: -50px;
+    top: 0;
     max-width: 350px;
     height: 280px;
   }
@@ -347,8 +333,9 @@ a {
   }
 
   .rightSide {
-    float: right;
     margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 80px;
   }
 
   .trueFalse {

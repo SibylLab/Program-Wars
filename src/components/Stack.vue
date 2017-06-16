@@ -296,11 +296,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #stack{
-    background-color: #cff;
-    min-width: 150px;
-    min-height: 50px;
-    color: #000;
+  background-color: cornflowerblue;
+  min-width: 150px;
+  min-height: 50px;
+  color: #000;
   margin-top: 5px;
+  padding-bottom:3px;
+  border-radius: 8px;
+  border: 1px solid gray;
+  box-shadow: 4px 4px 9px 1px black;
 }
 
 h1, h2 {

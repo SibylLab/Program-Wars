@@ -1,5 +1,5 @@
 <template>
-  <div id="playfield" :class="playfieldClass" >
+  <div id="playfield" :class="playfieldClass">
     <h3>{{ trueOrFalse }}</h3>
     <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
 
@@ -16,7 +16,7 @@ import Stack from './Stack'
 
 export default {
   name: 'Playfield',
-  props: ['trueFalse', 'playerId'],
+  props: ['trueFalse', 'playerId', 'activeColour'],
   data () {
     return {
       title: 'Playfield',
@@ -33,10 +33,10 @@ export default {
       }
     },
     playfieldClass () {
-      if (this.trueFalse) {
-        return 'light'
+      if (this.activeColour) {
+        return 'active'
       } else {
-          return 'dark'
+          return 'notActive'
       }
     },
     stacks() {
@@ -96,6 +96,7 @@ h1, h2 {
 h3, h5 {
   margin-top: 0px;
   margin-bottom: 0px;
+  color: black;
 }
 
 ul {
@@ -111,16 +112,16 @@ a {
   color: #42b983;
 }
 
-#playfield.dark {
-  background-color: #666;
+#playfield.active {
+  background-color: rgba(0, 255, 0, 0.26);
+    /*#666;*/
   color: #fff;
 }
 
-#playfield.dark > h3, #playfield.dark > h5 {
-  color: #fff;
+#playfield.notActive {
+  background-color: rgba(242, 0, 0, 0.36);
+    /*#eee;*/
 }
 
-#playfield.light {
-  background-color: #eee;
-}
+
 </style>

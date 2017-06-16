@@ -71,6 +71,9 @@ export default {
         },
         getWinner(state) {
           return state.winner
+        },
+        getTips(state) {
+          return state.tips
         }
 }
 

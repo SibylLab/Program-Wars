@@ -29,7 +29,8 @@ export const store = new Vuex.Store({
         scoreLimit: 10,
         groupStacks: false,
         trueFalseAnim: false,
-        winner: false
+        winner: false,
+        tips: {tutorial: true, fact: true}
     },
     originalState: {
       players: [],
