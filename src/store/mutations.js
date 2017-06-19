@@ -29,7 +29,7 @@ export default {
         addPlayers(state, payload) {
             let id = 0;
             for(let p of payload.list){
-              let pp = new Player(id,p,undefined,0);
+              let pp = new Player(id,p,undefined,0, 0);
               state.players.push(pp);
               id++;
             }
@@ -175,7 +175,8 @@ export default {
 
         setPlayerScore(state, payload) {
           let player = state.players.find(player => player.id === payload.id)
-          player.score = payload.score
+          player.trueScore = payload.trueScore;
+          player.falseScore = payload.falseScore;
         },
 
         setActiveSide(state, payload) {
@@ -193,8 +194,25 @@ export default {
         setWinner(state, payload){
           state.winner = payload;
         },
+        setPlayerScores(state) {
+          let players = state.players;
+          let stacks = state.stacks;
+          for (let player of players) {
+            player.trueScore = 0;
+            player.falseScore = 0;
+            for (let stack of stacks) {
+              if (stack.playerId === player.id) {
+                if (stack.boolSide) {
+                  player.trueScore += stack.score;
+                } else
+                  player.falseScore += stack.score;
+              }
+            }
+          }
+        },
         setTips(state, payload) {
           state.tips.tutorial = payload.tutorial;
           state.tips.fact = payload.fact;
+
         }
 }

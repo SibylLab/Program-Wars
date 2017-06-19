@@ -1,8 +1,11 @@
 <template>
   <div id="maincontainer">
+
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></hack-modal>
+    <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+    :winner="winner" :playerList="playerList" :winnerScore="winnerScore"></winner-modal>
 
 
     <div id="header">
@@ -16,13 +19,9 @@
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-
         <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
       </div>
     </div>
-
-    <modal :modalId="modalId" :cancel="false" :modalTitle="gameOverWinner" :modalBody="gameOverText" :modalCards="modalCards" :modalCallback="() => this.$router.push('/')"></modal>
-
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
     </div>
@@ -57,6 +56,8 @@ import Modal from './Modal'
 import RulesModal from './RulesModal.vue'
 import CreditsModal from './CreditsModal.vue'
 import HackModal from './HackModal.vue'
+import WinnerModal from './WinnerModal.vue'
+
 
 import Card from '../classes/Card'
 import Player from '../classes/Player'
@@ -80,6 +81,10 @@ export default {
       modalId: "gameOverModal",
       tipsToggle: true,
       factsToggle: true,
+      playerList: [],
+      winner: '',
+      winnerScore: 0
+
     }
   },
   methods: {
@@ -140,7 +145,9 @@ export default {
     'modal': Modal,
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal,
-    'hack-modal': HackModal
+    'hack-modal': HackModal,
+    'winner-modal': WinnerModal
+
   },
   watch: {
     tipsToggle(val) {
@@ -163,25 +170,28 @@ export default {
     }
   },
   created: function () {
-
-      bus.$on('checkWin', () => {
-        let players = this.$store.getters.getPlayers;
-
-        for (let player of players) {
-          if (player.score >= this.$store.getters.getScoreLimit) {
-            this.gameOverWinner = "Congratulations " + player.name + ", you win!"
-            this.gameOverText = player.name + " wins!"
-            $('#' + this.modalId).modal('show');
-            this.$store.commit('setWinner', true);
-
-            document.removeEventListener('click', () => {
-              console.log('removing event listener')
-            })
-            clearInterval(gameEventLoopTimer);
-          }
+    bus.$on('checkWin', () => {
+      this.playerList = this.$store.getters.getPlayers;
+      let highScore = 0;
+      for (let player of this.playerList) {
+        let score = 0;
+        if (this.$store.getters.getActiveSide) {
+          score = player.trueScore;
+        } else {
+          score = player.falseScore;
         }
-      });
-
+        if (score >= this.$store.getters.getScoreLimit) {
+          if(score > highScore) {
+            highScore = score;
+            this.winner = player.name;
+            this.winnerScore = score;
+          }
+          console.log(highScore)
+          $('.winner').modal('show');
+          this.$store.commit('setWinner', true);
+        }
+      }
+    });
     this.gameStart = true
 
     let gameEventLoopTimer = setInterval(() => {
@@ -203,6 +213,7 @@ export default {
           } else {
             this.$store.commit('setActiveSide', {activeSide: false})
           }
+          bus.$emit('checkWin');
 
           setTimeout(() => {
 
