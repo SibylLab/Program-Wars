@@ -1,5 +1,5 @@
 <template>
-  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked()" @click.stop>
+  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked()" @click.stop style="text-align: center; border: 2px solid darkgrey; border-radius: 5px">
     <ul id="example-1">
 
       <span>Stack Score: {{ score }}</span>
@@ -162,7 +162,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #stack{
-    background-color: #cff;
+    background-color: lightgrey;
     width: 100%;
 
     color: #000;

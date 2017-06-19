@@ -5,41 +5,20 @@
         <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-          <h3 class="modal-title">Programming Wars Rules</h3>
+          <h3 class="modal-title">Opponent Stacks</h3>
         </div>
         <div class="modal-body">
           <div class="container">
             <ul class="nav nav-tabs">
-              <!--<li class="active"><a data-toggle="tab" href="#home">Home</a></li>-->
-              <li v-for="player in playerList" :class="isActive"><a data-toggle="tab" :href="'#' + player.name">{{ player.name }}</a></li>
+              <li v-for="player in players"><a data-toggle="tab" :href="'#' + player.name">{{ player.name }}</a></li>
             </ul>
 
             <div class="tab-content" style="text-align: left">
-              <!--<div id="home" class="tab-pane fade in active">-->
-              <!--</div>-->
-
-              <div v-for="player in playerList" :id="player.name" class="tab-pane fade">
-                <h5>True Score: {{ player.trueScore }} ~ False Score: {{ player.falseScore }}</h5>
-                <hr>
-                <p>True Stacks</p>
-                <div v-if="trueStacks.length !== 0" id="example-1">
-                  <div v-for="stack in trueStacks" class="stacks">
-                    <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
-                  </div>
-                </div>
-                <h6 v-else>There are no stacks!</h6>
-                <h6>False Stacks</h6>
-                <div v-if="falseStacks.length !== 0" id="example-2">
-                  <div v-for="stack in falseStacks" class="stacks">
-                    <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
-                  </div>
-                </div>
-                <h6 v-else>There are no stacks!</h6>
-              </div>
-
+              <div v-for="player in players" :id="player.name" class="tab-pane fade">
+                <opponent-stacks :player="player"></opponent-stacks>
             </div>
           </div>
-
+          </div>
 
         </div>
         <div class="modal-footer">
@@ -53,52 +32,14 @@
 
 <script>
 
-  import OpponentStack from './OpponentStack'
+  import OpponentStacks from './OpponentStacks.vue'
 
   export default {
-  props: ['player'],
-    data() {
-      return {
-        playerList: []
-      }
-    },
+    props: ['players'],
     components: {
-      'opponent-stack': OpponentStack
-    },
-    created() {
-//        this.playerList = this.$store.getters.getCurrentOpponents;
-      this.playerList = this.$store.getters.getPlayers;
-//      let players = this.$store.getters.getPlayers;
-//      let currentPlayer = this.$store.getters.getCurrentPlayerId;
-//      for(let player of players) {
-//        if(player.id !== currentPlayer) {
-//          this.playerList.push(player);
-//        }
-//      }
-    },
-    computed: {
-      isActive() {
-        for(let player of this.playerList){
-          if(player.id === 0) {
-            console.log(player.id)
-            return '';
-          } else {
-            return '';
-          }
-        }
-      },
-      trueStacks () {
-        return this.$store.getters.getStacks.filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === true)
-      },
-      falseStacks () {
-        return this.$store.getters.getStacks.filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === false)
-      }
-    },
-
-    methods: {
-      hackStack(e) {
-      }
+      'opponent-stacks': OpponentStacks
     }
+
   }
 
 </script>
