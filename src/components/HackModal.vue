@@ -19,7 +19,22 @@
               <!--</div>-->
 
               <div v-for="player in playerList" :id="player.name" class="tab-pane fade">
-                <h1>{{ player.name }}</h1>
+                <h5>True Score: {{ player.trueScore }} ~ False Score: {{ player.falseScore }}</h5>
+                <hr>
+                <p>True Stacks</p>
+                <div v-if="trueStacks.length !== 0" id="example-1">
+                  <div v-for="stack in trueStacks" class="stacks">
+                    <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
+                  </div>
+                </div>
+                <h6 v-else>There are no stacks!</h6>
+                <h6>False Stacks</h6>
+                <div v-if="falseStacks.length !== 0" id="example-2">
+                  <div v-for="stack in falseStacks" class="stacks">
+                    <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id"></opponent-stack>
+                  </div>
+                </div>
+                <h6 v-else>There are no stacks!</h6>
               </div>
 
             </div>
@@ -38,14 +53,28 @@
 
 <script>
 
+  import OpponentStack from './OpponentStack'
+
   export default {
+  props: ['player'],
     data() {
       return {
         playerList: []
       }
     },
+    components: {
+      'opponent-stack': OpponentStack
+    },
     created() {
+//        this.playerList = this.$store.getters.getCurrentOpponents;
       this.playerList = this.$store.getters.getPlayers;
+//      let players = this.$store.getters.getPlayers;
+//      let currentPlayer = this.$store.getters.getCurrentPlayerId;
+//      for(let player of players) {
+//        if(player.id !== currentPlayer) {
+//          this.playerList.push(player);
+//        }
+//      }
     },
     computed: {
       isActive() {
@@ -57,17 +86,26 @@
             return '';
           }
         }
+      },
+      trueStacks () {
+        return this.$store.getters.getStacks.filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === true)
+      },
+      falseStacks () {
+        return this.$store.getters.getStacks.filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === false)
+      }
+    },
+
+    methods: {
+      hackStack(e) {
       }
     }
-//    computed: {
-//      getPlayerList() {
-//        this.playerList = this.$store.getters.getPlayers;
-//      }
-//    }
   }
 
 </script>
 
 <style scoped>
-
+.stacks {
+  width: 120px;
+  border: 1px solid black;
+}
 </style>

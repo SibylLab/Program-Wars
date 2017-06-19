@@ -74,6 +74,15 @@ export default {
         },
         getTips(state) {
           return state.tips
+        },
+        getCurrentOpponents(state) {
+          let players = state.getPlayers;
+          for(let player of players) {
+            if(player.id !== state.currentId) {
+              state.currentOpponents.push(player);
+            }
+          }
+          return state.currentOpponents;
         }
 }
 
