@@ -116,9 +116,6 @@ export default {
     'modal': Modal
   },
   methods: {
-    openHackModal() {
-      $('.hack').modal('show');
-    },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {
         this.$store.commit('discardSelectedCard')
