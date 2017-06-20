@@ -15,7 +15,6 @@
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
-          <button class="btn btn-danger" data-toggle="modal" data-target=".hack">HACK test</button>
         <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
@@ -33,17 +32,7 @@
           <playfield :trueFalse="false" :activeColour="!this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
         </div>
       </div>
-
-      <div id="opponent-stacks" v-if="gameStart" style="margin: 10px">
-        <h3>Opponent Stacks</h3>
-        <div id="flex-opponent-stacks">
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <opponent-stacks v-for="player in players" :player="player"></opponent-stacks>
-          </div>
-      </div>
     </div>
-
-  </div>
   </div>
 </template>
 
@@ -186,7 +175,6 @@ export default {
             this.winner = player.name;
             this.winnerScore = score;
           }
-          console.log(highScore)
           $('.winner').modal('show');
           this.$store.commit('setWinner', true);
         }
@@ -246,6 +234,7 @@ export default {
   align-items: flex-end;
   justify-content: flex-start;
   min-height: inherit;
+  min-width: inherit;
 
   }
 

@@ -114,13 +114,11 @@ a {
 
 #playfield.active {
   background-color: rgba(0, 255, 0, 0.26);
-    /*#666;*/
   color: #fff;
 }
 
 #playfield.notActive {
   background-color: rgba(242, 0, 0, 0.36);
-    /*#eee;*/
 }
 
 

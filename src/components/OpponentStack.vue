@@ -5,12 +5,12 @@
       <span>Stack Score: {{ score }}</span>
 
 
-      <button v-if="activeCardIsHack" class="btn btn-danger" :class="buttonStyle" v-on:click="hackStackClicked">
+      <button v-if="activeCardIsHack" class="btn btn-danger btn-sm" :class="buttonStyle" v-on:click="hackStackClicked" style="margin: 4px;">
         HACK
       </button>
       <br>
 
-      <li v-for="card in cards" style="zoom: 60%; margin: 4px">
+      <li v-for="card in cards" style="zoom: 60%; margin: 4px; ">
             <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
       </li>
 
@@ -60,6 +60,7 @@ export default {
     },
     activeCardIsHack() {
         if (this.$store.getters.getActiveCard !== undefined && this.$store.getters.getActiveCard.type === 'H') {
+          $('.hack').modal('show');
           let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
             if(stack !== undefined && stack.cards[0].type !== 'G') {
               return true
@@ -148,6 +149,7 @@ export default {
     },
     hackStackClicked() {
         this.addToStack()
+      $('.hack').modal('hide');
     },
     drop () {
       this.addToStack()
