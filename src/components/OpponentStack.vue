@@ -1,16 +1,16 @@
 <template>
-  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked()" @click.stop>
+  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" :class="stackCss" @click="stackClicked()" @click.stop style="text-align: center; border: 2px solid darkgrey; border-radius: 5px">
     <ul id="example-1">
 
       <span>Stack Score: {{ score }}</span>
 
 
-      <button v-if="activeCardIsHack" class="btn btn-danger" :class="buttonStyle" v-on:click="hackStackClicked">
+      <button v-if="activeCardIsHack" class="btn btn-danger btn-sm" :class="buttonStyle" v-on:click="hackStackClicked" style="margin: 4px;">
         HACK
       </button>
       <br>
 
-      <li v-for="card in cards" style="zoom: 60%; margin: 4px">
+      <li v-for="card in cards" style="zoom: 60%; margin: 4px; ">
             <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
       </li>
 
@@ -60,6 +60,7 @@ export default {
     },
     activeCardIsHack() {
         if (this.$store.getters.getActiveCard !== undefined && this.$store.getters.getActiveCard.type === 'H') {
+          $('.hack').modal('show');
           let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
             if(stack !== undefined && stack.cards[0].type !== 'G') {
               return true
@@ -147,7 +148,8 @@ export default {
       }
     },
     hackStackClicked() {
-      this.addToStack()
+      this.addToStack();
+      $('.hack').modal('hide');
       this.$store.commit('setPlayerScores');
     },
     drop () {
@@ -163,7 +165,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #stack{
-    background-color: #cff;
+    background-color: lightgrey;
     width: 100%;
 
     color: #000;

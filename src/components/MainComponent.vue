@@ -3,8 +3,11 @@
 
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
-    <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+    <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"></hack-modal>
+    <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
+
     :winner="winner" :playerList="playerList" :winnerScore="winnerScore"></winner-modal>
+
 
     <div id="header">
       <p>Programming Wars</p>
@@ -30,17 +33,7 @@
           <playfield :trueFalse="false" :activeColour="!this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
         </div>
       </div>
-
-      <div id="opponent-stacks" v-if="gameStart" style="margin: 10px">
-        <h3>Opponent Stacks</h3>
-        <div id="flex-opponent-stacks">
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <opponent-stacks v-for="player in players" :player="player"></opponent-stacks>
-          </div>
-      </div>
     </div>
-
-  </div>
   </div>
 </template>
 
@@ -52,7 +45,9 @@ import OpponentStacks from './OpponentStacks'
 import Modal from './Modal'
 import RulesModal from './RulesModal.vue'
 import CreditsModal from './CreditsModal.vue'
+import HackModal from './HackModal.vue'
 import WinnerModal from './WinnerModal.vue'
+
 
 import Card from '../classes/Card'
 import Player from '../classes/Player'
@@ -75,11 +70,11 @@ export default {
       gameOverText: "",
       modalId: "gameOverModal",
       tipsToggle: true,
-      factsToggle: true,  
+      factsToggle: true,
       playerList: [],
       winner: '',
       winnerScore: 0
-      
+
     }
   },
   methods: {
@@ -140,7 +135,9 @@ export default {
     'modal': Modal,
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal,
+    'hack-modal': HackModal,
     'winner-modal': WinnerModal
+
   },
   watch: {
     tipsToggle(val) {
@@ -179,7 +176,6 @@ export default {
             this.winner = player.name;
             this.winnerScore = score;
           }
-          console.log(highScore)
           $('.winner').modal('show');
           this.$store.commit('setWinner', true);
         }
@@ -239,6 +235,7 @@ export default {
   align-items: flex-end;
   justify-content: flex-start;
   min-height: inherit;
+  min-width: inherit;
 
   }
 

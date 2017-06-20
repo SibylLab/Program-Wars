@@ -30,7 +30,8 @@ export const store = new Vuex.Store({
         groupStacks: false,
         trueFalseAnim: false,
         winner: false,
-        tips: {tutorial: true, fact: true}
+        tips: {tutorial: true, fact: true},
+        currentOpponents: []
     },
     originalState: {
       players: [],

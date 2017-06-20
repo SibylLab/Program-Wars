@@ -10,7 +10,8 @@ export default class Player{
    * @param {int} id The ID of the Player
    * @param {string} name The name of the Player
    * @param {int} hand The hand ID of the player
-   * @param {int} score The current score of the player
+   * @param {int} trueScore The current score of the player on the true side
+   *  @param {int} falseScore The current score of the player on the false side
    */
   constructor(id, name, hand, trueScore, falseScore) {
     this.name = name;
