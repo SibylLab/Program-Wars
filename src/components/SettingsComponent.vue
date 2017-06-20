@@ -144,10 +144,6 @@
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal
     },
-    created: function () {
-      this.$store.commit('resetState')
-      setTimeout(() => {$('#myModal').modal('show')}, 750)
-    },
     beforeMount() {
       this.$store.commit('resetState')
     }
@@ -162,7 +158,6 @@
     background-image: url("../../static/backgroundImg/helloWorld.png");
     min-height: inherit;
     min-width: inherit;
-    /*padding: 200px;*/
   }
 
   .settingMenu {
@@ -196,10 +191,8 @@
   h1, h2 {
     font-weight: normal;
   }
-
-  .addPlayer {
-    flex-shrink: 1;
-    align-items: center;
+  li {
+    margin-right: 25px;
   }
 
   select.custom-select {
@@ -207,15 +200,4 @@
     align-items: center;
   }
 
-  .players {
-    width: 50%;
-  }
-
-  a {
-    color: #42b983;
-  }
-
-  #myModal{
-    background-image: url("../../static/backgroundImg/helloWorld.png");
-  }
 </style>
