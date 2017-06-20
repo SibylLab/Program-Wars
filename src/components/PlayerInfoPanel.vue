@@ -227,6 +227,9 @@ export default {
     }
   },
   created: function () {
+    bus.$on('hackCanceled', () => {
+      this.deselectAll();
+    })
     bus.$on('activeCardAddedToStack', (cardId) => {
       this.removeCard(cardId)
       this.$store.commit('addCardToHand')

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document" data-backdrop="static" data-keyboard="false">
       <div class="modal-content" style="border-radius: 30px">
-        <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="hackCanceled">
           <span aria-hidden="true">&times;</span>
         </button>
           <h3 class="modal-title">Opponent Stacks</h3>
@@ -22,7 +22,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;">Cancel</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="hackCanceled">Cancel</button>
         </div>
       </div>
     </div>
@@ -33,11 +33,23 @@
 <script>
 
   import OpponentStacks from './OpponentStacks.vue'
+  import { bus } from './Bus.vue'
 
   export default {
     props: ['players'],
     components: {
       'opponent-stacks': OpponentStacks
+    },
+    methods: {
+      hackCanceled() {
+        bus.$emit('hackCanceled');
+      }
+    },
+    created() {
+      $('.hack').modal({
+        backdrop: 'static',
+        keyboard: false
+      })
     }
 
   }
