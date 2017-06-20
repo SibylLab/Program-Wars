@@ -148,8 +148,9 @@ export default {
       }
     },
     hackStackClicked() {
-        this.addToStack()
+      this.addToStack();
       $('.hack').modal('hide');
+      this.$store.commit('setPlayerScores');
     },
     drop () {
       this.addToStack()
