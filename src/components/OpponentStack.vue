@@ -147,7 +147,8 @@ export default {
       }
     },
     hackStackClicked() {
-        this.addToStack()
+      this.addToStack()
+      this.$store.commit('setPlayerScores');
     },
     drop () {
       this.addToStack()
