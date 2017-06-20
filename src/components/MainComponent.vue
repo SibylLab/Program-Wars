@@ -3,7 +3,7 @@
 
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
-    <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+    <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :winner="winner" :playerList="playerList" :winnerScore="winnerScore"></winner-modal>
 
     <div id="header">
@@ -75,11 +75,11 @@ export default {
       gameOverText: "",
       modalId: "gameOverModal",
       tipsToggle: true,
-      factsToggle: true,  
+      factsToggle: true,
       playerList: [],
       winner: '',
       winnerScore: 0
-      
+
     }
   },
   methods: {

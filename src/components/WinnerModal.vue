@@ -2,9 +2,8 @@
   <div>
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><router-link to="/">
+          <span aria-hidden="true">&times;</span></router-link></button>
           <h3 class="modal-title"><b>Congratulations {{ winner }}!!</b></h3>
         </div>
         <div class="modal-body">
