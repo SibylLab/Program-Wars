@@ -3,7 +3,7 @@
 
       <div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
+          <div class="modal-content" style="border-radius: 30px">
             <h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>
           </div>
         </div>
@@ -116,14 +116,14 @@ export default {
     'modal': Modal
   },
   methods: {
-      discardSelected() {
-        if (this.$store.getters.getActiveCard !== undefined) {
-          this.$store.commit('discardSelectedCard')
-          this.$store.commit('removeActiveCardFromHand')
-          this.$store.commit('setHasPlayed', { hasPlayed: true})
-          this.$store.commit('setPlayerScores');
-          bus.$emit('playerHasPlayed')
-        }
+    discardSelected() {
+      if (this.$store.getters.getActiveCard !== undefined) {
+        this.$store.commit('discardSelectedCard')
+        this.$store.commit('removeActiveCardFromHand')
+        this.$store.commit('setHasPlayed', { hasPlayed: true})
+        this.$store.commit('setPlayerScores');
+        bus.$emit('playerHasPlayed')
+      }
       },
     endTurn() {
       bus.$emit('checkWin')
@@ -227,6 +227,9 @@ export default {
     }
   },
   created: function () {
+    bus.$on('hackCanceled', () => {
+      this.deselectAll();
+    })
     bus.$on('activeCardAddedToStack', (cardId) => {
       this.removeCard(cardId)
       this.$store.commit('addCardToHand')
