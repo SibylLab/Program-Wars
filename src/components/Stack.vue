@@ -9,7 +9,7 @@
 
 
     <button
-      style="margin-top: 7px"
+      style="margin-top: 7px;"
       class="btn btn-secondary"
       :class="buttonStyle"
       :stackId="this.stackId"
@@ -18,7 +18,7 @@
       data-container="body"
       data-placement="top"
       data-trigger="hover">
-      Add to Stack
+      Add
     </button>
     <br>
     <ul id="example-1">
@@ -296,7 +296,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #stack{
-  background-color: cornflowerblue;
+  background-color: rgba(100, 149, 237, .50);
   min-width: 150px;
   min-height: 50px;
   color: #000;

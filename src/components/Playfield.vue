@@ -1,13 +1,16 @@
 <template>
-  <div id="playfield" :class="playfieldClass">
-    <h3>{{ trueOrFalse }}</h3>
-    <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
-
-    <ul id="example-1">
-        <li v-for="stack in stacks">
-            <stack :playfieldBoolean="trueFalse" :stackId="stack.stackId" @cardAdded="cardAdded" :playerId="playerId"></stack>
-        </li>
-    </ul>
+  <div id="playfield" :class="playfieldClass" class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>{{ trueOrFalse }}</h3>
+        <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
+      </div>
+    </div>
+    <div class="row">
+        <div class="stacks col-md-4 col-sm-6" v-for="stack in stacks">
+          <stack :playfieldBoolean="trueFalse" :stackId="stack.stackId" @cardAdded="cardAdded" :playerId="playerId"></stack>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -82,11 +85,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #playfield {
-    background-color: #ddd;
-    width: 100%;
-    height:90%;
-    overflow-y: scroll;
-
+  background-color: #ddd;
+  height:500px;
+  overflow-y: scroll;
+  min-height: 500px;
+  width: 100%;
 }
 
 h1, h2 {

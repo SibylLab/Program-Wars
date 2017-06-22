@@ -28,9 +28,15 @@
     <div id="flexcontainer">
       <div id="player-stacks">
         <h3>Your Stacks</h3>
-        <div id="stacks">
-          <playfield :trueFalse="true" :activeColour="this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="trueHighlighted" class="playfieldSides"></playfield>
-          <playfield :trueFalse="false" :activeColour="!this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
+        <div id="stacks" class="container" style="width: inherit;">
+          <div class="row">
+            <div class="col-md-6 col-sm-6">
+              <playfield  :trueFalse="true" :activeColour="this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="trueHighlighted" class="playfieldSides"></playfield>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <playfield :trueFalse="false" :activeColour="!this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -228,17 +234,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-#maincontainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
-  min-height: inherit;
-  min-width: inherit;
-
-  }
-
 #header {
   width: 100%;
   display: flex;
@@ -258,20 +253,6 @@ export default {
   flex-grow:0;
   width: 100%;
 }
-#flexcontainer {
-  display: flex;
-  overflow: hidden;
-  height: calc(100vh - 45px - 277.5px);
-  position: relative;
-  width: 100%;
-}
-
-#player-stacks {
-  flex-grow: 1;
-  max-height: 100%;
-  height: 100%;
-  min-height:100%;
-}
 
 #opponent-stacks {
   min-width: 30%;
@@ -287,13 +268,6 @@ export default {
   width: 100%;
 }
 
-#stacks {
-  display: flex;
-  flex-direction:row;
-  max-height: 100%;
-  height: 100%;
-  flex-wrap: nowrap;
-}
 ::-webkit-scrollbar {
     display: none;
   }
@@ -304,8 +278,7 @@ export default {
 
 .playfieldSides{
   padding: 8px;
-  margin: 0 10px 0 10px;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 h1, h2 {
   font-weight: normal;
