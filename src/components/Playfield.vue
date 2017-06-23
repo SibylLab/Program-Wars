@@ -2,13 +2,18 @@
   <div id="playfield" :class="playfieldClass" class="container">
     <div class="row">
       <div class="col-md-12">
-        <h3>{{ trueOrFalse }}</h3>
+        <h3>if({{ trueOrFalse }}) {</h3>
         <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
       </div>
     </div>
     <div class="row">
-        <div class="stacks col-md-4 col-sm-6" v-for="stack in stacks">
+        <div class="stacks col-lg-3 col-md-4 col-sm-6" v-for="stack in stacks">
           <stack :playfieldBoolean="trueFalse" :stackId="stack.stackId" @cardAdded="cardAdded" :playerId="playerId"></stack>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" style="text-align: left; margin: 30px 0 0 50px">
+        <h3>};</h3>
       </div>
     </div>
   </div>
@@ -30,9 +35,9 @@ export default {
   computed: {
     trueOrFalse () {
       if (this.trueFalse) {
-        return 'TRUE'
+        return 'true'
       } else {
-        return 'FALSE'
+        return 'false'
       }
     },
     playfieldClass () {
