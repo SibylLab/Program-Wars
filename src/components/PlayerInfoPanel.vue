@@ -120,20 +120,22 @@ export default {
       if (this.$store.getters.getActiveCard !== undefined) {
         this.$store.commit('discardSelectedCard')
         this.$store.commit('removeActiveCardFromHand')
-        this.$store.commit('setHasPlayed', { hasPlayed: true})
+        this.$store.commit('setHasPlayed', {hasPlayed: true})
         this.$store.commit('setPlayerScores');
         bus.$emit('playerHasPlayed')
       }
-      },
+    },
     endTurn() {
-      bus.$emit('checkWin')
+      bus.$emit('checkWin');
       this.tipsCardSelected = this.setTipBox('default');
-      this.$store.commit('setHasPlayed', {hasPlayed:false});
+      this.$store.commit('setHasPlayed', {hasPlayed: false});
       this.$store.commit('endTurn', this.$store.getters.maxplayers);
       this.$store.commit('setGameState', {gameState: 'startPlayerTurn'});
-      if(!(this.$store.getters.getWinner)) {
-          $('#playerTurn').modal();
-          setTimeout(function () {$('#playerTurn').modal('hide');}, 1500);
+      if (!(this.$store.getters.getWinner)) {
+        $('#playerTurn').modal();
+        setTimeout(function () {
+          $('#playerTurn').modal('hide');
+        }, 1500);
       }
     },
     cardClicked (c) {
@@ -229,14 +231,18 @@ export default {
   created: function () {
     bus.$on('hackCanceled', () => {
       this.deselectAll();
-    })
+    });
     bus.$on('activeCardAddedToStack', (cardId) => {
       this.removeCard(cardId)
       this.$store.commit('addCardToHand')
     });
     bus.$on('playerHasPlayed', () => {
-      setTimeout(() => {this.endTurn();}, 1)
-      })
+      setTimeout(() => {
+          if(this.$store.getters.getHasPlayed) {
+            this.endTurn();
+          }
+          }, 1000)
+      });
     bus.$on('tutorialOff', () => {
         this.tipsCardSelected = this.setTipBox('default');
     })
