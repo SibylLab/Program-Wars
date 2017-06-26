@@ -9,7 +9,7 @@
         </div>
         <div class="modal-body">
           <div class="container">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs" style="font-size: 25px">
               <li v-for="player in players"><a data-toggle="tab" :href="'#' + player.name">{{ player.name }}</a></li>
             </ul>
 
