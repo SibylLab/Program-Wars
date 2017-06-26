@@ -7,7 +7,7 @@
           </button>
             <h3 class="modal-title">Programming Wars Rules</h3>
             <div>
-              <ul class="nav nav-tabs" role="tablist">
+              <ul class="nav nav-tabs" role="tablist" style="font-size: 22px">
                 <li role="presentation" class="active"><a href="#introduction" aria-controls="introduction" role="tab" data-toggle="tab">Introduction</a></li>
                 <li role="presentation"><a href="#cardType" aria-controls="cardType" role="tab" data-toggle="tab">Card Type</a></li>
                 <li role="presentation"><a href="#gamePlay" aria-controls="gamePlay" role="tab" data-toggle="tab">Game Play</a></li>
@@ -53,7 +53,7 @@
                 <div role="tabpanel" class="tab-pane" id="gamePlay">
                   <h4>Game Play</h4>
                   <p>On your turn, you do the following:</p>
-                  <ul>
+                  <ul id="gamePlay">
                     <li>Draw a card from the draw pile.<br/>
                       ○ If there are no more cards in the draw pile, the discarded pile is shuffled and reused.</li>
                     <li>Add a card to either the "True" or "False" side.<br/>
@@ -67,7 +67,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="cardPlayingRules">
                   <h4>Card Playing Rules</h4>
-                  <ul>
+                  <ul id="cardPlaying">
                     <li><h5>Instruction Cards</h5>
                       <ul><li>Instruction cards are placed to either "True" or "False" side.</li>
                       </ul></li>
@@ -121,8 +121,16 @@
     font-weight: bold;
   }
 
+  p {
+    font-size: medium;
+  }
+
   .tab-pane {
     text-align: left;
+  }
+
+  #gamePlay, #cardPlaying {
+    font-size: medium;
   }
 
 </style>

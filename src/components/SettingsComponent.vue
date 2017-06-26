@@ -154,6 +154,7 @@
 <style scoped>
 
   #settingsPage {
+    background-color: royalblue;
     background-image: url("../../static/backgroundImg/helloWorld.png");
     min-height: inherit;
     min-width: inherit;
