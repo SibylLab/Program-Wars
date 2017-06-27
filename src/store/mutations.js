@@ -173,11 +173,11 @@ export default {
           state.stacks = state.stacks.filter(s => s.stackId !== payload.stackId)
         },
 
-        setPlayerScore(state, payload) {
-          let player = state.players.find(player => player.id === payload.id)
-          player.trueScore = payload.trueScore;
-          player.falseScore = payload.falseScore;
-        },
+        // setPlayerScore(state, payload) {
+        //   let player = state.players.find(player => player.id === payload.id)
+        //   player.trueScore = payload.trueScore;
+        //   player.falseScore = payload.falseScore;
+        // },
 
         setActiveSide(state, payload) {
           state.activeSide = payload.activeSide
@@ -213,6 +213,29 @@ export default {
         setTips(state, payload) {
           state.tips.tutorial = payload.tutorial;
           state.tips.fact = payload.fact;
+
+        },
+        checkWin(state) {
+          let playerList = state.players;
+          let highScore = 0;
+          for (let player of playerList) {
+            let score = 0;
+            if (state.activeSide) {
+              score = player.trueScore;
+            } else {
+              score = player.falseScore;
+            }
+            if (score >= state.scoreLimit) {
+              if (score > highScore) {
+                highScore = score;
+                state.winnerName = player.name;
+                state.winnerScore = score;
+                state.winner = true;
+              }
+            }
+          }
+        },
+        endPlayerTurn(state) {
 
         }
 }

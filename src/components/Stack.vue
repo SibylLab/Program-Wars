@@ -167,7 +167,6 @@ export default {
     },
     groupStacks() {
       let selectedStacks = this.$store.getters.getSelectedStacks
-
         for (let stack of selectedStacks) {
           while (stack.cards.length !== 0) {
             this.$store.commit('stackDiscard', {stackId: stack.stackId})
@@ -176,14 +175,18 @@ export default {
         }
         let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1]
-        this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard})
-        this.$store.commit('removeActiveCardFromHand')
-        this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
+        this.$store.dispatch('groupEnd', {stackId: stack.stackId, card: this.$store.getters.getActiveCard, playerId: this.playerId, boolSide: this.playfieldBoolean});
+//        this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard})
+//        this.$store.commit('removeActiveCardFromHand')
+//        this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
 
         bus.$emit('cardDeselected')
-        this.$store.commit('setHasPlayed', {hasPlayed: true})
-        this.$store.commit('groupStacks', {yesOrNo: false})
-        bus.$emit('playerHasPlayed');
+        if(!(this.$store.getters.getWinner)) {
+          this.$store.dispatch('endTurn')
+        }
+//        this.$store.commit('setHasPlayed', {hasPlayed: true})
+//        this.$store.commit('groupStacks', {yesOrNo: false})
+//        bus.$emit('playerHasPlayed');
     },
     cardAddClicked () {
       this.$emit('cardAddClicked', this.id)
@@ -208,11 +211,12 @@ export default {
         switch (activeCard.type) {
           case 'I':
             if (thisStack.cards.length === 0) {
-              this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
-              this.$store.commit('removeActiveCardFromHand')
-              this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
+              this.$store.dispatch('stackEnd', {stackId: this.stackId, card: this.$store.getters.getActiveCard, playerId: this.playerId, boolSide: this.playfieldBoolean});
+//              this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard})
+//              this.$store.commit('removeActiveCardFromHand')
+//              this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
               bus.$emit('cardDeselected')
-              this.$store.commit('setHasPlayed', {hasPlayed: true})
+//              this.$store.commit('setHasPlayed', {hasPlayed: true})
             } else {
                   $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Instead add the card to a new stack" );
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
@@ -275,8 +279,12 @@ export default {
         }
       }
       if(this.$store.getters.getHasPlayed) {
-        this.$store.commit('setPlayerScores');
-        bus.$emit('playerHasPlayed');
+        if(!(this.$store.getters.getWinner)) {
+          this.$store.dispatch('endTurn', this.$store.getters.maxplayers)
+        }
+        this.$store.dispatch('displayModal', {winner: this.$store.state.winner, isLast: false})
+//        this.$store.commit('setPlayerScores');
+//        bus.$emit('playerHasPlayed');
       }
     },
     addToStackClicked() {

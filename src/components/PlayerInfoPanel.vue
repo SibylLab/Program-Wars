@@ -135,26 +135,33 @@ export default {
     },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {
-        this.$store.commit('discardSelectedCard')
-        this.$store.commit('removeActiveCardFromHand')
-        this.$store.commit('setHasPlayed', {hasPlayed: true})
-        this.$store.commit('setPlayerScores');
-        bus.$emit('playerHasPlayed')
+        this.$store.dispatch('discardEnd');
+        if(!(this.$store.getters.getWinner)) {
+          this.$store.dispatch('endTurn', this.$store.getters.maxplayers)
+        }
+        this.$store.dispatch('displayModal', {winner: this.$store.state.winner, isLast: false})
+//        this.$store.dispatch('checkWin');
+//        this.@store.dispatch('displayModal', {winner: this.$store.state.winner, isLast: false});
+//        this.$store.commit('discardSelectedCard')
+//        this.$store.commit('removeActiveCardFromHand')
+//        this.$store.commit('setHasPlayed', {hasPlayed: true})
+//        this.$store.commit('setPlayerScores');
+//        bus.$emit('playerHasPlayed')
       }
     },
-    endTurn() {
-      bus.$emit('checkWin');
-      this.tipsCardSelected = this.setTipBox('default');
-      this.$store.commit('setHasPlayed', {hasPlayed: false});
-      this.$store.commit('endTurn', this.$store.getters.maxplayers);
-      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'});
-      if (!(this.$store.getters.getWinner)) {
-        $('#playerTurn').modal();
-        setTimeout(function () {
-          $('#playerTurn').modal('hide');
-        }, 1500);
-      }
-    },
+//    endTurn() {
+//      bus.$emit('checkWin');
+//      this.tipsCardSelected = this.setTipBox('default');
+//      this.$store.commit('setHasPlayed', {hasPlayed: false});
+//      this.$store.commit('endTurn', this.$store.getters.maxplayers);
+//      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'});
+//      if (!(this.$store.getters.getWinner)) {
+//        $('#playerTurn').modal();
+//        setTimeout(function () {
+//          $('#playerTurn').modal('hide');
+//        }, 1500);
+//      }
+//    },
     cardClicked (c) {
       if(this.$store.getters.getTips.tutorial) {
         this.tipsCardSelected = this.setTipBox(c);
@@ -253,13 +260,13 @@ export default {
       this.removeCard(cardId)
       this.$store.commit('addCardToHand')
     });
-    bus.$on('playerHasPlayed', () => {
-      setTimeout(() => {
-          if(this.$store.getters.getHasPlayed) {
-            this.endTurn();
-          }
-          }, 1000)
-      });
+//    bus.$on('playerHasPlayed', () => {
+//      setTimeout(() => {
+//          if(this.$store.getters.getHasPlayed) {
+//            this.endTurn();
+//          }
+//          }, 1000)
+//      });
     bus.$on('tutorialOff', () => {
         this.tipsCardSelected = this.setTipBox('default');
     })
