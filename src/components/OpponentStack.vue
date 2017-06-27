@@ -133,17 +133,23 @@ export default {
           case 'H':
               this.$store.commit('stackDiscard', {stackId: this.stackId})
               this.$store.commit('removeStack', {stackId: this.stackId})
-              this.$store.commit('removeActiveCardFromHand')
+            this.$store.dispatch('playerTookTurn');
+//              this.$store.commit('removeActiveCardFromHand')
               // the previous stack has an instruction card, give the player a new empty stack
               bus.$emit('cardDeselected')
-              this.$store.commit('setHasPlayed', {hasPlayed: true})
+//              this.$store.commit('setHasPlayed', {hasPlayed: true})
             break;
           default:
               return '';
               break;
         }
         if(this.$store.getters.getHasPlayed) {
-          bus.$emit('playerHasPlayed');
+          this.$store.dispatch('endTurn', {
+            players: this.$store.getters.maxplayers,
+            isWinner: this.$store.getters.getWinner,
+            isLast: this.$store.getters.getIsLast
+          });
+//          bus.$emit('playerHasPlayed');
         }
       }
     },

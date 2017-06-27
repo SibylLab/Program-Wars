@@ -43,7 +43,15 @@
   import { bus } from './Bus';
 
   export default {
-    props: ['winner', 'playerList', 'winnerScore'],
+    props: ['playerList'],
+    computed: {
+      winner() {
+        return this.$store.state.winnerName;
+      },
+      winnerScore() {
+        return this.$store.state.winnerScore;
+      }
+    }
   }
 
 </script>

@@ -235,7 +235,13 @@ export default {
             }
           }
         },
-        endPlayerTurn(state) {
-
+        winnerModalTrigger() {
+          $('.winner').modal('show');
+        },
+        playerModalTrigger() {
+          $('#playerTurn').modal('show');
+        },
+        playerModalHide() {
+          $('#playerTurn').modal('hide');
         }
 }

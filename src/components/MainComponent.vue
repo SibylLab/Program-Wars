@@ -5,7 +5,7 @@
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"></hack-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
-    :winner="winner" :playerList="playerList" :winnerScore="winnerScore"></winner-modal>
+    :playerList="playerList"></winner-modal>
 
 
     <div id="header">
@@ -159,27 +159,29 @@ export default {
     }
   },
   created: function () {
-    bus.$on('checkWin', () => {
-      this.playerList = this.$store.getters.getPlayers;
-      let highScore = 0;
-      for (let player of this.playerList) {
-        let score = 0;
-        if (this.$store.getters.getActiveSide) {
-          score = player.trueScore;
-        } else {
-          score = player.falseScore;
-        }
-        if (score >= this.$store.getters.getScoreLimit) {
-          if(score > highScore) {
-            highScore = score;
-            this.winner = player.name;
-            this.winnerScore = score;
-          }
-          $('.winner').modal('show');
-          this.$store.commit('setWinner', true);
-        }
-      }
-    });
+          this.playerList = this.$store.getters.getPlayers;
+
+//    bus.$on('checkWin', () => {
+//      this.playerList = this.$store.getters.getPlayers;
+//      let highScore = 0;
+//      for (let player of this.playerList) {
+//        let score = 0;
+//        if (this.$store.getters.getActiveSide) {
+//          score = player.trueScore;
+//        } else {
+//          score = player.falseScore;
+//        }
+//        if (score >= this.$store.getters.getScoreLimit) {
+//          if(score > highScore) {
+//            highScore = score;
+//            this.winner = player.name;
+//            this.winnerScore = score;
+//          }
+//          $('.winner').modal('show');
+//          this.$store.commit('setWinner', true);
+//        }
+//      }
+//    });
     this.gameStart = true
 
     let gameEventLoopTimer = setInterval(() => {
@@ -201,7 +203,8 @@ export default {
           } else {
             this.$store.commit('setActiveSide', {activeSide: false})
           }
-          bus.$emit('checkWin');
+
+//          bus.$emit('checkWin');
 
           setTimeout(() => {
 

@@ -135,18 +135,14 @@ export default {
     },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {
-        this.$store.dispatch('discardEnd');
-        if(!(this.$store.getters.getWinner)) {
-          this.$store.dispatch('endTurn', this.$store.getters.maxplayers)
-        }
-        this.$store.dispatch('displayModal', {winner: this.$store.state.winner, isLast: false})
-//        this.$store.dispatch('checkWin');
-//        this.@store.dispatch('displayModal', {winner: this.$store.state.winner, isLast: false});
-//        this.$store.commit('discardSelectedCard')
-//        this.$store.commit('removeActiveCardFromHand')
-//        this.$store.commit('setHasPlayed', {hasPlayed: true})
-//        this.$store.commit('setPlayerScores');
-//        bus.$emit('playerHasPlayed')
+        this.$store.commit('discardSelectedCard');
+        this.$store.dispatch('playerTookTurn');
+        this.$store.commit('checkWin');
+        this.$store.dispatch('endTurn', {
+          players: this.$store.getters.maxplayers,
+          isWinner: this.$store.getters.getWinner,
+          isLast: this.$store.getters.getIsLast
+        });
       }
     },
 //    endTurn() {

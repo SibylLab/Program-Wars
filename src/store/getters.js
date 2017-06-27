@@ -83,6 +83,15 @@ export default {
             }
           }
           return state.currentOpponents;
+        },
+        getIsLast(state) {
+          if((state.activePlayer + 1) % state.players.length === 0) {
+            state.isLast = true;
+          } else {
+            state.isLast = false;
+          }
+          return state.isLast;
         }
+
 }
 

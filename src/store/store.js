@@ -32,6 +32,7 @@ export const store = new Vuex.Store({
       winner: false,
       winnerName: '',
       winnerScore: 0,
+      isLast: false,
       tips: {tutorial: true, fact: true},
       currentOpponents: []
     },
