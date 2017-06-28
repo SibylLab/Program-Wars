@@ -7,15 +7,15 @@ export default {
     context.commit('setHasPlayed', {hasPlayed: true});
     context.commit('setPlayerScores')
   },
-  endTurn(context, payload) {
+  endTurn(context) {
     setTimeout(() => {
       if (context.state.winner) {
         context.commit('winnerModalTrigger');
-      } else if(!(context.state.winner)){
+      } else if (!(context.state.winner)) {
         context.commit('setHasPlayed', {hasPlayed: false});
-        context.commit('endTurn', payload.players);
+        context.commit('endTurn', context.state.players.length);
         context.commit('setGameState', {gameState: 'startPlayerTurn'});
-        if (payload.isLast) {
+        if (context.state.isLast) {
           console.log('actions line 19')
         }
         context.commit('playerModalTrigger');
@@ -25,35 +25,38 @@ export default {
       }
     }, endTurnTimer * 1000)
   },
-  coinFlipWinCheck(context) {
+  turn(context, payload) {
     context.commit('checkWin');
-    if(context.state.winner) {
-      context.commit('playerModalHide');
-      context.commit('winnerModalTrigger');
+    context.commit('getIsLast');
+    if (!(payload)) {
+      if (context.state.winner) {
+        context.commit('playerModalHide');
+        context.commit('winnerModalTrigger');
+      } else {
+        context.commit('playerModalTrigger');
+        setTimeout(() => {
+          context.commit('playerModalHide');
+        }, playerModalTimer * 1000);
+      }
+    } else {
+      setTimeout(() => {
+        if (context.state.winner) {
+          context.commit('winnerModalTrigger');
+        } else if (!(context.state.winner)) {
+          context.commit('setHasPlayed', {hasPlayed: false});
+          context.commit('endTurn', context.state.players.length);
+          context.commit('setGameState', {gameState: 'startPlayerTurn'});
+          if (context.state.isLast) {
+            console.log('actions line 19')
+          } else {
+            context.commit('playerModalTrigger');
+            setTimeout(() => {
+              context.commit('playerModalHide');
+            }, playerModalTimer * 1000);
+          }
+        }
+
+      }, endTurnTimer * 1000)
     }
   }
 }
-
-
-// export default {
-//     // purpose of actions in allow async code
-//     addTodo(context, todoObj) {
-//         // run async code here
-//
-//
-//         context.commit('addTodo', todoObj)
-//
-//
-//     },
-//     removeTodo(context, todoId) {
-//
-//         context.commit('removeTodo', todoId)
-//     },
-//     toggleComplete(context, todoId) {
-//       context.commit('toggleComplete', todoId)
-//
-//
-//       setTimeout(() => {
-//       }, 250);
-//     }
-// }

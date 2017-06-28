@@ -141,11 +141,8 @@ export default {
               break;
         }
         if(this.$store.getters.getHasPlayed) {
-          this.$store.dispatch('endTurn', {
-            players: this.$store.getters.maxplayers,
-            isWinner: this.$store.getters.getWinner,
-            isLast: this.$store.getters.getIsLast
-          });
+          this.$store.dispatch('turn', true);
+//          this.$store.dispatch('endTurn');
         }
       }
     },

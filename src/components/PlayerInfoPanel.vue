@@ -137,27 +137,11 @@ export default {
       if (this.$store.getters.getActiveCard !== undefined) {
         this.$store.commit('discardSelectedCard');
         this.$store.dispatch('playerTookTurn');
-        this.$store.commit('checkWin');
-        this.$store.dispatch('endTurn', {
-          players: this.$store.getters.maxplayers,
-          isWinner: this.$store.getters.getWinner,
-          isLast: this.$store.getters.getIsLast
-        });
+        this.$store.dispatch('turn', true);
+//        this.$store.commit('checkWin');
+//        this.$store.dispatch('endTurn');
       }
     },
-//    endTurn() {
-//      bus.$emit('checkWin');
-//      this.tipsCardSelected = this.setTipBox('default');
-//      this.$store.commit('setHasPlayed', {hasPlayed: false});
-//      this.$store.commit('endTurn', this.$store.getters.maxplayers);
-//      this.$store.commit('setGameState', {gameState: 'startPlayerTurn'});
-//      if (!(this.$store.getters.getWinner)) {
-//        $('#playerTurn').modal();
-//        setTimeout(function () {
-//          $('#playerTurn').modal('hide');
-//        }, 1500);
-//      }
-//    },
     cardClicked (c) {
       if(this.$store.getters.getTips.tutorial) {
         this.tipsCardSelected = this.setTipBox(c);

@@ -181,11 +181,8 @@ export default {
 
         bus.$emit('cardDeselected');
         this.$store.commit('groupStacks', {yesOrNo: false});
-        this.$store.dispatch('endTurn', {
-          players: this.$store.getters.maxplayers,
-          isWinner: this.$store.getters.getWinner,
-          isLast: this.$store.getters.getIsLast
-        });
+      this.$store.dispatch('turn', true);
+//        this.$store.dispatch('endTurn');
     },
     cardAddClicked () {
       this.$emit('cardAddClicked', this.id)
@@ -269,12 +266,9 @@ export default {
         }
       }
       if(this.$store.getters.getHasPlayed) {
-        this.$store.commit('checkWin');
-        this.$store.dispatch('endTurn', {
-          players: this.$store.getters.maxplayers,
-          isWinner: this.$store.getters.getWinner,
-          isLast: this.$store.getters.getIsLast
-        });
+        this.$store.dispatch('turn', true);
+//        this.$store.commit('checkWin');
+//        this.$store.dispatch('endTurn');
       }
     },
     addToStackClicked() {
