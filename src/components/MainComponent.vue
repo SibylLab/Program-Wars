@@ -6,7 +6,7 @@
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"></hack-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
-
+    <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
 
     <div id="header">
       <p>Programming Wars</p>
@@ -46,6 +46,7 @@ import RulesModal from './RulesModal.vue'
 import CreditsModal from './CreditsModal.vue'
 import HackModal from './HackModal.vue'
 import WinnerModal from './WinnerModal.vue'
+import CoinModal from './CoinModal.vue'
 
 
 import Card from '../classes/Card'
@@ -72,7 +73,7 @@ export default {
       factsToggle: true,
       playerList: [],
       winner: '',
-      winnerScore: 0
+      winnerScore: 0,
 
     }
   },
@@ -135,7 +136,8 @@ export default {
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal,
     'hack-modal': HackModal,
-    'winner-modal': WinnerModal
+    'winner-modal': WinnerModal,
+    'coin-modal':CoinModal
 
   },
   watch: {

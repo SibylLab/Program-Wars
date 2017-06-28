@@ -29,14 +29,20 @@ export default {
     context.commit('checkWin');
     context.commit('getIsLast');
     if (!(payload)) {
+      $('.coin').modal('show');
+      setTimeout(() => {
+        $('.coin').modal('hide');
+      }, 1500)
       if (context.state.winner) {
         context.commit('playerModalHide');
         context.commit('winnerModalTrigger');
       } else {
-        context.commit('playerModalTrigger');
         setTimeout(() => {
-          context.commit('playerModalHide');
-        }, playerModalTimer * 1000);
+          context.commit('playerModalTrigger');
+          setTimeout(() => {
+            context.commit('playerModalHide');
+          }, playerModalTimer * 1000);
+        }, 1600)
       }
     } else {
       setTimeout(() => {
@@ -47,7 +53,9 @@ export default {
           context.commit('endTurn', context.state.players.length);
           context.commit('setGameState', {gameState: 'startPlayerTurn'});
           if (context.state.isLast) {
-            console.log('actions line 19')
+            // $('.coin').modal('show');
+            // console.log('actions line 19')
+            return '';
           } else {
             context.commit('playerModalTrigger');
             setTimeout(() => {
