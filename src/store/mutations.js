@@ -234,6 +234,7 @@ export default {
               }
             }
           }
+          console.log('in checkWin '+ state.winner);
         },
         winnerModalTrigger() {
           $('.winner').modal('show');

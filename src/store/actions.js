@@ -9,9 +9,9 @@ export default {
   },
   endTurn(context, payload) {
     setTimeout(() => {
-      if (payload.isWinner) {
+      if (context.state.winner) {
         context.commit('winnerModalTrigger');
-      } else {
+      } else if(!(context.state.winner)){
         context.commit('setHasPlayed', {hasPlayed: false});
         context.commit('endTurn', payload.players);
         context.commit('setGameState', {gameState: 'startPlayerTurn'});
@@ -24,6 +24,13 @@ export default {
         }, playerModalTimer * 1000);
       }
     }, endTurnTimer * 1000)
+  },
+  coinFlipWinCheck(context) {
+    context.commit('checkWin');
+    if(context.state.winner) {
+      context.commit('playerModalHide');
+      context.commit('winnerModalTrigger');
+    }
   }
 }
 

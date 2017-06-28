@@ -181,7 +181,7 @@ export default {
               } else {
                   this.$store.commit('setActiveSide', {activeSide: false})
                 }
-//          bus.$emit('checkWin');
+                this.$store.dispatch('coinFlipWinCheck', this.$store.state.winner);
               setTimeout(() => {
                 this.$store.commit('setTrueFalseAnim', {startAnim: false});
                 this.$store.commit('setGameState', {gameState: 'playerTurn'});
