@@ -2,8 +2,8 @@
   <div id="playfield" :class="playfieldClass" class="container">
     <div class="row">
       <div class="col-md-12">
-        <h3 style="text-align: left; margin-left: 40px">if(activeSide == {{ trueOrFalse }}) {</h3>
-        <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
+        <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5></br>
+        <h3 style="text-align: left; margin-left: 40px">if(Active Side is {{ trueOrFalse }}) {</h3>
       </div>
     </div>
     <div class="row">
@@ -35,9 +35,9 @@ export default {
   computed: {
     trueOrFalse () {
       if (this.trueFalse) {
-        return 'true'
+        return 'True'
       } else {
-        return 'false'
+        return 'False'
       }
     },
     playfieldClass () {
