@@ -159,70 +159,39 @@ export default {
     }
   },
   created: function () {
-          this.playerList = this.$store.getters.getPlayers;
-
-//    bus.$on('checkWin', () => {
-//      this.playerList = this.$store.getters.getPlayers;
-//      let highScore = 0;
-//      for (let player of this.playerList) {
-//        let score = 0;
-//        if (this.$store.getters.getActiveSide) {
-//          score = player.trueScore;
-//        } else {
-//          score = player.falseScore;
-//        }
-//        if (score >= this.$store.getters.getScoreLimit) {
-//          if(score > highScore) {
-//            highScore = score;
-//            this.winner = player.name;
-//            this.winnerScore = score;
-//          }
-//          $('.winner').modal('show');
-//          this.$store.commit('setWinner', true);
-//        }
-//      }
-//    });
-    this.gameStart = true
+    this.playerList = this.$store.getters.getPlayers;
+    this.gameStart = true;
 
     let gameEventLoopTimer = setInterval(() => {
-      let gameState = this.$store.getters.getgameState
+      let gameState = this.$store.getters.getgameState;
       if (gameState === 'newGame') {
-        $('#myModal').modal('toggle')
-        this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'})
-        this.gameStart = true
+        $('#myModal').modal('toggle');
+        this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'});
+        this.gameStart = true;
       } else if (gameState === 'initGame') {
       } else if (gameState === 'startPlayerTurn') {
-          this.$store.commit('addCardToHand')
-        this.$store.commit('setGameState', {gameState: 'playerTurn'})
+          this.$store.commit('addCardToHand');
+          this.$store.commit('setGameState', {gameState: 'playerTurn'});
 
-        if (this.$store.getters.getCurrentPlayerId === 0) {
-          let j = Math.floor(Math.random() * 2);
-          this.$store.commit('setTrueFalseAnim', {startAnim: true})
-          if (j === 0) {
-            this.$store.commit('setActiveSide', {activeSide: true})
-          } else {
-            this.$store.commit('setActiveSide', {activeSide: false})
-          }
-
+            if (this.$store.getters.getCurrentPlayerId === 0) {
+             let j = Math.floor(Math.random() * 2);
+             this.$store.commit('setTrueFalseAnim', {startAnim: true});
+              if (j === 0) {
+                this.$store.commit('setActiveSide', {activeSide: true})
+              } else {
+                  this.$store.commit('setActiveSide', {activeSide: false})
+                }
 //          bus.$emit('checkWin');
-
-          setTimeout(() => {
-
-
-            this.$store.commit('setTrueFalseAnim', {startAnim: false})
-
-            this.$store.commit('setGameState', {gameState: 'playerTurn'})
-
-          }, 3000);
-        }
-
+              setTimeout(() => {
+                this.$store.commit('setTrueFalseAnim', {startAnim: false});
+                this.$store.commit('setGameState', {gameState: 'playerTurn'});
+              }, 3000);
+            }
       }
     }, 500);
-
-    this.initGame()
-    this.fillHands()
-    this.addStacksToPlayers()
-
+    this.initGame();
+    this.fillHands();
+    this.addStacksToPlayers();
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
   },
  }

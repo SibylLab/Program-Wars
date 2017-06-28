@@ -55,7 +55,7 @@ export default {
       return this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)
     },
     cardAdded (id) {
-      var emptyStackExists = false
+      var emptyStackExists = false;
 
       for (var stack of this.stacks) {
         if (stack.id === id) {
@@ -70,7 +70,7 @@ export default {
       }
 
       if (!emptyStackExists) {
-        this.numberOfStacks += 1
+        this.numberOfStacks += 1;
         this.stacks.push({ id: this.numberOfStacks, elements: [], value: 0, cardCount: 0})
       }
     },

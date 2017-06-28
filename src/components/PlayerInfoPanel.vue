@@ -111,15 +111,15 @@ export default {
     currentPlayerName() {
       return this.$store.getters.currentPlayerName;
     },
-    endTurnEnabled() {
-        let hasPlayed = this.$store.getters.getHasPlayed
-
-        if (hasPlayed) {
-            return false
-        } else {
-            return true
-        }
-    },
+//    endTurnEnabled() {
+//        let hasPlayed = this.$store.getters.getHasPlayed
+//
+//        if (hasPlayed) {
+//            return false
+//        } else {
+//            return true
+//        }
+//    },
     activeSide() {
         let activeSideString = String(this.$store.getters.getActiveSide)
         return activeSideString.toUpperCase()
@@ -229,7 +229,7 @@ export default {
       bus.$emit('cardDeselected');
       this.$store.commit('setStackSelectedBoolean', {payload: undefined})
 
-      this.$store.commit('setActiveCardUndefined')
+      this.$store.commit('setActiveCardUndefined');
       if(this.hand !== undefined) {
         for (let card of this.hand) {
           card.selected = false
@@ -239,11 +239,11 @@ export default {
     removeCard (cardId) {
       this.$store.commit('removeCard', cardId)
     },
-    getRandomInt(min, max) {
-      min = Math.ceil(min);
-       max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min)) + min;
-    },
+//    getRandomInt(min, max) {
+//      min = Math.ceil(min);
+//       max = Math.floor(max);
+//      return Math.floor(Math.random() * (max - min)) + min;
+//    },
     setActiveCard(c) {
       this.$store.commit('selectCard', c)
     }
@@ -265,7 +265,7 @@ export default {
 //      });
     bus.$on('tutorialOff', () => {
         this.tipsCardSelected = this.setTipBox('default');
-    })
+    });
     bus.$on('tutorialOn', () => {
         let c = this.$store.getters.getActiveCard;
         this.tipsCardSelected = this.setTipBox(c);
