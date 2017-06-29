@@ -7,7 +7,7 @@
                            :completed-steps="completedSteps"
                            :total-steps="totalSteps"
                            style="margin-left: auto; margin-right: auto;">
-        <h5>{{ message }}</h5>
+        <!--<h5>{{ message }}</h5>-->
       </radial-progress-bar>
     </div>
   </div>
@@ -16,7 +16,7 @@
 <script>
   import RadialProgressBar from 'vue-radial-progress'
   export default {
-    props: ['message', 'completedSteps'],
+//    props: ['message', 'completedSteps'],
     data () {
       return {
 //        completedSteps: 0,
@@ -26,6 +26,12 @@
     components: {
       RadialProgressBar
     },
+    computed: {
+        completedSteps() {
+          console.log(this.$store.state.coinFlip);
+          return this.$store.state.coinFlip;
+        }
+    }
   }
 </script>
 

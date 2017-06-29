@@ -223,5 +223,8 @@ export default {
   },
   playerModalHide() {
     $('#playerTurn').modal('hide');
+  },
+  setCoinFlipAnim(state, payload) {
+    state.coinFlip = payload;
   }
 }

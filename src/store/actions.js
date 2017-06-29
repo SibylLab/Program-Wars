@@ -13,8 +13,12 @@ export default {
     if (!(payload)) {
       $('.coin').modal('show');
       setTimeout(() => {
+        context.commit('setCoinFlipAnim', 1);
+      },200);
+      setTimeout(() => {
         $('.coin').modal('hide');
-      }, 15)
+        context.commit('setCoinFlipAnim', 0);
+      }, 1100);
       if (context.state.winner) {
         context.commit('playerModalHide');
         context.commit('winnerModalTrigger');
