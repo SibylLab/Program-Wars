@@ -133,7 +133,8 @@
       },
       players() {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
-      }
+      },
+
 
     },
     components: {
@@ -144,7 +145,15 @@
       'credits-modal': CreditsModal
     },
     beforeMount() {
-      this.$store.commit('resetState')
+      this.$store.commit('resetState');
+      this.localPlayers = [];
+      if(this.$store.state.players.length > 0) {
+        for(let i = 0; i < this.$store.state.players.length; i++) {
+          this.newPlayer = this.$store.state.players[i].name;
+          this.submit();
+        }
+        this.$store.state.players = [];
+      }
     }
 
   }
