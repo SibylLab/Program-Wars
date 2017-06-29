@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5></br>
-        <h3 style="text-align: left; margin-left: 40px">if(Active Side is {{ trueOrFalse }}) {</h3>
+        <h3 style="text-align: left; margin-left: 40px">if( Active Side is {{ trueOrFalse }}) {</h3>
       </div>
     </div>
     <div class="row">
