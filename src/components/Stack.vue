@@ -1,33 +1,69 @@
 <template>
-  <div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" class="panel panel-default" :class="stackCss" @click="stackClicked()" @click.stop>
+
+  <div class="container" @dragover.prevent @drop="drop" @ontouchend="drop"  @click="stackClicked()" @click.stop style="text-align: left; color: black;">
     <modal :modalId="modalId2" :modalTitle="groupSelectConfirm" :modalBody="groupSelectText" :cancel="true" :modalCards="[]" :modalCallback="() => {groupStacks()}" data-backdrop="static" data-keyboard="false"></modal>
+    <div class="row">
+      <div class="col-md-12">
+        <span style="padding: 10px; font-size: 16px">Stack Score: {{ score }}</span>
+      </div>
+      <div class="col-md-12">
+        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
+        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
+      </div>
+      <div class="col-md-12" style="margin-left: 20px">
+        <button
+        style="margin-top: 7px;"
+        class="btn btn-secondary"
+        :class="buttonStyle"
+        :stackId="this.stackId"
+        @click="addToStackClicked"
+        type="button"
+        data-container="body"
+        data-placement="top"
+        data-trigger="hover">
+        Add
+        </button>
+      </div>
 
-
-    <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
-    <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
-    <span style="padding: 10px">Stack Score: {{ score }}</span>
-
-
-    <button
-      style="margin-top: 7px"
-      class="btn btn-secondary"
-      :class="buttonStyle"
-      :stackId="this.stackId"
-      @click="addToStackClicked"
-      type="button"
-      data-container="body"
-      data-placement="top"
-      data-trigger="hover">
-      Add to Stack
-    </button>
-    <br>
-    <ul id="example-1">
-      <li v-for="card in cards" style="zoom: 60%; margin: 4px">
-            <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
-      </li>
-
-    </ul>
+      <div class="col-md-12">
+        <ul id="example-1">
+        <li v-for="card in cards" style="zoom: 80%; margin: 4px">
+        <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
+        </li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <!--<div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" class="panel panel-default" :class="stackCss" @click="stackClicked()" @click.stop>-->
+    <!--<modal :modalId="modalId2" :modalTitle="groupSelectConfirm" :modalBody="groupSelectText" :cancel="true" :modalCards="[]" :modalCallback="() => {groupStacks()}" data-backdrop="static" data-keyboard="false"></modal>-->
+
+
+    <!--<input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">-->
+    <!--<label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>-->
+    <!--<span style="padding: 10px">Stack Score: {{ score }}</span>-->
+
+
+    <!--<button-->
+      <!--style="margin-top: 7px;"-->
+      <!--class="btn btn-secondary"-->
+      <!--:class="buttonStyle"-->
+      <!--:stackId="this.stackId"-->
+      <!--@click="addToStackClicked"-->
+      <!--type="button"-->
+      <!--data-container="body"-->
+      <!--data-placement="top"-->
+      <!--data-trigger="hover">-->
+      <!--Add-->
+    <!--</button>-->
+    <!--<br>-->
+    <!--<ul id="example-1">-->
+      <!--<li v-for="card in cards" style="zoom: 60%; margin: 4px">-->
+            <!--<card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>-->
+      <!--</li>-->
+
+    <!--</ul>-->
+  <!--</div>-->
 </template>
 
 <script>
@@ -296,7 +332,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #stack{
-  background-color: cornflowerblue;
+  background-color: rgba(100, 149, 237, .50);
   min-width: 150px;
   min-height: 50px;
   color: #000;
