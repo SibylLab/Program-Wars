@@ -28,13 +28,25 @@
         </div>
 
         <div id="controls">
-        <button class="btn btn-success btn-lg rightSide" v-on:click="discardSelected">
+        <button class="btn btn-primary btn-lg rightSide" v-on:click="discardSelected" style="border-radius: 40px">
           Discard <br/> Selected Card
         </button>
         </div>
 
       </div>
-
+      <div class="container" style="border-top: 1px solid white; padding: 10px;">
+        <div class="row">
+          <div class="col-md-12">
+            <h4>Score To Win is: <b>{{ $store.getters.getScoreLimit }}</b></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div :class="colSize" v-for="player in players" style="text-align: left">
+            <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79);">{{ player.name }}:</a></b></h4></div>
+              <div> True Score: {{ player.trueScore }} <br> False Score: {{ player.falseScore }}</div>
+          </div>
+        </div>
+      </div>
     </div>
 </template>
 
@@ -67,6 +79,13 @@ export default {
     }
   },
   computed: {
+    colSize() {
+      let size = 12/this.$store.getters.getPlayers.length;
+      return 'col-md-'+size;
+    },
+    players() {
+      return this.$store.getters.getPlayers;
+    },
     displayStyle() {
       if(this.$store.getters.getTips.fact) {
         return {'display':'block'}
@@ -116,6 +135,9 @@ export default {
     'modal': Modal
   },
   methods: {
+    openModal() {
+      $('.hack').modal('show');
+    },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {
         this.$store.commit('discardSelectedCard')

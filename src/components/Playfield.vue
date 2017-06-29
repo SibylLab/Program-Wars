@@ -90,11 +90,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #playfield {
-  background-color: #ddd;
-  height:500px;
-  overflow-y: scroll;
-  min-height: 500px;
-  width: 100%;
+    background-color: #ddd;
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll;
 }
 
 h1, h2 {

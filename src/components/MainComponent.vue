@@ -16,7 +16,7 @@
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
-        <button class="btn btn-primary"><router-link to="/">New Game</router-link></button>
+        <button class="btn btn-primary"><router-link to="/" style="text-decoration: none">New Game</router-link></button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
         <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
@@ -234,6 +234,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#maincontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  min-height: inherit;
+  min-width: inherit;
+  /*height: inherit;*/
+
+  }
+
 #header {
   width: 100%;
   display: flex;
