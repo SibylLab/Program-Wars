@@ -79,11 +79,11 @@ export default {
     },
     score() {
         let thisStack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
-         thisStack.calculateStackScore()
+         thisStack.calculateStackScore();
           return thisStack.score
     },
     selectedStacksLength () {
-      let selectedStacks = this.$store.getters.getSelectedStacks
+      let selectedStacks = this.$store.getters.getSelectedStacks;
 
       for (let stack of selectedStacks) {
           if (stack.stackId === this.stackId)
@@ -99,16 +99,16 @@ export default {
         if (card.selected === true) {
           this.activeCard = Object.assign({}, card);
 
-          this.activeCard.category = 'stack'
-          this.activeCard.selected = false
+          this.activeCard.category = 'stack';
+          this.activeCard.selected = false;
         }
       }
     })
 
     bus.$on('cardDeselected', () => {
-      this.activeCard = undefined
-      this.$store.commit('setActiveCardUndefined')
-      this.$store.commit('removeAllSelectedStacks')
+      this.activeCard = undefined;
+      this.$store.commit('setActiveCardUndefined');
+      this.$store.commit('removeAllSelectedStacks');
     })
   },
   methods: {
@@ -133,17 +133,16 @@ export default {
           case 'H':
               this.$store.commit('stackDiscard', {stackId: this.stackId})
               this.$store.commit('removeStack', {stackId: this.stackId})
-              this.$store.commit('removeActiveCardFromHand')
-              // the previous stack has an instruction card, give the player a new empty stack
-              bus.$emit('cardDeselected')
-              this.$store.commit('setHasPlayed', {hasPlayed: true})
+            this.$store.dispatch('playerTookTurn');
+              bus.$emit('cardDeselected');
             break;
           default:
               return '';
               break;
         }
         if(this.$store.getters.getHasPlayed) {
-          bus.$emit('playerHasPlayed');
+          this.$store.dispatch('turn', true);
+//          this.$store.dispatch('endTurn');
         }
       }
     },
