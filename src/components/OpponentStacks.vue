@@ -16,7 +16,7 @@
     <div v-if="falseStacks.length !== 0" class="stacks">
       <div class="container">
         <div class="row">
-          <div class="col-md-3" v-for="stack in falseStacks">
+          <div class="col-lg-3 col-md-4" v-for="stack in falseStacks">
               <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id" class="opponentStacks"></opponent-stack>
           </div>
         </div>
