@@ -89,6 +89,13 @@ export default {
     state.players.find(player => player.id === playerId).hand = hand.id;
   },
   addCardToHand(state) {
+    if(state.deck.cards.length <= 1 && state.deck.discard_cards.length > 0 ) {
+      state.deck.shuffle(state.deck.discard_cards);
+      for(let i = 0; i < state.deck.discard_cards.length; i++) {
+        state.deck.cards.push(state.deck.discard_cards[i]);
+      }
+      state.deck.discard_cards = [];
+    }
     state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.cards.pop())
   },
   initDeck(state){
@@ -126,6 +133,7 @@ export default {
     let tempActiveCard = state.activeCard
     tempActiveCard.selected = false
     state.deck.discard_cards.push(tempActiveCard)
+    console.log('discarded a card' + state.deck.discard_cards.length)
   },
   setHasPlayed(state, payload) {
     state.activeHasPlayed = payload.hasPlayed

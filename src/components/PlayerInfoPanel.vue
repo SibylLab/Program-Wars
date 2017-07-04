@@ -61,8 +61,8 @@ export default {
     return {
       title: 'Player Info Panel',
       idCounter: 6,
-      showDiscardedCards: false,
-      modalId: "discardCards",
+//      showDiscardedCards: false,
+//      modalId: "discardCards",
       modalText: "",
       modalCards: [],
       tipsToggle: true,
@@ -116,15 +116,6 @@ export default {
     currentPlayerName() {
       return this.$store.getters.currentPlayerName;
     },
-//    endTurnEnabled() {
-//        let hasPlayed = this.$store.getters.getHasPlayed
-//
-//        if (hasPlayed) {
-//            return false
-//        } else {
-//            return true
-//        }
-//    },
     activeSide() {
         let activeSideString = String(this.$store.getters.getActiveSide)
         return activeSideString.toUpperCase()
@@ -143,8 +134,6 @@ export default {
         this.$store.commit('discardSelectedCard');
         this.$store.dispatch('playerTookTurn');
         this.$store.dispatch('turn', true);
-//        this.$store.commit('checkWin');
-//        this.$store.dispatch('endTurn');
       }
     },
     cardClicked (c) {
@@ -228,11 +217,6 @@ export default {
     removeCard (cardId) {
       this.$store.commit('removeCard', cardId)
     },
-//    getRandomInt(min, max) {
-//      min = Math.ceil(min);
-//       max = Math.floor(max);
-//      return Math.floor(Math.random() * (max - min)) + min;
-//    },
     setActiveCard(c) {
       this.$store.commit('selectCard', c)
     }
@@ -245,13 +229,6 @@ export default {
       this.removeCard(cardId)
       this.$store.commit('addCardToHand')
     });
-//    bus.$on('playerHasPlayed', () => {
-//      setTimeout(() => {
-//          if(this.$store.getters.getHasPlayed) {
-//            this.endTurn();
-//          }
-//          }, 1000)
-//      });
     bus.$on('tutorialOff', () => {
         this.tipsCardSelected = this.setTipBox('default');
     });

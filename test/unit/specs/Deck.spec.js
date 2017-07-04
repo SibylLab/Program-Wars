@@ -188,7 +188,7 @@ describe('Deck.js', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
     let shuffledDeck = testDeck
-    shuffledDeck.shuffle()
+    shuffledDeck.shuffle(testDeck)
     let counter = 0
     for (let idx of testDeck.cards) {
       expect(idx.id).to.not.equal(shuffledDeck.cards[counter])
