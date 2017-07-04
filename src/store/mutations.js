@@ -133,7 +133,6 @@ export default {
     let tempActiveCard = state.activeCard
     tempActiveCard.selected = false
     state.deck.discard_cards.push(tempActiveCard)
-    console.log('discarded a card' + state.deck.discard_cards.length)
   },
   setHasPlayed(state, payload) {
     state.activeHasPlayed = payload.hasPlayed

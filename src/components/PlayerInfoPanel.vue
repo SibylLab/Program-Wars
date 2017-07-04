@@ -61,8 +61,6 @@ export default {
     return {
       title: 'Player Info Panel',
       idCounter: 6,
-//      showDiscardedCards: false,
-//      modalId: "discardCards",
       modalText: "",
       modalCards: [],
       tipsToggle: true,
