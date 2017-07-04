@@ -143,8 +143,6 @@ export default {
         this.$store.commit('discardSelectedCard');
         this.$store.dispatch('playerTookTurn');
         this.$store.dispatch('turn', true);
-//        this.$store.commit('checkWin');
-//        this.$store.dispatch('endTurn');
       }
     },
     cardClicked (c) {
