@@ -14,7 +14,7 @@
         <p><b>Follow the project page on </b><a href="https://github.com/johnanvik/program-wars" target="_blank">GitHub</a></p>
       <div class="modal-footer">
         <div style="text-align: left; float: left; font-size: 85%">
-          <p><b>Version: </b>1.1</p></div>
+          <p><b>Version: </b>1.2</p></div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float: right">Close</button>
       </div>
         <div>
