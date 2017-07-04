@@ -20,6 +20,7 @@ install:
 - npm install jasmine-core
 - npm install karma-chrome-launcher
 - npm install karma-jasmine
+- npm install vue-radial-progress
 script:
 - npm run test
 after_success:

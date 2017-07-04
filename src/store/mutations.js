@@ -224,11 +224,22 @@ export default {
   },
   winnerModalTrigger() {
     $('.winner').modal('show');
+    $('#playerTurn').modal('handleUpdate')
+
   },
   playerModalTrigger() {
+    $('#playerTurn').modal('handleUpdate')
     $('#playerTurn').modal('show');
   },
   playerModalHide() {
+    $('#playerTurn').modal('handleUpdate')
     $('#playerTurn').modal('hide');
+  },
+  coinModalTrigger() {
+    $('.coin').modal('handleUpdate');
+    $('.coin').modal('show');
+  },
+  setCoinFlipAnim(state, payload) {
+    state.coinFlip = payload;
   }
 }
