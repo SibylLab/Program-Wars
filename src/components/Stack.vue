@@ -34,36 +34,6 @@
       </div>
     </div>
   </div>
-
-  <!--<div @dragover.prevent @drop="drop" @ontouchend="drop" id="stack" class="panel panel-default" :class="stackCss" @click="stackClicked()" @click.stop>-->
-    <!--<modal :modalId="modalId2" :modalTitle="groupSelectConfirm" :modalBody="groupSelectText" :cancel="true" :modalCards="[]" :modalCallback="() => {groupStacks()}" data-backdrop="static" data-keyboard="false"></modal>-->
-
-
-    <!--<input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">-->
-    <!--<label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>-->
-    <!--<span style="padding: 10px">Stack Score: {{ score }}</span>-->
-
-
-    <!--<button-->
-      <!--style="margin-top: 7px;"-->
-      <!--class="btn btn-secondary"-->
-      <!--:class="buttonStyle"-->
-      <!--:stackId="this.stackId"-->
-      <!--@click="addToStackClicked"-->
-      <!--type="button"-->
-      <!--data-container="body"-->
-      <!--data-placement="top"-->
-      <!--data-trigger="hover">-->
-      <!--Add-->
-    <!--</button>-->
-    <!--<br>-->
-    <!--<ul id="example-1">-->
-      <!--<li v-for="card in cards" style="zoom: 60%; margin: 4px">-->
-            <!--<card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>-->
-      <!--</li>-->
-
-    <!--</ul>-->
-  <!--</div>-->
 </template>
 
 <script>
