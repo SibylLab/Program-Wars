@@ -6,7 +6,6 @@ import Stack from '../classes/Stack'
 import Player from '../classes/Player'
 import Deck from '../classes/Deck'
 
-
 export default {
   resetState(state) {
     // state.players = []

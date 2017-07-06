@@ -11,3 +11,5 @@ testsContext.keys().forEach(testsContext)
 // you want coverage for.
 const srcContext = require.context('src', true, /^\.\/(?!main(\.js)?$)/)
 srcContext.keys().forEach(srcContext)
+
+module.exports = testsContext
