@@ -99,7 +99,6 @@ export default {
     if (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6) {
       do {
         state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.cards.pop())
-        console.log(state.hands.find(hand => hand.playerId === state.activePlayer).cards.length)
       } while (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6);
     }
   },
