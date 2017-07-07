@@ -1,7 +1,7 @@
 // This is a karma config file. For more details see
-//   http://karma-runner.github.io/0.13/config/configuration-file.html
+// http://karma-runner.github.io/0.13/config/configuration-file.html
 // we are also using it with karma-webpack
-//   https://github.com/webpack/karma-webpack
+// https://github.com/webpack/karma-webpack
 
 var webpackConfig = require('../../build/webpack.test.conf')
 
@@ -11,35 +11,35 @@ module.exports = function (config) {
     // 1. install corresponding karma launcher
     //    http://karma-runner.github.io/0.13/config/browsers.html
     // 2. add it to the `browsers` array below.
-    browsers: ['Firefox'/*'Chrome'*/],
+    browsers: ['Firefox'],
     frameworks: ['mocha', 'sinon-chai', 'jasmine'],
     reporters: ['spec', 'coverage'],
     files: [
       './index.js'
-      // added these, but causing issues
-      //'../../src/classes/*.js',
-      //'../../test/**/**/*.spec.js',
-      //'../../src/components/*.vue'
+      //  added these, but causing issues
+      // '../../src/classes/*.js',
+      // '../../test/**/**/*.spec.js',
+      // '../../src/components/*.vue'
     ],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']
     },
     plugins: [
-      //launchers
+      // launchers
       'karma-chrome-launcher',
       'karma-firefox-launcher',
 
-      //Test libraries
+      // Test libraries
       'karma-mocha',
       'karma-jasmine',
       'karma-sinon-chai',
 
-      //preprocessors
+      // preprocessors
       'karma-webpack',
       'karma-sourcemap-loader',
-      //'karma-babel-preprocessor',
+      // 'karma-babel-preprocessor',
 
-      //reporters
+      // reporters
       'karma-spec-reporter',
       'karma-coverage'
     ],
