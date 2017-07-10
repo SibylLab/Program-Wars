@@ -34,14 +34,13 @@ export default {
         break;
       case false:
         context.commit('checkWin');
-
-//         context.commit('coinModalTrigger');
-//         context.commit('setCoinFlipAnim', 0);
-//         setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
-//         setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
+        context.commit('coinModalTrigger');
+        context.commit('setCoinFlipAnim', 0);
+        setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
+        setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
         setTimeout(() => {
-//           $('.coin').modal('handleUpdate');
-//           $('.coin').modal('hide');
+          $('.coin').modal('handleUpdate');
+          $('.coin').modal('hide');
           if (context.state.winner) {
             context.commit('winnerModalTrigger');
             return '';
