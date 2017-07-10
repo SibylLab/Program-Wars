@@ -37,7 +37,6 @@
         <div class="col-md-12" id="scoreSelect">
           <p>Score to Win:
           <select class="custom-select" name="select" v-model="selected">
-            <option value="1">TESTING</option>
             <option value="10">Short (score 10)</option>
             <option value="20">Medium (score 20)</option>
             <option value="30">Long (score 30)</option>
