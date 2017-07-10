@@ -14,7 +14,8 @@
             <div class="modal-body" style="padding-top: 0;" v-else>
               <h4><b>Congratulations: </b></h4>
               <ul style="list-style-type: none; text-align: center; margin-right: 40px; margin-top: 10px;">
-                <li v-for="win in winnerList"><h4>{{ win }}</h4></li>
+                <li v-for="(win, index) in winnerList"><h4 v-if="!(index === winnerList.length - 1)">{{ win }},</h4>
+                <h4 v-else> and {{ win }}</h4></li>
               </ul>
               <h4 v-if="winnerList.length === 2">You both reached the winning score!</h4>
               <h4 v-if="winnerList.length > 2">You all reached the winning score!</h4>
