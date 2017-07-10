@@ -22,6 +22,7 @@
 
         </div>
         <div class="modal-footer">
+          <button class="btn btn-default" @click="discardHack" data-dismiss="modal">Discard Hack Card</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="hackCanceled">Cancel</button>
         </div>
       </div>
@@ -43,7 +44,14 @@
     methods: {
       hackCanceled() {
         bus.$emit('hackCanceled');
-      }
+      },
+      discardHack() {
+        if (this.$store.getters.getActiveCard !== undefined) {
+          this.$store.commit('discardSelectedCard');
+          this.$store.dispatch('playerTookTurn');
+          this.$store.dispatch('turn', true);
+        }
+      },
     },
     created() {
       $('.hack').modal({

@@ -14,7 +14,6 @@
   "dependencies": {
     "jsdoc-vue": "^1.0.0",
     "vue": "^2.1.10",
-    "vue-radial-progress": "^0.2.10",
     "vue-router": "^2.2.0",
     "vue-template-compiler": "^2.2.6",
     "vuex": "^2.2.1"

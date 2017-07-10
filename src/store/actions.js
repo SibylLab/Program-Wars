@@ -1,6 +1,5 @@
-let playerModalTimer = 2; //sec
-let endTurnTimer = 1.5; //sec
-let coinTimer = 2; //sec
+let playerModalTimer = 2;//sec
+let endTurnTimer = 1.5;//sec
 
 export default {
   playerTookTurn(context) {
@@ -39,14 +38,14 @@ export default {
         }
         break;
       case false:
-        context.commit('coinModalTrigger');
-        context.commit('setCoinFlipAnim', 0);
-        setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
-        setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
-        setTimeout(() => {
-          $('.coin').modal('handleUpdate');
-          $('.coin').modal('hide');
-        }, coinTimer * 1000);
+//         context.commit('coinModalTrigger');
+//         context.commit('setCoinFlipAnim', 0);
+//         setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
+//         setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
+//         setTimeout(() => {
+//           $('.coin').modal('handleUpdate');
+//           $('.coin').modal('hide');
+//         }, coinTimer * 1000);
         if(!(context.state.winner)) {
           setTimeout(() => {
             context.commit('playerModalTrigger');

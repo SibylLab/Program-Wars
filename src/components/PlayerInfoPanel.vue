@@ -24,7 +24,7 @@
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
-          <h4 class="boolState" >Active Side is: <b>{{ activeSide }}</b></h4>
+          <h4 class="boolState" >Active Side is: <div :class="changeTrueFalse"><b>{{ activeSide }}</b></div></h4>
         </div>
 
         <div id="controls">
@@ -61,8 +61,6 @@ export default {
     return {
       title: 'Player Info Panel',
       idCounter: 6,
-      showDiscardedCards: false,
-      modalId: "discardCards",
       modalText: "",
       modalCards: [],
       tipsToggle: true,
@@ -305,7 +303,7 @@ h1, h2 {
 
 h4.boolState {
   margin-bottom: 0px;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 h4.playerName {
