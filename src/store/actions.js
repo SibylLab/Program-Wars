@@ -41,11 +41,14 @@ export default {
         setTimeout(() => {
           $('.coin').modal('handleUpdate');
           $('.coin').modal('hide');
-          if (context.state.winner) {
-            context.commit('winnerModalTrigger');
-            return '';
-          }
+
         }, coinTimer * 1000);
+        if (context.state.winner) {
+          setTimeout(() => {
+          context.commit('winnerModalTrigger');
+          return '';
+        }, coinTimer * 1000 + 350)
+        }
         if(!(context.state.winner)) {
           setTimeout(() => {
             context.commit('playerModalTrigger');
