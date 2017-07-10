@@ -9,23 +9,17 @@ export default {
     context.commit('setPlayerScores')
   },
   turn(context, payload) {
-    // context.commit('checkWin');
     context.commit('getIsLast');
     context.state.coinMsg = 'Evaluating...';
     switch(payload) {
       case true:
         if(context.state.isLast) {
-          // if (context.state.winner) {
-          //   context.commit('winnerModalTrigger');
-          //   return '';
-          // } else {
             setTimeout(() => {
               context.commit('setHasPlayed', {hasPlayed: false});
               context.commit('endTurn', context.state.players.length);
               context.commit('setGameState', {gameState: 'startPlayerTurn'});
               return '';
             }, endTurnTimer * 1000)
-          // }
         } else {
           setTimeout(() => {
             context.commit('setHasPlayed', {hasPlayed: false});
