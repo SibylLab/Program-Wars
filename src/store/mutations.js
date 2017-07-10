@@ -89,7 +89,18 @@ export default {
     state.players.find(player => player.id === playerId).hand = hand.id;
   },
   addCardToHand(state) {
-    state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.cards.pop())
+    if (state.deck.cards.length <= 1 && state.deck.discard_cards.length > 0) {
+      state.deck.shuffle(state.deck.discard_cards);
+      for (let i = 0; i < state.deck.discard_cards.length; i++) {
+        state.deck.cards.push(state.deck.discard_cards[i]);
+      }
+      state.deck.discard_cards = [];
+    }
+    if (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6) {
+      do {
+        state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.cards.pop())
+      } while (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6);
+    }
   },
   initDeck(state){
     state.deck.initDeck(state.players.length);

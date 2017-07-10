@@ -10,11 +10,11 @@
         <div class="modal-body">
           <div class="container">
             <ul class="nav nav-tabs" style="font-size: 25px">
-              <li v-for="player in players"><a data-toggle="tab" :href="'#' + player.name">{{ player.name }}</a></li>
+              <li v-for="player in players"><a data-toggle="tab" :href="'#' + player.id">{{ player.name }}</a></li>
             </ul>
 
             <div class="tab-content" style="text-align: left">
-              <div v-for="player in players" :id="player.name" class="tab-pane fade">
+              <div v-for="player in players" :id="player.id" class="tab-pane fade">
                 <opponent-stacks :player="player"></opponent-stacks>
             </div>
           </div>
@@ -22,6 +22,7 @@
 
         </div>
         <div class="modal-footer">
+          <button class="btn btn-default" @click="discardHack" data-dismiss="modal">Discard Hack Card</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="hackCanceled">Cancel</button>
         </div>
       </div>
@@ -43,7 +44,14 @@
     methods: {
       hackCanceled() {
         bus.$emit('hackCanceled');
-      }
+      },
+      discardHack() {
+        if (this.$store.getters.getActiveCard !== undefined) {
+          this.$store.commit('discardSelectedCard');
+          this.$store.dispatch('playerTookTurn');
+          this.$store.dispatch('turn', true);
+        }
+      },
     },
     created() {
       $('.hack').modal({
