@@ -8,6 +8,8 @@ Program Wars is a web-based educational card game that teaches the basic concept
 
 To play Program Wars go to [http://programmingwars.cullen.io](http://programmingwars.cullen.io)
 
+If you would like to contribute to the project, see [CONTRIBUTING](docs/CONTRIBUTING.md).
+
 For more information about the project, refer to the [wiki](https://github.com/johnanvik/program-wars/wiki).
 
 
