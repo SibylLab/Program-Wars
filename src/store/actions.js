@@ -9,23 +9,23 @@ export default {
     context.commit('setPlayerScores')
   },
   turn(context, payload) {
-    context.commit('checkWin');
+    // context.commit('checkWin');
     context.commit('getIsLast');
     context.state.coinMsg = 'Evaluating...';
     switch(payload) {
       case true:
         if(context.state.isLast) {
-          if (context.state.winner) {
-            context.commit('winnerModalTrigger');
-            return '';
-          } else {
+          // if (context.state.winner) {
+          //   context.commit('winnerModalTrigger');
+          //   return '';
+          // } else {
             setTimeout(() => {
               context.commit('setHasPlayed', {hasPlayed: false});
               context.commit('endTurn', context.state.players.length);
               context.commit('setGameState', {gameState: 'startPlayerTurn'});
               return '';
             }, endTurnTimer * 1000)
-          }
+          // }
         } else {
           setTimeout(() => {
             context.commit('setHasPlayed', {hasPlayed: false});
@@ -39,14 +39,20 @@ export default {
         }
         break;
       case false:
+        context.commit('checkWin');
+
 //         context.commit('coinModalTrigger');
 //         context.commit('setCoinFlipAnim', 0);
 //         setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
 //         setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
-//         setTimeout(() => {
+        setTimeout(() => {
 //           $('.coin').modal('handleUpdate');
 //           $('.coin').modal('hide');
-//         }, coinTimer * 1000);
+          if (context.state.winner) {
+            context.commit('winnerModalTrigger');
+            return '';
+          }
+        }, coinTimer * 1000);
         if(!(context.state.winner)) {
           setTimeout(() => {
             context.commit('playerModalTrigger');
