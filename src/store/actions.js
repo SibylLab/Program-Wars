@@ -1,5 +1,6 @@
-let playerModalTimer = 2;//sec
-let endTurnTimer = 1.5;//sec
+let playerModalTimer = 2;// sec
+let endTurnTimer = 1.5;// sec
+let coinTimer = 2;// sec
 
 export default {
   playerTookTurn(context) {
