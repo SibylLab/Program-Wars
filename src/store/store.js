@@ -34,9 +34,7 @@ export const store = new Vuex.Store({
       winnerScore: 0,
       isLast: false,
       tips: {tutorial: true, fact: true},
-      currentOpponents: [],
-      coinFlip: 0,
-      coinMsg: 'Evaluating...'
+      currentOpponents: []
     },
     originalState: {
       players: [],
