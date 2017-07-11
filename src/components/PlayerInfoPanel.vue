@@ -232,7 +232,12 @@ export default {
     });
     bus.$on('tutorialOn', () => {
         let c = this.$store.getters.getActiveCard;
-        this.tipsCardSelected = this.setTipBox(c);
+        if(c === undefined) {
+          this.tipsCardSelected = this.setTipBox('default');
+        } else {
+          this.tipsCardSelected = this.setTipBox(c);
+
+        }
     })
   }
 }
