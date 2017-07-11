@@ -3,7 +3,11 @@ node_js:
 - node
 notifications:
   email: false
-  slack: programwarscardgame:u1VhNgRjj1X8gxpEWhfLw6MP#builds
+  slack: 
+     rooms:
+        programwarscardgame:u1VhNgRjj1X8gxpEWhfLw6MP#builds
+     on-failure: always
+      
 addons:
   code_climate:
     repo_token: 814d39d2092e7f3b870f9a455dad28295a4aa15e611472ecca5a6ae547a536f6
