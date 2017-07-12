@@ -1,6 +1,7 @@
 # Instructions
 1. Choose which template below to use (BUG or FEATURE) and delete the other one.
-1. Under "Label" section on the right, click on the gear icon and select the correct label ('bug' or 'enhancement')
+2. Under "Label" section on the right, click on the gear icon and select the correct label ('bug' or 'enhancement')
+3. Remove the "Instructions" and "BUG" or "FEATURE" headings before submitting the issue. 
 
 ## BUG
 ### I encountered a problem with the game.
