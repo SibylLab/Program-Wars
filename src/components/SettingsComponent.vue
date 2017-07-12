@@ -83,7 +83,9 @@
       submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer);
-          this.noPlayers = false;
+          if(this.localPlayers.length > 1) {
+            this.noPlayers = false;
+          }
         }
         if(this.localPlayers.length >= 4) {
           this.maxPlayer = true;
@@ -106,6 +108,9 @@
           this.localPlayers.splice(e, 1);
           if(this.localPlayers.length < 4) {
             this.maxPlayer = false;
+          }
+          if(this.localPlayers.length < 2) {
+            this.noPlayers = true;
           }
         } else
           return;
@@ -134,8 +139,6 @@
       players() {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
       },
-
-
     },
     components: {
       'player-info-panel': PlayerInfoPanel,
