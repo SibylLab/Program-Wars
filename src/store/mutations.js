@@ -231,13 +231,15 @@ export default {
     $('#playerTurn').modal('handleUpdate')
 
   },
-  playerModalTrigger() {
-    $('#playerTurn').modal('handleUpdate')
-    $('#playerTurn').modal('show');
+  playerModalTrigger(state) {
+    state.playerTurn = true;
+    // $('#playerTurn').modal('handleUpdate')
+    // $('#playerTurn').modal('show');
   },
-  playerModalHide() {
-    $('#playerTurn').modal('handleUpdate')
-    $('#playerTurn').modal('hide');
+  playerModalHide(state) {
+    state.playerTurn = false;
+    // $('#playerTurn').modal('handleUpdate')
+    // $('#playerTurn').modal('hide');
   },
   coinModalTrigger() {
     $('.coin').modal('handleUpdate');
