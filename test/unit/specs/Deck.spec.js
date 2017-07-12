@@ -172,7 +172,7 @@ describe('Deck.js', () => {
   it('test to see if the draw function works properly', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
-    //let testCard = new Card(0, 1, 'I')
+    // let testCard = new Card(0, 1, 'I')
     let drawnCard = testDeck.draw()
     expect(testDeck.cards.length).to.equal(49)
 
@@ -188,7 +188,7 @@ describe('Deck.js', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
     let shuffledDeck = testDeck
-    shuffledDeck.shuffle()
+    shuffledDeck.shuffle(testDeck)
     let counter = 0
     for (let idx of testDeck.cards) {
       expect(idx.id).to.not.equal(shuffledDeck.cards[counter])
