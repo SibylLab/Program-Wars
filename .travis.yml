@@ -3,7 +3,12 @@ node_js:
 - node
 notifications:
   email: false
-  slack: programwarscardgame:u1VhNgRjj1X8gxpEWhfLw6MP#builds
+  slack:
+    rooms:
+      - programwarscardgame:u1VhNgRjj1X8gxpEWhfLw6MP#builds
+    on_success: change # default: always
+    on_failure: always # default: always
+        
       
 addons:
   code_climate:
