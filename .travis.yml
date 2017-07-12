@@ -1,6 +1,12 @@
+global:
+    - CC_TEST_REPORTER_ID=09f861ca773e539244a9f3654511a4de0ad532c566ba6a0dab98ae5ec033b1d3
+    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
+
 language: node_js
+
 node_js:
-- node
+   - node
+
 notifications:
   email: false
   slack:
@@ -11,13 +17,15 @@ notifications:
         
       
 addons:
-  code_climate:
-    repo_token: 814d39d2092e7f3b870f9a455dad28295a4aa15e611472ecca5a6ae547a536f6
   ssh_known_hosts:
   - cullen.io
+
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
+ - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+
 cache:
   directories:
   - node_modules
