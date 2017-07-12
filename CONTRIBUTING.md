@@ -7,3 +7,6 @@ The Programming Wars team values the principle of continous improvement and welc
 1. Look at the [issues labelled with "Community"](https://github.com/johnanvik/program-wars/issues?q=is%3Aopen+is%3Aissue+label%3Acommunity) and help to complete them. These items don't usually require programming experience.
 1. Look at [open bugs or feature requests](https://github.com/johnanvik/program-wars/issues) and add your reaction to let us know what is important to you.
 1. If you have experience with Vue or Javascript, you can contribute code to fix a bug or add a new feature. See [Contributing to the Project](https://github.com/johnanvik/program-wars/wiki/Contributing-to-the-Project).
+
+# Code of Conduct
+Please refer to the project's [Code of Conduct](CODE_OF_CONDUCT.md), if you have not already done so.
