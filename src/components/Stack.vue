@@ -230,8 +230,13 @@ export default {
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
               this.$store.dispatch('playerTookTurn');
               bus.$emit('cardDeselected');
-            }else if(thisStack.stackTopCard().type === 'R') {
-              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to another repetition card. Instead add the card to a stack with an Instruction or Group card." );
+            }else if(activeCard.value === 1 && thisStack.stackTopCard().type === 'R') {
+              this.$store.commit('popCardFromStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
+              this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
+              this.$store.dispatch('playerTookTurn');
+              bus.$emit('cardDeselected');
+            } else if(thisStack.stackTopCard().type === 'R' && activeCard.value !== 1) {
+              $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only replace a repetition card with a variable repetition card (Rx). Instead add the card to a stack with an Instruction or Group card." );
               $('button[stackId="'+this.stackId+'"]').popover('toggle')
             } else {
                   $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an Instruction or Group card. Instead add the card to a stack with an Instruction or Group card." );

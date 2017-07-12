@@ -108,10 +108,16 @@ export default {
     state.stacks.push(new Stack(payload.playerId, payload.boolSide))
   },
   addCardToStack(state, payload) {
-    let stackToAdd = state.stacks.find(st => st.stackId === payload.stackId)
+    let stackToAdd = state.stacks.find(st => st.stackId === payload.stackId);
     payload.card.selected = false;
     stackToAdd.addCardToStack(payload.card);
     stackToAdd.calculateStackScore();
+  },
+  popCardFromStack(state, payload) {
+    let stackToPop = state.stacks.find(st => st.stackId === payload.stackId);
+    payload.card.selected = false;
+    stackToPop.popTopCard();
+    stackToPop.calculateStackScore();
   },
   groupStacks(state, payload) {
     state.groupStacks = payload.yesOrNo;
