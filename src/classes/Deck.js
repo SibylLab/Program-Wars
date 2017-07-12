@@ -76,7 +76,7 @@ export default class Deck {
         }
       }
     }
-    this.shuffle();
+    this.shuffle(this.cards);
   };//end Init game
 
   /**
@@ -94,10 +94,10 @@ export default class Deck {
    * shuffle function that will psuedo shuffle the contents of the deck into a random order
    * @memberOf Deck
    */
-  shuffle() {
-    for (let i = this.cards.length; i; i--) {
+  shuffle(event) {
+    for (let i = event.length; i; i--) {
       let j = Math.floor(Math.random() * i);
-      [this.cards[i - 1], this.cards[j]] = [this.cards[j], this.cards[i - 1]];
+      [event[i - 1], event[j]] = [event[j], event[i - 1]];
     }
   }
 
