@@ -38,8 +38,9 @@ export default {
         context.commit('coinModalTrigger');
         context.commit('setCoinFlipAnim', 0);
         context.commit('setPlayfieldColour', true);
+        context.state.coinMsg = context.state.activeSide ? 'True' : 'False';
         setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
-        setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
+        // setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
         setTimeout(() => {
           $('.coin').modal('handleUpdate');
           $('.coin').modal('hide');
