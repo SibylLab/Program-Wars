@@ -1,6 +1,7 @@
 let playerModalTimer = 2;// sec
 let endTurnTimer = 1.5;// sec
 let coinTimer = 2;// sec
+let runTimer = 1;// sec
 
 export default {
   playerTookTurn(context) {
@@ -36,12 +37,17 @@ export default {
         context.commit('checkWin');
         context.commit('coinModalTrigger');
         context.commit('setCoinFlipAnim', 0);
+        context.commit('setPlayfieldColour', true);
         setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
         setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
         setTimeout(() => {
           $('.coin').modal('handleUpdate');
           $('.coin').modal('hide');
-
+          setTimeout(() => {
+            if(!(context.state.winner)) {
+              context.commit('setPlayfieldColour', false);
+            }
+          }, runTimer * 1000);
         }, coinTimer * 1000);
         if (context.state.winner) {
           setTimeout(() => {
@@ -55,7 +61,7 @@ export default {
             setTimeout(()=> {
               context.commit('playerModalHide');
             }, playerModalTimer * 1000)
-          }, coinTimer * 1000 + 350);
+          }, (coinTimer + runTimer) * 1000 + 350);
         }
         break;
     }
