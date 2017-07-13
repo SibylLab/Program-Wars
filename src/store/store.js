@@ -37,8 +37,8 @@ export const store = new Vuex.Store({
       currentOpponents: [],
       coinFlip: 0,
       coinMsg: 'Evaluating...',
-      trueSideColour: 'background-color: cornflowerblue',
-      falseSideColour: 'background-color: royalblue'
+      trueSideColour: 'background-color: cornflowerblue; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)',
+      falseSideColour: 'background-color: royalblue; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)'
     },
     originalState: {
       players: [],
