@@ -4,7 +4,7 @@
 [![Test Coverage](https://codeclimate.com/github/johnanvik/program-wars/badges/coverage.svg)](https://codeclimate.com/github/johnanvik/program-wars/coverage)
 [![Issue Count](https://codeclimate.com/github/johnanvik/program-wars/badges/issue_count.svg)](https://codeclimate.com/github/johnanvik/program-wars/issues)
 
-Program Wars is a web-based educational card game that teaches the basic concepts of programming. The game was created by Dr. John Anvik and his two sons (John and Erik) over a weekend. This web version was created as a part of a software engineering course at the University of Lethbridge.
+Program Wars is a web-based educational card game that teaches the basic concepts of programming.
 
 To play Program Wars go to [http://programmingwars.cullen.io](http://programmingwars.cullen.io)
 
