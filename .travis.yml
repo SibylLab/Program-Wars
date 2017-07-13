@@ -41,7 +41,9 @@ script:
 after_success:
 #- npm install -g codeclimate-test-reporter --save-dev
 #- codeclimate-test-reporter < ./test/unit/coverage/lcov.info
-- ./cc-test-reporter after-build --prefix /home/travis/build/johnanvik/program-wars/test/unit -t lcov --exit-code $TRAVIS_TEST_RESULT; 
+- mv ./test/unit/coverage .
+- cat covearge/lcov.info
+- ./cc-test-reporter after-build -t lcov --exit-code $TRAVIS_TEST_RESULT; 
 
 - openssl aes-256-cbc -K $encrypted_d5e0ba2980d8_key -iv $encrypted_d5e0ba2980d8_iv
   -in deploy_rsa.enc -out deploy_rsa -d
