@@ -93,7 +93,6 @@ export default {
     background-color: #ddd;
     width: 100%;
     height: 90%;
-    overflow-y: scroll;
 }
 
 h1, h2 {
