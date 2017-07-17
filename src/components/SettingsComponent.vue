@@ -19,7 +19,12 @@
       </div>
       <div class="row">
         <div class="col-md-12" id="addPlayer">
-          <input type="text" placeholder="Add a player..." v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="maxPlayer">
+          <select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; height: 32px">
+            <option value="none" selected>(None)</option>
+            <option value="noAiSelected" disabled selected>Select AI Opponent:</option>
+            <option v-for="opponents in aiOpponents" :value="opponents.name">{{ opponents.name }}</option>
+          </select> or
+          <input type="text" placeholder="Add a player..." v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="inputDisable" style="margin-left: 20px">
           <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
         </div>
       </div>
@@ -76,11 +81,19 @@
         gameStart: false,
         selected: '10',
         noPlayers: true,
-        maxPlayer: false
+        inputDisable: false,
+        maxPlayer: false,
+        aiSelect: 'noAiSelected',
+        aiOpponents: [{name: 'Nightmare', isAi: true},
+          {name: 'Joker', isAi: true}]
       }
     },
     methods: {
       submit() {
+        if(!(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none')) {
+          if(this.aiSelect.length > 0 && this.localPlayers.indexOf(this.aiSelect) < 0)
+          this.localPlayers.push(this.aiSelect);
+        };
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer);
           if(this.localPlayers.length > 1) {
@@ -91,6 +104,7 @@
           this.maxPlayer = true;
         }
         this.newPlayer = ""
+        this.aiSelect = 'noAiSelected'
 
       },
       submitPlayers() {
@@ -139,6 +153,16 @@
       players() {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
       },
+    },
+    watch: {
+      aiSelect() {
+        if(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none') {
+          this.inputDisable = false;
+        } else {
+          this.inputDisable = true;
+          this.newPlayer = '';
+        }
+      }
     },
     components: {
       'player-info-panel': PlayerInfoPanel,
