@@ -136,6 +136,9 @@ export default {
     },
     falseSideColour() {
       return this.$store.state.falseSideColour;
+    },
+    playerTurn() {
+      return this.$store.state.playerTurn;
     }
   },
 
@@ -207,6 +210,7 @@ export default {
   justify-content: flex-start;
   min-height: inherit;
   min-width: inherit;
+  overflow-y: auto;
   /*height: inherit;*/
 
   }
