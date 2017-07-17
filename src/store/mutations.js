@@ -27,7 +27,7 @@ export default {
   addPlayers(state, payload) {
     let id = 0;
     for(let p of payload.list){
-      let pp = new Player(id,p,undefined,0, 0);
+      let pp = new Player(id,p.name,undefined,0, 0, p.isAi);
       state.players.push(pp);
       id++;
     }

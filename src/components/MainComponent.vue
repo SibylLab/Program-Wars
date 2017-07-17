@@ -94,7 +94,6 @@ export default {
     },
     initGame(){
         this.$store.commit('initDeck');
-
     },
     fillHands() {
         for(let player of this.$store.getters.getPlayers) {

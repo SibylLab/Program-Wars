@@ -13,11 +13,12 @@ export default class Player{
    * @param {int} trueScore The current score of the player on the true side
    *  @param {int} falseScore The current score of the player on the false side
    */
-  constructor(id, name, hand, trueScore, falseScore) {
+  constructor(id, name, hand, trueScore, falseScore, isAi) {
     this.name = name;
     this.hand = hand;
     this.trueScore = trueScore;
     this.falseScore = falseScore;
     this.id = id;
+    this.isAi = isAi;
   }
 }
