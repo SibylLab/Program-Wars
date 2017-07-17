@@ -17,6 +17,7 @@
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
+          <button class="btn btn-danger" @click="deleteMe">click</button>
         <button class="btn btn-primary"><router-link to="/" style="text-decoration: none">New Game</router-link></button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
@@ -100,6 +101,9 @@ export default {
 
   },
   methods: {
+    deleteMe() {
+      console.log(this.$store.state.currentGameState)
+    },
     submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer)
@@ -197,7 +201,15 @@ export default {
     this.fillHands();
     this.addStacksToPlayers();
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
+
   },
+  updated() {
+    console.log('in updated')
+    if(this.$store.state.currentGameState === 'playerTurn' && this.$store.state.players[this.$store.state.activePlayer].isAi) {
+      this.$store.commit('setGameState', {gameState: 'aiTurn'})
+      console.log('in aiTurn')
+    }
+  }
  }
 </script>
 

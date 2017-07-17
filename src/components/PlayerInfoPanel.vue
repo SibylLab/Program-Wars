@@ -1,14 +1,5 @@
 <template>
     <div id="player-info-panel">
-
-      <!--<div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">-->
-        <!--<div class="modal-dialog" role="document">-->
-          <!--<div class="modal-content" style="border-radius: 30px">-->
-            <!--<h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-
       <div id="flexcontainer">
         <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
           <div class="panel panel-default" style="border-radius: 10px">
@@ -238,7 +229,15 @@ export default {
 
         }
     })
-  }
+    if(this.$store.state.currentGameState === 'aiTurn') {
+      console.log('first level')
+      let player = this.$store.state.players[this.$store.state.activePlayer];
+      if(player.isAi) {
+        console.log('sec level')
+        this.cardClicked(player.hand[1])
+      }
+    }
+  },
 }
 </script>
 
