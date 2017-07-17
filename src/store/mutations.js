@@ -252,5 +252,19 @@ export default {
   },
   setCoinFlipAnim(state, payload) {
     state.coinFlip = payload;
+  },
+  setPlayfieldColour(state, payload) {
+    if(payload) {
+     if(state.activeSide) {
+       state.trueSideColour = 'background-color: rgba(0, 255, 0, 0.26); box-shadow: 0 0 15px 10px forestgreen';
+       state.falseSideColour = 'rgba(242, 0, 0, 0.36)';
+     } else {
+       state.falseSideColour = 'background-color: rgba(0, 255, 0, 0.26); box-shadow: 0 0 15px 10px forestgreen';
+       state.trueSideColour = 'rgba(242, 0, 0, 0.36)';
+     }
+    } else {
+      state.trueSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)';
+      state.falseSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)';
+    }
   }
 }

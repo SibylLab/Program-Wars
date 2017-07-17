@@ -32,10 +32,10 @@
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <playfield  :trueFalse="true" :activeColour="this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="trueHighlighted" class="playfieldSides"></playfield>
+              <playfield  :trueFalse="true" :playerId="currentPlayerId" :style="trueSideColour" class="playfieldSides"></playfield>
             </div>
             <div class="col-md-6 col-sm-6">
-              <playfield :trueFalse="false" :activeColour="!this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
+              <playfield :trueFalse="false" :playerId="currentPlayerId" :style="falseSideColour" class="playfieldSides"></playfield>
             </div>
           </div>
         </div>
@@ -132,25 +132,11 @@ export default {
     players() {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
     },
-    trueHighlighted() {
-      if(this.$store.getters.getActiveSide) {
-        return this.highlighted;
-      } else {
-        return ''
-      }
+    trueSideColour() {
+      return this.$store.state.trueSideColour;
     },
-    falseHighlighted() {
-      if(!(this.$store.getters.getActiveSide)) {
-        return this.highlighted;
-      } else {
-        return ''
-      }
-    },
-    highlighted() {
-        return 'box-shadow: 0 0 15px 10px forestgreen';
-    },
-    playerTurn() {
-      return this.$store.state.playerTurn;
+    falseSideColour() {
+      return this.$store.state.falseSideColour;
     }
   },
 
@@ -271,6 +257,7 @@ export default {
 .playfieldSides{
   padding: 8px;
   border-radius: 15px;
+  min-height: 375px;
 }
 h1, h2 {
   font-weight: normal;
