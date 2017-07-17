@@ -1,13 +1,13 @@
 <template>
     <div id="player-info-panel">
 
-      <div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content" style="border-radius: 30px">
-            <h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>
-          </div>
-        </div>
-      </div>
+      <!--<div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">-->
+        <!--<div class="modal-dialog" role="document">-->
+          <!--<div class="modal-content" style="border-radius: 30px">-->
+            <!--<h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <div id="flexcontainer">
         <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">

@@ -6,6 +6,9 @@
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
+    <transition name="fade">
+      <player-turn v-if="playerTurn"></player-turn>
+    </transition>
 
     <div id="header">
       <p>Programming Wars</p>
@@ -52,6 +55,7 @@ import CreditsModal from './CreditsModal.vue'
 import HackModal from './HackModal.vue'
 import WinnerModal from './WinnerModal.vue'
 import CoinModal from './CoinModal.vue'
+import PlayerTurn from './PlayerTurnPopUp.vue'
 
 
 import Card from '../classes/Card'
@@ -81,6 +85,19 @@ export default {
       winnerScore: 0,
 
     }
+  },
+  components: {
+    'player-info-panel': PlayerInfoPanel,
+    'playfield': Playfield,
+    'opponent-stacks': OpponentStacks,
+    'modal': Modal,
+    'rules-modal': RulesModal,
+    'credits-modal': CreditsModal,
+    'hack-modal': HackModal,
+    'winner-modal': WinnerModal,
+    'coin-modal': CoinModal,
+    'player-turn': PlayerTurn
+
   },
   methods: {
     submit() {
@@ -122,18 +139,7 @@ export default {
       return this.$store.state.falseSideColour;
     }
   },
-  components: {
-    'player-info-panel': PlayerInfoPanel,
-    'playfield': Playfield,
-    'opponent-stacks': OpponentStacks,
-    'modal': Modal,
-    'rules-modal': RulesModal,
-    'credits-modal': CreditsModal,
-    'hack-modal': HackModal,
-    'winner-modal': WinnerModal,
-    'coin-modal':CoinModal
 
-  },
   watch: {
     tipsToggle(val) {
         if(val === true && this.factsToggle === false) {
@@ -178,7 +184,6 @@ export default {
                   this.$store.commit('setActiveSide', {activeSide: false})
                 }
                 this.$store.dispatch('turn', false);
-//                this.$store.dispatch('coinFlipWinCheck');
               setTimeout(() => {
                 this.$store.commit('setTrueFalseAnim', {startAnim: false});
                 this.$store.commit('setGameState', {gameState: 'playerTurn'});
@@ -276,4 +281,20 @@ a {
   color: #fff;
 }
 
+  .fade-enter {
+    opacity: 0;
+  }
+
+  .fade-enter-active {
+    transition: opacity .5s;
+  }
+
+  .fade-leave {
+
+  }
+
+  .fade-leave-active {
+    transition: opacity .5s;
+    opacity: 0;
+  }
 </style>
