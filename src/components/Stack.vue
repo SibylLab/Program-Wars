@@ -146,27 +146,27 @@ export default {
       this.$store.commit('setActiveCardUndefined')
       this.$store.commit('removeAllSelectedStacks')
       $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
-    })
+    });
+
+    bus.$on('aiAddToStack', (stackId) => {
+      console.log('on')
+      this.id = stackId;
+      this.addToStack();
+    });
   },
   methods: {
     stackSelected() {
       this.$store.commit('addStackToSelected', {stackId: this.stackId})
-
       this.$store.commit('setStackSelectedBoolean', {boolean: this.playfieldBoolean})
-
       let selectedStacks = this.$store.getters.getSelectedStacks
-
       if (selectedStacks.length === 0) {
         this.$store.commit('setStackSelectedBoolean', {boolean: undefined})
-
       }
         let totalScore = 0;
         for (let stack of selectedStacks) {
             totalScore += stack.score
         }
-
         let activeCardValue = this.$store.getters.getActiveCard.value
-
         if (selectedStacks.length >= 1 && activeCardValue === totalScore) {
             $('#'+this.modalId2).modal('show')
         }

@@ -230,7 +230,6 @@ export default {
         }
     });
     bus.$on('aiDiscard', () => {
-      this.$store.state.activeCard = this.hand[0];
       this.discardSelected();
     })
   },

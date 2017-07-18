@@ -77,7 +77,7 @@ export default {
   },
   getCurrentPlayer(state) {
     return state.players[state.activePlayer];
-  }
+  },
   // getCurrentOpponents(state) {
   //   let players = state.getPlayers;
   //   for(let player of players) {

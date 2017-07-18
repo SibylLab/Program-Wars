@@ -268,6 +268,12 @@ export default {
     }
   },
   aiTakeTurn(state, payload) {
-    bus.$emit('aiDiscard')
+    state.activeCard = payload.cards[0]
+    let myStack = state.stacks.filter(stack => state.activePlayer === stack.playerId && true === stack.boolSide && stack.score === 0)
+    if(state.activeCard.type === 'I') {
+      bus.$emit('aiAddToStack', myStack.stackId)
+    } else {
+      bus.$emit('aiDiscard')
+    }
   },
 }

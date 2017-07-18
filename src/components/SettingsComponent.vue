@@ -76,7 +76,7 @@
         idCounter:0,
         dataToggle: false,
         modalTitle: "Welcome to a new game of Programming Wars!",
-        localPlayers: [],
+        localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
         selected: '10',
@@ -89,13 +89,19 @@
     },
     methods: {
       submit() {
+        let pass = true;
+        for (let player of this.localPlayers) {
+          if (player.name === this.aiSelect || player.name === this.newPlayer) {
+            pass = false;
+          }
+        }
         if(!(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none')) {
-          if(this.aiSelect.length > 0 && this.localPlayers.indexOf(this.aiSelect) < 0)
-          this.localPlayers.push({name: this.aiSelect, isAi: true});
-        };
-        if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
+          if(this.aiSelect.length > 0 && pass) {
+            this.localPlayers.push({name: this.aiSelect, isAi: true});
+          }
+        }
+        if(this.newPlayer.length > 0 && pass) {
           this.localPlayers.push({name: this.newPlayer, isAi: false});
-
         }
         if(this.localPlayers.length >= 4) {
           this.maxPlayer = true;

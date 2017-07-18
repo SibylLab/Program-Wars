@@ -102,9 +102,7 @@ export default {
   },
   methods: {
     deleteMe() {
-      console.log(this.$store.state.currentGameState)
-      console.log(this.$store.getters.getCurrentPlayer)
-      console.log(this.$store.getters.getCurrentPlayerHand)
+      console.log(this.$store.getters.getStacks)
     },
     submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
