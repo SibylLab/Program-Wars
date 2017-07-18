@@ -29,8 +29,13 @@ export default {
             context.commit('playerModalTrigger');
             setTimeout(() => {
               context.commit('playerModalHide');
-            }, playerModalTimer * 1000)
-          }, endTurnTimer * 1000)
+            }, playerModalTimer * 1000);
+          }, endTurnTimer * 1000);
+          setTimeout(() => {
+            if(context.getters.getCurrentPlayer.isAi) {
+              context.commit('aiTakeTurn', context.getters.getCurrentPlayerHand);
+            }
+          }, 4000)
         }
         break;
       case false:
@@ -63,6 +68,11 @@ export default {
               context.commit('playerModalHide');
             }, playerModalTimer * 1000)
           }, (coinTimer + runTimer) * 1000 + 350);
+          setTimeout(() => {
+            if(context.getters.getCurrentPlayer.isAi) {
+              context.commit('aiTakeTurn', true);
+            }
+          }, 6000)
         }
         break;
     }

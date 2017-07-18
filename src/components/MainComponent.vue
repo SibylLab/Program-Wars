@@ -103,6 +103,8 @@ export default {
   methods: {
     deleteMe() {
       console.log(this.$store.state.currentGameState)
+      console.log(this.$store.getters.getCurrentPlayer)
+      console.log(this.$store.getters.getCurrentPlayerHand)
     },
     submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
@@ -203,13 +205,13 @@ export default {
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
 
   },
-  updated() {
-    console.log('in updated')
-    if(this.$store.state.currentGameState === 'playerTurn' && this.$store.state.players[this.$store.state.activePlayer].isAi) {
-      this.$store.commit('setGameState', {gameState: 'aiTurn'})
-      console.log('in aiTurn')
-    }
-  }
+//  updated() {
+//    console.log('in updated')
+//    if(this.$store.state.currentGameState === 'playerTurn' && this.$store.state.players[this.$store.state.activePlayer].isAi) {
+//      this.$store.commit('setGameState', {gameState: 'aiTurn'})
+//      console.log('in aiTurn')
+//    }
+//  }
  }
 </script>
 

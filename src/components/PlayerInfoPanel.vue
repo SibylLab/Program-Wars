@@ -228,15 +228,11 @@ export default {
           this.tipsCardSelected = this.setTipBox(c);
 
         }
+    });
+    bus.$on('aiDiscard', () => {
+      this.$store.state.activeCard = this.hand[0];
+      this.discardSelected();
     })
-    if(this.$store.state.currentGameState === 'aiTurn') {
-      console.log('first level')
-      let player = this.$store.state.players[this.$store.state.activePlayer];
-      if(player.isAi) {
-        console.log('sec level')
-        this.cardClicked(player.hand[1])
-      }
-    }
   },
 }
 </script>
