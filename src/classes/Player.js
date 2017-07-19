@@ -2,6 +2,7 @@
  * @file player.js file
  * @author Lance on 2017-03-10.
  */
+import Human from './Human'
 
 export default class Player{
   /**
@@ -20,5 +21,12 @@ export default class Player{
     this.falseScore = falseScore;
     this.id = id;
     this.isAi = isAi;
+    this.type = new Human();
+  };
+
+  playerTest(store, event, event2) {
+    console.log('in player function')
+    console.log(store.state.players)
+    console.log(event + event2)
   }
 }

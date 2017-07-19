@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     deleteMe() {
-      console.log(this.deleteData)
+      this.$store.state.players[0].type.humanTest()
     },
     submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
