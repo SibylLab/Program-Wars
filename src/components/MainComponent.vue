@@ -18,7 +18,9 @@
         </div>
         <div id="header-buttons">
           <button class="btn btn-danger" @click="deleteMe">click</button>
-        <button class="btn btn-primary"><router-link to="/" style="text-decoration: none">New Game</router-link></button>
+        <!--<button class="btn btn-primary"><router-link to="/" style="text-decoration: none">New Game</router-link></button>-->
+          <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
+
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
         <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
@@ -84,7 +86,7 @@ export default {
       playerList: [],
       winner: '',
       winnerScore: 0,
-
+      deleteData: []
     }
   },
   components: {
@@ -102,7 +104,7 @@ export default {
   },
   methods: {
     deleteMe() {
-      console.log(this.$store.getters.getStacks)
+      console.log(this.deleteData)
     },
     submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
@@ -143,6 +145,9 @@ export default {
     },
     playerTurn() {
       return this.$store.state.playerTurn;
+    },
+    gameStateChanges() {
+        return this.$store.state.currentGameState
     }
   },
 
@@ -203,6 +208,9 @@ export default {
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
 
   },
+  updated() {
+      this.deleteData.push(this.$store.state.currentGameState);
+  }
 //  updated() {
 //    console.log('in updated')
 //    if(this.$store.state.currentGameState === 'playerTurn' && this.$store.state.players[this.$store.state.activePlayer].isAi) {

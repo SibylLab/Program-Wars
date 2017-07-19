@@ -84,7 +84,7 @@
         inputDisable: false,
         maxPlayer: false,
         aiSelect: 'noAiSelected',
-        aiOpponents: ['Nightmare', 'Joker', 'DarthVader']
+        aiOpponents: ['Vincent Vega', 'Joker', 'Darth Vader']
       }
     },
     methods: {
