@@ -148,10 +148,14 @@ export default {
       $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
     });
 
-    bus.$on('aiAddToStack', (stackId) => {
-      console.log('on')
-      this.id = stackId;
-      this.addToStack();
+    bus.$on('aiAddToStack', (newStackId) => {
+      if(this.$store.state.aiTurn === true) {
+        if(this.$store.state.activeCard !== undefined)
+          console.log('stack in stacks' + newStackId.stackId)
+          this.id = newStackId.stackId;
+        this.addToStack();
+        this.$store.state.aiTurn = false;
+      }
     });
   },
   methods: {
@@ -212,6 +216,7 @@ export default {
 
         switch (activeCard.type) {
           case 'I':
+            console.log(thisStack.stackId)
             if (thisStack.cards.length === 0) {
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
               this.$store.dispatch('playerTookTurn');

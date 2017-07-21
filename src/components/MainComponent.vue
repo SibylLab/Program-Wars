@@ -104,7 +104,10 @@ export default {
   },
   methods: {
     deleteMe() {
-      this.$store.state.players[0].type.humanTest()
+      console.log(this.$store.getters.getAiDependent.hand)
+      console.log(this.$store.state.stacks)
+//      console.log(this.$store.state.hands)
+//      console.log(this.$store.state.players)
     },
     submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
@@ -178,7 +181,7 @@ export default {
     let gameEventLoopTimer = setInterval(() => {
       let gameState = this.$store.getters.getgameState;
       if (gameState === 'newGame') {
-        $('#myModal').modal('toggle');
+//        $('#myModal').modal('toggle');
         this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'});
         this.gameStart = true;
       } else if (gameState === 'initGame') {

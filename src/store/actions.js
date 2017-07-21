@@ -34,7 +34,7 @@ export default {
           setTimeout(() => {
             if(context.getters.getCurrentPlayer.isAi) {
               // console.log(context.getters.getCurrentPlayerHand)
-              context.commit('aiTakeTurn', context.getters.getCurrentPlayerHand);
+              context.commit('aiTakeTurn', context.getters.getAiDependent);
             }
           }, 4000)
         }
@@ -71,7 +71,7 @@ export default {
           }, (coinTimer + runTimer) * 1000 + 350);
           setTimeout(() => {
             if(context.getters.getCurrentPlayer.isAi) {
-              context.commit('aiTakeTurn', context.getters.getCurrentPlayerHand);
+              context.commit('aiTakeTurn', context.getters.getAiDependent);
             }
           }, 6000)
         }

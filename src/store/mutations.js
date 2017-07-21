@@ -85,7 +85,7 @@ export default {
     state = localState;
     hand.cards = cardsTemp;
     state.hands.push(hand);
-    state.players.find(player => player.id === playerId).hand = hand.id;
+    state.players.find(player => player.id === playerId).hand = hand.handId;
   },
   addCardToHand(state) {
     if (state.deck.cards.length <= 1 && state.deck.discard_cards.length > 0) {
@@ -268,12 +268,29 @@ export default {
     }
   },
   aiTakeTurn(state, payload) {
-    state.activeCard = payload.cards[0]
-    let myStack = state.stacks.filter(stack => state.activePlayer === stack.playerId && true === stack.boolSide && stack.score === 0)
-    if(state.activeCard.type === 'I') {
-      bus.$emit('aiAddToStack', myStack.stackId)
-    } else {
-      bus.$emit('aiDiscard')
+    state.aiTurn = true;
+    let aiMove = state.players[state.activePlayer].type.turnLogic(payload);
+    let cardToPlay = aiMove.cardToPlay;
+    let stackToPlay = aiMove.stackToPlay;
+    state.activeCard = cardToPlay;
+    if(aiMove.moveType === 'play') {
+      bus.$emit('aiAddToStack', stackToPlay)
+    } else if(aiMove.moveType === 'discard') {
+      bus.$emit('aiDiscard');
     }
+
+    // let executed = false;
+    // if(!executed) {
+    //   console.log('this should only be called once')
+    //   executed = false;
+    //   state.activeCard = payload.cards[0]
+    //   let myStack = state.stacks.filter(stack => state.activePlayer === stack.playerId && true === stack.boolSide && stack.score === 0)
+    //   if(state.activeCard.type === 'I') {
+    //     bus.$emit('aiAddToStack', myStack.stackId)
+    //   } else {
+    //     bus.$emit('aiDiscard')
+    //   }
+    // }
+
   },
 }

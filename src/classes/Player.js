@@ -23,10 +23,4 @@ export default class Player{
     this.isAi = isAi;
     this.type = new Human();
   };
-
-  playerTest(store, event, event2) {
-    console.log('in player function')
-    console.log(store.state.players)
-    console.log(event + event2)
-  }
 }

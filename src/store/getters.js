@@ -78,14 +78,24 @@ export default {
   getCurrentPlayer(state) {
     return state.players[state.activePlayer];
   },
-  // getCurrentOpponents(state) {
-  //   let players = state.getPlayers;
-  //   for(let player of players) {
-  //     if(player.id !== state.currentId) {
-  //       state.currentOpponents.push(player);
-  //     }
-  //   }
-  //   return state.currentOpponents;
-  // },
+  getAiDependent(state) {
+    let playerHand;
+    let playerStack = [];
+    let opponentStack = [];
+    let currentPlayer = state.players[state.activePlayer];
+    for(let hand of state.hands) {
+      if(currentPlayer.hand === hand.handId) {
+        playerHand = hand;
+      }
+    }
+    for(let stack of state.stacks) {
+      if(currentPlayer.id === stack.playerId) {
+        playerStack.push(stack)
+      } else {
+        opponentStack.push(stack)
+      }
+    }
+    return {hand: playerHand, stack: playerStack, opponents: opponentStack}
+  }
 }
 
