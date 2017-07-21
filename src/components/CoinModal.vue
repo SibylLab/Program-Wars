@@ -1,7 +1,7 @@
 <template>
   <div id="coinStyle" style="top: 20%; left: 50%; margin-left: -200px;">
     <div id="background">
-      <h3>Active Side is: </h3>
+      <h4>Running Instructions in {{ message }} Path</h4>
       <radial-progress-bar :diameter="200"
                            :completed-steps="completedSteps"
                            :total-steps="totalSteps"
@@ -15,10 +15,8 @@
 <script>
   import RadialProgressBar from 'vue-radial-progress'
   export default {
-//    props: ['message', 'completedSteps'],
     data () {
       return {
-//        completedSteps: 0,
         totalSteps: 1,
       }
     },
