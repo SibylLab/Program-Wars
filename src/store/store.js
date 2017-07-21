@@ -37,6 +37,7 @@ export const store = new Vuex.Store({
       currentOpponents: [],
       coinFlip: 0,
       coinMsg: '',
+      playerTurn: false,
       trueSideColour: 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)',
       falseSideColour: 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)'
     },
