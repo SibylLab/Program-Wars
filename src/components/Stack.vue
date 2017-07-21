@@ -52,6 +52,7 @@ export default {
     return {
       title: 'Stack',
       id: this.stackId,
+      activeStack: '',
       dataContent: "hello",
       groupSelectConfirm: "Group Stacks",
       groupSelectText: "Would you like to group these stacks?"
@@ -149,19 +150,23 @@ export default {
     });
 
     bus.$on('aiAddToStack', (newStackId) => {
+      this.activeStack = newStackId;
       if(this.$store.state.aiTurn === true) {
-        if(this.$store.state.activeCard !== undefined)
-          console.log('stack in stacks' + newStackId.stackId)
-          this.id = newStackId.stackId;
-        this.addToStack();
-        this.$store.state.aiTurn = false;
+        console.log('should only be called once a turn')
+        if(this.$store.state.activeCard !== undefined) {
+          if(this.id === newStackId.stackId) {
+            this.activeStack = newStackId;
+            this.addToStack();
+            this.$store.state.aiTurn = false;
+          }
+        }
       }
     });
   },
   methods: {
     stackSelected() {
-      this.$store.commit('addStackToSelected', {stackId: this.stackId})
-      this.$store.commit('setStackSelectedBoolean', {boolean: this.playfieldBoolean})
+      this.$store.commit('addStackToSelected', {stackId: this.stackId});
+      this.$store.commit('setStackSelectedBoolean', {boolean: this.playfieldBoolean});
       let selectedStacks = this.$store.getters.getSelectedStacks
       if (selectedStacks.length === 0) {
         this.$store.commit('setStackSelectedBoolean', {boolean: undefined})
@@ -170,7 +175,7 @@ export default {
         for (let stack of selectedStacks) {
             totalScore += stack.score
         }
-        let activeCardValue = this.$store.getters.getActiveCard.value
+        let activeCardValue = this.$store.getters.getActiveCard.value;
         if (selectedStacks.length >= 1 && activeCardValue === totalScore) {
             $('#'+this.modalId2).modal('show')
         }
@@ -213,10 +218,12 @@ export default {
       if (this.$store.getters.getActiveCard !== undefined) {
         let activeCard = this.$store.getters.getActiveCard
         let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
+        if(this.$store.state.players[this.$store.state.activePlayer].isAi) {
+          thisStack = this.activeStack;
+        }
 
         switch (activeCard.type) {
           case 'I':
-            console.log(thisStack.stackId)
             if (thisStack.cards.length === 0) {
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
               this.$store.dispatch('playerTookTurn');

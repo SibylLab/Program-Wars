@@ -22,8 +22,6 @@ export default class Human{
       moveType = 'discard';
     }
     stackToPlay = e.stack.find(stack => stack.boolSide === true && stack.score === 0);
-    console.log(e.stack);
-    console.log(stackToPlay)
     return {cardToPlay: cardToPlay, stackToPlay: stackToPlay, opponentToAttack: opponentToAttack, moveType: moveType};
   }
 }
