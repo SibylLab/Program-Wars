@@ -9,20 +9,22 @@ import Deck from '../classes/Deck'
 export default {
   resetState(state) {
     // state.players = []
-    state.stacks = []
-    state.deck = new Deck()
-    state.hands = []
-    state.currentGameState = 'newGame'
-    state.activeSide = true
-    state.activePlayer = 0
-    state.activeHasPlayed = false
-    state.currentId = 0
-    state.activeCard = undefined
-    state.selectedStacks = []
-    state.selectedStackBoolean = undefined
-    state.winner = false
-    state.tips.tutorial = true
-    state.tips.fact = true
+    state.stacks = [];
+    state.deck = new Deck();
+    state.hands = [];
+    state.currentGameState = 'newGame';
+    state.activeSide = true;
+    state.activePlayer = 0;
+    state.activeHasPlayed = false;
+    state.currentId = 0;
+    state.activeCard = undefined;
+    state.selectedStacks = [];
+    state.selectedStackBoolean = undefined;
+    state.winner = false;
+    state.tips.tutorial = true;
+    state.tips.fact = true;
+    state.aiTurn = false;
+    state.playerTurn = false;
   },
   addPlayers(state, payload) {
     let id = 0;

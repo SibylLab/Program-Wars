@@ -152,7 +152,6 @@ export default {
     bus.$on('aiAddToStack', (newStackId) => {
       this.activeStack = newStackId;
       if(this.$store.state.aiTurn === true) {
-        console.log('should only be called once a turn')
         if(this.$store.state.activeCard !== undefined) {
           if(this.id === newStackId.stackId) {
             this.activeStack = newStackId;
