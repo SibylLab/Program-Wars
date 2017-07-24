@@ -153,7 +153,7 @@ export default {
       this.activeStack = newStackId;
       if(this.$store.state.aiTurn === true) {
         if(this.$store.state.activeCard !== undefined) {
-          if(this.id === newStackId.stackId) {
+          if(this.stackId === newStackId.stackId) {
             this.activeStack = newStackId;
             this.addToStack();
             this.$store.state.aiTurn = false;
