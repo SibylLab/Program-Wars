@@ -104,8 +104,9 @@ export default {
   },
   methods: {
     deleteMe() {
-      console.log(this.$store.getters.getAiDependent.hand)
-      console.log(this.$store.state.stacks)
+      console.log(this.$store.state.players)
+//      console.log(this.$store.getters.getAiDependent.hand)
+//      console.log(this.$store.state.stacks)
 //      console.log(this.$store.state.hands)
 //      console.log(this.$store.state.players)
     },

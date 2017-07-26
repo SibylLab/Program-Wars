@@ -181,7 +181,11 @@
       this.localPlayers = [];
       if(this.$store.state.players.length > 0) {
         for(let i = 0; i < this.$store.state.players.length; i++) {
-          this.newPlayer = this.$store.state.players[i].name;
+          if(this.$store.state.players[i].isAi) {
+            this.aiSelect = this.$store.state.players[i].name;
+          } else {
+            this.newPlayer = this.$store.state.players[i].name;
+          }
           this.submit();
         }
         this.$store.state.players = [];
