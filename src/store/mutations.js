@@ -274,11 +274,15 @@ export default {
     let aiMove = state.players[state.activePlayer].type.turnLogic(payload);
     let cardToPlay = aiMove.cardToPlay;
     let stackToPlay = aiMove.stackToPlay;
+    let stackToHack = aiMove.opponentToAttack;
     state.activeCard = cardToPlay;
     if(aiMove.moveType === 'play') {
       bus.$emit('aiAddToStack', stackToPlay)
     } else if(aiMove.moveType === 'discard') {
       bus.$emit('aiDiscard');
+    } else if(aiMove.moveType === 'hack') {
+      console.log(stackToHack)
+      bus.$emit('aiHack', stackToHack);
     }
 
     // let executed = false;

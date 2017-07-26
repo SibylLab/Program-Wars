@@ -15,6 +15,7 @@ export default class Human{
     let bestICard = null;
     let bestRCard = null;
     let rXCard = null;
+    let hackCard = null;
     let bestVCard = null;
     let handHas = this.handHasA(e);
     let stackToRepeat = undefined;
@@ -34,6 +35,9 @@ export default class Human{
       if(hand.type === 'V') {
         bestVCard = this.findBestCard(hand, bestVCard)
       }
+      if(hand.type === 'H') {
+        hackCard = hand;
+      }
     }
 
     if(!handHas.I) {
@@ -47,9 +51,21 @@ export default class Human{
         }
       }
     }
-
+    let tmpOpponents = e.opponents.filter(opponents => opponents.score > 0);
+    if(handHas.H && tmpOpponents.length > 0) {
+      let tmpScore = 0;
+      for(let player of tmpOpponents) {
+        if(player.score > tmpScore && player.cards[0].type !== 'G') {
+          console.log(player)
+          opponentToAttack = player;
+          foundACard = true;
+        }
+      }
+      cardToPlay = hackCard;
+      moveType = 'hack';
+    }
     // let stackToRepeat = e.stack.find(stack => stack.boolSide === boolSideToPlay && stack.score >= minStackScore && stack.cards.length === 1);
-    if(stackToRepeat !== undefined && bestRCard !== null && bestRCard.value > 1) {
+    else if(stackToRepeat !== undefined && bestRCard !== null && bestRCard.value > 1) {
       stackToPlay = stackToRepeat;
       cardToPlay = bestRCard;
       moveType = 'play';
@@ -77,15 +93,15 @@ export default class Human{
         }
       moveType = 'discard';
     }
-    return {cardToPlay: cardToPlay, stackToPlay: stackToPlay, opponentToAttack: opponentToAttack, moveType: moveType};
+    return {cardToPlay, stackToPlay, opponentToAttack, moveType};
   };
 
-  findBestCard(card, CardToBeat) {
-    if(CardToBeat !== null) {
-      if(card.value > CardToBeat.value) {
+  findBestCard(card, cardToBeat) {
+    if(cardToBeat !== null && cardToBeat !== undefined) {
+      if(card.value > cardToBeat.value) {
         return card;
       } else {
-        return CardToBeat;
+        return cardToBeat;
       }
     } else {
       return card;
@@ -93,7 +109,7 @@ export default class Human{
   };
 
   findSmallestCard(card, cardToBeat) {
-    if(cardToBeat !== null) {
+    if(cardToBeat !== null && cardToBeat !== undefined) {
       if(card.value < cardToBeat.value) {
         return card;
       } else {
