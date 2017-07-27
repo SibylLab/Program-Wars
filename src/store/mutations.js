@@ -279,24 +279,11 @@ export default {
     if(aiMove.moveType === 'play') {
       bus.$emit('aiAddToStack', stackToPlay)
     } else if(aiMove.moveType === 'discard') {
-      bus.$emit('aiDiscard');
+        bus.$emit('aiDiscard');
     } else if(aiMove.moveType === 'hack') {
-      console.log(stackToHack)
-      bus.$emit('aiHack', stackToHack);
+        bus.$emit('aiHack', stackToHack);
+    } else if(aiMove.moveType === 'group') {
+        bus.$emit('aiGroup', stackToPlay);
     }
-
-    // let executed = false;
-    // if(!executed) {
-    //   console.log('this should only be called once')
-    //   executed = false;
-    //   state.activeCard = payload.cards[0]
-    //   let myStack = state.stacks.filter(stack => state.activePlayer === stack.playerId && true === stack.boolSide && stack.score === 0)
-    //   if(state.activeCard.type === 'I') {
-    //     bus.$emit('aiAddToStack', myStack.stackId)
-    //   } else {
-    //     bus.$emit('aiDiscard')
-    //   }
-    // }
-
   },
 }

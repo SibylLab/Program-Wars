@@ -17,8 +17,10 @@ export default class Human{
     let rXCard = null;
     let hackCard = null;
     let bestVCard = null;
+    let bestGCard = [];
     let handHas = this.handHasA(e);
     let stackToRepeat = undefined;
+    let group = undefined;
 
     for(let hand of e.hand.cards) {
       if(hand.type === 'I') {
@@ -35,6 +37,9 @@ export default class Human{
       if(hand.type === 'V') {
         bestVCard = this.findBestCard(hand, bestVCard)
       }
+      if(hand.type === 'G') {
+        bestGCard.push(hand);
+      }
       if(hand.type === 'H') {
         hackCard = hand;
       }
@@ -42,6 +47,9 @@ export default class Human{
 
     if(!handHas.I) {
       minStackScore = 1;
+    }
+    if(handHas.G) {
+      group = this.getGroups(bestGCard, e.stack);
     }
     if(handHas.R) {
       for(let i = 1; i <= 6; i++) {
@@ -51,18 +59,22 @@ export default class Human{
         }
       }
     }
-    let tmpOpponents = e.opponents.filter(opponents => opponents.score > 0);
+    let tmpOpponents = e.opponents.filter(opponents => opponents.score > 0 && opponents.cards[0].type !== 'G');
     if(handHas.H && tmpOpponents.length > 0) {
       let tmpScore = 0;
       for(let player of tmpOpponents) {
         if(player.score > tmpScore && player.cards[0].type !== 'G') {
-          console.log(player)
           opponentToAttack = player;
           foundACard = true;
         }
       }
       cardToPlay = hackCard;
       moveType = 'hack';
+    } else if(group !== undefined) {
+      cardToPlay = group.card;
+      stackToPlay = group.stack;
+      moveType = 'group';
+      foundACard = true;
     }
     // let stackToRepeat = e.stack.find(stack => stack.boolSide === boolSideToPlay && stack.score >= minStackScore && stack.cards.length === 1);
     else if(stackToRepeat !== undefined && bestRCard !== null && bestRCard.value > 1) {
@@ -93,6 +105,7 @@ export default class Human{
         }
       moveType = 'discard';
     }
+    console.log(moveType)
     return {cardToPlay, stackToPlay, opponentToAttack, moveType};
   };
 
@@ -151,6 +164,17 @@ export default class Human{
     }
     return {I, R, V, G, H}
   };
+
+  getGroups(cards, stacks) {
+    for(let card of cards) {
+      for(let stack of stacks) {
+        if(card.value === stack.score) {
+          console.log('can Group!!')
+          return {stack, card};
+        }
+      }
+    }
+  }
 
 }
 
