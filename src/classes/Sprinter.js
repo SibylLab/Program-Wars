@@ -80,6 +80,7 @@ export default class Sprinter {
         for(let player of tmpOpponents) {
           if(player.score > tmpScore && player.cards[0].type !== 'G') {
             opponentToAttack = player;
+            tmpScore = player.score;
           }
         }
         cardToPlay = hackCard;

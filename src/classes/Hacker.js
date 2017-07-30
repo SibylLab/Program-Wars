@@ -66,9 +66,9 @@ export default class Hacker {
       let tmpScore = 0;
       for(let player of tmpOpponents) {
         if(player.score > tmpScore && player.cards[0].type !== 'G') {
-          console.log(player.score)
           opponentToAttack = player;
           foundACard = true;
+          tmpScore = player.score;
         }
       }
       cardToPlay = hackCard;
