@@ -41,9 +41,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <!--<button class="btn btn-secondary" style="float: right" data-dismiss="modal"><router-link to="/">Close</router-link></button>-->
             <button class="btn btn-secondary" style="float: right" data-dismiss="modal" @click="newGame">Close</button>
-
           </div>
         </div>
       </div>
@@ -59,7 +57,7 @@
     props: ['playerList'],
     methods: {
       newGame() {
-          this.$router.push('/')
+        this.$router.push('/');
       }
     },
     computed: {

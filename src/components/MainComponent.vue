@@ -22,6 +22,7 @@
           <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
           <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
         </div>
+
     </div>
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
