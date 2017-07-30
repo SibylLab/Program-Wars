@@ -2,7 +2,7 @@
  * @file player.js file
  * @author Lance on 2017-03-10.
  */
-import Human from './Human'
+import Personality from './Personality'
 
 export default class Player{
   /**
@@ -21,6 +21,6 @@ export default class Player{
     this.falseScore = falseScore;
     this.id = id;
     this.isAi = isAi;
-    this.type = new Human();
+    this.type = new Personality(name);
   };
 }

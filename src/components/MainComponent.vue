@@ -17,14 +17,11 @@
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
-          <button class="btn btn-danger" @click="deleteMe">click</button>
-        <!--<button class="btn btn-primary"><router-link to="/" style="text-decoration: none">New Game</router-link></button>-->
           <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
-
-        <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
-        <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-        <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
-      </div>
+          <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
+          <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
+        </div>
     </div>
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
@@ -103,13 +100,6 @@ export default {
 
   },
   methods: {
-    deleteMe() {
-      console.log(this.$store.state.players)
-//      console.log(this.$store.getters.getAiDependent.hand)
-//      console.log(this.$store.state.stacks)
-//      console.log(this.$store.state.hands)
-//      console.log(this.$store.state.players)
-    },
     submit() {
         if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
           this.localPlayers.push(this.newPlayer)
