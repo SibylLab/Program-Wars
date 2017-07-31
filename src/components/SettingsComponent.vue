@@ -19,7 +19,7 @@
       </div>
       <div class="row">
         <div class="col-md-12" id="addPlayer">
-          <input type="text" placeholder="Add a player..." v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="maxPlayer">
+          <input type="text" placeholder="Add a player..." maxlength="10" v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="maxPlayer">
           <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
         </div>
       </div>

@@ -1,14 +1,5 @@
 <template>
     <div id="player-info-panel">
-
-      <!--<div id="playerTurn" class="modal fade yourTurn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">-->
-        <!--<div class="modal-dialog" role="document">-->
-          <!--<div class="modal-content" style="border-radius: 30px">-->
-            <!--<h4 class="modal-title">{{ currentPlayerName }}, It's Your Turn</h4>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-
       <div id="flexcontainer">
         <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
           <div class="panel panel-default" style="border-radius: 10px">
@@ -40,8 +31,8 @@
           </div>
         </div>
         <div class="row">
-          <div :class="colSize" v-for="player in players" style="text-align: left">
-            <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79);">{{ player.name }}:</a></b></h4></div>
+          <div :class="colSize" v-for="player in players" style="text-align: left;">
+            <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
               <div> True Path: {{ player.trueScore }} Instructions <br> False Path: {{ player.falseScore }} Instructions</div>
           </div>
         </div>
@@ -78,7 +69,7 @@ export default {
   computed: {
     colSize() {
       let size = 12/this.$store.getters.getPlayers.length;
-      return 'col-md-'+size;
+      return 'col-sm-6 col-md-'+size;
     },
     players() {
       return this.$store.getters.getPlayers;
