@@ -23,6 +23,7 @@ export default {
     state.winner = false
     state.tips.tutorial = true
     state.tips.fact = true
+    state.firstRound = true
   },
   addPlayers(state, payload) {
     let id = 0;

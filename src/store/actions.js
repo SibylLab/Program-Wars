@@ -9,6 +9,12 @@ export default {
     context.commit('setHasPlayed', {hasPlayed: true});
     context.commit('setPlayerScores')
   },
+  firstRound(context) {
+    context.commit('playerModalTrigger');
+    setTimeout(() => {
+      context.commit('playerModalHide');
+    }, playerModalTimer * 1000)
+  },
   turn(context, payload) {
     context.commit('getIsLast');
     context.state.coinMsg = 'Evaluating...';
@@ -40,7 +46,6 @@ export default {
         context.commit('setPlayfieldColour', true);
         context.state.coinMsg = context.state.activeSide ? 'True' : 'False';
         setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
-        // setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
         setTimeout(() => {
           $('.coin').modal('handleUpdate');
           $('.coin').modal('hide');

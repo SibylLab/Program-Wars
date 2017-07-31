@@ -83,7 +83,6 @@ export default {
       playerList: [],
       winner: '',
       winnerScore: 0,
-
     }
   },
   components: {
@@ -186,7 +185,12 @@ export default {
               } else {
                   this.$store.commit('setActiveSide', {activeSide: false})
                 }
+              if(this.$store.state.firstRound) {
+                this.$store.dispatch('firstRound');
+                this.$store.state.firstRound= false;
+              } else {
                 this.$store.dispatch('turn', false);
+              }
               setTimeout(() => {
                 this.$store.commit('setTrueFalseAnim', {startAnim: false});
                 this.$store.commit('setGameState', {gameState: 'playerTurn'});
