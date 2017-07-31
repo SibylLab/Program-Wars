@@ -21,6 +21,8 @@
         <div class="col-md-12" id="addPlayer">
           <input type="text" placeholder="Add a player..." maxlength="10" v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="maxPlayer">
           <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
+          <p v-if="maxChar" class="infoMsg">Maximum Characters Reached</p>
+          <p v-if="isRepeat" class="infoMsg">Player Already exists</p>
         </div>
       </div>
       <div class="row">
@@ -76,7 +78,8 @@
         gameStart: false,
         selected: '10',
         noPlayers: true,
-        maxPlayer: false
+        maxPlayer: false,
+        isRepeat: false
       }
     },
     methods: {
@@ -85,7 +88,10 @@
           this.localPlayers.push(this.newPlayer);
           if(this.localPlayers.length > 1) {
             this.noPlayers = false;
+            this.isRepeat = false;
           }
+        } else {
+          this.isRepeat = true;
         }
         if(this.localPlayers.length >= 4) {
           this.maxPlayer = true;
@@ -139,6 +145,13 @@
       players() {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
       },
+      maxChar() {
+        if(this.newPlayer.length >= 10) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     },
     components: {
       'player-info-panel': PlayerInfoPanel,
@@ -164,6 +177,12 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .infoMsg {
+    font-size: smaller;
+    color: red;
+    margin-top: 5px;
+    margin-bottom: -10px
+  }
 
   #settingsPage {
     background-image: url("/static/backgroundImg/helloWorld.png");
