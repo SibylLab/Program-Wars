@@ -4,7 +4,7 @@
     <modal :modalId="modalId2" :modalTitle="groupSelectConfirm" :modalBody="groupSelectText" :cancel="true" :modalCards="[]" :modalCallback="() => {groupStacks()}" data-backdrop="static" data-keyboard="false"></modal>
     <div class="row">
       <div class="col-md-12">
-        <span style="padding: 10px; font-size: 16px">Stack Score: {{ score }}</span>
+        <span style="padding: 10px; font-size: 16px" v-if="showBtn || score > 0">Stack Score: {{ score }}</span>
       </div>
       <div class="col-md-12">
         <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
@@ -20,7 +20,8 @@
         type="button"
         data-container="body"
         data-placement="top"
-        data-trigger="hover">
+        data-trigger="hover"
+        v-if="showBtn">
         Add
         </button>
       </div>
@@ -58,9 +59,30 @@ export default {
     }
   },
   computed: {
-      modalId2() {
-        return this.id + "Modal"
-      },
+    showBtn() {
+      if(this.$store.state.activeCard !== undefined) {
+        let activeCard = this.$store.state.activeCard.type;
+        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
+        if(activeCard === 'I' && thisStack.cards.length === 0) {
+          return true;
+        } else if(activeCard === 'R' && thisStack.cards.length > 0 && thisStack.cards.length < 3) {
+          if(thisStack.cards.length === 1) {
+            return true;
+          } else if(thisStack.cards.length === 2 && this.$store.state.activeCard.value === 1 && !(thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1)) {
+            return true;
+          }
+        } else if(activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 3) {
+          if(thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1) {
+            return true;
+          }
+        }
+      } else {
+        return false;
+      }
+    },
+    modalId2() {
+      return this.id + "Modal"
+    },
     cards () {
 
       if (this.playerId === this.$store.getters.getCurrentPlayerId ) {
