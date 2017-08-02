@@ -24,6 +24,12 @@
         </div>
 
     </div>
+    <transition name="hackFade">
+    <div class="hacked" v-if="hacked"><h1 id="hackStyle">HACKED!!</h1></div>
+      <!--<div class="hacked" v-if="true"><h1 id="hackStyle">HACKED!!</h1></div>-->
+
+    </transition>
+
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
     </div>
@@ -126,6 +132,9 @@ export default {
     }
 },
   computed: {
+    hacked() {
+      return this.$store.state.isHack;
+    },
     currentPlayerId() {
       return this.$store.getters.getCurrentPlayerId;
     },
@@ -277,6 +286,21 @@ export default {
   border-radius: 15px;
   min-height: 375px;
 }
+
+.hacked {
+  position: fixed;
+  z-index: 10;
+  top: 30%;
+  left: 50%;
+  width: 1100px;
+  margin-left: -550px;
+}
+
+#hackStyle {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 220px;
+  color: darkred;
+}
 h1, h2 {
   font-weight: normal;
 }
@@ -315,4 +339,21 @@ a {
     transition: opacity .5s;
     opacity: 0;
   }
+
+.hackFade-enter {
+  opacity: 0;
+}
+
+.hackFade-enter-active {
+  transition: opacity .5s;
+}
+
+.hackFade-leave {
+
+}
+
+.hackFade-leave-active {
+  transition: opacity .9s;
+  opacity: 0;
+}
 </style>

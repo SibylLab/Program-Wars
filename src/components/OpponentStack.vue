@@ -142,10 +142,14 @@ export default {
 
         switch (activeCard.type) {
           case 'H':
-              this.$store.commit('stackDiscard', {stackId: this.stackId})
-              this.$store.commit('removeStack', {stackId: this.stackId})
+            this.$store.commit('stackDiscard', {stackId: this.stackId})
+            this.$store.commit('removeStack', {stackId: this.stackId})
             this.$store.dispatch('playerTookTurn');
-              bus.$emit('cardDeselected');
+            bus.$emit('cardDeselected');
+            this.$store.state.isHack = true;
+            setTimeout(() => {
+              this.$store.state.isHack = false;
+            },1250)
             break;
           default:
               return '';

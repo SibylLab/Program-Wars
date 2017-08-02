@@ -91,7 +91,7 @@
       submit() {
         let pass = true;
         for (let player of this.localPlayers) {
-          if (player.name === this.aiSelect || player.name === this.newPlayer) {
+          if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
             pass = false;
           }
         }
