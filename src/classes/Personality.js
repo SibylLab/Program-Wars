@@ -3,7 +3,7 @@ import Hacker from './Hacker'
 export default class Personality {
 
   constructor(name) {
-    if(name === 'Flash') {
+    if(name === 'Flash' || name === 'JarJarBinks') {
       this.personality = new Sprinter();
     }
     if(name === 'Joker') {
@@ -12,10 +12,6 @@ export default class Personality {
   };
 
   turnLogic(event) {
-  //   if(this.personality instanceof Sprinter) {
       return this.personality.turnLogic(event);
-  //   } else if(this.personality instanceof Hacker) {
-  //
-  //   }
   }
 }

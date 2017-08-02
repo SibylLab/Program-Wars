@@ -27,6 +27,10 @@ export default class Sprinter {
     let handHas = this.handHasA(e);
     let stackToRepeat = undefined;
 
+    if(e.player.name === 'JarJarBinks') {
+      this.boolSide = !this.boolSide;
+    }
+
     for(let hand of e.hand.cards) {
       if(hand.type === 'I') {
         bestICard = this.findBestCard(hand, bestICard);
