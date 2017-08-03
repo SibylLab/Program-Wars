@@ -3,7 +3,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12" id="playerTurn">
-          <h4 id="text">{{ currentPlayer }}, its your turn</h4>
+          <h4 id="text" v-if="isAi">{{ currentPlayer }} (Computer), its your turn</h4>
+          <h4 id="text" v-else>{{ currentPlayer }}, its your turn</h4>
         </div>
       </div>
     </div>
@@ -15,6 +16,9 @@ export default {
   computed: {
     currentPlayer() {
       return this.$store.getters.currentPlayerName
+    },
+    isAi() {
+      return this.$store.getters.getCurrentPlayer.isAi;
     }
   }
 }

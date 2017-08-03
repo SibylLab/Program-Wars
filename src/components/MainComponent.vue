@@ -17,11 +17,12 @@
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
-        <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
-        <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
-        <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-        <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
-      </div>
+          <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
+          <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
+        </div>
+
     </div>
     <div id="playerinfopanel">
       <player-info-panel></player-info-panel>
@@ -83,7 +84,7 @@ export default {
       playerList: [],
       winner: '',
       winnerScore: 0,
-
+      deleteData: []
     }
   },
   components: {
@@ -111,7 +112,6 @@ export default {
     },
     initGame(){
         this.$store.commit('initDeck');
-
     },
     fillHands() {
         for(let player of this.$store.getters.getPlayers) {
@@ -140,6 +140,9 @@ export default {
     },
     playerTurn() {
       return this.$store.state.playerTurn;
+    },
+    gameStateChanges() {
+        return this.$store.state.currentGameState
     }
   },
 
@@ -170,7 +173,7 @@ export default {
     let gameEventLoopTimer = setInterval(() => {
       let gameState = this.$store.getters.getgameState;
       if (gameState === 'newGame') {
-        $('#myModal').modal('toggle');
+//        $('#myModal').modal('toggle');
         this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'});
         this.gameStart = true;
       } else if (gameState === 'initGame') {
@@ -198,7 +201,18 @@ export default {
     this.fillHands();
     this.addStacksToPlayers();
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
+
   },
+  updated() {
+      this.deleteData.push(this.$store.state.currentGameState);
+  }
+//  updated() {
+//    console.log('in updated')
+//    if(this.$store.state.currentGameState === 'playerTurn' && this.$store.state.players[this.$store.state.activePlayer].isAi) {
+//      this.$store.commit('setGameState', {gameState: 'aiTurn'})
+//      console.log('in aiTurn')
+//    }
+//  }
  }
 </script>
 

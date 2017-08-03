@@ -75,14 +75,27 @@ export default {
   getTips(state) {
     return state.tips
   },
-  getCurrentOpponents(state) {
-    let players = state.getPlayers;
-    for(let player of players) {
-      if(player.id !== state.currentId) {
-        state.currentOpponents.push(player);
+  getCurrentPlayer(state) {
+    return state.players[state.activePlayer];
+  },
+  getAiDependent(state) {
+    let playerHand;
+    let playerStack = [];
+    let opponentStack = [];
+    let currentPlayer = state.players[state.activePlayer];
+    for(let hand of state.hands) {
+      if(currentPlayer.hand === hand.handId) {
+        playerHand = hand;
       }
     }
-    return state.currentOpponents;
-  },
+    for(let stack of state.stacks) {
+      if(currentPlayer.id === stack.playerId) {
+        playerStack.push(stack)
+      } else {
+        opponentStack.push(stack)
+      }
+    }
+    return {hand: playerHand, stack: playerStack, opponents: opponentStack, player: currentPlayer}
+  }
 }
 
