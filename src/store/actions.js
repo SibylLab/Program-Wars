@@ -1,6 +1,7 @@
 let playerModalTimer = 2;// sec
 let endTurnTimer = 1.5;// sec
 let coinTimer = 2;// sec
+let runTimer = 1;// sec
 
 export default {
   playerTookTurn(context) {
@@ -8,9 +9,22 @@ export default {
     context.commit('setHasPlayed', {hasPlayed: true});
     context.commit('setPlayerScores')
   },
+  firstRound(context) {
+    context.commit('playerModalTrigger');
+    setTimeout(() => {
+      context.commit('playerModalHide');
+      context.state.pointerEvent = ''
+    }, playerModalTimer * 1000)
+    setTimeout(() => {
+      if(context.getters.getCurrentPlayer.isAi) {
+        context.commit('aiTakeTurn', context.getters.getAiDependent);
+      }
+    }, 2500)
+  },
   turn(context, payload) {
     context.commit('getIsLast');
     context.state.coinMsg = 'Evaluating...';
+    context.state.pointerEvent = 'pointer-events: none'
     switch(payload) {
       case true:
         if(context.state.isLast) {
@@ -28,20 +42,32 @@ export default {
             context.commit('playerModalTrigger');
             setTimeout(() => {
               context.commit('playerModalHide');
-            }, playerModalTimer * 1000)
-          }, endTurnTimer * 1000)
+            }, playerModalTimer * 1000);
+          }, endTurnTimer * 1000);
+          setTimeout(() => {
+            if(context.getters.getCurrentPlayer.isAi) {
+              // console.log(context.getters.getCurrentPlayerHand)
+              context.commit('aiTakeTurn', context.getters.getAiDependent);
+            }
+          }, 4000)
         }
+        context.state.pointerEvent = '';
         break;
       case false:
         context.commit('checkWin');
         context.commit('coinModalTrigger');
         context.commit('setCoinFlipAnim', 0);
+        context.commit('setPlayfieldColour', true);
+        context.state.coinMsg = context.state.activeSide ? 'True' : 'False';
         setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
-        setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
         setTimeout(() => {
           $('.coin').modal('handleUpdate');
           $('.coin').modal('hide');
-
+          setTimeout(() => {
+            if(!(context.state.winner)) {
+              context.commit('setPlayfieldColour', false);
+            }
+          }, runTimer * 1000);
         }, coinTimer * 1000);
         if (context.state.winner) {
           setTimeout(() => {
@@ -54,8 +80,14 @@ export default {
             context.commit('playerModalTrigger');
             setTimeout(()=> {
               context.commit('playerModalHide');
+              context.state.pointerEvent = '';
             }, playerModalTimer * 1000)
-          }, coinTimer * 1000 + 350);
+          }, (coinTimer + runTimer) * 1000 + 350);
+          setTimeout(() => {
+            if(context.getters.getCurrentPlayer.isAi) {
+              context.commit('aiTakeTurn', context.getters.getAiDependent);
+            }
+          }, 6000)
         }
         break;
     }

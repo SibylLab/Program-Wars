@@ -2,8 +2,8 @@
   <div>
     <div class="modal-dialog" role="document">
       <div class="modal-content" style="border-radius: 30px">
-        <div class="modal-header" style="padding-bottom: 0;"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><router-link to="/">
-          <span aria-hidden="true">&times;</span></router-link></button>
+        <div class="modal-header" style="padding-bottom: 0;"> <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="newGame">
+          <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body" style="padding-top: 0;" v-if="oneWinner">
           <h3 class="modal-title"><b>Congratulations {{ winner }}!!</b></h3>
@@ -41,7 +41,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" style="float: right" data-dismiss="modal"><router-link to="/">Close</router-link></button>
+            <button class="btn btn-secondary" style="float: right" data-dismiss="modal" @click="newGame">Close</button>
           </div>
         </div>
       </div>
@@ -55,6 +55,12 @@
 
   export default {
     props: ['playerList'],
+    methods: {
+      newGame() {
+        this.$store.commit('setPlayfieldColour', false);
+        this.$router.push('/');
+      }
+    },
     computed: {
       winner() {
         return this.$store.state.winnerName;

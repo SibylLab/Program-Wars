@@ -6,6 +6,9 @@
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
+    <transition name="fade">
+      <player-turn v-if="playerTurn"></player-turn>
+    </transition>
 
     <div id="header">
       <p>Programming Wars</p>
@@ -14,13 +17,13 @@
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
-        <button class="btn btn-primary"><router-link to="/" style="text-decoration: none">New Game</router-link></button>
+        <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-        <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
+        <a class="btn btn-primary" href="https://programmingwars.cullen.io/reportissue/" target="_blank">Report Issue</a>
       </div>
     </div>
-    <div id="playerinfopanel">
+    <div id="playerinfopanel" :style="deactivateClick">
       <player-info-panel></player-info-panel>
     </div>
     <div id="flexcontainer">
@@ -29,10 +32,10 @@
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <playfield  :trueFalse="true" :activeColour="this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="trueHighlighted" class="playfieldSides"></playfield>
+              <playfield  :trueFalse="true" :playerId="currentPlayerId" :style="trueSideColour" class="playfieldSides"></playfield>
             </div>
             <div class="col-md-6 col-sm-6">
-              <playfield :trueFalse="false" :activeColour="!this.$store.getters.getActiveSide" :playerId="currentPlayerId" :style="falseHighlighted" class="playfieldSides"></playfield>
+              <playfield :trueFalse="false" :playerId="currentPlayerId" :style="falseSideColour" class="playfieldSides"></playfield>
             </div>
           </div>
         </div>
@@ -52,6 +55,7 @@ import CreditsModal from './CreditsModal.vue'
 import HackModal from './HackModal.vue'
 import WinnerModal from './WinnerModal.vue'
 import CoinModal from './CoinModal.vue'
+import PlayerTurn from './PlayerTurnPopUp.vue'
 
 
 import Card from '../classes/Card'
@@ -79,8 +83,21 @@ export default {
       playerList: [],
       winner: '',
       winnerScore: 0,
-
+      deleteData: []
     }
+  },
+  components: {
+    'player-info-panel': PlayerInfoPanel,
+    'playfield': Playfield,
+    'opponent-stacks': OpponentStacks,
+    'modal': Modal,
+    'rules-modal': RulesModal,
+    'credits-modal': CreditsModal,
+    'hack-modal': HackModal,
+    'winner-modal': WinnerModal,
+    'coin-modal': CoinModal,
+    'player-turn': PlayerTurn
+
   },
   methods: {
     submit() {
@@ -94,7 +111,6 @@ export default {
     },
     initGame(){
         this.$store.commit('initDeck');
-
     },
     fillHands() {
         for(let player of this.$store.getters.getPlayers) {
@@ -115,36 +131,23 @@ export default {
     players() {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
     },
-    trueHighlighted() {
-      if(this.$store.getters.getActiveSide) {
-        return this.highlighted;
-      } else {
-        return ''
-      }
+    trueSideColour() {
+      return this.$store.state.trueSideColour;
     },
-    falseHighlighted() {
-      if(!(this.$store.getters.getActiveSide)) {
-        return this.highlighted;
-      } else {
-        return ''
-      }
+    falseSideColour() {
+      return this.$store.state.falseSideColour;
     },
-    highlighted() {
-        return 'box-shadow: 0 0 15px 10px forestgreen';
+    playerTurn() {
+      return this.$store.state.playerTurn;
+    },
+    deactivateClick() {
+      return this.$store.state.pointerEvent;
+    },
+    gameStateChanges() {
+        return this.$store.state.currentGameState
     }
   },
-  components: {
-    'player-info-panel': PlayerInfoPanel,
-    'playfield': Playfield,
-    'opponent-stacks': OpponentStacks,
-    'modal': Modal,
-    'rules-modal': RulesModal,
-    'credits-modal': CreditsModal,
-    'hack-modal': HackModal,
-    'winner-modal': WinnerModal,
-    'coin-modal':CoinModal
 
-  },
   watch: {
     tipsToggle(val) {
         if(val === true && this.factsToggle === false) {
@@ -172,7 +175,7 @@ export default {
     let gameEventLoopTimer = setInterval(() => {
       let gameState = this.$store.getters.getgameState;
       if (gameState === 'newGame') {
-        $('#myModal').modal('toggle');
+//        $('#myModal').modal('toggle');
         this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'});
         this.gameStart = true;
       } else if (gameState === 'initGame') {
@@ -188,8 +191,12 @@ export default {
               } else {
                   this.$store.commit('setActiveSide', {activeSide: false})
                 }
+              if(this.$store.state.firstRound) {
+                this.$store.dispatch('firstRound');
+                this.$store.state.firstRound = false;
+              } else {
                 this.$store.dispatch('turn', false);
-//                this.$store.dispatch('coinFlipWinCheck');
+              }
               setTimeout(() => {
                 this.$store.commit('setTrueFalseAnim', {startAnim: false});
                 this.$store.commit('setGameState', {gameState: 'playerTurn'});
@@ -201,7 +208,18 @@ export default {
     this.fillHands();
     this.addStacksToPlayers();
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
+
   },
+  updated() {
+      this.deleteData.push(this.$store.state.currentGameState);
+  }
+//  updated() {
+//    console.log('in updated')
+//    if(this.$store.state.currentGameState === 'playerTurn' && this.$store.state.players[this.$store.state.activePlayer].isAi) {
+//      this.$store.commit('setGameState', {gameState: 'aiTurn'})
+//      console.log('in aiTurn')
+//    }
+//  }
  }
 </script>
 
@@ -214,6 +232,7 @@ export default {
   justify-content: flex-start;
   min-height: inherit;
   min-width: inherit;
+  overflow-y: auto;
   /*height: inherit;*/
 
   }
@@ -263,6 +282,7 @@ export default {
 .playfieldSides{
   padding: 8px;
   border-radius: 15px;
+  min-height: 375px;
 }
 h1, h2 {
   font-weight: normal;
@@ -286,4 +306,20 @@ a {
   color: #fff;
 }
 
+  .fade-enter {
+    opacity: 0;
+  }
+
+  .fade-enter-active {
+    transition: opacity .5s;
+  }
+
+  .fade-leave {
+
+  }
+
+  .fade-leave-active {
+    transition: opacity .5s;
+    opacity: 0;
+  }
 </style>
