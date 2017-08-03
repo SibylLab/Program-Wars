@@ -48,7 +48,7 @@ export default {
       }
     },
     stacks() {
-      return this.getStackList();
+      return this.getStackList(this.trueFalse);
     },
     score() {
       return {trueScore: this.$store.getters.getPlayers[this.playerId].trueScore,

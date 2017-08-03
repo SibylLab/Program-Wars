@@ -57,7 +57,7 @@
     props: ['playerList'],
     methods: {
       newGame() {
-          this.$router.push('/');
+        this.$router.push('/');
       }
     },
     computed: {
