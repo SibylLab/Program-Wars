@@ -9,9 +9,17 @@ export default {
     context.commit('setHasPlayed', {hasPlayed: true});
     context.commit('setPlayerScores')
   },
+  firstRound(context) {
+    context.commit('playerModalTrigger');
+    setTimeout(() => {
+      context.commit('playerModalHide');
+      context.state.pointerEvent = ''
+    }, playerModalTimer * 1000)
+  },
   turn(context, payload) {
     context.commit('getIsLast');
     context.state.coinMsg = 'Evaluating...';
+    context.state.pointerEvent = 'pointer-events: none'
     switch(payload) {
       case true:
         if(context.state.isLast) {
@@ -38,6 +46,7 @@ export default {
             }
           }, 4000)
         }
+        context.state.pointerEvent = '';
         break;
       case false:
         context.commit('checkWin');
@@ -46,7 +55,6 @@ export default {
         context.commit('setPlayfieldColour', true);
         context.state.coinMsg = context.state.activeSide ? 'True' : 'False';
         setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
-        // setTimeout(() => {context.state.coinMsg = context.state.activeSide ? 'True' : 'False'}, 1200);
         setTimeout(() => {
           $('.coin').modal('handleUpdate');
           $('.coin').modal('hide');
@@ -67,6 +75,7 @@ export default {
             context.commit('playerModalTrigger');
             setTimeout(()=> {
               context.commit('playerModalHide');
+              context.state.pointerEvent = '';
             }, playerModalTimer * 1000)
           }, (coinTimer + runTimer) * 1000 + 350);
           setTimeout(() => {

@@ -8,7 +8,6 @@ import Deck from '../classes/Deck'
 
 export default {
   resetState(state) {
-    // state.players = []
     state.stacks = [];
     state.deck = new Deck();
     state.hands = [];
@@ -23,6 +22,7 @@ export default {
     state.winner = false;
     state.tips.tutorial = true;
     state.tips.fact = true;
+     state.firstRound = true
     state.aiTurn = false;
     state.playerTurn = false;
   },

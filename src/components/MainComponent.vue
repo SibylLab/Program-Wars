@@ -30,7 +30,7 @@
 
     </transition>
 
-    <div id="playerinfopanel">
+    <div id="playerinfopanel" :style="deactivateClick">
       <player-info-panel></player-info-panel>
     </div>
     <div id="flexcontainer">
@@ -150,6 +150,9 @@ export default {
     playerTurn() {
       return this.$store.state.playerTurn;
     },
+    deactivateClick() {
+      return this.$store.state.pointerEvent;
+    },
     gameStateChanges() {
         return this.$store.state.currentGameState
     }
@@ -198,7 +201,12 @@ export default {
               } else {
                   this.$store.commit('setActiveSide', {activeSide: false})
                 }
+              if(this.$store.state.firstRound) {
+                this.$store.dispatch('firstRound');
+                this.$store.state.firstRound= false;
+              } else {
                 this.$store.dispatch('turn', false);
+              }
               setTimeout(() => {
                 this.$store.commit('setTrueFalseAnim', {startAnim: false});
                 this.$store.commit('setGameState', {gameState: 'playerTurn'});

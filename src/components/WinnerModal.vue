@@ -57,6 +57,7 @@
     props: ['playerList'],
     methods: {
       newGame() {
+        this.$store.commit('setPlayfieldColour', false);
         this.$router.push('/');
       }
     },
