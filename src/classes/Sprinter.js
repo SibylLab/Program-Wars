@@ -10,7 +10,7 @@ export default class Sprinter {
   }
   ;
 
-  turnLogic(e) {
+  turnLogic(e, isTimid) {
     let cardToPlay;
     let stackToPlay;
     let boolSideToPlay = this.boolSide;
@@ -27,7 +27,7 @@ export default class Sprinter {
     let handHas = this.handHasA(e);
     let stackToRepeat = undefined;
 
-    if(e.player.name === 'JarJarBinks') {
+    if(isTimid) {
       this.boolSide = !this.boolSide;
     }
 
@@ -59,7 +59,7 @@ export default class Sprinter {
 
     if(handHas.R) {
       for(let i = 1; i <= 6; i++) {
-        let tmpStack = e.stack.find(stack => stack.boolSide === boolSideToPlay && stack.score === i && stack.cards.length === 1);
+        let tmpStack = e.stack.find(stack => stack.score === i && stack.cards.length === 1);
         if(tmpStack !== undefined) {
           stackToRepeat = tmpStack;
         }
