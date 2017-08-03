@@ -8,27 +8,28 @@ import Deck from '../classes/Deck'
 
 export default {
   resetState(state) {
-    // state.players = []
-    state.stacks = []
-    state.deck = new Deck()
-    state.hands = []
-    state.currentGameState = 'newGame'
-    state.activeSide = true
-    state.activePlayer = 0
-    state.activeHasPlayed = false
-    state.currentId = 0
-    state.activeCard = undefined
-    state.selectedStacks = []
-    state.selectedStackBoolean = undefined
-    state.winner = false
-    state.tips.tutorial = true
-    state.tips.fact = true
-    state.firstRound = true
+    state.stacks = [];
+    state.deck = new Deck();
+    state.hands = [];
+    state.currentGameState = 'newGame';
+    state.activeSide = true;
+    state.activePlayer = 0;
+    state.activeHasPlayed = false;
+    state.currentId = 0;
+    state.activeCard = undefined;
+    state.selectedStacks = [];
+    state.selectedStackBoolean = undefined;
+    state.winner = false;
+    state.tips.tutorial = true;
+    state.tips.fact = true;
+     state.firstRound = true
+    state.aiTurn = false;
+    state.playerTurn = false;
   },
   addPlayers(state, payload) {
     let id = 0;
     for(let p of payload.list){
-      let pp = new Player(id,p,undefined,0, 0);
+      let pp = new Player(id,p.name,undefined,0, 0, p.isAi);
       state.players.push(pp);
       id++;
     }
@@ -86,7 +87,7 @@ export default {
     state = localState;
     hand.cards = cardsTemp;
     state.hands.push(hand);
-    state.players.find(player => player.id === playerId).hand = hand.id;
+    state.players.find(player => player.id === playerId).hand = hand.handId;
   },
   addCardToHand(state) {
     if (state.deck.cards.length <= 1 && state.deck.discard_cards.length > 0) {
@@ -267,5 +268,22 @@ export default {
       state.trueSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)';
       state.falseSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)';
     }
-  }
+  },
+  aiTakeTurn(state, payload) {
+    state.aiTurn = true;
+    let aiMove = state.players[state.activePlayer].type.turnLogic(payload);
+    let cardToPlay = aiMove.cardToPlay;
+    let stackToPlay = aiMove.stackToPlay;
+    let stackToHack = aiMove.opponentToAttack;
+    state.activeCard = cardToPlay;
+    if(aiMove.moveType === 'play') {
+      bus.$emit('aiAddToStack', stackToPlay)
+    } else if(aiMove.moveType === 'discard') {
+        bus.$emit('aiDiscard');
+    } else if(aiMove.moveType === 'hack') {
+        bus.$emit('aiHack', stackToHack);
+    } else if(aiMove.moveType === 'group') {
+        bus.$emit('aiGroup', stackToPlay);
+    }
+  },
 }

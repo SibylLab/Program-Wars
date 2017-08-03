@@ -37,8 +37,14 @@ export default {
             context.commit('playerModalTrigger');
             setTimeout(() => {
               context.commit('playerModalHide');
-            }, playerModalTimer * 1000)
-          }, endTurnTimer * 1000)
+            }, playerModalTimer * 1000);
+          }, endTurnTimer * 1000);
+          setTimeout(() => {
+            if(context.getters.getCurrentPlayer.isAi) {
+              // console.log(context.getters.getCurrentPlayerHand)
+              context.commit('aiTakeTurn', context.getters.getAiDependent);
+            }
+          }, 4000)
         }
         context.state.pointerEvent = '';
         break;
@@ -72,6 +78,11 @@ export default {
               context.state.pointerEvent = '';
             }, playerModalTimer * 1000)
           }, (coinTimer + runTimer) * 1000 + 350);
+          setTimeout(() => {
+            if(context.getters.getCurrentPlayer.isAi) {
+              context.commit('aiTakeTurn', context.getters.getAiDependent);
+            }
+          }, 6000)
         }
         break;
     }
