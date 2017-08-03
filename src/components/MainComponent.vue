@@ -17,12 +17,11 @@
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
-          <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
-          <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
-          <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-          <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
-        </div>
-
+        <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
+        <a class="btn btn-primary" href="https://programmingwars.cullen.io/reportissue/" target="_blank">Report Issue</a>
+      </div>
     </div>
     <div id="playerinfopanel" :style="deactivateClick">
       <player-info-panel></player-info-panel>
