@@ -228,8 +228,11 @@ export default {
           this.tipsCardSelected = this.setTipBox(c);
 
         }
+    });
+    bus.$on('aiDiscard', () => {
+      this.discardSelected();
     })
-  }
+  },
 }
 </script>
 
