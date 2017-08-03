@@ -19,13 +19,15 @@
       </div>
       <div class="row">
         <div class="col-md-12" id="addPlayer">
-          <select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; height: 32px">
+        <select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; height: 32px">
             <option value="none" selected>(None)</option>
             <option value="noAiSelected" disabled selected>Select AI Opponent:</option>
             <option v-for="opponents in aiOpponents" :value="opponents">{{ opponents }}</option>
           </select> or
-          <input type="text" placeholder="Add a player..." v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="inputDisable" style="margin-left: 20px">
-          <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
+          <input type="text" placeholder="Add a player..." maxlength="10" v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="inputDisable" style="margin-left: 20px">
+         <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
+          <p v-if="maxChar && !maxPlayer" class="infoMsg">Maximum Characters Reached</p>
+          <p v-if="isRepeat && !maxPlayer" class="infoMsg">Player Already exists</p>
         </div>
       </div>
       <div class="row">
@@ -83,6 +85,7 @@
         noPlayers: true,
         inputDisable: false,
         maxPlayer: false,
+         isRepeat: false,
         aiSelect: 'noAiSelected',
         aiOpponents: ['Flash', 'Joker', 'JarJarBinks']
       }
@@ -93,6 +96,9 @@
         for (let player of this.localPlayers) {
           if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
             pass = false;
+            this.isRepeat = true;
+          } else {
+            this.isRepeat = false;
           }
         }
         if(!(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none')) {
@@ -158,6 +164,13 @@
       players() {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
       },
+      maxChar() {
+        if(this.newPlayer.length >= 10) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     },
     watch: {
       aiSelect() {
@@ -197,6 +210,12 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .infoMsg {
+    font-size: smaller;
+    color: red;
+    margin-top: 5px;
+    margin-bottom: -10px
+  }
 
   #settingsPage {
     background-image: url("/static/backgroundImg/helloWorld.png");
