@@ -109,7 +109,18 @@ export default {
       this.activeCard = undefined;
       this.$store.commit('setActiveCardUndefined');
       this.$store.commit('removeAllSelectedStacks');
-    })
+    });
+
+    bus.$on('aiHack', (newStackId) => {
+      if(this.$store.state.aiTurn === true) {
+        if(this.$store.state.activeCard !== undefined) {
+          if(this.stackId === newStackId.stackId) {
+            this.hackStackClicked();
+            this.$store.state.aiTurn = false;
+          }
+        }
+      }
+    });
   },
   methods: {
     cardAddClicked () {
