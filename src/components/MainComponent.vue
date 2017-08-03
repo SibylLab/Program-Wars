@@ -193,7 +193,7 @@ export default {
                 }
               if(this.$store.state.firstRound) {
                 this.$store.dispatch('firstRound');
-                this.$store.state.firstRound= false;
+                this.$store.state.firstRound = false;
               } else {
                 this.$store.dispatch('turn', false);
               }
