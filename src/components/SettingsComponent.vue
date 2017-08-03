@@ -26,8 +26,8 @@
           </select> or
           <input type="text" placeholder="Add a player..." maxlength="10" v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="inputDisable" style="margin-left: 20px">
          <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
-          <p v-if="maxChar" class="infoMsg">Maximum Characters Reached</p>
-          <p v-if="isRepeat" class="infoMsg">Player Already exists</p>
+          <p v-if="maxChar && !maxPlayer" class="infoMsg">Maximum Characters Reached</p>
+          <p v-if="isRepeat && !maxPlayer" class="infoMsg">Player Already exists</p>
         </div>
       </div>
       <div class="row">
@@ -92,18 +92,14 @@
     },
     methods: {
       submit() {
-        if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
-          this.localPlayers.push(this.newPlayer);
-          if(this.localPlayers.length > 1) {
-            this.noPlayers = false;
-            this.isRepeat = false;
         let pass = true;
         for (let player of this.localPlayers) {
           if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
             pass = false;
+            this.isRepeat = true;
+          } else {
+            this.isRepeat = false;
           }
-        } else {
-          this.isRepeat = true;
         }
         if(!(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none')) {
           if(this.aiSelect.length > 0 && pass) {
