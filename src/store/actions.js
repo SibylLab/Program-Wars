@@ -13,11 +13,13 @@ export default {
     context.commit('playerModalTrigger');
     setTimeout(() => {
       context.commit('playerModalHide');
+      context.state.pointerEvent = ''
     }, playerModalTimer * 1000)
   },
   turn(context, payload) {
     context.commit('getIsLast');
     context.state.coinMsg = 'Evaluating...';
+    context.state.pointerEvent = 'pointer-events: none'
     switch(payload) {
       case true:
         if(context.state.isLast) {
@@ -44,6 +46,7 @@ export default {
             }
           }, 4000)
         }
+        context.state.pointerEvent = '';
         break;
       case false:
         context.commit('checkWin');
@@ -72,6 +75,7 @@ export default {
             context.commit('playerModalTrigger');
             setTimeout(()=> {
               context.commit('playerModalHide');
+              context.state.pointerEvent = '';
             }, playerModalTimer * 1000)
           }, (coinTimer + runTimer) * 1000 + 350);
           setTimeout(() => {

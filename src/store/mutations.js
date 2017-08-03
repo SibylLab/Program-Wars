@@ -22,6 +22,7 @@ export default {
     state.winner = false;
     state.tips.tutorial = true;
     state.tips.fact = true;
+     state.firstRound = true
     state.aiTurn = false;
     state.playerTurn = false;
   },
