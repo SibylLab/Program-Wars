@@ -8,7 +8,6 @@ import Deck from '../classes/Deck'
 
 export default {
   resetState(state) {
-    // state.players = []
     state.stacks = [];
     state.deck = new Deck();
     state.hands = [];
