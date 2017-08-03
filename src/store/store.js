@@ -41,7 +41,8 @@ export const store = new Vuex.Store({
       firstRound: true,
       aiTurn: false,
       trueSideColour: 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)',
-      falseSideColour: 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)'
+      falseSideColour: 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)',
+      pointerEvent: 'pointer-events: none'
     },
     originalState: {
       players: [],

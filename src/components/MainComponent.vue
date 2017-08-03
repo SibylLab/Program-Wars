@@ -23,7 +23,7 @@
         <a class="btn btn-primary" href="https://programmingwars.cullen.io/reportissue/" target="_blank">Report Issue</a>
       </div>
     </div>
-    <div id="playerinfopanel">
+    <div id="playerinfopanel" :style="deactivateClick">
       <player-info-panel></player-info-panel>
     </div>
     <div id="flexcontainer">
@@ -139,6 +139,9 @@ export default {
     },
     playerTurn() {
       return this.$store.state.playerTurn;
+    },
+    deactivateClick() {
+      return this.$store.state.pointerEvent;
     },
     gameStateChanges() {
         return this.$store.state.currentGameState
