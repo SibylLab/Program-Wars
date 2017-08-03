@@ -15,6 +15,11 @@ export default {
       context.commit('playerModalHide');
       context.state.pointerEvent = ''
     }, playerModalTimer * 1000)
+    setTimeout(() => {
+      if(context.getters.getCurrentPlayer.isAi) {
+        context.commit('aiTakeTurn', context.getters.getAiDependent);
+      }
+    }, 2500)
   },
   turn(context, payload) {
     context.commit('getIsLast');
