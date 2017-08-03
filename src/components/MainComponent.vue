@@ -143,6 +143,7 @@ export default {
     },
     deactivateClick() {
       return this.$store.state.pointerEvent;
+    },
     gameStateChanges() {
         return this.$store.state.currentGameState
     }
