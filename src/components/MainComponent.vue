@@ -175,7 +175,6 @@ export default {
     let gameEventLoopTimer = setInterval(() => {
       let gameState = this.$store.getters.getgameState;
       if (gameState === 'newGame') {
-//        $('#myModal').modal('toggle');
         this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'});
         this.gameStart = true;
       } else if (gameState === 'initGame') {
@@ -210,16 +209,6 @@ export default {
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
 
   },
-  updated() {
-      this.deleteData.push(this.$store.state.currentGameState);
-  }
-//  updated() {
-//    console.log('in updated')
-//    if(this.$store.state.currentGameState === 'playerTurn' && this.$store.state.players[this.$store.state.activePlayer].isAi) {
-//      this.$store.commit('setGameState', {gameState: 'aiTurn'})
-//      console.log('in aiTurn')
-//    }
-//  }
  }
 </script>
 

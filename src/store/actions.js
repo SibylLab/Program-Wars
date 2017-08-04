@@ -46,7 +46,6 @@ export default {
           }, endTurnTimer * 1000);
           setTimeout(() => {
             if(context.getters.getCurrentPlayer.isAi) {
-              // console.log(context.getters.getCurrentPlayerHand)
               context.commit('aiTakeTurn', context.getters.getAiDependent);
             }
           }, 4000)
