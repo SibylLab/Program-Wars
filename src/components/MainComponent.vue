@@ -209,9 +209,6 @@ export default {
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
 
   },
-//  updated() {
-//      this.deleteData.push(this.$store.state.currentGameState);
-//  }
  }
 </script>
 
