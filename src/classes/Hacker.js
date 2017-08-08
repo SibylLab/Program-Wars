@@ -7,8 +7,7 @@ export default class Hacker {
     } else {
       this.boolSide = false;
     }
-  }
-  ;
+  };
 
   turnLogic(e) {
     let cardToPlay;
@@ -17,12 +16,12 @@ export default class Hacker {
     let minStackScore = 2;
     let foundACard = false;
     let moveType; // play, discard, hack, or group
-    let opponentToAttack = null;
-    let bestICard = null;
-    let bestRCard = null;
-    let rXCard = null;
-    let hackCard = null;
-    let bestVCard = null;
+    let opponentToAttack = undefined;
+    let bestICard = undefined;
+    let bestRCard = undefined;
+    let rXCard = undefined;
+    let hackCard = undefined;
+    let bestVCard = undefined;
     let bestGCard = [];
     let handHas = this.handHasA(e);
     let stackToRepeat = undefined;
@@ -74,7 +73,7 @@ export default class Hacker {
       cardToPlay = hackCard;
       moveType = 'hack';
     }
-    else if(stackToRepeat !== undefined && bestRCard !== null && bestRCard.value > 1) {
+    else if(stackToRepeat !== undefined && bestRCard !== undefined && bestRCard.value > 1) {
       stackToPlay = stackToRepeat;
       cardToPlay = bestRCard;
       moveType = 'play';
@@ -96,7 +95,7 @@ export default class Hacker {
           }
         }
       }
-      if(cardToPlay === undefined || cardToPlay === null) {
+      if(cardToPlay === undefined || cardToPlay === undefined) {
         cardToPlay = e.hand.cards[0];
       }
       moveType = 'discard';
@@ -105,7 +104,7 @@ export default class Hacker {
   };
 
   findBestCard(card, cardToBeat) {
-    if(cardToBeat !== null && cardToBeat !== undefined) {
+    if(cardToBeat !== undefined && cardToBeat !== undefined) {
       if(card.value > cardToBeat.value) {
         return card;
       } else {
@@ -116,7 +115,7 @@ export default class Hacker {
     }
   };
   findSmallestCard(card, cardToBeat) {
-    if(cardToBeat !== null && cardToBeat !== undefined) {
+    if(cardToBeat !== undefined && cardToBeat !== undefined) {
       if(card.value < cardToBeat.value) {
         return card;
       } else {

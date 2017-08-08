@@ -1,0 +1,82 @@
+export default class {
+  constructor() {
+
+  };
+
+  getBoolSide() {
+    let num = Math.floor((Math.random() * 2) + 1);
+    if(num === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  organizeHand(event) {
+    let bestICard = undefined;
+    let bestRCard = undefined;
+    let rXCard = undefined;
+    let hackCard = undefined;
+    let bestVCard = undefined;
+    let bestGCard = [];
+
+    for(let hand of event.hand.cards) {
+      if(hand.type === 'I') {
+        bestICard = this.findBestCard(hand, bestICard);
+      }
+      if(hand.type === 'R') {
+        if(hand.value === 1) {
+          rXCard = hand;
+        } else {
+          bestRCard = this.findBestCard(hand, bestRCard);
+        }
+      }
+      if(hand.type === 'V') {
+        bestVCard = this.findBestCard(hand, bestVCard)
+      }
+      if(hand.type === 'G') {
+        bestGCard.push(hand);
+      }
+      if(hand.type === 'H') {
+        hackCard = hand;
+      }
+    }
+    return {bestICard, bestRCard, rXCard, hackCard, bestVCard, bestGCard}
+  };
+
+  getStackToRepeat(e) {
+    let stackToRepeat = undefined;
+    for(let i = 1; i <= 6; i++) {
+      let tmpStack = e.stack.find(stack => stack.score === i && stack.cards.length === 1);
+      if(tmpStack !== undefined) {
+        stackToRepeat = tmpStack;
+      }
+    }
+    return stackToRepeat;
+  }
+
+  stackToAddVariable(e) {
+    let stackToRepeat = undefined;
+    for(let i = 1; i <= 6; i++) {
+      let tmpStack = e.stack.find(stack => stack.score === i && stack.cards.length === 2);
+      if(tmpStack !== undefined && tmpStack.cards[1].value === 1) {
+        stackToRepeat = tmpStack;
+      }
+    }
+    console.log(stackToRepeat)
+    return stackToRepeat;
+  }
+
+  findBestCard(card, cardToBeat) {
+    if(cardToBeat !== undefined && cardToBeat !== undefined) {
+      if(card.value > cardToBeat.value) {
+        return card;
+      } else {
+        return cardToBeat;
+      }
+    } else {
+      return card;
+    }
+  };
+
+}

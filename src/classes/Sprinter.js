@@ -7,8 +7,7 @@ export default class Sprinter {
     } else {
       this.boolSide = false;
     }
-  }
-  ;
+  };
 
   turnLogic(e, isTimid) {
     let cardToPlay;
@@ -17,12 +16,12 @@ export default class Sprinter {
     let minStackScore = 2;
     let foundACard = false;
     let moveType; // play, discard, hack, or group
-    let opponentToAttack = null;
-    let bestICard = null;
-    let bestRCard = null;
-    let rXCard = null;
-    let hackCard = null;
-    let bestVCard = null;
+    let opponentToAttack = undefined;
+    let bestICard = undefined;
+    let bestRCard = undefined;
+    let rXCard = undefined;
+    let hackCard = undefined;
+    let bestVCard = undefined;
     let bestGCard = [];
     let handHas = this.handHasA(e);
     let stackToRepeat = undefined;
@@ -67,7 +66,7 @@ export default class Sprinter {
     }
     let tmpOpponents = e.opponents.filter(opponents => opponents.score > 0 && opponents.cards[0].type !== 'G');
 
-    if(stackToRepeat !== undefined && bestRCard !== null && bestRCard.value > 1) {
+    if(stackToRepeat !== undefined && bestRCard !== undefined && bestRCard.value > 1) {
       stackToPlay = stackToRepeat;
       cardToPlay = bestRCard;
       moveType = 'play';
@@ -112,7 +111,7 @@ export default class Sprinter {
     };
 
   findBestCard(card, cardToBeat) {
-    if(cardToBeat !== null && cardToBeat !== undefined) {
+    if(cardToBeat !== undefined && cardToBeat !== undefined) {
       if(card.value > cardToBeat.value) {
         return card;
       } else {
@@ -123,7 +122,7 @@ export default class Sprinter {
     }
   };
   findSmallestCard(card, cardToBeat) {
-    if(cardToBeat !== null && cardToBeat !== undefined) {
+    if(cardToBeat !== undefined && cardToBeat !== undefined) {
       if(card.value < cardToBeat.value) {
         return card;
       } else {
