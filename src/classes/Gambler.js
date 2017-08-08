@@ -15,6 +15,17 @@ export default class Gambler {
 
     let hand = this.move.organizeHand(event);
 
+    if(this.boolSide) {
+      if(event.player.trueScore >= event.scoreLimit) {
+        this.boolSide = !this.boolSide;
+      }
+    }
+    if(!this.boolSide) {
+      if(event.player.falseScore >= event.scoreLimit) {
+        this.boolSide = !this.boolSide;
+      }
+    }
+
     if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined) {
       cardToPlay = hand.bestVCard;
       stackToPlay = this.move.stackToAddVariable(event);
@@ -49,8 +60,10 @@ export default class Gambler {
       }
       moveType = 'discard';
 
-    } else {
-      // This should not get called, used as a failsafe
+    }
+    
+    // This should not get called, used as a failsafe
+    if(cardToPlay === undefined) {
       cardToPlay = event.hand.cards[0];
       moveType = 'discard';
     }

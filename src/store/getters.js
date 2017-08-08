@@ -95,7 +95,7 @@ export default {
         opponentStack.push(stack)
       }
     }
-    return {hand: playerHand, stack: playerStack, opponents: opponentStack, player: currentPlayer}
+    return {hand: playerHand, stack: playerStack, opponents: opponentStack, player: currentPlayer, scoreLimit: state.scoreLimit}
   }
 }
 
