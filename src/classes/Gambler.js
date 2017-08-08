@@ -35,6 +35,20 @@ export default class Gambler {
       stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
       moveType = 'play';
 
+    } else if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined) {
+      cardToPlay = hand.hackCard;
+      opponentToAttack = this.move.getHackOpponent(event);
+      moveType = 'hack';
+
+    } else if(hand.bestGCard !== undefined) {
+      cardToPlay = hand.bestGCard[0];
+      for(let card in hand.bestGCard) {
+        if(cardToPlay.value > card.value) {
+          cardToPlay = card;
+        }
+      }
+      moveType = 'discard';
+
     } else {
       // This should not get called, used as a failsafe
       cardToPlay = event.hand.cards[0];

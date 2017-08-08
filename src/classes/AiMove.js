@@ -63,8 +63,20 @@ export default class {
         stackToRepeat = tmpStack;
       }
     }
-    console.log(stackToRepeat)
     return stackToRepeat;
+  }
+
+  getHackOpponent(event) {
+    let tmpOpponents = event.opponents.filter(opponents => opponents.score > 0 && opponents.cards[0].type !== 'G');
+      let tmpScore = 0;
+      let opponentToAttack;
+      for(let player of tmpOpponents) {
+        if(player.score > tmpScore && player.cards[0].type !== 'G') {
+          opponentToAttack = player;
+          tmpScore = player.score;
+        }
+      }
+      return opponentToAttack;
   }
 
   findBestCard(card, cardToBeat) {
