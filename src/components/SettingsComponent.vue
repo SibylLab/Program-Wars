@@ -87,7 +87,7 @@
         maxPlayer: false,
          isRepeat: false,
         aiSelect: 'noAiSelected',
-        aiOpponents: ['Flash', 'Joker', 'JarJarBinks']
+        aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman']
       }
     },
     methods: {
