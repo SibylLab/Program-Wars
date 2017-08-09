@@ -91,4 +91,48 @@ export default class {
     }
   };
 
+  sortStacks(stack) {
+    if(stack !== undefined) {
+      function compare(a,b) {
+        if (a.score < b.score)
+          return 1;
+        if (a.score > b.score)
+          return -1;
+        return 0;
+      }
+      return stack.sort(compare);
+    } else {
+      return;
+    }
+  }
+
+  getGroupStacks(value, stacks){
+    let tmpStacks = undefined;
+    for(let stack of stacks){
+      if(stack.value > 0 && stack.value <= value){
+        tmpStacks.push(stack);
+      }
+    }
+    return tmpStack;
+  }
+
+  findGroup(stack, groupCards) {
+    let card = undefined;
+    let stacks = undefined;
+
+    function compare(a,b) {
+      if (a.value < b.value)
+        return 1;
+      if (a.value > b.value)
+        return -1;
+      return 0;
+    }
+    groupCards.sort(compare);
+    let tmpStacks = this.sortStacks(stack.stack);
+    for(let i = groupCards.length; i > 0; i--) {
+
+    }
+    return {card, stacks}
+  }
+
 }

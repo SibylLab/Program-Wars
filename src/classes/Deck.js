@@ -9,11 +9,11 @@ const instruction2 = 7;
 const instruction3 = 7;
 // const instruction4 = 0;
 
-const group2 = 1;
-const group3 = 2;
-const group4 = 3;
-const group5 = 2;
-const group6 = 1;
+const group2 = 11;
+const group3 = 12;
+const group4 = 13;
+const group5 = 12;
+const group6 = 11;
 // const group7 = 0;
 // const group8 = 0;
 
