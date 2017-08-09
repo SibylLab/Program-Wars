@@ -91,48 +91,68 @@ export default class {
     }
   };
 
-  sortStacks(stack) {
-    if(stack !== undefined) {
-      function compare(a,b) {
-        if (a.score < b.score)
-          return 1;
-        if (a.score > b.score)
-          return -1;
-        return 0;
+  // sortStacks(stack) {
+  //   if(stack !== undefined) {
+  //     function compare(a,b) {
+  //       if (a.score < b.score)
+  //         return 1;
+  //       if (a.score > b.score)
+  //         return -1;
+  //       return 0;
+  //     }
+  //     return stack.sort(compare);
+  //   } else {
+  //     return;
+  //   }
+  // }
+  //
+  // getGroupStacks(stacks){
+  //   let tmpStacks = undefined;
+  //   for(let stack of stacks){
+  //     if(stack.value > 0 && stack.value <= 6){
+  //       tmpStacks.push(stack);
+  //     }
+  //   }
+  //   return tmpStack;
+  // }
+  //
+  // findGroup(stack, groupCards) {
+  //   let card = undefined;
+  //   let stacks = undefined;
+  //
+  //   function compare(a,b) {
+  //     if (a.value < b.value)
+  //       return 1;
+  //     if (a.value > b.value)
+  //       return -1;
+  //     return 0;
+  //   }
+  //   groupCards.sort(compare);
+  //   let tmpStacks = this.sortStacks(stack.stack);
+  //   for(let i = groupCards.length; i > 0; i--) {
+  //
+  //   }
+  //   return {card, stacks}
+  // }
+
+  compare(a,b) {
+    if (a.score < b.score || a.value < b.value)
+      return 1;
+    if (a.score > b.score || a.value > b.value)
+      return -1;
+    return 0;
+  }
+
+  findGroup(stack, groupCard) {
+    stack = stack.sort(this.compare);
+    let tmpStack = [];
+    for(let i of stack) {
+      if(i.score > 0 && i.score < 6) {
+        tmpStack.push(i);
       }
-      return stack.sort(compare);
-    } else {
-      return;
     }
+    stack = tmpStack;
+    groupCard = groupCard.sort(this.compare);
+    console.log(groupCard)
   }
-
-  getGroupStacks(value, stacks){
-    let tmpStacks = undefined;
-    for(let stack of stacks){
-      if(stack.value > 0 && stack.value <= value){
-        tmpStacks.push(stack);
-      }
-    }
-    return tmpStack;
-  }
-
-  findGroup(stack, groupCards) {
-    let card = undefined;
-    let stacks = undefined;
-
-    function compare(a,b) {
-      if (a.value < b.value)
-        return 1;
-      if (a.value > b.value)
-        return -1;
-      return 0;
-    }
-    groupCards.sort(compare);
-    let tmpStacks = this.sortStacks(stack.stack);
-    for(let i = groupCards.length; i > 0; i--) {
-
-    }
-    return {card, stacks}
-  }
-
 }

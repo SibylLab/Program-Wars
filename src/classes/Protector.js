@@ -47,7 +47,7 @@ export default class Gambler {
       moveType = 'play';
 
     } else if(hand.bestGCard.length > 0) {
-      let moveInfo = this.move.findGroup(event, hand.bestGCard);
+      let moveInfo = this.move.findGroup(event.stack, hand.bestGCard);
       cardToPlay = moveInfo.card;
       stackToPlay = moveInfo.stacks;
       moveType = 'group';
