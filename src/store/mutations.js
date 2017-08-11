@@ -286,7 +286,9 @@ export default {
       for(let id of stackToPlay) {
         state.selectedStacks.push(id.stackId)
       }
-      bus.$emit('aiGroup', stackToPlay);
+      state.selectedStackBoolean = stackToPlay[0].boolSide;
+      state.groupStacks = false;
+      bus.$emit('aiGroup', stackToPlay[0].boolSide);
     }
   },
 }

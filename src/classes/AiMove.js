@@ -107,7 +107,6 @@ export default class {
         tmpStack.push(i);
       }
     }
-    console.log(tmpStack[0])
     groupCard = groupCard.sort(this.compare);
     for(let card of groupCard) {
       let lookingForStacks = this.findMatch(card.value, tmpStack);
@@ -120,7 +119,6 @@ export default class {
   }
 
   findMatch(groupValue, groupStacks) {
-    console.log('recursion!')
     let num = groupStacks.length;
     for (let j = 0; j < num; j++) {
       let newValue = 0;
@@ -138,22 +136,6 @@ export default class {
     }
     return undefined;
   }
-  //   for(let i = 0; i < num; i++) {
-  //     if(newValue + groupStacks[i].score <= groupValue) {
-  //       newValue = newValue + groupStacks[i].score;
-  //       tmpStack.push(groupStacks[i]);
-  //       if(newValue === groupValue) {
-  //         return tmpStack;
-  //       }
-  //     }
-  //   }
-  //   groupStacks.shift();
-  //   if(groupStacks.length > 0) {
-  //     return this.findMatch(groupValue, groupStacks)
-  //   } else {
-  //     return undefined
-  //   }
-  // }
 }
 
 

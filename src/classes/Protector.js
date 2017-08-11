@@ -26,10 +26,11 @@ export default class Gambler {
       }
     }
 
-    if(hand.bestGCard.length > 0 && this.move.findGroup(event.stack, hand.bestGCard) !== undefined) {
-      let moveInfo = this.move.findGroup(event.stack, hand.bestGCard);
-      cardToPlay = moveInfo.cardToPlay;
-      stackToPlay = moveInfo.stackToPlay;
+    let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
+
+    if(hand.bestGCard.length > 0 && canGroup  !== undefined) {
+      cardToPlay = canGroup.cardToPlay;
+      stackToPlay = canGroup.stackToPlay;
       moveType = 'group';
 
     } else if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined) {

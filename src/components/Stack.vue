@@ -184,15 +184,11 @@ export default {
       }
     });
 
-    bus.$on('aiGroup', (stacks) => {
-      if(this.$store.state.aiTurn === true && this.$store.state.activeCard) {
-//      for(let stack of stacks) {
-//        if(stack.stackId === this.stackId) {
-//          this.stackSelected();
-//          this.selectedStacksLength = true;
-//        }
-      this.checked = true;
-          this.groupStacks();
+    bus.$on('aiGroup', (boolSide) => {
+      if(this.$store.state.aiTurn === true && this.$store.state.activeCard !== undefined && this.playfieldBoolean === boolSide) {
+        this.$store.commit('setStackSelectedBoolean', {boolean: boolSide});
+        this.checked = true;
+        this.groupStacks();
         this.$store.state.aiTurn = false;
       }
     });
@@ -224,15 +220,12 @@ export default {
         }
         let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1];
-      console.log(this.$store.getters.getActiveCard);
         this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard});
         this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.$store.dispatch('playerTookTurn');
-
         bus.$emit('cardDeselected');
         this.$store.commit('groupStacks', {yesOrNo: false});
       this.$store.dispatch('turn', true);
-//        this.$store.dispatch('endTurn');
     },
     cardAddClicked () {
       this.$emit('cardAddClicked', this.id)
