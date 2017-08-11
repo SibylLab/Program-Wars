@@ -13,6 +13,7 @@
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
+        <p :deleteMe="deleteMe">{{ deleteMe }}</p>
       <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
@@ -125,6 +126,9 @@ export default {
     }
 },
   computed: {
+    deleteMe() {
+      return this.$store.state.selectedStacks;
+    },
     currentPlayerId() {
       return this.$store.getters.getCurrentPlayerId;
     },

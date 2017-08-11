@@ -91,50 +91,6 @@ export default class {
     }
   };
 
-  // sortStacks(stack) {
-  //   if(stack !== undefined) {
-  //     function compare(a,b) {
-  //       if (a.score < b.score)
-  //         return 1;
-  //       if (a.score > b.score)
-  //         return -1;
-  //       return 0;
-  //     }
-  //     return stack.sort(compare);
-  //   } else {
-  //     return;
-  //   }
-  // }
-  //
-  // getGroupStacks(stacks){
-  //   let tmpStacks = undefined;
-  //   for(let stack of stacks){
-  //     if(stack.value > 0 && stack.value <= 6){
-  //       tmpStacks.push(stack);
-  //     }
-  //   }
-  //   return tmpStack;
-  // }
-  //
-  // findGroup(stack, groupCards) {
-  //   let card = undefined;
-  //   let stacks = undefined;
-  //
-  //   function compare(a,b) {
-  //     if (a.value < b.value)
-  //       return 1;
-  //     if (a.value > b.value)
-  //       return -1;
-  //     return 0;
-  //   }
-  //   groupCards.sort(compare);
-  //   let tmpStacks = this.sortStacks(stack.stack);
-  //   for(let i = groupCards.length; i > 0; i--) {
-  //
-  //   }
-  //   return {card, stacks}
-  // }
-
   compare(a,b) {
     if (a.score < b.score || a.value < b.value)
       return 1;
@@ -151,8 +107,53 @@ export default class {
         tmpStack.push(i);
       }
     }
-    stack = tmpStack;
+    console.log(tmpStack[0])
     groupCard = groupCard.sort(this.compare);
-    console.log(groupCard)
+    for(let card of groupCard) {
+      let lookingForStacks = this.findMatch(card.value, tmpStack);
+      if(lookingForStacks !== undefined) {
+        return {cardToPlay: card, stackToPlay: lookingForStacks};
+        break;
+      }
+    }
+    return undefined;
   }
+
+  findMatch(groupValue, groupStacks) {
+    console.log('recursion!')
+    let num = groupStacks.length;
+    for (let j = 0; j < num; j++) {
+      let newValue = 0;
+      let tmpStack = [];
+      for (let i = 0; i < num; i++) {
+        if (newValue + groupStacks[i].score <= groupValue) {
+          newValue = newValue + groupStacks[i].score;
+          tmpStack.push(groupStacks[i]);
+          if (newValue === groupValue) {
+            return tmpStack;
+          }
+        }
+      }
+      num--;
+    }
+    return undefined;
+  }
+  //   for(let i = 0; i < num; i++) {
+  //     if(newValue + groupStacks[i].score <= groupValue) {
+  //       newValue = newValue + groupStacks[i].score;
+  //       tmpStack.push(groupStacks[i]);
+  //       if(newValue === groupValue) {
+  //         return tmpStack;
+  //       }
+  //     }
+  //   }
+  //   groupStacks.shift();
+  //   if(groupStacks.length > 0) {
+  //     return this.findMatch(groupValue, groupStacks)
+  //   } else {
+  //     return undefined
+  //   }
+  // }
 }
+
+

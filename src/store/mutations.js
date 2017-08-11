@@ -283,6 +283,9 @@ export default {
     } else if (aiMove.moveType === 'hack') {
       bus.$emit('aiHack', stackToHack);
     } else if (aiMove.moveType === 'group') {
+      for(let id of stackToPlay) {
+        state.selectedStacks.push(id.stackId)
+      }
       bus.$emit('aiGroup', stackToPlay);
     }
   },

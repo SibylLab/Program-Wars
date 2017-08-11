@@ -26,7 +26,13 @@ export default class Gambler {
       }
     }
 
-    if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined) {
+    if(hand.bestGCard.length > 0 && this.move.findGroup(event.stack, hand.bestGCard) !== undefined) {
+      let moveInfo = this.move.findGroup(event.stack, hand.bestGCard);
+      cardToPlay = moveInfo.cardToPlay;
+      stackToPlay = moveInfo.stackToPlay;
+      moveType = 'group';
+
+    } else if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined) {
       cardToPlay = hand.bestVCard;
       stackToPlay = this.move.stackToAddVariable(event);
       moveType = 'play';
@@ -46,11 +52,6 @@ export default class Gambler {
       stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
       moveType = 'play';
 
-    } else if(hand.bestGCard.length > 0) {
-      let moveInfo = this.move.findGroup(event.stack, hand.bestGCard);
-      cardToPlay = moveInfo.card;
-      stackToPlay = moveInfo.stacks;
-      moveType = 'group';
 
     } else if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined) {
       cardToPlay = hand.hackCard;
