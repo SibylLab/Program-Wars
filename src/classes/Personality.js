@@ -11,6 +11,7 @@ export default class Personality {
     //   case 2: this.personality = new Sprinter(); break;
     //   case 3: this.personality = new Hacker(); break;
     //   case 4: this.personality = new Gambler(); break;
+    //   case 5: this.personality = new Protector(); break;
     // }
     this.personality = new Protector();
   };

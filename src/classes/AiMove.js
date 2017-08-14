@@ -128,7 +128,11 @@ export default class {
           newValue = newValue + groupStacks[i].score;
           tmpStack.push(groupStacks[i]);
           if (newValue === groupValue) {
-            return tmpStack;
+            if(tmpStack.length === 1 && tmpStack[0].cards[0].type === 'G') {
+              return undefined;
+            } else {
+              return tmpStack;
+            }
           }
         }
       }

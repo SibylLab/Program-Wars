@@ -38,11 +38,6 @@ export default class Gambler {
       stackToPlay = this.move.stackToAddVariable(event);
       moveType = 'play';
 
-    } else if(hand.rXCard !== undefined && this.move.getStackToRepeat(event) !== undefined) {
-      cardToPlay = hand.rXCard;
-      stackToPlay = this.move.getStackToRepeat(event);
-      moveType = 'play';
-
     } else if(hand.bestRCard !== undefined && this.move.getStackToRepeat(event) !== undefined) {
       cardToPlay = hand.bestRCard;
       stackToPlay = this.move.getStackToRepeat(event);
@@ -53,6 +48,10 @@ export default class Gambler {
       stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
       moveType = 'play';
 
+    } else if(hand.rXCard !== undefined && this.move.getStackToRepeat(event) !== undefined && hand.bestVCard !== undefined) {
+      cardToPlay = hand.rXCard;
+      stackToPlay = this.move.getStackToRepeat(event);
+      moveType = 'play';
 
     } else if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined) {
       cardToPlay = hand.hackCard;
@@ -68,7 +67,7 @@ export default class Gambler {
       }
       moveType = 'discard';
 
-    }
+      }
 
     // This should not get called, used as a failsafe
     if(cardToPlay === undefined) {

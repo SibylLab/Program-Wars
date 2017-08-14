@@ -9,11 +9,11 @@ import Card from './Card'
 // const instruction3 = 7;
 // // const instruction4 = 0;
 //
-// const group2 = 11;
-// const group3 = 12;
-// const group4 = 13;
-// const group5 = 12;
-// const group6 = 11;
+// const group2 = 1;
+// const group3 = 2;
+// const group4 = 3;
+// const group5 = 2;
+// const group6 = 1;
 // // const group7 = 0;
 // // const group8 = 0;
 //
@@ -35,12 +35,12 @@ const instruction2 = 7;
 const instruction3 = 7;
 // const instruction4 = 0;
 
-const group2 = 7;
-const group3 = 7;
-const group4 = 7;
-const group5 = 7;
-const group6 = 7;
-// const group7 = 0;
+const group2 = 11;
+const group3 = 12;
+const group4 = 13;
+const group5 = 12;
+const group6 = 11;
+// const group71 = 0;
 // const group8 = 0;
 
 const repetition2 = 0;

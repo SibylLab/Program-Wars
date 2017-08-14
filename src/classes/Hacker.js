@@ -26,6 +26,8 @@ export default class Hacker {
       }
     }
 
+    let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
+
     if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined) {
       cardToPlay = hand.hackCard;
       opponentToAttack = this.move.getHackOpponent(event);
@@ -51,6 +53,11 @@ export default class Hacker {
       cardToPlay = hand.rXCard;
       stackToPlay = this.move.getStackToRepeat(event);
       moveType = 'play';
+
+    } else if(hand.bestGCard.length > 0 && canGroup  !== undefined) {
+      cardToPlay = canGroup.cardToPlay;
+      stackToPlay = canGroup.stackToPlay;
+      moveType = 'group';
 
     } else if(hand.bestGCard !== undefined) {
       cardToPlay = hand.bestGCard[0];

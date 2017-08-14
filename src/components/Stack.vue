@@ -184,8 +184,8 @@ export default {
       }
     });
 
-    bus.$on('aiGroup', (boolSide) => {
-      if(this.$store.state.aiTurn === true && this.$store.state.activeCard !== undefined && this.playfieldBoolean === boolSide) {
+    bus.$on('aiGroup', (boolSide, currentPlayerId) => {
+      if(this.$store.state.aiTurn === true && this.$store.state.activeCard !== undefined && this.playfieldBoolean === boolSide && this.playerId === currentPlayerId) {
         this.$store.commit('setStackSelectedBoolean', {boolean: boolSide});
         this.checked = true;
         this.groupStacks();

@@ -288,7 +288,7 @@ export default {
       }
       state.selectedStackBoolean = stackToPlay[0].boolSide;
       state.groupStacks = false;
-      bus.$emit('aiGroup', stackToPlay[0].boolSide);
+      bus.$emit('aiGroup', stackToPlay[0].boolSide, state.players[state.activePlayer].id);
     }
   },
 }
