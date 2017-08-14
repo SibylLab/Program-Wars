@@ -4,57 +4,31 @@
  */
 import Card from './Card'
 
-// const instruction1 = 7;
-// const instruction2 = 7;
-// const instruction3 = 7;
-// // const instruction4 = 0;
-//
-// const group2 = 1;
-// const group3 = 2;
-// const group4 = 3;
-// const group5 = 2;
-// const group6 = 1;
-// // const group7 = 0;
-// // const group8 = 0;
-//
-// const repetition2 = 4;
-// const repetition3 = 4;
-// const repetition4 = 0;
-// const repetitionX = 5;
-//
-// // const variable2 = 2;
-// const variable3 = 4;
-// const variable4 = 3;
-// const variable5 = 3;
-// const variable6 = 1;
-//
-// const hack = 3;
-
 const instruction1 = 7;
 const instruction2 = 7;
 const instruction3 = 7;
 // const instruction4 = 0;
 
-const group2 = 11;
-const group3 = 12;
-const group4 = 13;
-const group5 = 12;
-const group6 = 11;
-// const group71 = 0;
+const group2 = 1;
+const group3 = 2;
+const group4 = 3;
+const group5 = 2;
+const group6 = 1;
+// const group7 = 0;
 // const group8 = 0;
 
-const repetition2 = 0;
-const repetition3 = 0;
+const repetition2 = 4;
+const repetition3 = 4;
 const repetition4 = 0;
-const repetitionX = 0;
+const repetitionX = 5;
 
 // const variable2 = 2;
-const variable3 = 0;
-const variable4 = 0;
-const variable5 = 0;
-const variable6 = 0;
+const variable3 = 4;
+const variable4 = 3;
+const variable5 = 3;
+const variable6 = 1;
 
-const hack = 0;
+const hack = 3;
 
 const cardDeck = [
   {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
