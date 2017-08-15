@@ -1,6 +1,6 @@
 import AiMove from './AiMove'
 
-export default class Hacker {
+export default class Gambler {
 
   constructor() {
     this.move = new AiMove();
@@ -28,10 +28,10 @@ export default class Hacker {
 
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
 
-    if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined) {
-      cardToPlay = hand.hackCard;
-      opponentToAttack = this.move.getHackOpponent(event);
-      moveType = 'hack';
+    if(hand.bestGCard.length > 0 && canGroup  !== undefined) {
+      cardToPlay = canGroup.cardToPlay;
+      stackToPlay = canGroup.stackToPlay;
+      moveType = 'group';
 
     } else if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined) {
       cardToPlay = hand.bestVCard;
@@ -48,16 +48,15 @@ export default class Hacker {
       stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
       moveType = 'play';
 
-
     } else if(hand.rXCard !== undefined && this.move.getStackToRepeat(event) !== undefined && hand.bestVCard !== undefined) {
       cardToPlay = hand.rXCard;
       stackToPlay = this.move.getStackToRepeat(event);
       moveType = 'play';
 
-    } else if(hand.bestGCard.length > 0 && canGroup  !== undefined) {
-      cardToPlay = canGroup.cardToPlay;
-      stackToPlay = canGroup.stackToPlay;
-      moveType = 'group';
+    } else if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined) {
+      cardToPlay = hand.hackCard;
+      opponentToAttack = this.move.getHackOpponent(event);
+      moveType = 'hack';
 
     } else if(hand.bestGCard !== undefined) {
       cardToPlay = hand.bestGCard[0];
@@ -68,7 +67,7 @@ export default class Hacker {
       }
       moveType = 'discard';
 
-    }
+      }
 
     // This should not get called, used as a failsafe
     if(cardToPlay === undefined) {
