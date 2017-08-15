@@ -166,13 +166,8 @@ export default {
     state.selectedStackBoolean = payload.boolean
   },
   removeStack(state, payload) {
-    state.stacks = state.stacks.filter(s => s.stackId !== payload.stackId)
+    state.stacks = state.stacks.filter(s => s.stackId !== payload.stackId);
   },
-  // setPlayerScore(state, payload) {
-  //   let player = state.players.find(player => player.id === payload.id)
-  //   player.trueScore = payload.trueScore;
-  //   player.falseScore = payload.falseScore;
-  // },
   setActiveSide(state, payload) {
     state.activeSide = payload.activeSide
   },
@@ -240,13 +235,9 @@ export default {
   },
   playerModalTrigger(state) {
     state.playerTurn = true;
-    // $('#playerTurn').modal('handleUpdate')
-    // $('#playerTurn').modal('show');
   },
   playerModalHide(state) {
     state.playerTurn = false;
-    // $('#playerTurn').modal('handleUpdate')
-    // $('#playerTurn').modal('hide');
   },
   coinModalTrigger() {
     $('.coin').modal('handleUpdate');

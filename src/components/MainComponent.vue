@@ -10,6 +10,10 @@
       <player-turn v-if="playerTurn"></player-turn>
     </transition>
 
+    <transition name="fade">
+      <hack-discard v-if="showMsg"></hack-discard>
+    </transition>
+
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
@@ -22,14 +26,7 @@
           <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
           <a class="btn btn-primary" href="https://github.com/johnanvik/program-wars/issues/new" target="_blank">Report Issue</a>
         </div>
-
     </div>
-    <transition name="hackFade">
-    <div class="hacked" v-if="hacked"><h1 id="hackStyle">HACKED!!</h1></div>
-      <!--<div class="hacked" v-if="true"><h1 id="hackStyle">HACKED!!</h1></div>-->
-
-    </transition>
-
     <div id="playerinfopanel" :style="deactivateClick">
       <player-info-panel></player-info-panel>
     </div>
@@ -63,7 +60,7 @@ import HackModal from './HackModal.vue'
 import WinnerModal from './WinnerModal.vue'
 import CoinModal from './CoinModal.vue'
 import PlayerTurn from './PlayerTurnPopUp.vue'
-
+import HackDiscard from './HackDiscardMsg.vue'
 
 import Card from '../classes/Card'
 import Player from '../classes/Player'
@@ -94,6 +91,7 @@ export default {
     }
   },
   components: {
+    HackDiscard,
     'player-info-panel': PlayerInfoPanel,
     'playfield': Playfield,
     'opponent-stacks': OpponentStacks,
@@ -103,7 +101,8 @@ export default {
     'hack-modal': HackModal,
     'winner-modal': WinnerModal,
     'coin-modal': CoinModal,
-    'player-turn': PlayerTurn
+    'player-turn': PlayerTurn,
+    'hack-discard': HackDiscard
 
   },
   methods: {
@@ -132,6 +131,13 @@ export default {
     }
 },
   computed: {
+    showMsg() {
+      if(this.$store.state.isHack) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     hacked() {
       return this.$store.state.isHack;
     },
@@ -347,21 +353,4 @@ a {
     transition: opacity .5s;
     opacity: 0;
   }
-
-.hackFade-enter {
-  opacity: 0;
-}
-
-.hackFade-enter-active {
-  transition: opacity .5s;
-}
-
-.hackFade-leave {
-
-}
-
-.hackFade-leave-active {
-  transition: opacity .9s;
-  opacity: 0;
-}
 </style>
