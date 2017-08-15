@@ -274,7 +274,12 @@ export default {
     } else if (aiMove.moveType === 'hack') {
       bus.$emit('aiHack', stackToHack);
     } else if (aiMove.moveType === 'group') {
-      bus.$emit('aiGroup', stackToPlay);
+      for(let id of stackToPlay) {
+        state.selectedStacks.push(id.stackId)
+      }
+      state.selectedStackBoolean = stackToPlay[0].boolSide;
+      state.groupStacks = false;
+      bus.$emit('aiGroup', stackToPlay[0].boolSide, state.players[state.activePlayer].id);
     }
   },
 }

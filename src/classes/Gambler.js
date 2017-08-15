@@ -26,6 +26,8 @@ export default class Gambler {
       }
     }
 
+    let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
+
     if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined) {
       cardToPlay = hand.bestVCard;
       stackToPlay = this.move.stackToAddVariable(event);
@@ -51,6 +53,11 @@ export default class Gambler {
       opponentToAttack = this.move.getHackOpponent(event);
       moveType = 'hack';
 
+    } else if(hand.bestGCard.length > 0 && canGroup  !== undefined) {
+      cardToPlay = canGroup.cardToPlay;
+      stackToPlay = canGroup.stackToPlay;
+      moveType = 'group';
+
     } else if(hand.bestGCard !== undefined) {
       cardToPlay = hand.bestGCard[0];
       for(let card in hand.bestGCard) {
@@ -61,7 +68,7 @@ export default class Gambler {
       moveType = 'discard';
 
     }
-    
+
     // This should not get called, used as a failsafe
     if(cardToPlay === undefined) {
       cardToPlay = event.hand.cards[0];

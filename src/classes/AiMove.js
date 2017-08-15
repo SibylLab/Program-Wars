@@ -91,4 +91,55 @@ export default class {
     }
   };
 
+  compare(a,b) {
+    if (a.score < b.score || a.value < b.value)
+      return 1;
+    if (a.score > b.score || a.value > b.value)
+      return -1;
+    return 0;
+  }
+
+  findGroup(stack, groupCard) {
+    stack = stack.sort(this.compare);
+    let tmpStack = [];
+    for(let i of stack) {
+      if(i.score > 0 && i.score < 6) {
+        tmpStack.push(i);
+      }
+    }
+    groupCard = groupCard.sort(this.compare);
+    for(let card of groupCard) {
+      let lookingForStacks = this.findMatch(card.value, tmpStack);
+      if(lookingForStacks !== undefined) {
+        return {cardToPlay: card, stackToPlay: lookingForStacks};
+        break;
+      }
+    }
+    return undefined;
+  }
+
+  findMatch(groupValue, groupStacks) {
+    let num = groupStacks.length;
+    for (let j = 0; j < num; j++) {
+      let newValue = 0;
+      let tmpStack = [];
+      for (let i = 0; i < num; i++) {
+        if (newValue + groupStacks[i].score <= groupValue) {
+          newValue = newValue + groupStacks[i].score;
+          tmpStack.push(groupStacks[i]);
+          if (newValue === groupValue) {
+            if(tmpStack.length === 1 && tmpStack[0].cards[0].type === 'G') {
+              return undefined;
+            } else {
+              return tmpStack;
+            }
+          }
+        }
+      }
+      num--;
+    }
+    return undefined;
+  }
 }
+
+
