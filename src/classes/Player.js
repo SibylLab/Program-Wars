@@ -21,6 +21,8 @@ export default class Player{
     this.falseScore = falseScore;
     this.id = id;
     this.isAi = isAi;
-    this.type = new Personality(name);
+    if(this.isAi) {
+      this.type = new Personality();
+    }
   };
 }

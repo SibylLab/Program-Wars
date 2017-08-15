@@ -1,17 +1,20 @@
 import Sprinter from './Sprinter'
 import Hacker from './Hacker'
+import Gambler from './Gambler'
 export default class Personality {
 
-  constructor(name) {
-    if(name === 'Flash' || name === 'JarJarBinks') {
-      this.personality = new Sprinter();
+  constructor() {
+    let num = Math.floor((Math.random() * 4) + 1);
+    switch(num) {
+      case 1: this.isTimid = true;
+      case 2: this.personality = new Sprinter(); break;
+      case 3: this.personality = new Hacker(); break;
+      case 4: this.personality = new Gambler(); break;
     }
-    if(name === 'Joker') {
-      this.personality = new Hacker();
-    }
+
   };
 
   turnLogic(event) {
-      return this.personality.turnLogic(event);
+      return this.personality.turnLogic(event, this.isTimid);
   }
 }

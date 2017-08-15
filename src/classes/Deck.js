@@ -7,24 +7,26 @@ import Card from './Card'
 const instruction1 = 7;
 const instruction2 = 7;
 const instruction3 = 7;
-const instruction4 = 0;
+// const instruction4 = 0;
 
 const group2 = 1;
 const group3 = 2;
 const group4 = 3;
 const group5 = 2;
 const group6 = 1;
-const group7 = 0;
-const group8 = 0;
+// const group7 = 0;
+// const group8 = 0;
 
 const repetition2 = 4;
 const repetition3 = 4;
 const repetition4 = 0;
-const repetitionX = 4;
+const repetitionX = 5;
 
-const variable2 = 2;
-const variable3 = 2;
-const variable4 = 1;
+// const variable2 = 2;
+const variable3 = 4;
+const variable4 = 3;
+const variable5 = 3;
+const variable6 = 1;
 
 const hack = 3;
 
@@ -44,9 +46,11 @@ const cardDeck = [
   {type:'G', cardValue: 5, imgSrc: '/static/cardImg/G5.png', howMany: group5},
   {type:'G', cardValue: 6, imgSrc: '/static/cardImg/G6.png', howMany: group6},
 
-  {type:'V', cardValue: 2, imgSrc: '/static/cardImg/V2.png', howMany: variable2},
+  // {type:'V', cardValue: 2, imgSrc: '/static/cardImg/V2.png', howMany: variable2},
   {type:'V', cardValue: 3, imgSrc: '/static/cardImg/V3.png', howMany: variable3},
   {type:'V', cardValue: 4, imgSrc: '/static/cardImg/V4.png', howMany: variable4},
+  {type:'V', cardValue: 5, imgSrc: '/static/cardImg/V5.png', howMany: variable5},
+  {type:'V', cardValue: 6, imgSrc: '/static/cardImg/V6.png', howMany: variable6},
 
   {type:'H', cardValue: 0, imgSrc: '/static/cardImg/H.png', howMany: hack},
 ]

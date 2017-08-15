@@ -267,14 +267,14 @@ export default {
     let stackToPlay = aiMove.stackToPlay;
     let stackToHack = aiMove.opponentToAttack;
     state.activeCard = cardToPlay;
-    if(aiMove.moveType === 'play') {
+    if (aiMove.moveType === 'play') {
       bus.$emit('aiAddToStack', stackToPlay)
-    } else if(aiMove.moveType === 'discard') {
-        bus.$emit('aiDiscard');
-    } else if(aiMove.moveType === 'hack') {
-        bus.$emit('aiHack', stackToHack);
-    } else if(aiMove.moveType === 'group') {
-        bus.$emit('aiGroup', stackToPlay);
+    } else if (aiMove.moveType === 'discard') {
+      bus.$emit('aiDiscard');
+    } else if (aiMove.moveType === 'hack') {
+      bus.$emit('aiHack', stackToHack);
+    } else if (aiMove.moveType === 'group') {
+      bus.$emit('aiGroup', stackToPlay);
     }
   },
 }
