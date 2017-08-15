@@ -10,6 +10,10 @@
       <player-turn v-if="playerTurn"></player-turn>
     </transition>
 
+    <transition name="fade">
+      <hack-discard v-if="showMsg"></hack-discard>
+    </transition>
+
     <div id="header">
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
@@ -17,6 +21,7 @@
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
+
         <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
@@ -56,7 +61,7 @@ import HackModal from './HackModal.vue'
 import WinnerModal from './WinnerModal.vue'
 import CoinModal from './CoinModal.vue'
 import PlayerTurn from './PlayerTurnPopUp.vue'
-
+import HackDiscard from './HackDiscardMsg.vue'
 
 import Card from '../classes/Card'
 import Player from '../classes/Player'
@@ -87,6 +92,7 @@ export default {
     }
   },
   components: {
+    HackDiscard,
     'player-info-panel': PlayerInfoPanel,
     'playfield': Playfield,
     'opponent-stacks': OpponentStacks,
@@ -96,7 +102,8 @@ export default {
     'hack-modal': HackModal,
     'winner-modal': WinnerModal,
     'coin-modal': CoinModal,
-    'player-turn': PlayerTurn
+    'player-turn': PlayerTurn,
+    'hack-discard': HackDiscard
 
   },
   methods: {
@@ -125,6 +132,13 @@ export default {
     }
 },
   computed: {
+    showMsg() {
+      if(this.$store.state.isHack || this.$store.state.isDiscard) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     currentPlayerId() {
       return this.$store.getters.getCurrentPlayerId;
     },
@@ -272,6 +286,21 @@ export default {
   padding: 8px;
   border-radius: 15px;
   min-height: 375px;
+}
+
+.hacked {
+  position: fixed;
+  z-index: 10;
+  top: 30%;
+  left: 50%;
+  width: 1100px;
+  margin-left: -550px;
+}
+
+#hackStyle {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 220px;
+  color: darkred;
 }
 h1, h2 {
   font-weight: normal;

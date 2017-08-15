@@ -119,6 +119,10 @@ export default {
     },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {
+        this.$store.state.isDiscard = true;
+        setTimeout(() => {
+          this.$store.state.isDiscard = false;
+        },1250);
         this.$store.commit('discardSelectedCard');
         this.$store.dispatch('playerTookTurn');
         this.$store.dispatch('turn', true);
