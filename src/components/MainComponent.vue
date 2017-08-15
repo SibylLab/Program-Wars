@@ -132,14 +132,11 @@ export default {
 },
   computed: {
     showMsg() {
-      if(this.$store.state.isHack) {
+      if(this.$store.state.isHack || this.$store.state.isDiscard) {
         return true;
       } else {
         return false;
       }
-    },
-    hacked() {
-      return this.$store.state.isHack;
     },
     currentPlayerId() {
       return this.$store.getters.getCurrentPlayerId;

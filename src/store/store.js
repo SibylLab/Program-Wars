@@ -44,7 +44,8 @@ export const store = new Vuex.Store({
       falseSideColour: 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)',
       isHack: false,
       hackedPlayer:'',
-      pointerEvent: 'pointer-events: none'
+      isDiscard: false,
+      pointerEvent: 'pointer-events: none',
     },
     originalState: {
       players: [],
