@@ -26,6 +26,8 @@ export default class Sprinter {
       }
     }
 
+    let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
+
     if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined) {
       cardToPlay = hand.bestVCard;
       stackToPlay = this.move.stackToAddVariable(event);
@@ -53,6 +55,11 @@ export default class Sprinter {
       cardToPlay = hand.hackCard;
       opponentToAttack = this.move.getHackOpponent(event);
       moveType = 'hack';
+
+    } else if(hand.bestGCard.length > 0 && canGroup  !== undefined) {
+      cardToPlay = canGroup.cardToPlay;
+      stackToPlay = canGroup.stackToPlay;
+      moveType = 'group';
 
     } else if(hand.bestGCard !== undefined) {
       cardToPlay = hand.bestGCard[0];

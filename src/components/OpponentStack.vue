@@ -136,16 +136,21 @@ export default {
     addToStack() {
 
       if (this.$store.getters.getActiveCard !== undefined) {
-        let activeCard = this.$store.getters.getActiveCard
+        let activeCard = this.$store.getters.getActiveCard;
         // get the stack data model that goes with this stack component
-        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
-
+        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
         switch (activeCard.type) {
           case 'H':
-              this.$store.commit('stackDiscard', {stackId: this.stackId})
-              this.$store.commit('removeStack', {stackId: this.stackId})
+            this.$store.commit('stackDiscard', {stackId: this.stackId});
+            this.$store.commit('removeStack', {stackId: this.stackId});
+            this.$store.state.hackedPlayer = this.$store.state.players[thisStack.playerId].name;
+            console.log(this.$store.state.hackedPlayer);
             this.$store.dispatch('playerTookTurn');
-              bus.$emit('cardDeselected');
+            bus.$emit('cardDeselected');
+            this.$store.state.isHack = true;
+            setTimeout(() => {
+              this.$store.state.isHack = false;
+            },1250);
             break;
           default:
               return '';
