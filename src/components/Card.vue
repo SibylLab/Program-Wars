@@ -1,6 +1,7 @@
 <template>
   <div id="card" :class="cardCss" class="panel panel-default" @click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
-    <img :src="cardGraphics" alt="Instruction Card (Value 1)">
+    <img src="../../static/cardImg/backOfCard.png" alt="back of Card" v-if="isAi">
+    <img :src="cardGraphics" alt="Instruction Card (Value 1)" v-else>
   </div>
 </template>
 
@@ -18,6 +19,13 @@ export default {
     }
   },
   computed: {
+    isAi() {
+      if(this.$store.getters.getCurrentPlayer.isAi && !this.inStack) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     cardGraphics() {
       return this.cardData.cardImg;
     },
