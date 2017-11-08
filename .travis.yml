@@ -25,11 +25,14 @@ before_script:
 cache:
   directories:
   - node_modules
+
 install:
 - npm install 
+
 script:
 - ./cc-test-reporter before-build
 - npm run test
+
 after_success:
 - mv ./test/unit/coverage .
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build -t lcov -r c0ccb3f018875b6a3ed742ff0a4ccec2a6b49d5e3a5e745c9cbcd8bca21ed372 --exit-code $TRAVIS_TEST_RESULT; fi
