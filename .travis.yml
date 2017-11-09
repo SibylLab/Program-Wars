@@ -32,7 +32,7 @@ script:
 - npm run test
 after_success:
 - mv ./test/unit/coverage .
-- ./cc-test-reporter after-build -t lcov -r 09f861ca773e539244a9f3654511a4de0ad532c566ba6a0dab98ae5ec033b1d3 --exit-code $TRAVIS_TEST_RESULT;
+- ./cc-test-reporter after-build -t lcov -r c0ccb3f018875b6a3ed742ff0a4ccec2a6b49d5e3a5e745c9cbcd8bca21ed372 --exit-code $TRAVIS_TEST_RESULT;
 
  test ${TRAVIS_PULL_REQUEST} = 0 \
     && npm run build \
