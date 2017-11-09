@@ -111,15 +111,15 @@ export default {
     -ms-user-select: none;
     user-select: none;
     min-height: 120px;
-    border: 0px solid #000;
+    border: 0 solid #000;
     border-radius: 10px;
     /*padding: 10px 0px 10px 0px;*/
-    margin: 0px 0px 0px 0px;
+    margin: 0 0 0 0;
     }
 
 .flex-container {
   flex-direction:column;
-  padding: 0px;
+  padding: 0;
 
 }
 
@@ -153,9 +153,9 @@ a {
 }
 
 .selected {
-  -webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
-  -moz-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
-  box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
+  -webkit-box-shadow: 0 0 24px 4px rgba(0,255,60,1);
+  -moz-box-shadow: 0 0 24px 4px rgba(0,255,60,1);
+  box-shadow: 0 0 24px 4px rgba(0,255,60,1);
 }
 
 #card.stack {

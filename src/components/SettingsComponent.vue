@@ -115,8 +115,8 @@
         if(this.localPlayers.length > 1) {
           this.noPlayers = false;
         }
-        this.newPlayer = ""
-        this.aiSelect = 'noAiSelected'
+        this.newPlayer = "";
+        this.aiSelect = 'noAiSelected';
       },
       submitPlayers() {
         this.$store.commit('addPlayers', {list: this.localPlayers});
