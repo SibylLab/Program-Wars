@@ -9,88 +9,117 @@
             <div>
               <ul class="nav nav-tabs" role="tablist" style="font-size: 22px">
                 <li role="presentation" class="active"><a href="#introduction" aria-controls="introduction" role="tab" data-toggle="tab">Introduction</a></li>
-                <li role="presentation"><a href="#cardType" aria-controls="cardType" role="tab" data-toggle="tab">Card Type</a></li>
-                <li role="presentation"><a href="#gamePlay" aria-controls="gamePlay" role="tab" data-toggle="tab">Game Play</a></li>
-                <li role="presentation"><a href="#cardPlayingRules" aria-controls="cardPlayingRule" role="tab" data-toggle="tab">Card Playing Rules</a></li>
-                <li role="presentation"><a href="#endOfGame" aria-controls="endOfGame" role="tab" data-toggle="tab">End of Game</a></li>
-
+                <li role="presentation"><a href="#cardType" aria-controls="cardType" role="tab" data-toggle="tab">Card Types</a></li>
+                <li role="presentation"><a href="#gamePlay" aria-controls="gamePlay" role="tab" data-toggle="tab">Playing the Game</a></li>                
               </ul>
 
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="introduction">
                   <h4>Introduction</h4>
-                  <p>The basic elements of a program are simple to understand, but can be used to create complex
-                    computer programs. In this fun, fast-paced game you try to complete a simple program before
-                    the opponent player.</p>
+                  <p>In this fun, fast-paced educational card game <b>you try to complete a program before your opponents can complete their program</b>.
+                  <p>To build your program you will be using the basic building blocks of any program: instructions, repeats, decisions, and groups of instructions.</p>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="cardType">
                   <h4>Card Types</h4>
-                  <p>There are five types of cards:</p>
+                  <p>To build your program you use five types of cards:</p>
                   <ul>
                     <li><h5>Instruction</h5>
-                      <p>Instruction cards provide the instructions used to create the
-                        program. The instruction card is always placed on an empty stack, the
-                        cards value will be added to your total on the boolean side of its stack.</p></li>
+                      <div>
+                        <img src="../../static/cardImg/I1.png" alt="Instruction 1 Card" class="cardImage">
+                        <img src="../../static/cardImg/I2.png" alt="Instruction 2 Card" class="cardImage">
+                        <img src="../../static/cardImg/I3.png" alt="Instruction 3 Card" class="cardImage">
+                      </div>
+
+                      <div>
+                        <ol>
+                        <li>Instruction cards are the basic way by which you build your program.</li>
+                        <li>You place an instruction card on either the "True" or the "False" playing field.</li>
+                        <li>The value of the instruction card is added to the total number of instructions for that playing field.</li>
+                        </ol>
+                      </div>
+                    </li>
+
                     <li><h5>Repetition</h5>
-                      <p>Repetition cards allow you to repeat an instructions. This will multiply
-                        the value of the repetition card and the instruction card (ex. there is an
-                        I-2 card on the stack, you add an R-3 card, your score for that stack is now 6).
-                        There are also variable Repetition cards (R-x), they allow to choose the value
-                        by adding a Variable card to it. Repetition cards may be played on Instruction
-                        cards or a stack who has been grouped.</p></li>
+                     <div>
+                        <img src="../../static/cardImg/R2.png" alt="Repetition 2 Card" class="cardImage">
+                        <img src="../../static/cardImg/R3.png" alt="Repetition 3 Card" class="cardImage">
+                        <img src="../../static/cardImg/R4.png" alt="Repetition 4 Card" class="cardImage">
+                        <img src="../../static/cardImg/R5.png" alt="Repetition 5 Card" class="cardImage">
+                      </div>
+
+                      <div>
+                      <ol>
+                      <li>Repetition cards allow you to repeat an instruction or group card.</li>
+                      <li>You add a repetition card on top of an instruction card or a group card.</li>
+                      <li>The value of the instruction or group card is then multiplied by the value of the repetition card.</li>
+                      <li>You cannot repeat a repetition card (at least not yet).</li>
+                      </ol>
+                      </div>
+                    </li>
                     <li><h5>Group</h5>
-                      <p>A Group card lets you combine the cards of one or more stacks.To group
-                        the cards, the combined value of the stacks must equal the value of
-                        the Group card. A grouped stack cannot be hacked.</p></li>
+                      <div>
+                        <img src="../../static/cardImg/G2.png" alt="Group 2 Card" class="cardImage">
+                        <img src="../../static/cardImg/G3.png" alt="Group 2 Card" class="cardImage">
+                        <img src="../../static/cardImg/G4.png" alt="Group 2 Card" class="cardImage">
+                        <img src="../../static/cardImg/G5.png" alt="Group 2 Card" class="cardImage">
+                        <img src="../../static/cardImg/G6.png" alt="Group 2 Card" class="cardImage">
+                      </div>
+
+                      <div>
+                      <ol>
+                        <li>Group cards let you combine stacks of instructions and group cards into one card.</li>
+                        <li>The combined total of the instructions must be the same as the value of the group card.
+                        <li>Group cards protect your instructions from Hack cards.</li>
+                      </ol>
+                      </div>
+                    </li>
                     <li><h5>Variables</h5>
-                      <p>Variable cards are used with the variable Repetition (R-x) cards. You use
-                        these cards to change the number of times an Instruction or Group card repeats.</p></li>
+                      <div>
+                        <img src="../../static/cardImg/Rx.png" alt="Variable Repetition Card" class="cardImage">
+                        <img src="../../static/cardImg/V2.png" alt="Variable 2 Card" class="cardImage">
+                        <img src="../../static/cardImg/V3.png" alt="Variable 3 Card" class="cardImage">
+                        <img src="../../static/cardImg/V4.png" alt="Variable 4 Card" class="cardImage">
+                        <img src="../../static/cardImg/V5.png" alt="Variable 5 Card" class="cardImage">
+                        <img src="../../static/cardImg/V6.png" alt="Variable 6 Card" class="cardImage">
+                      </div>
+
+                      <div>
+                        <ol>
+                          <li>Variable cards are played on top of a Variable Repetition card.</li>
+                          <li>A variable card lets you change the number of times an instruction or group card is repeated.
+                          <li>You can replace one variable card with another variable card.</li>
+                          <li>A Variable Repetition card without a Variable card has no effect.</li>
+                        </ol>
+                      </div>
+                    </li>
                     <li><h5>Hack</h5>
-                      <p>Hacking cards allow you to remove one of an opponent’s stack, the
-                        Hack card cannot be used on a grouped stack.</p></li>
+                      <div>
+                        <img src="../../static/cardImg/H.png" alt="Instruction 1 Card" class="cardImage">
+                      </div>
+
+                      <div>
+                        <ol>
+                          <li>Hack cards let you attack another player's program.</li>
+                          <li>When you play a Hack card, you choose which stack of cards from another player's playing fields will be destroyed.
+                          <li>You cannot hack a Group card.</li>
+                        </ol>
+                      </div>
+                    </li>
                   </ul>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="gamePlay">
-                  <h4>Game Play</h4>
-                  <p>On your turn, you do the following:</p>
-                  <ul id="gamePlay">
-                    <li>Draw a card from the draw pile.<br/>
-                      ○ If there are no more cards in the draw pile, the discarded pile is shuffled and reused.</li>
-                    <li>Add a card to either the "True" or "False" side.<br/>
-                      ○ If you cannot play a card, discard a card from your hand.</li>
-                    <li>At the end of everyone’s turn, the Boolean coin is flipped to determine the active side.<br/>
-                      ○ If the Boolean coin is “True”, the stacks on the "True" side
-                      are ‘running’ to give your current total.<br/>
-                      ○ If the Boolean coin is “False”, the stacks on the "False" side
-                      are ‘running’ to give your current total.</li>
-                  </ul>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="cardPlayingRules">
-                  <h4>Card Playing Rules</h4>
-                  <ul id="cardPlaying">
-                    <li><h5>Instruction Cards</h5>
-                      <ul><li>Instruction cards are placed to either "True" or "False" side.</li>
-                      </ul></li>
-                    <li><h5>Repetition Cards</h5>
-                      <ul><li>Repetition cards are played on either an Instruction card or a Group card.</li>
-                        <li>A variable Repetition card (R-x) without a variable card counts as an R-1.</li>
-                      </ul></li>
-                    <li><h5>Group Cards</h5>
-                      <ul><li>A Group card combines one or more stack(s) turning it into a single group card on a single stack</li>
-                        <li>Group cards cannot be hacked.</li>
-                      </ul></li>
-                    <li><h5>Variable Cards</h5>
-                      <ul><li>Variable cards can only be played on one Repetition-X card.</li>
-                        <li>Variable cards can be replaced by a Variable card of a higher value. The replaced card
-                          is put in the discard pile. For example, a V-2 card can be replaced by a V-3
-                          card.</li>
-                      </ul></li>
-                  </ul>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="endOfGame">
-                  <h4>End of Game</h4>
-                  <p>The game ends when the Boolean coin is flipped and your ‘running’ program
-                    totals the set score limit or more instructions.</p>
+                  <h4>Playing the Game</h4>
+                  <p>On each of your turns:</p>
+                  <ol id="gamePlay">
+                    <li>Select a card to either put on your "True" or "False" playing field, or to discard.</li>
+                    <li>At the end of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.
+                    <li>The game is over if one or more players have an "Active" playing field that totals to at least the game limit:</li>
+                    <ul>
+                      <li>Easy: 15 instructions</li>
+                      <li>Medium: 25 instructions</li>
+                      <li>Hard: 35 instructions</li>
+                      </ul>
+                  </ol>
                 </div>
               </div>
             </div>
