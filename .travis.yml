@@ -34,11 +34,11 @@ after_success:
 - mv ./test/unit/coverage .
 - ./cc-test-reporter after-build -t lcov -r c0ccb3f018875b6a3ed742ff0a4ccec2a6b49d5e3a5e745c9cbcd8bca21ed372 --exit-code $TRAVIS_TEST_RESULT;
 
-if [${TRAVIS_PULL_REQUEST} = "false"]; then
-   echo "Pull request"
-else
-   echo "Master"
-fi
+#if [${TRAVIS_PULL_REQUEST} = "false"]; then
+#   echo "Pull request"
+#else
+#   echo "Master"
+#fi
 
 #- npm run build
 #- openssl aes-256-cbc -K $encrypted_d5e0ba2980d8_key -iv $encrypted_d5e0ba2980d8_iv -in deploy_rsa.enc -out deploy_rsa -d
