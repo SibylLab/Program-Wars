@@ -40,10 +40,10 @@ else
    echo "Master"
 fi
 
-- npm run build
-- openssl aes-256-cbc -K $encrypted_d5e0ba2980d8_key -iv $encrypted_d5e0ba2980d8_iv -in deploy_rsa.enc -out deploy_rsa -d
-- eval "$(ssh-agent -s)"
-- chmod 600 deploy_rsa
-- ssh-add deploy_rsa
-- git remote add deploy ssh://git@cullen.io/var/repo/programwars.git
-- git push -f deploy HEAD:master'
+#- npm run build
+#- openssl aes-256-cbc -K $encrypted_d5e0ba2980d8_key -iv $encrypted_d5e0ba2980d8_iv -in deploy_rsa.enc -out deploy_rsa -d
+#- eval "$(ssh-agent -s)"
+#- chmod 600 deploy_rsa
+#- ssh-add deploy_rsa
+#- git remote add deploy ssh://git@cullen.io/var/repo/programwars.git
+#- git push -f deploy HEAD:master'
