@@ -147,40 +147,24 @@ export default {
     setTipBox(c) {
         switch(c.type) {
           case 'I' :
-            this.tipsInfoText = 'Instruction cards are the basis of any program, ' +
-              'and are thus the basic card that any player will start a “stack” ' +
-              '(i.e. Instruction cards with modifiers placed on them) with.';
+            this.tipsInfoText =
+            'Use this to create your program.' +
+            ' Place it on either the "True" or "False" playing field.';
             return 'Instruction Card'; break;
           case 'R' :
-            this.tipsInfoText = 'Repetition cards are used to emulate the action of a loop, ' +
-              'repeating an instruction a number of times. ' +
-              'Repetition cards need an instruction card as a base before they can be played on a playfield. ' +
-              'Once played on an instruction, ' +
-              'a Repetition card multiplies the value of the underlying Instruction card by the value printed ' +
-              'on the Repetition card.';
-            return 'Repetition card'; break;
+            this.tipsInfoText = 'Play this card on top of an instruction or group card to repeat it.';
+            return 'Repetition Card'; break;
 
           case 'V':
-            this.tipsInfoText = 'Variable cards are used in conjunction with Repetition X cards. ' +
-              'The value of the Variable card is then applied to the Repetition X card, ' +
-              'which specifies the value of X. ' +
-              'The value of X then becomes the multiplier for the underlying Instruction card.';
+            this.tipsInfoText = 'Play this card on top of Variable Repetition cards to change the number of times an instruction or group card repeats.';
             return 'Variable Card'; break;
 
           case 'H':
-            this.tipsInfoText = 'The Hack card can be played with ' +
-              'the purpose of removing cards from an opponent\'s stack. ' +
-              'When a Hack card is played, players specify a target for the Hack card, ' +
-              'and that stack is discarded. All cards are targetable by a ' +
-              'Hack card with the exception of Group cards.';
+            this.tipsInfoText = 'Use this card to remove cards from another player`s playing field. Group cards are immune to hacking.';
             return 'Hack Card'; break;
 
           case 'G' :
-            this.tipsInfoText = 'Group cards are used to emulate the notion of a function, ' +
-              'essentially aggregating a set of instructions together into one unit. ' +
-              'Group cards are played on one or more stacks of cards. ' +
-              'In order to play a Group card ' +
-              'the total point value of each of the stacks must be equal to the value of the Group card.';
+            this.tipsInfoText = 'Use this to combine instruction and group cards to protect them from Hack cards. The total of the instruction and group cards must match the value of this card';
             return 'Group Card'; break;
 
           default :
