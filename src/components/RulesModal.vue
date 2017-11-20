@@ -10,7 +10,7 @@
               <ul class="nav nav-tabs" role="tablist" style="font-size: 22px">
                 <li role="presentation" class="active"><a href="#introduction" aria-controls="introduction" role="tab" data-toggle="tab">Introduction</a></li>
                 <li role="presentation"><a href="#cardType" aria-controls="cardType" role="tab" data-toggle="tab">Card Types</a></li>
-                <li role="presentation"><a href="#gamePlay" aria-controls="gamePlay" role="tab" data-toggle="tab">Playing the Game</a></li>                
+                <li role="presentation"><a href="#gamePlay" aria-controls="gamePlay" role="tab" data-toggle="tab">Playing the Game</a></li>
               </ul>
 
               <div class="tab-content">
@@ -52,6 +52,7 @@
                       <li>Repetition cards allow you to repeat an instruction or group card.</li>
                       <li>You add a repetition card on top of an instruction card or a group card.</li>
                       <li>The value of the instruction or group card is then multiplied by the value of the repetition card.</li>
+                      <li>You can replace a repetition card with another repetition card.</li>
                       <li>You cannot repeat a repetition card (at least not yet).</li>
                       </ol>
                       </div>
