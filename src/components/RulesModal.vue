@@ -116,9 +116,9 @@
                     <li>At the end of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.
                     <li>The game is over if one or more players have an "Active" playing field that totals to at least the game limit:</li>
                     <ul>
-                      <li>Easy: 15 instructions</li>
+                      <li>Short: 15 instructions</li>
                       <li>Medium: 25 instructions</li>
-                      <li>Hard: 35 instructions</li>
+                      <li>Long: 35 instructions</li>
                       </ul>
                   </ol>
                 </div>
