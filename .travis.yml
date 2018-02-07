@@ -46,5 +46,5 @@ after_success:
 - chmod 600 deploy_rsa
 - ssh-add deploy_rsa
 - git remote add deploy ssh://git@cullen.io/var/repo/programwars.git
-- git push -f deploy HEAD:master
+- git push -f deploy master
 
