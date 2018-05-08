@@ -70,7 +70,7 @@ export default class TutorialDeck {
    * initDeck function to initialize the deck with a pre determined number and type of cards
    * @memberOf Deck
    */
-  initTutorialDeck(value) {
+  initDeck(value) {
     let cardId = 0;
     for(let k = 0; k < value; k++) {
       for (let i = 0; i < cardDeck.length; i++) {

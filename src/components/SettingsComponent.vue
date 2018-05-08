@@ -69,6 +69,8 @@
   import RulesModal from './RulesModal.vue'
   import CreditsModal from './CreditsModal.vue'
 
+  import {mapGetters} from 'vuex';
+  import {mapMutations} from 'vuex';
   import Card from '../classes/Card'
   import Player from '../classes/Player'
 
@@ -121,10 +123,15 @@
         this.newPlayer = "";
         this.aiSelect = 'noAiSelected';
       },
+      /**
+       * Start the tutorial mode with just the player and one AI
+       */
       startTutorial() {
         this.isTutorial = true;
+        this.$store.commit('setTutorial', {gameType: true});
+        this.localPlayers = [];
         this.localPlayers.push({name: 'Flash', isAi: true});
-        this.localPlayers.push({name: 'Tutorial', isAi: false});
+        this.localPlayers.push({name: 'Tutorial Player', isAi: false});
         console.log(this.localPlayers[0]);
         this.$store.commit('addPlayers', {list: this.localPlayers});
         this.$store.commit('setScoreLimit', {scoreLimit: 15});
@@ -133,6 +140,7 @@
           this.$router.push('tutorial')
         }, 100);
       },
+
       submitPlayers() {
         this.$store.commit('addPlayers', {list: this.localPlayers});
         this.$store.commit('setScoreLimit', {scoreLimit: this.selected});
@@ -157,8 +165,11 @@
 
       },
       initGame(){
-        this.$store.commit('initDeck');
-
+        if(this.$store.isTutorial) {
+          this.$store.commit('initTutorialDeck');
+        } else {
+          this.$store.commit('initDeck');
+        }
       },
       fillHands() {
         for(let player of this.$store.getters.getPlayers) {
@@ -167,8 +178,8 @@
       },
       addStacksToPlayers() {
         for(let player of this.$store.getters.getPlayers) {
-          this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true})
-          this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false})
+          this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true});
+          this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false});
         }
       }
     },
@@ -185,7 +196,13 @@
         } else {
           return false;
         }
-      }
+      },
+      ...mapGetters([
+        'getTutorialState'
+      ]),
+      //...mapMutations([
+        //'setTutorial'
+      //])
     },
     watch: {
       aiSelect() {

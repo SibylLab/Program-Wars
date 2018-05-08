@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
       stacks: [],
       deck: new Deck(),
       tutorialDeck: new TutorialDeck(),
+      isTutorial: false,
       hands: [],
       currentGameState: 'newGame',
       activeSide: true,
