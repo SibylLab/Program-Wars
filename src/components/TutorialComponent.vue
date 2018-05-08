@@ -16,10 +16,7 @@
 
     <div id="header">
       <p>Programming Wars</p>
-      <div style="margin-left: auto; padding: 0 10px 0 0">
-        <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
-        <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
-      </div>
+
       <div id="header-buttons">
 
         <button class="btn btn-primary" @click="() => {this.$router.push('/')}">End Tutorial</button>
@@ -62,6 +59,9 @@
   import CoinModal from './CoinModal.vue'
   import PlayerTurn from './PlayerTurnPopUp.vue'
   import HackDiscard from './HackDiscardMsg.vue'
+
+  import {mapGetters} from 'vuex'
+  import {mapMutations} from 'vuex'
 
   import Card from '../classes/Card'
   import Player from '../classes/Player'
@@ -107,15 +107,15 @@
 
     },
     methods: {
-      submit() {
-        if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
-          this.localPlayers.push(this.newPlayer)
-        }
-      },
-      submitPlayers() {
-        this.$store.commit('addPlayers', {list: this.localPlayers});
-        this.gameStart = true;
-      },
+      // submit() {
+      //   if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
+      //     this.localPlayers.push(this.newPlayer)
+      //   }
+      // },
+      // submitPlayers() {
+      //   this.$store.commit('addPlayers', {list: this.localPlayers});
+      //   this.gameStart = true;
+      // },
       initGame(){
         this.$store.commit('initTutorialDeck');
       },
@@ -162,27 +162,7 @@
       }
     },
 
-    watch: {
-      tipsToggle(val) {
-        if(val === true && this.factsToggle === false) {
-          this.factsToggle = true;
-        }
-        if(val === false) {
-          bus.$emit('tutorialOff');
-        }
-        if(val) {
-          bus.$emit('tutorialOn');
-        }
-        this.$store.commit('setTips', {tutorial: val, fact: this.factsToggle});
-      },
-      factsToggle(val) {
-        if(val === false) {
-          this.tipsToggle = false;
-        }
-        this.$store.commit('setTips', {tutorial: this.tipsToggle, fact: val});
-      }
-    },
-    created: function () {
+    created() {
       this.playerList = this.$store.getters.getPlayers;
       this.gameStart = true;
 

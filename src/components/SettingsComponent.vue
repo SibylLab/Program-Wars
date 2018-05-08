@@ -78,7 +78,7 @@
     name: 'settings-component',
     data () {
       return {
-        idCounter:0,
+        idCounter: 0,
         dataToggle: false,
         modalTitle: "Welcome to a new game of Programming Wars!",
         localPlayers: [{name: '', isAi: false}],
@@ -96,6 +96,18 @@
       }
     },
     methods: {
+      /**
+       * The following two functions call initiate the getters and setters we need from VueX
+       */
+      ...mapGetters([
+        'getTutorialState'
+      ]),
+      ...mapMutations([
+        'setTutorial'
+      ]),
+      /**
+       * Called whenever the 'Add Player' button has been clicked, for the purpose of adding the player
+       */
       submit() {
         let pass = true;
         for (let player of this.localPlayers) {
@@ -123,15 +135,17 @@
         this.newPlayer = "";
         this.aiSelect = 'noAiSelected';
       },
+
       /**
        * Start the tutorial mode with just the player and one AI
        */
       startTutorial() {
         this.isTutorial = true;
-        this.$store.commit('setTutorial', {gameType: true});
+        this.setTutorial({gameType: true});
+        //this.$store.commit('setTutorial', {gameType: true});
         this.localPlayers = [];
-        this.localPlayers.push({name: 'Flash', isAi: true});
         this.localPlayers.push({name: 'Tutorial Player', isAi: false});
+        this.localPlayers.push({name: 'Flash', isAi: true});
         console.log(this.localPlayers[0]);
         this.$store.commit('addPlayers', {list: this.localPlayers});
         this.$store.commit('setScoreLimit', {scoreLimit: 15});
@@ -141,6 +155,9 @@
         }, 100);
       },
 
+      /**
+       * Called whenever the submit button is pressed to
+       */
       submitPlayers() {
         this.$store.commit('addPlayers', {list: this.localPlayers});
         this.$store.commit('setScoreLimit', {scoreLimit: this.selected});
@@ -151,6 +168,11 @@
         }, 100);
 
       },
+
+      /**
+       * Called when the remove button beside a players name is called, for the purpose of removing that player.
+       * @param e The player to be removed.
+       */
       removePlayer(e) {
         if(this.localPlayers[e] !== '') {
           this.localPlayers.splice(e, 1);
@@ -164,24 +186,6 @@
           return;
 
       },
-      initGame(){
-        if(this.$store.isTutorial) {
-          this.$store.commit('initTutorialDeck');
-        } else {
-          this.$store.commit('initDeck');
-        }
-      },
-      fillHands() {
-        for(let player of this.$store.getters.getPlayers) {
-          this.$store.commit('addHandToPlayer', player.id)
-        }
-      },
-      addStacksToPlayers() {
-        for(let player of this.$store.getters.getPlayers) {
-          this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true});
-          this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false});
-        }
-      }
     },
     computed: {
       currentPlayerId() {
@@ -196,15 +200,12 @@
         } else {
           return false;
         }
-      },
-      ...mapGetters([
-        'getTutorialState'
-      ]),
-      //...mapMutations([
-        //'setTutorial'
-      //])
+      }
     },
     watch: {
+      /**
+       * This watches the AI selector dialog box and is called when it changes.
+       */
       aiSelect() {
         if(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none') {
           this.inputDisable = false;

@@ -107,15 +107,15 @@ export default {
 
   },
   methods: {
-    submit() {
-        if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
-          this.localPlayers.push(this.newPlayer)
-        }
-    },
-    submitPlayers() {
-      this.$store.commit('addPlayers', {list: this.localPlayers});
-      this.gameStart = true;
-    },
+    // submit() {
+    //     if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
+    //       this.localPlayers.push(this.newPlayer)
+    //     }
+    // },
+    // submitPlayers() {
+    //   this.$store.commit('addPlayers', {list: this.localPlayers});
+    //   this.gameStart = true;
+    // },
     initGame(){
         this.$store.commit('initDeck');
     },
@@ -182,7 +182,7 @@ export default {
         this.$store.commit('setTips', {tutorial: this.tipsToggle, fact: val});
     }
   },
-  created: function () {
+  created() {
     this.playerList = this.$store.getters.getPlayers;
     this.gameStart = true;
 

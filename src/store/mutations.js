@@ -22,9 +22,10 @@ export default {
     state.winner = false;
     state.tips.tutorial = true;
     state.tips.fact = true;
-     state.firstRound = true
+    state.firstRound = true
     state.aiTurn = false;
     state.playerTurn = false;
+    state.isTutorial = false;
   },
   addPlayers(state, payload) {
     let id = 0;
@@ -39,8 +40,8 @@ export default {
   // },
   //
   endTurn(state, maxplayers) {
-    state.activePlayer += 1
-    state.activePlayer = state.activePlayer % maxplayers
+    state.activePlayer += 1;
+    state.activePlayer = state.activePlayer % maxplayers;
   },
   //
   // updateCurrentPlayerHand(state, hand) {
@@ -56,11 +57,11 @@ export default {
     bus.$emit('cardHasBeenSelected');
     for (var card of playerHand.cards) {
       if (card.id === c.id) {
-        card.selected = !card.selected
+        card.selected = !card.selected;
         if (!card.selected) {
           bus.$emit('cardDeselected')
         } else {
-          state.activeCard = c
+          state.activeCard = c;
         }
       } else {
         card.selected = false
@@ -163,12 +164,20 @@ export default {
   },
   stackDiscard(state, payload) {
     let card = state.stacks.find(stack => stack.stackId === payload.stackId).popTopCard()
-    state.deck.discard_cards.push(card)
+    if(state.isTutorial) {
+      state.tutorialDeck.discard_cards.push(card)
+    } else {
+      state.deck.discard_cards.push(card)
+    }
   },
   discardSelectedCard(state) {
-    let tempActiveCard = state.activeCard
-    tempActiveCard.selected = false
-    state.deck.discard_cards.push(tempActiveCard)
+    let tempActiveCard = state.activeCard;
+    tempActiveCard.selected = false;
+    if(state.isTutorial) {
+      state.tutorialDeck.discard_cards.push(tempActiveCard)
+    } else {
+      state.deck.discard_cards.push(tempActiveCard)
+    }
   },
   setHasPlayed(state, payload) {
     state.activeHasPlayed = payload.hasPlayed
