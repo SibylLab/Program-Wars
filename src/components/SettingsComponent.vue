@@ -50,8 +50,10 @@
           </select></p>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12" style="text-align: right">
+      <div id="HASH" class="row">
+        <div id="HASH" class="col-md-12" style="text-align: right">
+          <button type="button" class="btn btn-primary" @click="takeTutorial">Take the Tutorial</button>
+          <vr></vr>
           <button type="button" class="btn btn-primary" @click="submitPlayers" :disabled="noPlayers">Start New Game</button>
         </div>
       </div>
@@ -87,7 +89,8 @@
         maxPlayer: false,
          isRepeat: false,
         aiSelect: 'noAiSelected',
-        aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman']
+        aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
+        typesOfGames: ['Short (15)', 'Medium (25)', 'Long (35']
       }
     },
     methods: {
@@ -117,6 +120,9 @@
         }
         this.newPlayer = "";
         this.aiSelect = 'noAiSelected';
+      },
+      startTutorial() {
+
       },
       submitPlayers() {
         this.$store.commit('addPlayers', {list: this.localPlayers});
@@ -215,6 +221,11 @@
     color: red;
     margin-top: 5px;
     margin-bottom: -10px
+  }
+  
+  #HASH {
+    display: flex;
+    justify-content: space-between;
   }
 
   #settingsPage {
