@@ -121,13 +121,13 @@ export default {
     },
     fillHands() {
         for(let player of this.$store.getters.getPlayers) {
-          this.$store.commit('addHandToPlayer', player.id)
+          this.$store.commit('addHandToPlayer', player.id);
         }
     },
     addStacksToPlayers() {
       for(let player of this.$store.getters.getPlayers) {
-        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true})
-        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false})
+        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true});
+        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false});
       }
     }
 },

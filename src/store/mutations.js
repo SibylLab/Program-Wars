@@ -106,6 +106,9 @@ export default {
   initDeck(state){
     state.deck.initDeck(state.players.length);
   },
+  initTutorialDeck(state){
+    state.tutorialDeck.initDeck(state.players.length);
+  },
   addStackToPlayer(state, payload) {
     state.stacks.push(new Stack(payload.playerId, payload.boolSide))
   },

@@ -13,11 +13,11 @@ export default class Card {
    */
   constructor(id, value, type, cardImg) {
 
-    this.value = value
-    this.type = type
-    this.selected = false
-    this.id = id
-    this.cardImg = cardImg
+    this.value = value;
+    this.type = type;
+    this.selected = false;
+    this.id = id;
+    this.cardImg = cardImg;
   }
 }
 

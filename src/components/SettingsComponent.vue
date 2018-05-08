@@ -123,15 +123,24 @@
       },
       startTutorial() {
         this.isTutorial = true;
+        this.localPlayers.push({name: 'Flash', isAi: true});
+        this.localPlayers.push({name: 'Tutorial', isAi: false});
+        console.log(this.localPlayers[0]);
+        this.$store.commit('addPlayers', {list: this.localPlayers});
+        this.$store.commit('setScoreLimit', {scoreLimit: 15});
+        this.gameStart = true;
+        setTimeout(() => {
+          this.$router.push('tutorial')
+        }, 100);
       },
       submitPlayers() {
         this.$store.commit('addPlayers', {list: this.localPlayers});
-        this.$store.commit('setScoreLimit', {scoreLimit: this.selected})
+        this.$store.commit('setScoreLimit', {scoreLimit: this.selected});
         this.gameStart = true;
 
         setTimeout(() => {
           this.$router.push('game')
-        }, 100)
+        }, 100);
 
       },
       removePlayer(e) {
