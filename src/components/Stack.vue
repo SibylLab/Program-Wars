@@ -44,6 +44,7 @@
   import Modal from './Modal'
 
 /**
+ * The component that holds what will be used as the true and false stacks
  * @file Stack.vue
  */
 export default {
@@ -323,7 +324,9 @@ export default {
       }
     },
     addToStackClicked() {
-        this.addToStack()
+
+      this.addToStack()
+      this.$store.commit('setActiveCardUndefined');
     },
     drop () {
       this.addToStack()

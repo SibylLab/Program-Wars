@@ -47,7 +47,7 @@
 </template>
 
 <script>
-  import PlayerInfoPanel from './PlayerInfoPanel'
+  import PlayerInfoPanel from './TutorialPlayerInfoPanel'
   import Playfield from './Playfield'
 
   import OpponentStacks from './OpponentStacks'
@@ -72,7 +72,7 @@
     name: 'TutorialComponent',
     data () {
       return {
-        idCounter:0,
+        idCounter: 0,
         dataToggle: false,
         modalTitle: "Welcome to the Programming Wars Tutorial!",
         localPlayers: [],
@@ -208,6 +208,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
   #maincontainer {
     display: flex;
     flex-direction: column;
@@ -228,6 +229,8 @@
     justify-content: space-between;
     align-items: center;
     flex-grow:0;
+    //position:relative;/* bring on top;*/
+    //box-shadow:0 0 0 1600px rgba(0,0,0,0.65);/* dark around it */
   }
 
   #header > p {
