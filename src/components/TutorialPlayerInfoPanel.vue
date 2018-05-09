@@ -11,7 +11,7 @@
 
         <ul id="example-1">
           <h4 class="modal-title"><b>{{ currentPlayerName }}</b>, It's Your Turn</h4>
-          <li v-for="(card,index) in hand" :id="Card + index">
+          <li v-for="(card,index) in hand" :id="index">
             <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
           </li>
         </ul>
@@ -61,7 +61,8 @@
         + 'Click on the first instruction card to get started. If you get lost at any time click on the rules button in the top right!',
         facts: [
           'Great! You can either continue to build on top of your instruction or place another instruction in the false path.'
-          + 'we\'re going to build on this instruction right now.',
+          + 'For this tutorial we\'re going to build on this instruction right now.',
+          'This is the next step '
         ]
       }
     },
@@ -144,6 +145,7 @@
         }
       },
       setTipBox(c) {
+        console.log("setTipBox called");
         switch(c.type) {
           case 'I' :
             this.tipsInfoText =
@@ -167,13 +169,14 @@
             return 'Group Card'; break;
 
           default :
-            var fact = this.setFact();
+            var fact = this.setTutorialFact();
             this.tipsInfoText = fact;
-            return 'Did you know?';
+            return 'Next Step!';
         }
       },
-      setFact() {
-        let retFact = this.facts[this.indexOfFact];
+      setTutorialFact() {
+        let retFact = this.facts[this.$store.getters.getFactIndex % this.facts.length];
+        console.log(retFact);
         ++this.indexOfFact;
         return retFact;
       },
@@ -190,7 +193,7 @@
           }
         }
       },
-      removeCard (cardId) {
+      removeTutorialCard (cardId) {
         this.$store.commit('removeCard', cardId)
       },
       setActiveCard(c) {
@@ -200,26 +203,30 @@
     created: function () {
       bus.$on('hackCanceled', () => {
         this.deselectAll();
-      });
+      }),
       bus.$on('activeCardAddedToStack', (cardId) => {
-        this.removeCard(cardId);
-        this.$store.commit('addCardToHand')
-      });
+        this.removeTutorialCard(cardId);
+        this.$store.commit('addCardToHand');
+        console.log("Im in activeCardAddedToStack")
+      }),
       bus.$on('tutorialOff', () => {
         this.tipsCardSelected = this.setTipBox('default');
-      });
+      }),
       bus.$on('tutorialOn', () => {
         let c = this.$store.getters.getActiveCard;
         if(c === undefined) {
           this.tipsCardSelected = this.setTipBox('default');
         } else {
           this.tipsCardSelected = this.setTipBox(c);
-
         }
-      });
+      }),
       bus.$on('aiDiscard', () => {
         this.discardSelected();
-      })
+      }),
+      bus.$on('cardPlayed', () => {
+        console.log("WHY IS THIS NOT WORKING")
+        this.tipsCardSelected = this.setTipBox('default');
+      });
     },
   }
 </script>
@@ -325,5 +332,10 @@
     from { -webkit-transform: rotate(0deg) scale(1) skew(0deg) translate(0px); }
     to { -webkit-transform: rotate(720deg) scale(1) skew(0deg) translate(0px); }
   }
+
+  /*ul:first-child {*/
+    /*position:relative;!* bring on top;*!*/
+    /*box-shadow:0 0 0 10px rgba(0,0,0,0.65);!* dark around it *!*/
+  /*}*/
 
 </style>

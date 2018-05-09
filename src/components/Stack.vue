@@ -85,7 +85,7 @@ export default {
     modalId2() {
       return this.id + "Modal"
     },
-    cards () {
+    cards() {
 
       if (this.playerId === this.$store.getters.getCurrentPlayerId ) {
         if (this.$store.getters.getCurrentPlayerStacks.length !== 0) {
@@ -155,7 +155,7 @@ export default {
       if (card.category !== 'stack') {
         if (card.selected === true) {
           this.activeCard = Object.assign({}, card);
-          this.activeCard.category = 'stack'
+          this.activeCard.category = 'stack';
           this.activeCard.selected = false
         }
       }
@@ -325,8 +325,17 @@ export default {
     },
     addToStackClicked() {
 
-      this.addToStack()
+      this.addToStack();
+      console.log("Adding to stack");
+      console.log("is tutorial:" + this.$store.getters.getTutorialState)
+      if(this.$store.getters.getTutorialState){
+        console.log("emitting event");
+        bus.$emit('cardPlayed');
+      }
+
+      this.$store.commit('increaseFactIndex');
       this.$store.commit('setActiveCardUndefined');
+      console.log(this.$store.getters.getFactIndex);
     },
     drop () {
       this.addToStack()

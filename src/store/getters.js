@@ -99,6 +99,9 @@ export default {
   },
   getTutorialState(state) {
     return state.isTutorial;
+  },
+  getFactIndex(state) {
+    return state.factIndex;
   }
 }
 

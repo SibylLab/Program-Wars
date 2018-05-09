@@ -22,10 +22,11 @@ export default {
     state.winner = false;
     state.tips.tutorial = true;
     state.tips.fact = true;
-    state.firstRound = true
+    state.firstRound = true;
     state.aiTurn = false;
     state.playerTurn = false;
     state.isTutorial = false;
+    state.factIndex = 0;
   },
   addPlayers(state, payload) {
     let id = 0;
@@ -316,4 +317,7 @@ export default {
       bus.$emit('aiGroup', stackToPlay[0].boolSide, state.players[state.activePlayer].id);
     }
   },
+  increaseFactIndex(state) {
+    state.factIndex++;
+  }
 }

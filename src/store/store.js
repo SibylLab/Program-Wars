@@ -49,6 +49,8 @@ export const store = new Vuex.Store({
       hackedPlayer:'',
       isDiscard: false,
       pointerEvent: 'pointer-events: none',
+      factIndex: 0
+
     },
     originalState: {
       players: [],

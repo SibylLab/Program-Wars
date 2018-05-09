@@ -11,7 +11,7 @@
 
           <ul id="example-1">
             <h4 class="modal-title"><b>{{ currentPlayerName }}</b>, It's Your Turn</h4>
-              <li v-for="card in hand">
+              <li v-for="(card) in hand">
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
@@ -204,6 +204,7 @@ export default {
     },
     setFact() {
       var num = Math.floor(Math.random() * this.facts.length);
+      console.log("Fact in notTut: " + this.facts[num]);
       return this.facts[num];
     },
     deselectAll () {
