@@ -57,8 +57,8 @@
         factsToggle: true,
         indexOfFact: 0,
         tipsCardSelected:'Programming Wars Tutorial!',
-        tipsInfoText: 'Welcome to the tutorial, the objective of this game is to get to the instruction score using good coding practices.'
-        + 'Click on the first instruction card to get started. If you get lost at any time click on the rules button in the top right!',
+        tipsInfoText: 'Welcome to the tutorial, the objective of this game is to get to the instruction score using good coding fundamentals. ' +
+        'Click on the first instruction card to get started. If you get lost at any time click on the rules button in the top right!',
         facts: [
           'Great! You can either continue to build on top of your instruction or place another instruction in the false path.'
           + 'For this tutorial we\'re going to build on this instruction right now.',

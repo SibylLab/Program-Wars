@@ -5,6 +5,8 @@
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"></hack-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
                   :playerList="playerList"></winner-modal>
+    <tutorial-modal id="tutorialModal" class="modal fade tutorial" tabindex="-1" role="dialog" aria-labelledby=""
+                    aria-hidden="true" style="background-color: aqua"></tutorial-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
     <transition name="fade">
       <player-turn v-if="playerTurn"></player-turn>
@@ -21,6 +23,7 @@
 
         <button class="btn btn-primary" @click="() => {this.$router.push('/')}">End Tutorial</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target=".tutorial">Game Objectives</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
         <a class="btn btn-primary" href="https://programmingwars.cullen.io/reportissue/" target="_blank">Report Issue</a>
       </div>
@@ -56,6 +59,7 @@
   import CreditsModal from './CreditsModal.vue'
   import HackModal from './HackModal.vue'
   import WinnerModal from './WinnerModal.vue'
+  import TutorialModal from './TutorialStartModal.vue'
   import CoinModal from './CoinModal.vue'
   import PlayerTurn from './PlayerTurnPopUp.vue'
   import HackDiscard from './HackDiscardMsg.vue'
@@ -103,7 +107,8 @@
       'winner-modal': WinnerModal,
       'coin-modal': CoinModal,
       'player-turn': PlayerTurn,
-      'hack-discard': HackDiscard
+      'hack-discard': HackDiscard,
+      'tutorial-modal': TutorialModal
 
     },
     methods: {

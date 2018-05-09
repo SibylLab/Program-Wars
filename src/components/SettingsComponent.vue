@@ -52,7 +52,7 @@
       </div>
       <div id="HASH" class="row">
         <div id="HASH" class="col-md-12" style="text-align: right">
-          <button type="button" class="btn btn-primary" @click="startTutorial">Take the Tutorial</button>
+          <button type="button" class="btn btn-primary" @click="startTutorial" data-toggle="modal" data-target=".tutorial">Take the Tutorial</button>
           <button type="button" class="btn btn-primary" @click="submitPlayers" :disabled="noPlayers">Start New Game</button>
         </div>
       </div>
@@ -68,6 +68,7 @@
 
   import RulesModal from './RulesModal.vue'
   import CreditsModal from './CreditsModal.vue'
+  import TutorialModal from './TutorialStartModal'
 
   import {mapGetters} from 'vuex';
   import {mapMutations} from 'vuex';
@@ -92,7 +93,8 @@
         aiSelect: 'noAiSelected',
         aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
         typesOfGames: ['Short (15)', 'Medium (25)', 'Long (35'],
-        isTutorial: false
+        isTutorial: false,
+        tutorialBegin: false
       }
     },
     methods: {
@@ -220,7 +222,8 @@
       'playfield': Playfield,
       'opponent-stacks': OpponentStacks,
       'rules-modal': RulesModal,
-      'credits-modal': CreditsModal
+      'credits-modal': CreditsModal,
+      'tutorial-modal': TutorialModal
     },
     beforeMount() {
       this.$store.commit('resetState');

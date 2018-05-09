@@ -1,3 +1,5 @@
+import TutorialDeck from "../classes/TutorialDeck";
+
 const uuidV1 = require('uuid/v1');
 
 import { bus } from '../components/Bus';
@@ -10,6 +12,7 @@ export default {
   resetState(state) {
     state.stacks = [];
     state.deck = new Deck();
+    state.tutorialDeck = new TutorialDeck();
     state.hands = [];
     state.currentGameState = 'newGame';
     state.activeSide = true;
