@@ -3,8 +3,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12" id="playerTurn">
-          <h4 id="text" v-if="isAi">{{ currentPlayer }} (Computer), its your turn</h4>
-          <h4 id="text" v-else>{{ currentPlayer }}, its your turn</h4>
+          <h4 v-if="isAi">{{ displayAi }}</h4>
+
+          <h4 v-else>{{ currentPlayer }}</h4>
         </div>
       </div>
     </div>
@@ -14,11 +15,30 @@
 <script>
 export default {
   computed: {
+    /**
+     * Displays the appropriate message for players in the tutorial or the real game.
+     * @returns {string} The message to be displayed.
+     */
     currentPlayer() {
-      return this.$store.getters.currentPlayerName
+      if(this.$store.getters.getTutorialState)
+        return 'It\'s your turn!';
+      else {
+        return this.$store.getters.currentPlayerName + ', it\'s your turn.';
+      }
     },
+    /**
+     * Checks if the current player is an AI.
+     * @returns {default.computed.isAi|(function())|boolean|*} True if the play is AI.
+     */
     isAi() {
-      return this.$store.getters.getCurrentPlayer.isAi;
+      return this.$store.getters.getCurrentPlayer.isAi ;
+    },
+    /**
+     * Displays the AI's output message.
+     * @returns {string} The output message.
+     */
+    displayAi() {
+      return this.$store.getters.currentPlayerName + ' (Computer), it\'s your turn.'
     }
   }
 }

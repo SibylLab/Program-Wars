@@ -22,6 +22,7 @@ export const store = new Vuex.Store({
       isTutorial: false,
       hands: [],
       currentGameState: 'newGame',
+      displayObjModal: false,
       activeSide: true,
       activePlayer: 0,
       activeHasPlayed: false,

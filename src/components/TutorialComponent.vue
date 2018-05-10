@@ -6,7 +6,8 @@
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
                   :playerList="playerList"></winner-modal>
     <tutorial-modal id="tutorialModal" class="modal fade tutorial" tabindex="-1" role="dialog" aria-labelledby=""
-                    aria-hidden="true" style="background-color: aqua"></tutorial-modal>
+                    aria-hidden="true"
+    ></tutorial-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
     <transition name="fade">
       <player-turn v-if="playerTurn"></player-turn>
@@ -92,7 +93,7 @@
         playerList: [],
         winner: '',
         winnerScore: 0,
-        deleteData: []
+        deleteData: [],
       }
     },
     components: {
@@ -163,8 +164,16 @@
         return this.$store.state.pointerEvent;
       },
       gameStateChanges() {
-        return this.$store.state.currentGameState
-      }
+        return this.$store.state.currentGameState;
+      },
+      // displayObjectives() {
+      //   console.log("Im in displayObjectives");
+      //   let ret = this.$store.state.displayObjModal;
+      //   console.log("return: " + ret);
+      //   this.$store.state.displayObjModal = false;
+      //   return ret;
+      // }
+
     },
 
     created() {
@@ -208,6 +217,14 @@
       this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
 
     },
+    mounted() {
+      this.$nextTick(function () {
+        // Code that will run only after the
+        // entire view has been rendered
+        $('#tutorialModal').modal('show');
+      })
+
+    }
   }
 </script>
 
