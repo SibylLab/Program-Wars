@@ -11,7 +11,7 @@
 
         <ul id="example-1">
           <h4 class="modal-title"><b>{{ currentPlayerName }}</b>, It's Your Turn</h4>
-          <li v-for="(card,index) in hand" :id="index">
+          <li v-for="(card,index) in hand" :id="card.type + index">
             <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
           </li>
         </ul>
@@ -135,7 +135,7 @@
           this.tipsCardSelected = this.setTipBox('default');
         }
         let prevActive = this.$store.getters.getActiveCard;
-
+        console.log("Card Clicked");
         this.$store.commit('selectCard', c);
         if (prevActive !== undefined) {
           if (c.type !== 'G' || c.id !== prevActive.id) {
@@ -205,26 +205,29 @@
         this.deselectAll();
       }),
       bus.$on('activeCardAddedToStack', (cardId) => {
-        this.removeTutorialCard(cardId);
-        this.$store.commit('addCardToHand');
-        console.log("Im in activeCardAddedToStack")
-      }),
-      bus.$on('tutorialOff', () => {
-        this.tipsCardSelected = this.setTipBox('default');
-      }),
-      bus.$on('tutorialOn', () => {
-        let c = this.$store.getters.getActiveCard;
-        if(c === undefined) {
-          this.tipsCardSelected = this.setTipBox('default');
-        } else {
-          this.tipsCardSelected = this.setTipBox(c);
+        if(this.$store.getters.getTutorialState) {
+          this.removeTutorialCard(cardId);
+          this.$store.commit('addCardToHand');
         }
       }),
+        // bus.$on('highlightCard', () => {
+        //
+        // }),
+      // bus.$on('tutorialOff', () => {
+      //   this.tipsCardSelected = this.setTipBox('default');
+      // }),
+      // bus.$on('tutorialOn', () => {
+      //   let c = this.$store.getters.getActiveCard;
+      //   if(c === undefined) {
+      //     this.tipsCardSelected = this.setTipBox('default');
+      //   } else {
+      //     this.tipsCardSelected = this.setTipBox(c);
+      //   }
+      // }),
       bus.$on('aiDiscard', () => {
         this.discardSelected();
       }),
       bus.$on('cardPlayed', () => {
-        console.log("WHY IS THIS NOT WORKING")
         this.tipsCardSelected = this.setTipBox('default');
       });
     },
@@ -233,10 +236,15 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  li#I0 {
+    -webkit-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;
+    -moz-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;
+    box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;
+  }
   .hasPlayed {
-    -webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
-    -moz-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
-    box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
+    /*-webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);*/
+    /*-moz-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);*/
+    /*box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);*/
   }
 
   #flexcontainer {

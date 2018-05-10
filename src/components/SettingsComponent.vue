@@ -146,7 +146,7 @@
         this.setTutorial({gameType: true});
         //this.$store.commit('setTutorial', {gameType: true});
         this.localPlayers = [];
-        this.localPlayers.push({name: 'Tutorial Player', isAi: false});
+        this.localPlayers.push({name: 'You', isAi: false});
         this.localPlayers.push({name: 'Flash', isAi: true});
         console.log(this.localPlayers[0]);
         this.$store.commit('addPlayers', {list: this.localPlayers});

@@ -36,6 +36,10 @@ export default {
         classString = classString + ' selected'
       }
 
+      // if () {
+      //   classString = classString + ' selectedTutorial';
+      // }
+
       if (this.inStack) {
        classString = classString + ' stack'
      }
