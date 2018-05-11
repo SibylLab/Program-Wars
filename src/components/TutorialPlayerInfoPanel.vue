@@ -240,18 +240,18 @@
 
   @-webkit-keyframes myfirst
   {
-    from {-webkit-box-shadow: 0 0 24px 4px rgb(247, 255, 0);}
+    from {-webkit-box-shadow: 0 0 24px 6px rgb(247, 255, 0);}
     to {box-shadow : none;}
   }
 
   @-moz-keyframes myfirst
   {
-    from {-moz-box-shadow: 0 0 24px 4px rgb(247, 255, 0);}
+    from {-moz-box-shadow: 0 0 24px 6px rgb(247, 255, 0);}
     to {box-shadow : none;}
   }
   @keyframes myfirst
   {
-    from {box-shadow: 0 0 24px 4px rgb(247, 255, 0);}
+    from {box-shadow: 0 0 24px 6px rgb(247, 255, 0);}
     to {box-shadow : none;}
   }
   /**
@@ -263,12 +263,14 @@
     /*-moz-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;*/
     /*box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;*/
 
-    -webkit-animation: myfirst 1s 98765432;
-    -moz-animation: myfirst 1s 98765432;
-    animation: myfirst 1s 98765432;
+    -webkit-animation: myfirst 0.8s 98765432;
+    -moz-animation: myfirst 0.8s 98765432;
+    animation: myfirst 0.8s 98765432;
     -webkit-animation-delay: 4s;
     -moz-animation-delay: 4s;
     animation-delay: 4s;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
   }
 
 
