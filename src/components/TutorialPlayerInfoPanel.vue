@@ -11,7 +11,7 @@
 
         <ul id="example-1">
           <h4 class="modal-title"><b>{{ currentPlayerName }}</b>, It's Your Turn</h4>
-          <li v-for="(card,index) in hand" :id="card.type + index">
+          <li v-for="(card,index) in hand" :id="card.type + card.value + index">
             <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
           </li>
         </ul>
@@ -60,9 +60,15 @@
         tipsInfoText: 'Welcome to the tutorial, the objective of this game is to get to the instruction score using good coding fundamentals. ' +
         'Click on the first instruction card to get started. If you get lost at any time click on the rules button in the top right!',
         facts: [
-          'Great! You can either continue to build on top of your instruction or place another instruction in the false path.'
-          + 'For this tutorial we\'re going to build on this instruction right now.',
-          'This is the next step '
+          'Great! The first path is started, let\'s place an instruction in the the opposite path.',
+          'Either of your paths could be attacked by a hack card, which would ruin your stack. Let\'s protect one with'
+          + ' a group card.',
+          'It\'s time to build up one of our paths. Add the repetition card to your instruction path. This will allow you'
+          + ' to add a variable on top of it to change how often it repeats.',
+          'The computer is getting closer to completing a path. He has no grouped stacks, so use the hack card on one of its stacks to set him back.',
+          'You\'re about to complete a path, add the variable (5) card to complete a path. This will give you a 50/50'
+          + ' shot of winning after each round.',
+          'That\'s the end of the tutorial, you can continue playing until you win or click \'End Tutorial\' in the top right corner. '
         ]
       }
     },
@@ -144,6 +150,11 @@
           }
         }
       },
+      /**
+       * This changes gathers which instruction to display in the text box
+       * @param c The type of card played or default for a fact.
+       * @returns {string} This returns the string that will be displayed.
+       */
       setTipBox(c) {
         console.log("setTipBox called");
         switch(c.type) {
@@ -175,7 +186,11 @@
         }
       },
       setTutorialFact() {
-        let retFact = this.facts[this.$store.getters.getFactIndex % this.facts.length];
+        console.log("HI: " + this.$store.getters.getFactIndex);
+        let retFact = this.facts[4];
+        if(this.$store.getters.getFactIndex < 4) {
+          retFact = this.facts[this.$store.getters.getFactIndex % this.facts.length];
+        } 
         console.log(retFact);
         ++this.indexOfFact;
         return retFact;
@@ -210,20 +225,6 @@
           this.$store.commit('addCardToHand');
         }
       }),
-        // bus.$on('highlightCard', () => {
-        //
-        // }),
-      // bus.$on('tutorialOff', () => {
-      //   this.tipsCardSelected = this.setTipBox('default');
-      // }),
-      // bus.$on('tutorialOn', () => {
-      //   let c = this.$store.getters.getActiveCard;
-      //   if(c === undefined) {
-      //     this.tipsCardSelected = this.setTipBox('default');
-      //   } else {
-      //     this.tipsCardSelected = this.setTipBox(c);
-      //   }
-      // }),
       bus.$on('aiDiscard', () => {
         this.discardSelected();
       }),
@@ -236,11 +237,15 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  li#I0 {
+  /**
+   *this is for highlighting the card path that the player should take
+   */
+  li#I30, li#G30, li#R10, li#V50, li#H00{
     -webkit-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;
     -moz-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;
     box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;
   }
+
   .hasPlayed {
     /*-webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);*/
     /*-moz-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);*/
@@ -341,9 +346,5 @@
     to { -webkit-transform: rotate(720deg) scale(1) skew(0deg) translate(0px); }
   }
 
-  /*ul:first-child {*/
-    /*position:relative;!* bring on top;*!*/
-    /*box-shadow:0 0 0 10px rgba(0,0,0,0.65);!* dark around it *!*/
-  /*}*/
 
 </style>

@@ -212,6 +212,12 @@ export default {
         }
     },
     groupStacks() {
+      if(this.$store.getters.getTutorialState){
+        console.log("emitting event in Group");
+        bus.$emit('cardPlayed');
+        this.$store.commit('increaseFactIndex');
+      }
+
       let selectedStacks = this.$store.getters.getSelectedStacks
         for (let stack of selectedStacks) {
           while (stack.cards.length !== 0) {
