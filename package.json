@@ -12,6 +12,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
+    "animate.css": "^3.6.1",
     "jsdoc-vue": "^1.0.0",
     "vue": "^2.1.10",
     "vue-radial-progress": "^0.2.10",
