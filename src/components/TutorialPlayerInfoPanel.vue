@@ -190,7 +190,7 @@
         let retFact = this.facts[4];
         if(this.$store.getters.getFactIndex < 4) {
           retFact = this.facts[this.$store.getters.getFactIndex % this.facts.length];
-        } 
+        }
         console.log(retFact);
         ++this.indexOfFact;
         return retFact;
@@ -237,14 +237,41 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+  @-webkit-keyframes myfirst
+  {
+    from {-webkit-box-shadow: 0 0 24px 4px rgb(247, 255, 0);}
+    to {box-shadow : none;}
+  }
+
+  @-moz-keyframes myfirst
+  {
+    from {-moz-box-shadow: 0 0 24px 4px rgb(247, 255, 0);}
+    to {box-shadow : none;}
+  }
+  @keyframes myfirst
+  {
+    from {box-shadow: 0 0 24px 4px rgb(247, 255, 0);}
+    to {box-shadow : none;}
+  }
   /**
    *this is for highlighting the card path that the player should take
    */
   li#I30, li#G30, li#R10, li#V50, li#H00{
-    -webkit-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;
-    -moz-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;
-    box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;
+    /*These can be used instead of the animations to have a solid border*/
+    /*-webkit-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;*/
+    /*-moz-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;*/
+    /*box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;*/
+
+    -webkit-animation: myfirst 1s 98765432;
+    -moz-animation: myfirst 1s 98765432;
+    animation: myfirst 1s 98765432;
+    -webkit-animation-delay: 4s;
+    -moz-animation-delay: 4s;
+    animation-delay: 4s;
   }
+
+
 
   .hasPlayed {
     /*-webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);*/
