@@ -1,7 +1,7 @@
 <template>
   <div id="player-info-panel">
     <div id="flexcontainer">
-      <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
+      <div id="tipBox" class="container animated bounce" :style="displayStyle" :cardClicked="tipsCardSelected">
         <div class="panel panel-default" style="border-radius: 10px">
           <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
           <div class="panel-body">{{ tipsInfoText }}</div>
@@ -308,14 +308,43 @@
 
 
   #player-info-panel {
+
+
     background-color: #ccc;
   }
 
   #tipBox {
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-delay: 6s;
+    -webkit-animation-iteration-count: 4;
+
+    -moz-animation-duration: 1.5s;
+    -moz-animation-delay: 6s;
+    -moz-animation-iteration-count: 4;
+
+    animation-duration: 1.5s;
+    animation-delay: 6s;
+    animation-iteration-count: 4;
+
     position: relative;
     top: 0;
     max-width: 350px;
     height: 280px;
+  }
+
+  #tipBox:hover {
+    -webkit-animation-duration: 1s;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 0;
+
+    -moz-animation-duration: 1s;
+    -moz-animation-delay: 0s;
+    -moz-animation-iteration-count: 0;
+
+    animation-duration: 1s;
+    animation-delay: 0s;
+    animation-iteration-count: 0;
+
   }
 
   #playerTurn {
