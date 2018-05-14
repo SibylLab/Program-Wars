@@ -5,7 +5,7 @@
         <div class="panel panel-default" style="border-radius: 10px">
           <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
           <div class="panel-body">{{ tipsInfoText }}</div>
-          <button class="btn btn-primary" v-if="showTextBoxButton" @click="removeAnimation()">OK</button>
+          <button class="btn btn-primary" v-if="showTextBoxButton" @click="removeAnimation()" style="align-content: right">OK</button>
           <br v-if="showTextBoxButton"><br v-if="showTextBoxButton">
         </div>
       </div>
@@ -345,9 +345,9 @@
 
   #tipBox:hover {
     /*-webkit-animation:hoverColor infinite;*/
-    -webkit-animation: none;
-    -moz-animation: none;
-    animation: none;
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    animation-play-state: paused;
 
   }
 

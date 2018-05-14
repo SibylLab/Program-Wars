@@ -5,9 +5,12 @@
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"></hack-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
                   :playerList="playerList"></winner-modal>
+
     <tutorial-modal id="tutorialModal" class="modal fade tutorial" tabindex="-1" role="dialog" aria-labelledby=""
                     aria-hidden="true"
     ></tutorial-modal>
+    <start-modal id="startModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></start-modal>
+
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
     <transition name="fade">
       <player-turn v-if="playerTurn"></player-turn>
@@ -54,6 +57,7 @@
   import PlayerInfoPanel from './TutorialPlayerInfoPanel'
   import Playfield from './Playfield'
 
+  import TipBoxStartModal from './TipBoxStartModal'
   import OpponentStacks from './OpponentStacks'
   import Modal from './Modal'
   import RulesModal from './RulesModal.vue'
@@ -109,7 +113,8 @@
       'coin-modal': CoinModal,
       'player-turn': PlayerTurn,
       'hack-discard': HackDiscard,
-      'tutorial-modal': TutorialModal
+      'tutorial-modal': TutorialModal,
+      'start-modal': TipBoxStartModal
 
     },
     methods: {
@@ -218,10 +223,13 @@
 
     },
     mounted() {
+
+      $('#tutorialModal').modal('show');
       this.$nextTick(function () {
-        // Code that will run only after the
-        // entire view has been rendered
-        $('#tutorialModal').modal('show');
+        //For some reason this has the opposite effect of what you would expect. The start Modal is shown first, and the tutorialModal second.
+        $('#tutorialModal').on('hidden.bs.modal', () => {
+          $('#startModal').modal('show');
+        });
       })
 
     }
