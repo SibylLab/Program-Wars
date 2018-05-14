@@ -30,7 +30,7 @@ export default {
       return this.cardData.cardImg;
     },
     cardCss () {
-      let classString = 'card'
+      let classString = 'card';
 
       if (this.cardData.selected) {
         classString = classString + ' selected'
