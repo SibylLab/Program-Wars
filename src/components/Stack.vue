@@ -7,7 +7,8 @@
         <span style="padding: 10px; font-size: 16px" v-if="showBtn || score > 0">Stack Score: {{ score }}</span>
       </div>
       <div class="col-md-12">
-        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
+        <button class="btn btn-secondary" v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">Add</button>
+        <br>
         <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
       </div>
       <div class="col-md-12" style="margin-left: 20px">
@@ -42,6 +43,7 @@
   import { bus } from './Bus';
   import Card from './Card'
   import Modal from './Modal'
+  import GroupModal from './NoGroupingModal'
 
 /**
  * @file Stack.vue
@@ -139,8 +141,31 @@ export default {
             return false;
         }
     },
+    valuesMatch() {
+      let selectedStacks = this.$store.getters.getSelectedStacks;
+      //console.log(selectedStacks[0]);
+      let val = 0;
+      //this.$store.commit('addStackToSelected', {stackId: this.stackId});
+      for(let stack in selectedStacks) {
+        console.log("stack: " + stack.cards);
+        let totalScore = 0;
+        for (let stack of selectedStacks) {
+          totalScore += stack.score
+        }
+
+        console.log(totalScore);
+        let activeCardValue = this.$store.getters.getActiveCard.value;
+        if (selectedStacks.length >= 1 && activeCardValue === totalScore) {
+          return true;
+        }
+
+
+      }
+      //console.log("val: " + val);
+      return false
+    },
     selectedStacksLength () {
-      let selectedStacks = this.$store.getters.getSelectedStacks
+      let selectedStacks = this.$store.getters.getSelectedStacks;
 
       for (let stack of selectedStacks) {
           if (stack.stackId === this.stackId)
@@ -154,7 +179,7 @@ export default {
       if (card.category !== 'stack') {
         if (card.selected === true) {
           this.activeCard = Object.assign({}, card);
-          this.activeCard.category = 'stack'
+          this.activeCard.category = 'stack';
           this.activeCard.selected = false
         }
       }
@@ -195,9 +220,10 @@ export default {
   },
   methods: {
     stackSelected() {
+      console.log("in stack selected")
       this.$store.commit('addStackToSelected', {stackId: this.stackId});
       this.$store.commit('setStackSelectedBoolean', {boolean: this.playfieldBoolean});
-      let selectedStacks = this.$store.getters.getSelectedStacks
+      let selectedStacks = this.$store.getters.getSelectedStacks;
       if (selectedStacks.length === 0) {
         this.$store.commit('setStackSelectedBoolean', {boolean: undefined})
       }
@@ -211,6 +237,7 @@ export default {
         }
     },
     groupStacks() {
+      console.log("In group Stacks")
       let selectedStacks = this.$store.getters.getSelectedStacks
         for (let stack of selectedStacks) {
           while (stack.cards.length !== 0) {
@@ -331,7 +358,8 @@ export default {
   },
   components: {
     'card': Card,
-    'modal': Modal
+    'modal': Modal,
+    'no-grouping-modal': GroupModal
   },
 }
 </script>
