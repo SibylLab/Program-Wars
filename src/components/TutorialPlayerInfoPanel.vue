@@ -1,10 +1,12 @@
 <template>
   <div id="player-info-panel">
     <div id="flexcontainer">
-      <div id="tipBox" class="container animated bounce" :style="displayStyle" :cardClicked="tipsCardSelected">
+      <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
         <div class="panel panel-default" style="border-radius: 10px">
           <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
           <div class="panel-body">{{ tipsInfoText }}</div>
+          <button class="btn btn-primary" v-if="showTextBoxButton" @click="removeAnimation()">OK</button>
+          <br v-if="showTextBoxButton"><br v-if="showTextBoxButton">
         </div>
       </div>
       <div id="cards">
@@ -57,7 +59,7 @@
         factsToggle: true,
         indexOfFact: 0,
         tipsCardSelected:'Programming Wars Tutorial!',
-        tipsInfoText: 'Welcome to the tutorial, the objective of this game is to get to the instruction score using good coding fundamentals. ' +
+        tipsInfoText: 'Welcome to the tutorial, you can find tips on what on what to do next here. ' +
         'Click on the first instruction card to get started. If you get lost at any time click on the rules button in the top right!',
         facts: [
           'Great! The first path is started, let\'s place an instruction in the the opposite path.',
@@ -69,7 +71,8 @@
           'You\'re about to complete a path, add the variable (5) card to complete a path. This will give you a 50/50'
           + ' shot of winning after each round.',
           'That\'s the end of the tutorial, you can continue playing until you win or click \'End Tutorial\' in the top right corner. '
-        ]
+        ],
+        showTextBoxButton: true,
       }
     },
     computed: {
@@ -113,7 +116,8 @@
       activeSide() {
         let activeSideString = String(this.$store.getters.getActiveSide)
         return activeSideString.toUpperCase()
-      }
+      },
+
     },
     components: {
       'card': Card,
@@ -213,7 +217,12 @@
       },
       setActiveCard(c) {
         this.$store.commit('selectCard', c)
+      },
+      removeAnimation() {
+        $('#tipBox').removeClass('animated bounce');
+        this.showTextBoxButton = !this.showTextBoxButton;
       }
+
     },
     created: function () {
       bus.$on('hackCanceled', () => {
@@ -232,6 +241,9 @@
         this.tipsCardSelected = this.setTipBox('default');
       });
     },
+    mounted() {
+      $('#tipBox').addClass('animated bounce');
+    }
   }
 </script>
 
@@ -308,23 +320,21 @@
 
 
   #player-info-panel {
-
-
     background-color: #ccc;
   }
 
   #tipBox {
     -webkit-animation-duration: 1.5s;
     -webkit-animation-delay: 6s;
-    -webkit-animation-iteration-count: 4;
+    -webkit-animation-iteration-count: infinite;
 
     -moz-animation-duration: 1.5s;
     -moz-animation-delay: 6s;
-    -moz-animation-iteration-count: 4;
+    -moz-animation-iteration-count: infinite;
 
     animation-duration: 1.5s;
     animation-delay: 6s;
-    animation-iteration-count: 4;
+    animation-iteration-count: infinite;
 
     position: relative;
     top: 0;
@@ -332,18 +342,12 @@
     height: 280px;
   }
 
+
   #tipBox:hover {
-    -webkit-animation-duration: 1s;
-    -webkit-animation-delay: 0s;
-    -webkit-animation-iteration-count: 0;
-
-    -moz-animation-duration: 1s;
-    -moz-animation-delay: 0s;
-    -moz-animation-iteration-count: 0;
-
-    animation-duration: 1s;
-    animation-delay: 0s;
-    animation-iteration-count: 0;
+    /*-webkit-animation:hoverColor infinite;*/
+    -webkit-animation: none;
+    -moz-animation: none;
+    animation: none;
 
   }
 
