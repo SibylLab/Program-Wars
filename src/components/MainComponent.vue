@@ -185,7 +185,13 @@ export default {
   created: function () {
     this.playerList = this.$store.getters.getPlayers;
     this.gameStart = true;
-
+    let j = Math.floor(Math.random() * 2);
+    this.$store.commit('setTrueFalseAnim', {startAnim: true});
+    if (j === 0) {
+      this.$store.commit('setActiveSide', {activeSide: true})
+    } else {
+      this.$store.commit('setActiveSide', {activeSide: false})
+    }
     let gameEventLoopTimer = setInterval(() => {
       let gameState = this.$store.getters.getgameState;
       if (gameState === 'newGame') {
@@ -220,6 +226,7 @@ export default {
     this.initGame();
     this.fillHands();
     this.addStacksToPlayers();
+
     this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
 
   },
