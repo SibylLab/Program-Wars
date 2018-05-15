@@ -11,7 +11,7 @@
                 <li role="presentation" class="active"><a href="#introduction" aria-controls="introduction" role="tab" data-toggle="tab">Introduction</a></li>
                 <li role="presentation"><a href="#cardType" aria-controls="cardType" role="tab" data-toggle="tab">Card Types</a></li>
                 <li role="presentation"><a href="#gamePlay" aria-controls="gamePlay" role="tab" data-toggle="tab">Playing the Game</a></li>
-                <li role="presentation"><a href="#coding" aria-controls="coding" role="tab" data-toggle="tab">Learning to code</a></li>
+                <li role="presentation"><a href="#coding" aria-controls="coding" role="tab" data-toggle="tab">Learning Computer Programming</a></li>
               </ul>
 
               <div class="tab-content">
@@ -37,7 +37,8 @@
                         <li>You place an instruction card on either the "True" or the "False" playing field.</li>
                         <li>The value of the instruction card is added to the total number of instructions for that playing field.</li>
                         </ol>
-                        Instructions can be thought of as the basis of your program overall, as basis for you to build off of.
+                        <b>Relation to computer programming:</b>
+                        A computer program is a collection of instructions that tell the computer what to do.
                       </div>
                     </li>
 
@@ -57,11 +58,11 @@
                       <li>You can replace a repetition card with another repetition card.</li>
                       <li>You cannot repeat a repetition card (at least not yet).</li>
                       </ol>
-                        Repeat cards are the representation of loops in software. A loop is exactly like a repetition,
-                        the block of code in the loop is repeated every time the loop is ran.
-                        To find out more about different types of loops you can go to: <a href="https://www.tutorialspoint.com/computer_programming/computer_programming_loops.htm">
-                        TutorialsPoint.
-                      </a>
+                      <b>Relation to computer programming:</b>
+                        Repetition cards represent special computer instructions called <i>loops<i>. Like a repetition card,
+                        a loop repeats one or more instructions.
+                        <br>To understand the different types of loops in a computer program you can go <a href="https://www.tutorialspoint.com/computer_programming/computer_programming_loops.htm">
+                        here.</a>
                       </div>
                     </li>
                     <li><h5>Group</h5>
@@ -79,11 +80,12 @@
                         <li>The combined total of the instructions must be the same as the value of the group card.
                         <li>Group cards protect your instructions from Hack cards.</li>
                       </ol>
-                        Groups can be thought of as functions.. not mathematical functions but functions as in a blocks of code.
-                        A function is a small chunk of code that can be called upon to run the code in the function.
-                        To find out more about functions you can go to <a href="https://www.tutorialspoint.com/python/python_functions.htm">
-                        TutorialsPoint.
-                      </a>
+                       <b>Relation to computer programming:</b>
+                        Computer programs are commonly broken up into <i>functions</i>, <i>methods</i> or <i>procedures</i>. All of these names
+                        mean the same thing - a group of instructions. These groups of instructions are given names so they can be called upon to
+                        run whenever needed.
+                        <br>To find out more about these groups of instructions, you can go <a href="https://www.tutorialspoint.com/python/python_functions.htm">
+                        here.</a>
                       </div>
                     </li>
                     <li><h5>Variables</h5>
@@ -103,12 +105,13 @@
                           <li>You can replace one variable card with another variable card.</li>
                           <li>A Variable Repetition card without a Variable card has no effect.</li>
                         </ol>
-                        Variables are something that is defined such as 'var variableOne = 1' where 'var' tells the program
-                        to create and name the variable 'variableOne' the value of 1. 'variableOne can be exchanged with any other
-                        value, which is why its called a variable.
-                        To find out more about variables you can go to: <a href="https://www.tutorialspoint.com/computer_programming/computer_programming_variables.htm">
-                          TutorialsPoint.
-                        </a>
+                        <b>Relation to computer programming:</b>
+                        A variable in a computer program is a piece of computer memory that holds a value. Variables are given names so the computer program
+                        can either get the value or change the value at the memory location.
+                        You can think of a variable as a small box with a label on it,
+                        and the computer program can change what is in the box at anytime.
+                        <br>To find out more about variables you can go to: <a href="https://www.tutorialspoint.com/computer_programming/computer_programming_variables.htm">
+                          here.</a>
                       </div>
                     </li>
                     <li><h5>Hack</h5>
@@ -123,10 +126,10 @@
                             fields will be destroyed. </li>
                           <li>You cannot hack a Group card.</li>
                         </ol>
-                        Hacks can sound like an intimidating concept, let's call them bugs. A bug is one or more errors in code that was created by the user.
-                        By code into functions (or groups) its easier to figure out what or where the bugs are, which is why groups are protected against hacks.
-                        To find out more about bugs you can go to: <a href="https://searchsoftwarequality.techtarget.com/definition/bug">
-                        TechTarget.
+                        <b>Relation to computer programming:</b>
+                        Sometimes a mean or mischievous computer programmer. known as a <i>hacker</i> will change a computer program
+                        to do something it is not supposed to do. Using functions can make it harder for a hacker to change the computer program,
+                        which is why Group cards counter Hack cards in the game.
                       </a>
                       </div>
                     </li>
@@ -147,15 +150,12 @@
                   </ol>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="coding">
-                  <h4>Learn Python!</h4>
-                  <p>Learning to program can be tough which is why you should start by learning Python.</p>
-                  <p>Python is a relatively easy language to learn and it implements all of the concepts that
-                  we've displayed here. Later on it can also be expanding to do almost anything, including web development.
-                    To start learning Python all you really need is a to download python
-                  and maybe a text editor, although it can be done in a text file. Consider downloading the editor
-                    <a href="https://www.sublimetext.com">Sublime Text 3</a> and <a href="https://www.python.org/downloads/">
-                      Python 3</a>. You can start with tutorials from <a href="https://www.codecademy.com/learn/learn-python">Code Academy</a>
-                    Which requires no editors or Python downloaded.
+                  <h4>Learning Computer Programming</h4>
+                  <p>Learning computer program can be tough for some people.
+                  Some programming languages are easier to learn than others. </p>
+                  <p>Python is one of the easier-to-learn programming language and it uses all of the ideas from Programming Wars. 
+                  A good place to start is with this <a href="http://interactivepython.org/runestone/static/IntroPythonTurtles/index.html">interactive Python tutorial.</a>
+                  <p>There are also many other Python tutorials available, such as this ones from <a href="https://www.codecademy.com/learn/learn-python">Code Academy.</a>                    
                   </p>
                 </div>
               </div>
