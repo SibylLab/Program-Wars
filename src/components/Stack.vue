@@ -333,9 +333,10 @@ export default {
       this.addToStack();
       if(this.$store.getters.getTutorialState){
         bus.$emit('cardPlayed');
+        this.$store.commit('increaseFactIndex');
       }
 
-      this.$store.commit('increaseFactIndex');
+
       this.$store.commit('setActiveCardUndefined');
     },
     drop () {

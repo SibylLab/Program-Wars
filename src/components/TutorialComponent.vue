@@ -114,15 +114,6 @@
 
     },
     methods: {
-      // submit() {
-      //   if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
-      //     this.localPlayers.push(this.newPlayer)
-      //   }
-      // },
-      // submitPlayers() {
-      //   this.$store.commit('addPlayers', {list: this.localPlayers});
-      //   this.gameStart = true;
-      // },
       initGame() {
         this.$store.commit('initTutorialDeck');
       },

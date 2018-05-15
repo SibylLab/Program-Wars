@@ -63,14 +63,14 @@
         'Click on the first instruction card and place it in the true path to get started. If you get lost at any time click on the rules button in the top right!',
         facts: [
           'This path is not looking very strong, let\'s add another instruction to the true path.',
-          'Great! The first path is started, let\'s place an instruction in the the false path.',
+          'Great! The first path is started, let\'s place an instruction in the false path.',
           'Either of your paths could be attacked by a hack card, which would ruin your stack. Group cards can be used on' +
           ' one or more stacks of cards that equal up to the group card value. Let\'s protect your true path with'
           + ' a group card. Click on the check boxes above the cards in your true path to group them.',
           'It\'s time to build up one of our paths. Add the repetition card to your true path. This will allow you'
           + ' to add a variable on top of it to change how often it repeats.',
           'The computer is getting closer to completing a path. He has no grouped stacks, so use the hack card on one of its stacks to set him back.',
-          'You\'re getting close to completing a path, add the variable (4) card to complete your true path. This will bring you up to 12 instructions.',
+          'You\'re getting close to completing a path, add the variable (4) card to build up your true path. This will bring you up to 12 instructions.',
           'Your false path is not looking very solid, add the Repetition (3) card to your false path to get a score of 9 in that path.',
           'You can complete your truth path! Add the instruction card to complete it and give yourself a 50/50 shot of winning each round.',
           'That\'s the end of the tutorial, you can continue playing until you win or click \'End Tutorial\' in the top right corner. '
@@ -193,7 +193,7 @@
       setTutorialFact() {
         let retFact = this.facts[this.facts.length-1];
         if(this.$store.getters.getFactIndex < this.facts.length) {
-          retFact = this.facts[this.$store.getters.getFactIndex % this.facts.length];
+          retFact = this.facts[this.$store.getters.getFactIndex];
         }
         ++this.indexOfFact;
         return retFact;
@@ -268,7 +268,7 @@
   /**
    *this is for highlighting the card path that the player should take
    */
-  li#I30, li#G30, li#R10, li#V50, li#H00, li#I10, li#I20, li#R30{
+  li#I30, li#G30, li#R10, li#V40, li#H00, li#I10, li#I20, li#R30{
     -webkit-animation: myfirst 0.8s 98765432;
     -moz-animation: myfirst 0.8s 98765432;
     animation: myfirst 0.8s 98765432;

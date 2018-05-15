@@ -148,7 +148,6 @@
         this.localPlayers = [];
         this.localPlayers.push({name: 'You', isAi: false});
         this.localPlayers.push({name: 'Flash', isAi: true});
-        console.log(this.localPlayers[0]);
         this.$store.commit('addPlayers', {list: this.localPlayers});
         this.$store.commit('setScoreLimit', {scoreLimit: 15});
         this.gameStart = true;
