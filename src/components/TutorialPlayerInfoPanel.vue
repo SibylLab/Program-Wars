@@ -60,16 +60,19 @@
         indexOfFact: 0,
         tipsCardSelected:'Programming Wars Tutorial!',
         tipsInfoText: 'Welcome to the tutorial, you can find tips on what on what to do next here. ' +
-        'Click on the first instruction card to get started. If you get lost at any time click on the rules button in the top right!',
+        'Click on the first instruction card and place it in the true path to get started. If you get lost at any time click on the rules button in the top right!',
         facts: [
-          'Great! The first path is started, let\'s place an instruction in the the opposite path.',
-          'Either of your paths could be attacked by a hack card, which would ruin your stack. Let\'s protect one with'
-          + ' a group card.',
-          'It\'s time to build up one of our paths. Add the repetition card to your instruction path. This will allow you'
+          'This path is not looking very strong, let\'s add another instruction to the true path.',
+          'Great! The first path is started, let\'s place an instruction in the the false path.',
+          'Either of your paths could be attacked by a hack card, which would ruin your stack. Group cards can be used on' +
+          ' one or more stacks of cards that equal up to the group card value. Let\'s protect your true path with'
+          + ' a group card. Click on the check boxes above the cards in your true path to group them.',
+          'It\'s time to build up one of our paths. Add the repetition card to your true path. This will allow you'
           + ' to add a variable on top of it to change how often it repeats.',
           'The computer is getting closer to completing a path. He has no grouped stacks, so use the hack card on one of its stacks to set him back.',
-          'You\'re about to complete a path, add the variable (5) card to complete a path. This will give you a 50/50'
-          + ' shot of winning after each round.',
+          'You\'re getting close to completing a path, add the variable (4) card to complete your true path. This will bring you up to 12 instructions.',
+          'Your false path is not looking very solid, add the Repetition (3) card to your false path to get a score of 9 in that path.',
+          'You can complete your truth path! Add the instruction card to complete it and give yourself a 50/50 shot of winning each round.',
           'That\'s the end of the tutorial, you can continue playing until you win or click \'End Tutorial\' in the top right corner. '
         ],
         showTextBoxButton: true,
@@ -145,7 +148,6 @@
           this.tipsCardSelected = this.setTipBox('default');
         }
         let prevActive = this.$store.getters.getActiveCard;
-        console.log("Card Clicked");
         this.$store.commit('selectCard', c);
         if (prevActive !== undefined) {
           if (c.type !== 'G' || c.id !== prevActive.id) {
@@ -160,7 +162,6 @@
        * @returns {string} This returns the string that will be displayed.
        */
       setTipBox(c) {
-        console.log("setTipBox called");
         switch(c.type) {
           case 'I' :
             this.tipsInfoText =
@@ -190,12 +191,10 @@
         }
       },
       setTutorialFact() {
-        console.log("HI: " + this.$store.getters.getFactIndex);
-        let retFact = this.facts[4];
-        if(this.$store.getters.getFactIndex < 4) {
+        let retFact = this.facts[this.facts.length-1];
+        if(this.$store.getters.getFactIndex < this.facts.length) {
           retFact = this.facts[this.$store.getters.getFactIndex % this.facts.length];
         }
-        console.log(retFact);
         ++this.indexOfFact;
         return retFact;
       },
@@ -243,9 +242,6 @@
       bus.$on('cardPlayed', () => {
         this.tipsCardSelected = this.setTipBox('default');
       });
-    },
-    mounted() {
-      //$('#tipBox').addClass('animated bounce');
     }
   }
 </script>
@@ -272,12 +268,7 @@
   /**
    *this is for highlighting the card path that the player should take
    */
-  li#I30, li#G30, li#R10, li#V50, li#H00{
-    /*These can be used instead of the animations to have a solid border*/
-    /*-webkit-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;*/
-    /*-moz-box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;*/
-    /*box-shadow: 0 0 24px 4px rgb(247, 255, 0) !important;*/
-
+  li#I30, li#G30, li#R10, li#V50, li#H00, li#I10, li#I20, li#R30{
     -webkit-animation: myfirst 0.8s 98765432;
     -moz-animation: myfirst 0.8s 98765432;
     animation: myfirst 0.8s 98765432;
@@ -348,9 +339,9 @@
 
   #tipBox:hover {
     /*-webkit-animation:hoverColor infinite;*/
-    -webkit-animation-play-state: paused;
-    -moz-animation-play-state: paused;
-    animation-play-state: paused;
+    -webkit-animation: none;
+    -moz-animation: none;
+    animation: none;
 
   }
 

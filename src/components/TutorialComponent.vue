@@ -9,8 +9,6 @@
     <tutorial-modal id="tutorialModal" class="modal fade tutorial" tabindex="-1" role="dialog" aria-labelledby=""
                     aria-hidden="true"
     ></tutorial-modal>
-    <start-modal id="startModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></start-modal>
-
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
     <transition name="fade">
       <player-turn v-if="playerTurn"></player-turn>
@@ -57,7 +55,6 @@
   import PlayerInfoPanel from './TutorialPlayerInfoPanel'
   import Playfield from './Playfield'
 
-  import TipBoxStartModal from './TipBoxStartModal'
   import OpponentStacks from './OpponentStacks'
   import Modal from './Modal'
   import RulesModal from './RulesModal.vue'
@@ -113,8 +110,7 @@
       'coin-modal': CoinModal,
       'player-turn': PlayerTurn,
       'hack-discard': HackDiscard,
-      'tutorial-modal': TutorialModal,
-      'start-modal': TipBoxStartModal
+      'tutorial-modal': TutorialModal
 
     },
     methods: {
@@ -171,14 +167,6 @@
       gameStateChanges() {
         return this.$store.state.currentGameState;
       },
-      // displayObjectives() {
-      //   console.log("Im in displayObjectives");
-      //   let ret = this.$store.state.displayObjModal;
-      //   console.log("return: " + ret);
-      //   this.$store.state.displayObjModal = false;
-      //   return ret;
-      // }
-
     },
 
     created() {
@@ -228,11 +216,7 @@
       this.$nextTick(function () {
         //For some reason this has the opposite effect of what you would expect. The start Modal is shown first, and the tutorialModal second.
         $('#tutorialModal').on('hidden.bs.modal', () => {
-          $('#startModal').modal('show');
-          $('#startModal').on('hidden.bs.modal', () => {
-            bus.$emit('playAnimation')
-
-          });
+          bus.$emit('playAnimation')
         });
 
       })

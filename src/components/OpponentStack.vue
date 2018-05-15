@@ -165,6 +165,11 @@ export default {
     hackStackClicked() {
       this.addToStack();
       $('.hack').modal('hide');
+      if(this.$store.getters.getTutorialState){
+        console.log("in hack");
+        bus.$emit('cardPlayed');
+        this.$store.commit('increaseFactIndex');
+      }
       this.$store.commit('setPlayerScores');
     },
     drop () {

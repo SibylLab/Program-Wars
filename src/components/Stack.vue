@@ -213,7 +213,6 @@ export default {
     },
     groupStacks() {
       if(this.$store.getters.getTutorialState){
-        console.log("emitting event in Group");
         bus.$emit('cardPlayed');
         this.$store.commit('increaseFactIndex');
       }
@@ -332,16 +331,12 @@ export default {
     addToStackClicked() {
 
       this.addToStack();
-      console.log("Adding to stack");
-      console.log("is tutorial:" + this.$store.getters.getTutorialState)
       if(this.$store.getters.getTutorialState){
-        console.log("emitting event");
         bus.$emit('cardPlayed');
       }
 
       this.$store.commit('increaseFactIndex');
       this.$store.commit('setActiveCardUndefined');
-      console.log(this.$store.getters.getFactIndex);
     },
     drop () {
       this.addToStack()

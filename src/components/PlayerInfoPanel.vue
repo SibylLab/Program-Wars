@@ -204,7 +204,6 @@ export default {
     },
     setFact() {
       var num = Math.floor(Math.random() * this.facts.length);
-      console.log("Fact in notTut: " + this.facts[num]);
       return this.facts[num];
     },
     deselectAll () {

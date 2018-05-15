@@ -31,11 +31,13 @@ const variable6 = 1;
 const hack = 3;
 
 const cardDeck = [
-  {type:'I', cardValue: 3, imgSrc: '/static/cardImg/I3.png', howMany: instruction3},
+  //{type:'I', cardValue: 3, imgSrc: '/static/cardImg/I3.png', howMany: instruction3},
+  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
+  {type:'I', cardValue: 2, imgSrc: '/static/cardImg/I2.png', howMany: instruction2},
   {type:'I', cardValue: 3, imgSrc: '/static/cardImg/I3.png', howMany: instruction3},
   {type:'G', cardValue: 3, imgSrc: '/static/cardImg/G3.png', howMany: group3},
   {type:'R', cardValue: 1, imgSrc: '/static/cardImg/Rx.png', howMany: repetitionX},
-  {type:'V', cardValue: 5, imgSrc: '/static/cardImg/V5.png', howMany: variable5},
+
 
 
   {type:'V', cardValue: 3, imgSrc: '/static/cardImg/V3.png', howMany: variable3},
@@ -44,6 +46,7 @@ const cardDeck = [
   {type:'R', cardValue: 2, imgSrc: '/static/cardImg/R2.png', howMany: repetition2},
   {type:'G', cardValue: 2, imgSrc: '/static/cardImg/G2.png', howMany: group2},
 
+  {type:'V', cardValue: 5, imgSrc: '/static/cardImg/V5.png', howMany: variable5},
   {type:'R', cardValue: 4, imgSrc: '/static/cardImg/R4.png', howMany: repetition4},
   {type:'I', cardValue: 3, imgSrc: '/static/cardImg/I3.png', howMany: instruction3},
 
@@ -75,7 +78,6 @@ export default class TutorialDeck {
    * @constructor Deck
    */
   constructor(){
-    //this.initDeck();
     this.cards = [];
     this.discard_cards = [];
   };
@@ -94,7 +96,6 @@ export default class TutorialDeck {
 
       }
     }
-    //this.shuffle(this.cards);
   };//end Init game
 
   /**
@@ -107,16 +108,5 @@ export default class TutorialDeck {
     this.cards.shift();//unshift removes the first element.
     return card;
   };
-
-  /**
-   * shuffle function that will psuedo shuffle the contents of the deck into a random order
-   * @memberOf Deck
-   */
-  shuffle(event) {
-    for (let i = event.length; i; i--) {
-      let j = Math.floor(Math.random() * i);
-      [event[i - 1], event[j]] = [event[j], event[i - 1]];
-    }
-  }
 
 }
