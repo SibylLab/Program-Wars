@@ -18,7 +18,7 @@
                 </p>
                 <br>
                 <h4>Playing the Game</h4>
-                <p style="font-size: 16px">
+                <p>
                   The Instruction card is the basic building block for your program, and is the first card that
                   you play to start building your program.
                   You will then continue to build your program by using Repetition cards to make Instruction cards repeat, 
