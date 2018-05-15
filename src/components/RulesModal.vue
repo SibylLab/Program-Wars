@@ -59,7 +59,7 @@
                       <li>You cannot repeat a repetition card (at least not yet).</li>
                       </ol>
                       <b>Relation to computer programming:</b>
-                        Repetition cards represent special computer instructions called <i>loops<i>. Like a repetition card,
+                        Repetition cards represent special computer instructions called <i>loops</i>. Like a repetition card,
                         a loop repeats one or more instructions.
                         <br>To understand the different types of loops in a computer program you can go <a href="https://www.tutorialspoint.com/computer_programming/computer_programming_loops.htm">
                         here.</a>
