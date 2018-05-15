@@ -10,18 +10,21 @@
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="introduction">
                 <h4>Introduction</h4>
-                <p style="font-size: 16px">Thanks for playing the tutorial. Each card in your hand is a representation of a programming fundamental.
-                  You can choose which of the branches, true and false, to build up in each turn. At the end of each turn a
-                  coin will be flipped to choose which branch will be executed. If you have at least at much instructions as the
-                  score limit in the path that is chosen then you will win.
+                <p style="font-size: 16px">Thanks for playing the tutorial! In Programming Wars you pretend to create a computer program using cards.
+                Each part of Programming Wars represents a real part of a computer program.                                
+                <p>Your computer program has two parts: a "True" side and a "False" side (called <i>branches</i> in a computer program). This represents making a decision in a computer program.
+                You choose which of the two sides, True or False, to build your computer program in each turn. At the end of each turn, the computer will
+                randomly choose which of the two sides will be run. Your goal is to have the computer run a program that has the target number (or more) of instructions.  
                 </p>
                 <br>
-                <h4>Building Instructions</h4>
-                <p style="font-size: 16px">
-                  Instructions are the building blocks of your programs on either path. They will be the first card that
-                  you play to start off your path.
-                  You will then build on top of these functions with repeats, groups, and variables.
-                  To shut down an opponents block of code you can hack it with a hack card.
+                <h4>Playing the Game</h4>
+                <p>
+                  The Instruction card is the basic building block for your program, and is the first card that
+                  you play to start building your program.
+                  You will then continue to build your program by using Repetition cards to make Instruction cards repeat, 
+                  using Variable cards to change the number of times the Instructions repeat, 
+                  protecting your Instructions with Group cards, and
+                  attacking an opponent's Instructions using a Hack card.
                 </p>
               </div>
             </div>
