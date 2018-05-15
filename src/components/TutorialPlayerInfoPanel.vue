@@ -237,12 +237,15 @@
       bus.$on('aiDiscard', () => {
         this.discardSelected();
       }),
+        bus.$on('playAnimation', () =>{
+          $('#tipBox').addClass('animated bounce');
+      }),
       bus.$on('cardPlayed', () => {
         this.tipsCardSelected = this.setTipBox('default');
       });
     },
     mounted() {
-      $('#tipBox').addClass('animated bounce');
+      //$('#tipBox').addClass('animated bounce');
     }
   }
 </script>
@@ -325,15 +328,15 @@
 
   #tipBox {
     -webkit-animation-duration: 1.5s;
-    -webkit-animation-delay: 6s;
+    -webkit-animation-delay: 0s;
     -webkit-animation-iteration-count: infinite;
 
     -moz-animation-duration: 1.5s;
-    -moz-animation-delay: 6s;
+    -moz-animation-delay: 0s;
     -moz-animation-iteration-count: infinite;
 
     animation-duration: 1.5s;
-    animation-delay: 6s;
+    animation-delay: 0s;
     animation-iteration-count: infinite;
 
     position: relative;

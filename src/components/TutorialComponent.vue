@@ -79,7 +79,7 @@
 
   export default {
     name: 'TutorialComponent',
-    data () {
+    data() {
       return {
         idCounter: 0,
         dataToggle: false,
@@ -127,16 +127,16 @@
       //   this.$store.commit('addPlayers', {list: this.localPlayers});
       //   this.gameStart = true;
       // },
-      initGame(){
+      initGame() {
         this.$store.commit('initTutorialDeck');
       },
       fillHands() {
-        for(let player of this.$store.getters.getPlayers) {
+        for (let player of this.$store.getters.getPlayers) {
           this.$store.commit('addHandToPlayer', player.id)
         }
       },
       addStacksToPlayers() {
-        for(let player of this.$store.getters.getPlayers) {
+        for (let player of this.$store.getters.getPlayers) {
           this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true});
           this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false});
         }
@@ -144,7 +144,7 @@
     },
     computed: {
       showMsg() {
-        if(this.$store.state.isHack || this.$store.state.isDiscard) {
+        if (this.$store.state.isHack || this.$store.state.isDiscard) {
           return true;
         } else {
           return false;
@@ -203,7 +203,7 @@
             } else {
               this.$store.commit('setActiveSide', {activeSide: false})
             }
-            if(this.$store.state.firstRound) {
+            if (this.$store.state.firstRound) {
               this.$store.dispatch('firstRound');
               this.$store.state.firstRound = false;
             } else {
@@ -229,9 +229,13 @@
         //For some reason this has the opposite effect of what you would expect. The start Modal is shown first, and the tutorialModal second.
         $('#tutorialModal').on('hidden.bs.modal', () => {
           $('#startModal').modal('show');
-        });
-      })
+          $('#startModal').on('hidden.bs.modal', () => {
+            bus.$emit('playAnimation')
 
+          });
+        });
+
+      })
     }
   }
 </script>
