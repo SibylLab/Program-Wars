@@ -70,12 +70,13 @@ export default {
           } else if (activeCard === 'R') {
             let rCount = 0;
             if(thisStack.cards.length !== 0 && (thisStack.stackTopCard().type !== 'R' || thisStack.stackTopCard().value !== 1)) {
-              for(let card in thisStack.cards){
-                if(card.type === 'R'){
+              for(let i=0; i<thisStack.cards.length; i++){
+                console.log("In for loop " + thisStack.cards[i].value);
+                if(thisStack.cards[i].type === 'R'){
                   rCount++;
                 }
               }
-              if(rCount < 3){
+              if(rCount < 2){
                 return true;
               }
             }
