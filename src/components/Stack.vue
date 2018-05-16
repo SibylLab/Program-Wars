@@ -61,25 +61,33 @@ export default {
   },
   computed: {
     showBtn() {
+      console.log("playfieldBool: " + this.playfieldBoolean);
       if(this.$store.state.activeCard !== undefined) {
         let activeCard = this.$store.state.activeCard.type;
         let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
-        if(activeCard === 'I' && thisStack.cards.length === 0) {
-          return true;
-        } else if(activeCard === 'R' && thisStack.cards.length > 0 && thisStack.cards.length < 3) {
-          if(thisStack.cards.length === 1) {
+        console.log("Coin msg: " + this.$store.getters.getCoinMsg.valueOf() == this.playfieldBoolean)
+        console.log("Coin msg: " + this.$store.getters.getCoinMsg.valueOf() + "Playfield: " + this.playfieldBoolean)
+        if (this.$store.getters.getCoinMsg.valueOf() == this.playfieldBoolean) {
+            console.log("In If statement")
+          if (activeCard === 'I' && thisStack.cards.length === 0) {
+            console.log("in I")
             return true;
-          } else if(thisStack.cards.length === 2 && this.$store.state.activeCard.value === 1 && !(thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1)) {
-            return true;
+          } else if (activeCard === 'R' && thisStack.cards.length > 0 && thisStack.cards.length < 3) {
+            if (thisStack.cards.length === 1) {
+              return true;
+            } else if (thisStack.cards.length === 2 && this.$store.state.activeCard.value === 1 && !(thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1)) {
+              return true;
+            }
+          } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 3) {
+            if (thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1) {
+              return true;
+            }
           }
-        } else if(activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 3) {
-          if(thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1) {
-            return true;
-          }
+        } else {
+          return false;
         }
-      } else {
-        return false;
       }
+      return false;
     },
     modalId2() {
       return this.id + "Modal"
