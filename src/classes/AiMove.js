@@ -2,7 +2,6 @@ import {store} from '../store/store.js'
 
 export default class {
   constructor() {
-
   };
 
   getBoolSide() {
