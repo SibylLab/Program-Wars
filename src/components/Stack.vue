@@ -7,8 +7,7 @@
         <span style="padding: 10px; font-size: 16px" v-if="showBtn || score > 0">Stack Score: {{ score }}</span>
       </div>
       <div class="col-md-12">
-        <button class="btn btn-secondary" v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">Add</button>
-        <br>
+        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
         <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
       </div>
       <div class="col-md-12" style="margin-left: 20px">
@@ -43,7 +42,6 @@
   import { bus } from './Bus';
   import Card from './Card'
   import Modal from './Modal'
-  import GroupModal from './NoGroupingModal'
 
 /**
  * @file Stack.vue
@@ -109,9 +107,6 @@ export default {
     selectedStackBoolean () {
       return this.$store.getters.getSelectedStackBoolean
     },
-//    currentPlayer () {
-//
-//    },
     stackCss () {
       return 'stack'
     },
@@ -140,29 +135,6 @@ export default {
         } else {
             return false;
         }
-    },
-    valuesMatch() {
-      let selectedStacks = this.$store.getters.getSelectedStacks;
-      //console.log(selectedStacks[0]);
-      let val = 0;
-      //this.$store.commit('addStackToSelected', {stackId: this.stackId});
-      for(let stack in selectedStacks) {
-        console.log("stack: " + stack.cards);
-        let totalScore = 0;
-        for (let stack of selectedStacks) {
-          totalScore += stack.score
-        }
-
-        console.log(totalScore);
-        let activeCardValue = this.$store.getters.getActiveCard.value;
-        if (selectedStacks.length >= 1 && activeCardValue === totalScore) {
-          return true;
-        }
-
-
-      }
-      //console.log("val: " + val);
-      return false
     },
     selectedStacksLength () {
       let selectedStacks = this.$store.getters.getSelectedStacks;
@@ -358,8 +330,7 @@ export default {
   },
   components: {
     'card': Card,
-    'modal': Modal,
-    'no-grouping-modal': GroupModal
+    'modal': Modal
   },
 }
 </script>

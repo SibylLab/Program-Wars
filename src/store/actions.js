@@ -11,10 +11,20 @@ export default {
   },
   firstRound(context) {
     context.commit('playerModalTrigger');
+    context.commit('coinModalTrigger');
+    context.commit('setCoinFlipAnim', 0);
+    context.commit('setPlayfieldColour', true);
+    context.state.coinMsg = context.state.activeSide ? 'True' : 'False';
+    console.log(context.state.coinMsg);
+    setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
+    setTimeout(() => {
+      $('.coin').modal('handleUpdate');
+      $('.coin').modal('hide');
+    }, coinTimer * 1000);
     setTimeout(() => {
       context.commit('playerModalHide');
-      context.state.pointerEvent = ''
-    }, playerModalTimer * 1000)
+      context.state.pointerEvent = '';
+    }, playerModalTimer * 1000);
     setTimeout(() => {
       if(context.getters.getCurrentPlayer.isAi) {
         context.commit('aiTakeTurn', context.getters.getAiDependent);
@@ -24,7 +34,7 @@ export default {
   turn(context, payload) {
     context.commit('getIsLast');
     context.state.coinMsg = 'Evaluating...';
-    context.state.pointerEvent = 'pointer-events: none'
+    context.state.pointerEvent = 'pointer-events: none';
     switch(payload) {
       case true:
         if(context.state.isLast) {
