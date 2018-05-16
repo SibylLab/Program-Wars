@@ -1,15 +1,12 @@
+import {store} from '../store/store.js'
+
 export default class {
   constructor() {
 
   };
 
   getBoolSide() {
-    let num = Math.floor((Math.random() * 2) + 1);
-    if(num === 1) {
-      return true;
-    } else {
-      return false;
-    }
+    return store.getters.getCoinMsg;
   };
 
   organizeHand(event) {
@@ -47,9 +44,11 @@ export default class {
   getStackToRepeat(e) {
     let stackToRepeat = undefined;
     for(let i = 1; i <= 6; i++) {
-      let tmpStack = e.stack.find(stack => stack.score === i && stack.cards.length === 1);
-      if(tmpStack !== undefined) {
-        stackToRepeat = tmpStack;
+
+        let tmpStack = e.stack.find(stack => stack.score === i && stack.cards.length === 1);
+        if (tmpStack !== undefined && tmpStack.boolSide === store.getters.getCoinMsg) {
+          stackToRepeat = tmpStack;
+
       }
     }
     return stackToRepeat;
@@ -58,11 +57,14 @@ export default class {
   stackToAddVariable(e) {
     let stackToRepeat = undefined;
     for(let i = 1; i <= 6; i++) {
+
       let tmpStack = e.stack.find(stack => stack.score === i && stack.cards.length === 2);
-      if(tmpStack !== undefined && tmpStack.cards[1].value === 1) {
-        stackToRepeat = tmpStack;
+
+      if (tmpStack !== undefined && tmpStack.cards[1].value === 1 && tmpStack.boolSide === store.getters.getCoinMsg) {
+         stackToRepeat = tmpStack;
+        }
       }
-    }
+
     return stackToRepeat;
   }
 
@@ -103,7 +105,10 @@ export default class {
     stack = stack.sort(this.compare);
     let tmpStack = [];
     for(let i of stack) {
-      if(i.score > 0 && i.score < 6) {
+      console.log("i: " + i.boolSide)
+      if(i.score > 0 && i.score < 6 && i.boolSide === store.getters.getCoinMsg) {
+        console.log("Pushing: " + i.boolSide)
+        console.log("Is value: " + i.score)
         tmpStack.push(i);
       }
     }
