@@ -65,9 +65,7 @@ export default {
         let activeCard = this.$store.state.activeCard.type;
         let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
         if (this.$store.getters.getCoinMsg.valueOf() == this.playfieldBoolean) {
-            console.log("In If statement")
           if (activeCard === 'I' && thisStack.cards.length === 0) {
-            console.log("in I")
             return true;
           } else if (activeCard === 'R' && thisStack.cards.length > 0 && thisStack.cards.length < 3) {
             if (thisStack.cards.length === 1) {
@@ -199,7 +197,6 @@ export default {
   },
   methods: {
     stackSelected() {
-      console.log("in stack selected")
       this.$store.commit('addStackToSelected', {stackId: this.stackId});
       this.$store.commit('setStackSelectedBoolean', {boolean: this.playfieldBoolean});
       let selectedStacks = this.$store.getters.getSelectedStacks;
@@ -216,7 +213,6 @@ export default {
         }
     },
     groupStacks() {
-      console.log("In group Stacks")
       let selectedStacks = this.$store.getters.getSelectedStacks
         for (let stack of selectedStacks) {
           while (stack.cards.length !== 0) {
