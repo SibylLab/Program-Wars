@@ -14,7 +14,7 @@ export default {
     context.commit('coinModalTrigger');
     context.commit('setCoinFlipAnim', 0);
     context.commit('setPlayfieldColour', true);
-    context.state.coinMsg = context.state.activeSide ? 'True' : 'False';
+    context.state.coinMsg = context.state.activeSide ? true : false;
     console.log(context.state.coinMsg);
     setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
     setTimeout(() => {
@@ -31,9 +31,10 @@ export default {
       }
     }, 2500)
   },
+
   turn(context, payload) {
     context.commit('getIsLast');
-    context.state.coinMsg = 'Evaluating...';
+    //context.state.coinMsg = 'Evaluating...';
     context.state.pointerEvent = 'pointer-events: none';
     switch(payload) {
       case true:
@@ -67,16 +68,16 @@ export default {
         context.commit('coinModalTrigger');
         context.commit('setCoinFlipAnim', 0);
         context.commit('setPlayfieldColour', true);
-        context.state.coinMsg = context.state.activeSide ? 'True' : 'False';
+        context.state.coinMsg = context.state.activeSide ? true : false;
         setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
         setTimeout(() => {
           $('.coin').modal('handleUpdate');
           $('.coin').modal('hide');
-          setTimeout(() => {
-            if(!(context.state.winner)) {
-              context.commit('setPlayfieldColour', false);
-            }
-          }, runTimer * 1000);
+          //setTimeout(() => {
+            //if(!(context.state.winner)) {
+              //context.commit('setPlayfieldColour', false);
+            //}
+          //}, runTimer * 1000);
         }, coinTimer * 1000);
         if (context.state.winner) {
           setTimeout(() => {
