@@ -61,12 +61,9 @@ export default {
   },
   computed: {
     showBtn() {
-      console.log("playfieldBool: " + this.playfieldBoolean);
       if(this.$store.state.activeCard !== undefined) {
         let activeCard = this.$store.state.activeCard.type;
-        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
-        console.log("Coin msg: " + this.$store.getters.getCoinMsg.valueOf() == this.playfieldBoolean)
-        console.log("Coin msg: " + this.$store.getters.getCoinMsg.valueOf() + "Playfield: " + this.playfieldBoolean)
+        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
         if (this.$store.getters.getCoinMsg.valueOf() == this.playfieldBoolean) {
             console.log("In If statement")
           if (activeCard === 'I' && thisStack.cards.length === 0) {
@@ -136,13 +133,15 @@ export default {
         }
     },
     currentSelectedStacksMatch() {
+      if (this.$store.getters.getCoinMsg.valueOf() === this.playfieldBoolean) {
         if (this.$store.getters.getSelectedStacksBoolean === undefined) {
-            return true
+          return true
         } else if (this.playfieldBoolean === this.$store.getters.getSelectedStacksBoolean) {
-            return true;
+          return true;
         } else {
-            return false;
+          return false;
         }
+      }
     },
     selectedStacksLength () {
       let selectedStacks = this.$store.getters.getSelectedStacks;
