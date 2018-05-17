@@ -243,17 +243,16 @@ export default {
     let playerList = state.players;
     let highScore = 0;
     for (let player of playerList) {
-      let score = 0;
-      if (state.activeSide) {
-        score = player.trueScore;
-      } else {
-        score = player.falseScore;
-      }
-      if (score >= state.scoreLimit) {
-        if (score > highScore) {
-          highScore = score;
+      let scoreTrue = 0;
+      let scoreFalse = 0;
+      scoreTrue = player.trueScore;
+      scoreFalse = player.falseScore;
+
+      if ((scoreTrue >= state.scoreLimit) || (scoreFalse >= state.scoreLimit))  {
+        if ((scoreTrue > highScore) || (scoreFalse > highScore)) {
+          highScore = Math.max(scoreTrue, scoreFalse);
           state.winnerName = player.name;
-          state.winnerScore = score;
+          state.winnerScore = Math.max(scoreTrue, scoreFalse);
           state.winner = true;
         }
       }

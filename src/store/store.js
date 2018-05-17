@@ -40,7 +40,7 @@ export const store = new Vuex.Store({
       tips: {tutorial: true, fact: true},
       currentOpponents: [],
       coinFlip: 0,
-      coinMsg: '',
+      coinMsg: false,
       playerTurn: false,
       firstRound: true,
       aiTurn: false,

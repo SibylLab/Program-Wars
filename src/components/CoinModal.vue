@@ -1,7 +1,7 @@
 <template>
   <div id="coinStyle" style="top: 20%; left: 50%; margin-left: -200px;">
     <div id="background">
-      <h4>Running Instructions in {{ message }} Path</h4>
+      <h4>Determining the Path</h4>
       <radial-progress-bar :diameter="200"
                            :completed-steps="completedSteps"
                            :total-steps="totalSteps"
@@ -28,7 +28,8 @@
           return this.$store.state.coinFlip;
         },
       message() {
-          return this.$store.state.coinMsg;
+          let lower = this.$store.state.coinMsg.toString();
+        return lower.charAt(0).toUpperCase() + lower.slice(1);
       }
     }
   }

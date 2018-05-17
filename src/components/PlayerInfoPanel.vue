@@ -178,7 +178,7 @@ export default {
           case 'I' :
             this.tipsInfoText =
             'Use this to create your program.' +
-            ' Place it on either the "True" or "False" playing field.';
+            ' Place it on either the chosen path.';
             return 'Instruction Card'; break;
           case 'R' :
             this.tipsInfoText = 'Play this card on top of an instruction or group card to repeat it.';

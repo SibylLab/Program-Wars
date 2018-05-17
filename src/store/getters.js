@@ -97,6 +97,9 @@ export default {
     }
     return {hand: playerHand, stack: playerStack, opponents: opponentStack, player: currentPlayer, scoreLimit: state.scoreLimit}
   },
+  getCoinMsg(state) {
+    return state.coinMsg;
+  },
   getTutorialState(state) {
     return state.isTutorial;
   },

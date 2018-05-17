@@ -34,7 +34,7 @@
                       <div>
                         <ol>
                         <li>Instruction cards are the basic way by which you build your program.</li>
-                        <li>You place an instruction card on either the "True" or the "False" playing field.</li>
+                        <li>You place an instruction card in the chosen path to begin a stack.</li>
                         <li>The value of the instruction card is added to the total number of instructions for that playing field.</li>
                         </ol>
                         <b>Relation to computer programming:</b>
@@ -77,7 +77,7 @@
                       <div>
                       <ol>
                         <li>Group cards let you combine stacks of instructions and group cards into one card.</li>
-                        <li>The combined total of the instructions must be the same as the value of the group card.
+                        <li>The combined total of the stacks must be the same as the value of the group card.
                         <li>Group cards protect your instructions from Hack cards.</li>
                       </ol>
                        <b>Relation to computer programming:</b>
@@ -139,9 +139,9 @@
                   <h4>Playing the Game</h4>
                   <p>On each of your turns:</p>
                   <ol id="gamePlay">
-                    <li>Select a card to either put on your "True" or "False" playing field, or to discard.</li>
-                    <li>At the end of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.
-                    <li>The game is over if one or more players have an "Active" playing field that totals to at least the game limit:</li>
+                    <li>Select a card to put in the "True" or "False" playing field that was chosen at the beginning of the round, or to discard.</li>
+                    <li>At the beginning of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.
+                    <li>The game is over if a player reaches the score limit in either paths:</li>
                     <ul>
                       <li>Short: 15 instructions</li>
                       <li>Medium: 25 instructions</li>

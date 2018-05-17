@@ -64,23 +64,40 @@ export default {
     showBtn() {
       if(this.$store.state.activeCard !== undefined) {
         let activeCard = this.$store.state.activeCard.type;
-        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
-        if(activeCard === 'I' && thisStack.cards.length === 0) {
-          return true;
-        } else if(activeCard === 'R' && thisStack.cards.length > 0 && thisStack.cards.length < 3) {
-          if(thisStack.cards.length === 1) {
+        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
+        if (this.$store.getters.getCoinMsg.valueOf() == this.playfieldBoolean) {
+          if (activeCard === 'I' && thisStack.cards.length === 0) {
             return true;
-          } else if(thisStack.cards.length === 2 && this.$store.state.activeCard.value === 1 && !(thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1)) {
-            return true;
-          }
-        } else if(activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 3) {
-          if(thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1) {
-            return true;
+          } else if (activeCard === 'R') {
+            let rCount = 0;
+            if(thisStack.cards.length !== 0 && (thisStack.stackTopCard().type !== 'R' || thisStack.stackTopCard().value !== 1)) {
+              for(let i=0; i<thisStack.cards.length; i++){
+                console.log("In for loop " + thisStack.cards[i].value);
+                if(thisStack.cards[i].type === 'R'){
+                  rCount++;
+                }
+              }
+              if(rCount < 2){
+                return true;
+              }
+            }
+            // if (thisStack.cards.length === 1) {
+            //   return true;
+            // } else if (thisStack.cards.length === 2 && this.$store.state.activeCard.value === 1) {
+            //   return true;
+            // }
+            // else if (thisStack.cards.length === 3){
+            //   return true;
+            // }
+
+          } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 5) {
+            if (thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1) {
+              return true;
+            }
           }
         }
-      } else {
-        return false;
       }
+      return false;
     },
     modalId2() {
       return this.id + "Modal"
@@ -108,9 +125,6 @@ export default {
     selectedStackBoolean () {
       return this.$store.getters.getSelectedStackBoolean
     },
-//    currentPlayer () {
-//
-//    },
     stackCss () {
       return 'stack'
     },
@@ -132,16 +146,18 @@ export default {
         }
     },
     currentSelectedStacksMatch() {
+      if (this.$store.getters.getCoinMsg.valueOf() === this.playfieldBoolean) {
         if (this.$store.getters.getSelectedStacksBoolean === undefined) {
-            return true
+          return true
         } else if (this.playfieldBoolean === this.$store.getters.getSelectedStacksBoolean) {
-            return true;
+          return true;
         } else {
-            return false;
+          return false;
         }
+      }
     },
     selectedStacksLength () {
-      let selectedStacks = this.$store.getters.getSelectedStacks
+      let selectedStacks = this.$store.getters.getSelectedStacks;
 
       for (let stack of selectedStacks) {
           if (stack.stackId === this.stackId)
@@ -198,7 +214,7 @@ export default {
     stackSelected() {
       this.$store.commit('addStackToSelected', {stackId: this.stackId});
       this.$store.commit('setStackSelectedBoolean', {boolean: this.playfieldBoolean});
-      let selectedStacks = this.$store.getters.getSelectedStacks
+      let selectedStacks = this.$store.getters.getSelectedStacks;
       if (selectedStacks.length === 0) {
         this.$store.commit('setStackSelectedBoolean', {boolean: undefined})
       }
@@ -250,8 +266,8 @@ export default {
       });
       $('button[stackId="'+this.stackId+'"]').popover('hide');
       if (this.$store.getters.getActiveCard !== undefined) {
-        let activeCard = this.$store.getters.getActiveCard
-        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId)
+        let activeCard = this.$store.getters.getActiveCard;
+        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
         if(this.$store.state.players[this.$store.state.activePlayer].isAi) {
           thisStack = this.activeStack;
         }
@@ -272,7 +288,7 @@ export default {
             if (thisStack.cards.length === 0) {
               $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card." );
               $('button[stackId="'+this.stackId+'"]').popover('toggle')
-            } else if (thisStack.stackTopCard().type === 'I' || thisStack.stackTopCard().type === 'G') {
+            } else if (thisStack.stackTopCard().type === 'I' || thisStack.stackTopCard().type === 'G' || thisStack.stackTopCard().type === 'R' || thisStack.stackTopCard().type === 'V') {
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
               this.$store.dispatch('playerTookTurn');
               bus.$emit('cardDeselected');
@@ -291,6 +307,7 @@ export default {
             break;
 
           case 'V':
+            console.log("Top card = " + thisStack.stackTopCard.type)
           if (thisStack.cards.length === 0) {
                 $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')

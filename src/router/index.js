@@ -25,7 +25,8 @@ export default new Router({
       canReuse: false,
       name: 'settings-component',
       component: SettingsComponent
-    }
+    },
+    {path: '*', redirect: '/'}
   ],
     mode: 'history'
 })
