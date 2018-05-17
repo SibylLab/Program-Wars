@@ -1,6 +1,0 @@
-checks:
-  method-lines:
-    config:
-      threshold: 100
-  argument-count:
-    enabled: false
