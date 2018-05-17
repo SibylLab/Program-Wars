@@ -1,7 +1,14 @@
 version: "2"
+
+prepare:
+  fetch:
+
 checks:
   method-lines:
     config:
       threshold: 100
   argument-count:
     enabled: false
+plugins:
+
+exclude_patterns:
