@@ -1,8 +1,5 @@
 version: "2"
 
-prepare:
-
-
 checks:
   method-lines:
     config:
