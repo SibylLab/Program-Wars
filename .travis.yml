@@ -1,3 +1,7 @@
+env:
+   global:
+      - CC_TEST_REPORTER_ID=c0ccb3f018875b6a3ed742ff0a4ccec2a6b49d5e3a5e745c9cbcd8bca21ed372
+      
 language: node_js
 
 node_js:
@@ -21,18 +25,21 @@ before_script:
 - sh -e /etc/init.d/xvfb start
 - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
+- ./cc-test-reporter before-build
 
 cache:
   directories:
   - node_modules
+
 install:
 - npm install
+
 script:
-- ./cc-test-reporter before-build
 - npm run test
+
 after_success:
 - mv ./test/unit/coverage .
-- ./cc-test-reporter after-build -t lcov -r c0ccb3f018875b6a3ed742ff0a4ccec2a6b49d5e3a5e745c9cbcd8bca21ed372 --exit-code $TRAVIS_TEST_RESULT;
+- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 - npm run build
 
