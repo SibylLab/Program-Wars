@@ -39,7 +39,7 @@ script:
 
 after_success:
  - mv ./test/unit/coverage .
- - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+ - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT
 
  #- npm run build
 
