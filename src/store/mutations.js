@@ -1,3 +1,5 @@
+import TutorialDeck from "../classes/TutorialDeck";
+
 const uuidV1 = require('uuid/v1');
 
 import { bus } from '../components/Bus';
@@ -8,8 +10,10 @@ import Deck from '../classes/Deck'
 
 export default {
   resetState(state) {
+    state.players = [];
     state.stacks = [];
     state.deck = new Deck();
+    state.tutorialDeck = new TutorialDeck();
     state.hands = [];
     state.currentGameState = 'newGame';
     state.activeSide = true;
@@ -22,9 +26,11 @@ export default {
     state.winner = false;
     state.tips.tutorial = true;
     state.tips.fact = true;
-     state.firstRound = true
+    state.firstRound = true;
     state.aiTurn = false;
     state.playerTurn = false;
+    state.isTutorial = false;
+    state.factIndex = 0;
   },
   addPlayers(state, payload) {
     let id = 0;
@@ -39,8 +45,8 @@ export default {
   // },
   //
   endTurn(state, maxplayers) {
-    state.activePlayer += 1
-    state.activePlayer = state.activePlayer % maxplayers
+    state.activePlayer += 1;
+    state.activePlayer = state.activePlayer % maxplayers;
   },
   //
   // updateCurrentPlayerHand(state, hand) {
@@ -56,11 +62,11 @@ export default {
     bus.$emit('cardHasBeenSelected');
     for (var card of playerHand.cards) {
       if (card.id === c.id) {
-        card.selected = !card.selected
+        card.selected = !card.selected;
         if (!card.selected) {
           bus.$emit('cardDeselected')
         } else {
-          state.activeCard = c
+          state.activeCard = c;
         }
       } else {
         card.selected = false
@@ -82,7 +88,11 @@ export default {
     let localState = state;
     let cardsTemp = [];
     for(let i = 0; i < 5; i++) {
-      cardsTemp.push(localState.deck.draw());
+      if(state.isTutorial) {
+        cardsTemp.push(localState.tutorialDeck.draw());
+      } else {
+        cardsTemp.push(localState.deck.draw());
+      }
     }
     state = localState;
     hand.cards = cardsTemp;
@@ -90,21 +100,42 @@ export default {
     state.players.find(player => player.id === playerId).hand = hand.handId;
   },
   addCardToHand(state) {
-    if (state.deck.cards.length <= 1 && state.deck.discard_cards.length > 0) {
-      state.deck.shuffle(state.deck.discard_cards);
-      for (let i = 0; i < state.deck.discard_cards.length; i++) {
-        state.deck.cards.push(state.deck.discard_cards[i]);
+    if(state.isTutorial) {
+      if (state.tutorialDeck.cards.length <= 1 && state.tutorialDeck.discard_cards.length > 0) {
+        state.tutorialDeck.shuffle(state.tutorialDeck.discard_cards);
+        for (let i = 0; i < state.tutorialDeck.discard_cards.length; i++) {
+          state.tutorialDeck.cards.push(state.tutorialDeck.discard_cards[i]);
+        }
+        state.tutorialDeck.discard_cards = [];
       }
-      state.deck.discard_cards = [];
-    }
-    if (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6) {
-      do {
-        state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.cards.pop())
-      } while (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6);
+      if (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6) {
+        do {
+          state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.tutorialDeck.cards.pop())
+        } while (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6);
+      }
+    } else {
+      if (state.deck.cards.length <= 1 && state.deck.discard_cards.length > 0) {
+        state.deck.shuffle(state.deck.discard_cards);
+        for (let i = 0; i < state.deck.discard_cards.length; i++) {
+          state.deck.cards.push(state.deck.discard_cards[i]);
+        }
+        state.deck.discard_cards = [];
+      }
+      if (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6) {
+        do {
+          state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.cards.pop())
+        } while (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6);
+      }
     }
   },
   initDeck(state){
     state.deck.initDeck(state.players.length);
+  },
+  initTutorialDeck(state){
+    state.tutorialDeck.initDeck(state.players.length);
+  },
+  setTutorial(state, payload){
+    state.isTutorial = payload.gameType;
   },
   addStackToPlayer(state, payload) {
     state.stacks.push(new Stack(payload.playerId, payload.boolSide))
@@ -138,12 +169,20 @@ export default {
   },
   stackDiscard(state, payload) {
     let card = state.stacks.find(stack => stack.stackId === payload.stackId).popTopCard()
-    state.deck.discard_cards.push(card)
+    if(state.isTutorial) {
+      state.tutorialDeck.discard_cards.push(card)
+    } else {
+      state.deck.discard_cards.push(card)
+    }
   },
   discardSelectedCard(state) {
-    let tempActiveCard = state.activeCard
-    tempActiveCard.selected = false
-    state.deck.discard_cards.push(tempActiveCard)
+    let tempActiveCard = state.activeCard;
+    tempActiveCard.selected = false;
+    if(state.isTutorial) {
+      state.tutorialDeck.discard_cards.push(tempActiveCard)
+    } else {
+      state.deck.discard_cards.push(tempActiveCard)
+    }
   },
   setHasPlayed(state, payload) {
     state.activeHasPlayed = payload.hasPlayed
@@ -282,4 +321,7 @@ export default {
       bus.$emit('aiGroup', stackToPlay[0].boolSide, state.players[state.activePlayer].id);
     }
   },
+  increaseFactIndex(state) {
+    state.factIndex++;
+  }
 }
