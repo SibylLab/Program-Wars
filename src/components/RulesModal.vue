@@ -77,7 +77,7 @@
                       <div>
                       <ol>
                         <li>Group cards let you combine stacks of instructions and group cards into one card.</li>
-                        <li>The combined total of the instructions must be the same as the value of the group card.
+                        <li>The combined total of the stacks must be the same as the value of the group card.
                         <li>Group cards protect your instructions from Hack cards.</li>
                       </ol>
                        <b>Relation to computer programming:</b>
