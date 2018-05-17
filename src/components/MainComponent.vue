@@ -107,27 +107,18 @@ export default {
 
   },
   methods: {
-    submit() {
-        if(this.newPlayer.length > 0 && this.localPlayers.indexOf(this.newPlayer) < 0) {
-          this.localPlayers.push(this.newPlayer)
-        }
-    },
-    submitPlayers() {
-      this.$store.commit('addPlayers', {list: this.localPlayers});
-      this.gameStart = true;
-    },
     initGame(){
         this.$store.commit('initDeck');
     },
     fillHands() {
         for(let player of this.$store.getters.getPlayers) {
-          this.$store.commit('addHandToPlayer', player.id)
+          this.$store.commit('addHandToPlayer', player.id);
         }
     },
     addStacksToPlayers() {
       for(let player of this.$store.getters.getPlayers) {
-        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true})
-        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false})
+        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true});
+        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false});
       }
     }
 },
@@ -182,7 +173,7 @@ export default {
         this.$store.commit('setTips', {tutorial: this.tipsToggle, fact: val});
     }
   },
-  created: function () {
+  created() {
     this.playerList = this.$store.getters.getPlayers;
     this.gameStart = true;
     let j = Math.floor(Math.random() * 2);

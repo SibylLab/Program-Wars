@@ -35,7 +35,6 @@ export default {
       if (this.cardData.selected) {
         classString = classString + ' selected'
       }
-
       if (this.inStack) {
        classString = classString + ' stack'
      }
