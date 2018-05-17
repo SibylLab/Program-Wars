@@ -1,7 +1,23 @@
-
-version: "2"         # required to adjust maintainability checks
-
+version: "2"
+prepare:
+  fetch:
+    - url: "https://raw.githubusercontent.com/example/example/master/rubocop.yml"
+      path: "alternate-rubocop-path.yml"
 checks:
-  argument-count:
+  method-lines:
     config:
-      threshold: 4
+      threshold: 100
+  argument-count:
+    enabled: false
+plugins:
+  rubocop:
+    enabled: true
+    channel: "rubocop-0-49"
+    checks:
+      Rubocop/Style/TrailingCommaInLiteral:
+        enabled: false
+    config:
+      file: "alternate-rubocop-path.yml"
+exclude_patterns:
+  - "spec/"
+  - "!spec/support/helpers"
