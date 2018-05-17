@@ -44,6 +44,7 @@
   import Modal from './Modal'
 
 /**
+ * The component that holds what will be used as the true and false stacks
  * @file Stack.vue
  */
 export default {
@@ -101,7 +102,7 @@ export default {
     modalId2() {
       return this.id + "Modal"
     },
-    cards () {
+    cards() {
 
       if (this.playerId === this.$store.getters.getCurrentPlayerId ) {
         if (this.$store.getters.getCurrentPlayerStacks.length !== 0) {
@@ -227,6 +228,11 @@ export default {
         }
     },
     groupStacks() {
+      if(this.$store.getters.getTutorialState){
+        bus.$emit('cardPlayed');
+        this.$store.commit('increaseFactIndex');
+      }
+
       let selectedStacks = this.$store.getters.getSelectedStacks
         for (let stack of selectedStacks) {
           while (stack.cards.length !== 0) {
@@ -340,7 +346,15 @@ export default {
       }
     },
     addToStackClicked() {
-        this.addToStack()
+
+      this.addToStack();
+      if(this.$store.getters.getTutorialState){
+        bus.$emit('cardPlayed');
+        this.$store.commit('increaseFactIndex');
+      }
+
+
+      this.$store.commit('setActiveCardUndefined');
     },
     drop () {
       this.addToStack()

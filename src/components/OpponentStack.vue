@@ -144,7 +144,6 @@ export default {
             this.$store.commit('stackDiscard', {stackId: this.stackId});
             this.$store.commit('removeStack', {stackId: this.stackId});
             this.$store.state.hackedPlayer = this.$store.state.players[thisStack.playerId].name;
-            console.log(this.$store.state.hackedPlayer);
             this.$store.dispatch('playerTookTurn');
             bus.$emit('cardDeselected');
             this.$store.state.isHack = true;
@@ -158,13 +157,16 @@ export default {
         }
         if(this.$store.getters.getHasPlayed) {
           this.$store.dispatch('turn', true);
-//          this.$store.dispatch('endTurn');
         }
       }
     },
     hackStackClicked() {
       this.addToStack();
       $('.hack').modal('hide');
+      if(this.$store.getters.getTutorialState){
+        bus.$emit('cardPlayed');
+        this.$store.commit('increaseFactIndex');
+      }
       this.$store.commit('setPlayerScores');
     },
     drop () {

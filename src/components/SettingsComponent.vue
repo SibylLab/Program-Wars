@@ -50,8 +50,9 @@
           </select></p>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12" style="text-align: right">
+      <div id="HASH" class="row">
+        <div id="HASH" class="col-md-12" style="text-align: right">
+          <button type="button" class="btn btn-primary" @click="startTutorial" data-toggle="modal" data-target=".tutorial">Take the Tutorial</button>
           <button type="button" class="btn btn-primary" @click="submitPlayers" :disabled="noPlayers">Start New Game</button>
         </div>
       </div>
@@ -67,7 +68,10 @@
 
   import RulesModal from './RulesModal.vue'
   import CreditsModal from './CreditsModal.vue'
+  import TutorialModal from './TutorialStartModal'
 
+  import {mapGetters} from 'vuex';
+  import {mapMutations} from 'vuex';
   import Card from '../classes/Card'
   import Player from '../classes/Player'
 
@@ -75,7 +79,7 @@
     name: 'settings-component',
     data () {
       return {
-        idCounter:0,
+        idCounter: 0,
         dataToggle: false,
         modalTitle: "Welcome to a new game of Programming Wars!",
         localPlayers: [{name: '', isAi: false}],
@@ -87,10 +91,25 @@
         maxPlayer: false,
          isRepeat: false,
         aiSelect: 'noAiSelected',
-        aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman']
+        aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
+        typesOfGames: ['Short (15)', 'Medium (25)', 'Long (35'],
+        isTutorial: false,
+        tutorialBegin: false
       }
     },
     methods: {
+      /**
+       * The following two functions call initiate the getters and setters we need from VueX
+       */
+      ...mapGetters([
+        'getTutorialState'
+      ]),
+      ...mapMutations([
+        'setTutorial'
+      ]),
+      /**
+       * Called whenever the 'Add Player' button has been clicked, for the purpose of adding the player
+       */
       submit() {
         let pass = true;
         for (let player of this.localPlayers) {
@@ -118,16 +137,43 @@
         this.newPlayer = "";
         this.aiSelect = 'noAiSelected';
       },
+
+      /**
+       * Start the tutorial mode with just the player and one AI
+       */
+      startTutorial() {
+        this.isTutorial = true;
+        this.setTutorial({gameType: true});
+        //this.$store.commit('setTutorial', {gameType: true});
+        this.localPlayers = [];
+        this.localPlayers.push({name: 'You', isAi: false});
+        this.localPlayers.push({name: 'Flash', isAi: true});
+        this.$store.commit('addPlayers', {list: this.localPlayers});
+        this.$store.commit('setScoreLimit', {scoreLimit: 15});
+        this.gameStart = true;
+        setTimeout(() => {
+          this.$router.push('tutorial')
+        }, 100);
+      },
+
+      /**
+       * Called whenever the submit button is pressed to
+       */
       submitPlayers() {
         this.$store.commit('addPlayers', {list: this.localPlayers});
-        this.$store.commit('setScoreLimit', {scoreLimit: this.selected})
+        this.$store.commit('setScoreLimit', {scoreLimit: this.selected});
         this.gameStart = true;
 
         setTimeout(() => {
           this.$router.push('game')
-        }, 100)
+        }, 100);
 
       },
+
+      /**
+       * Called when the remove button beside a players name is called, for the purpose of removing that player.
+       * @param e The player to be removed.
+       */
       removePlayer(e) {
         if(this.localPlayers[e] !== '') {
           this.localPlayers.splice(e, 1);
@@ -141,21 +187,6 @@
           return;
 
       },
-      initGame(){
-        this.$store.commit('initDeck');
-
-      },
-      fillHands() {
-        for(let player of this.$store.getters.getPlayers) {
-          this.$store.commit('addHandToPlayer', player.id)
-        }
-      },
-      addStacksToPlayers() {
-        for(let player of this.$store.getters.getPlayers) {
-          this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true})
-          this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false})
-        }
-      }
     },
     computed: {
       currentPlayerId() {
@@ -173,6 +204,9 @@
       }
     },
     watch: {
+      /**
+       * This watches the AI selector dialog box and is called when it changes.
+       */
       aiSelect() {
         if(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none') {
           this.inputDisable = false;
@@ -187,7 +221,8 @@
       'playfield': Playfield,
       'opponent-stacks': OpponentStacks,
       'rules-modal': RulesModal,
-      'credits-modal': CreditsModal
+      'credits-modal': CreditsModal,
+      'tutorial-modal': TutorialModal
     },
     beforeMount() {
       this.$store.commit('resetState');
@@ -215,6 +250,11 @@
     color: red;
     margin-top: 5px;
     margin-bottom: -10px
+  }
+
+  #HASH {
+    display: flex;
+    justify-content: space-between;
   }
 
   #settingsPage {

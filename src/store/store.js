@@ -11,14 +11,18 @@ import getters from './getters.js'
 import Card from '../classes/Card'
 import Player from '../classes/Player'
 import Deck from '../classes/Deck'
+import TutorialDeck from '../classes/TutorialDeck.js'
 
 export const store = new Vuex.Store({
     state: {
       players: [],
       stacks: [],
       deck: new Deck(),
+      tutorialDeck: new TutorialDeck(),
+      isTutorial: false,
       hands: [],
       currentGameState: 'newGame',
+      displayObjModal: false,
       activeSide: true,
       activePlayer: 0,
       activeHasPlayed: false,
@@ -46,11 +50,14 @@ export const store = new Vuex.Store({
       hackedPlayer:'',
       isDiscard: false,
       pointerEvent: 'pointer-events: none',
+      factIndex: 0
+
     },
     originalState: {
       players: [],
       stacks: [],
       deck: new Deck(),
+      tutorialDeck: new TutorialDeck(),
       hands: [],
       currentGameState: 'newGame',
       activeSide: true,
@@ -64,4 +71,4 @@ export const store = new Vuex.Store({
     getters,
     mutations,
     actions
-})
+});
