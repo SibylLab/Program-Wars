@@ -27,6 +27,9 @@ export default class Player{
     this.hasVirus = false;
     this.hasPowerOutage = false;
     this.isAi = isAi;
+    this.infectedAmountTrue = 0;
+    this.infectedAmountFalse = 0;
+    this.numViruses = 0;
     if(this.isAi) {
       this.type = new Personality();
     }

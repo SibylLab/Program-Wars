@@ -44,15 +44,15 @@ export default {
       if (this.activeColour) {
         return 'active'
       } else {
-          return 'notActive'
+        return 'notActive'
       }
     },
     stacks() {
       return this.getStackList(this.trueFalse);
     },
     score() {
-      return {trueScore: this.$store.getters.getPlayers[this.playerId].trueScore,
-              falseScore: this.$store.getters.getPlayers[this.playerId].falseScore};
+      return {trueScore: this.$store.getters.getPlayers[this.playerId].trueScore - this.$store.getters.getPlayers[this.playerId].infectedAmountTrue,
+              falseScore: this.$store.getters.getPlayers[this.playerId].falseScore - this.$store.getters.getPlayers[this.playerId].infectedAmountFalse};
     }
   },
   components: {

@@ -11,7 +11,7 @@
           <div class="container col-lg-12">
             <div class="row">
               <div v-for="player in players" :id="player.id" class="col-lg-4" style="-webkit-align-items: center">
-                <button class="btn btn-primary" @click="playerClicked(player.name)">Infect <b>{{player.name}}</b></button>
+                <button class="btn btn-primary" @click="playerClicked(player.id)" v-if="!player.hasAntiVirus">Infect <b>{{player.name}}</b></button>
               </div>
             </div>
 
@@ -60,9 +60,13 @@
           this.$store.dispatch('turn', true);
         }
       },
-      playerClicked(name) {
-        //console.log(JSON.stringify(name, null, 4));
-        console.log("Im in playerClicked " + name);
+      playerClicked(player) {
+        console.log("Im in playerClicked " + player);
+        this.$store.commit('giveVirus', player);
+        console.log("Active Card " + this.$store.getActiveCard)
+        $('.virus').modal('hide');
+        let ret = this.$store.dispatch('playerTookTurn');
+        this.$store.dispatch('turn', true);
       }
     },
     computed: {
@@ -78,7 +82,6 @@
           return 'display: none'
         }
       },
-
     },
     created() {
       $('.virus').modal({

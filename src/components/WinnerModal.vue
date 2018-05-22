@@ -34,8 +34,8 @@
               <tbody>
               <tr v-for="player in playerList">
                 <td>{{ player.name }}</td>
-                <td>{{ player.trueScore }}</td>
-                <td>{{ player.falseScore }}</td>
+                <td>{{ player.trueScore - player.infectedAmountTrue}}</td>
+                <td>{{ player.falseScore - player.infectedAmountFalse}}</td>
               </tr>
               </tbody>
             </table>
@@ -75,11 +75,11 @@
           let winList = [];
           for(let player of this.playerList) {
               if (this.$store.state.activeSide) {
-                  if(player.trueScore >= this.$store.state.scoreLimit) {
+                  if(player.trueScore - player.infectedAmountTrue >= this.$store.state.scoreLimit) {
                       winList.push(player.name)
                   }
               } else {
-                if(player.falseScore >= this.$store.state.scoreLimit) {
+                if(player.falseScore - player.infectedAmountFalse >= this.$store.state.scoreLimit) {
                   winList.push(player.name)
                 }
               }

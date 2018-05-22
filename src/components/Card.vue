@@ -77,8 +77,6 @@ export default {
       } else {
         return '';
       }
-
-
     },
     hide () {
 

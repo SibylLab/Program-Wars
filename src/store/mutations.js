@@ -60,13 +60,15 @@ export default {
   selectCard(state, c) {
     let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
     bus.$emit('cardHasBeenSelected');
-    for (var card of playerHand.cards) {
+    for (let card of playerHand.cards) {
       if (card.id === c.id) {
         card.selected = !card.selected;
         if (!card.selected) {
           bus.$emit('cardDeselected')
         } else {
+          console.log("Adding active card " + JSON.stringify(c, null, 4))
           state.activeCard = c;
+          console.log("the active Card is:  " + JSON.stringify(state.activeCard, null, 4))
         }
       } else {
         card.selected = false
@@ -322,5 +324,13 @@ export default {
   },
   increaseFactIndex(state) {
     state.factIndex++;
+  },
+  giveVirus(state,payload) {
+    state.players[payload].hasVirus = true;
+    console.log(state.players[payload].name + " Has a virus: " + state.players[payload].hasVirus);
+    state.players[payload].infectedAmountFalse += Math.ceil(state.players[payload].falseScore/2 - state.players[payload].infectedAmountFalse);
+    state.players[payload].infectedAmountTrue +=  Math.ceil(state.players[payload].trueScore/2 - state.players[payload].infectedAmountTrue);
+    state.players[payload].numViruses++;
+    //bus.$emit('hackCanceled');
   }
 }

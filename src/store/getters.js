@@ -23,6 +23,7 @@ export default {
     else
       return ''
   },
+
   getCurrentPlayerStacks(state) {
     if(state.stacks.length)
       return state.stacks.filter(st => st.playerId === state.activePlayer)

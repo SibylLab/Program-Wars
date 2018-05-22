@@ -7,6 +7,8 @@
             <div class="panel-body">{{ tipsInfoText }}</div>
           </div>
         </div>
+        <div class="container" style="width: 900px; float: left">
+        <div class="row">
         <div id="cards">
 
           <ul id="example-1">
@@ -16,14 +18,38 @@
               </li>
           </ul>
         </div>
-
-        <div id="controls">
-        <button class="btn btn-primary btn-lg rightSide" v-on:click="discardSelected" style="border-radius: 40px">
-          Discard <br/> Selected Card
-        </button>
+        </div>
+        <div class="row">
+          <div id="controls" class="col-sm">
+            <button class="btn btn-primary btn-lg rightSide" v-on:click="discardSelected" style="border-radius: 40px">
+              Discard <br/> Selected Card
+            </button>
+          </div>
+        </div>
         </div>
 
+        <div class="container-fluid rounded" id="disabilityPanel" style="border-radius: 40px">
+          <div class="row">
+            <div class="col-sm">
+            <div class="panel panel-default">
+              <div class="panel-heading">Perks/Disabilities</div>
+              <div class="panel-body">Number of Viruses: {{getCurrentPlayer.numViruses}}</div>
+              <div class="panel-body" v-if="getCurrentPlayer.hasPowerOutage">You have a power outage! </div>
+              <div class="panel-body" v-if="getCurrentPlayer.hasAntiVirus">You're Protected From Viruses </div>
+              <div class="panel-body" v-if="getCurrentPlayer.hasGenerator">You're Protected From Power Outages </div>
+              <div class="panel-body" v-if="getCurrentPlayer.hasFirewall">You're Protected From Hacks </div>
+            </div>
+            </div>
+          </div>
+          <br>
+
       </div>
+      </div>
+      <!--<div class="container">-->
+        <!--<div class="row">-->
+          <!--<div class="col-lg">You have a virus</div>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="container" style="border-top: 1px solid white; padding: 10px;">
         <div class="row">
           <div class="col-md-12">
@@ -33,7 +59,7 @@
         <div class="row">
           <div :class="colSize" v-for="player in players" style="text-align: left;">
             <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-              <div> True Path: {{ player.trueScore }} Instructions <br> False Path: {{ player.falseScore }} Instructions</div>
+              <div> True Path: {{ player.trueScore - player.infectedAmountTrue }} Instructions <br> False Path: {{ player.falseScore - player.infectedAmountFalse }} Instructions</div>
           </div>
         </div>
       </div>
@@ -136,6 +162,9 @@ export default {
     activeSide() {
         let activeSideString = String(this.$store.getters.getActiveSide)
         return activeSideString.toUpperCase()
+    },
+    getCurrentPlayer() {
+      return this.$store.getters.getCurrentPlayer;
     }
   },
   components: {
@@ -303,12 +332,25 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 0px;
-    justify-content: space-between;
+    vertical-align: middle;
+    //justify-content: space-between;
     align-items: center;
-    padding-right: 50px;
+    //padding-right: 50px;
     flex-basis: content;
-    flex-shrink:5;
-    margin-top: -120px;
+    flex-shrink: 5;
+    //margin-top: -120px;
+  }
+
+  #disabilityPanel {
+    top: 0;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    padding: 0;
+    padding-right: 80px;
+    flex-basis: content;
+    flex-shrink: 3;
   }
 
   #cards {
@@ -322,10 +364,11 @@ export default {
 }
 
   #tipBox {
-    position: relative;
-    top: 0;
+    //position: relative;
+    //top: 0;
     max-width: 350px;
-    height: 280px;
+    //height: 280px;
+    vertical-align: middle;
   }
 
   #playerTurn {

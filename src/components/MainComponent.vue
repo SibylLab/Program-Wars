@@ -130,7 +130,6 @@ export default {
 },
   computed: {
     showMsg() {
-      console.log("in showMsg")
       if(this.$store.state.isHack || this.$store.state.isDiscard) {
         return true;
       } else {
