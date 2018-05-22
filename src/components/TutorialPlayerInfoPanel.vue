@@ -183,8 +183,7 @@
           case 'G' :
             this.tipsInfoText = 'Use this to combine instruction and group cards to protect them from Hack cards. The total of the instruction and group cards must match the value of this card';
             return 'Group Card'; break;
-
-<<<<<<< HEAD
+          
           case 'FIREWALL':
           this.tipsInfoText = 'Use this to remove the chance of being hacked.';
           return 'Firewall Card'; break;
@@ -213,8 +212,7 @@
           this.tipsInfoText = 'Use this to be able to play instruction cards. (Negate Power Outage)';
           return 'BatteryBackup Card'; break;
 
-=======
->>>>>>> 27b2cad457a8e8833132432cee4ca9f65479a564
+
           default :
             var fact = this.setTutorialFact();
             this.tipsInfoText = fact;
