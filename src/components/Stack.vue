@@ -333,7 +333,7 @@ export default {
           case 'G':
             $('button[stackId="'+this.stackId+'"]').attr("data-content", "Group cards are not played on a stack. Click the checkbox(es) to select the cards to group together. The total of the selected card(s) must equal the value of the group card." );
             $('button[stackId="'+this.stackId+'"]').popover('toggle');
-
+                break;
           default:
               return '';
               break;

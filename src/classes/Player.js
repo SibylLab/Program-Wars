@@ -20,6 +20,12 @@ export default class Player{
     this.trueScore = trueScore;
     this.falseScore = falseScore;
     this.id = id;
+    this.hasGenerator = false;
+    this.hasAntiVirus = false;
+    this.hasFirewall = false;
+    this.hasOverClock = false;
+    this.hasVirus = false;
+    this.hasPowerOutage = false;
     this.isAi = isAi;
     if(this.isAi) {
       this.type = new Personality();

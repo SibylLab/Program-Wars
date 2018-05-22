@@ -100,11 +100,10 @@ export default {
 
   getCoinMsg(state) {
     return state.coinMsg;
-
-  getTutorialState(state)
+  },
+  getTutorialState(state) {
     return state.isTutorial;
   },
-
   getFactIndex(state) {
     return state.factIndex;
   }

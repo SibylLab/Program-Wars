@@ -4,7 +4,7 @@
  */
 import Card from './Card'
 
-const instruction1 = 7;
+const instruction1 = 20;
 const instruction2 = 7;
 const instruction3 = 7;
 // const instruction4 = 0;
@@ -28,7 +28,16 @@ const variable4 = 3;
 const variable5 = 3;
 const variable6 = 1;
 
-const hack = 3;
+const hack = 10;
+const virus = 20;
+const powerOutage = 3;
+
+const overClock = 3;
+const batteryBackup = 3;
+
+const antiVirus = 1;
+const firewall = 1;
+const generator = 1;
 
 const cardDeck = [
   {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
@@ -53,6 +62,16 @@ const cardDeck = [
   {type:'V', cardValue: 6, imgSrc: '/static/cardImg/V6.png', howMany: variable6},
 
   {type:'H', cardValue: 0, imgSrc: '/static/cardImg/H.png', howMany: hack},
+  {type:'VIRUS', cardValue: 0, imgSrc: '/static/cardImg/Virus.png', howMany: virus},
+  {type:'POWEROUTAGE', cardValue: 0, imgSrc: '/static/cardImg/PowerOutage.png', howMany: powerOutage},
+
+  {type:'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/OverClock.png', howMany: overClock},
+  {type:'BATTERYBACKUP', cardValue: 0, imgSrc: '/static/cardImg/BatteryBackup.png', howMany: batteryBackup},
+
+  {type:'FIREWALL', cardValue: 0, imgSrc: '/static/cardImg/Firewall.png', howMany: firewall},
+  {type:'GENERATOR', cardValue: 0, imgSrc: '/static/cardImg/Generator.png', howMany: generator},
+  {type:'ANTIVIRUS', cardValue: 0, imgSrc: '/static/cardImg/AntiVirus.png', howMany: antiVirus},
+
 ]
 
 export default class Deck {

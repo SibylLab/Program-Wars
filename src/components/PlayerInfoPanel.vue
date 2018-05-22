@@ -145,6 +145,7 @@ export default {
   methods: {
     openModal() {
       $('.hack').modal('show');
+
     },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {
@@ -164,7 +165,9 @@ export default {
           this.tipsCardSelected = this.setTipBox('default');
       }
       let prevActive = this.$store.getters.getActiveCard
-
+      if(c.type === 'VIRUS'){
+        $('.virus').modal('show')
+      }
       this.$store.commit('selectCard', c)
       if (prevActive !== undefined) {
         if (c.type !== 'G' || c.id !== prevActive.id) {
@@ -196,14 +199,42 @@ export default {
             this.tipsInfoText = 'Use this to combine instruction and group cards to protect them from Hack cards. The total of the instruction and group cards must match the value of this card';
             return 'Group Card'; break;
 
+          case 'FIREWALL':
+            this.tipsInfoText = 'Use this to remove the chance of being hacked.';
+            return 'Firewall Card'; break;
+
+          case 'GENERATOR':
+            this.tipsInfoText = 'Use this card to prevent prevent a power outage.';
+            return 'Generator Card'; break;
+
+          case 'ANTIVIRUS':
+            this.tipsInfoText = 'Use this card to prevent all viruses.';
+            return 'AntiVirus Card'; break;
+
+          case 'VIRUS':
+            this.tipsInfoText = 'Use this on an opponent to cut their current score in half.';
+            return 'Virus Card'; break;
+
+          case 'OVERCLOCK':
+            this.tipsInfoText = 'Use this card to double your current score.';
+            return 'Overclock Card'; break;
+
+          case 'POWEROUTAGE':
+            this.tipsInfoText = 'Use this card on an opponent to prevent them from playing instruction cards.';
+            return 'PowerOutage Card'; break;
+
+          case 'BATTERYBACKUP':
+            this.tipsInfoText = 'Use this to be able to play instruction cards. (Negate Power Outage)';
+            return 'BatteryBackup Card'; break;
+
           default :
-            var fact = this.setFact();
+            let fact = this.setFact();
             this.tipsInfoText = fact;
             return 'Did you know?';
         }
     },
     setFact() {
-      var num = Math.floor(Math.random() * this.facts.length);
+      let num = Math.floor(Math.random() * this.facts.length);
       return this.facts[num];
     },
     deselectAll () {
@@ -243,7 +274,6 @@ export default {
           this.tipsCardSelected = this.setTipBox('default');
         } else {
           this.tipsCardSelected = this.setTipBox(c);
-
         }
     });
     bus.$on('aiDiscard', () => {

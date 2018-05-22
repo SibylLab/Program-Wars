@@ -2,7 +2,11 @@
   <div id="maincontainer">
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
-    <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"></hack-modal>
+    <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby=""
+                aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"
+    ></hack-modal>
+    <virus-modal id="virusModal" class="modal fade virus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                 data-backdrop="static" data-keyboard="false"></virus-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
@@ -13,6 +17,7 @@
     <transition name="fade">
       <hack-discard v-if="showMsg"></hack-discard>
     </transition>
+
 
     <div id="header">
       <p>Programming Wars</p>
@@ -62,7 +67,7 @@ import WinnerModal from './WinnerModal.vue'
 import CoinModal from './CoinModal.vue'
 import PlayerTurn from './PlayerTurnPopUp.vue'
 import HackDiscard from './HackDiscardMsg.vue'
-
+import VirusModal from './VirusModal.vue'
 import Card from '../classes/Card'
 import Player from '../classes/Player'
 
@@ -100,6 +105,7 @@ export default {
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal,
     'hack-modal': HackModal,
+    'virus-modal': VirusModal,
     'winner-modal': WinnerModal,
     'coin-modal': CoinModal,
     'player-turn': PlayerTurn,
@@ -124,10 +130,25 @@ export default {
 },
   computed: {
     showMsg() {
+      console.log("in showMsg")
       if(this.$store.state.isHack || this.$store.state.isDiscard) {
         return true;
       } else {
         return false;
+      }
+    },
+    showVirus() {
+      let c = this.$store.getters.getActiveCard;
+      if(c !== undefined) {
+        //console.log(JSON.stringify(c, null, 4));
+        console.log(c.type);
+        if (c.type === 'VIRUS') {
+          console.log("returning true");
+          $('.virus').modal('show');
+          return true;
+        } else {
+          return false;
+        }
       }
     },
     currentPlayerId() {
