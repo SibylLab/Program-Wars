@@ -97,7 +97,10 @@ export default {
     }
     return {hand: playerHand, stack: playerStack, opponents: opponentStack, player: currentPlayer, scoreLimit: state.scoreLimit}
   },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 27b2cad457a8e8833132432cee4ca9f65479a564
   getCoinMsg(state) {
     return state.coinMsg;
   },

@@ -66,9 +66,12 @@ export default {
         if (!card.selected) {
           bus.$emit('cardDeselected')
         } else {
+<<<<<<< HEAD
           //if(c.type === 'VIRUS'){
           //  $('.virus').show();
           //}
+=======
+>>>>>>> 27b2cad457a8e8833132432cee4ca9f65479a564
           state.activeCard = c;
         }
       } else {
