@@ -332,5 +332,10 @@ export default {
     state.players[payload].infectedAmountTrue +=  Math.ceil(state.players[payload].trueScore/2 - state.players[payload].infectedAmountTrue);
     state.players[payload].numViruses++;
     //bus.$emit('hackCanceled');
+  },
+  givePowerOutage(state,payload) {
+    state.players[payload].hasPowerOutage = true;
+    console.log(state.players[payload].name + " Has a Power Outage: " + state.players[payload].hasPowerOutage);
+    console.log("in givePowerOutage");
   }
 }

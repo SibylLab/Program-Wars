@@ -196,6 +196,8 @@ export default {
       let prevActive = this.$store.getters.getActiveCard
       if(c.type === 'VIRUS'){
         $('.virus').modal('show')
+      } else if(c.type === 'POWEROUTAGE'){
+        $('.powerOutage').modal('show');
       }
       this.$store.commit('selectCard', c)
       if (prevActive !== undefined) {

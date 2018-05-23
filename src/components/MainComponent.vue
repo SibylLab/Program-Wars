@@ -7,6 +7,8 @@
     ></hack-modal>
     <virus-modal id="virusModal" class="modal fade virus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
                  data-backdrop="static" data-keyboard="false"></virus-modal>
+    <power-outage-modal id="powerOutageModal" class="modal fade powerOutage" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                 data-backdrop="static" data-keyboard="false"></power-outage-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
@@ -68,6 +70,7 @@ import CoinModal from './CoinModal.vue'
 import PlayerTurn from './PlayerTurnPopUp.vue'
 import HackDiscard from './HackDiscardMsg.vue'
 import VirusModal from './VirusModal.vue'
+import PowerOutageModal from './PowerOutageModal'
 import Card from '../classes/Card'
 import Player from '../classes/Player'
 
@@ -109,7 +112,8 @@ export default {
     'winner-modal': WinnerModal,
     'coin-modal': CoinModal,
     'player-turn': PlayerTurn,
-    'hack-discard': HackDiscard
+    'hack-discard': HackDiscard,
+    'power-outage-modal': PowerOutageModal,
 
   },
   methods: {
