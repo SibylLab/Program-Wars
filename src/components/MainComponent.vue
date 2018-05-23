@@ -11,6 +11,8 @@
                  data-backdrop="static" data-keyboard="false"></power-outage-modal>
     <battery-backup-modal id="batteryBackupModal" class="modal fade batteryBackup" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
                         data-backdrop="static" data-keyboard="false"></battery-backup-modal>
+    <overclock-modal id="overclockModal" class="modal fade overclock" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                          data-backdrop="static" data-keyboard="false"></overclock-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
@@ -74,6 +76,8 @@ import HackDiscard from './HackDiscardMsg.vue'
 import VirusModal from './VirusModal.vue'
 import PowerOutageModal from './PowerOutageModal'
 import BatteryBackup from './BatteryBackup'
+import Overclock from './Overclock'
+
 import Card from '../classes/Card'
 import Player from '../classes/Player'
 
@@ -117,7 +121,8 @@ export default {
     'player-turn': PlayerTurn,
     'hack-discard': HackDiscard,
     'power-outage-modal': PowerOutageModal,
-    'battery-backup-modal': BatteryBackup
+    'battery-backup-modal': BatteryBackup,
+    'overclock-modal': Overclock,
 
   },
   methods: {

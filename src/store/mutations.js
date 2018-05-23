@@ -327,18 +327,24 @@ export default {
   },
   giveVirus(state,payload) {
     state.players[payload].hasVirus = true;
-    console.log(state.players[payload].name + " Has a virus: " + state.players[payload].hasVirus);
-    state.players[payload].infectedAmountFalse += Math.ceil(state.players[payload].falseScore/2 - state.players[payload].infectedAmountFalse);
-    state.players[payload].infectedAmountTrue +=  Math.ceil(state.players[payload].trueScore/2 - state.players[payload].infectedAmountTrue);
+    let falseVirus = Math.floor(state.players[payload].falseScore/2 - state.players[payload].infectedAmountFalse);
+    let trueVirus = Math.floor(state.players[payload].trueScore/2 - state.players[payload].infectedAmountTrue);
+    state.players[payload].infectedAmountFalse += falseVirus;
+    state.players[payload].infectedAmountTrue += trueVirus;
     state.players[payload].numViruses++;
-    //bus.$emit('hackCanceled');
   },
   givePowerOutage(state,payload) {
     state.players[payload].hasPowerOutage = true;
-    console.log(state.players[payload].name + " Has a Power Outage: " + state.players[payload].hasPowerOutage);
   },
   giveBatteryBackup(state,payload) {
     state.players[payload].hasPowerOutage = false;
-    console.log(state.players[payload].name + " Has a Power Outage: " + state.players[payload].hasPowerOutage);
+  },
+  giveOverclock(state,payload) {
+    let overclockTrue = (state.players[payload].trueScore - state.players[payload].infectedAmountTrue + state.players[payload].overclockIncreaseTrue);
+    let overclockFalse = (state.players[payload].falseScore - state.players[payload].infectedAmountFalse + state.players[payload].overclockIncreaseFalse);
+    state.players[payload].overclockIncreaseTrue += overclockTrue;
+    state.players[payload].overclockIncreaseFalse += overclockFalse;
+    console.log("OverClock False = " + overclockFalse);
+    console.log("OverClock True = " + overclockTrue);
   }
 }

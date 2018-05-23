@@ -61,9 +61,9 @@
         }
       },
       playerClicked(player) {
-        console.log("Im in playerClicked " + player);
+        //console.log("Im in playerClicked " + player);
         this.$store.commit('giveVirus', player);
-        console.log("Active Card " + this.$store.getActiveCard)
+        //console.log("Active Card " + this.$store.getActiveCard)
         $('.virus').modal('hide');
         let ret = this.$store.dispatch('playerTookTurn');
         this.$store.dispatch('turn', true);

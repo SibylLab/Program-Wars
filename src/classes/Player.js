@@ -30,8 +30,15 @@ export default class Player{
     this.infectedAmountTrue = 0;
     this.infectedAmountFalse = 0;
     this.numViruses = 0;
+    this.overclockIncreaseTrue = 0;
+    this.overclockIncreaseFalse = 0;
     if(this.isAi) {
       this.type = new Personality();
     }
   };
+
+  // updateScore(){
+  //   this.trueScore = (this.trueScore - this.infectedAmountTrue) * this.overclockMultiplier;
+  //   this.falseScore = (this.falseScore - this.infectedAmountFalse) * this.overclockMultiplier;
+  // }
 }
