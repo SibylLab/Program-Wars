@@ -336,6 +336,9 @@ export default {
   givePowerOutage(state,payload) {
     state.players[payload].hasPowerOutage = true;
     console.log(state.players[payload].name + " Has a Power Outage: " + state.players[payload].hasPowerOutage);
-    console.log("in givePowerOutage");
+  },
+  giveBatteryBackup(state,payload) {
+    state.players[payload].hasPowerOutage = false;
+    console.log(state.players[payload].name + " Has a Power Outage: " + state.players[payload].hasPowerOutage);
   }
 }

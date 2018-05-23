@@ -198,6 +198,8 @@ export default {
         $('.virus').modal('show')
       } else if(c.type === 'POWEROUTAGE'){
         $('.powerOutage').modal('show');
+      } else if(c.type === 'BATTERYBACKUP') {
+        $('.batteryBackup').modal('show');
       }
       this.$store.commit('selectCard', c)
       if (prevActive !== undefined) {

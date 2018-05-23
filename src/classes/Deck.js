@@ -33,7 +33,7 @@ const virus = 3;
 const powerOutage = 20;
 
 const overClock = 3;
-const batteryBackup = 3;
+const batteryBackup = 20;
 
 const antiVirus = 1;
 const firewall = 1;

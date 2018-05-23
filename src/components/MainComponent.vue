@@ -9,6 +9,8 @@
                  data-backdrop="static" data-keyboard="false"></virus-modal>
     <power-outage-modal id="powerOutageModal" class="modal fade powerOutage" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
                  data-backdrop="static" data-keyboard="false"></power-outage-modal>
+    <battery-backup-modal id="batteryBackupModal" class="modal fade batteryBackup" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                        data-backdrop="static" data-keyboard="false"></battery-backup-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
@@ -71,6 +73,7 @@ import PlayerTurn from './PlayerTurnPopUp.vue'
 import HackDiscard from './HackDiscardMsg.vue'
 import VirusModal from './VirusModal.vue'
 import PowerOutageModal from './PowerOutageModal'
+import BatteryBackup from './BatteryBackup'
 import Card from '../classes/Card'
 import Player from '../classes/Player'
 
@@ -114,6 +117,7 @@ export default {
     'player-turn': PlayerTurn,
     'hack-discard': HackDiscard,
     'power-outage-modal': PowerOutageModal,
+    'battery-backup-modal': BatteryBackup
 
   },
   methods: {

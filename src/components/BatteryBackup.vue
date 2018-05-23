@@ -2,23 +2,22 @@
   <div>
     <div class="modal-dialog modal-lg" role="document" data-backdrop="static" data-keyboard="false">
       <div class="modal-content" style="border-radius: 30px">
-        <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="powerOutageCanceled">
+        <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="batteryBackupCanceled">
           <span aria-hidden="true">&times;</span>
         </button>
-          <h3 class="modal-title">Opponents to Crash</h3>
+          <h3 class="modal-title">Battery Backup</h3>
         </div>
         <div class="modal-body">
           <div class="container col-lg-12">
             <div class="row">
-              <div v-for="player in players" :id="player.id" class="col-lg-4" style="-webkit-align-items: center">
-                <button class="btn btn-primary" @click="playerClicked(player.id)" v-if="!player.hasGenerator && !player.hasPowerOutage">Blackout <b>{{player.name}}</b></button>
-              </div>
+              <p>Do you want to use the Battery Backup to negate a power outage?</p>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-default" @click="discardPowerOutage" data-dismiss="modal" style="float: right; margin: 5px;" :style="hideButton">Discard P/O Card</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="powerOutageCanceled">Cancel</button>
+          <button class="btn btn-default" @click="discardBatteryBackup" data-dismiss="modal" style="float: right; margin: 5px;" :style="hideButton">Discard B/B Card</button>
+          <button class="btn btn-default" @click="useClicked()" :disabled="playerCanUse"><b>Use</b></button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="batteryBackupCanceled">Cancel</button>
         </div>
       </div>
     </div>
@@ -28,39 +27,37 @@
 <script>
 
   import { bus } from './Bus.vue'
-  import OpponentStacks from './OpponentStacks.vue'
 
   export default {
     props: ['players'],
-    components: {
-      'opponent-stacks': OpponentStacks
-    },
 
     methods: {
-      powerOutageCanceled() {
+      batteryBackupCanceled() {
         bus.$emit('hackCanceled');
       },
-      discardPowerOutage() {
+      discardBatteryBackup() {
         if (this.$store.getters.getActiveCard !== undefined) {
           this.$store.commit('discardSelectedCard');
           this.$store.dispatch('playerTookTurn');
           this.$store.dispatch('turn', true);
         }
       },
-      playerClicked(player) {
-        console.log("Im in playerClicked " + player);
-        this.$store.commit('givePowerOutage', player);
-        console.log("Active Card " + this.$store.getActiveCard)
-        $('.powerOutage').modal('hide');
+      useClicked() {
+        let player = this.$store.getters.getCurrentPlayer;
+        //console.log("Im in playerClicked " + player);
+        this.$store.commit('giveBatteryBackup', player.id);
+        console.log("Active Card " + this.$store.getActiveCard);
+        $('.batteryBackup').modal('hide');
         let ret = this.$store.dispatch('playerTookTurn');
-        this.$store.dispatch('turn', true);
-      }
+        let turn = this.$store.dispatch('turn', true);
+      },
+
     },
     computed: {
       hideButton() {
         let activeCard = this.$store.getters.getActiveCard;
         if(activeCard !== undefined) {
-          if(activeCard.type === 'POWEROUTAGE' && activeCard !== undefined) {
+          if(activeCard.type === 'BATTERYBACKUP' && activeCard !== undefined) {
             return 'display: block';
           } else {
             return 'display: none';
@@ -69,9 +66,13 @@
           return 'display: none'
         }
       },
+      playerCanUse() {
+        let player = this.$store.getters.getCurrentPlayer;
+        return !player.hasPowerOutage;
+      }
     },
     created() {
-      $('.powerOutage').modal({
+      $('.batteryBackup').modal({
         backdrop: 'static',
         keyboard: false
       })
