@@ -50,7 +50,7 @@
 
 <script>
 
-  import { bus } from './Bus';
+  import { bus } from '../SharedComponents/Bus';
 
   export default {
     props: ['playerList'],

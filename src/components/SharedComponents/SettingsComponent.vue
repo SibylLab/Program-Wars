@@ -62,18 +62,18 @@
 
 <script>
 
-  import PlayerInfoPanel from './PlayerInfoPanel'
+  import PlayerInfoPanel from '../MainGame/PlayerInfoPanel'
   import Playfield from './Playfield'
   import OpponentStacks from './OpponentStacks'
 
-  import RulesModal from './RulesModal.vue'
-  import CreditsModal from './CreditsModal.vue'
-  import TutorialModal from './TutorialStartModal'
+  import RulesModal from '../Modals/RulesModal.vue'
+  import CreditsModal from '../Modals/CreditsModal.vue'
+  import TutorialModal from '../Modals/TutorialStartModal'
 
   import {mapGetters} from 'vuex';
   import {mapMutations} from 'vuex';
-  import Card from '../classes/Card'
-  import Player from '../classes/Player'
+  import Card from '../../classes/Card'
+  import Player from '../../classes/Player'
 
   export default {
     name: 'settings-component',

@@ -4,7 +4,7 @@
  */
 import Card from './Card'
 
-const instruction1 = 20;
+const instruction1 = 7;
 const instruction2 = 7;
 const instruction3 = 7;
 // const instruction4 = 0;
@@ -29,10 +29,10 @@ const variable5 = 3;
 const variable6 = 1;
 
 const hack = 3;
-const virus = 20;
+const virus = 3;
 const powerOutage = 3;
 
-const overClock = 20;
+const overClock = 3;
 const batteryBackup = 3;
 
 const antiVirus = 1;
@@ -123,5 +123,4 @@ export default class Deck {
       [event[i - 1], event[j]] = [event[j], event[i - 1]];
     }
   }
-
 }

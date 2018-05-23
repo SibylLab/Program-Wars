@@ -41,7 +41,7 @@
 
   import { bus } from './Bus';
   import Card from './Card'
-  import Modal from './Modal';
+  import Modal from '../Modals/Modal';
 
 /**
  * The component that holds what will be used as the true and false stacks

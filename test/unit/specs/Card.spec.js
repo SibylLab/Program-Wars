@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Card from 'src/components/Card'
+import Card from 'src/components/SharedComponents/Card'
 import CardObj from '../../../src/classes/Card'
 
 function getCssString (Component, propsData) {

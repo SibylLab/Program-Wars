@@ -10,7 +10,7 @@
         <div class="modal-body">
           <div class="container">
             <ul class="nav nav-tabs" style="font-size: 25px">
-              <li v-for="player in players"><a data-toggle="tab" :href="'#' + player.id">{{ player.name }}</a></li>
+              <li v-for="player in players" v-if="!player.hasFirewall"><a data-toggle="tab" :href="'#' + player.id">{{ player.name }}</a></li>
             </ul>
 
             <div class="tab-content" style="text-align: left">
@@ -33,8 +33,8 @@
 
 <script>
 
-  import OpponentStacks from './OpponentStacks.vue'
-  import { bus } from './Bus.vue'
+  import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
+  import { bus } from '../../SharedComponents/Bus.vue'
 
   export default {
     props: ['players'],

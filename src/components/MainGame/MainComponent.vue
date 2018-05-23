@@ -13,6 +13,12 @@
                         data-backdrop="static" data-keyboard="false"></battery-backup-modal>
     <overclock-modal id="overclockModal" class="modal fade overclock" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
                           data-backdrop="static" data-keyboard="false"></overclock-modal>
+    <firewall-modal id="firewallModal" class="modal fade firewall" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                     data-backdrop="static" data-keyboard="false"></firewall-modal>
+    <generator-modal id="generatorModal" class="modal fade generator" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                     data-backdrop="static" data-keyboard="false"></generator-modal>
+    <anti-virus-modal id="antiVirusModal" class="modal fade antiVirus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                     data-backdrop="static" data-keyboard="false"></anti-virus-modal>
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
@@ -62,26 +68,29 @@
 
 <script>
 import PlayerInfoPanel from './PlayerInfoPanel'
-import Playfield from './Playfield'
+import Playfield from '../SharedComponents/Playfield'
 
-import OpponentStacks from './OpponentStacks'
-import Modal from './Modal'
-import RulesModal from './RulesModal.vue'
-import CreditsModal from './CreditsModal.vue'
-import HackModal from './HackModal.vue'
-import WinnerModal from './WinnerModal.vue'
-import CoinModal from './CoinModal.vue'
-import PlayerTurn from './PlayerTurnPopUp.vue'
-import HackDiscard from './HackDiscardMsg.vue'
-import VirusModal from './VirusModal.vue'
-import PowerOutageModal from './PowerOutageModal'
-import BatteryBackup from './BatteryBackup'
-import Overclock from './Overclock'
+import OpponentStacks from '../SharedComponents/OpponentStacks'
+import Modal from '../Modals/Modal'
+import RulesModal from '../Modals/RulesModal.vue'
+import CreditsModal from '../Modals/CreditsModal.vue'
+import HackModal from '../Modals/CardModals/HackModal.vue'
+import WinnerModal from '../Modals/WinnerModal.vue'
+import CoinModal from '../Modals/CoinModal.vue'
+import PlayerTurn from '../SharedComponents/PlayerTurnPopUp.vue'
+import HackDiscard from '../Modals/CardModals/HackDiscardMsg.vue'
+import VirusModal from '../Modals/CardModals/VirusModal.vue'
+import PowerOutageModal from '../Modals/CardModals/PowerOutageModal'
+import BatteryBackup from '../Modals/CardModals/BatteryBackup'
+import Overclock from '../Modals/CardModals/OverclockModal'
+import AntiVirus from '../Modals/CardModals/AntiVirusModal'
+import Generator from '../Modals/CardModals/Generator'
+import Firewall from '../Modals/CardModals/Firewall'
 
-import Card from '../classes/Card'
-import Player from '../classes/Player'
+import Card from '../../classes/Card'
+import Player from '../../classes/Player'
 
-import { bus } from './Bus';
+import { bus } from '../SharedComponents/Bus';
 
 export default {
   name: 'main-component',
@@ -123,6 +132,9 @@ export default {
     'power-outage-modal': PowerOutageModal,
     'battery-backup-modal': BatteryBackup,
     'overclock-modal': Overclock,
+    'firewall-modal': Firewall,
+    'generator-modal': Generator,
+    'anti-virus-modal': AntiVirus
 
   },
   methods: {

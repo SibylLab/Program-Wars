@@ -23,8 +23,6 @@ export default class Player{
     this.hasGenerator = false;
     this.hasAntiVirus = false;
     this.hasFirewall = false;
-    this.hasOverClock = false;
-    this.hasVirus = false;
     this.hasPowerOutage = false;
     this.isAi = isAi;
     this.infectedAmountTrue = 0;
@@ -32,6 +30,7 @@ export default class Player{
     this.numViruses = 0;
     this.overclockIncreaseTrue = 0;
     this.overclockIncreaseFalse = 0;
+    this.numOverclocked = 0;
     if(this.isAi) {
       this.type = new Personality();
     }

@@ -20,36 +20,16 @@
         </div>
         </div>
         <div class="row">
-          <div id="controls" class="col-sm">
-            <button class="btn btn-primary btn-lg rightSide" v-on:click="discardSelected" style="border-radius: 40px">
+          <div id="controls" class="col-sm" style="height: 80px; justify-content: center; align-items: center">
+            <button class="btn btn-primary btn-lg" v-on:click="discardSelected" style="border-radius: 40px">
               Discard <br/> Selected Card
             </button>
           </div>
         </div>
         </div>
-
-        <div class="container-fluid rounded" id="disabilityPanel" style="border-radius: 40px">
-          <div class="row">
-            <div class="col-sm">
-            <div class="panel panel-default">
-              <div class="panel-heading">Perks/Disabilities</div>
-              <div class="panel-body">Number of Viruses: {{getCurrentPlayer.numViruses}}</div>
-              <div class="panel-body" v-if="getCurrentPlayer.hasPowerOutage">You have a power outage! </div>
-              <div class="panel-body" v-if="getCurrentPlayer.hasAntiVirus">You're Protected From Viruses </div>
-              <div class="panel-body" v-if="getCurrentPlayer.hasGenerator">You're Protected From Power Outages </div>
-              <div class="panel-body" v-if="getCurrentPlayer.hasFirewall">You're Protected From Hacks </div>
-            </div>
-            </div>
-          </div>
-          <br>
+        <stats-panel></stats-panel>
 
       </div>
-      </div>
-      <!--<div class="container">-->
-        <!--<div class="row">-->
-          <!--<div class="col-lg">You have a virus</div>-->
-        <!--</div>-->
-      <!--</div>-->
       <div class="container" style="border-top: 1px solid white; padding: 10px;">
         <div class="row">
           <div class="col-md-12">
@@ -68,9 +48,10 @@
 </template>
 
 <script>
-import { bus } from './Bus';
-import Card from './Card'
-import Modal from './Modal'
+import { bus } from '../SharedComponents/Bus';
+import Card from '../SharedComponents/Card'
+import Modal from '../Modals/Modal'
+import StatsPanel from '../SharedComponents/StatsPanel'
 
 export default {
   name: 'PlayerInfoPanel',
@@ -170,12 +151,12 @@ export default {
   },
   components: {
     'card': Card,
-    'modal': Modal
+    'modal': Modal,
+    'stats-panel': StatsPanel
   },
   methods: {
     openModal() {
       $('.hack').modal('show');
-
     },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {
@@ -203,8 +184,17 @@ export default {
         $('.batteryBackup').modal('show');
       } else if(c.type === 'OVERCLOCK'){
         $('.overclock').modal('show');
+      } else if(c.type === 'FIREWALL'){
+        $('.firewall').modal('show');
       }
-      this.$store.commit('selectCard', c)
+      else if(c.type === 'GENERATOR'){
+        $('.generator').modal('show');
+      }
+      else if(c.type === 'ANTIVIRUS'){
+        $('.antiVirus').modal('show');
+      }
+
+      this.$store.commit('selectCard', c);
       if (prevActive !== undefined) {
         if (c.type !== 'G' || c.id !== prevActive.id) {
           this.$store.commit('removeAllSelectedStacks')

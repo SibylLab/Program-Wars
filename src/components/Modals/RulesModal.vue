@@ -26,9 +26,9 @@
                   <ul>
                     <li><h5>Instruction</h5>
                       <div>
-                        <img src="../../static/cardImg/I1.png" alt="Instruction 1 Card" class="cardImage">
-                        <img src="../../static/cardImg/I2.png" alt="Instruction 2 Card" class="cardImage">
-                        <img src="../../static/cardImg/I3.png" alt="Instruction 3 Card" class="cardImage">
+                        <img src="../../../static/cardImg/I1.png" alt="Instruction 1 Card" class="cardImage">
+                        <img src="../../../static/cardImg/I2.png" alt="Instruction 2 Card" class="cardImage">
+                        <img src="../../../static/cardImg/I3.png" alt="Instruction 3 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -44,10 +44,10 @@
 
                     <li><h5>Repetition</h5>
                      <div>
-                        <img src="../../static/cardImg/R2.png" alt="Repetition 2 Card" class="cardImage">
-                        <img src="../../static/cardImg/R3.png" alt="Repetition 3 Card" class="cardImage">
-                        <img src="../../static/cardImg/R4.png" alt="Repetition 4 Card" class="cardImage">
-                        <img src="../../static/cardImg/R5.png" alt="Repetition 5 Card" class="cardImage">
+                        <img src="../../../static/cardImg/R2.png" alt="Repetition 2 Card" class="cardImage">
+                        <img src="../../../static/cardImg/R3.png" alt="Repetition 3 Card" class="cardImage">
+                        <img src="../../../static/cardImg/R4.png" alt="Repetition 4 Card" class="cardImage">
+                        <img src="../../../static/cardImg/R5.png" alt="Repetition 5 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -67,11 +67,11 @@
                     </li>
                     <li><h5>Group</h5>
                       <div>
-                        <img src="../../static/cardImg/G2.png" alt="Group 2 Card" class="cardImage">
-                        <img src="../../static/cardImg/G3.png" alt="Group 2 Card" class="cardImage">
-                        <img src="../../static/cardImg/G4.png" alt="Group 2 Card" class="cardImage">
-                        <img src="../../static/cardImg/G5.png" alt="Group 2 Card" class="cardImage">
-                        <img src="../../static/cardImg/G6.png" alt="Group 2 Card" class="cardImage">
+                        <img src="../../../static/cardImg/G2.png" alt="Group 2 Card" class="cardImage">
+                        <img src="../../../static/cardImg/G3.png" alt="Group 2 Card" class="cardImage">
+                        <img src="../../../static/cardImg/G4.png" alt="Group 2 Card" class="cardImage">
+                        <img src="../../../static/cardImg/G5.png" alt="Group 2 Card" class="cardImage">
+                        <img src="../../../static/cardImg/G6.png" alt="Group 2 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -90,12 +90,12 @@
                     </li>
                     <li><h5>Variables</h5>
                       <div>
-                        <img src="../../static/cardImg/Rx.png" alt="Variable Repetition Card" class="cardImage">
-                        <img src="../../static/cardImg/V2.png" alt="Variable 2 Card" class="cardImage">
-                        <img src="../../static/cardImg/V3.png" alt="Variable 3 Card" class="cardImage">
-                        <img src="../../static/cardImg/V4.png" alt="Variable 4 Card" class="cardImage">
-                        <img src="../../static/cardImg/V5.png" alt="Variable 5 Card" class="cardImage">
-                        <img src="../../static/cardImg/V6.png" alt="Variable 6 Card" class="cardImage">
+                        <img src="../../../static/cardImg/Rx.png" alt="Variable Repetition Card" class="cardImage">
+                        <img src="../../../static/cardImg/V2.png" alt="Variable 2 Card" class="cardImage">
+                        <img src="../../../static/cardImg/V3.png" alt="Variable 3 Card" class="cardImage">
+                        <img src="../../../static/cardImg/V4.png" alt="Variable 4 Card" class="cardImage">
+                        <img src="../../../static/cardImg/V5.png" alt="Variable 5 Card" class="cardImage">
+                        <img src="../../../static/cardImg/V6.png" alt="Variable 6 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -116,7 +116,7 @@
                     </li>
                     <li><h5>Hack</h5>
                       <div>
-                        <img src="../../static/cardImg/H.png" alt="Instruction 1 Card" class="cardImage">
+                        <img src="../../../static/cardImg/H.png" alt="Instruction 1 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -153,9 +153,9 @@
                   <h4>Learning Computer Programming</h4>
                   <p>Learning computer program can be tough for some people.
                   Some programming languages are easier to learn than others. </p>
-                  <p>Python is one of the easier-to-learn programming language and it uses all of the ideas from Programming Wars. 
+                  <p>Python is one of the easier-to-learn programming language and it uses all of the ideas from Programming Wars.
                   A good place to start is with this <a href="http://interactivepython.org/runestone/static/IntroPythonTurtles/index.html">interactive Python tutorial.</a>
-                  <p>There are also many other Python tutorials available, such as this ones from <a href="https://www.codecademy.com/learn/learn-python">Code Academy.</a>                    
+                  <p>There are also many other Python tutorials available, such as this ones from <a href="https://www.codecademy.com/learn/learn-python">Code Academy.</a>
                   </p>
                 </div>
               </div>

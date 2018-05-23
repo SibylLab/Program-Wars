@@ -2,7 +2,7 @@ import TutorialDeck from "../classes/TutorialDeck";
 
 const uuidV1 = require('uuid/v1');
 
-import { bus } from '../components/Bus';
+import { bus } from '../components/SharedComponents/Bus';
 
 import Stack from '../classes/Stack'
 import Player from '../classes/Player'
@@ -344,7 +344,15 @@ export default {
     let overclockFalse = (state.players[payload].falseScore - state.players[payload].infectedAmountFalse + state.players[payload].overclockIncreaseFalse);
     state.players[payload].overclockIncreaseTrue += overclockTrue;
     state.players[payload].overclockIncreaseFalse += overclockFalse;
-    console.log("OverClock False = " + overclockFalse);
-    console.log("OverClock True = " + overclockTrue);
+    state.players[payload].numOverclocked++;
+  },
+  giveFirewall(state, payload){
+    state.players[payload].hasFirewall = true;
+  },
+  giveGenerator(state,payload){
+    state.players[payload].hasGenerator = true;
+  },
+  giveAntiVirus(state,payload){
+    state.players[payload].hasAntiVirus = true;
   }
 }

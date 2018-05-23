@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import { bus } from './Bus.vue'
+  import { bus } from '../../SharedComponents/Bus.vue'
   export default {
   }
 </script>

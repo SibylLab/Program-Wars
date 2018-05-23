@@ -1,4 +1,4 @@
-import hackModal from '../../../src/components/HackModal.vue'
+import hackModal from '../../../src/components/Modals/CardModals/HackModal.vue'
 // import { bus } from '../../../src/components/Bus.vue'
 
 describe('HackModal', () => {

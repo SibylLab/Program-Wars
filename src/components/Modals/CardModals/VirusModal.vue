@@ -14,18 +14,6 @@
                 <button class="btn btn-primary" @click="playerClicked(player.id)" v-if="!player.hasAntiVirus">Infect <b>{{player.name}}</b></button>
               </div>
             </div>
-
-            <!--<ul class="nav nav-tabs" style="font-size: 25px">-->
-              <!--<li v-for="player in players"><a data-toggle="tab" :href="'#' + player.id">{{ player.name }}</a></li>-->
-            <!--</ul>-->
-
-            <!--<div class="tab-content" style="text-align: left">-->
-              <!--<div role="tabpanel" class="tab-pane" id="1">a</div>-->
-              <!--<div v-for="player in players" :id="player.id" class="tab-pane active">-->
-                <!--<br>-->
-                <!--<button class="btn btn-primary">Infect {{player.id}}</button>-->
-              <!--</div>-->
-            <!--</div>-->
           </div>
         </div>
         <div class="modal-footer">
@@ -40,14 +28,11 @@
 
 <script>
 
-  import { bus } from './Bus.vue'
-  import OpponentStacks from './OpponentStacks.vue'
+  import { bus } from '../../SharedComponents/Bus.vue'
 
   export default {
     props: ['players'],
-    components: {
-      'opponent-stacks': OpponentStacks
-    },
+
 
     methods: {
       virusCanceled() {
@@ -61,9 +46,7 @@
         }
       },
       playerClicked(player) {
-        //console.log("Im in playerClicked " + player);
         this.$store.commit('giveVirus', player);
-        //console.log("Active Card " + this.$store.getActiveCard)
         $('.virus').modal('hide');
         let ret = this.$store.dispatch('playerTookTurn');
         this.$store.dispatch('turn', true);

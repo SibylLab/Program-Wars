@@ -27,8 +27,8 @@
 
 <script>
 
-  import { bus } from './Bus.vue'
-  import OpponentStacks from './OpponentStacks.vue'
+  import { bus } from '../../SharedComponents/Bus.vue'
+  import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
 
   export default {
     props: ['players'],

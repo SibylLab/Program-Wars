@@ -53,26 +53,26 @@
 
 <script>
   import PlayerInfoPanel from './TutorialPlayerInfoPanel'
-  import Playfield from './Playfield'
+  import Playfield from '../SharedComponents/Playfield'
 
-  import OpponentStacks from './OpponentStacks'
-  import Modal from './Modal'
-  import RulesModal from './RulesModal.vue'
-  import CreditsModal from './CreditsModal.vue'
-  import HackModal from './HackModal.vue'
-  import WinnerModal from './WinnerModal.vue'
-  import TutorialModal from './TutorialStartModal.vue'
-  import CoinModal from './CoinModal.vue'
-  import PlayerTurn from './PlayerTurnPopUp.vue'
-  import HackDiscard from './HackDiscardMsg.vue'
+  import OpponentStacks from '../SharedComponents/OpponentStacks'
+  import Modal from '../Modals/Modal'
+  import RulesModal from '../Modals/RulesModal.vue'
+  import CreditsModal from '../Modals/CreditsModal.vue'
+  import HackModal from '../Modals/CardModals/HackModal.vue'
+  import WinnerModal from '../Modals/WinnerModal.vue'
+  import TutorialModal from '../Modals/TutorialStartModal.vue'
+  import CoinModal from '../Modals/CoinModal.vue'
+  import PlayerTurn from '../SharedComponents/PlayerTurnPopUp.vue'
+  import HackDiscard from '../Modals/CardModals/HackDiscardMsg.vue'
 
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
 
-  import Card from '../classes/Card'
-  import Player from '../classes/Player'
+  import Card from '../../classes/Card'
+  import Player from '../../classes/Player'
 
-  import { bus } from './Bus';
+  import { bus } from '../SharedComponents/Bus';
 
   export default {
     name: 'TutorialComponent',

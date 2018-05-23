@@ -43,9 +43,9 @@
 </template>
 
 <script>
-  import { bus } from './Bus';
-  import Card from './Card'
-  import Modal from './Modal'
+  import { bus } from '../SharedComponents/Bus';
+  import Card from '../SharedComponents/Card'
+  import Modal from '../Modals/Modal'
 
   export default {
     name: 'PlayerInfoPanel',
