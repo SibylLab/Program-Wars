@@ -234,7 +234,7 @@
                       </ol>
                       <b>Relation to computer programming:</b>
                       Firewalls monitor and restrict what is coming into your local network. This will help protect you
-                      from hackers. 
+                      from hackers.
                     </div>
                   </li>
 
