@@ -336,7 +336,7 @@ export default {
     state.players[payload].hasPowerOutage = false;
   },
   giveOverclock(state,payload) {
-    state.players[payload].updateOverclock((state.players[payload].trueScore - state.players[payload].infectedAmountTrue + state.players[payload].overclockIncreaseTrue), (state.players[payload].falseScore - state.players[payload].infectedAmountFalse + state.players[payload].overclockIncreaseFalse));
+    state.players[payload].updateOverclock();
 
     state.players[payload].numOverclocked++;
   },
