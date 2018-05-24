@@ -327,10 +327,8 @@ export default {
   },
   giveVirus(state,payload) {
     state.players[payload].hasVirus = true;
-    let falseVirus = Math.floor(state.players[payload].falseScore/2 - state.players[payload].infectedAmountFalse);
-    let trueVirus = Math.floor(state.players[payload].trueScore/2 - state.players[payload].infectedAmountTrue);
-    state.players[payload].infectedAmountFalse += falseVirus;
-    state.players[payload].infectedAmountTrue += trueVirus;
+    state.players[payload].infectedAmountFalse += Math.floor(state.players[payload].falseScore/2 - state.players[payload].infectedAmountFalse);
+    state.players[payload].infectedAmountTrue += Math.floor(state.players[payload].trueScore/2 - state.players[payload].infectedAmountTrue);
     state.players[payload].numViruses++;
   },
   givePowerOutage(state,payload) {
@@ -340,10 +338,8 @@ export default {
     state.players[payload].hasPowerOutage = false;
   },
   giveOverclock(state,payload) {
-    let overclockTrue = (state.players[payload].trueScore - state.players[payload].infectedAmountTrue + state.players[payload].overclockIncreaseTrue);
-    let overclockFalse = (state.players[payload].falseScore - state.players[payload].infectedAmountFalse + state.players[payload].overclockIncreaseFalse);
-    state.players[payload].overclockIncreaseTrue += overclockTrue;
-    state.players[payload].overclockIncreaseFalse += overclockFalse;
+    state.players[payload].overclockIncreaseTrue += (state.players[payload].trueScore - state.players[payload].infectedAmountTrue + state.players[payload].overclockIncreaseTrue);
+    state.players[payload].overclockIncreaseFalse += (state.players[payload].falseScore - state.players[payload].infectedAmountFalse + state.players[payload].overclockIncreaseFalse);
     state.players[payload].numOverclocked++;
   },
   giveFirewall(state, payload){
