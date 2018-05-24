@@ -326,9 +326,7 @@ export default {
     state.factIndex++;
   },
   giveVirus(state,payload) {
-    state.players[payload].hasVirus = true;
-    state.players[payload].infectedAmountFalse += Math.floor(state.players[payload].falseScore/2 - state.players[payload].infectedAmountFalse);
-    state.players[payload].infectedAmountTrue += Math.floor(state.players[payload].trueScore/2 - state.players[payload].infectedAmountTrue);
+    state.players[payload].updateVirusAmount();
     state.players[payload].numViruses++;
   },
   givePowerOutage(state,payload) {
@@ -338,8 +336,8 @@ export default {
     state.players[payload].hasPowerOutage = false;
   },
   giveOverclock(state,payload) {
-    state.players[payload].overclockIncreaseTrue += (state.players[payload].trueScore - state.players[payload].infectedAmountTrue + state.players[payload].overclockIncreaseTrue);
-    state.players[payload].overclockIncreaseFalse += (state.players[payload].falseScore - state.players[payload].infectedAmountFalse + state.players[payload].overclockIncreaseFalse);
+    state.players[payload].updateOverclock((state.players[payload].trueScore - state.players[payload].infectedAmountTrue + state.players[payload].overclockIncreaseTrue), (state.players[payload].falseScore - state.players[payload].infectedAmountFalse + state.players[payload].overclockIncreaseFalse));
+
     state.players[payload].numOverclocked++;
   },
   giveFirewall(state, payload){

@@ -36,8 +36,15 @@ export default class Player{
     }
   };
 
-  // updateScore(){
-  //   this.trueScore = (this.trueScore - this.infectedAmountTrue) * this.overclockMultiplier;
-  //   this.falseScore = (this.falseScore - this.infectedAmountFalse) * this.overclockMultiplier;
-  // }
+  updateOverclock(){
+     this.overclockIncreaseTrue += this.trueScore - this.infectedAmountTrue + this.overclockIncreaseTrue;
+     this.overclockIncreaseFalse += this.falseScore - this.infectedAmountFalse + this.overclockIncreaseFalse;
+     console.log(this.overclockIncreaseTrue)
+    console.log(this.overclockIncreaseFalse)
+   };
+
+  updateVirusAmount(){
+    this.infectedAmountFalse += Math.floor(this.falseScore/2 - this.infectedAmountFalse);
+    this.infectedAmountTrue += Math.floor(this.trueScore/2 - this.infectedAmountTrue);
+  }
 }

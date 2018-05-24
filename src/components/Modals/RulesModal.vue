@@ -195,7 +195,7 @@
                         When you overclock your computer your computer runs faster, allowing your programs to run much quicker.
                       </div>
                     </li>
-                  </ul>
+
 
                   <li><h5>Generator</h5>
                     <div>
@@ -237,7 +237,7 @@
                       from hackers.
                     </div>
                   </li>
-
+                  </ul>
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="gamePlay">
