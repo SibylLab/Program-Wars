@@ -323,9 +323,9 @@ export default {
     } else if (aiMove.moveType === 'attack') {
       bus.$emit('aiAttack', stackToHack);
     } else if (aiMove.moveType === 'protection') {
-      bus.$emit('aiHack');
+      bus.$emit('aiProtection');
     } else if (aiMove.moveType === 'enhance') {
-      bus.$emit('aiHack');
+      bus.$emit('aiEnhance');
     }
   },
   increaseFactIndex(state) {

@@ -79,6 +79,9 @@ export default {
   getCurrentPlayer(state) {
     return state.players[state.activePlayer];
   },
+  getFirstRound(state){
+    return state.firstRound;
+  },
   getAiDependent(state) {
     let playerHand;
     let playerStack = [];

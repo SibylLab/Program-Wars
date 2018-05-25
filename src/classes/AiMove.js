@@ -97,7 +97,7 @@ export default class {
   }
 
   getHackOpponent(event) {
-    let tmpOpponents = event.opponents.filter(opponents => opponents.score > 0 && opponents.cards[0].type !== 'G');
+    let tmpOpponents = event.opponents.filter(opponents => opponents.score > 0 && opponents.cards[0].type !== 'G' && opponents.hasFirewall !== true);
       let tmpScore = 0;
       let opponentToAttack;
       for(let player of tmpOpponents) {
@@ -109,15 +109,24 @@ export default class {
       return opponentToAttack;
   }
 
-  getOpponentToAttack(event) {
-    let tmpOpponents = event.opponents.filter(opponents => opponents.hasGenerator !== true);
-    let tmpScore = 0;
-    let opponentToAttack;
-    for(let player of tmpOpponents) {
-      if(player.score >= tmpScore) {
-        opponentToAttack = player;
-        console.log("Attack: " + JSON.stringify(opponentToAttack));
-        tmpScore = player.score;
+  getOpponentToAttack(event, type) {
+    let tmpOpponents = undefined;
+    if(type === "POWEROUTAGE") {
+      console.log("In POWEROUTAGE")
+      tmpOpponents = event.opponents.filter(opponents => opponents.hasGenerator !== true && opponents.hasPowerOutage!== true);
+    } else if(type === "VIRUS"){
+      tmpOpponents = event.opponents.filter(opponents => opponents.hasAntiVirus !== true && (opponents.trueScore !== 0 || opponents.falseScore !== 0));
+    }
+
+      let tmpScore = 0;
+      let opponentToAttack = undefined;
+    if(tmpOpponents !== undefined) {
+      for (let player of tmpOpponents) {
+        if (player.score >= tmpScore) {
+          opponentToAttack = player;
+          console.log("Attack: " + JSON.stringify(opponentToAttack));
+          tmpScore = player.score;
+        }
       }
     }
     return opponentToAttack;

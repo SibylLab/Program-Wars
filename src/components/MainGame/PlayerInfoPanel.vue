@@ -311,12 +311,20 @@ export default {
           if(this.$store.getters.getActiveCard.type === 'POWEROUTAGE') {
 
             $('.powerOutage').modal('hide');
-            // if(this.$store.getters.getTutorialState){
-            //   bus.$emit('cardPlayed');
-            //   this.$store.commit('increaseFactIndex');
-            // }
             console.log("Stack to hack: " + stackToHack.playerId);
             this.$store.commit('givePowerOutage', stackToHack.playerId);
+            this.$store.dispatch('playerTookTurn');
+            bus.$emit('cardDeselected');
+            if(this.$store.getters.getHasPlayed) {
+              this.$store.dispatch('turn', true);
+            }
+            this.$store.state.aiTurn = false;
+          }
+          else if(this.$store.getters.getActiveCard.type === 'VIRUS') {
+
+            $('.virus').modal('hide');
+            console.log("Stack to hack: " + stackToHack.playerId);
+            this.$store.commit('giveVirus', stackToHack.playerId);
             this.$store.dispatch('playerTookTurn');
             bus.$emit('cardDeselected');
             if(this.$store.getters.getHasPlayed) {
@@ -327,6 +335,71 @@ export default {
         }
       }
     });
+
+    bus.$on('aiProtection', () => {
+      if(this.$store.state.aiTurn === true) {
+        if(this.$store.state.activeCard !== undefined) {
+          if (this.$store.getters.getActiveCard.type === 'FIREWALL') {
+            $('.firewall').modal('hide');
+            this.$store.commit('giveFirewall', this.$store.getters.getCurrentPlayer.id);
+            this.$store.dispatch('playerTookTurn');
+            bus.$emit('cardDeselected');
+            if (this.$store.getters.getHasPlayed) {
+              this.$store.dispatch('turn', true);
+            }
+            this.$store.state.aiTurn = false;
+          }
+          else if (this.$store.getters.getActiveCard.type === 'ANTIVIRUS') {
+            $('.antiVirus').modal('hide');
+            this.$store.commit('giveAntiVirus', this.$store.getters.getCurrentPlayer.id);
+            this.$store.dispatch('playerTookTurn');
+            bus.$emit('cardDeselected');
+            if (this.$store.getters.getHasPlayed) {
+              this.$store.dispatch('turn', true);
+            }
+            this.$store.state.aiTurn = false;
+          }
+          else if (this.$store.getters.getActiveCard.type === 'GENERATOR') {
+            $('.generator').modal('hide');
+            this.$store.commit('giveGenerator', this.$store.getters.getCurrentPlayer.id);
+            this.$store.dispatch('playerTookTurn');
+            bus.$emit('cardDeselected');
+            if (this.$store.getters.getHasPlayed) {
+              this.$store.dispatch('turn', true);
+            }
+            this.$store.state.aiTurn = false;
+          }
+        }
+      }
+    });
+
+    bus.$on('aiEnhance', () => {
+      if(this.$store.state.aiTurn === true) {
+        if(this.$store.state.activeCard !== undefined) {
+          if (this.$store.getters.getActiveCard.type === 'BATTERYBACKUP') {
+            $('.batteryBackup').modal('hide');
+            this.$store.commit('giveBatteryBackup', this.$store.getters.getCurrentPlayer.id);
+            this.$store.dispatch('playerTookTurn');
+            bus.$emit('cardDeselected');
+            if (this.$store.getters.getHasPlayed) {
+              this.$store.dispatch('turn', true);
+            }
+            this.$store.state.aiTurn = false;
+          }
+          else if (this.$store.getters.getActiveCard.type === 'OVERCLOCK') {
+            $('.batteryBackup').modal('hide');
+            this.$store.commit('giveOverclock', this.$store.getters.getCurrentPlayer.id);
+            this.$store.dispatch('playerTookTurn');
+            bus.$emit('cardDeselected');
+            if (this.$store.getters.getHasPlayed) {
+              this.$store.dispatch('turn', true);
+            }
+            this.$store.state.aiTurn = false;
+          }
+        }
+      }
+    });
+
   },
 }
 </script>

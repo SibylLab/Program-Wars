@@ -25,6 +25,7 @@ export default class Gambler {
     let hand = this.move.organizeHand(event);
 
     this.boolSide = store.getters.getCoinMsg;
+
     // console.log("The coinMsg: " + store.getters.getCoinMsg)
     // console.log("AI is choosing: " + this.boolSide)
 
@@ -42,38 +43,41 @@ export default class Gambler {
 
     }
 
-    // else if(hand.firewallCard !== undefined){
-    //   cardToPlay = hand.firewallCard;
-    //   moveType = 'protection'
-    // }
-    // else if(hand.virusCard !== undefined) {
-    //   opponentToAttack = this.move.getHackOpponent(event);
-    //   cardToPlay = hand.virusCard;
-    //   moveType = 'attack'
-    // }
-    // else if(hand.batteryBackupCard !== undefined && store.getters.getCurrentPlayer.hasPowerOutage){
-    //   cardToPlay = hand.batteryBackupCard;
-    //   moveType = 'enhance'
-    // }
-    //
-    // else if(hand.antiVirusCard !== undefined){
-    //   cardToPlay = hand.antiVirusCard;
-    //   moveType = 'protection'
-    // }
-    // else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 &&  store.getters.getCurrentPlayer.falseScore !== 0){
-    //   cardToPlay = hand.overclockCard;
-    //   moveType = 'enhance'
-    // }
+    else if(hand.firewallCard !== undefined){
+      cardToPlay = hand.firewallCard;
+      moveType = 'protection'
+    }
+    else if(hand.virusCard !== undefined && !store.getters.getFirstRound) {
+      opponentToAttack = this.move.getOpponentToAttack(event, "VIRUS");
+      cardToPlay = hand.virusCard;
+      moveType = 'attack';
+    }
+
+    else if(hand.generatorCard !== undefined){
+      cardToPlay = hand.generatorCard;
+      moveType = 'protection'
+    }
+
+    else if(hand.antiVirusCard !== undefined){
+      cardToPlay = hand.antiVirusCard;
+      moveType = 'protection'
+    }
+    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0){
+      cardToPlay = hand.overclockCard;
+      moveType = 'enhance'
+    }
     else if(hand.powerOutageCard !== undefined){
       opponentToAttack = this.move.getOpponentToAttack(event);
       cardToPlay = hand.powerOutageCard;
       moveType = 'attack'
     }
 
-    // else if(hand.generatorCard !== undefined){
-    //   cardToPlay = hand.generatorCard;
-    //   moveType = 'protection'
-    // }
+    else if(hand.batteryBackupCard !== undefined && store.getters.getCurrentPlayer.hasPowerOutage){
+      console.log("Current player: " + JSON.stringify(store.getters.getCurrentPlayer));
+      cardToPlay = hand.batteryBackupCard;
+      moveType = 'enhance'
+    }
+
 
     else if(hand.rXCard !== undefined && this.move.getStackToRepeat(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.rXCard;
