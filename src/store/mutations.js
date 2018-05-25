@@ -320,6 +320,12 @@ export default {
       state.selectedStackBoolean = stackToPlay[0].boolSide;
       state.groupStacks = false;
       bus.$emit('aiGroup', stackToPlay[0].boolSide, state.players[state.activePlayer].id);
+    } else if (aiMove.moveType === 'attack') {
+      bus.$emit('aiAttack', stackToHack);
+    } else if (aiMove.moveType === 'protection') {
+      bus.$emit('aiHack');
+    } else if (aiMove.moveType === 'enhance') {
+      bus.$emit('aiHack');
     }
   },
   increaseFactIndex(state) {
@@ -327,7 +333,6 @@ export default {
   },
   giveVirus(state,payload) {
     state.players[payload].updateVirusAmount();
-    state.players[payload].numViruses++;
   },
   givePowerOutage(state,payload) {
     state.players[payload].hasPowerOutage = true;
@@ -337,16 +342,18 @@ export default {
   },
   giveOverclock(state,payload) {
     state.players[payload].updateOverclock();
-
-    state.players[payload].numOverclocked++;
   },
   giveFirewall(state, payload){
     state.players[payload].hasFirewall = true;
   },
   giveGenerator(state,payload){
     state.players[payload].hasGenerator = true;
+    state.players[payload].hasPowerOutage = false;
   },
   giveAntiVirus(state,payload){
     state.players[payload].hasAntiVirus = true;
+    state.players[payload].numViruses = 0;
+    state.players[payload].infectedAmountFalse = 0;
+    state.players[payload].infectedAmountTrue = 0;
   }
 }

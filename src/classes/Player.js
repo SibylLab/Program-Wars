@@ -39,12 +39,12 @@ export default class Player{
   updateOverclock(){
      this.overclockIncreaseTrue += this.trueScore - this.infectedAmountTrue + this.overclockIncreaseTrue;
      this.overclockIncreaseFalse += this.falseScore - this.infectedAmountFalse + this.overclockIncreaseFalse;
-     console.log(this.overclockIncreaseTrue)
-    console.log(this.overclockIncreaseFalse)
+     this.numOverclocked++;
    };
 
   updateVirusAmount(){
     this.infectedAmountFalse += Math.floor(this.falseScore/2 - this.infectedAmountFalse);
     this.infectedAmountTrue += Math.floor(this.trueScore/2 - this.infectedAmountTrue);
+    this.numViruses++;
   }
 }

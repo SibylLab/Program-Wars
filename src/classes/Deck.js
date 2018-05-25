@@ -30,7 +30,7 @@ const variable6 = 1;
 
 const hack = 3;
 const virus = 3;
-const powerOutage = 3;
+const powerOutage = 25;
 
 const overClock = 3;
 const batteryBackup = 3;

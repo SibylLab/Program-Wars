@@ -304,7 +304,31 @@ export default {
     });
     bus.$on('aiDiscard', () => {
       this.discardSelected();
-    })
+    });
+    bus.$on('aiAttack', (stackToHack) => {
+      if(this.$store.state.aiTurn === true) {
+        if(this.$store.state.activeCard !== undefined) {
+          if(this.$store.getters.getActiveCard.type === 'POWEROUTAGE') {
+
+            $('.powerOutage').modal('hide');
+            // if(this.$store.getters.getTutorialState){
+            //   bus.$emit('cardPlayed');
+            //   this.$store.commit('increaseFactIndex');
+            // }
+            //this.$store.commit('setPlayerScores');
+            console.log("Stack to hack: " + stackToHack.playerId);
+            this.$store.commit('givePowerOutage', stackToHack.playerId);
+            this.$store.dispatch('playerTookTurn');
+            bus.$emit('cardDeselected');
+            if(this.$store.getters.getHasPlayed) {
+              this.$store.dispatch('turn', true);
+            }
+
+            this.$store.state.aiTurn = false;
+          }
+        }
+      }
+    });
   },
 }
 </script>

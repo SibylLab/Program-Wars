@@ -15,6 +15,14 @@ export default class {
     let hackCard = undefined;
     let bestVCard = undefined;
     let bestGCard = [];
+    let virusCard = undefined;
+    let powerOutageCard = undefined;
+    let batteryBackupCard = undefined;
+    let overclockCard = undefined;
+    let generatorCard = undefined;
+    let antiVirusCard = undefined;
+    let firewallCard = undefined;
+
 
     for(let hand of event.hand.cards) {
       if(hand.type === 'I') {
@@ -36,8 +44,29 @@ export default class {
       if(hand.type === 'H') {
         hackCard = hand;
       }
+      if(hand.type === 'VIRUS') {
+        virusCard = hand;
+      }
+      if(hand.type === 'POWEROUTAGE') {
+        powerOutageCard = hand;
+      }
+      if(hand.type === 'BATTERYBACKUP') {
+        batteryBackupCard = hand;
+      }
+      if(hand.type === 'OVERCLOCK') {
+        overclockCard = hand;
+      }
+      if(hand.type === 'FIREWALL') {
+        firewallCard = hand;
+      }
+      if(hand.type === 'GENERATOR') {
+        generatorCard = hand;
+      }
+      if(hand.type === 'ANTIVIRUS') {
+        antiVirusCard = hand;
+      }
     }
-    return {bestICard, bestRCard, rXCard, hackCard, bestVCard, bestGCard}
+    return {bestICard, bestRCard, rXCard, hackCard, bestVCard, bestGCard, virusCard, powerOutageCard, batteryBackupCard, overclockCard, firewallCard, generatorCard, antiVirusCard}
   };
 
   getStackToRepeat(e) {
@@ -80,6 +109,20 @@ export default class {
       return opponentToAttack;
   }
 
+  getOpponentToAttack(event) {
+    let tmpOpponents = event.opponents.filter(opponents => opponents.hasGenerator !== true);
+    let tmpScore = 0;
+    let opponentToAttack;
+    for(let player of tmpOpponents) {
+      if(player.score >= tmpScore) {
+        opponentToAttack = player;
+        console.log("Attack: " + JSON.stringify(opponentToAttack));
+        tmpScore = player.score;
+      }
+    }
+    return opponentToAttack;
+  }
+
   findBestCard(card, cardToBeat) {
     if(cardToBeat !== undefined && cardToBeat !== undefined) {
       if(card.value > cardToBeat.value) {
@@ -116,7 +159,6 @@ export default class {
       let lookingForStacks = this.findMatch(card.value, tmpStack);
       if(lookingForStacks !== undefined) {
         return {cardToPlay: card, stackToPlay: lookingForStacks};
-        break;
       }
     }
     return undefined;
