@@ -315,7 +315,6 @@ export default {
             //   bus.$emit('cardPlayed');
             //   this.$store.commit('increaseFactIndex');
             // }
-            //this.$store.commit('setPlayerScores');
             console.log("Stack to hack: " + stackToHack.playerId);
             this.$store.commit('givePowerOutage', stackToHack.playerId);
             this.$store.dispatch('playerTookTurn');
@@ -323,7 +322,6 @@ export default {
             if(this.$store.getters.getHasPlayed) {
               this.$store.dispatch('turn', true);
             }
-
             this.$store.state.aiTurn = false;
           }
         }
