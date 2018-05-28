@@ -244,7 +244,21 @@ export default {
         let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1];
         this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard});
-        this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
+        console.log("Active side: " + this.$store.getters.getActiveSide);
+        if(this.$store.getters.getActiveSide) {
+          this.$store.commit('changeBonusScore', {
+            id: this.$store.getters.getCurrentPlayer.id,
+            trueScore: 2,
+            falseScore: 0
+          });
+        } else if(!this.$store.getters.getActiveSide){
+          this.$store.commit('changeBonusScore', {
+            id: this.$store.getters.getCurrentPlayer.id,
+            trueScore: 0,
+            falseScore: 2
+          });
+        }
+        this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean});
         this.$store.dispatch('playerTookTurn');
         bus.$emit('cardDeselected');
         this.$store.commit('groupStacks', {yesOrNo: false});

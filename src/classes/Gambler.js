@@ -17,9 +17,13 @@ export default class Gambler {
    * @returns {*} The card to play, the stack to play, the opponent to attack, and the move type.
    */
   turnLogic(event) {
+    //This will be executed in either OpponentStacks or PlayerInfoPanel
     let cardToPlay = undefined;
+    //This will be executed in AiMove.js
     let stackToPlay = undefined;
+    //This will be executed in AiMove.js
     let opponentToAttack = undefined;
+    //This is used in mutations under AiTakeTurn
     let moveType = undefined;
 
     let hand = this.move.organizeHand(event);
@@ -73,7 +77,6 @@ export default class Gambler {
     }
 
     else if(hand.batteryBackupCard !== undefined && store.getters.getCurrentPlayer.hasPowerOutage){
-      console.log("Current player: " + JSON.stringify(store.getters.getCurrentPlayer));
       cardToPlay = hand.batteryBackupCard;
       moveType = 'enhance'
     }

@@ -17,26 +17,23 @@ export default class Gambler {
    * @returns {*} The card to play, the stack to play, the opponent to attack, and the move type.
    */
   turnLogic(event) {
+    //This will be executed in either OpponentStacks or PlayerInfoPanel
     let cardToPlay = undefined;
+    //This will be executed in AiMove.js
     let stackToPlay = undefined;
+    //This will be executed in AiMove.js
     let opponentToAttack = undefined;
+    //This is used in mutations under AiTakeTurn
     let moveType = undefined;
 
     let hand = this.move.organizeHand(event);
-
-
-
     this.boolSide = store.getters.getCoinMsg;
-    // console.log("The coinMsg: " + store.getters.getCoinMsg)
-    // console.log("AI is choosing: " + this.boolSide)
-
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
 
     if(hand.bestGCard.length > 0 && canGroup  !== undefined) {
       cardToPlay = canGroup.cardToPlay;
       stackToPlay = canGroup.stackToPlay;
       moveType = 'group';
-
     }
 
     else if(hand.virusCard !== undefined && !store.getters.getFirstRound) {

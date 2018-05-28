@@ -52,9 +52,9 @@ export default {
     },
     score() {
       return {trueScore: (this.$store.getters.getPlayers[this.playerId].trueScore - this.$store.getters.getPlayers[this.playerId].infectedAmountTrue)
-        + this.$store.getters.getPlayers[this.playerId].overclockIncreaseTrue,
+        + this.$store.getters.getPlayers[this.playerId].overclockIncreaseTrue + this.$store.getters.getPlayers[this.playerId].bonusTrue,
               falseScore: (this.$store.getters.getPlayers[this.playerId].falseScore - this.$store.getters.getPlayers[this.playerId].infectedAmountFalse)
-              + this.$store.getters.getPlayers[this.playerId].overclockIncreaseFalse};
+              + this.$store.getters.getPlayers[this.playerId].overclockIncreaseFalse + this.$store.getters.getPlayers[this.playerId].bonusFalse};
     }
   },
   components: {

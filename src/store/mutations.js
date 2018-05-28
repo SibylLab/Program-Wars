@@ -66,9 +66,7 @@ export default {
         if (!card.selected) {
           bus.$emit('cardDeselected')
         } else {
-          console.log("Adding active card " + JSON.stringify(c, null, 4))
           state.activeCard = c;
-          console.log("the active Card is:  " + JSON.stringify(state.activeCard, null, 4))
         }
       } else {
         card.selected = false
@@ -339,21 +337,29 @@ export default {
   },
   giveBatteryBackup(state,payload) {
     state.players[payload].hasPowerOutage = false;
+    state.players[payload].updateBonus(1,1);
   },
   giveOverclock(state,payload) {
     state.players[payload].updateOverclock();
   },
   giveFirewall(state, payload){
     state.players[payload].hasFirewall = true;
+    state.players[payload].updateBonus(1,1);
   },
   giveGenerator(state,payload){
     state.players[payload].hasGenerator = true;
     state.players[payload].hasPowerOutage = false;
+    state.players[payload].updateBonus(1,1);
   },
   giveAntiVirus(state,payload){
     state.players[payload].hasAntiVirus = true;
     state.players[payload].numViruses = 0;
-    state.players[payload].infectedAmountFalse = 0;
-    state.players[payload].infectedAmountTrue = 0;
+    state.players[payload].updateBonus(1,1);
+    // state.players[payload].infectedAmountFalse = 0;
+    // state.players[payload].infectedAmountTrue = 0;
+  },
+  changeBonusScore(state,payload){
+    state.players[payload.id].bonusTrue += payload.trueScore;
+    state.players[payload.id].bonusFalse += payload.falseScore;
   }
 }

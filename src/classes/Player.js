@@ -31,20 +31,27 @@ export default class Player{
     this.overclockIncreaseTrue = 0;
     this.overclockIncreaseFalse = 0;
     this.numOverclocked = 0;
+    this.bonusTrue = 0;
+    this.bonusFalse = 0;
     if(this.isAi) {
       this.type = new Personality();
     }
   };
 
   updateOverclock(){
-     this.overclockIncreaseTrue += this.trueScore - this.infectedAmountTrue + this.overclockIncreaseTrue;
-     this.overclockIncreaseFalse += this.falseScore - this.infectedAmountFalse + this.overclockIncreaseFalse;
+     this.overclockIncreaseTrue += this.trueScore - this.infectedAmountTrue + this.overclockIncreaseTrue + this.bonusTrue;
+     this.overclockIncreaseFalse += this.falseScore - this.infectedAmountFalse + this.overclockIncreaseFalse + this.bonusFalse;
      this.numOverclocked++;
    };
 
   updateVirusAmount(){
-    this.infectedAmountFalse += Math.floor(this.falseScore/2 - this.infectedAmountFalse);
-    this.infectedAmountTrue += Math.floor(this.trueScore/2 - this.infectedAmountTrue);
+    this.infectedAmountFalse += Math.floor((this.falseScore - this.infectedAmountFalse + this.bonusFalse)/2);
+    this.infectedAmountTrue += Math.floor((this.trueScore - this.infectedAmountTrue + this.bonusTrue)/2);
     this.numViruses++;
+  };
+
+  updateBonus(scoreTrue, scoreFalse){
+    this.bonusTrue += scoreTrue;
+    this.bonusFalse += scoreFalse;
   }
 }

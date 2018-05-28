@@ -74,11 +74,11 @@
           let winList = [];
           for(let player of this.playerList) {
               if (this.$store.state.activeSide) {
-                  if((player.trueScore - player.infectedAmountTrue) + player.overclockIncreaseTrue >= this.$store.state.scoreLimit) {
+                  if((player.trueScore - player.infectedAmountTrue) + player.overclockIncreaseTrue + player.bonusTrue >= this.$store.state.scoreLimit) {
                       winList.push(player.name)
                   }
               } else {
-                if((player.falseScore - player.infectedAmountFalse) + player.overclockIncreaseFalse >= this.$store.state.scoreLimit) {
+                if((player.falseScore - player.infectedAmountFalse) + player.overclockIncreaseFalse + player.bonusFalse >= this.$store.state.scoreLimit) {
                   winList.push(player.name)
                 }
               }
