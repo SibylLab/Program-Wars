@@ -12,7 +12,7 @@ export default {
   firstRound(context) {
     context.commit('playerModalTrigger');
     if(!context.state.isTutorial)
-      this.coinAnimation(context);
+      context.dispatch('coinAnimation');
     setTimeout(() => {
       context.commit('playerModalHide');
       context.state.pointerEvent = '';

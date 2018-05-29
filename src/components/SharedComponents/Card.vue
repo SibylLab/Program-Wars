@@ -67,7 +67,7 @@ export default {
     }
   },
   methods: {
-    cardClicked (e) {
+    cardClicked(e) {
       if (this.$store.getters.getHasPlayed === false) {
         this.$emit('cardClicked', this.cardData)
 
@@ -78,18 +78,28 @@ export default {
         return '';
       }
     },
-    hide () {
+    hide() {
 
     },
     cardDragged(e) {
-      if (this.$store.getters.getHasPlayed === false) {
-        this.$emit('setActiveCard', this.cardData)
-        bus.$emit('cardClickedStack', e, this.cardData)
+      if (this.$store.getters.getTutorialState) {
+        if (this.$store.getters.getCurrentPlayerHand[0] === this.cardData) {
+          if (this.$store.getters.getHasPlayed === false) {
+            this.$emit('setActiveCard', this.cardData)
+            bus.$emit('cardClickedStack', e, this.cardData)
+          } else {
+            return '';
+          }
+        }
       } else {
-        return '';
+        if (this.$store.getters.getHasPlayed === false) {
+          this.$emit('setActiveCard', this.cardData)
+          bus.$emit('cardClickedStack', e, this.cardData)
+        } else {
+          return '';
+        }
       }
     }
-
   }
 }
 </script>

@@ -157,34 +157,37 @@
         }
       },
       cardClicked (c) {
-        if(this.$store.getters.getTips.tutorial) {
-          this.tipsCardSelected = this.setTipBox(c);
-        } else {
-          this.tipsCardSelected = this.setTipBox('default');
-        }
-        let prevActive = this.$store.getters.getActiveCard;
-        if(c.type === 'VIRUS'){
-          $('.virus').modal('show')
-        } else if(c.type === 'POWEROUTAGE'){
-          $('.powerOutage').modal('show');
-        } else if(c.type === 'BATTERYBACKUP') {
-          $('.batteryBackup').modal('show');
-        } else if(c.type === 'OVERCLOCK'){
-          $('.overclock').modal('show');
-        } else if(c.type === 'FIREWALL'){
-          $('.firewall').modal('show');
-        }
-        else if(c.type === 'GENERATOR'){
-          $('.generator').modal('show');
-        }
-        else if(c.type === 'ANTIVIRUS'){
-          $('.antiVirus').modal('show');
-        }
-        this.$store.commit('selectCard', c);
-        if (prevActive !== undefined) {
-          if (c.type !== 'G' || c.id !== prevActive.id) {
-            this.$store.commit('removeAllSelectedStacks');
-            this.$store.commit('setStackSelectedBoolean', {payload: undefined});
+        console.log(this.hand[0])
+        if(this.hand[0] === c) {
+          if (this.$store.getters.getTips.tutorial) {
+            this.tipsCardSelected = this.setTipBox(c);
+          } else {
+            this.tipsCardSelected = this.setTipBox('default');
+          }
+          let prevActive = this.$store.getters.getActiveCard;
+          if (c.type === 'VIRUS') {
+            $('.virus').modal('show')
+          } else if (c.type === 'POWEROUTAGE') {
+            $('.powerOutage').modal('show');
+          } else if (c.type === 'BATTERYBACKUP') {
+            $('.batteryBackup').modal('show');
+          } else if (c.type === 'OVERCLOCK') {
+            $('.overclock').modal('show');
+          } else if (c.type === 'FIREWALL') {
+            $('.firewall').modal('show');
+          }
+          else if (c.type === 'GENERATOR') {
+            $('.generator').modal('show');
+          }
+          else if (c.type === 'ANTIVIRUS') {
+            $('.antiVirus').modal('show');
+          }
+          this.$store.commit('selectCard', c);
+          if (prevActive !== undefined) {
+            if (c.type !== 'G' || c.id !== prevActive.id) {
+              this.$store.commit('removeAllSelectedStacks');
+              this.$store.commit('setStackSelectedBoolean', {payload: undefined});
+            }
           }
         }
       },

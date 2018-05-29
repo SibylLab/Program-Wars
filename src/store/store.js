@@ -53,8 +53,9 @@ export const store = new Vuex.Store({
       pointerEvent: 'pointer-events: none',
       factIndex: 0,
       tutorialStep: true,
-
+      tutorialOver: false
     },
+
     originalState: {
       players: [],
       stacks: [],
