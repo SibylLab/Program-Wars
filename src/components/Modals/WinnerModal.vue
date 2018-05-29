@@ -34,8 +34,8 @@
               <tbody>
               <tr v-for="player in playerList">
                 <td>{{ player.name }}</td>
-                <td>{{ player.trueScore }}</td>
-                <td>{{ player.falseScore }}</td>
+                <td>{{ (player.trueScore - player.infectedAmountTrue) * player.overclockMultiplier}}</td>
+                <td>{{ (player.falseScore - player.infectedAmountFalse) * player.overclockMultiplier}}</td>
               </tr>
               </tbody>
             </table>
@@ -46,12 +46,11 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
 
-  import { bus } from './Bus';
+  import { bus } from '../SharedComponents/Bus';
 
   export default {
     props: ['playerList'],
@@ -75,11 +74,11 @@
           let winList = [];
           for(let player of this.playerList) {
               if (this.$store.state.activeSide) {
-                  if(player.trueScore >= this.$store.state.scoreLimit) {
+                  if((player.trueScore - player.infectedAmountTrue) + player.overclockIncreaseTrue + player.bonusTrue >= this.$store.state.scoreLimit) {
                       winList.push(player.name)
                   }
               } else {
-                if(player.falseScore >= this.$store.state.scoreLimit) {
+                if((player.falseScore - player.infectedAmountFalse) + player.overclockIncreaseFalse + player.bonusFalse >= this.$store.state.scoreLimit) {
                   winList.push(player.name)
                 }
               }

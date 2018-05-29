@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import MainComponent from 'components/MainComponent'
-import SettingsComponent from 'components/SettingsComponent'
-import TutorialComponent from '../components/TutorialComponent.vue'
+import MainComponent from 'components/MainGame/MainComponent'
+import SettingsComponent from 'components/SharedComponents/SettingsComponent'
+import TutorialComponent from '../components/Tutorial/TutorialComponent.vue'
 
 Vue.use(Router)
 

@@ -41,7 +41,7 @@
 
   import { bus } from './Bus';
   import Card from './Card'
-  import Modal from './Modal'
+  import Modal from '../Modals/Modal';
 
 /**
  * The component that holds what will be used as the true and false stacks
@@ -65,7 +65,8 @@ export default {
       if(this.$store.state.activeCard !== undefined) {
         let activeCard = this.$store.state.activeCard.type;
         let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
-        if (this.$store.getters.getCoinMsg.valueOf() == this.playfieldBoolean) {
+        if (this.$store.getters.getCoinMsg.valueOf() == this.playfieldBoolean && !this.$store.getters.getCurrentPlayer.hasPowerOutage) {
+
           if (activeCard === 'I' && thisStack.cards.length === 0) {
             return true;
           } else if (activeCard === 'R') {
@@ -243,7 +244,21 @@ export default {
         let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1];
         this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard});
-        this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
+        //console.log("Active side: " + this.$store.getters.getActiveSide);
+        if(this.$store.getters.getActiveSide) {
+          this.$store.commit('changeBonusScore', {
+            id: this.$store.getters.getCurrentPlayer.id,
+            trueScore: 2,
+            falseScore: 0
+          });
+        } else if(!this.$store.getters.getActiveSide){
+          this.$store.commit('changeBonusScore', {
+            id: this.$store.getters.getCurrentPlayer.id,
+            trueScore: 0,
+            falseScore: 2
+          });
+        }
+        this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean});
         this.$store.dispatch('playerTookTurn');
         bus.$emit('cardDeselected');
         this.$store.commit('groupStacks', {yesOrNo: false});
@@ -333,7 +348,7 @@ export default {
           case 'G':
             $('button[stackId="'+this.stackId+'"]').attr("data-content", "Group cards are not played on a stack. Click the checkbox(es) to select the cards to group together. The total of the selected card(s) must equal the value of the group card." );
             $('button[stackId="'+this.stackId+'"]').popover('toggle');
-
+                break;
           default:
               return '';
               break;
@@ -352,7 +367,6 @@ export default {
         bus.$emit('cardPlayed');
         this.$store.commit('increaseFactIndex');
       }
-
 
       this.$store.commit('setActiveCardUndefined');
     },

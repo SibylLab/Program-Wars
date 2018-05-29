@@ -25,20 +25,29 @@ const variable5 = 3;
 const variable6 = 1;
 
 const hack = 3;
+const virus = 3;
+const powerOutage = 3;
+
+const overClock = 3;
+const batteryBackup = 3;
+
+const antiVirus = 1;
+const firewall = 1;
+const generator = 1;
+
 
 const cardDeck = [
   //{type:'I', cardValue: 3, imgSrc: '/static/cardImg/I3.png', howMany: instruction3},
   {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
-  {type:'I', cardValue: 2, imgSrc: '/static/cardImg/I2.png', howMany: instruction2},
   {type:'I', cardValue: 3, imgSrc: '/static/cardImg/I3.png', howMany: instruction3},
-  {type:'G', cardValue: 3, imgSrc: '/static/cardImg/G3.png', howMany: group3},
+  {type:'I', cardValue: 2, imgSrc: '/static/cardImg/I2.png', howMany: instruction2},
   {type:'R', cardValue: 1, imgSrc: '/static/cardImg/Rx.png', howMany: repetitionX},
-
+  {type:'G', cardValue: 3, imgSrc: '/static/cardImg/G3.png', howMany: group3},
 
 
   {type:'V', cardValue: 3, imgSrc: '/static/cardImg/V3.png', howMany: variable3},
-  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
-  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
+  {type:'I', cardValue: 2, imgSrc: '/static/cardImg/I2.png', howMany: instruction2},
+  {type:'I', cardValue: 2, imgSrc: '/static/cardImg/I2.png', howMany: instruction2},
   {type:'R', cardValue: 2, imgSrc: '/static/cardImg/R2.png', howMany: repetition2},
   {type:'G', cardValue: 2, imgSrc: '/static/cardImg/G2.png', howMany: group2},
 
@@ -55,7 +64,29 @@ const cardDeck = [
   {type:'V', cardValue: 4, imgSrc: '/static/cardImg/V4.png', howMany: variable4},
   {type:'V', cardValue: 6, imgSrc: '/static/cardImg/V6.png', howMany: variable6},
 
+
+
+  // {type:'POWEROUTAGE', cardValue: 0, imgSrc: '/static/cardImg/PowerOutage.png', howMany: powerOutage},
+
+  // {type:'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/OverClock.png', howMany: overClock},
+  // {type:'BATTERYBACKUP', cardValue: 0, imgSrc: '/static/cardImg/BatteryBackup.png', howMany: batteryBackup},
+
+  {type:'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/OverClock.png', howMany: overClock},
+  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
+  //{type:'BATTERYBACKUP', cardValue: 0, imgSrc: '/static/cardImg/BatteryBackup.png', howMany: batteryBackup},
+  {type:'GENERATOR', cardValue: 0, imgSrc: '/static/cardImg/Generator.png', howMany: generator},
+  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
+  {type:'POWEROUTAGE', cardValue: 0, imgSrc: '/static/cardImg/PowerOutage.png', howMany: powerOutage},
+  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
+  {type:'ANTIVIRUS', cardValue: 0, imgSrc: '/static/cardImg/AntiVirus.png', howMany: antiVirus},
+  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
+  {type:'VIRUS', cardValue: 0, imgSrc: '/static/cardImg/Virus.png', howMany: virus},
+  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
+  {type:'FIREWALL', cardValue: 0, imgSrc: '/static/cardImg/Firewall.png', howMany: firewall},
+  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
   {type:'H', cardValue: 0, imgSrc: '/static/cardImg/H.png', howMany: hack},
+  {type:'V', cardValue: 3, imgSrc: '/static/cardImg/V3.png', howMany: variable3},
+  {type:'V', cardValue: 5, imgSrc: '/static/cardImg/V5.png', howMany: variable5},
 ];
 
 export default class TutorialDeck {

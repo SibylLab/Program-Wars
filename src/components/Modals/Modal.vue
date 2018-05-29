@@ -34,8 +34,8 @@
 
 <script>
 
-  import { bus } from './Bus';
-  import Card from './Card'
+  import { bus } from '../SharedComponents/Bus';
+  import Card from '../SharedComponents/Card'
 
 
   export default {

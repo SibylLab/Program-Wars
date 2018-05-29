@@ -44,9 +44,9 @@
         <div class="col-md-12" id="scoreSelect">
           <p>Score to Win:
           <select class="custom-select" name="select" v-model="selected">
-            <option value="15">Short (score 15)</option>
-            <option value="25">Medium (score 25)</option>
-            <option value="35">Long (score 35)</option>
+            <option value="25">Short (score 25)</option>
+            <option value="35">Medium (score 35)</option>
+            <option value="45">Long (score 45)</option>
           </select></p>
         </div>
       </div>
@@ -62,18 +62,18 @@
 
 <script>
 
-  import PlayerInfoPanel from './PlayerInfoPanel'
+  import PlayerInfoPanel from '../MainGame/PlayerInfoPanel'
   import Playfield from './Playfield'
   import OpponentStacks from './OpponentStacks'
 
-  import RulesModal from './RulesModal.vue'
-  import CreditsModal from './CreditsModal.vue'
-  import TutorialModal from './TutorialStartModal'
+  import RulesModal from '../Modals/RulesModal.vue'
+  import CreditsModal from '../Modals/CreditsModal.vue'
+  import TutorialModal from '../Modals/TutorialStartModal'
 
   import {mapGetters} from 'vuex';
   import {mapMutations} from 'vuex';
-  import Card from '../classes/Card'
-  import Player from '../classes/Player'
+  import Card from '../../classes/Card'
+  import Player from '../../classes/Player'
 
   export default {
     name: 'settings-component',
@@ -85,14 +85,14 @@
         localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
-        selected: '15',
+        selected: '25',
         noPlayers: true,
         inputDisable: false,
         maxPlayer: false,
          isRepeat: false,
         aiSelect: 'noAiSelected',
         aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
-        typesOfGames: ['Short (15)', 'Medium (25)', 'Long (35'],
+        typesOfGames: ['Short (25)', 'Medium (35)', 'Long (45)'],
         isTutorial: false,
         tutorialBegin: false
       }
@@ -149,7 +149,7 @@
         this.localPlayers.push({name: 'You', isAi: false});
         this.localPlayers.push({name: 'Flash', isAi: true});
         this.$store.commit('addPlayers', {list: this.localPlayers});
-        this.$store.commit('setScoreLimit', {scoreLimit: 15});
+        this.$store.commit('setScoreLimit', {scoreLimit: 25});
         this.gameStart = true;
         setTimeout(() => {
           this.$router.push('tutorial')

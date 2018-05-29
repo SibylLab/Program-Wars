@@ -9,6 +9,20 @@
     <tutorial-modal id="tutorialModal" class="modal fade tutorial" tabindex="-1" role="dialog" aria-labelledby=""
                     aria-hidden="true"
     ></tutorial-modal>
+    <virus-modal id="virusModal" class="modal fade virus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                 data-backdrop="static" data-keyboard="false"></virus-modal>
+    <power-outage-modal id="powerOutageModal" class="modal fade powerOutage" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                        data-backdrop="static" data-keyboard="false"></power-outage-modal>
+    <battery-backup-modal id="batteryBackupModal" class="modal fade batteryBackup" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                          data-backdrop="static" data-keyboard="false"></battery-backup-modal>
+    <overclock-modal id="overclockModal" class="modal fade overclock" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                     data-backdrop="static" data-keyboard="false"></overclock-modal>
+    <firewall-modal id="firewallModal" class="modal fade firewall" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                    data-backdrop="static" data-keyboard="false"></firewall-modal>
+    <generator-modal id="generatorModal" class="modal fade generator" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                     data-backdrop="static" data-keyboard="false"></generator-modal>
+    <anti-virus-modal id="antiVirusModal" class="modal fade antiVirus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
+                      data-backdrop="static" data-keyboard="false"></anti-virus-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
     <transition name="fade">
       <player-turn v-if="playerTurn"></player-turn>
@@ -19,7 +33,7 @@
     </transition>
 
     <div id="header">
-      <p>Programming Wars</p>
+      <p>Programming Wars Tutorial</p>
 
       <div id="header-buttons">
 
@@ -53,26 +67,33 @@
 
 <script>
   import PlayerInfoPanel from './TutorialPlayerInfoPanel'
-  import Playfield from './Playfield'
+  import Playfield from '../SharedComponents/Playfield'
 
-  import OpponentStacks from './OpponentStacks'
-  import Modal from './Modal'
-  import RulesModal from './RulesModal.vue'
-  import CreditsModal from './CreditsModal.vue'
-  import HackModal from './HackModal.vue'
-  import WinnerModal from './WinnerModal.vue'
-  import TutorialModal from './TutorialStartModal.vue'
-  import CoinModal from './CoinModal.vue'
-  import PlayerTurn from './PlayerTurnPopUp.vue'
-  import HackDiscard from './HackDiscardMsg.vue'
+  import OpponentStacks from '../SharedComponents/OpponentStacks'
+  import Modal from '../Modals/Modal'
+  import RulesModal from '../Modals/RulesModal.vue'
+  import CreditsModal from '../Modals/CreditsModal.vue'
+  import HackModal from '../Modals/CardModals/HackModal.vue'
+  import WinnerModal from '../Modals/WinnerModal.vue'
+  import TutorialModal from '../Modals/TutorialStartModal.vue'
+  import CoinModal from '../Modals/CoinModal.vue'
+  import PlayerTurn from '../SharedComponents/PlayerTurnPopUp.vue'
+  import HackDiscard from '../Modals/CardModals/HackDiscardMsg.vue'
 
+  import VirusModal from '../Modals/CardModals/VirusModal.vue'
+  import PowerOutageModal from '../Modals/CardModals/PowerOutageModal'
+  import BatteryBackup from '../Modals/CardModals/BatteryBackup'
+  import Overclock from '../Modals/CardModals/OverclockModal'
+  import AntiVirus from '../Modals/CardModals/AntiVirusModal'
+  import Generator from '../Modals/CardModals/Generator'
+  import Firewall from '../Modals/CardModals/Firewall'
   import {mapGetters} from 'vuex'
   import {mapMutations} from 'vuex'
 
-  import Card from '../classes/Card'
-  import Player from '../classes/Player'
+  import Card from '../../classes/Card'
+  import Player from '../../classes/Player'
 
-  import { bus } from './Bus';
+  import { bus } from '../SharedComponents/Bus';
 
   export default {
     name: 'TutorialComponent',
@@ -110,7 +131,14 @@
       'coin-modal': CoinModal,
       'player-turn': PlayerTurn,
       'hack-discard': HackDiscard,
-      'tutorial-modal': TutorialModal
+      'tutorial-modal': TutorialModal,
+      'virus-modal': VirusModal,
+      'power-outage-modal': PowerOutageModal,
+      'battery-backup-modal': BatteryBackup,
+      'overclock-modal': Overclock,
+      'firewall-modal': Firewall,
+      'generator-modal': Generator,
+      'anti-virus-modal': AntiVirus
 
     },
     methods: {
@@ -160,6 +188,9 @@
       },
     },
 
+    /**
+     * Called when the component is created (after mount) to run the game loop
+     */
     created() {
       this.playerList = this.$store.getters.getPlayers;
       this.gameStart = true;
@@ -175,13 +206,13 @@
           this.$store.commit('setGameState', {gameState: 'playerTurn'});
 
           if (this.$store.getters.getCurrentPlayerId === 0) {
-            let j = Math.floor(Math.random() * 2);
             this.$store.commit('setTrueFalseAnim', {startAnim: true});
-            if (j === 0) {
+            if (this.$store.getters.getTutorialStep) {
               this.$store.commit('setActiveSide', {activeSide: true})
             } else {
               this.$store.commit('setActiveSide', {activeSide: false})
             }
+            this.$store.commit('flipTutorialStep');
             if (this.$store.state.firstRound) {
               this.$store.dispatch('firstRound');
               this.$store.state.firstRound = false;
@@ -201,13 +232,16 @@
       this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
 
     },
+    /**
+     * Called when the component is mounted to show the modals in a correct order
+     */
     mounted() {
-
       $('#tutorialModal').modal('show');
       this.$nextTick(function () {
         //For some reason this has the opposite effect of what you would expect. The start Modal is shown first, and the tutorialModal second.
         $('#tutorialModal').on('hidden.bs.modal', () => {
           bus.$emit('playAnimation')
+          this.$store.dispatch('coinAnimation');
         });
 
       })

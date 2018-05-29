@@ -11,15 +11,8 @@ export default {
   },
   firstRound(context) {
     context.commit('playerModalTrigger');
-    context.commit('coinModalTrigger');
-    context.commit('setCoinFlipAnim', 0);
-    context.commit('setPlayfieldColour', true);
-    context.state.coinMsg = context.state.activeSide ? true : false;
-    setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
-    setTimeout(() => {
-      $('.coin').modal('handleUpdate');
-      $('.coin').modal('hide');
-    }, coinTimer * 1000);
+    if(!context.state.isTutorial)
+      context.dispatch('coinAnimation');
     setTimeout(() => {
       context.commit('playerModalHide');
       context.state.pointerEvent = '';
@@ -29,6 +22,18 @@ export default {
         context.commit('aiTakeTurn', context.getters.getAiDependent);
       }
     }, 2500)
+  },
+
+  coinAnimation(context){
+    context.commit('coinModalTrigger');
+    context.commit('setCoinFlipAnim', 0);
+    context.commit('setPlayfieldColour', true);
+    context.state.coinMsg = context.state.activeSide ? true : false;
+    setTimeout(() => {context.commit('setCoinFlipAnim', 1)}, 200);
+    setTimeout(() => {
+      $('.coin').modal('handleUpdate');
+      $('.coin').modal('hide');
+    }, coinTimer * 1000);
   },
 
   turn(context, payload) {
@@ -65,18 +70,20 @@ export default {
       case false:
         context.commit('checkWin');
         if(!context.state.winner) {
-          context.commit('coinModalTrigger');
-          context.commit('setCoinFlipAnim', 0);
-          context.commit('setPlayfieldColour', true);
-          context.state.coinMsg = context.state.activeSide ? true : false;
-
-          setTimeout(() => {
-            context.commit('setCoinFlipAnim', 1)
-          }, 200);
-          setTimeout(() => {
-            $('.coin').modal('handleUpdate');
-            $('.coin').modal('hide');
-          }, coinTimer * 1000);
+          context.dispatch('coinAnimation');
+          //this.coinAnimation(context);
+          // context.commit('coinModalTrigger');
+          // context.commit('setCoinFlipAnim', 0);
+          // context.commit('setPlayfieldColour', true);
+          // context.state.coinMsg = context.state.activeSide ? true : false;
+          //
+          // setTimeout(() => {
+          //   context.commit('setCoinFlipAnim', 1)
+          // }, 200);
+          // setTimeout(() => {
+          //   $('.coin').modal('handleUpdate');
+          //   $('.coin').modal('hide');
+          // }, coinTimer * 1000);
         }
         if (context.state.winner) {
           setTimeout(() => {

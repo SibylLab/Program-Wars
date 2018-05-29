@@ -44,15 +44,17 @@ export default {
       if (this.activeColour) {
         return 'active'
       } else {
-          return 'notActive'
+        return 'notActive'
       }
     },
     stacks() {
       return this.getStackList(this.trueFalse);
     },
     score() {
-      return {trueScore: this.$store.getters.getPlayers[this.playerId].trueScore,
-              falseScore: this.$store.getters.getPlayers[this.playerId].falseScore};
+      return {trueScore: (this.$store.getters.getPlayers[this.playerId].trueScore - this.$store.getters.getPlayers[this.playerId].infectedAmountTrue)
+        + this.$store.getters.getPlayers[this.playerId].overclockIncreaseTrue + this.$store.getters.getPlayers[this.playerId].bonusTrue,
+              falseScore: (this.$store.getters.getPlayers[this.playerId].falseScore - this.$store.getters.getPlayers[this.playerId].infectedAmountFalse)
+              + this.$store.getters.getPlayers[this.playerId].overclockIncreaseFalse + this.$store.getters.getPlayers[this.playerId].bonusFalse};
     }
   },
   components: {
@@ -63,15 +65,15 @@ export default {
       return this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)
     },
     cardAdded (id) {
-      var emptyStackExists = false;
+      let emptyStackExists = false;
 
-      for (var stack of this.stacks) {
+      for (let stack of this.stacks) {
         if (stack.id === id) {
           stack.cardCount += 1
         }
       }
 
-      for (var stack of this.stacks) {
+      for (let stack of this.stacks) {
         if (stack.cardCount === 0) {
           emptyStackExists = true
         }

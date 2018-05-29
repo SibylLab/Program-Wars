@@ -103,7 +103,7 @@ export default {
           this.activeCard.selected = false;
         }
       }
-    })
+    });
 
     bus.$on('cardDeselected', () => {
       this.activeCard = undefined;

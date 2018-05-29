@@ -7,6 +7,8 @@
             <div class="panel-body">{{ tipsInfoText }}</div>
           </div>
         </div>
+        <div class="container" style="width: 900px; float: left">
+        <div class="row">
         <div id="cards">
 
           <ul id="example-1">
@@ -16,12 +18,16 @@
               </li>
           </ul>
         </div>
-
-        <div id="controls">
-        <button class="btn btn-primary btn-lg rightSide" v-on:click="discardSelected" style="border-radius: 40px">
-          Discard <br/> Selected Card
-        </button>
         </div>
+        <div class="row">
+          <div id="controls" class="col-sm" style="height: 80px; justify-content: center; align-items: center">
+            <button class="btn btn-primary btn-lg" v-on:click="discardSelected" style="border-radius: 40px">
+              Discard <br/> Selected Card
+            </button>
+          </div>
+        </div>
+        </div>
+        <stats-panel></stats-panel>
 
       </div>
       <div class="container" style="border-top: 1px solid white; padding: 10px;">
@@ -33,7 +39,8 @@
         <div class="row">
           <div :class="colSize" v-for="player in players" style="text-align: left;">
             <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-              <div> True Path: {{ player.trueScore }} Instructions <br> False Path: {{ player.falseScore }} Instructions</div>
+              <div> True Path: {{ (player.trueScore - player.infectedAmountTrue) + player.overclockIncreaseTrue + player.bonusTrue}}
+                Instructions <br> False Path: {{ (player.falseScore - player.infectedAmountFalse) + player.overclockIncreaseFalse + player.bonusFalse}} Instructions</div>
           </div>
         </div>
       </div>
@@ -41,9 +48,10 @@
 </template>
 
 <script>
-import { bus } from './Bus';
-import Card from './Card'
-import Modal from './Modal'
+import { bus } from '../SharedComponents/Bus';
+import Card from '../SharedComponents/Card'
+import Modal from '../Modals/Modal'
+import StatsPanel from '../SharedComponents/StatsPanel'
 
 export default {
   name: 'PlayerInfoPanel',
@@ -136,11 +144,15 @@ export default {
     activeSide() {
         let activeSideString = String(this.$store.getters.getActiveSide)
         return activeSideString.toUpperCase()
+    },
+    getCurrentPlayer() {
+      return this.$store.getters.getCurrentPlayer;
     }
   },
   components: {
     'card': Card,
-    'modal': Modal
+    'modal': Modal,
+    'stats-panel': StatsPanel
   },
   methods: {
     openModal() {
@@ -164,8 +176,25 @@ export default {
           this.tipsCardSelected = this.setTipBox('default');
       }
       let prevActive = this.$store.getters.getActiveCard
+      if(c.type === 'VIRUS'){
+        $('.virus').modal('show')
+      } else if(c.type === 'POWEROUTAGE'){
+        $('.powerOutage').modal('show');
+      } else if(c.type === 'BATTERYBACKUP') {
+        $('.batteryBackup').modal('show');
+      } else if(c.type === 'OVERCLOCK'){
+        $('.overclock').modal('show');
+      } else if(c.type === 'FIREWALL'){
+        $('.firewall').modal('show');
+      }
+      else if(c.type === 'GENERATOR'){
+        $('.generator').modal('show');
+      }
+      else if(c.type === 'ANTIVIRUS'){
+        $('.antiVirus').modal('show');
+      }
 
-      this.$store.commit('selectCard', c)
+      this.$store.commit('selectCard', c);
       if (prevActive !== undefined) {
         if (c.type !== 'G' || c.id !== prevActive.id) {
           this.$store.commit('removeAllSelectedStacks')
@@ -196,14 +225,42 @@ export default {
             this.tipsInfoText = 'Use this to combine instruction and group cards to protect them from Hack cards. The total of the instruction and group cards must match the value of this card';
             return 'Group Card'; break;
 
+          case 'FIREWALL':
+            this.tipsInfoText = 'Use this to remove the chance of being hacked.';
+            return 'Firewall Card'; break;
+
+          case 'GENERATOR':
+            this.tipsInfoText = 'Use this card to prevent prevent a power outage.';
+            return 'Generator Card'; break;
+
+          case 'ANTIVIRUS':
+            this.tipsInfoText = 'Use this card to prevent all viruses.';
+            return 'AntiVirus Card'; break;
+
+          case 'VIRUS':
+            this.tipsInfoText = 'Use this on an opponent to cut their current score in half.';
+            return 'Virus Card'; break;
+
+          case 'OVERCLOCK':
+            this.tipsInfoText = 'Use this card to double your current score.';
+            return 'Overclock Card'; break;
+
+          case 'POWEROUTAGE':
+            this.tipsInfoText = 'Use this card on an opponent to prevent them from playing instruction cards.';
+            return 'PowerOutage Card'; break;
+
+          case 'BATTERYBACKUP':
+            this.tipsInfoText = 'Use this to be able to play instruction cards. (Negate Power Outage)';
+            return 'BatteryBackup Card'; break;
+
           default :
-            var fact = this.setFact();
+            let fact = this.setFact();
             this.tipsInfoText = fact;
             return 'Did you know?';
         }
     },
     setFact() {
-      var num = Math.floor(Math.random() * this.facts.length);
+      let num = Math.floor(Math.random() * this.facts.length);
       return this.facts[num];
     },
     deselectAll () {
@@ -243,12 +300,112 @@ export default {
           this.tipsCardSelected = this.setTipBox('default');
         } else {
           this.tipsCardSelected = this.setTipBox(c);
-
         }
     });
     bus.$on('aiDiscard', () => {
       this.discardSelected();
-    })
+    });
+    bus.$on('aiAttack', (stackToHack) => {
+      if(!this.$store.getters.getTutorialState) {
+        if (this.$store.state.aiTurn === true) {
+          if (this.$store.state.activeCard !== undefined) {
+            if (this.$store.getters.getActiveCard.type === 'POWEROUTAGE') {
+
+              $('.powerOutage').modal('hide');
+              console.log("Stack to hack: " + stackToHack.playerId);
+              this.$store.commit('givePowerOutage', stackToHack.playerId);
+              this.$store.dispatch('playerTookTurn');
+              bus.$emit('cardDeselected');
+              if (this.$store.getters.getHasPlayed) {
+                this.$store.dispatch('turn', true);
+              }
+              this.$store.state.aiTurn = false;
+            }
+            else if (this.$store.getters.getActiveCard.type === 'VIRUS') {
+
+              $('.virus').modal('hide');
+              console.log("Stack to hack: " + stackToHack.playerId);
+              this.$store.commit('giveVirus', stackToHack.playerId);
+              this.$store.dispatch('playerTookTurn');
+              bus.$emit('cardDeselected');
+              if (this.$store.getters.getHasPlayed) {
+                this.$store.dispatch('turn', true);
+              }
+              this.$store.state.aiTurn = false;
+            }
+          }
+        }
+      }
+    });
+
+    bus.$on('aiProtection', () => {
+      if(!this.$store.getters.getTutorialState) {
+        if (this.$store.state.aiTurn === true) {
+          if (this.$store.state.activeCard !== undefined) {
+            if (this.$store.getters.getActiveCard.type === 'FIREWALL') {
+              $('.firewall').modal('hide');
+              this.$store.commit('giveFirewall', this.$store.getters.getCurrentPlayer.id);
+              this.$store.dispatch('playerTookTurn');
+              bus.$emit('cardDeselected');
+              if (this.$store.getters.getHasPlayed) {
+                this.$store.dispatch('turn', true);
+              }
+              this.$store.state.aiTurn = false;
+            }
+            else if (this.$store.getters.getActiveCard.type === 'ANTIVIRUS') {
+              $('.antiVirus').modal('hide');
+              this.$store.commit('giveAntiVirus', this.$store.getters.getCurrentPlayer.id);
+              this.$store.dispatch('playerTookTurn');
+              bus.$emit('cardDeselected');
+              if (this.$store.getters.getHasPlayed) {
+                this.$store.dispatch('turn', true);
+              }
+              this.$store.state.aiTurn = false;
+            }
+            else if (this.$store.getters.getActiveCard.type === 'GENERATOR') {
+              $('.generator').modal('hide');
+              this.$store.commit('giveGenerator', this.$store.getters.getCurrentPlayer.id);
+              this.$store.dispatch('playerTookTurn');
+              bus.$emit('cardDeselected');
+              if (this.$store.getters.getHasPlayed) {
+                this.$store.dispatch('turn', true);
+              }
+              this.$store.state.aiTurn = false;
+            }
+          }
+        }
+      }
+    });
+
+    bus.$on('aiEnhance', () => {
+      if(!this.$store.getters.getTutorialState){
+          if (this.$store.state.aiTurn === true) {
+            if (this.$store.state.activeCard !== undefined) {
+              if (this.$store.getters.getActiveCard.type === 'BATTERYBACKUP') {
+                $('.batteryBackup').modal('hide');
+                this.$store.commit('giveBatteryBackup', this.$store.getters.getCurrentPlayer.id);
+                this.$store.dispatch('playerTookTurn');
+                bus.$emit('cardDeselected');
+                if (this.$store.getters.getHasPlayed) {
+                  this.$store.dispatch('turn', true);
+                }
+                this.$store.state.aiTurn = false;
+              }
+              else if (this.$store.getters.getActiveCard.type === 'OVERCLOCK') {
+                $('.batteryBackup').modal('hide');
+                this.$store.commit('giveOverclock', this.$store.getters.getCurrentPlayer.id);
+                this.$store.dispatch('playerTookTurn');
+                bus.$emit('cardDeselected');
+                if (this.$store.getters.getHasPlayed) {
+                  this.$store.dispatch('turn', true);
+                }
+                this.$store.state.aiTurn = false;
+              }
+            }
+          }
+        }
+    });
+
   },
 }
 </script>
@@ -273,12 +430,25 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 0px;
-    justify-content: space-between;
+    vertical-align: middle;
+    //justify-content: space-between;
     align-items: center;
-    padding-right: 50px;
+    //padding-right: 50px;
     flex-basis: content;
-    flex-shrink:5;
-    margin-top: -120px;
+    flex-shrink: 5;
+    //margin-top: -120px;
+  }
+
+  #disabilityPanel {
+    top: 0;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    padding: 0;
+    padding-right: 80px;
+    flex-basis: content;
+    flex-shrink: 3;
   }
 
   #cards {
@@ -292,10 +462,11 @@ export default {
 }
 
   #tipBox {
-    position: relative;
-    top: 0;
+    //position: relative;
+    //top: 0;
     max-width: 350px;
-    height: 280px;
+    //height: 280px;
+    vertical-align: middle;
   }
 
   #playerTurn {

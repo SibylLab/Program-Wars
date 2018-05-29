@@ -47,12 +47,15 @@ export const store = new Vuex.Store({
       trueSideColour: 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)',
       falseSideColour: 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)',
       isHack: false,
+      isVirus: false,
       hackedPlayer:'',
       isDiscard: false,
       pointerEvent: 'pointer-events: none',
-      factIndex: 0
-
+      factIndex: 0,
+      tutorialStep: true,
+      tutorialOver: false
     },
+
     originalState: {
       players: [],
       stacks: [],

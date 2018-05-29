@@ -2,7 +2,9 @@ import AiMove from './AiMove'
 import {store} from '../store/store'
 
 export default class Hacker {
-
+  /**
+   * Constructor for this AI personality.
+   */
   constructor() {
     this.move = new AiMove();
     this.boolSide = this.move.getBoolSide();
@@ -11,26 +13,72 @@ export default class Hacker {
     // console.log("Hacker")
   }
 
+  /**
+   * This function will figure out what card the AI should play.
+   * @param event
+   * @returns {*} The card to play, the stack to play, the opponent to attack, and the move type.
+   */
   turnLogic(event) {
+    //This will be executed in either OpponentStacks or PlayerInfoPanel
     let cardToPlay = undefined;
+    //This will be executed in AiMove.js
     let stackToPlay = undefined;
+    //This will be executed in AiMove.js
     let opponentToAttack = undefined;
+    //This is used in mutations under AiTakeTurn
     let moveType = undefined;
 
     let hand = this.move.organizeHand(event);
-
     this.boolSide = store.getters.getCoinMsg;
-    // console.log("The coinMsg: " + store.getters.getCoinMsg);
-    // console.log("AI is choosing: " + this.boolSide);
-
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
 
     if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.hackCard;
       opponentToAttack = this.move.getHackOpponent(event);
       moveType = 'hack';
+      return {cardToPlay, stackToPlay, opponentToAttack, moveType};
 
-    } else if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
+    }
+    else if(hand.powerOutageCard !== undefined){
+      opponentToAttack = this.move.getOpponentToAttack(event);
+      cardToPlay = hand.powerOutageCard;
+      moveType = 'attack'
+    }
+
+    else if(hand.generatorCard !== undefined){
+      cardToPlay = hand.generatorCard;
+      moveType = 'protection'
+    }
+
+    else if(hand.antiVirusCard !== undefined){
+      cardToPlay = hand.antiVirusCard;
+      moveType = 'protection';
+    }
+    else if(hand.firewallCard !== undefined){
+      cardToPlay = hand.firewallCard;
+      moveType = 'protection'
+    }
+
+    else if(hand.batteryBackupCard !== undefined && store.getters.getCurrentPlayer.hasPowerOutage){
+      console.log("Current player: " + JSON.stringify(store.getters.getCurrentPlayer));
+      cardToPlay = hand.batteryBackupCard;
+      moveType = 'enhance'
+    }
+
+
+
+    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0){
+      cardToPlay = hand.overclockCard;
+      moveType = 'enhance'
+    }
+
+    else if(hand.virusCard !== undefined && !store.getters.getFirstRound) {
+      opponentToAttack = this.move.getOpponentToAttack(event, "VIRUS");
+      cardToPlay = hand.virusCard;
+      moveType = 'attack';
+    }
+
+    else if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.bestVCard;
       stackToPlay = this.move.stackToAddVariable(event);
       moveType = 'play';
@@ -40,11 +88,10 @@ export default class Hacker {
       stackToPlay = this.move.getStackToRepeat(event);
       moveType = 'play';
 
-    } else if(event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0) !== undefined && hand.bestICard !== undefined) {
+    } else if(hand.bestICard !== undefined) {
       cardToPlay = hand.bestICard;
       stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
       moveType = 'play';
-
 
     } else if(hand.rXCard !== undefined && this.move.getStackToRepeat(event) !== undefined && hand.bestVCard !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.rXCard;
@@ -66,6 +113,8 @@ export default class Hacker {
       moveType = 'discard';
 
     }
+
+
 
     // This should not get called, used as a failsafe
     if(cardToPlay === undefined) {

@@ -23,6 +23,7 @@ export default {
     else
       return ''
   },
+
   getCurrentPlayerStacks(state) {
     if(state.stacks.length)
       return state.stacks.filter(st => st.playerId === state.activePlayer)
@@ -78,6 +79,9 @@ export default {
   getCurrentPlayer(state) {
     return state.players[state.activePlayer];
   },
+  getFirstRound(state){
+    return state.firstRound;
+  },
   getAiDependent(state) {
     let playerHand;
     let playerStack = [];
@@ -105,6 +109,9 @@ export default {
   },
   getFactIndex(state) {
     return state.factIndex;
+  },
+  getTutorialStep(state) {
+    return state.tutorialStep;
   }
 }
 

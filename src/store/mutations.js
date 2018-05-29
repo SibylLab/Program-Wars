@@ -2,7 +2,7 @@ import TutorialDeck from "../classes/TutorialDeck";
 
 const uuidV1 = require('uuid/v1');
 
-import { bus } from '../components/Bus';
+import { bus } from '../components/SharedComponents/Bus';
 
 import Stack from '../classes/Stack'
 import Player from '../classes/Player'
@@ -31,6 +31,7 @@ export default {
     state.playerTurn = false;
     state.isTutorial = false;
     state.factIndex = 0;
+    state.tutorialStep = true;
   },
   addPlayers(state, payload) {
     let id = 0;
@@ -60,7 +61,7 @@ export default {
   selectCard(state, c) {
     let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
     bus.$emit('cardHasBeenSelected');
-    for (var card of playerHand.cards) {
+    for (let card of playerHand.cards) {
       if (card.id === c.id) {
         card.selected = !card.selected;
         if (!card.selected) {
@@ -318,9 +319,51 @@ export default {
       state.selectedStackBoolean = stackToPlay[0].boolSide;
       state.groupStacks = false;
       bus.$emit('aiGroup', stackToPlay[0].boolSide, state.players[state.activePlayer].id);
+    } else if (aiMove.moveType === 'attack') {
+      bus.$emit('aiAttack', stackToHack);
+    } else if (aiMove.moveType === 'protection') {
+      bus.$emit('aiProtection');
+    } else if (aiMove.moveType === 'enhance') {
+      bus.$emit('aiEnhance');
     }
   },
   increaseFactIndex(state) {
     state.factIndex++;
+  },
+  giveVirus(state,payload) {
+    state.players[payload].updateVirusAmount();
+  },
+  givePowerOutage(state,payload) {
+    state.players[payload].hasPowerOutage = true;
+  },
+  giveBatteryBackup(state,payload) {
+    state.players[payload].hasPowerOutage = false;
+    state.players[payload].updateBonus(1,1);
+  },
+  giveOverclock(state,payload) {
+    state.players[payload].updateOverclock();
+  },
+  giveFirewall(state, payload){
+    state.players[payload].hasFirewall = true;
+    state.players[payload].updateBonus(1,1);
+  },
+  giveGenerator(state,payload){
+    state.players[payload].hasGenerator = true;
+    state.players[payload].hasPowerOutage = false;
+    state.players[payload].updateBonus(1,1);
+  },
+  giveAntiVirus(state,payload){
+    state.players[payload].hasAntiVirus = true;
+    state.players[payload].numViruses = 0;
+    state.players[payload].updateBonus(1,1);
+    // state.players[payload].infectedAmountFalse = 0;
+    // state.players[payload].infectedAmountTrue = 0;
+  },
+  changeBonusScore(state,payload){
+    state.players[payload.id].bonusTrue += payload.trueScore;
+    state.players[payload.id].bonusFalse += payload.falseScore;
+  },
+  flipTutorialStep(state){
+    state.tutorialStep = !state.tutorialStep;
   }
 }
