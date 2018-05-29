@@ -156,7 +156,6 @@ export default class {
     stack = stack.sort(this.compare);
     let tmpStack = [];
     for(let i of stack) {
-      console.log("i: " + i.boolSide)
       if(i.score > 0 && i.score < 6 && i.boolSide === store.getters.getCoinMsg) {
         console.log("Pushing: " + i.boolSide)
         console.log("Is value: " + i.score)

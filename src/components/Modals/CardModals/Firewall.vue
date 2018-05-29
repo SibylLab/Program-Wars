@@ -46,8 +46,11 @@
         let player = this.$store.getters.getCurrentPlayer;
         //console.log("Im in playerClicked " + player);
         this.$store.commit('giveFirewall', player.id);
-
         $('.firewall').modal('hide');
+        if(this.$store.getters.getTutorialState){
+          bus.$emit('cardPlayed');
+          this.$store.commit('increaseFactIndex');
+        }
         let ret = this.$store.dispatch('playerTookTurn');
         let turn = this.$store.dispatch('turn', true);
       },

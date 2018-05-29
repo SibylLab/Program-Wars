@@ -46,8 +46,8 @@ const cardDeck = [
 
 
   {type:'V', cardValue: 3, imgSrc: '/static/cardImg/V3.png', howMany: variable3},
-  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
-  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
+  {type:'I', cardValue: 2, imgSrc: '/static/cardImg/I2.png', howMany: instruction2},
+  {type:'I', cardValue: 2, imgSrc: '/static/cardImg/I2.png', howMany: instruction2},
   {type:'R', cardValue: 2, imgSrc: '/static/cardImg/R2.png', howMany: repetition2},
   {type:'G', cardValue: 2, imgSrc: '/static/cardImg/G2.png', howMany: group2},
 
@@ -85,7 +85,7 @@ const cardDeck = [
   {type:'FIREWALL', cardValue: 0, imgSrc: '/static/cardImg/Firewall.png', howMany: firewall},
   {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
   {type:'H', cardValue: 0, imgSrc: '/static/cardImg/H.png', howMany: hack},
-  {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
+  {type:'V', cardValue: 3, imgSrc: '/static/cardImg/V3.png', howMany: variable3},
   {type:'V', cardValue: 5, imgSrc: '/static/cardImg/V5.png', howMany: variable5},
 ];
 

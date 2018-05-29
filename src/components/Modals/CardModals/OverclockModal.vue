@@ -46,8 +46,12 @@
         let player = this.$store.getters.getCurrentPlayer;
         //console.log("Im in playerClicked " + player);
         this.$store.commit('giveOverclock', player.id);
-        console.log("Active Card " + this.$store.getActiveCard);
+        // console.log("Active Card " + this.$store.getActiveCard);
         $('.overclock').modal('hide');
+        if(this.$store.getters.getTutorialState){
+          bus.$emit('cardPlayed');
+          this.$store.commit('increaseFactIndex');
+        }
         let ret = this.$store.dispatch('playerTookTurn');
         let turn = this.$store.dispatch('turn', true);
       },

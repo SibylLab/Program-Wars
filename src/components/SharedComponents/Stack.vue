@@ -244,7 +244,7 @@ export default {
         let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1];
         this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard});
-        console.log("Active side: " + this.$store.getters.getActiveSide);
+        //console.log("Active side: " + this.$store.getters.getActiveSide);
         if(this.$store.getters.getActiveSide) {
           this.$store.commit('changeBonusScore', {
             id: this.$store.getters.getCurrentPlayer.id,
@@ -367,7 +367,6 @@ export default {
         bus.$emit('cardPlayed');
         this.$store.commit('increaseFactIndex');
       }
-
 
       this.$store.commit('setActiveCardUndefined');
     },

@@ -48,6 +48,10 @@
         this.$store.commit('giveAntiVirus', player.id);
 
         $('.antiVirus').modal('hide');
+        if(this.$store.getters.getTutorialState){
+          bus.$emit('cardPlayed');
+          this.$store.commit('increaseFactIndex');
+        }
         let ret = this.$store.dispatch('playerTookTurn');
         let turn = this.$store.dispatch('turn', true);
       },

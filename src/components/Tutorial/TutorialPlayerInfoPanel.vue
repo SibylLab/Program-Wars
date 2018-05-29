@@ -15,7 +15,7 @@
 
             <ul id="example-1">
               <h4 class="modal-title"><b>{{ currentPlayerName }}</b>, It's Your Turn</h4>
-              <li v-for="(card,index) in hand" :id="card.type + card.value + index">
+              <li v-for="(card,index) in hand" :id="card.type + card.value + index + currentPlayerName">
                 <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
             </ul>
@@ -72,17 +72,22 @@
         facts: [
           'Your false path needs an instruction, let\'s add one to the false path.',
           'Great! Your paths are started, let\'s place another instruction in the true path.',
+          'It\'s time to build up one of our paths. Add the repetition card to your flase path. This will allow you'
+          + ' to add a variable on top of it to change how often it repeats.',
           'Either of your paths could be attacked by a hack card, which would ruin your stack. Group cards can be used on' +
           ' one or more stacks of cards in one path that equal up to the group card value. Let\'s protect your true path with'
-          + ' a group card. Click on the check boxes above the cards in your true path to group them. You also get a small bonus for using group cards ' +
-          'because they are good programming practice.',
-          'It\'s time to build up one of our paths. Add the repetition card to your true path. This will allow you'
-          + ' to add a variable on top of it to change how often it repeats.',
-          'The computer is getting closer to completing a path. He has no grouped stacks, so use the hack card on one of its stacks to set him back.',
-          'You\'re getting close to completing a path, add the variable (4) card to build up your true path. This will bring you up to 12 instructions.',
-          'Your false path is not looking very solid, add the Repetition (3) card to your false path to get a score of 9 in that path.',
-          'You can complete your truth path! Add the instruction card to complete it and give yourself a 50/50 shot of winning each round.',
-          'That\'s the end of the tutorial, you can continue playing until you win or click \'End Tutorial\' in the top right corner. '
+          + ' a group card. Click on the check boxes above the cards in your true path to group them. You also get a small bonus for using group cards.',
+          'You\'re getting closer to completing a path, add the variable (5) card to build up your false path.',
+          'The computer has no grouped stacks, so use the hack card on one of its stacks to set him back.',
+          'Your false path is vulnerable to getting hacked, but you dont have any more group card. Use the Firewall card to get full protection from hack cards.',
+          'The computer is vulnerable to getting a virus, send him a virus to slow down his program to half the instructions.',
+          'Speaking of being vulnerable to viruses, you\'re also vulnerable. Let\'s use an AntiVirus to protect you from all further viruses',
+          'You have one more attack card in your hand. Use the Power Outage card to stop your opponent from playing instruction cards.',
+          'With our last attack card of course we have a protection card. You can play a generator to reverse a power outage and prevent them or just use a '+
+          'Battery Backup to reverse it. Let\'s use the generator.',
+          'You have one more attack card in your hand. Use the Power Outage card to stop your opponent from playing instruction cards.',
+          'We have one last card to use. Maybe our most powerful. Let\'s use a overclock card to speed up your pc to run double the instructions.',
+          'That\'s the end of the tutorial, you can continue playing or click \'End Tutorial\' in the top right corner.'
         ],
         showTextBoxButton: true,
       }
@@ -247,7 +252,7 @@
         }
       },
       setTutorialFact() {
-        let retFact = this.facts[this.facts.length-1];
+        let retFact = this.facts[this.facts.length];
         if(this.$store.getters.getFactIndex < this.facts.length) {
           retFact = this.facts[this.$store.getters.getFactIndex];
         }
@@ -424,7 +429,8 @@
   /**
    *this is for highlighting the card path that the player should take
    */
-  li#I30, li#G30, li#R10, li#V50, li#H00, li#I10, li#I20, li#R30{
+  li#I30You, li#G30You, li#R10You, li#V50You, li#H00You, li#I10You, li#I20You, li#R30You, li#VIRUS00You,li#POWEROUTAGE00You,
+  li#ANTIVIRUS00You,li#GENERATOR00You,li#FIREWALL00You,li#OVERCLOCK00You{
     -webkit-animation: myfirst 0.8s 98765432;
     -moz-animation: myfirst 0.8s 98765432;
     animation: myfirst 0.8s 98765432;
