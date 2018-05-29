@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
   <div id="player-info-panel">
     <div id="flexcontainer">
       <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
@@ -9,21 +9,27 @@
           <br v-if="showTextBoxButton"><br v-if="showTextBoxButton">
         </div>
       </div>
-      <div id="cards">
+      <div class="container" style="width: 900px; float: left">
+        <div class="row">
+          <div id="cards">
 
-        <ul id="example-1">
-          <h4 class="modal-title"><b>{{ currentPlayerName }}</b>, It's Your Turn</h4>
-          <li v-for="(card,index) in hand" :id="card.type + card.value + index">
-            <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
-          </li>
-        </ul>
+            <ul id="example-1">
+              <h4 class="modal-title"><b>{{ currentPlayerName }}</b>, It's Your Turn</h4>
+              <li v-for="(card,index) in hand" :id="card.type + card.value + index">
+                <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div id="controls" class="col-sm" style="height: 80px; justify-content: center; align-items: center">
+            <button class="btn btn-primary btn-lg" v-on:click="discardSelected" style="border-radius: 40px">
+              Discard <br/> Selected Card
+            </button>
+          </div>
+        </div>
       </div>
-
-      <div id="controls">
-        <button class="btn btn-primary btn-lg rightSide" v-on:click="discardSelected" style="border-radius: 40px">
-          Discard <br/> Selected Card
-        </button>
-      </div>
+      <stats-panel></stats-panel>
 
     </div>
     <div class="container" style="border-top: 1px solid white; padding: 10px;">
@@ -35,7 +41,8 @@
       <div class="row">
         <div :class="colSize" v-for="player in players" style="text-align: left;">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-          <div> True Path: {{ player.trueScore }} Instructions <br> False Path: {{ player.falseScore }} Instructions</div>
+          <div> True Path: {{ (player.trueScore - player.infectedAmountTrue) + player.overclockIncreaseTrue + player.bonusTrue}}
+            Instructions <br> False Path: {{ (player.falseScore - player.infectedAmountFalse) + player.overclockIncreaseFalse + player.bonusFalse}} Instructions</div>
         </div>
       </div>
     </div>
@@ -46,6 +53,7 @@
   import { bus } from '../SharedComponents/Bus';
   import Card from '../SharedComponents/Card'
   import Modal from '../Modals/Modal'
+  import StatsPanel from '../SharedComponents/StatsPanel'
 
   export default {
     name: 'PlayerInfoPanel',
@@ -62,11 +70,12 @@
         tipsInfoText: 'Welcome to the tutorial, you can find tips on what on what to do next here. ' +
         'Click on the first instruction card and place it in the true path to get started. If you get lost at any time click on the rules button in the top right!',
         facts: [
-          'This path is not looking very strong, let\'s add another instruction to the true path.',
-          'Great! The first path is started, let\'s place an instruction in the false path.',
+          'Your false path needs an instruction, let\'s add one to the false path.',
+          'Great! Your paths are started, let\'s place another instruction in the true path.',
           'Either of your paths could be attacked by a hack card, which would ruin your stack. Group cards can be used on' +
-          ' one or more stacks of cards that equal up to the group card value. Let\'s protect your true path with'
-          + ' a group card. Click on the check boxes above the cards in your true path to group them.',
+          ' one or more stacks of cards in one path that equal up to the group card value. Let\'s protect your true path with'
+          + ' a group card. Click on the check boxes above the cards in your true path to group them. You also get a small bonus for using group cards ' +
+          'because they are good programming practice.',
           'It\'s time to build up one of our paths. Add the repetition card to your true path. This will allow you'
           + ' to add a variable on top of it to change how often it repeats.',
           'The computer is getting closer to completing a path. He has no grouped stacks, so use the hack card on one of its stacks to set him back.',
@@ -124,7 +133,8 @@
     },
     components: {
       'card': Card,
-      'modal': Modal
+      'modal': Modal,
+      'stats-panel': StatsPanel
     },
     methods: {
       openModal() {
@@ -148,6 +158,23 @@
           this.tipsCardSelected = this.setTipBox('default');
         }
         let prevActive = this.$store.getters.getActiveCard;
+        if(c.type === 'VIRUS'){
+          $('.virus').modal('show')
+        } else if(c.type === 'POWEROUTAGE'){
+          $('.powerOutage').modal('show');
+        } else if(c.type === 'BATTERYBACKUP') {
+          $('.batteryBackup').modal('show');
+        } else if(c.type === 'OVERCLOCK'){
+          $('.overclock').modal('show');
+        } else if(c.type === 'FIREWALL'){
+          $('.firewall').modal('show');
+        }
+        else if(c.type === 'GENERATOR'){
+          $('.generator').modal('show');
+        }
+        else if(c.type === 'ANTIVIRUS'){
+          $('.antiVirus').modal('show');
+        }
         this.$store.commit('selectCard', c);
         if (prevActive !== undefined) {
           if (c.type !== 'G' || c.id !== prevActive.id) {
@@ -214,7 +241,7 @@
 
 
           default :
-            var fact = this.setTutorialFact();
+            let fact = this.setTutorialFact();
             this.tipsInfoText = fact;
             return 'Next Step!';
         }
@@ -255,21 +282,121 @@
     created: function () {
       bus.$on('hackCanceled', () => {
         this.deselectAll();
-      }),
+      });
       bus.$on('activeCardAddedToStack', (cardId) => {
         if(this.$store.getters.getTutorialState) {
           this.removeTutorialCard(cardId);
           this.$store.commit('addCardToHand');
         }
-      }),
+      });
       bus.$on('aiDiscard', () => {
         this.discardSelected();
-      }),
+      });
         bus.$on('playAnimation', () =>{
           $('#tipBox').addClass('animated bounce');
-      }),
+      });
       bus.$on('cardPlayed', () => {
         this.tipsCardSelected = this.setTipBox('default');
+      });
+      bus.$on('aiAttack', (stackToHack) => {
+        if(this.$store.getters.getTutorialState) {
+          if (this.$store.state.aiTurn === true) {
+            if (this.$store.state.activeCard !== undefined) {
+              if (this.$store.getters.getActiveCard.type === 'POWEROUTAGE') {
+
+                $('.powerOutage').modal('hide');
+                console.log("Stack to hack: " + stackToHack.playerId);
+                this.$store.commit('givePowerOutage', stackToHack.playerId);
+                this.$store.dispatch('playerTookTurn');
+                bus.$emit('cardDeselected');
+                if (this.$store.getters.getHasPlayed) {
+                  this.$store.dispatch('turn', true);
+                }
+                this.$store.state.aiTurn = false;
+              }
+              else if (this.$store.getters.getActiveCard.type === 'VIRUS') {
+
+                $('.virus').modal('hide');
+                console.log("Stack to hack: " + stackToHack.playerId);
+                this.$store.commit('giveVirus', stackToHack.playerId);
+                this.$store.dispatch('playerTookTurn');
+                bus.$emit('cardDeselected');
+                if (this.$store.getters.getHasPlayed) {
+                  this.$store.dispatch('turn', true);
+                }
+                this.$store.state.aiTurn = false;
+              }
+            }
+          }
+        }
+      });
+
+      bus.$on('aiProtection', () => {
+        if(this.$store.getters.getTutorialState) {
+          if (this.$store.state.aiTurn === true) {
+            if (this.$store.state.activeCard !== undefined) {
+              if (this.$store.getters.getActiveCard.type === 'FIREWALL') {
+                $('.firewall').modal('hide');
+                this.$store.commit('giveFirewall', this.$store.getters.getCurrentPlayer.id);
+                this.$store.dispatch('playerTookTurn');
+                bus.$emit('cardDeselected');
+                if (this.$store.getters.getHasPlayed) {
+                  this.$store.dispatch('turn', true);
+                }
+                this.$store.state.aiTurn = false;
+              }
+              else if (this.$store.getters.getActiveCard.type === 'ANTIVIRUS') {
+                $('.antiVirus').modal('hide');
+                this.$store.commit('giveAntiVirus', this.$store.getters.getCurrentPlayer.id);
+                this.$store.dispatch('playerTookTurn');
+                bus.$emit('cardDeselected');
+                if (this.$store.getters.getHasPlayed) {
+                  this.$store.dispatch('turn', true);
+                }
+                this.$store.state.aiTurn = false;
+              }
+              else if (this.$store.getters.getActiveCard.type === 'GENERATOR') {
+                $('.generator').modal('hide');
+                this.$store.commit('giveGenerator', this.$store.getters.getCurrentPlayer.id);
+                this.$store.dispatch('playerTookTurn');
+                bus.$emit('cardDeselected');
+                if (this.$store.getters.getHasPlayed) {
+                  this.$store.dispatch('turn', true);
+                }
+                this.$store.state.aiTurn = false;
+              }
+            }
+          }
+        }
+      });
+
+      bus.$on('aiEnhance', () => {
+        if(this.$store.getters.getTutorialState){
+          if (this.$store.state.aiTurn === true) {
+            if (this.$store.state.activeCard !== undefined) {
+              if (this.$store.getters.getActiveCard.type === 'BATTERYBACKUP') {
+                $('.batteryBackup').modal('hide');
+                this.$store.commit('giveBatteryBackup', this.$store.getters.getCurrentPlayer.id);
+                this.$store.dispatch('playerTookTurn');
+                bus.$emit('cardDeselected');
+                if (this.$store.getters.getHasPlayed) {
+                  this.$store.dispatch('turn', true);
+                }
+                this.$store.state.aiTurn = false;
+              }
+              else if (this.$store.getters.getActiveCard.type === 'OVERCLOCK') {
+                $('.batteryBackup').modal('hide');
+                this.$store.commit('giveOverclock', this.$store.getters.getCurrentPlayer.id);
+                this.$store.dispatch('playerTookTurn');
+                bus.$emit('cardDeselected');
+                if (this.$store.getters.getHasPlayed) {
+                  this.$store.dispatch('turn', true);
+                }
+                this.$store.state.aiTurn = false;
+              }
+            }
+          }
+        }
       });
     }
   }
@@ -297,7 +424,7 @@
   /**
    *this is for highlighting the card path that the player should take
    */
-  li#I30, li#G30, li#R10, li#V40, li#H00, li#I10, li#I20, li#R30{
+  li#I30, li#G30, li#R10, li#V50, li#H00, li#I10, li#I20, li#R30{
     -webkit-animation: myfirst 0.8s 98765432;
     -moz-animation: myfirst 0.8s 98765432;
     animation: myfirst 0.8s 98765432;
@@ -328,12 +455,25 @@
     display: flex;
     flex-direction: column;
     padding: 0px;
-    justify-content: space-between;
+    vertical-align: middle;
+  //justify-content: space-between;
     align-items: center;
-    padding-right: 50px;
+  //padding-right: 50px;
     flex-basis: content;
-    flex-shrink:5;
-    margin-top: -120px;
+    flex-shrink: 5;
+  //margin-top: -120px;
+  }
+
+  #disabilityPanel {
+    top: 0;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    padding: 0;
+    padding-right: 80px;
+    flex-basis: content;
+    flex-shrink: 3;
   }
 
   #cards {

@@ -124,11 +124,12 @@ export default {
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal,
     'hack-modal': HackModal,
-    'virus-modal': VirusModal,
+
     'winner-modal': WinnerModal,
     'coin-modal': CoinModal,
     'player-turn': PlayerTurn,
     'hack-discard': HackDiscard,
+    'virus-modal': VirusModal,
     'power-outage-modal': PowerOutageModal,
     'battery-backup-modal': BatteryBackup,
     'overclock-modal': Overclock,
@@ -165,7 +166,7 @@ export default {
       let c = this.$store.getters.getActiveCard;
       if(c !== undefined) {
         //console.log(JSON.stringify(c, null, 4));
-        console.log(c.type);
+        //console.log(c.type);
         if (c.type === 'VIRUS') {
           console.log("returning true");
           $('.virus').modal('show');

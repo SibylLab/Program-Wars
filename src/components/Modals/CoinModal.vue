@@ -24,11 +24,11 @@
       RadialProgressBar
     },
     computed: {
-        completedSteps() {
-          return this.$store.state.coinFlip;
-        },
+       completedSteps() {
+        return this.$store.state.coinFlip;
+       },
       message() {
-          let lower = this.$store.state.coinMsg.toString();
+        let lower = this.$store.state.coinMsg.toString();
         return lower.charAt(0).toUpperCase() + lower.slice(1);
       }
     }

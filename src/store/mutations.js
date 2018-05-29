@@ -31,6 +31,7 @@ export default {
     state.playerTurn = false;
     state.isTutorial = false;
     state.factIndex = 0;
+    state.tutorialStep = true;
   },
   addPlayers(state, payload) {
     let id = 0;
@@ -361,5 +362,8 @@ export default {
   changeBonusScore(state,payload){
     state.players[payload.id].bonusTrue += payload.trueScore;
     state.players[payload.id].bonusFalse += payload.falseScore;
+  },
+  flipTutorialStep(state){
+    state.tutorialStep = !state.tutorialStep;
   }
 }

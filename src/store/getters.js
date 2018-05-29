@@ -109,6 +109,9 @@ export default {
   },
   getFactIndex(state) {
     return state.factIndex;
+  },
+  getTutorialStep(state) {
+    return state.tutorialStep;
   }
 }
 
