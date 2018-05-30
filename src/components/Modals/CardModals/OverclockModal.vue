@@ -44,9 +44,7 @@
       },
       useClicked() {
         let player = this.$store.getters.getCurrentPlayer;
-        //console.log("Im in playerClicked " + player);
         this.$store.commit('giveOverclock', player.id);
-        // console.log("Active Card " + this.$store.getActiveCard);
         $('.overclock').modal('hide');
         if(this.$store.getters.getTutorialState){
           bus.$emit('cardPlayed');

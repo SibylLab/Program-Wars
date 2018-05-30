@@ -312,7 +312,6 @@ export default {
             if (this.$store.getters.getActiveCard.type === 'POWEROUTAGE') {
 
               $('.powerOutage').modal('hide');
-              console.log("Stack to hack: " + stackToHack.playerId);
               this.$store.commit('givePowerOutage', stackToHack.playerId);
               this.$store.dispatch('playerTookTurn');
               bus.$emit('cardDeselected');
@@ -324,7 +323,6 @@ export default {
             else if (this.$store.getters.getActiveCard.type === 'VIRUS') {
 
               $('.virus').modal('hide');
-              console.log("Stack to hack: " + stackToHack.playerId);
               this.$store.commit('giveVirus', stackToHack.playerId);
               this.$store.dispatch('playerTookTurn');
               bus.$emit('cardDeselected');
@@ -431,12 +429,9 @@ export default {
     flex-direction: column;
     padding: 0px;
     vertical-align: middle;
-    //justify-content: space-between;
     align-items: center;
-    //padding-right: 50px;
     flex-basis: content;
     flex-shrink: 5;
-    //margin-top: -120px;
   }
 
   #disabilityPanel {
@@ -462,10 +457,7 @@ export default {
 }
 
   #tipBox {
-    //position: relative;
-    //top: 0;
     max-width: 350px;
-    //height: 280px;
     vertical-align: middle;
   }
 
@@ -518,7 +510,6 @@ a {
   }
 
   .trueFalse {
-
     animation: cssAnimation 3s 16 ease-in-out;
   }
   @keyframes cssAnimation {

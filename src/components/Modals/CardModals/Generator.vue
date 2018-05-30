@@ -44,7 +44,6 @@
       },
       useClicked() {
         let player = this.$store.getters.getCurrentPlayer;
-        //console.log("Im in playerClicked " + player);
         this.$store.commit('giveGenerator', player.id);
         $('.generator').modal('hide');
         if(this.$store.getters.getTutorialState){

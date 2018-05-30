@@ -9,6 +9,7 @@ export default {
     context.commit('setHasPlayed', {hasPlayed: true});
     context.commit('setPlayerScores')
   },
+
   firstRound(context) {
     context.commit('playerModalTrigger');
     if(!context.state.isTutorial)
@@ -38,7 +39,6 @@ export default {
 
   turn(context, payload) {
     context.commit('getIsLast');
-    //context.state.coinMsg = 'Evaluating...';
     context.state.pointerEvent = 'pointer-events: none';
     switch(payload) {
       case true:
@@ -71,19 +71,6 @@ export default {
         context.commit('checkWin');
         if(!context.state.winner) {
           context.dispatch('coinAnimation');
-          //this.coinAnimation(context);
-          // context.commit('coinModalTrigger');
-          // context.commit('setCoinFlipAnim', 0);
-          // context.commit('setPlayfieldColour', true);
-          // context.state.coinMsg = context.state.activeSide ? true : false;
-          //
-          // setTimeout(() => {
-          //   context.commit('setCoinFlipAnim', 1)
-          // }, 200);
-          // setTimeout(() => {
-          //   $('.coin').modal('handleUpdate');
-          //   $('.coin').modal('hide');
-          // }, coinTimer * 1000);
         }
         if (context.state.winner) {
           setTimeout(() => {

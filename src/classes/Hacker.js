@@ -8,9 +8,6 @@ export default class Hacker {
   constructor() {
     this.move = new AiMove();
     this.boolSide = this.move.getBoolSide();
-    // console.log("The coinMsg: " + store.getters.getCoinMsg)
-    // console.log("AI is choosing: " + this.boolSide)
-    // console.log("Hacker")
   }
 
   /**
@@ -60,7 +57,6 @@ export default class Hacker {
     }
 
     else if(hand.batteryBackupCard !== undefined && store.getters.getCurrentPlayer.hasPowerOutage){
-      console.log("Current player: " + JSON.stringify(store.getters.getCurrentPlayer));
       cardToPlay = hand.batteryBackupCard;
       moveType = 'enhance'
     }

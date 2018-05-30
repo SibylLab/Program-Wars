@@ -48,9 +48,7 @@
         }
       },
       playerClicked(player) {
-        //console.log("Im in playerClicked " + player);
         this.$store.commit('givePowerOutage', player);
-        //console.log("Active Card " + this.$store.getActiveCard)
         $('.powerOutage').modal('hide');
         if(this.$store.getters.getTutorialState){
           bus.$emit('cardPlayed');

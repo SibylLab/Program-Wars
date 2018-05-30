@@ -9,8 +9,6 @@ export default class Sprinter {
   constructor() {
     this.move = new AiMove();
     this.boolSide = this.move.getBoolSide();
-    console.log("Sprinter")
-
   }
 
   /**

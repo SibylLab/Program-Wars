@@ -65,7 +65,7 @@ export default {
       if(this.$store.state.activeCard !== undefined) {
         let activeCard = this.$store.state.activeCard.type;
         let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
-        if (this.$store.getters.getCoinMsg.valueOf() == this.playfieldBoolean && !this.$store.getters.getCurrentPlayer.hasPowerOutage) {
+        if (this.$store.getters.getCoinMsg.valueOf() === this.playfieldBoolean && !this.$store.getters.getCurrentPlayer.hasPowerOutage) {
 
           if (activeCard === 'I' && thisStack.cards.length === 0) {
             return true;
@@ -73,7 +73,6 @@ export default {
             let rCount = 0;
             if(thisStack.cards.length !== 0 && (thisStack.stackTopCard().type !== 'R' || thisStack.stackTopCard().value !== 1)) {
               for(let i=0; i<thisStack.cards.length; i++){
-                console.log("In for loop " + thisStack.cards[i].value);
                 if(thisStack.cards[i].type === 'R'){
                   rCount++;
                 }
@@ -82,15 +81,6 @@ export default {
                 return true;
               }
             }
-            // if (thisStack.cards.length === 1) {
-            //   return true;
-            // } else if (thisStack.cards.length === 2 && this.$store.state.activeCard.value === 1) {
-            //   return true;
-            // }
-            // else if (thisStack.cards.length === 3){
-            //   return true;
-            // }
-
           } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 5) {
             if (thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1) {
               return true;
@@ -244,7 +234,6 @@ export default {
         let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1];
         this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard});
-        //console.log("Active side: " + this.$store.getters.getActiveSide);
         if(this.$store.getters.getActiveSide) {
           this.$store.commit('changeBonusScore', {
             id: this.$store.getters.getCurrentPlayer.id,
@@ -322,7 +311,6 @@ export default {
             break;
 
           case 'V':
-            console.log("Top card = " + thisStack.stackTopCard.type)
           if (thisStack.cards.length === 0) {
                 $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
@@ -351,13 +339,10 @@ export default {
                 break;
           default:
               return '';
-              break;
         }
       }
       if(this.$store.getters.getHasPlayed) {
         this.$store.dispatch('turn', true);
-//        this.$store.commit('checkWin');
-//        this.$store.dispatch('endTurn');
       }
     },
     addToStackClicked() {

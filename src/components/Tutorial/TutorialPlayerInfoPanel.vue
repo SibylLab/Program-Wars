@@ -157,7 +157,6 @@
         }
       },
       cardClicked (c) {
-        console.log(this.hand[0])
         if(this.hand[0] === c) {
           if (this.$store.getters.getTips.tutorial) {
             this.tipsCardSelected = this.setTipBox(c);
@@ -313,7 +312,6 @@
               if (this.$store.getters.getActiveCard.type === 'POWEROUTAGE') {
 
                 $('.powerOutage').modal('hide');
-                console.log("Stack to hack: " + stackToHack.playerId);
                 this.$store.commit('givePowerOutage', stackToHack.playerId);
                 this.$store.dispatch('playerTookTurn');
                 bus.$emit('cardDeselected');
@@ -325,7 +323,6 @@
               else if (this.$store.getters.getActiveCard.type === 'VIRUS') {
 
                 $('.virus').modal('hide');
-                console.log("Stack to hack: " + stackToHack.playerId);
                 this.$store.commit('giveVirus', stackToHack.playerId);
                 this.$store.dispatch('playerTookTurn');
                 bus.$emit('cardDeselected');
