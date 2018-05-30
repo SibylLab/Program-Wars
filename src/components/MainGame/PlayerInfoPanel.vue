@@ -175,6 +175,7 @@ export default {
     },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {
+        this.tipsCardSelected = this.setTipBox('default');
         this.$store.state.isDiscard = true;
         setTimeout(() => {
           this.$store.state.isDiscard = false;
@@ -185,9 +186,11 @@ export default {
       }
     },
     cardClicked (c) {
-      if(this.$store.getters.getTips.tutorial) {
+
+      if(this.$store.getters.getTips.tutorial && this.$store.getters.getActiveCard === undefined) {
         this.tipsCardSelected = this.setTipBox(c);
       } else {
+        console.log("in cardClicked")
           this.tipsCardSelected = this.setTipBox('default');
       }
       let prevActive = this.$store.getters.getActiveCard
