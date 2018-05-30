@@ -1,4 +1,4 @@
-Fixes \#\<Issue number\>
+Fixes #
 
 #### Overview of changes
 
