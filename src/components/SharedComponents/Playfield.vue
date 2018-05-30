@@ -51,10 +51,19 @@ export default {
       return this.getStackList(this.trueFalse);
     },
     score() {
-      return {trueScore: (this.$store.getters.getPlayers[this.playerId].trueScore - this.$store.getters.getPlayers[this.playerId].infectedAmountTrue)
-        + this.$store.getters.getPlayers[this.playerId].overclockIncreaseTrue + this.$store.getters.getPlayers[this.playerId].bonusTrue,
-              falseScore: (this.$store.getters.getPlayers[this.playerId].falseScore - this.$store.getters.getPlayers[this.playerId].infectedAmountFalse)
-              + this.$store.getters.getPlayers[this.playerId].overclockIncreaseFalse + this.$store.getters.getPlayers[this.playerId].bonusFalse};
+      let trueSide = 0;
+      let falseSide = 0;
+      trueSide = this.$store.getters.getCurrentPlayer.trueScore + this.$store.getters.getCurrentPlayer.bonusTrue;
+      falseSide = this.$store.getters.getCurrentPlayer.falseScore + this.$store.getters.getCurrentPlayer.bonusFalse;
+      if(this.$store.getters.getCurrentPlayer.hasVirus){
+        trueSide = trueSide/2;
+        falseSide = falseSide/2;
+      } else if(this.$store.getters.getCurrentPlayer.hasOverclock){
+        trueSide = trueSide*2;
+        falseSide = falseSide*2
+      }
+      return {trueScore: trueSide,
+              falseScore: falseSide};
     }
   },
   components: {

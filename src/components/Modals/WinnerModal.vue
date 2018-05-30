@@ -58,7 +58,21 @@
       newGame() {
         this.$store.commit('setPlayfieldColour', false);
         this.$router.push('/');
-      }
+      },
+      getScore(player, type){
+        let trueSide = 0;
+        let falseSide = 0;
+        trueSide = this.$store.getters.getPlayers[player].trueScore + this.$store.getters.getPlayers[player].bonusTrue;
+        falseSide = this.$store.getters.getPlayers[player].falseScore + this.$store.getters.getPlayers[player].bonusFalse;
+        if(this.$store.getters.getPlayers[player].hasVirus){
+          trueSide = trueSide/2;
+          falseSide = falseSide/2;
+        } else if(this.$store.getters.getPlayers[player].hasOverclock){
+          trueSide = trueSide*2;
+          falseSide = falseSide*2
+        }
+        return{trueScore: trueSide, falseScore: falseSide}
+      },
     },
     computed: {
       winner() {
@@ -74,11 +88,11 @@
           let winList = [];
           for(let player of this.playerList) {
               if (this.$store.state.activeSide) {
-                  if((player.trueScore - player.infectedAmountTrue) + player.overclockIncreaseTrue + player.bonusTrue >= this.$store.state.scoreLimit) {
+                  if(this.getScore(this.$store.getters.getCurrentPlayer.id).trueScore >= this.$store.state.scoreLimit) {
                       winList.push(player.name)
                   }
               } else {
-                if((player.falseScore - player.infectedAmountFalse) + player.overclockIncreaseFalse + player.bonusFalse >= this.$store.state.scoreLimit) {
+                if(this.getScore(this.$store.getters.getCurrentPlayer.id).falseScore >= this.$store.state.scoreLimit) {
                   winList.push(player.name)
                 }
               }
