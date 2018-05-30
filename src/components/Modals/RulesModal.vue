@@ -225,7 +225,7 @@
 
                   <li><h5>Firewall</h5>
                     <div>
-                      <img src="../../../static/cardImg/Virus.png" alt="Instruction 1 Card" class="cardImage">
+                      <img src="../../../static/cardImg/Firewall.png" alt="Instruction 1 Card" class="cardImage">
                     </div>
 
                     <div>
