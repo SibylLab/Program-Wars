@@ -32,6 +32,8 @@ export default {
     state.isTutorial = false;
     state.factIndex = 0;
     state.tutorialStep = true;
+    state.trueSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)';
+    state.falseSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)';
   },
   addPlayers(state, payload) {
     let id = 0;
