@@ -16,7 +16,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-default" @click="discardOverclock" data-dismiss="modal" style="float: right; margin: 5px;" :style="hideButton">Discard OC Card</button>
-          <button class="btn btn-default" @click="useClicked()"><b>Use</b></button>
+          <button class="btn btn-default" @click="useClicked()" :disabled="checkUse"><b>Use</b></button>
           <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="overclockCanceled">Cancel</button>
         </div>
       </div>
@@ -53,6 +53,11 @@
         let ret = this.$store.dispatch('playerTookTurn');
         let turn = this.$store.dispatch('turn', true);
       },
+      checkUse() {
+        if(this.$store.getters.getCurrentPlayer.hasOverclock)
+          return true;
+        return false;
+      }
 
     },
     computed: {

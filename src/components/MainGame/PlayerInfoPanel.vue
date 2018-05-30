@@ -159,12 +159,12 @@ export default {
     getScore(player){
       let trueSide = 0;
       let falseSide = 0;
-      trueSide = this.$store.getters.getPlayers[player.id].trueScore + this.$store.getters.getPlayers[player.id].bonusTrue;
-      falseSide = this.$store.getters.getPlayers[player.id].falseScore + this.$store.getters.getPlayers[player.id].bonusFalse;
-      if(this.$store.getters.getPlayers[player.id].hasVirus){
+      trueSide = this.$store.getters.getPlayers[player].trueScore + this.$store.getters.getPlayers[player].bonusTrue;
+      falseSide = this.$store.getters.getPlayers[player].falseScore + this.$store.getters.getPlayers[player].bonusFalse;
+      if(this.$store.getters.getPlayers[player].hasVirus){
         trueSide = trueSide/2;
         falseSide = falseSide/2;
-      } else if(this.$store.getters.getPlayers[player.id].hasOverclock){
+      } else if(this.$store.getters.getPlayers[player].hasOverclock){
         trueSide = trueSide*2;
         falseSide = falseSide*2
       }

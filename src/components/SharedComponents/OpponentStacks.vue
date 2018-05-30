@@ -3,9 +3,9 @@
     <br>
     <h5><b>True Stacks: {{ player.trueScore }}</b></h5>
     <div v-if="trueStacks.length !== 0" class="stacks">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-3" v-for="stack in trueStacks" style="margin-bottom: 15px">
+        <div class="container" style="max-width: 50%">
+          <div class="row" style="max-width: 50%">
+            <div class="col-md-3" v-for="stack in trueStacks" style="margin-bottom: 15px; max-width: 440px; min-width: 250px">
               <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id" class="opponentStacks"></opponent-stack>
             </div>
           </div>
@@ -16,7 +16,7 @@
     <div v-if="falseStacks.length !== 0" class="stacks">
       <div class="container">
         <div class="row">
-          <div class="col-lg-3 col-md-4" v-for="stack in falseStacks">
+          <div class="col-lg-3 col-md-4" v-for="stack in falseStacks" style="max-width: 440px; min-width: 250px">
               <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id" class="opponentStacks"></opponent-stack>
           </div>
         </div>
