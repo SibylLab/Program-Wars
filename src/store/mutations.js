@@ -32,6 +32,8 @@ export default {
     state.isTutorial = false;
     state.factIndex = 0;
     state.tutorialStep = true;
+    state.trueSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)';
+    state.falseSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)';
   },
   addPlayers(state, payload) {
     let id = 0;
@@ -41,23 +43,12 @@ export default {
       id++;
     }
   },
-  // setCurrentPlayer(state, playerId) {
-  //   state.activePlayer = playerId
-  // },
-  //
+
   endTurn(state, maxplayers) {
     state.activePlayer += 1;
     state.activePlayer = state.activePlayer % maxplayers;
   },
-  //
-  // updateCurrentPlayerHand(state, hand) {
-  //   for(let h of state.hands) {
-  //     if(h.playerId == hand.playerId) {
-  //       delete state.hands[state.hands.indexOf(h)];
-  //     }
-  //   }
-  //   state.hands.push(hand)
-  // },
+
   selectCard(state, c) {
     let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
     bus.$emit('cardHasBeenSelected');
@@ -331,7 +322,12 @@ export default {
     state.factIndex++;
   },
   giveVirus(state,payload) {
-    state.players[payload].updateVirusAmount();
+    // state.players[payload].updateVirusAmount();
+    if(state.players[payload].hasOverclock) {
+      state.players[payload].hasOverclock = false;
+    } else {
+      state.players[payload].hasVirus = true;
+    }
   },
   givePowerOutage(state,payload) {
     state.players[payload].hasPowerOutage = true;
@@ -341,7 +337,12 @@ export default {
     state.players[payload].updateBonus(1,1);
   },
   giveOverclock(state,payload) {
-    state.players[payload].updateOverclock();
+    // state.players[payload].updateOverclock();
+    if(state.players[payload].hasVirus) {
+      state.players[payload].hasVirus = false;
+    } else {
+      state.players[payload].hasOverclock = true;
+    }
   },
   giveFirewall(state, payload){
     state.players[payload].hasFirewall = true;
@@ -356,8 +357,6 @@ export default {
     state.players[payload].hasAntiVirus = true;
     state.players[payload].numViruses = 0;
     state.players[payload].updateBonus(1,1);
-    // state.players[payload].infectedAmountFalse = 0;
-    // state.players[payload].infectedAmountTrue = 0;
   },
   changeBonusScore(state,payload){
     state.players[payload.id].bonusTrue += payload.trueScore;
@@ -365,5 +364,6 @@ export default {
   },
   flipTutorialStep(state){
     state.tutorialStep = !state.tutorialStep;
-  }
+  },
+
 }

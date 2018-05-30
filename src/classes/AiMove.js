@@ -112,7 +112,6 @@ export default class {
   getOpponentToAttack(event, type) {
     let tmpOpponents = undefined;
     if(type === "POWEROUTAGE") {
-      console.log("In POWEROUTAGE")
       tmpOpponents = event.opponents.filter(opponents => opponents.hasGenerator !== true && opponents.hasPowerOutage!== true);
     } else if(type === "VIRUS"){
       tmpOpponents = event.opponents.filter(opponents => opponents.hasAntiVirus !== true && (opponents.trueScore !== 0 || opponents.falseScore !== 0));
@@ -124,7 +123,6 @@ export default class {
       for (let player of tmpOpponents) {
         if (player.score >= tmpScore) {
           opponentToAttack = player;
-          console.log("Attack: " + JSON.stringify(opponentToAttack));
           tmpScore = player.score;
         }
       }
@@ -157,8 +155,6 @@ export default class {
     let tmpStack = [];
     for(let i of stack) {
       if(i.score > 0 && i.score < 6 && i.boolSide === store.getters.getCoinMsg) {
-        console.log("Pushing: " + i.boolSide)
-        console.log("Is value: " + i.score)
         tmpStack.push(i);
       }
     }

@@ -41,8 +41,8 @@
       <div class="row">
         <div :class="colSize" v-for="player in players" style="text-align: left;">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-          <div> True Path: {{ (player.trueScore - player.infectedAmountTrue) + player.overclockIncreaseTrue + player.bonusTrue}}
-            Instructions <br> False Path: {{ (player.falseScore - player.infectedAmountFalse) + player.overclockIncreaseFalse + player.bonusFalse}} Instructions</div>
+          <div> True Path: {{ getScore(player.id).trueScore}}
+            Instructions <br> False Path: {{ getScore(player.id).falseScore }} Instructions</div>
         </div>
       </div>
     </div>
@@ -93,6 +93,7 @@
       }
     },
     computed: {
+
       colSize() {
         let size = 12/this.$store.getters.getPlayers.length;
         return 'col-sm-6 col-md-'+size;
@@ -142,6 +143,20 @@
       'stats-panel': StatsPanel
     },
     methods: {
+      getScore(player){
+        let trueSide = 0;
+        let falseSide = 0;
+        trueSide = this.$store.getters.getPlayers[player].trueScore + this.$store.getters.getPlayers[player].bonusTrue;
+        falseSide = this.$store.getters.getPlayers[player].falseScore + this.$store.getters.getPlayers[player].bonusFalse;
+        if(this.$store.getters.getPlayers[player].hasVirus){
+          trueSide = trueSide/2;
+          falseSide = falseSide/2;
+        } else if(this.$store.getters.getPlayers[player].hasOverclock){
+          trueSide = trueSide*2;
+          falseSide = falseSide*2
+        }
+        return {trueScore: trueSide, falseScore: falseSide }
+      },
       openModal() {
         $('.hack').modal('show');
       },
@@ -157,7 +172,6 @@
         }
       },
       cardClicked (c) {
-        console.log(this.hand[0])
         if(this.hand[0] === c) {
           if (this.$store.getters.getTips.tutorial) {
             this.tipsCardSelected = this.setTipBox(c);
@@ -313,7 +327,6 @@
               if (this.$store.getters.getActiveCard.type === 'POWEROUTAGE') {
 
                 $('.powerOutage').modal('hide');
-                console.log("Stack to hack: " + stackToHack.playerId);
                 this.$store.commit('givePowerOutage', stackToHack.playerId);
                 this.$store.dispatch('playerTookTurn');
                 bus.$emit('cardDeselected');
@@ -325,7 +338,6 @@
               else if (this.$store.getters.getActiveCard.type === 'VIRUS') {
 
                 $('.virus').modal('hide');
-                console.log("Stack to hack: " + stackToHack.playerId);
                 this.$store.commit('giveVirus', stackToHack.playerId);
                 this.$store.dispatch('playerTookTurn');
                 bus.$emit('cardDeselected');

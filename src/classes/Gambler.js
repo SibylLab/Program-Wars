@@ -8,7 +8,6 @@ export default class Gambler {
   constructor() {
     this.move = new AiMove();
     this.boolSide = this.move.getBoolSide();
-    console.log("Gambler")
   }
 
   /**
@@ -27,24 +26,13 @@ export default class Gambler {
     let moveType = undefined;
 
     let hand = this.move.organizeHand(event);
-
     this.boolSide = store.getters.getCoinMsg;
-
-    // console.log("The coinMsg: " + store.getters.getCoinMsg)
-    // console.log("AI is choosing: " + this.boolSide)
-
-    // let tempGroupStack = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score !== 0)
-    // console.log("stack: " + tempGroupStack);
-    // console.log("Full Stack: " + event.stack)
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
-    //let canGroup = this.move.findGroup(tempGroupStack, hand.bestGCard);
-
 
     if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.bestVCard;
       stackToPlay = this.move.stackToAddVariable(event);
       moveType = 'play';
-
     }
 
     else if(hand.firewallCard !== undefined){

@@ -37,7 +37,6 @@ const generator = 1;
 
 
 const cardDeck = [
-  //{type:'I', cardValue: 3, imgSrc: '/static/cardImg/I3.png', howMany: instruction3},
   {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
   {type:'I', cardValue: 3, imgSrc: '/static/cardImg/I3.png', howMany: instruction3},
   {type:'I', cardValue: 2, imgSrc: '/static/cardImg/I2.png', howMany: instruction2},
@@ -65,15 +64,8 @@ const cardDeck = [
   {type:'V', cardValue: 6, imgSrc: '/static/cardImg/V6.png', howMany: variable6},
 
 
-
-  // {type:'POWEROUTAGE', cardValue: 0, imgSrc: '/static/cardImg/PowerOutage.png', howMany: powerOutage},
-
-  // {type:'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/OverClock.png', howMany: overClock},
-  // {type:'BATTERYBACKUP', cardValue: 0, imgSrc: '/static/cardImg/BatteryBackup.png', howMany: batteryBackup},
-
   {type:'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/OverClock.png', howMany: overClock},
   {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
-  //{type:'BATTERYBACKUP', cardValue: 0, imgSrc: '/static/cardImg/BatteryBackup.png', howMany: batteryBackup},
   {type:'GENERATOR', cardValue: 0, imgSrc: '/static/cardImg/Generator.png', howMany: generator},
   {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
   {type:'POWEROUTAGE', cardValue: 0, imgSrc: '/static/cardImg/PowerOutage.png', howMany: powerOutage},

@@ -112,6 +112,22 @@ export default {
   },
   getTutorialStep(state) {
     return state.tutorialStep;
+  },
+  getPlayerScore(state, payload) {
+    let trueSide = 0;
+    let falseSide = 0;
+    trueSide = state.players[payload.id].trueScore + state.players[payload.id].bonusTrue;
+    falseSide = state.players[payload.id].falseScore + state.players[payload.id].bonusFalse;
+    if(state.players[payload.id].hasVirus){
+      trueSide = trueSide/2;
+      falseSide = falseSide/2;
+    } else if(state.players[payload.id].hasOverclock){
+      trueSide = trueSide*2;
+      falseSide = falseSide*2
+    }
+    console.log(trueSide);
+    return trueSide;
+    //return {trueScore: trueSide, falseScore: falseSide}
   }
 }
 

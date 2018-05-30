@@ -165,10 +165,7 @@ export default {
     showVirus() {
       let c = this.$store.getters.getActiveCard;
       if(c !== undefined) {
-        //console.log(JSON.stringify(c, null, 4));
-        //console.log(c.type);
         if (c.type === 'VIRUS') {
-          console.log("returning true");
           $('.virus').modal('show');
           return true;
         } else {

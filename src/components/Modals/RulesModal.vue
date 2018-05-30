@@ -124,10 +124,10 @@
                           <li>Hack cards let you attack another player's program.</li>
                           <li>When you play a Hack card, you choose which stack of cards from another player's playing
                             fields will be destroyed. </li>
-                          <li>You cannot hack a Group card or someone with a Firewall card active.</li>
+                          <li>You cannot hack a Group card or someone with a Firewall card played.</li>
                         </ol>
                         <b>Relation to computer programming:</b>
-                        Sometimes a mean or mischievous computer programmer. Known as a <i>hacker</i> will change a computer program
+                        Sometimes a mean or mischievous computer programmer known as a <i>hacker</i> will change a computer program
                         to do something it is not supposed to do. Using functions can make it harder for a hacker to change the computer program,
                         which is why Group cards counter Hack cards in the game.
 
@@ -142,10 +142,10 @@
                         <ol>
                           <li>Virus cards let you infect another player's program, cutting their score in half.</li>
                           <li>When you play a Virus card, you choose which player will be infected. </li>
-                          <li>You cannot infect someone with a AntiVirus card active.</li>
+                          <li>You cannot infect someone with a AntiVirus card played.</li>
                         </ol>
                         <b>Relation to computer programming:</b>
-                        Sometimes a mean or mischievous computer programmer. Known as a <i>hacker</i> will send you a computer program called a <i>virus</i>
+                        Sometimes a mean or mischievous computer programmer known as a <i>hacker</i> will send you a computer program called a <i>virus</i>
                         to have your computer do something it shouldn't, making your computer slower.
                         Overclocking your computer increases the rate at which it runs programs, which is why Overclocking cards counter Virus cards in the game.
                       </div>
@@ -159,12 +159,12 @@
                         <ol>
                           <li>Power Outage cards let you stop another player from playing instruction cards.</li>
                           <li>When you play a Power Outage card, you choose which player will be impacted. </li>
-                          <li>You cannot give a power outage to someone with a generator card active.</li>
+                          <li>You cannot give a power outage to someone with a Generator card played.</li>
                         </ol>
                         <b>Relation to computer programming:</b>
-                        Sometimes when the weather is bad you can have a power outage. This makes it so that you can't create programs.
-                        A backup battery or a generator can resolve this and allow you to continue programming, which is why the battery
-                        backup and generator cards reverse this program.
+                        Sometimes the power to the computer stops
+                        (like when someone trips on a cord, pushes the power button or a tree branch knocks down a power line).
+                        If the computer is off, it can't run any programs.
                       </div>
                     </li>
                     <li><h5>Battery Backup</h5>
@@ -174,7 +174,7 @@
 
                       <div>
                         <ol>
-                          <li>Battery Backup cards reverse the effects of Power Outage cards.</li>
+                          <li>Battery Backup cards reverse the effects of Power Outage card that has been played on you once and then is discarded.</li>
                         </ol>
                         <b>Relation to computer programming:</b>
                         Sometimes when the weather is bad you can have a power outage. This makes it so that you can't create programs.
@@ -203,7 +203,7 @@
                     </div>
                     <div>
                       <ol>
-                        <li>Generator cards protect you from all Power Outage cards.</li>
+                        <li>Generator cards protect you from anyone playing a Power Outage card on you for the rest of the game.</li>
                       </ol>
                       <b>Relation to computer programming:</b>
                       Like the battery backup, generators allow you to continue programming when you lose power.

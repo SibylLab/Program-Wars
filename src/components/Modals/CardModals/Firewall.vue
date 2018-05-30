@@ -44,7 +44,6 @@
       },
       useClicked() {
         let player = this.$store.getters.getCurrentPlayer;
-        //console.log("Im in playerClicked " + player);
         this.$store.commit('giveFirewall', player.id);
         $('.firewall').modal('hide');
         if(this.$store.getters.getTutorialState){

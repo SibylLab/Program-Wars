@@ -8,7 +8,6 @@ export default class Gambler {
   constructor() {
     this.move = new AiMove();
     this.boolSide = this.move.getBoolSide();
-    console.log("Protector")
   }
 
   /**

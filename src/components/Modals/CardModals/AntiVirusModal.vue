@@ -44,7 +44,6 @@
       },
       useClicked() {
         let player = this.$store.getters.getCurrentPlayer;
-        //console.log("Im in playerClicked " + player);
         this.$store.commit('giveAntiVirus', player.id);
 
         $('.antiVirus').modal('hide');
