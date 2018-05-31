@@ -44,9 +44,9 @@
         <div class="col-md-12" id="scoreSelect">
           <p>Score to Win:
           <select class="custom-select" name="select" v-model="selected">
-            <option value="25">Short (score 25)</option>
-            <option value="35">Medium (score 35)</option>
-            <option value="45">Long (score 45)</option>
+            <option value="50">Short (score 50)</option>
+            <option value="75">Medium (score 75)</option>
+            <option value="100">Long (score 100)</option>
           </select></p>
         </div>
       </div>
@@ -85,7 +85,7 @@
         localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
-        selected: '25',
+        selected: '50',
         noPlayers: true,
         inputDisable: false,
         maxPlayer: false,
@@ -149,7 +149,7 @@
         this.localPlayers.push({name: 'You', isAi: false});
         this.localPlayers.push({name: 'Flash', isAi: true});
         this.$store.commit('addPlayers', {list: this.localPlayers});
-        this.$store.commit('setScoreLimit', {scoreLimit: 25});
+        this.$store.commit('setScoreLimit', {scoreLimit: 50});
         this.gameStart = true;
         setTimeout(() => {
           this.$router.push('tutorial')

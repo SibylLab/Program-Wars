@@ -322,13 +322,11 @@ export default {
     state.factIndex++;
   },
   giveVirus(state,payload) {
-    // state.players[payload].updateVirusAmount();
     if(state.players[payload].hasOverclock) {
       state.players[payload].hasOverclock = false;
       state.players[payload].usedBonusCards = state.players[payload].usedBonusCards.filter(( obj ) => {
         return obj.type !== "OVERCLOCK";
       });
-      //let index = state.players[payload].attackedCards.indexOf()
     } else {
       state.players[payload].hasVirus = true;
       state.players[payload].attackedCards.push(state.activeCard);
@@ -362,21 +360,20 @@ export default {
   },
   giveFirewall(state, payload){
     state.players[payload].hasFirewall = true;
-
     state.players[payload].usedBonusCards.push(state.activeCard);
-    state.players[payload].updateBonus(1,1);
+    state.players[payload].updateBonus(10,10);
   },
   giveGenerator(state,payload){
     state.players[payload].hasGenerator = true;
     state.players[payload].hasPowerOutage = false;
     state.players[payload].usedBonusCards.push(state.activeCard);
-    state.players[payload].updateBonus(1,1);
+    state.players[payload].updateBonus(10,10);
   },
   giveAntiVirus(state,payload){
     state.players[payload].hasAntiVirus = true;
     state.players[payload].numViruses = 0;
     state.players[payload].usedBonusCards.push(state.activeCard);
-    state.players[payload].updateBonus(1,1);
+    state.players[payload].updateBonus(10,10);
   },
   changeBonusScore(state,payload){
     state.players[payload.id].bonusTrue += payload.trueScore;
