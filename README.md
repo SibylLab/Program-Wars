@@ -2,14 +2,13 @@
 [![Build Status](https://travis-ci.org/johnanvik/program-wars.svg?branch=master)](https://travis-ci.org/johnanvik/program-wars)
 
 [![Code Climate](https://codeclimate.com/github/johnanvik/program-wars/badges/gpa.svg)](https://codeclimate.com/github/johnanvik/program-wars)
-
 [![Test Coverage](https://codeclimate.com/github/johnanvik/program-wars/badges/coverage.svg)](https://codeclimate.com/github/johnanvik/program-wars/coverage)
 
 [![Issue Count](https://codeclimate.com/github/johnanvik/program-wars/badges/issue_count.svg)](https://codeclimate.com/github/johnanvik/program-wars/issues)
 
-[![NPM version](https://badge.fury.io/js/badge-list.svg)](http://badge.fury.io/js/badge-list)
-
-[![GitHub version](https://badge.fury.io/gh/johnanvik%2Fprogram-wars.svg)](https://badge.fury.io/gh/johnanvik%2Fprogram-wars)
+[![GitHub release](https://img.shields.io/github/release/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/releases/latest)
+[![Open Source Love](https://badges.frapsoft.com/os/gpl/gpl.svg?v=102)](https://github.com/johnanvik/open-source-badge/)
+[![Dependency Status](https://david-dm.org/johnanvik/badges.svg)](https://david-dm.org/johnanvik/badges)
 
 Program Wars is a web-based educational card game that teaches the basic concepts of programming.
 
