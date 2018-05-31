@@ -27,7 +27,7 @@
           </div>
         </div>
         </div>
-        <stats-panel></stats-panel>
+        <display-used-cards></display-used-cards>
 
       </div>
       <div class="container" style="border-top: 1px solid white; padding: 10px;">
@@ -52,6 +52,7 @@ import { bus } from '../SharedComponents/Bus';
 import Card from '../SharedComponents/Card'
 import Modal from '../Modals/Modal'
 import StatsPanel from '../SharedComponents/StatsPanel'
+import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
 
 export default {
   name: 'PlayerInfoPanel',
@@ -153,7 +154,8 @@ export default {
   components: {
     'card': Card,
     'modal': Modal,
-    'stats-panel': StatsPanel
+    'stats-panel': StatsPanel,
+    'display-used-cards': DisplayUsedCards
   },
   methods: {
     getScore(player){
@@ -190,7 +192,6 @@ export default {
       if(this.$store.getters.getTips.tutorial && this.$store.getters.getActiveCard === undefined) {
         this.tipsCardSelected = this.setTipBox(c);
       } else {
-        console.log("in cardClicked")
           this.tipsCardSelected = this.setTipBox('default');
       }
       let prevActive = this.$store.getters.getActiveCard

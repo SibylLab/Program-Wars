@@ -53,11 +53,7 @@
         let ret = this.$store.dispatch('playerTookTurn');
         let turn = this.$store.dispatch('turn', true);
       },
-      checkUse() {
-        if(this.$store.getters.getCurrentPlayer.hasOverclock)
-          return true;
-        return false;
-      }
+
 
     },
     computed: {
@@ -72,6 +68,13 @@
         } else {
           return 'display: none'
         }
+      },
+      checkUse() {
+        if(this.$store.getters.getCurrentPlayer.hasOverclock) {
+          console.log()
+          return true;
+        }
+        return false;
       }
     },
     created() {
