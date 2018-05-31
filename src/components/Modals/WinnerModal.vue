@@ -34,8 +34,8 @@
               <tbody>
               <tr v-for="player in playerList">
                 <td>{{ player.name }}</td>
-                <td>{{ (player.trueScore - player.infectedAmountTrue) * player.overclockMultiplier}}</td>
-                <td>{{ (player.falseScore - player.infectedAmountFalse) * player.overclockMultiplier}}</td>
+                <td>{{ getScore(player.id).trueScore}}</td>
+                <td>{{ getScore(player.id).falseScore}}</td>
               </tr>
               </tbody>
             </table>
@@ -59,7 +59,7 @@
         this.$store.commit('setPlayfieldColour', false);
         this.$router.push('/');
       },
-      getScore(player, type){
+      getScore(player){
         let trueSide = 0;
         let falseSide = 0;
         trueSide = this.$store.getters.getPlayers[player].trueScore + this.$store.getters.getPlayers[player].bonusTrue;

@@ -237,8 +237,16 @@ export default {
     for (let player of playerList) {
       let scoreTrue = 0;
       let scoreFalse = 0;
-      scoreTrue = player.trueScore;
-      scoreFalse = player.falseScore;
+      scoreTrue = player.trueScore + player.bonusTrue;
+      scoreFalse = player.falseScore + player.bonusFalse;
+
+      if(player.hasVirus){
+        scoreFalse = scoreFalse/2;
+        scoreTrue = scoreTrue/2;
+      } else if(player.hasOverclock){
+        scoreFalse = scoreFalse*2;
+        scoreTrue = scoreTrue*2
+      }
 
       if ((scoreTrue >= state.scoreLimit) || (scoreFalse >= state.scoreLimit))  {
         if ((scoreTrue > highScore) || (scoreFalse > highScore)) {
