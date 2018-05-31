@@ -325,37 +325,57 @@ export default {
     // state.players[payload].updateVirusAmount();
     if(state.players[payload].hasOverclock) {
       state.players[payload].hasOverclock = false;
+      state.players[payload].usedBonusCards = state.players[payload].usedBonusCards.filter(( obj ) => {
+        return obj.type !== "OVERCLOCK";
+      });
+      //let index = state.players[payload].attackedCards.indexOf()
     } else {
       state.players[payload].hasVirus = true;
+      state.players[payload].attackedCards.push(state.activeCard);
     }
   },
   givePowerOutage(state,payload) {
     state.players[payload].hasPowerOutage = true;
+    state.players[payload].attackedCards.push(state.activeCard);
+
+
   },
   giveBatteryBackup(state,payload) {
     state.players[payload].hasPowerOutage = false;
+    state.players[payload].attackedCards = state.players[payload].attackedCards.filter(( obj ) => {
+      return obj.type !== "POWEROUTAGE";
+    });
     state.players[payload].updateBonus(1,1);
   },
   giveOverclock(state,payload) {
     // state.players[payload].updateOverclock();
+
     if(state.players[payload].hasVirus) {
       state.players[payload].hasVirus = false;
+      state.players[payload].attackedCards = state.players[payload].attackedCards.filter(( obj ) => {
+        return obj.type !== "VIRUS";
+      });
     } else {
       state.players[payload].hasOverclock = true;
+      state.players[payload].usedBonusCards.push(state.activeCard);
     }
   },
   giveFirewall(state, payload){
     state.players[payload].hasFirewall = true;
+
+    state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(1,1);
   },
   giveGenerator(state,payload){
     state.players[payload].hasGenerator = true;
     state.players[payload].hasPowerOutage = false;
+    state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(1,1);
   },
   giveAntiVirus(state,payload){
     state.players[payload].hasAntiVirus = true;
     state.players[payload].numViruses = 0;
+    state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(1,1);
   },
   changeBonusScore(state,payload){

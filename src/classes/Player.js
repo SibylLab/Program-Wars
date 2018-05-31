@@ -17,6 +17,8 @@ export default class Player{
   constructor(id, name, hand, trueScore, falseScore, isAi) {
     this.name = name;
     this.hand = hand;
+    this.usedBonusCards = [];
+    this.attackedCards = [];
     this.trueScore = trueScore;
     this.falseScore = falseScore;
     this.id = id;

@@ -27,7 +27,7 @@
           </div>
         </div>
         </div>
-        <stats-panel></stats-panel>
+        <display-used-cards></display-used-cards>
 
       </div>
       <div class="container" style="border-top: 1px solid white; padding: 10px;">
@@ -39,8 +39,27 @@
         <div class="row">
           <div :class="colSize" v-for="player in players" style="text-align: left;">
             <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-              <div> True Path: {{ getScore(player.id).trueScore }}
-                Instructions <br> False Path: {{ getScore(player.id).falseScore }} Instructions</div>
+             <div>
+               True Path:&nbsp;
+               <meter :max="$store.getters.getScoreLimit" min=0
+                      :value="getScore(player.id).trueScore"
+                      :high="$store.getters.getScoreLimit/2"
+                      :low="$store.getters.getScoreLimit/3"
+                      :optimum="$store.getters.getScoreLimit-5"
+                      style="width: 150px"
+               ></meter>
+               <br>
+               False Path:
+               <meter :max="$store.getters.getScoreLimit" min=0
+                      :value="getScore(player.id).falseScore"
+                      :high="$store.getters.getScoreLimit/2"
+                      :low="$store.getters.getScoreLimit/3"
+                      :optimum="$store.getters.getScoreLimit-5"
+                      style="width:150px"
+               ></meter>
+             </div>
+              <!--<div> True Path: {{ getScore(player.id).trueScore }}-->
+                <!--Instructions <br> False Path: {{ getScore(player.id).falseScore }} Instructions</div>-->
           </div>
         </div>
       </div>
@@ -52,6 +71,7 @@ import { bus } from '../SharedComponents/Bus';
 import Card from '../SharedComponents/Card'
 import Modal from '../Modals/Modal'
 import StatsPanel from '../SharedComponents/StatsPanel'
+import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
 
 export default {
   name: 'PlayerInfoPanel',
@@ -153,7 +173,8 @@ export default {
   components: {
     'card': Card,
     'modal': Modal,
-    'stats-panel': StatsPanel
+    'stats-panel': StatsPanel,
+    'display-used-cards': DisplayUsedCards
   },
   methods: {
     getScore(player){
@@ -190,7 +211,6 @@ export default {
       if(this.$store.getters.getTips.tutorial && this.$store.getters.getActiveCard === undefined) {
         this.tipsCardSelected = this.setTipBox(c);
       } else {
-        console.log("in cardClicked")
           this.tipsCardSelected = this.setTipBox('default');
       }
       let prevActive = this.$store.getters.getActiveCard
