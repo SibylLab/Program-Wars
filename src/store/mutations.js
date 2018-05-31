@@ -248,6 +248,33 @@ export default {
         scoreTrue = scoreTrue*2
       }
 
+      for(let p in playerList){
+        if(p.id !== player.id){
+          if(!p.hasPlayedInstruction){
+            scoreFalse += 10;
+            scoreTrue += 10;
+          }
+        }
+      }
+
+      if(scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit){
+        scoreFalse += 10;
+        scoreTrue += 10;
+      }
+      if(player.isDefensive){
+        scoreTrue += 15;
+        scoreFalse += 15;
+      }
+      if(!player.hasHadOverclock){
+        scoreTrue += 10;
+        scoreFalse += 10;
+      }
+
+      if(!player.hasHadVirus){
+        scoreTrue += 10;
+        scoreFalse += 10;
+      }
+
       if ((scoreTrue >= state.scoreLimit) || (scoreFalse >= state.scoreLimit))  {
         if ((scoreTrue > highScore) || (scoreFalse > highScore)) {
           highScore = Math.max(scoreTrue, scoreFalse);
@@ -339,11 +366,11 @@ export default {
       state.players[payload].hasVirus = true;
       state.players[payload].attackedCards.push(state.activeCard);
     }
+    state.players[payload].hadVirus = true;
   },
   givePowerOutage(state,payload) {
     state.players[payload].hasPowerOutage = true;
     state.players[payload].attackedCards.push(state.activeCard);
-
 
   },
   giveBatteryBackup(state,payload) {
@@ -365,23 +392,33 @@ export default {
       state.players[payload].hasOverclock = true;
       state.players[payload].usedBonusCards.push(state.activeCard);
     }
+    state.players[payload].hasHadOverclock = true;
   },
   giveFirewall(state, payload){
     state.players[payload].hasFirewall = true;
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(10,10);
+    if(state.players[payload].hasFirewall && state.players[payload].hasAntiVirus && state.players[payload].hasGenerator){
+      state.players[payload].isDefensive = true;
+    }
   },
   giveGenerator(state,payload){
     state.players[payload].hasGenerator = true;
     state.players[payload].hasPowerOutage = false;
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(10,10);
+    if(state.players[payload].hasFirewall && state.players[payload].hasAntiVirus && state.players[payload].hasGenerator){
+      state.players[payload].isDefensive = true;
+    }
   },
   giveAntiVirus(state,payload){
     state.players[payload].hasAntiVirus = true;
     state.players[payload].numViruses = 0;
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(10,10);
+    if(state.players[payload].hasFirewall && state.players[payload].hasAntiVirus && state.players[payload].hasGenerator){
+      state.players[payload].isDefensive = true;
+    }
   },
   changeBonusScore(state,payload){
     state.players[payload.id].bonusTrue += payload.trueScore;

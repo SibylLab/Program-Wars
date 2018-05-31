@@ -271,6 +271,7 @@ export default {
               this.$store.dispatch('playerTookTurn');
               this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
               bus.$emit('cardDeselected');
+              this.$store.getters.getCurrentPlayer.hasPlayedInstruction = true;
             } else {
                   $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Instead add the card to a new stack" );
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')

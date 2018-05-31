@@ -34,8 +34,15 @@ export default class Player{
     this.overclockIncreaseFalse = 0;
     this.hasOverclock = false;
     this.hasVirus = false;
+    this.hasHadVirus = false;
+    this.hasHadOverclock = false;
+    this.hasPlayedInstruction = false;
     this.bonusTrue = 0;
     this.bonusFalse = 0;
+    this.isDefensive = false;
+    //this.isCoolSystem = true;
+    //this.isCompleteProgram = false;
+    this.isCleanSystem = true;
     if(this.isAi) {
       this.type = new Personality();
     }
