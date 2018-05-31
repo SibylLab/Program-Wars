@@ -1,5 +1,6 @@
 # Program Wars
 [![Build Status](https://travis-ci.org/johnanvik/program-wars.svg?branch=master)](https://travis-ci.org/johnanvik/program-wars)
+[![GitHub issues](https://img.shields.io/github/issues-raw/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/issues)
 
 [![Code Climate](https://codeclimate.com/github/johnanvik/program-wars/badges/gpa.svg)](https://codeclimate.com/github/johnanvik/program-wars)
 [![Test Coverage](https://codeclimate.com/github/johnanvik/program-wars/badges/coverage.svg)](https://codeclimate.com/github/johnanvik/program-wars/coverage)
