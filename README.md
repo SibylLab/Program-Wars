@@ -3,8 +3,7 @@
 
 [![Code Climate](https://codeclimate.com/github/johnanvik/program-wars/badges/gpa.svg)](https://codeclimate.com/github/johnanvik/program-wars)
 [![Test Coverage](https://codeclimate.com/github/johnanvik/program-wars/badges/coverage.svg)](https://codeclimate.com/github/johnanvik/program-wars/coverage)
-
-[![Issue Count](https://codeclimate.com/github/johnanvik/program-wars/badges/issue_count.svg)](https://codeclimate.com/github/johnanvik/program-wars/issues)
+[![Code Climate Issue Count](https://codeclimate.com/github/johnanvik/program-wars/badges/issue_count.svg)](https://codeclimate.com/github/johnanvik/program-wars/issues)
 
 [![GitHub release](https://img.shields.io/github/release/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/releases/latest)
 [![Open Source Love](https://badges.frapsoft.com/os/gpl/gpl.svg?v=102)](https://github.com/johnanvik/open-source-badge/)
