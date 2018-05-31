@@ -29,15 +29,15 @@ const variable5 = 3;
 const variable6 = 1;
 
 const hack = 3;
-const virus = 7;
-const powerOutage = 10;
+const virus = 3;
+const powerOutage = 3;
 
 const overClock = 3;
-const batteryBackup = 10;
+const batteryBackup = 3;
 
-const antiVirus = 5;
-const firewall = 5;
-const generator = 5;
+const antiVirus = 1;
+const firewall = 1;
+const generator = 1;
 
 const cardDeck = [
   {type:'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},

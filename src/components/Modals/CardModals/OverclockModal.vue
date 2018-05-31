@@ -71,7 +71,6 @@
       },
       checkUse() {
         if(this.$store.getters.getCurrentPlayer.hasOverclock) {
-          console.log()
           return true;
         }
         return false;

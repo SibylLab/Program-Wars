@@ -35,11 +35,6 @@
       'card': Card
 
     },
-    methods: {
-      cardClicked() {
-        console.log("in card clicked")
-      }
-    },
     computed: {
       attackedCards() {
         let cards = this.$store.getters.getCurrentPlayer.attackedCards;
