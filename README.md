@@ -3,6 +3,7 @@
 [![GitHub open issues](https://img.shields.io/github/issues-raw/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/issues)
 [![Dependency Status](https://david-dm.org/johnanvik/badges.svg)](https://david-dm.org/johnanvik/badges)
+[![Dev Dependency Status](https://david-dm.org/johnanvik/program-wars/badges/dev-status.svg)](https://david-dm.org/johnanvik/program-wars//badges#info=devDependencies)
 
 [![Code Climate](https://codeclimate.com/github/johnanvik/program-wars/badges/gpa.svg)](https://codeclimate.com/github/johnanvik/program-wars)
 [![Test Coverage](https://codeclimate.com/github/johnanvik/program-wars/badges/coverage.svg)](https://codeclimate.com/github/johnanvik/program-wars/coverage)
