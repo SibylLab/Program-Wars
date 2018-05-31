@@ -92,7 +92,7 @@
          isRepeat: false,
         aiSelect: 'noAiSelected',
         aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
-        typesOfGames: ['Short (25)', 'Medium (35)', 'Long (45)'],
+        typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
         isTutorial: false,
         tutorialBegin: false
       }
@@ -163,9 +163,11 @@
         this.$store.commit('addPlayers', {list: this.localPlayers});
         this.$store.commit('setScoreLimit', {scoreLimit: this.selected});
         this.gameStart = true;
+
         setTimeout(() => {
           this.$router.push('game')
         }, 100);
+
       },
 
       /**

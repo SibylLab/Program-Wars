@@ -278,6 +278,7 @@ export default {
             }
             break;
           case 'R':
+            let repBonus = 3;
             if (thisStack.cards.length === 0) {
               $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card." );
               $('button[stackId="'+this.stackId+'"]').popover('toggle')
@@ -285,7 +286,8 @@ export default {
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
               this.$store.dispatch('playerTookTurn');
               bus.$emit('cardDeselected');
-              this.updateBonus(3,3)
+              this.updateBonus(repBonus,repBonus);
+              this.$store.getters.getCurrentPlayer.repetitionBonus += repBonus;
             }else if(activeCard.value === 1 && thisStack.stackTopCard().type === 'R') {
               this.$store.commit('popCardFromStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
               this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
@@ -301,6 +303,7 @@ export default {
             break;
 
           case 'V':
+            let varBonus = 2;
           if (thisStack.cards.length === 0) {
                 $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
@@ -308,7 +311,8 @@ export default {
             this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
             this.$store.dispatch('playerTookTurn');
             bus.$emit('cardDeselected');
-            this.updateBonus(5,5);
+            this.$store.getters.getCurrentPlayer.repetitionBonus += varBonus;
+            this.updateBonus(varBonus,varBonus);
             } else if (thisStack.stackTopCard().type === 'V' && thisStack.stackTopCard().value < activeCard.value) {
                 this.$store.commit('stackDiscard', {stackId: this.stackId});
                 this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});

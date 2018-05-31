@@ -25,17 +25,56 @@
             <h5><b>Scores</b></h5>
             <table class="table table-condensed" style="width: 60%; margin: auto">
               <thead>
+
               <tr>
-                <th>Player Name</th>
-                <th>True Score</th>
-                <th>False Score</th>
+                <th>Player Name:</th>
+                <th v-for="player in playerList" >{{ player.name }}</th>
               </tr>
               </thead>
               <tbody>
-              <tr v-for="player in playerList">
-                <td>{{ player.name }}</td>
-                <td>{{ getScore(player.id).trueScore}}</td>
-                <td>{{ getScore(player.id).falseScore}}</td>
+              <tr>
+                <th>True Score:</th>
+                <td v-for="player in playerList">{{ getScore(player.id).trueScore}}</td>
+              </tr>
+              <tr>
+                <th>False Score:</th>
+                <td v-for="player in playerList">{{ getScore(player.id).falseScore}}</td>
+              </tr>
+              <tr>
+                <th>Completion Bonus:</th>
+                <td v-for="player in playerList">{{player.completionBonus}}</td>
+              </tr>
+              <tr>
+                <th>Defensive Bonus:</th>
+                <td v-for="player in playerList">{{player.defensiveBonus}}</td>
+              </tr>
+              <tr>
+                <th>No Viruses Bonus:</th>
+                <td v-for="player in playerList">{{player.virusBonus}}</td>
+              </tr>
+              <tr>
+                <th>No Overclocking Bonus:</th>
+                <td v-for="player in playerList">{{player.overClockBonus}}</td>
+              </tr>
+              <tr>
+                <th>Master Coder Bonus:</th>
+                <td v-for="player in playerList">{{player.instructionBonus}}</td>
+              </tr>
+              <tr>
+                <th>Protection Cards Bonus:</th>
+                <td v-for="player in playerList">{{player.protectionCardsBonus}}</td>
+              </tr>
+              <tr>
+                <th>Overclock Card Bonus:</th>
+                <td v-for="player in playerList">{{player.overclockIncrease}}</td>
+              </tr>
+              <tr>
+                <th>Grouping Cards Bonus:</th>
+                <td v-for="player in playerList">{{player.groupingBonus}}</td>
+              </tr>
+              <tr>
+                <th>Repetition Cards Bonus:</th>
+                <td v-for="player in playerList">{{player.repetitionBonus}}</td>
               </tr>
               </tbody>
             </table>

@@ -235,6 +235,12 @@ export default {
     let playerList = state.players;
     let highScore = 0;
     for (let player of playerList) {
+      player.instructionBonus = 0;
+      player.defensiveBonus = 0;
+      player.virusBonus = 0;
+      player.overClockBonus = 0;
+      player.completionBonus = 0;
+      player.overclockIncrease = 0;
       let scoreTrue = 0;
       let scoreFalse = 0;
       scoreTrue = player.trueScore + player.bonusTrue;
@@ -245,34 +251,50 @@ export default {
         scoreTrue = scoreTrue/2;
       } else if(player.hasOverclock){
         scoreFalse = scoreFalse*2;
-        scoreTrue = scoreTrue*2
+        scoreTrue = scoreTrue*2;
+        player.overclockIncrease += (scoreFalse/2) + (scoreTrue/2);
       }
 
-      for(let p in playerList){
+      if(scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit){
+        console.log("in scoreWin");
+        scoreFalse += 10;
+        scoreTrue += 10;
+        player.completionBonus = 10;
+      }
+
+
+      for(let p of playerList){
+        console.log("playerID: " + p.id + " otherPlayer: " + player.id)
+        console.log("player1 has instruction : " + p.hasPlayedInstruction + " and player2: " + player.hasPlayedInstruction)
         if(p.id !== player.id){
           if(!p.hasPlayedInstruction){
+            console.log("in instruction bonus")
             scoreFalse += 10;
             scoreTrue += 10;
+            player.instructionBonus += 10;
           }
         }
       }
 
-      if(scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit){
-        scoreFalse += 10;
-        scoreTrue += 10;
-      }
+
       if(player.isDefensive){
+        console.log("in defensive bonus");
         scoreTrue += 15;
         scoreFalse += 15;
+        player.defensiveBonus = 15;
       }
       if(!player.hasHadOverclock){
+        console.log("in overclock");
         scoreTrue += 10;
         scoreFalse += 10;
+        player.overClockBonus = 10;
       }
 
       if(!player.hasHadVirus){
+        console.log("in hadVirus");
         scoreTrue += 10;
         scoreFalse += 10;
+        player.virusBonus = 10;
       }
 
       if ((scoreTrue >= state.scoreLimit) || (scoreFalse >= state.scoreLimit))  {
@@ -395,27 +417,34 @@ export default {
     state.players[payload].hasHadOverclock = true;
   },
   giveFirewall(state, payload){
+    let bonus = 5;
     state.players[payload].hasFirewall = true;
     state.players[payload].usedBonusCards.push(state.activeCard);
-    state.players[payload].updateBonus(10,10);
+    state.players[payload].updateBonus(bonus,bonus);
+    state.players[payload].protectionCardsBonus += bonus;
     if(state.players[payload].hasFirewall && state.players[payload].hasAntiVirus && state.players[payload].hasGenerator){
       state.players[payload].isDefensive = true;
+
     }
   },
   giveGenerator(state,payload){
+    let bonus = 5;
     state.players[payload].hasGenerator = true;
     state.players[payload].hasPowerOutage = false;
     state.players[payload].usedBonusCards.push(state.activeCard);
-    state.players[payload].updateBonus(10,10);
+    state.players[payload].updateBonus(bonus,bonus);
+    state.players[payload].protectionCardsBonus += bonus;
     if(state.players[payload].hasFirewall && state.players[payload].hasAntiVirus && state.players[payload].hasGenerator){
       state.players[payload].isDefensive = true;
     }
   },
   giveAntiVirus(state,payload){
+    let bonus = 5;
     state.players[payload].hasAntiVirus = true;
     state.players[payload].numViruses = 0;
     state.players[payload].usedBonusCards.push(state.activeCard);
-    state.players[payload].updateBonus(10,10);
+    state.players[payload].updateBonus(bonus,bonus);
+    state.players[payload].protectionCardsBonus += bonus;
     if(state.players[payload].hasFirewall && state.players[payload].hasAntiVirus && state.players[payload].hasGenerator){
       state.players[payload].isDefensive = true;
     }
