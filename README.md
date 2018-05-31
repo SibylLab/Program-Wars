@@ -5,10 +5,7 @@
 
 [![Test Coverage](https://codeclimate.com/github/johnanvik/program-wars/badges/coverage.svg)](https://codeclimate.com/github/johnanvik/program-wars/coverage)
 
-[![Issue Count](https://codeclimate.com/github/johnanvik/program-wars/badges/issue_count.svg)](https://codeclimate.com/github/johnanvik/program-wars/issues)
-
-[![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)](https://github.com/johnanvik/program-wars)
-
+[![NPM version](https://badge.fury.io/js/program-wars.svg)](http://badge.fury.io/js/program-wars)
 
 Program Wars is a web-based educational card game that teaches the basic concepts of programming.
 
