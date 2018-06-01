@@ -18,14 +18,14 @@ describe('Deck.js', () => {
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
-    expect(testDeck.cards.length).to.equal(76)
+    expect(testDeck.cards.length).to.equal(75)
   })
 
   // test initDeck function 3 players
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck(3)
-    expect(testDeck.cards.length).to.equal(228)
+    expect(testDeck.cards.length).to.equal(225)
   })
 
   // test the number of 'I' cards 1 player
@@ -53,7 +53,7 @@ describe('Deck.js', () => {
         instructionCounter++
       }
     }
-    expect(instructionCounter).to.equal(75)
+    expect(instructionCounter).to.equal(81)
   })
 
   // test the number of R cards 1 player
@@ -316,7 +316,7 @@ describe('Deck.js', () => {
     testDeck.initDeck(1)
     // let testCard = new Card(0, 1, 'I')
     let drawnCard = testDeck.draw()
-    expect(testDeck.cards.length).to.equal(71)
+    expect(testDeck.cards.length).to.equal(74)
 
     expect(typeof drawnCard).to.equal('object')
     // The deck shuffles itself when created, no way of know what the top card is
