@@ -256,7 +256,6 @@ export default {
       }
 
       if(scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit){
-        console.log("in scoreWin");
         scoreFalse += 10;
         scoreTrue += 10;
         player.completionBonus = 10;
@@ -264,11 +263,8 @@ export default {
 
 
       for(let p of playerList){
-        console.log("playerID: " + p.id + " otherPlayer: " + player.id)
-        console.log("player1 has instruction : " + p.hasPlayedInstruction + " and player2: " + player.hasPlayedInstruction)
         if(p.id !== player.id){
           if(!p.hasPlayedInstruction){
-            console.log("in instruction bonus")
             scoreFalse += 10;
             scoreTrue += 10;
             player.instructionBonus += 10;
@@ -278,20 +274,17 @@ export default {
 
 
       if(player.isDefensive){
-        console.log("in defensive bonus");
         scoreTrue += 15;
         scoreFalse += 15;
         player.defensiveBonus = 15;
       }
       if(!player.hasHadOverclock){
-        console.log("in overclock");
         scoreTrue += 10;
         scoreFalse += 10;
         player.overClockBonus = 10;
       }
 
       if(!player.hasHadVirus){
-        console.log("in hadVirus");
         scoreTrue += 10;
         scoreFalse += 10;
         player.virusBonus = 10;

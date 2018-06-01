@@ -219,6 +219,7 @@ export default {
         }
     },
     groupStacks() {
+      let groupingBonus = 5;
       if(this.$store.getters.getTutorialState){
         bus.$emit('cardPlayed');
         this.$store.commit('increaseFactIndex');
@@ -234,7 +235,7 @@ export default {
         let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1];
         this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard});
-        this.updateBonus(5,5);
+        this.updateBonus(groupingBonus,groupingBonus);
         this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean});
         this.$store.dispatch('playerTookTurn');
         bus.$emit('cardDeselected');

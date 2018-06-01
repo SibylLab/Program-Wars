@@ -149,7 +149,7 @@
         this.localPlayers.push({name: 'You', isAi: false});
         this.localPlayers.push({name: 'Flash', isAi: true});
         this.$store.commit('addPlayers', {list: this.localPlayers});
-        this.$store.commit('setScoreLimit', {scoreLimit: 50});
+        this.$store.commit('setScoreLimit', {scoreLimit: 100});
         this.gameStart = true;
         setTimeout(() => {
           this.$router.push('tutorial')
