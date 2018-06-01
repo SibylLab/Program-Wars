@@ -82,7 +82,7 @@ export default {
               }
             }
           } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 5) {
-            if (thisStack.cards[1].type === 'R' && thisStack.cards[1].value === 1) {
+            if (thisStack.stackTopCard().type  === 'R' && thisStack.stackTopCard().value === 1) {
               return true;
             }
           }
