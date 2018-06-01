@@ -18,14 +18,14 @@ describe('Deck.js', () => {
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
-    expect(testDeck.cards.length).to.equal(72)
+    expect(testDeck.cards.length).to.equal(76)
   })
 
   // test initDeck function 3 players
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck(3)
-    expect(testDeck.cards.length).to.equal(216)
+    expect(testDeck.cards.length).to.equal(228)
   })
 
   // test the number of 'I' cards 1 player
@@ -39,7 +39,7 @@ describe('Deck.js', () => {
         instructionCounter++
       }
     }
-    expect(instructionCounter).to.equal(21)
+    expect(instructionCounter).to.equal(27)
   })
 
   // test the number of 'I' cards 3 players
@@ -53,7 +53,7 @@ describe('Deck.js', () => {
         instructionCounter++
       }
     }
-    expect(instructionCounter).to.equal(63)
+    expect(instructionCounter).to.equal(75)
   })
 
   // test the number of R cards 1 player
@@ -67,7 +67,7 @@ describe('Deck.js', () => {
         repetitionCounter++
       }
     }
-    expect(repetitionCounter).to.equal(13)
+    expect(repetitionCounter).to.equal(14)
   })
 
   // test the number of R cards 3 player
@@ -81,7 +81,7 @@ describe('Deck.js', () => {
         repetitionCounter++
       }
     }
-    expect(repetitionCounter).to.equal(39)
+    expect(repetitionCounter).to.equal(42)
   })
 
   // test the number of Rx cards 1 player
@@ -123,7 +123,7 @@ describe('Deck.js', () => {
         varCounter++
       }
     }
-    expect(varCounter).to.equal(11)
+    expect(varCounter).to.equal(7)
   })
 
   // test the number of variable cards in the deck 3 players
@@ -137,7 +137,7 @@ describe('Deck.js', () => {
         varCounter++
       }
     }
-    expect(varCounter).to.equal(33)
+    expect(varCounter).to.equal(21)
   })
 
   // test the number of hack cards in the deck 1 player
