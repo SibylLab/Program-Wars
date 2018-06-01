@@ -27,11 +27,6 @@ export default class Player{
     this.hasFirewall = false;
     this.hasPowerOutage = false;
     this.isAi = isAi;
-    this.infectedAmountTrue = 0;
-    this.infectedAmountFalse = 0;
-    this.numViruses = 0;
-    this.overclockIncreaseTrue = 0;
-    this.overclockIncreaseFalse = 0;
     this.hasOverclock = false;
     this.hasVirus = false;
     this.hasHadVirus = false;
@@ -51,25 +46,11 @@ export default class Player{
     this.bonusTrue = 0;
     this.bonusFalse = 0;
     this.isDefensive = false;
-    //this.isCoolSystem = true;
-    //this.isCompleteProgram = false;
     this.isCleanSystem = true;
     if(this.isAi) {
       this.type = new Personality();
     }
   };
-
-  // updateOverclock(){
-  //    this.overclockIncreaseTrue += this.trueScore - this.infectedAmountTrue + this.overclockIncreaseTrue + this.bonusTrue;
-  //    this.overclockIncreaseFalse += this.falseScore - this.infectedAmountFalse + this.overclockIncreaseFalse + this.bonusFalse;
-  //    this.numOverclocked++;
-  //  };
-
-  // updateVirusAmount(){
-  //   this.infectedAmountFalse += Math.floor((this.falseScore - this.infectedAmountFalse + this.bonusFalse)/2);
-  //   this.infectedAmountTrue += Math.floor((this.trueScore - this.infectedAmountTrue + this.bonusTrue)/2);
-  //   this.numViruses++;
-  // };
 
   updateBonus(scoreTrue, scoreFalse){
     this.bonusTrue += scoreTrue;
