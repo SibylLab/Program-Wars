@@ -222,7 +222,9 @@ export default {
       let groupingBonus = 5;
       if(this.$store.getters.getTutorialState){
         bus.$emit('cardPlayed');
-        this.$store.commit('increaseFactIndex');
+        if(!this.$store.state.aiTurn) {
+          this.$store.commit('increaseFactIndex');
+        }
       }
 
       let selectedStacks = this.$store.getters.getSelectedStacks
