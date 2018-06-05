@@ -98,7 +98,7 @@
           'You\'re getting closer to completing a path, add the variable (5) card to build up your false path.',
           'The computer has at least one stack that isn\'t grouped, so use the hack card on one of its stacks to set him back.',
           'Your false path is vulnerable to getting hacked, but you dont have any more group card. Use the Firewall card to get full protection from hack cards.',
-          'The computer is vulnerable to getting a virus, send him a virus to slow down his program and half their instructions.',
+          'The computer is vulnerable to getting a virus, send him a virus to slow down his program and half their total instructions.',
           'Speaking of being vulnerable to viruses, you\'re also vulnerable. Let\'s use an AntiVirus to protect you from all further viruses',
           'You have one more attack card in your hand. Use the Power Outage card to stop your opponent from playing instruction cards.',
           'With our last attack card of course we have a protection card. You can play a generator to reverse a power outage and prevent them or just use a '+

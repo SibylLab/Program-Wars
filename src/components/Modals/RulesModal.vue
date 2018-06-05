@@ -270,17 +270,17 @@
                     <li><h3>Defensive Programmer - 15 points</h3></li>
                     <p>Defensive Programmer is a bonus for playing all 3 safety cards</p>
                     <li><h3>Clean System - 10 points</h3></li>
-                    <p>Clean System is a bonus for not getting any viruses by the end of the game.</p>
+                    <p>Clean System is a bonus for not having an active virus by the end of the game.</p>
                     <li><h3>Cool System - 10 points</h3></li>
-                    <p>If you don't play any overclocking cards then you will be given a bonus 10 points.</p>
+                    <p>If you don't play any overclocking cards, without already having a virus, then you will be given a bonus 10 points.</p>
                     <li><h3>Complete Program - 10 points</h3></li>
                     <p>If you have a complete program on either path you'll get a bonus 10 points to be rewarded for your success.</p>
                     <li><h3>Programming Practices Bonuses</h3></li>
                     <p>You will be given several bonuses for using good programming practices: </p>
                     <ol>
-                      <li><b>Grouping Cards - 5</b>: Grouping programs together is a good and essential programming practice, so you'll get a bonus score of 5 for using a group card.</li>
-                      <li><b>Repetition - 3</b>: Looping through programs is an efficient way of having instructions run multiple times, so you'll be given a bonus score of 3 for using a repetition card. </li>
-                      <li><b>Variables - 2</b>: Variables can be used to store a number, making it easier to change and see why you're using that number. Which is why we give you a bonus score of 2</li>
+                      <li><b>Grouping Cards - 5</b>: Grouping instructions or other grouped instructions is a good and essential programming practice, so you'll get a bonus score of 5 for using a group card.</li>
+                      <li><b>Repetition - 3</b>: Repetition in programs is an efficient way of having instructions run multiple times, so you'll be given a bonus score of 3 for using a repetition card. </li>
+                      <li><b>Variables - 2</b>: Variables can be used to store a number, making it easier to change. Which is why we give you a bonus score of 2</li>
                       <li><b>Safeties - 10</b>: Safety cards are a great way to protect your programs, so we give you a bonus score of 10 for using one.</li>
                     </ol>
 

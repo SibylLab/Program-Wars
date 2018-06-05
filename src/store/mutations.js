@@ -284,7 +284,7 @@ export default {
         player.overClockBonus = 10;
       }
 
-      if(!player.hasHadVirus){
+      if(!player.hasVirus){
         scoreTrue += 10;
         scoreFalse += 10;
         player.virusBonus = 10;
@@ -406,8 +406,9 @@ export default {
     } else {
       state.players[payload].hasOverclock = true;
       state.players[payload].usedBonusCards.push(state.activeCard);
+      state.players[payload].hasHadOverclock = true;
     }
-    state.players[payload].hasHadOverclock = true;
+
   },
   giveFirewall(state, payload){
     let bonus = 5;
