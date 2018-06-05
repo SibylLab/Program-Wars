@@ -7,11 +7,12 @@
           </button>
             <h3 class="modal-title">Programming Wars Rules</h3>
             <div>
-              <ul class="nav nav-tabs" role="tablist" style="font-size: 22px">
+              <ul class="nav nav-tabs" role="tablist" style="font-size: 20px">
                 <li role="presentation" class="active"><a href="#introduction" aria-controls="introduction" role="tab" data-toggle="tab">Introduction</a></li>
                 <li role="presentation"><a href="#cardType" aria-controls="cardType" role="tab" data-toggle="tab">Card Types</a></li>
                 <li role="presentation"><a href="#gamePlay" aria-controls="gamePlay" role="tab" data-toggle="tab">Playing the Game</a></li>
-                <li role="presentation"><a href="#coding" aria-controls="coding" role="tab" data-toggle="tab">Learning Computer Programming</a></li>
+                <li role="presentation"><a href="#bonusPoints" aria-controls="bonusPoints" role="tab" data-toggle="tab">Bonus Points</a></li>
+                <li role="presentation"><a href="#coding" aria-controls="coding" role="tab" data-toggle="tab">Learning Programming</a></li>
               </ul>
 
               <div class="tab-content">
@@ -24,6 +25,8 @@
                   <h4>Card Types</h4>
                   <p>To build your program you use five types of cards:</p>
                   <ul>
+
+                    <p style="text-align: center; font-size: 24px;"><b>Playing Cards</b></p>
                     <li><h5>Instruction</h5>
                       <div>
                         <img src="../../../static/cardImg/I1.png" alt="Instruction 1 Card" class="cardImage">
@@ -47,7 +50,6 @@
                         <img src="../../../static/cardImg/R2.png" alt="Repetition 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/R3.png" alt="Repetition 3 Card" class="cardImage">
                         <img src="../../../static/cardImg/R4.png" alt="Repetition 4 Card" class="cardImage">
-                        <img src="../../../static/cardImg/R5.png" alt="Repetition 5 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -114,6 +116,8 @@
                           here.</a>
                       </div>
                     </li>
+                    <br>
+                    <p style="text-align: center; font-size: 24px;"><b>Attack Cards</b></p>
                     <li><h5>Hack</h5>
                       <div>
                         <img src="../../../static/cardImg/H.png" alt="Instruction 1 Card" class="cardImage">
@@ -154,7 +158,6 @@
                       <div>
                         <img src="../../../static/cardImg/PowerOutage.png" alt="Instruction 1 Card" class="cardImage">
                       </div>
-
                       <div>
                         <ol>
                           <li>Power Outage cards let you stop another player from playing instruction cards.</li>
@@ -167,6 +170,8 @@
                         If the computer is off, it can't run any programs.
                       </div>
                     </li>
+                    <br>
+                    <p style="text-align: center; font-size: 24px;"><b>Backup Cards</b></p>
                     <li><h5>Battery Backup</h5>
                       <div>
                         <img src="../../../static/cardImg/BatteryBackup.png" alt="Instruction 1 Card" class="cardImage">
@@ -195,8 +200,8 @@
                         When you overclock your computer your computer runs faster, allowing your programs to run much quicker.
                       </div>
                     </li>
-
-
+                    <br>
+                    <p style="text-align: center; font-size: 24px;"><b>Safety Cards</b></p>
                   <li><h5>Generator</h5>
                     <div>
                       <img src="../../../static/cardImg/Generator.png" alt="Instruction 1 Card" class="cardImage">
@@ -245,14 +250,41 @@
                   <p>On each of your turns:</p>
                   <ol id="gamePlay">
                     <li>Select a card to put in the "True" or "False" playing field that was chosen at the beginning of the round, or to discard.</li>
-                    <li>At the beginning of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.
+                    <li>At the beginning of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.</li>
+                    <li>You get bonus points for good programming practice. For more information on this go to the 'Bonus Points' tab.</li>
                     <li>The game is over if a player reaches the score limit in either paths:</li>
                     <ul>
-                      <li>Short: 15 instructions</li>
-                      <li>Medium: 25 instructions</li>
-                      <li>Long: 35 instructions</li>
+                      <li>Short: 75 instructions</li>
+                      <li>Medium: 100 instructions</li>
+                      <li>Long: 125 instructions</li>
                       </ul>
                   </ol>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="bonusPoints">
+                  <h4>Bonus Points</h4>
+                  <p>Various cards, good coding practices, or game play types will give you bonus points!  </p>
+                  <ul id="bonusPointsList">
+                    <li><h3>Master Coder - 10 points per opponent</h3></li>
+                    <p>By completing your program before an opponent has played an instruction you will gain the Master Coder bonus of 10 points per opponent.</p>
+                    <li><h3>Defensive Programmer - 15 points</h3></li>
+                    <p>Defensive Programmer is a bonus for playing all 3 safety cards</p>
+                    <li><h3>Clean System - 10 points</h3></li>
+                    <p>Clean System is a bonus for not having an active virus by the end of the game.</p>
+                    <li><h3>Cool System - 10 points</h3></li>
+                    <p>If you don't play any overclocking cards, without already having a virus, then you will be given a bonus 10 points.</p>
+                    <li><h3>Complete Program - 10 points</h3></li>
+                    <p>If you have a complete program on either path you'll get a bonus 10 points to be rewarded for your success.</p>
+                    <li><h3>Programming Practices Bonuses</h3></li>
+                    <p>You will be given several bonuses for using good programming practices: </p>
+                    <ol>
+                      <li><b>Grouping Cards - 5</b>: Grouping instructions or other grouped instructions is a good and essential programming practice, so you'll get a bonus score of 5 for using a group card.</li>
+                      <li><b>Repetition - 3</b>: Repetition in programs is an efficient way of having instructions run multiple times, so you'll be given a bonus score of 3 for using a repetition card. </li>
+                      <li><b>Variables - 2</b>: Variables can be used to store a number, making it easier to change. Which is why we give you a bonus score of 2</li>
+                      <li><b>Safeties - 10</b>: Safety cards are a great way to protect your programs, so we give you a bonus score of 10 for using one.</li>
+                    </ol>
+
+                  </ul>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="coding">
                   <h4>Learning Computer Programming</h4>
@@ -260,7 +292,7 @@
                   Some programming languages are easier to learn than others. </p>
                   <p>Python is one of the easier-to-learn programming language and it uses all of the ideas from Programming Wars.
                   A good place to start is with this <a href="http://interactivepython.org/runestone/static/IntroPythonTurtles/index.html">interactive Python tutorial.</a>
-                  <p>There are also many other Python tutorials available, such as this ones from <a href="https://www.codecademy.com/learn/learn-python">Code Academy.</a>
+                  <p>There are also many other Python tutorials available, such as these ones from <a href="https://www.codecademy.com/learn/learn-python">Code Academy.</a>
                   </p>
                 </div>
               </div>

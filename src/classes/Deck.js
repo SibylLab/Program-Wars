@@ -4,9 +4,9 @@
  */
 import Card from './Card'
 
-const instruction1 = 7;
-const instruction2 = 7;
-const instruction3 = 7;
+const instruction1 = 9;
+const instruction2 = 9;
+const instruction3 = 9;
 // const instruction4 = 0;
 
 const group2 = 1;
@@ -17,15 +17,15 @@ const group6 = 1;
 // const group7 = 0;
 // const group8 = 0;
 
-const repetition2 = 4;
-const repetition3 = 4;
-const repetition4 = 0;
+const repetition2 = 3;
+const repetition3 = 3;
+const repetition4 = 3;
 const repetitionX = 5;
 
 // const variable2 = 2;
-const variable3 = 4;
-const variable4 = 3;
-const variable5 = 3;
+const variable3 = 2;
+const variable4 = 2;
+const variable5 = 2;
 const variable6 = 1;
 
 const hack = 3;
