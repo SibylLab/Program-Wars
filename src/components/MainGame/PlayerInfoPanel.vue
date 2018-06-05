@@ -174,7 +174,7 @@ export default {
     'card': Card,
     'modal': Modal,
     'stats-panel': StatsPanel,
-    'display-used-cards': DisplayUsedCards
+    'display-used-cards': DisplayUsedCards,
   },
   methods: {
     getScore(player){
@@ -192,7 +192,7 @@ export default {
       return{trueScore: trueSide, falseScore:falseSide}
     },
     openModal() {
-      $('.hack').modal('show');
+      $('.opponentCards').modal('show');
     },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {
