@@ -53,8 +53,8 @@ export default {
     score() {
       let trueSide = 0;
       let falseSide = 0;
-      trueSide = this.$store.getters.getCurrentPlayer.trueScore + this.$store.getters.getCurrentPlayer.bonusTrue;
-      falseSide = this.$store.getters.getCurrentPlayer.falseScore + this.$store.getters.getCurrentPlayer.bonusFalse;
+      trueSide = this.$store.getters.getCurrentPlayer.trueScore; //+ this.$store.getters.getCurrentPlayer.bonusTrue;
+      falseSide = this.$store.getters.getCurrentPlayer.falseScore; // + this.$store.getters.getCurrentPlayer.bonusFalse;
       if(this.$store.getters.getCurrentPlayer.hasVirus){
         trueSide = trueSide/2;
         falseSide = falseSide/2;
