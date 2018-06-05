@@ -19,8 +19,7 @@
                      data-backdrop="static" data-keyboard="false"></generator-modal>
     <anti-virus-modal id="antiVirusModal" class="modal fade antiVirus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
                      data-backdrop="static" data-keyboard="false"></anti-virus-modal>
-    <opponent-cards-modal id="opponentCardsModal" class="modal fade opponentCards" tabindex="-1" role="dialog" aria-labelledby=""
-                          aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"></opponent-cards-modal>
+
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
@@ -88,13 +87,11 @@ import Overclock from '../Modals/CardModals/OverclockModal'
 import AntiVirus from '../Modals/CardModals/AntiVirusModal'
 import Generator from '../Modals/CardModals/Generator'
 import Firewall from '../Modals/CardModals/Firewall'
-import OpponentCards from '../Modals/OpponentCardsModal'
 
 import Card from '../../classes/Card'
 import Player from '../../classes/Player'
 
 import { bus } from '../SharedComponents/Bus';
-import OpponentCardsModal from "../Modals/OpponentCardsModal";
 
 export default {
   name: 'main-component',
@@ -120,7 +117,6 @@ export default {
     }
   },
   components: {
-    OpponentCardsModal,
     HackDiscard,
     'player-info-panel': PlayerInfoPanel,
     'playfield': Playfield,
@@ -141,7 +137,6 @@ export default {
     'firewall-modal': Firewall,
     'generator-modal': Generator,
     'anti-virus-modal': AntiVirus,
-    'opponent-cards-modal': OpponentCards,
 
   },
   methods: {

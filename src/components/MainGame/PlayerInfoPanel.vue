@@ -192,7 +192,7 @@ export default {
       return{trueScore: trueSide, falseScore:falseSide}
     },
     openModal() {
-      $('.opponentCards').modal('show');
+      $('.hack').modal('show');
     },
     discardSelected() {
       if (this.$store.getters.getActiveCard !== undefined) {

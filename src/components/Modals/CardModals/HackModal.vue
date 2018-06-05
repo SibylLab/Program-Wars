@@ -15,7 +15,7 @@
 
             <div class="tab-content" style="text-align: left">
               <div v-for="player in players" :id="player.id" class="tab-pane fade">
-                <!--<opponent-stacks :player="player"></opponent-stacks>-->
+                <opponent-stacks :player="player"></opponent-stacks>
               </div>
             </div>
         </div>
