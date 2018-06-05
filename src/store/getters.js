@@ -125,7 +125,6 @@ export default {
       trueSide = trueSide*2;
       falseSide = falseSide*2
     }
-    console.log(trueSide);
     return trueSide;
     //return {trueScore: trueSide, falseScore: falseSide}
   }

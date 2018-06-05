@@ -41,8 +41,25 @@
       <div class="row">
         <div :class="colSize" v-for="player in players" style="text-align: left;">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-          <div> True Path: {{ getScore(player.id).trueScore}}
-            Instructions <br> False Path: {{ getScore(player.id).falseScore }} Instructions</div>
+          <div>
+            True Path:&nbsp;
+            <meter :max="$store.getters.getScoreLimit" min=0
+                   :value="getScore(player.id).trueScore"
+                   :high="$store.getters.getScoreLimit/2"
+                   :low="$store.getters.getScoreLimit/3"
+                   :optimum="$store.getters.getScoreLimit-5"
+                   style="width: 150px"
+            ></meter>
+            <br>
+            False Path:
+            <meter :max="$store.getters.getScoreLimit" min=0
+                   :value="getScore(player.id).falseScore"
+                   :high="$store.getters.getScoreLimit/2"
+                   :low="$store.getters.getScoreLimit/3"
+                   :optimum="$store.getters.getScoreLimit-5"
+                   style="width:150px"
+            ></meter>
+          </div>
         </div>
       </div>
     </div>
@@ -79,16 +96,15 @@
           ' one or more stacks of cards in one path that equal up to the group card value. Let\'s protect your true path with'
           + ' a group card. Click on the check boxes above the cards in your true path to group them. You also get a small bonus for using group cards.',
           'You\'re getting closer to completing a path, add the variable (5) card to build up your false path.',
-          'The computer has no grouped stacks, so use the hack card on one of its stacks to set him back.',
+          'The computer has at least one stack that isn\'t grouped, so use the hack card on one of its stacks to set him back.',
           'Your false path is vulnerable to getting hacked, but you dont have any more group card. Use the Firewall card to get full protection from hack cards.',
-          'The computer is vulnerable to getting a virus, send him a virus to slow down his program to half the instructions.',
+          'The computer is vulnerable to getting a virus, send him a virus to slow down his program and half their total instructions.',
           'Speaking of being vulnerable to viruses, you\'re also vulnerable. Let\'s use an AntiVirus to protect you from all further viruses',
           'You have one more attack card in your hand. Use the Power Outage card to stop your opponent from playing instruction cards.',
           'With our last attack card of course we have a protection card. You can play a generator to reverse a power outage and prevent them or just use a '+
           'Battery Backup to reverse it. Let\'s use the generator.',
-          'You have one more attack card in your hand. Use the Power Outage card to stop your opponent from playing instruction cards.',
           'We have one last card to use. Maybe our most powerful. Let\'s use a overclock card to speed up your pc to run double the instructions.',
-          'That\'s the end of the tutorial, you can continue playing or click \'End Tutorial\' in the top right corner.'
+          'Congratulations, you\'ve completed the tutorial! You can continue playing or click \'End Tutorial\' in the top right corner.'
         ],
         showTextBoxButton: true,
       }
@@ -174,7 +190,7 @@
         }
       },
       cardClicked (c) {
-        if(this.hand[0] === c) {
+        if(this.hand[0] === c || this.$store.getters.getFactIndex >= this.facts.length) {
           if (this.$store.getters.getTips.tutorial) {
             this.tipsCardSelected = this.setTipBox(c);
           } else {

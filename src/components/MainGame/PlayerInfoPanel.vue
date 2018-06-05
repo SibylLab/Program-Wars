@@ -43,8 +43,8 @@
                True Path:&nbsp;
                <meter :max="$store.getters.getScoreLimit" min=0
                       :value="getScore(player.id).trueScore"
-                      :high="$store.getters.getScoreLimit/2"
-                      :low="$store.getters.getScoreLimit/3"
+                      :high="$store.getters.getScoreLimit * 0.75"
+                      :low="$store.getters.getScoreLimit/2"
                       :optimum="$store.getters.getScoreLimit-5"
                       style="width: 150px"
                ></meter>
@@ -52,8 +52,8 @@
                False Path:
                <meter :max="$store.getters.getScoreLimit" min=0
                       :value="getScore(player.id).falseScore"
-                      :high="$store.getters.getScoreLimit/2"
-                      :low="$store.getters.getScoreLimit/3"
+                      :high="$store.getters.getScoreLimit * 0.75"
+                      :low="$store.getters.getScoreLimit/2"
                       :optimum="$store.getters.getScoreLimit-5"
                       style="width:150px"
                ></meter>
