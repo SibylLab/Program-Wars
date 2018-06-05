@@ -8,15 +8,16 @@
           <h3 class="modal-title">Opponent Stacks</h3>
         </div>
         <div class="modal-body">
-          <div>
-            <ul class="nav nav-tabs" role="tablist" style="font-size: 22px">
-              <li role="presentation" class="active" v-for="player in players"><a data-toggle="tab" :href="'#' + player.id">{{ player.name }}</a></li>
+          <div class="container">
+            <ul class="nav nav-tabs list-inline" role="tablist" style="font-size: 22px">
+              <li role="presentation" v-for="player in players"><a data-toggle="tab" :href="'#' + player.id">{{ player.name }}</a></li>
             </ul>
-          </div>
+
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane" id="1" v-for="player in players">
+            <div v-for="player in players" :id="player.id" class="tab-pane fade" >
               <opponent-stacks :player="player"></opponent-stacks>
             </div>
+          </div>
           </div>
           <!--<div class="container">-->
             <!--<ul class="nav nav-tabs" role="tablist" style="font-size: 25px">-->
