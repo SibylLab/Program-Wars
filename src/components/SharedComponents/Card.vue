@@ -1,6 +1,6 @@
 <template>
   <div id="card" :class="cardCss" class="panel panel-default" @click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
-    <img src="../../../static/cardImg/backOfCard.png" alt="back of Card" width ="90" height="134" v-if="showCard()">
+    <img src="../../../static/cardImg/backOfCard.png" alt="back of Card" width ="90" height="134" v-if="false">
     <img class="cardImg" :src="cardGraphics" alt="Playing Card" width ="90" height="134" v-else>
   </div>
 </template>

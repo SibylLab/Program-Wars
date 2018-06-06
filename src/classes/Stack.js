@@ -98,7 +98,17 @@ export default class Stack {
 
   }
 
-
-
+  /**
+   * Checks if the max number of repeats in a certain stack has been reached
+   */
+  maxRepeats(){
+    let rCount = 0;
+    for(let i=0; i<this.cards.length; i++){
+      if(this.cards[i].type === 'R'){
+        rCount++;
+      }
+    }
+    return rCount >= 2;
+  }
 
 }

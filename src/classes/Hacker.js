@@ -90,6 +90,7 @@ export default class Hacker {
       moveType = 'play';
 
     } else if(hand.bestICard !== undefined) {
+      console.log("in instruction")
       cardToPlay = hand.bestICard;
       stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
       moveType = 'play';
