@@ -9,6 +9,7 @@ export default class Sprinter {
   constructor() {
     this.move = new AiMove();
     this.boolSide = this.move.getBoolSide();
+    console.log("Ai type: Sprinter")
   }
 
   /**
@@ -30,6 +31,9 @@ export default class Sprinter {
     this.boolSide = store.getters.getCoinMsg;
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
 
+    let opponentPO = this.move.getOpponentToAttack(event,'POWEROUTAGE');
+    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS');
+
     if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.bestVCard;
       stackToPlay = this.move.stackToAddVariable(event);
@@ -37,7 +41,7 @@ export default class Sprinter {
 
     }
 
-    else if(hand.powerOutageCard !== undefined){
+    else if(hand.powerOutageCard !== undefined && opponentPO !== undefined){
       opponentToAttack = this.move.getOpponentToAttack(event);
       cardToPlay = hand.powerOutageCard;
       moveType = 'attack'
@@ -63,12 +67,13 @@ export default class Sprinter {
     }
 
 
-    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0){
+    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0
+      && !store.getters.getCurrentPlayer.hasOverclock){
       cardToPlay = hand.overclockCard;
       moveType = 'enhance'
     }
 
-    else if(hand.virusCard !== undefined && !store.getters.getFirstRound) {
+    else if(hand.virusCard !== undefined && !store.getters.getFirstRound && opponentVirus !== undefined) {
       opponentToAttack = this.move.getOpponentToAttack(event, "VIRUS");
       cardToPlay = hand.virusCard;
       moveType = 'attack';

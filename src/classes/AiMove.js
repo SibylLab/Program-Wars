@@ -112,18 +112,23 @@ export default class {
   getOpponentToAttack(event, type) {
     let tmpOpponents = undefined;
     if(type === "POWEROUTAGE") {
-      tmpOpponents = event.opponents.filter(opponents => opponents.hasGenerator !== true && opponents.hasPowerOutage!== true);
+      tmpOpponents = store.getters.getPlayers.filter(player => player.hasGenerator !== true && player.hasPowerOutage !== true &&
+      store.getters.getCurrentPlayer.id !== player.id)
+      console.log("Temp opponents: " + JSON.stringify(tmpOpponents))
     } else if(type === "VIRUS"){
-      tmpOpponents = event.opponents.filter(opponents => opponents.hasAntiVirus !== true && (opponents.trueScore !== 0 || opponents.falseScore !== 0));
+      tmpOpponents = store.getters.getPlayers.filter(player => player.hasAntiVirus !== true && player.hasVirus !== true &&
+        store.getters.getCurrentPlayer.id !== player.id)
+      console.log("Temp opponents: " + JSON.stringify(tmpOpponents))
     }
+
 
       let tmpScore = 0;
       let opponentToAttack = undefined;
     if(tmpOpponents !== undefined) {
       for (let player of tmpOpponents) {
-        if (player.score >= tmpScore) {
+        if (player.trueScore >= tmpScore || player.falseScore >= tmpScore) {
           opponentToAttack = player;
-          tmpScore = player.score;
+          tmpScore = Math.max(player.trueScore, player.falseScore);
         }
       }
     }

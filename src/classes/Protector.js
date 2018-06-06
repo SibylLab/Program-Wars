@@ -8,6 +8,7 @@ export default class Gambler {
   constructor() {
     this.move = new AiMove();
     this.boolSide = this.move.getBoolSide();
+    console.log("Ai type: Protector")
   }
 
   /**
@@ -29,19 +30,22 @@ export default class Gambler {
     this.boolSide = store.getters.getCoinMsg;
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
 
+    let opponentPO = this.move.getOpponentToAttack(event,'POWEROUTAGE');
+    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS');
+
     if(hand.bestGCard.length > 0 && canGroup  !== undefined) {
       cardToPlay = canGroup.cardToPlay;
       stackToPlay = canGroup.stackToPlay;
       moveType = 'group';
     }
 
-    else if(hand.virusCard !== undefined && !store.getters.getFirstRound) {
+    else if(hand.virusCard !== undefined && !store.getters.getFirstRound && opponentVirus !== undefined) {
       opponentToAttack = this.move.getOpponentToAttack(event, "VIRUS");
       cardToPlay = hand.virusCard;
       moveType = 'attack';
     }
 
-    else if(hand.powerOutageCard !== undefined){
+    else if(hand.powerOutageCard !== undefined && opponentPO !== undefined){
       opponentToAttack = this.move.getOpponentToAttack(event, "POWEROUTAGE");
       cardToPlay = hand.powerOutageCard;
       moveType = 'attack';
@@ -52,7 +56,8 @@ export default class Gambler {
       moveType = 'protection'
     }
 
-    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0){
+    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0
+      && !store.getters.getCurrentPlayer.hasOverclock){
       cardToPlay = hand.overclockCard;
       moveType = 'enhance'
     }

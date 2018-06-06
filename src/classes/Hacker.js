@@ -8,6 +8,7 @@ export default class Hacker {
   constructor() {
     this.move = new AiMove();
     this.boolSide = this.move.getBoolSide();
+    console.log("Ai type: Hacker")
   }
 
   /**
@@ -25,6 +26,9 @@ export default class Hacker {
     //This is used in mutations under AiTakeTurn
     let moveType = undefined;
 
+    let opponentPO = this.move.getOpponentToAttack(event,'POWEROUTAGE');
+    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS');
+
     let hand = this.move.organizeHand(event);
     this.boolSide = store.getters.getCoinMsg;
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
@@ -36,7 +40,7 @@ export default class Hacker {
       return {cardToPlay, stackToPlay, opponentToAttack, moveType};
 
     }
-    else if(hand.powerOutageCard !== undefined){
+    else if(hand.powerOutageCard !== undefined && opponentPO !== undefined){
       opponentToAttack = this.move.getOpponentToAttack(event);
       cardToPlay = hand.powerOutageCard;
       moveType = 'attack'
@@ -63,12 +67,13 @@ export default class Hacker {
 
 
 
-    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0){
+    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0
+      && !store.getters.getCurrentPlayer.hasOverclock){
       cardToPlay = hand.overclockCard;
       moveType = 'enhance'
     }
 
-    else if(hand.virusCard !== undefined && !store.getters.getFirstRound) {
+    else if(hand.virusCard !== undefined && !store.getters.getFirstRound && opponentVirus !== undefined) {
       opponentToAttack = this.move.getOpponentToAttack(event, "VIRUS");
       cardToPlay = hand.virusCard;
       moveType = 'attack';
