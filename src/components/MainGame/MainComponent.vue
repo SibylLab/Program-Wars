@@ -19,6 +19,7 @@
                      data-backdrop="static" data-keyboard="false"></generator-modal>
     <anti-virus-modal id="antiVirusModal" class="modal fade antiVirus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
                      data-backdrop="static" data-keyboard="false"></anti-virus-modal>
+
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
@@ -135,7 +136,7 @@ export default {
     'overclock-modal': Overclock,
     'firewall-modal': Firewall,
     'generator-modal': Generator,
-    'anti-virus-modal': AntiVirus
+    'anti-virus-modal': AntiVirus,
 
   },
   methods: {

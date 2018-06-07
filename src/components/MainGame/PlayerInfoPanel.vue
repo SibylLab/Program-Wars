@@ -174,7 +174,7 @@ export default {
     'card': Card,
     'modal': Modal,
     'stats-panel': StatsPanel,
-    'display-used-cards': DisplayUsedCards
+    'display-used-cards': DisplayUsedCards,
   },
   methods: {
     getScore(player){

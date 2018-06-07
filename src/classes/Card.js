@@ -18,6 +18,11 @@ export default class Card {
     this.selected = false;
     this.id = id;
     this.cardImg = cardImg;
+    this.showFace = false;
+  }
+
+  flipCardFace() {
+    this.showFace = !this.showFace;
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div id="card" :class="cardCss" class="panel panel-default" @click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
-    <img src="../../../static/cardImg/backOfCard.png" alt="back of Card" width ="90" height="134" v-if="isAi">
+    <img src="../../../static/cardImg/backOfCard.png" alt="back of Card" width ="90" height="134" v-if="showCard">
     <img class="cardImg" :src="cardGraphics" alt="Playing Card" width ="90" height="134" v-else>
   </div>
 </template>
@@ -15,7 +15,8 @@ export default {
     return {
       msg: 'Programming Wars',
       valueCss: 'value',
-      typeCss: 'type'
+      typeCss: 'type',
+      showFace: false
     }
   },
   computed: {
@@ -64,7 +65,11 @@ export default {
       }else{
         return this.cardData.value
       }
-    }
+    },
+    showCard() {
+      return (this.isAi && !this.cardData.showFace && (this.cardData.type !== 'GENERATOR' || this.cardData.type !== 'FIREWALL' || this.cardData.type !== 'ANTIVIRUS'
+        || this.cardData.type !=='VIRUS'  || this.cardData.type !=='POWEROUTAGE' || this.cardData.type !=='OVERCLOCK'));
+    },
   },
   methods: {
     cardClicked(e) {
