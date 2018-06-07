@@ -8,7 +8,6 @@ export default class Gambler {
   constructor() {
     this.move = new AiMove();
     this.boolSide = this.move.getBoolSide();
-    console.log("Ai type: Gambler")
   }
 
   /**
@@ -33,13 +32,11 @@ export default class Gambler {
     this.boolSide = store.getters.getCoinMsg;
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
 
-    console.log("Hand: " + JSON.stringify(hand))
 
     if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.bestVCard;
       stackToPlay = this.move.stackToAddVariable(event);
       moveType = 'play';
-      console.log("in variable")
     }
 
     else if(hand.firewallCard !== undefined){
@@ -50,13 +47,11 @@ export default class Gambler {
       opponentToAttack = this.move.getOpponentToAttack(event, "VIRUS");
       cardToPlay = hand.virusCard;
       moveType = 'virus';
-      console.log("in virus")
     }
 
     else if(hand.generatorCard !== undefined){
       cardToPlay = hand.generatorCard;
       moveType = 'protection'
-      console.log("in generator");
     }
 
     else if(hand.antiVirusCard !== undefined){
@@ -66,69 +61,48 @@ export default class Gambler {
     else if(hand.overclockCard !== undefined && !store.getters.getCurrentPlayer.hasOverclock){
       cardToPlay = hand.overclockCard;
       moveType = 'enhance'
-      console.log("in overclock")
     }
     else if(hand.powerOutageCard !== undefined && opponentPO !== undefined){
       opponentToAttack = this.move.getOpponentToAttack(event);
       cardToPlay = hand.powerOutageCard;
       moveType = 'po'
-      console.log("in power outage")
     }
 
     else if(hand.batteryBackupCard !== undefined && store.getters.getCurrentPlayer.hasPowerOutage){
       cardToPlay = hand.batteryBackupCard;
       moveType = 'enhance'
-      console.log("in battery")
     }
 
     else if(hand.bestRCard !== undefined && this.move.getStackToRepeat(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.bestRCard;
       stackToPlay = this.move.getStackToRepeat(event);
       moveType = 'play';
-      console.log("in repeat")
 
     }
     else if(hand.rXCard !== undefined && this.move.getStackToRepeat(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.rXCard;
       stackToPlay = this.move.getStackToRepeat(event);
       moveType = 'play';
-      console.log("in Rx")
 
     }  else if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.hackCard;
       opponentToAttack = this.move.getHackOpponent(event);
       moveType = 'hack';
-      console.log("in hack")
 
     } else if(hand.bestGCard.length > 0 && canGroup  !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = canGroup.cardToPlay;
       stackToPlay = canGroup.stackToPlay;
       moveType = 'group';
-      console.log("in gorup")
-    //}
-    // } else if(hand.bestGCard !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
-    //   cardToPlay = hand.bestGCard[0];
-    //   for (let card in hand.bestGCard) {
-    //     if (cardToPlay.value > card.value) {
-    //       cardToPlay = card;
-    //     }
-    //   }
-    //   moveType = 'discard';
-    //   console.log("in group 2")
-    // }
     } else if(hand.bestICard !== undefined && !store.getters.getCurrentPlayer.hasPowerOutage) {
       cardToPlay = hand.bestICard;
       stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
       moveType = 'play';
-      console.log("in instruction ?")
 
     }
-    console.log("Why is instruction not being called " + !store.getters.getCurrentPlayer.hasPowerOutage)
 
 
     // This should not get called, used as a failsafe
     if(cardToPlay === undefined) {
-      console.log("Made it past the else ifs")
       if(hand.bestICard !== undefined && !store.getters.getCurrentPlayer.hasPowerOutage){
         cardToPlay = hand.bestICard;
         moveType = 'play';
