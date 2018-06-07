@@ -67,8 +67,8 @@ export default {
       }
     },
     showCard() {
-      return !(this.isAi && this.cardData.showFace && (this.cardData.type === 'GENERATOR' || this.cardData.type === 'FIREWALL' || this.cardData.type === 'ANTIVIRUS'
-        || this.cardData.type ==='VIRUS'  || this.cardData.type ==='POWEROUTAGE' || this.cardData.type ==='OVERCLOCK'));
+      return (this.isAi && !this.cardData.showFace && (this.cardData.type !== 'GENERATOR' || this.cardData.type !== 'FIREWALL' || this.cardData.type !== 'ANTIVIRUS'
+        || this.cardData.type !=='VIRUS'  || this.cardData.type !=='POWEROUTAGE' || this.cardData.type !=='OVERCLOCK'));
     },
   },
   methods: {
