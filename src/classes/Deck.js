@@ -29,13 +29,13 @@ const variable5 = 2;
 const variable6 = 1;
 
 const hack = 3;
-const virus = 3;
+const virus = 11;
 const powerOutage = 3;
 
 const overClock = 3;
 const batteryBackup = 3;
 
-const antiVirus = 1;
+const antiVirus = 10;
 const firewall = 1;
 const generator = 1;
 

@@ -180,8 +180,8 @@ export default {
     getScore(player){
       let trueSide = 0;
       let falseSide = 0;
-      trueSide = this.$store.getters.getPlayers[player].trueScore + this.$store.getters.getPlayers[player].bonusTrue;
-      falseSide = this.$store.getters.getPlayers[player].falseScore + this.$store.getters.getPlayers[player].bonusFalse;
+      trueSide = this.$store.getters.getPlayers[player].trueScore;
+      falseSide = this.$store.getters.getPlayers[player].falseScore;
       if(this.$store.getters.getPlayers[player].hasVirus){
         trueSide = trueSide/2;
         falseSide = falseSide/2;
