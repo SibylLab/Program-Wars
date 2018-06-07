@@ -379,12 +379,14 @@ export default {
       });
     } else {
       state.players[payload].hasVirus = true;
+      state.activeCard.flipCardFace();
       state.players[payload].attackedCards.push(state.activeCard);
     }
     state.players[payload].hadVirus = true;
   },
   givePowerOutage(state,payload) {
     state.players[payload].hasPowerOutage = true;
+    state.activeCard.flipCardFace();
     state.players[payload].attackedCards.push(state.activeCard);
 
   },
@@ -400,11 +402,13 @@ export default {
 
     if(state.players[payload].hasVirus) {
       state.players[payload].hasVirus = false;
+      state.activeCard.flipCardFace();
       state.players[payload].attackedCards = state.players[payload].attackedCards.filter(( obj ) => {
         return obj.type !== "VIRUS";
       });
     } else {
       state.players[payload].hasOverclock = true;
+      state.activeCard.flipCardFace();
       state.players[payload].usedBonusCards.push(state.activeCard);
       state.players[payload].hasHadOverclock = true;
     }
@@ -413,6 +417,7 @@ export default {
   giveFirewall(state, payload){
     let bonus = 5;
     state.players[payload].hasFirewall = true;
+    state.activeCard.flipCardFace();
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(bonus,bonus);
     state.players[payload].protectionCardsBonus += bonus;
@@ -425,6 +430,7 @@ export default {
     let bonus = 5;
     state.players[payload].hasGenerator = true;
     state.players[payload].hasPowerOutage = false;
+    state.activeCard.flipCardFace();
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(bonus,bonus);
     state.players[payload].protectionCardsBonus += bonus;
@@ -436,6 +442,7 @@ export default {
     let bonus = 5;
     state.players[payload].hasAntiVirus = true;
     state.players[payload].numViruses = 0;
+    state.activeCard.flipCardFace();
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(bonus,bonus);
     state.players[payload].protectionCardsBonus += bonus;
