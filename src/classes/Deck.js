@@ -29,13 +29,13 @@ const variable5 = 2;
 const variable6 = 1;
 
 const hack = 3;
-const virus = 11;
+const virus = 3;
 const powerOutage = 3;
 
 const overClock = 3;
 const batteryBackup = 3;
 
-const antiVirus = 10;
+const antiVirus = 1;
 const firewall = 1;
 const generator = 1;
 
@@ -92,10 +92,13 @@ export default class Deck {
   initDeck(value) {
     let cardId = 0;
     for(let k = 0; k < value; k++) {
-      for (var i = 0; i < cardDeck.length; i++) {
-        for (var j = 0; j < cardDeck[i].howMany; j++) {
+      for (let i = 0; i < cardDeck.length; i++) {
+        for (let j = 0; j < cardDeck[i].howMany; j++) {
           this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
           cardId++;
+          if(cardDeck[i].type === 'FIREWALL' || cardDeck[i].type === 'GENERATOR' || cardDeck[i].type === 'ANTIVIRUS') {
+            cardDeck[i].howMany = 0;
+          }
         }
       }
     }
