@@ -29,22 +29,25 @@ export default class Gambler {
     this.boolSide = store.getters.getCoinMsg;
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
 
+    let opponentPO = this.move.getOpponentToAttack(event,'POWEROUTAGE');
+    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS');
+
     if(hand.bestGCard.length > 0 && canGroup  !== undefined) {
       cardToPlay = canGroup.cardToPlay;
       stackToPlay = canGroup.stackToPlay;
       moveType = 'group';
     }
 
-    else if(hand.virusCard !== undefined && !store.getters.getFirstRound) {
+    else if(hand.virusCard !== undefined && !store.getters.getFirstRound && opponentVirus !== undefined) {
       opponentToAttack = this.move.getOpponentToAttack(event, "VIRUS");
       cardToPlay = hand.virusCard;
-      moveType = 'attack';
+      moveType = 'virus';
     }
 
-    else if(hand.powerOutageCard !== undefined){
+    else if(hand.powerOutageCard !== undefined && opponentPO !== undefined){
       opponentToAttack = this.move.getOpponentToAttack(event, "POWEROUTAGE");
       cardToPlay = hand.powerOutageCard;
-      moveType = 'attack';
+      moveType = 'po';
     }
 
     else if(hand.generatorCard !== undefined){
@@ -52,7 +55,7 @@ export default class Gambler {
       moveType = 'protection'
     }
 
-    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0){
+    else if(hand.overclockCard !== undefined && !store.getters.getCurrentPlayer.hasOverclock){
       cardToPlay = hand.overclockCard;
       moveType = 'enhance'
     }
@@ -82,7 +85,7 @@ export default class Gambler {
       stackToPlay = this.move.getStackToRepeat(event);
       moveType = 'play';
 
-    } else if(hand.bestICard !== undefined) {
+    } else if(hand.bestICard !== undefined && !store.getters.getCurrentPlayer.hasPowerOutage) {
       cardToPlay = hand.bestICard;
       stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
       moveType = 'play';
@@ -97,26 +100,22 @@ export default class Gambler {
       opponentToAttack = this.move.getHackOpponent(event);
       moveType = 'hack';
 
-    } else if(hand.bestGCard !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
-      cardToPlay = hand.bestGCard[0];
-      for(let card in hand.bestGCard) {
-        if(cardToPlay.value > card.value) {
-          cardToPlay = card;
-        }
-      }
-      moveType = 'discard';
-
-      }
-
+    }
 
 
 
     // This should not get called, used as a failsafe
     if(cardToPlay === undefined) {
-      cardToPlay = event.hand.cards[0];
-      moveType = 'discard';
+      if(hand.bestICard !== undefined && !store.getters.getCurrentPlayer.hasPowerOutage){
+        cardToPlay = hand.bestICard;
+        moveType = 'play';
+        stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
+      } else {
+        cardToPlay = event.hand.cards[0];
+        moveType = 'discard';
+      }
     }
 
-    return {cardToPlay, stackToPlay, opponentToAttack, moveType};
+    return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus};
   }
 }
