@@ -25,9 +25,13 @@ export default class Hacker {
     //This is used in mutations under AiTakeTurn
     let moveType = undefined;
 
+    let opponentPO = this.move.getOpponentToAttack(event,'POWEROUTAGE');
+    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS');
+
     let hand = this.move.organizeHand(event);
     this.boolSide = store.getters.getCoinMsg;
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
+
 
     if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.hackCard;
@@ -36,10 +40,10 @@ export default class Hacker {
       return {cardToPlay, stackToPlay, opponentToAttack, moveType};
 
     }
-    else if(hand.powerOutageCard !== undefined){
+    else if(hand.powerOutageCard !== undefined && opponentPO !== undefined){
       opponentToAttack = this.move.getOpponentToAttack(event);
       cardToPlay = hand.powerOutageCard;
-      moveType = 'attack'
+      moveType = 'po'
     }
 
     else if(hand.generatorCard !== undefined){
@@ -61,17 +65,15 @@ export default class Hacker {
       moveType = 'enhance'
     }
 
-
-
-    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0){
+    else if(hand.overclockCard !== undefined && !store.getters.getCurrentPlayer.hasOverclock){
       cardToPlay = hand.overclockCard;
       moveType = 'enhance'
     }
 
-    else if(hand.virusCard !== undefined && !store.getters.getFirstRound) {
+    else if(hand.virusCard !== undefined && !store.getters.getFirstRound && opponentVirus !== undefined) {
       opponentToAttack = this.move.getOpponentToAttack(event, "VIRUS");
       cardToPlay = hand.virusCard;
-      moveType = 'attack';
+      moveType = 'virus';
     }
 
     else if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
@@ -84,7 +86,7 @@ export default class Hacker {
       stackToPlay = this.move.getStackToRepeat(event);
       moveType = 'play';
 
-    } else if(hand.bestICard !== undefined) {
+    } else if(hand.bestICard !== undefined && !store.getters.getCurrentPlayer.hasPowerOutage) {
       cardToPlay = hand.bestICard;
       stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
       moveType = 'play';
@@ -99,25 +101,21 @@ export default class Hacker {
       stackToPlay = canGroup.stackToPlay;
       moveType = 'group';
 
-    } else if(hand.bestGCard !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
-      cardToPlay = hand.bestGCard[0];
-      for(let card in hand.bestGCard) {
-        if(cardToPlay.value > card.value) {
-          cardToPlay = card;
-        }
-      }
-      moveType = 'discard';
-
     }
-
 
 
     // This should not get called, used as a failsafe
     if(cardToPlay === undefined) {
-      cardToPlay = event.hand.cards[0];
-      moveType = 'discard';
+      if(hand.bestICard !== undefined && !store.getters.getCurrentPlayer.hasPowerOutage){
+        cardToPlay = hand.bestICard;
+        moveType = 'play';
+        stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
+      } else {
+        cardToPlay = event.hand.cards[0];
+        moveType = 'discard';
+      }
     }
 
-    return {cardToPlay, stackToPlay, opponentToAttack, moveType};
+    return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus};
   }
 }

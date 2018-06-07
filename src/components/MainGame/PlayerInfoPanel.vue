@@ -350,7 +350,7 @@ export default {
             if (this.$store.getters.getActiveCard.type === 'POWEROUTAGE') {
 
               $('.powerOutage').modal('hide');
-              this.$store.commit('givePowerOutage', stackToHack.playerId);
+              this.$store.commit('givePowerOutage', stackToHack.id);
               this.$store.dispatch('playerTookTurn');
               bus.$emit('cardDeselected');
               if (this.$store.getters.getHasPlayed) {
@@ -361,7 +361,7 @@ export default {
             else if (this.$store.getters.getActiveCard.type === 'VIRUS') {
 
               $('.virus').modal('hide');
-              this.$store.commit('giveVirus', stackToHack.playerId);
+              this.$store.commit('giveVirus', stackToHack.id);
               this.$store.dispatch('playerTookTurn');
               bus.$emit('cardDeselected');
               if (this.$store.getters.getHasPlayed) {

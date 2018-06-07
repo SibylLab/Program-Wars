@@ -360,8 +360,10 @@ export default {
       state.selectedStackBoolean = stackToPlay[0].boolSide;
       state.groupStacks = false;
       bus.$emit('aiGroup', stackToPlay[0].boolSide, state.players[state.activePlayer].id);
-    } else if (aiMove.moveType === 'attack') {
-      bus.$emit('aiAttack', stackToHack);
+    } else if (aiMove.moveType === 'po') {
+      bus.$emit('aiAttack', aiMove.opponentPO);
+    } else if (aiMove.moveType === 'virus') {
+      bus.$emit('aiAttack', aiMove.opponentVirus);
     } else if (aiMove.moveType === 'protection') {
       bus.$emit('aiProtection');
     } else if (aiMove.moveType === 'enhance') {

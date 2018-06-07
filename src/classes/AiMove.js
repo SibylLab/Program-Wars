@@ -71,12 +71,10 @@ export default class {
 
   getStackToRepeat(e) {
     let stackToRepeat = undefined;
-    for(let i = 1; i <= 6; i++) {
-
-        let tmpStack = e.stack.find(stack => stack.score === i && stack.cards.length === 1);
+    for(let i = 1; i <= 10; i++) {
+        let tmpStack = e.stack.find(stack => stack.score === i && !stack.maxRepeats() && (stack.stackTopCard().type !== 'R' || stack.stackTopCard().value !== 1));
         if (tmpStack !== undefined && tmpStack.boolSide === store.getters.getCoinMsg) {
           stackToRepeat = tmpStack;
-
       }
     }
     return stackToRepeat;
@@ -84,9 +82,9 @@ export default class {
 
   stackToAddVariable(e) {
     let stackToRepeat = undefined;
-    for(let i = 1; i <= 6; i++) {
+    for(let i = 1; i <= 25; i++) {
 
-      let tmpStack = e.stack.find(stack => stack.score === i && stack.cards.length === 2);
+      let tmpStack = e.stack.find(stack => stack.score === i && stack.stackTopCard().type === 'R' && stack.stackTopCard().value === 1);
 
       if (tmpStack !== undefined && tmpStack.cards[1].value === 1 && tmpStack.boolSide === store.getters.getCoinMsg) {
          stackToRepeat = tmpStack;
@@ -112,18 +110,21 @@ export default class {
   getOpponentToAttack(event, type) {
     let tmpOpponents = undefined;
     if(type === "POWEROUTAGE") {
-      tmpOpponents = event.opponents.filter(opponents => opponents.hasGenerator !== true && opponents.hasPowerOutage!== true);
+      tmpOpponents = store.getters.getPlayers.filter(player => player.hasGenerator !== true && player.hasPowerOutage !== true &&
+      store.getters.getCurrentPlayer.id !== player.id);
     } else if(type === "VIRUS"){
-      tmpOpponents = event.opponents.filter(opponents => opponents.hasAntiVirus !== true && (opponents.trueScore !== 0 || opponents.falseScore !== 0));
+      tmpOpponents = store.getters.getPlayers.filter(player => player.hasAntiVirus !== true && player.hasVirus !== true &&
+        store.getters.getCurrentPlayer.id !== player.id);
     }
+
 
       let tmpScore = 0;
       let opponentToAttack = undefined;
     if(tmpOpponents !== undefined) {
       for (let player of tmpOpponents) {
-        if (player.score >= tmpScore) {
+        if (player.trueScore >= tmpScore || player.falseScore >= tmpScore) {
           opponentToAttack = player;
-          tmpScore = player.score;
+          tmpScore = Math.max(player.trueScore, player.falseScore);
         }
       }
     }
@@ -131,7 +132,7 @@ export default class {
   }
 
   findBestCard(card, cardToBeat) {
-    if(cardToBeat !== undefined && cardToBeat !== undefined) {
+    if(cardToBeat !== undefined) {
       if(card.value > cardToBeat.value) {
         return card;
       } else {

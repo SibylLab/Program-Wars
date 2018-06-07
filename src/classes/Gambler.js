@@ -25,9 +25,13 @@ export default class Gambler {
     //This is used in mutations under AiTakeTurn
     let moveType = undefined;
 
+    let opponentPO = this.move.getOpponentToAttack(event,'POWEROUTAGE');
+    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS');
+
     let hand = this.move.organizeHand(event);
     this.boolSide = store.getters.getCoinMsg;
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
+
 
     if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.bestVCard;
@@ -39,10 +43,10 @@ export default class Gambler {
       cardToPlay = hand.firewallCard;
       moveType = 'protection'
     }
-    else if(hand.virusCard !== undefined && !store.getters.getFirstRound) {
+    else if(hand.virusCard !== undefined && !store.getters.getFirstRound && opponentVirus !== undefined) {
       opponentToAttack = this.move.getOpponentToAttack(event, "VIRUS");
       cardToPlay = hand.virusCard;
-      moveType = 'attack';
+      moveType = 'virus';
     }
 
     else if(hand.generatorCard !== undefined){
@@ -54,14 +58,14 @@ export default class Gambler {
       cardToPlay = hand.antiVirusCard;
       moveType = 'protection'
     }
-    else if(hand.overclockCard !== undefined && store.getters.getCurrentPlayer.trueScore !== 0 ||  store.getters.getCurrentPlayer.falseScore !== 0){
+    else if(hand.overclockCard !== undefined && !store.getters.getCurrentPlayer.hasOverclock){
       cardToPlay = hand.overclockCard;
       moveType = 'enhance'
     }
-    else if(hand.powerOutageCard !== undefined){
+    else if(hand.powerOutageCard !== undefined && opponentPO !== undefined){
       opponentToAttack = this.move.getOpponentToAttack(event);
       cardToPlay = hand.powerOutageCard;
-      moveType = 'attack'
+      moveType = 'po'
     }
 
     else if(hand.batteryBackupCard !== undefined && store.getters.getCurrentPlayer.hasPowerOutage){
@@ -69,23 +73,18 @@ export default class Gambler {
       moveType = 'enhance'
     }
 
+    else if(hand.bestRCard !== undefined && this.move.getStackToRepeat(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
+      cardToPlay = hand.bestRCard;
+      stackToPlay = this.move.getStackToRepeat(event);
+      moveType = 'play';
 
+    }
     else if(hand.rXCard !== undefined && this.move.getStackToRepeat(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.rXCard;
       stackToPlay = this.move.getStackToRepeat(event);
       moveType = 'play';
 
-    } else if(hand.bestRCard !== undefined && this.move.getStackToRepeat(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
-      cardToPlay = hand.bestRCard;
-      stackToPlay = this.move.getStackToRepeat(event);
-      moveType = 'play';
-
-    } else if(event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0) !== undefined && hand.bestICard !== undefined) {
-      cardToPlay = hand.bestICard;
-      stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
-      moveType = 'play';
-
-    } else if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
+    }  else if(hand.hackCard !== undefined && this.move.getHackOpponent(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.hackCard;
       opponentToAttack = this.move.getHackOpponent(event);
       moveType = 'hack';
@@ -94,25 +93,26 @@ export default class Gambler {
       cardToPlay = canGroup.cardToPlay;
       stackToPlay = canGroup.stackToPlay;
       moveType = 'group';
-
-    } else if(hand.bestGCard !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
-      cardToPlay = hand.bestGCard[0];
-      for(let card in hand.bestGCard) {
-        if(cardToPlay.value > card.value) {
-          cardToPlay = card;
-        }
-      }
-      moveType = 'discard';
+    } else if(hand.bestICard !== undefined && !store.getters.getCurrentPlayer.hasPowerOutage) {
+      cardToPlay = hand.bestICard;
+      stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
+      moveType = 'play';
 
     }
 
 
     // This should not get called, used as a failsafe
     if(cardToPlay === undefined) {
-      cardToPlay = event.hand.cards[0];
-      moveType = 'discard';
+      if(hand.bestICard !== undefined && !store.getters.getCurrentPlayer.hasPowerOutage){
+        cardToPlay = hand.bestICard;
+        moveType = 'play';
+        stackToPlay = event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0);
+      } else {
+        cardToPlay = event.hand.cards[0];
+        moveType = 'discard';
+      }
     }
 
-    return {cardToPlay, stackToPlay, opponentToAttack, moveType};
+    return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus};
   }
 }
