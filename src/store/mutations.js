@@ -256,37 +256,25 @@ export default {
       }
 
       if(scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit){
-        //scoreFalse += 10;
-        //scoreTrue += 10;
         player.completionBonus = 10;
       }
-
 
       for(let p of playerList){
         if(p.id !== player.id){
           if(!p.hasPlayedInstruction){
-            //scoreFalse += 10;
-           // scoreTrue += 10;
             player.instructionBonus += 10;
           }
         }
       }
 
-
       if(player.isDefensive){
-        //scoreTrue += 15;
-        //scoreFalse += 15;
         player.defensiveBonus = 15;
       }
       if(!player.hasHadOverclock){
-        //scoreTrue += 10;
-       // scoreFalse += 10;
         player.overClockBonus = 10;
       }
 
       if(!player.hasVirus){
-       // scoreTrue += 10;
-       // scoreFalse += 10;
         player.virusBonus = 10;
       }
 
