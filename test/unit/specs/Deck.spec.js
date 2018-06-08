@@ -25,7 +25,7 @@ describe('Deck.js', () => {
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck(3)
-    expect(testDeck.cards.length).to.equal(225)
+    expect(testDeck.cards.length).to.equal(219)
   })
 
   // test the number of 'I' cards 1 player
