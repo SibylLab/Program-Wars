@@ -116,7 +116,6 @@ export default class Deck {
         }
       }
     }
-    this.cardDeck
     this.shuffle(this.cards);
   };//end Init game
 
