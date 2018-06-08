@@ -91,17 +91,35 @@ export default class Deck {
    */
   initDeck(value) {
     let cardId = 0;
+    let fwPlayed = false;
+    let avPlayed = false;
+    let genPlayed = false;
     for(let k = 0; k < value; k++) {
       for (let i = 0; i < cardDeck.length; i++) {
         for (let j = 0; j < cardDeck[i].howMany; j++) {
-          this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
-          cardId++;
-          if(cardDeck[i].type === 'FIREWALL' || cardDeck[i].type === 'GENERATOR' || cardDeck[i].type === 'ANTIVIRUS') {
-            cardDeck[i].howMany = 0;
+          if(cardDeck[i].type === 'FIREWALL' && !fwPlayed) {
+            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
+            cardId++;
+            fwPlayed = true;
+            console.log("Safety Played")
+          } else if(cardDeck[i].type === 'GENERATOR' && !genPlayed) {
+            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
+            cardId++;
+            genPlayed = true;
+            console.log("Safety Played")
+          } else if(cardDeck[i].type === 'ANTIVIRUS' && !avPlayed) {
+            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
+            cardId++;
+            avPlayed = true;
+            console.log("Safety Played")
+          } else if(cardDeck[i].type !== 'ANTIVIRUS' && cardDeck[i].type !== 'FIREWALL' && cardDeck[i].type !== 'GENERATOR'){
+            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
+            cardId++;
           }
         }
       }
     }
+    this.cardDeck
     this.shuffle(this.cards);
   };//end Init game
 
