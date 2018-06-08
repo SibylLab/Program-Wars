@@ -101,17 +101,14 @@ export default class Deck {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
             cardId++;
             fwPlayed = true;
-            console.log("Safety Played")
           } else if(cardDeck[i].type === 'GENERATOR' && !genPlayed) {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
             cardId++;
             genPlayed = true;
-            console.log("Safety Played")
           } else if(cardDeck[i].type === 'ANTIVIRUS' && !avPlayed) {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
             cardId++;
             avPlayed = true;
-            console.log("Safety Played")
           } else if(cardDeck[i].type !== 'ANTIVIRUS' && cardDeck[i].type !== 'FIREWALL' && cardDeck[i].type !== 'GENERATOR'){
             this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc));
             cardId++;
