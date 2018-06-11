@@ -85,7 +85,10 @@
                        <b>Relation to computer programming:</b>
                         Computer programs are commonly broken up into <i>functions</i>, <i>methods</i> or <i>procedures</i>. All of these names
                         mean the same thing - a group of instructions. These groups of instructions are given names so they can be called upon to
-                        run whenever needed.
+                        run whenever needed. This also introduces the software engineering principle of refactoring. Refactoring is restructuring
+                        code without changing what it does. Grouping refactors our code into small chunks that can be reused making it easier to
+                        change or maintain. Although our code will still do the same thing, refactoring makes it easier to change later on.
+
                         <br>To find out more about these groups of instructions, you can go <a href="https://www.tutorialspoint.com/python/python_functions.htm">
                         here.</a>
                       </div>
