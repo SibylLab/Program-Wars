@@ -443,7 +443,6 @@ export default {
   giveAntiVirus(state,payload){
     let bonus = 5;
     state.players[payload].hasAntiVirus = true;
-    state.players[payload].numViruses = 0;
     state.activeCard.flipCardFace();
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(bonus,bonus);
