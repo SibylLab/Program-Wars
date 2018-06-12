@@ -18,14 +18,14 @@ describe('TutorialDeck.js', () => {
   it('test the initDeck function for number of cards', () => {
     let testDeck = new TutorialDeck()
     testDeck.initDeck(1)
-    expect(testDeck.cards.length).to.equal(33)
+    expect(testDeck.cards.length).to.equal(32)
   })
 
   // test initDeck function 3 players
   it('test the initDeck function for number of cards', () => {
     let testDeck = new TutorialDeck()
     testDeck.initDeck(3)
-    expect(testDeck.cards.length).to.equal(99)
+    expect(testDeck.cards.length).to.equal(96)
   })
 
   // test the number of 'I' cards 1 player
@@ -315,7 +315,7 @@ describe('TutorialDeck.js', () => {
     let testDeck = new TutorialDeck()
     testDeck.initDeck(1)
     let drawnCard = testDeck.draw()
-    expect(testDeck.cards.length).to.equal(33)
+    expect(testDeck.cards.length).to.equal(32)
     expect(typeof drawnCard).to.equal('object')
   })
 })

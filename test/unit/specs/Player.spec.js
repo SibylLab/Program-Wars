@@ -24,11 +24,11 @@ describe('Player.js', () => {
   })
 
   it('test the Player constructor usedBonusCards', () => {
-    expect(testPlayer.usedBonusCards).to.equal(undefined)
+    expect(testPlayer.usedBonusCards).to.equal([])
   })
 
   it('test the Player constructor attackedCards', () => {
-    expect(testPlayer.attackedCards).to.equal(undefined)
+    expect(testPlayer.attackedCards).to.equal([])
   })
 
   it('test the Player constructor hasGenerator', () => {
@@ -120,7 +120,7 @@ describe('Player.js', () => {
   })
 
   it('test the Player constructor isCleanSystem', () => {
-    expect(testPlayer.isCleanSystem).to.equal(0)
+    expect(testPlayer.isCleanSystem).to.equal(true)
   })
 
   it('test the Player updateBonus', () => {
