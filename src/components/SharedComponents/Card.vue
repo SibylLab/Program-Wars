@@ -7,7 +7,7 @@
 
 <script>
 import { bus } from './Bus'
-
+import {store} from '../../store/store.js'
 export default {
   name: 'Card',
   props: ['cardData', 'inStack'],
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     isAi() {
-      if(this.$store.getters.getCurrentPlayer.isAi && !this.inStack) {
+      if(store.getters.getCurrentPlayer.isAi && !this.inStack) {
         return true;
       } else {
         return false;
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     cardClicked(e) {
-      if (this.$store.getters.getHasPlayed === false) {
+      if (store.getters.getHasPlayed === false) {
         this.$emit('cardClicked', this.cardData)
 
         if (this.cardData.value !== '+') {
@@ -87,9 +87,9 @@ export default {
 
     },
     cardDragged(e) {
-      if (this.$store.getters.getTutorialState) {
-        if (this.$store.getters.getCurrentPlayerHand[0] === this.cardData) {
-          if (this.$store.getters.getHasPlayed === false) {
+      if (store.getters.getTutorialState) {
+        if (store.getters.getCurrentPlayerHand[0] === this.cardData) {
+          if (store.getters.getHasPlayed === false) {
             this.$emit('setActiveCard', this.cardData)
             bus.$emit('cardClickedStack', e, this.cardData)
           } else {
@@ -97,7 +97,7 @@ export default {
           }
         }
       } else {
-        if (this.$store.getters.getHasPlayed === false) {
+        if (store.getters.getHasPlayed === false) {
           this.$emit('setActiveCard', this.cardData)
           bus.$emit('cardClickedStack', e, this.cardData)
         } else {
