@@ -106,6 +106,6 @@ describe('Card.vue', () => {
   it('testing flipFace function', () => {
     let testCard = new CardObj(0, 1, 'I')
     testCard.flipCardFace()
-    expect(getCardValue(testCard.showFace).to.equal(true))
+    expect(testCard.showFace).to.equal(true)
   })
 })

@@ -24,11 +24,11 @@ describe('Player.js', () => {
   })
 
   it('test the Player constructor usedBonusCards', () => {
-    expect(testPlayer.usedBonusCards).to.equal([])
+    expect(testPlayer.usedBonusCards).to.equal(Array)
   })
 
   it('test the Player constructor attackedCards', () => {
-    expect(testPlayer.attackedCards).to.equal([])
+    expect(testPlayer.attackedCards).to.equal(Array)
   })
 
   it('test the Player constructor hasGenerator', () => {
