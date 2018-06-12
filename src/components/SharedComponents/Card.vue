@@ -7,7 +7,7 @@
 
 <script>
 import { bus } from './Bus'
-import {store} from '../../store/store.js'
+
 export default {
   name: 'Card',
   props: ['cardData', 'inStack'],
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     isAi() {
-      if(store.getters.getCurrentPlayer.isAi && !this.inStack) {
+      if(this.$store.getters.getCurrentPlayer.isAi && !this.inStack) {
         return true;
       } else {
         return false;
