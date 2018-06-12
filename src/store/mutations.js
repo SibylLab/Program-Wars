@@ -435,7 +435,6 @@ export default {
   giveAntiVirus(state,payload){
     let bonus = 5;
     state.players[payload].hasAntiVirus = true;
-    state.activeCard.flipCardFace();
     state.players[payload].hasVirus = false;
     state.players[payload].attackedCards = state.players[payload].attackedCards.filter(( obj ) => {
       return obj.type !== "VIRUS";
