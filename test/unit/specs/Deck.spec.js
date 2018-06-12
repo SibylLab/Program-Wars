@@ -25,7 +25,7 @@ describe('Deck.js', () => {
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck(3)
-    expect(testDeck.cards.length).to.equal(225)
+    expect(testDeck.cards.length).to.equal(219)
   })
 
   // test the number of 'I' cards 1 player
@@ -279,7 +279,7 @@ describe('Deck.js', () => {
         counter++
       }
     }
-    expect(counter).to.equal(3)
+    expect(counter).to.equal(1)
   })
 
   // test the number of Generator cards in the deck 3 player
@@ -293,7 +293,7 @@ describe('Deck.js', () => {
         counter++
       }
     }
-    expect(counter).to.equal(3)
+    expect(counter).to.equal(1)
   })
 
   // test the number of Firewall cards in the deck 3 player
@@ -307,7 +307,7 @@ describe('Deck.js', () => {
         counter++
       }
     }
-    expect(counter).to.equal(3)
+    expect(counter).to.equal(1)
   })
 
   // test to see if the draw function draws the card from the top of the deck
