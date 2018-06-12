@@ -38,7 +38,7 @@ script:
  - npm run test
 
 after_success:
- - mv ./test/unit/coverage/lcov.info .
+ - mv ./test/unit/coverage/lcov.info covearge/lcov.info
  - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT
 
  #- npm run build
