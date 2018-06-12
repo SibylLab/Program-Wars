@@ -7,6 +7,7 @@
 
 <script>
 import { bus } from './Bus'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'Card',
@@ -20,12 +21,9 @@ export default {
     }
   },
   computed: {
+
     isAi() {
-      if(this.$store.getters.getCurrentPlayer.isAi && !this.inStack) {
-        return true;
-      } else {
-        return false;
-      }
+      return (this.getCurrentPlayer.isAi && !this.inStack)
     },
     cardGraphics() {
       return this.cardData.cardImg;
@@ -43,13 +41,6 @@ export default {
       return classString
     },
     title () {
-        /*
-      if (this.cardData.category !== 'stack') {
-        return 'Card'
-      } else {
-        return ''
-      }
-      */
         return 'Card'
     },
     cardType(){
@@ -67,11 +58,17 @@ export default {
       }
     },
     showCard() {
+      console.log("ShowFace: " + (this.isAi && !this.cardData.showFace && (this.cardData.type !== 'GENERATOR' || this.cardData.type !== 'FIREWALL' || this.cardData.type !== 'ANTIVIRUS'
+        || this.cardData.type !=='VIRUS'  || this.cardData.type !=='POWEROUTAGE' || this.cardData.type !=='OVERCLOCK')));
+
       return (this.isAi && !this.cardData.showFace && (this.cardData.type !== 'GENERATOR' || this.cardData.type !== 'FIREWALL' || this.cardData.type !== 'ANTIVIRUS'
         || this.cardData.type !=='VIRUS'  || this.cardData.type !=='POWEROUTAGE' || this.cardData.type !=='OVERCLOCK'));
     },
   },
   methods: {
+    ...mapGetters([
+      'getCurrentPlayer',
+    ]),
     cardClicked(e) {
       if (store.getters.getHasPlayed === false) {
         this.$emit('cardClicked', this.cardData)
