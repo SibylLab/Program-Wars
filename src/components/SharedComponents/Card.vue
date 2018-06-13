@@ -58,9 +58,6 @@ export default {
       }
     },
     showCard() {
-      console.log("ShowFace: " + (this.isAi && !this.cardData.showFace && (this.cardData.type !== 'GENERATOR' || this.cardData.type !== 'FIREWALL' || this.cardData.type !== 'ANTIVIRUS'
-        || this.cardData.type !=='VIRUS'  || this.cardData.type !=='POWEROUTAGE' || this.cardData.type !=='OVERCLOCK')));
-
       return (this.isAi && !this.cardData.showFace && (this.cardData.type !== 'GENERATOR' || this.cardData.type !== 'FIREWALL' || this.cardData.type !== 'ANTIVIRUS'
         || this.cardData.type !=='VIRUS'  || this.cardData.type !=='POWEROUTAGE' || this.cardData.type !=='OVERCLOCK'));
     },
@@ -68,9 +65,14 @@ export default {
   methods: {
     ...mapGetters([
       'getCurrentPlayer',
+      'getHasPlayed',
+      'getTutorialState',
+      'getCurrentPlayerHand',
+      'getHasPlayed'
     ]),
+
     cardClicked(e) {
-      if (store.getters.getHasPlayed === false) {
+      if (this.getHasPlayed() === false) {
         this.$emit('cardClicked', this.cardData)
 
         if (this.cardData.value !== '+') {
@@ -84,9 +86,9 @@ export default {
 
     },
     cardDragged(e) {
-      if (store.getters.getTutorialState) {
-        if (store.getters.getCurrentPlayerHand[0] === this.cardData) {
-          if (store.getters.getHasPlayed === false) {
+      if (this.getTutorialState()) {
+        if (this.getCurrentPlayerHand()[0] === this.cardData) {
+          if (this.getHasPlayed() === false) {
             this.$emit('setActiveCard', this.cardData)
             bus.$emit('cardClickedStack', e, this.cardData)
           } else {
@@ -94,7 +96,7 @@ export default {
           }
         }
       } else {
-        if (store.getters.getHasPlayed === false) {
+        if (this.getHasPlayed() === false) {
           this.$emit('setActiveCard', this.cardData)
           bus.$emit('cardClickedStack', e, this.cardData)
         } else {

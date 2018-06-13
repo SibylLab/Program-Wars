@@ -24,7 +24,8 @@
 <script>
 
   import { bus } from './Bus';
-import Card from './Card'
+  import Card from './Card'
+  import {mapGetters, mapState, mapMutations, mapActions} from 'vuex'
 
 
 export default {
@@ -40,9 +41,9 @@ export default {
   computed: {
     cards () {
 
-      if (this.playerId === this.$store.getters.getCurrentPlayerId ) {
-        if (this.$store.getters.getCurrentPlayerStacks.length !== 0) {
-          let stack = this.$store.getters.getCurrentPlayerStacks.find(stack => stack.stackId === this.stackId)
+      if (this.playerId === this.getCurrentPlayerId() ) {
+        if (this.getCurrentPlayerStacks().length !== 0) {
+          let stack = this.getCurrentPlayerStacks().find(stack => stack.stackId === this.stackId);
           if (stack !== undefined) {
             return stack.cards
           } else {
@@ -50,7 +51,7 @@ export default {
           }
         }
       } else {
-        let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
+        let stack = this.getStacks().find(stack => stack.stackId === this.stackId);
         if (stack !== undefined) {
           return stack.cards
         } else {
@@ -61,14 +62,10 @@ export default {
 
     },
     activeCardIsHack() {
-        if (this.$store.getters.getActiveCard !== undefined && this.$store.getters.getActiveCard.type === 'H') {
+        if (this.getActiveCard() !== undefined && this.getActiveCard().type === 'H') {
           $('.hack').modal('show');
-          let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
-            if(stack !== undefined && stack.cards[0].type !== 'G') {
-              return true
-            } else {
-                return false
-            }
+          let stack = this.getStacks().find(stack => stack.stackId === this.stackId)
+            return(stack !== undefined && stack.cards[0].type !== 'G')
         } else {
             return false
         }
@@ -80,12 +77,12 @@ export default {
       return ''
     },
     score() {
-        let thisStack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
+        let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
          thisStack.calculateStackScore();
           return thisStack.score
     },
     selectedStacksLength () {
-      let selectedStacks = this.$store.getters.getSelectedStacks;
+      let selectedStacks = this.getSelectedStacks();
 
       for (let stack of selectedStacks) {
           if (stack.stackId === this.stackId)
@@ -109,25 +106,52 @@ export default {
 
     bus.$on('cardDeselected', () => {
       this.activeCard = undefined;
-      this.$store.commit('setActiveCardUndefined');
-      this.$store.commit('removeAllSelectedStacks');
+      this.setActiveCardUndefined();
+      this.removeAllSelectedStacks();
     });
 
     bus.$on('aiHack', (newStackId) => {
-      if(this.$store.state.aiTurn === true) {
-        if(this.$store.state.activeCard !== undefined) {
+      if(this.aiTurn === true) {
+        if(this.activeCard !== undefined) {
           if(this.stackId === newStackId.stackId) {
             this.hackStackClicked();
-            this.$store.state.aiTurn = false;
+            this.aiTurn = false;
           }
         }
       }
     });
   },
   methods: {
+    ...mapGetters([
+      'getActiveCard',
+      'getStacks',
+      'getCurrentPlayerStacks',
+      'getCurrentPlayerId',
+      'getHasPlayed',
+      'getTutorialState',
+      'getSelectedStacks'
+    ]),
+    ...mapState([
+      'aiTurn',
+      'activeCard',
+      'hackedPlayer',
+      'players',
+      'isHack'
+    ]),
+    ...mapMutations([
+      'stackDiscard',
+      'removeStack',
+      'increaseFactIndex',
+      'setPlayerScores',
+      'setActiveCardUndefined' ,
+      'removeAllSelectedStacks'
+    ]),
+    ...mapActions([
+      'playerTookTurn',
+      'turn'
+    ]),
     cardAddClicked () {
       this.$emit('cardAddClicked', this.id)
-
     },
     hide () {
     },
@@ -137,39 +161,38 @@ export default {
     },
     addToStack() {
 
-      if (this.$store.getters.getActiveCard !== undefined) {
-        let activeCard = this.$store.getters.getActiveCard;
+      if (this.getActiveCard() !== undefined) {
+        let activeCard = this.getActiveCard();
         // get the stack data model that goes with this stack component
-        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
+        let thisStack = this.getStacks().find(stack => this.stackId === stack.stackId);
         switch (activeCard.type) {
           case 'H':
-            this.$store.commit('stackDiscard', {stackId: this.stackId});
-            this.$store.commit('removeStack', {stackId: this.stackId});
-            this.$store.state.hackedPlayer = this.$store.state.players[thisStack.playerId].name;
-            this.$store.dispatch('playerTookTurn');
+            this.stackDiscard({stackId: this.stackId});
+            this.removeStack({stackId: this.stackId});
+            this.hackedPlayer = this.players[thisStack.playerId].name;
+            this.playerTookTurn();
             bus.$emit('cardDeselected');
-            this.$store.state.isHack = true;
+            this.isHack = true;
             setTimeout(() => {
-              this.$store.state.isHack = false;
+              this.isHack = false;
             },1250);
             break;
           default:
               return '';
-              break;
         }
-        if(this.$store.getters.getHasPlayed) {
-          this.$store.dispatch('turn', true);
+        if(this.getHasPlayed()) {
+          this.turn(true);
         }
       }
     },
     hackStackClicked() {
       this.addToStack();
       $('.hack').modal('hide');
-      if(this.$store.getters.getTutorialState){
+      if(this.getTutorialState()){
         bus.$emit('cardPlayed');
-        this.$store.commit('increaseFactIndex');
+        this.increaseFactIndex();
       }
-      this.$store.commit('setPlayerScores');
+      this.setPlayerScores();
     },
     drop () {
       this.addToStack()

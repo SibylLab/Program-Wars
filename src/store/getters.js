@@ -42,6 +42,12 @@ export default {
   getDiscard(state) {
     return state.deck.discard_cards
   },
+  getIsDiscard(state) {
+    return state.isDiscard
+  },
+  getIsHack(state){
+    return state.isHack
+  },
   getHasPlayed(state) {
     return state.activeHasPlayed
   },

@@ -25,19 +25,25 @@
 
 <script>
   import Card from './Card'
+  import {mapGetters} from 'vuex'
   export default {
     data(){
       return{
-        player: this.$store.getters.getCurrentPlayer,
+        player: this.getCurrentPlayer(),
       }
     },
     components: {
       'card': Card
 
     },
+    methods:{
+      ...mapGetters([
+        'getCurrentPlayer'
+      ])
+    },
     computed: {
       attackedCards() {
-        let cards = this.$store.getters.getCurrentPlayer.attackedCards;
+        let cards = this.getCurrentPlayer().attackedCards;
         if(cards === null ){
           return []
         } else {
@@ -45,7 +51,7 @@
         }
       },
       usedBonusCards() {
-        let cards = this.$store.getters.getCurrentPlayer.usedBonusCards;
+        let cards = this.getCurrentPlayer().usedBonusCards;
         if(cards === null ){
           return []
         } else {

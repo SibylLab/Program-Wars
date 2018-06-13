@@ -454,5 +454,7 @@ export default {
   flipTutorialStep(state){
     state.tutorialStep = !state.tutorialStep;
   },
-
+  setFirstRound(state, payload){
+    state.firstRound = payload;
+  }
 }

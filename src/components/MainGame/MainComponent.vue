@@ -24,7 +24,7 @@
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
     <transition name="fade">
-      <player-turn v-if="playerTurn"></player-turn>
+      <player-turn v-if="playerTurn()"></player-turn>
     </transition>
 
     <transition name="fade">
@@ -55,10 +55,10 @@
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <playfield  :trueFalse="true" :playerId="currentPlayerId" :style="trueSideColour" class="playfieldSides"></playfield>
+              <playfield  :trueFalse="true" :playerId="getCurrentPlayerId()" :style="trueSideColour()" class="playfieldSides"></playfield>
             </div>
             <div class="col-md-6 col-sm-6">
-              <playfield :trueFalse="false" :playerId="currentPlayerId" :style="falseSideColour" class="playfieldSides"></playfield>
+              <playfield :trueFalse="false" :playerId="getCurrentPlayerId()" :style="falseSideColour()" class="playfieldSides"></playfield>
             </div>
           </div>
         </div>
@@ -90,6 +90,11 @@ import Firewall from '../Modals/CardModals/Firewall'
 
 import Card from '../../classes/Card'
 import Player from '../../classes/Player'
+
+import {mapGetters} from 'vuex'
+import {mapMutations} from 'vuex'
+import {mapActions} from 'vuex'
+import {mapState} from 'vuex'
 
 import { bus } from '../SharedComponents/Bus';
 
@@ -140,31 +145,62 @@ export default {
 
   },
   methods: {
+    ...mapGetters([
+      'getPlayers',
+      'getActiveCard',
+      'getPlayers',
+      'getCurrentPlayerId',
+      'getgameState',
+      'getFirstRound',
+      'getIsDiscard',
+      'getIsHack'
+    ]),
+    ...mapMutations([
+      'initDeck',
+      'addHandToPlayer',
+      'addStackToPlayer',
+      'setTips',
+      'setTrueFalseAnim',
+      'setActiveSide',
+      'setGameState',
+      'addCardToHand',
+      'setFirstRound'
+
+    ]),
+    ...mapActions([
+      'firstRound',
+      'turn'
+    ]),
+    ...mapState([
+      'isHack',
+      'isDiscard',
+      'trueSideColour',
+      'falseSideColour',
+      'playerTurn',
+      'pointerEvent',
+      'currentGameState',
+    ]),
     initGame(){
-        this.$store.commit('initDeck');
+        this.initDeck();
     },
     fillHands() {
-        for(let player of this.$store.getters.getPlayers) {
-          this.$store.commit('addHandToPlayer', player.id);
+        for(let player of this.getPlayers()) {
+          this.addHandToPlayer(player.id);
         }
     },
     addStacksToPlayers() {
-      for(let player of this.$store.getters.getPlayers) {
-        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: true});
-        this.$store.commit('addStackToPlayer', {playerId: player.id, boolSide: false});
+      for(let player of this.getPlayers()) {
+        this.addStackToPlayer({playerId: player.id, boolSide: true});
+        this.addStackToPlayer({playerId: player.id, boolSide: false});
       }
     }
 },
   computed: {
     showMsg() {
-      if(this.$store.state.isHack || this.$store.state.isDiscard) {
-        return true;
-      } else {
-        return false;
-      }
+      return (this.getIsHack() || this.getIsDiscard())
     },
     showVirus() {
-      let c = this.$store.getters.getActiveCard;
+      let c = this.getActiveCard();
       if(c !== undefined) {
         if (c.type === 'VIRUS') {
           $('.virus').modal('show');
@@ -174,26 +210,14 @@ export default {
         }
       }
     },
-    currentPlayerId() {
-      return this.$store.getters.getCurrentPlayerId;
-    },
     players() {
-        return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
-    },
-    trueSideColour() {
-      return this.$store.state.trueSideColour;
-    },
-    falseSideColour() {
-      return this.$store.state.falseSideColour;
-    },
-    playerTurn() {
-      return this.$store.state.playerTurn;
+        return this.getPlayers().filter(player => player.id !== this.getCurrentPlayerId());
     },
     deactivateClick() {
-      return this.$store.state.pointerEvent;
+      return this.pointerEvent;
     },
     gameStateChanges() {
-        return this.$store.state.currentGameState
+      return this.currentGameState;
     }
   },
 
@@ -208,52 +232,52 @@ export default {
         if(val) {
           bus.$emit('tutorialOn');
         }
-        this.$store.commit('setTips', {tutorial: val, fact: this.factsToggle});
+        this.setTips({tutorial: val, fact: this.factsToggle});
     },
     factsToggle(val) {
         if(val === false) {
             this.tipsToggle = false;
         }
-        this.$store.commit('setTips', {tutorial: this.tipsToggle, fact: val});
+        this.setTips({tutorial: this.tipsToggle, fact: val});
     }
   },
   created() {
-    this.playerList = this.$store.getters.getPlayers;
+    this.playerList = this.getPlayers();
     this.gameStart = true;
     let j = Math.floor(Math.random() * 2);
-    this.$store.commit('setTrueFalseAnim', {startAnim: true});
+    this.setTrueFalseAnim({startAnim: true});
     if (j === 0) {
-      this.$store.commit('setActiveSide', {activeSide: true})
+      this.setActiveSide({activeSide: true})
     } else {
-      this.$store.commit('setActiveSide', {activeSide: false})
+      this.setActiveSide({activeSide: false})
     }
     let gameEventLoopTimer = setInterval(() => {
-      let gameState = this.$store.getters.getgameState;
+      let gameState = this.getgameState();
       if (gameState === 'newGame') {
-        this.$store.commit('setGameState', {gameState: 'waitingForPlayerInput'});
+        this.setGameState({gameState: 'waitingForPlayerInput'});
         this.gameStart = true;
       } else if (gameState === 'initGame') {
       } else if (gameState === 'startPlayerTurn') {
-          this.$store.commit('addCardToHand');
-          this.$store.commit('setGameState', {gameState: 'playerTurn'});
+          this.addCardToHand();
+          this.setGameState({gameState: 'playerTurn'});
 
-            if (this.$store.getters.getCurrentPlayerId === 0) {
+            if (this.getCurrentPlayerId() === 0) {
              let j = Math.floor(Math.random() * 2);
-             this.$store.commit('setTrueFalseAnim', {startAnim: true});
+             this.setTrueFalseAnim({startAnim: true});
               if (j === 0) {
-                this.$store.commit('setActiveSide', {activeSide: true})
+                this.setActiveSide({activeSide: true})
               } else {
-                  this.$store.commit('setActiveSide', {activeSide: false})
+                  this.setActiveSide({activeSide: false})
                 }
-              if(this.$store.state.firstRound) {
-                this.$store.dispatch('firstRound');
-                this.$store.state.firstRound = false;
+              if(this.getFirstRound()) {
+                this.firstRound();
+                this.setFirstRound(false);
               } else {
-                this.$store.dispatch('turn', false);
+                this.turn(false);
               }
               setTimeout(() => {
-                this.$store.commit('setTrueFalseAnim', {startAnim: false});
-                this.$store.commit('setGameState', {gameState: 'playerTurn'});
+                this.setTrueFalseAnim({startAnim: false});
+                this.setGameState({gameState: 'playerTurn'});
               }, 3000);
             }
       }
@@ -262,7 +286,7 @@ export default {
     this.fillHands();
     this.addStacksToPlayers();
 
-    this.$store.commit('setGameState', {gameState: 'startPlayerTurn'})
+    this.setGameState({gameState: 'startPlayerTurn'})
 
   },
  }
