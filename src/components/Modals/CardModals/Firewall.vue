@@ -27,37 +27,54 @@
 <script>
 
   import { bus } from '../../SharedComponents/Bus.vue'
-
+  import {mapGetters, mapMutations, mapActions} from 'vuex'
   export default {
     props: ['players'],
 
     methods: {
+      /**
+       * These mapping functions map local functions to the vuex functions or state.
+       */
+      ...mapActions([
+        'playerTookTurn',
+        'turn'
+      ]),
+      ...mapGetters([
+        'getActiveCard',
+        'getCurrentPlayer',
+        'getTutorialState'
+      ]),
+      ...mapMutations([
+        'increaseFactIndex',
+        'discardSelectedCard',
+        'giveFirewall'
+      ]),
       firewallCanceled() {
         bus.$emit('hackCanceled');
       },
       discardFirewall() {
-        if (this.$store.getters.getActiveCard !== undefined) {
-          this.$store.commit('discardSelectedCard');
-          this.$store.dispatch('playerTookTurn');
-          this.$store.dispatch('turn', true);
+        if (this.getActiveCard() !== undefined) {
+          this.discardSelectedCard();
+          this.playerTookTurn();
+          this.turn(true);
         }
       },
       useClicked() {
-        let player = this.$store.getters.getCurrentPlayer;
-        this.$store.commit('giveFirewall', player.id);
+        let player = this.getCurrentPlayer();
+        this.giveFirewall(player.id);
         $('.firewall').modal('hide');
-        if(this.$store.getters.getTutorialState){
+        if(this.getTutorialState()){
           bus.$emit('cardPlayed');
-          this.$store.commit('increaseFactIndex');
+          this.increaseFactIndex();
         }
-        let ret = this.$store.dispatch('playerTookTurn');
-        let turn = this.$store.dispatch('turn', true);
+        let ret = this.playerTookTurn();
+        let turn = this.turn(true);
       },
 
     },
     computed: {
       hideButton() {
-        let activeCard = this.$store.getters.getActiveCard;
+        let activeCard = this.getActiveCard();
         if(activeCard !== undefined) {
           if(activeCard.type === 'FIREWALL' && activeCard !== undefined) {
             return 'display: block';
@@ -69,7 +86,7 @@
         }
       },
       playerCanUse() {
-        let player = this.$store.getters.getCurrentPlayer;
+        let player = this.getCurrentPlayer();
         return player.hasFirewall;
       }
     },

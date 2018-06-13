@@ -12,16 +12,27 @@
 </template>
 
 <script>
+  import {mapGetters, mapState} from 'vuex'
   export default {
+    methods: {
+      /**
+       * These mapping functions map local functions to the vuex functions or state.
+       */
+      ...mapGetters([
+        'getIsHack',
+        'currentPlayerName',
+        'getHackedPlayer'
+      ])
+    },
     computed: {
       currentPlayer() {
-        return this.$store.getters.currentPlayerName
+        return this.currentPlayerName();
       },
       hackedPlayer() {
-        return this.$store.state.hackedPlayer;
+        return this.getHackedPlayer();
       },
       isHack() {
-        return this.$store.state.isHack;
+        return this.getIsHack();
       }
     }
   }

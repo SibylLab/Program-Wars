@@ -129,13 +129,13 @@ export default {
       'getCurrentPlayerId',
       'getHasPlayed',
       'getTutorialState',
-      'getSelectedStacks'
+      'getSelectedStacks',
+      'getPlayers'
     ]),
     ...mapState([
       'aiTurn',
       'activeCard',
       'hackedPlayer',
-      'players',
       'isHack'
     ]),
     ...mapMutations([
@@ -169,7 +169,7 @@ export default {
           case 'H':
             this.stackDiscard({stackId: this.stackId});
             this.removeStack({stackId: this.stackId});
-            this.hackedPlayer = this.players[thisStack.playerId].name;
+            this.hackedPlayer = this.getPlayers()[thisStack.playerId].name;
             this.playerTookTurn();
             bus.$emit('cardDeselected');
             this.isHack = true;

@@ -28,37 +28,56 @@
 
   import { bus } from '../../SharedComponents/Bus.vue'
 
+  import {mapGetters, mapActions, mapMutations} from 'vuex'
+
   export default {
     props: ['players'],
 
     methods: {
+      /**
+       * These mapping functions map local functions to the vuex functions or state.
+       */
+      ...mapActions([
+        'playerTookTurn',
+        'turn'
+      ]),
+      ...mapGetters([
+        'getActiveCard',
+        'getCurrentPlayer',
+        'getTutorialState'
+      ]),
+      ...mapMutations([
+        'increaseFactIndex',
+        'discardSelectedCard',
+        'giveAntiVirus'
+      ]),
       antiVirusCanceled() {
         bus.$emit('hackCanceled');
       },
       discardAntiVirus() {
-        if (this.$store.getters.getActiveCard !== undefined) {
-          this.$store.commit('discardSelectedCard');
-          this.$store.dispatch('playerTookTurn');
-          this.$store.dispatch('turn', true);
+        if (this.getActiveCard() !== undefined) {
+          this.discardSelectedCard();
+          this.playerTookTurn();
+          this.turn(true);
         }
       },
       useClicked() {
-        let player = this.$store.getters.getCurrentPlayer;
-        this.$store.commit('giveAntiVirus', player.id);
+        let player = this.getCurrentPlayer();
+        this.giveAntiVirus(player.id);
 
         $('.antiVirus').modal('hide');
-        if(this.$store.getters.getTutorialState){
+        if(this.getTutorialState()){
           bus.$emit('cardPlayed');
-          this.$store.commit('increaseFactIndex');
+          this.increaseFactIndex();
         }
-        let ret = this.$store.dispatch('playerTookTurn');
-        let turn = this.$store.dispatch('turn', true);
+        let ret = this.playerTookTurn();
+        let turn = this.turn(true);
       },
 
     },
     computed: {
       hideButton() {
-        let activeCard = this.$store.getters.getActiveCard;
+        let activeCard = this.getActiveCard();
         if(activeCard !== undefined) {
           if(activeCard.type === 'ANTIVIRUS' && activeCard !== undefined) {
             return 'display: block';
@@ -70,7 +89,7 @@
         }
       },
       playerCanUse() {
-        let player = this.$store.getters.getCurrentPlayer;
+        let player = this.getCurrentPlayer();
         return player.hasAntiVirus;
       }
     },

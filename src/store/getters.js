@@ -48,6 +48,12 @@ export default {
   getIsHack(state){
     return state.isHack
   },
+  getHackedPlayer(state){
+    return state.hackedPlayer
+  },
+  getCoinFlip(state){
+    return state.coinFlip
+  },
   getHasPlayed(state) {
     return state.activeHasPlayed
   },
@@ -78,6 +84,12 @@ export default {
   },
   getWinner(state) {
     return state.winner
+  },
+  getWinnerName(state){
+    return state.winnerName
+  },
+  getWinnerScore(state){
+    return state.winnerScore
   },
   getTips(state) {
     return state.tips

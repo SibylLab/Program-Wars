@@ -35,27 +35,40 @@
 
   import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
   import { bus } from '../../SharedComponents/Bus.vue'
-
+  import {mapGetters, mapMutations, mapActions} from 'vuex'
   export default {
     props: ['players'],
     components: {
       'opponent-stacks': OpponentStacks
     },
     methods: {
+      /**
+       * These mapping functions map local functions to the vuex functions or state.
+       */
+      ...mapGetters([
+        'getActiveCard'
+      ]),
+      ...mapActions([
+        'playerTookTurn',
+        'turn'
+      ]),
+      ...mapMutations([
+        'discardSelectedCard'
+      ]),
       hackCanceled() {
         bus.$emit('hackCanceled');
       },
       discardHack() {
-        if (this.$store.getters.getActiveCard !== undefined) {
-          this.$store.commit('discardSelectedCard');
-          this.$store.dispatch('playerTookTurn');
-          this.$store.dispatch('turn', true);
+        if (this.getActiveCard() !== undefined) {
+          this.discardSelectedCard();
+          this.playerTookTurn();
+          this.turn(true);
         }
       }
     },
     computed: {
       hideButton() {
-          let activeCard = this.$store.getters.getActiveCard;
+          let activeCard = this.getActiveCard();
           if(activeCard !== undefined) {
             if(activeCard.type === 'H' && activeCard !== undefined) {
               return 'display: block';
