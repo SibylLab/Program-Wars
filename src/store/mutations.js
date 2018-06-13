@@ -243,8 +243,8 @@ export default {
       player.overclockIncrease = 0;
       let scoreTrue = 0;
       let scoreFalse = 0;
-      scoreTrue = player.trueScore + player.bonusTrue;
-      scoreFalse = player.falseScore + player.bonusFalse;
+      scoreTrue = player.trueScore;
+      scoreFalse = player.falseScore;
 
       if(player.hasVirus){
         scoreFalse = scoreFalse/2;
@@ -256,37 +256,25 @@ export default {
       }
 
       if(scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit){
-        scoreFalse += 10;
-        scoreTrue += 10;
         player.completionBonus = 10;
       }
-
 
       for(let p of playerList){
         if(p.id !== player.id){
           if(!p.hasPlayedInstruction){
-            scoreFalse += 10;
-            scoreTrue += 10;
             player.instructionBonus += 10;
           }
         }
       }
 
-
       if(player.isDefensive){
-        scoreTrue += 15;
-        scoreFalse += 15;
         player.defensiveBonus = 15;
       }
       if(!player.hasHadOverclock){
-        scoreTrue += 10;
-        scoreFalse += 10;
         player.overClockBonus = 10;
       }
 
       if(!player.hasVirus){
-        scoreTrue += 10;
-        scoreFalse += 10;
         player.virusBonus = 10;
       }
 
@@ -420,6 +408,7 @@ export default {
     let bonus = 5;
     state.players[payload].hasFirewall = true;
     state.activeCard.flipCardFace();
+    state.players[payload].hasPowerOutage = false;
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(bonus,bonus);
     state.players[payload].protectionCardsBonus += bonus;
@@ -433,6 +422,9 @@ export default {
     state.players[payload].hasGenerator = true;
     state.players[payload].hasPowerOutage = false;
     state.activeCard.flipCardFace();
+    state.players[payload].attackedCards = state.players[payload].attackedCards.filter(( obj ) => {
+      return obj.type !== "POWEROUTAGE";
+    });
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(bonus,bonus);
     state.players[payload].protectionCardsBonus += bonus;
@@ -443,8 +435,11 @@ export default {
   giveAntiVirus(state,payload){
     let bonus = 5;
     state.players[payload].hasAntiVirus = true;
-    state.players[payload].numViruses = 0;
     state.activeCard.flipCardFace();
+    state.players[payload].hasVirus = false;
+    state.players[payload].attackedCards = state.players[payload].attackedCards.filter(( obj ) => {
+      return obj.type !== "VIRUS";
+    });
     state.players[payload].usedBonusCards.push(state.activeCard);
     state.players[payload].updateBonus(bonus,bonus);
     state.players[payload].protectionCardsBonus += bonus;
