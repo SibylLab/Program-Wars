@@ -223,7 +223,7 @@
           },1250);
           this.discardSelectedCard();
           this.playerTookTurn();
-          this.turn( true);
+          this.turn(true);
         }
       },
       cardClicked (c) {
@@ -386,7 +386,7 @@
                 this.playerTookTurn();
                 bus.$emit('cardDeselected');
                 if (this.getHasPlayed()) {
-                  this.turn( true);
+                  this.turn(true);
                 }
                 this.aiTurn = false;
               }
@@ -397,7 +397,7 @@
                 this.playerTookTurn();
                 bus.$emit('cardDeselected');
                 if (this.getHasPlayed()) {
-                  this.turn( true);
+                  this.turn(true);
                 }
                 this.aiTurn = false;
               }
@@ -416,7 +416,7 @@
                 this.playerTookTurn();
                 bus.$emit('cardDeselected');
                 if (this.getHasPlayed()) {
-                  this.turn( true);
+                  this.turn(true);
                 }
                 this.aiTurn = false;
               }
@@ -426,7 +426,7 @@
                 this.playerTookTurn();
                 bus.$emit('cardDeselected');
                 if (this.getHasPlayed()) {
-                  this.turn( true);
+                  this.turn(true);
                 }
                 this.aiTurn = false;
               }
@@ -436,7 +436,7 @@
                 this.playerTookTurn();
                 bus.$emit('cardDeselected');
                 if (this.getHasPlayed()) {
-                  this.turn( true);
+                  this.turn(true);
                 }
                 this.aiTurn = false;
               }
@@ -455,7 +455,7 @@
                 this.playerTookTurn();
                 bus.$emit('cardDeselected');
                 if (this.getHasPlayed()) {
-                  this.turn( true);
+                  this.turn(true);
                 }
                 this.aiTurn = false;
               }
@@ -465,7 +465,7 @@
                 this.playerTookTurn();
                 bus.$emit('cardDeselected');
                 if (this.getHasPlayed()) {
-                  this.turn( true);
+                  this.turn(true);
                 }
                 this.aiTurn = false;
               }
