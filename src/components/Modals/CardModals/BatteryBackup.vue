@@ -53,7 +53,6 @@
         bus.$emit('hackCanceled');
       },
       discardBatteryBackup() {
-        console.log("discard clicked")
         if (this.getActiveCard() !== undefined) {
           this.discardSelectedCard();
           this.playerTookTurn();
@@ -61,7 +60,6 @@
         }
       },
       useClicked() {
-        console.log("use clicked")
         let player = this.getCurrentPlayer();
         this.giveBatteryBackup(player.id);
 

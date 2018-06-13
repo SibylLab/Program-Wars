@@ -42,6 +42,7 @@
   import { bus } from './Bus';
   import Card from './Card'
   import Modal from '../Modals/Modal';
+  import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
 
 /**
  * The component that holds what will be used as the true and false stacks
@@ -62,10 +63,10 @@ export default {
   },
   computed: {
     showBtn() {
-      if(this.$store.state.activeCard !== undefined) {
-        let activeCard = this.$store.state.activeCard.type;
-        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
-        if (this.$store.getters.getCoinMsg.valueOf() === this.playfieldBoolean && !this.$store.getters.getCurrentPlayer.hasPowerOutage) {
+      if(this.getActiveCard() !== undefined) {
+        let activeCard = this.getActiveCard().type;
+        let thisStack = this.getStacks().find(stack => this.stackId === stack.stackId);
+        if (this.getCoinMsg().valueOf() === this.playfieldBoolean && !this.getCurrentPlayer().hasPowerOutage) {
 
           if (activeCard === 'I' && thisStack.cards.length === 0) {
             return true;
@@ -95,9 +96,9 @@ export default {
     },
     cards() {
 
-      if (this.playerId === this.$store.getters.getCurrentPlayerId ) {
-        if (this.$store.getters.getCurrentPlayerStacks.length !== 0) {
-          let stack = this.$store.getters.getCurrentPlayerStacks.find(stack => stack.stackId === this.stackId)
+      if (this.playerId === this.getCurrentPlayerId() ) {
+        if (this.getCurrentPlayerStacks().length !== 0) {
+          let stack = this.getCurrentPlayerStacks().find(stack => stack.stackId === this.stackId)
           if (stack !== undefined) {
             return stack.cards
           } else {
@@ -105,7 +106,7 @@ export default {
           }
         }
       } else {
-        let stack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
+        let stack = this.getStacks().find(stack => stack.stackId === this.stackId)
         if (stack !== undefined) {
           return stack.cards
         } else {
@@ -114,7 +115,7 @@ export default {
       }
     },
     selectedStackBoolean () {
-      return this.$store.getters.getSelectedStackBoolean
+      return this.getSelectedStacksBoolean()
     },
     stackCss () {
       return 'stack'
@@ -123,24 +124,20 @@ export default {
       return ''
     },
     score() {
-        let thisStack = this.$store.getters.getStacks.find(stack => stack.stackId === this.stackId)
+        let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
          thisStack.calculateStackScore();
           return thisStack.score;
     },
     activeCardIsGroup() {
-        let thisActiveCard = this.$store.getters.getActiveCard
+        let thisActiveCard = this.getActiveCard();
 
-        if (thisActiveCard !== undefined && thisActiveCard.type === 'G') {
-          return true;
-        } else {
-          return false;
-        }
+        return(thisActiveCard !== undefined && thisActiveCard.type === 'G')
     },
     currentSelectedStacksMatch() {
-      if (this.$store.getters.getCoinMsg.valueOf() === this.playfieldBoolean) {
-        if (this.$store.getters.getSelectedStacksBoolean === undefined) {
+      if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
+        if (this.getSelectedStacksBoolean() === undefined) {
           return true
-        } else if (this.playfieldBoolean === this.$store.getters.getSelectedStacksBoolean) {
+        } else if (this.playfieldBoolean === this.getSelectedStacksBoolean()) {
           return true;
         } else {
           return false;
@@ -148,7 +145,7 @@ export default {
       }
     },
     selectedStacksLength () {
-      let selectedStacks = this.$store.getters.getSelectedStacks;
+      let selectedStacks = this.getSelectedStacks();
 
       for (let stack of selectedStacks) {
           if (stack.stackId === this.stackId)
@@ -174,75 +171,113 @@ export default {
 
     bus.$on('cardDeselected', () => {
       this.activeCard = undefined
-      this.$store.commit('setActiveCardUndefined')
-      this.$store.commit('removeAllSelectedStacks')
+      this.setActiveCardUndefined()
+      this.removeAllSelectedStacks()
       $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
     });
 
     bus.$on('aiAddToStack', (newStackId) => {
       this.activeStack = newStackId;
-      if(this.$store.state.aiTurn === true) {
-        if(this.$store.state.activeCard !== undefined) {
+      if(this.aiTurn === true) {
+        if(this.activeCard !== undefined) {
           if(this.stackId === newStackId.stackId) {
             this.activeStack = newStackId;
             this.addToStack();
-            this.$store.state.aiTurn = false;
+            this.aiTurn = false;
           }
         }
       }
     });
 
     bus.$on('aiGroup', (boolSide, currentPlayerId) => {
-      if(this.$store.state.aiTurn === true && this.$store.state.activeCard !== undefined && this.playfieldBoolean === boolSide && this.playerId === currentPlayerId) {
-        this.$store.commit('setStackSelectedBoolean', {boolean: boolSide});
+      if(this.aiTurn === true && this.getActiveCard() !== undefined && this.playfieldBoolean === boolSide && this.playerId === currentPlayerId) {
+        this.setStackSelectedBoolean({boolean: boolSide});
         this.checked = true;
         this.groupStacks();
-        this.$store.state.aiTurn = false;
+        this.aiTurn = false;
       }
     });
   },
   methods: {
+    ...mapGetters([
+      'getSelectedStacks',
+      'getActiveCard',
+      'getTutorialState',
+      'getStacks',
+      'getActiveSide',
+      'getCoinMsg',
+      'getCurrentPlayer',
+      'getCurrentPlayerId',
+      'getCurrentPlayerStacks',
+      'getSelectedStacksBoolean',
+      'getHasPlayed',
+      'getPlayers',
+      'getActivePlayer'
+    ]),
+    ...mapMutations([
+      'addStackToSelected',
+      'setStackSelectedBoolean',
+      'increaseFactIndex',
+      'stackDiscard',
+      'removeStack',
+      'addCardToStack',
+      'addStackToPlayer',
+      'doGroupStacks',
+      'setActiveCardUndefined',
+      'removeAllSelectedStacks',
+      'popCardFromStack',
+      'changeBonusScore',
+    ]),
+    ...mapActions([
+      'playerTookTurn',
+      'turn'
+    ]),
+    ...mapState([
+      'aiTurn',
+      'activeCard'
+    ]),
     stackSelected() {
-      this.$store.commit('addStackToSelected', {stackId: this.stackId});
-      this.$store.commit('setStackSelectedBoolean', {boolean: this.playfieldBoolean});
-      let selectedStacks = this.$store.getters.getSelectedStacks;
+      this.addStackToSelected({stackId: this.stackId});
+      this.setStackSelectedBoolean({boolean: this.playfieldBoolean});
+      let selectedStacks = this.getSelectedStacks();
       if (selectedStacks.length === 0) {
-        this.$store.commit('setStackSelectedBoolean', {boolean: undefined})
+        this.setStackSelectedBoolean({boolean: undefined})
       }
         let totalScore = 0;
         for (let stack of selectedStacks) {
             totalScore += stack.score
         }
-        let activeCardValue = this.$store.getters.getActiveCard.value;
+        let activeCardValue = this.getActiveCard().value;
         if (selectedStacks.length >= 1 && activeCardValue === totalScore) {
             $('#'+this.modalId2).modal('show')
         }
     },
     groupStacks() {
       let groupingBonus = 5;
-      if(this.$store.getters.getTutorialState){
+      if(this.getTutorialState()){
         bus.$emit('cardPlayed');
-        if(!this.$store.state.aiTurn) {
-          this.$store.commit('increaseFactIndex');
+        if(!this.aiTurn) {
+          this.increaseFactIndex();
         }
       }
 
-      let selectedStacks = this.$store.getters.getSelectedStacks
+      let selectedStacks = this.getSelectedStacks();
         for (let stack of selectedStacks) {
           while (stack.cards.length !== 0) {
-            this.$store.commit('stackDiscard', {stackId: stack.stackId})
+            this.stackDiscard({stackId: stack.stackId})
           }
-          this.$store.commit('removeStack', {stackId: stack.stackId})
+          this.removeStack({stackId: stack.stackId})
         }
-        let stacks = this.$store.getters.getStacks.filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
+        let stacks = this.getStacks().filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1];
-        this.$store.commit('addCardToStack', {stackId: stack.stackId, card: this.$store.getters.getActiveCard});
+        //console.log("Card: " + JSON.stringify(this.activeCard))
+        this.addCardToStack({stackId: stack.stackId, card: this.activeCard});
         this.updateBonus(groupingBonus,groupingBonus);
-        this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean});
-        this.$store.dispatch('playerTookTurn');
+        this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean});
+        this.playerTookTurn();
         bus.$emit('cardDeselected');
-        this.$store.commit('groupStacks', {yesOrNo: false});
-      this.$store.dispatch('turn', true);
+        this.doGroupStacks({yesOrNo: false});
+        this.turn(true);
     },
     cardAddClicked () {
       this.$emit('cardAddClicked', this.id)
@@ -260,21 +295,21 @@ export default {
         delay: { "show": 200 }
       });
       $('button[stackId="'+this.stackId+'"]').popover('hide');
-      if (this.$store.getters.getActiveCard !== undefined) {
-        let activeCard = this.$store.getters.getActiveCard;
-        let thisStack = this.$store.getters.getStacks.find(stack => this.stackId === stack.stackId);
-        if(this.$store.state.players[this.$store.state.activePlayer].isAi) {
+      if (this.getActiveCard() !== undefined) {
+        let activeCard = this.getActiveCard();
+        let thisStack = this.getStacks().find(stack => this.stackId === stack.stackId);
+        if(this.getPlayers()[this.getActivePlayer()].isAi) {
           thisStack = this.activeStack;
         }
 
         switch (activeCard.type) {
           case 'I':
             if (thisStack.cards.length === 0) {
-              this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
-              this.$store.dispatch('playerTookTurn');
-              this.$store.commit('addStackToPlayer', {playerId: this.playerId, boolSide: this.playfieldBoolean})
+              this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()});
+              this.playerTookTurn();
+              this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
               bus.$emit('cardDeselected');
-              this.$store.getters.getCurrentPlayer.hasPlayedInstruction = true;
+              this.getCurrentPlayer().hasPlayedInstruction = true;
             } else {
                   $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add an instruction card to a non-empty stack. Instead add the card to a new stack" );
                   $('button[stackId="'+this.stackId+'"]').popover('toggle')
@@ -286,15 +321,15 @@ export default {
               $('button[stackId="'+this.stackId+'"]').attr("data-content", "You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card." );
               $('button[stackId="'+this.stackId+'"]').popover('toggle')
             } else if (thisStack.stackTopCard().type === 'I' || thisStack.stackTopCard().type === 'G' || thisStack.stackTopCard().type === 'R' || thisStack.stackTopCard().type === 'V') {
-              this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
-              this.$store.dispatch('playerTookTurn');
+              this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()});
+              this.playerTookTurn();
               bus.$emit('cardDeselected');
               this.updateBonus(repBonus,repBonus);
-              this.$store.getters.getCurrentPlayer.repetitionBonus += repBonus;
+              this.getCurrentPlayer().repetitionBonus += repBonus;
             }else if(activeCard.value === 1 && thisStack.stackTopCard().type === 'R') {
-              this.$store.commit('popCardFromStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
-              this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
-              this.$store.dispatch('playerTookTurn');
+              this.popCardFromStack({stackId: this.stackId, card: this.getActiveCard()});
+              this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()});
+              this.playerTookTurn();
               bus.$emit('cardDeselected');
             } else if(thisStack.stackTopCard().type === 'R' && activeCard.value !== 1) {
               $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only replace a repetition card with a variable repetition card (Rx). Instead add the card to a stack with an Instruction or Group card." );
@@ -311,15 +346,15 @@ export default {
                 $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
           } else if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1 ) {
-            this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
-            this.$store.dispatch('playerTookTurn');
+            this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()});
+            this.playerTookTurn();
             bus.$emit('cardDeselected');
-            this.$store.getters.getCurrentPlayer.repetitionBonus += varBonus;
+            this.getCurrentPlayer().repetitionBonus += varBonus;
             this.updateBonus(varBonus,varBonus);
             } else if (thisStack.stackTopCard().type === 'V' && thisStack.stackTopCard().value < activeCard.value) {
-                this.$store.commit('stackDiscard', {stackId: this.stackId});
-                this.$store.commit('addCardToStack', {stackId: this.stackId, card: this.$store.getters.getActiveCard});
-            this.$store.dispatch('playerTookTurn');
+                this.stackDiscard({stackId: this.stackId});
+                this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()});
+            this.playerTookTurn();
             } else {
                 $('button[stackId="'+this.stackId+'"]').attr("data-content", "You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card." );
                 $('button[stackId="'+this.stackId+'"]').popover('toggle')
@@ -340,33 +375,33 @@ export default {
               return '';
         }
       }
-      if(this.$store.getters.getHasPlayed) {
-        this.$store.dispatch('turn', true);
+      if(this.getHasPlayed()) {
+        this.turn(true);
       }
     },
     addToStackClicked() {
 
       this.addToStack();
-      if(this.$store.getters.getTutorialState){
+      if(this.getTutorialState()){
         bus.$emit('cardPlayed');
-        this.$store.commit('increaseFactIndex');
+        this.increaseFactIndex();
       }
 
-      this.$store.commit('setActiveCardUndefined');
+      this.setActiveCardUndefined();
     },
     drop () {
       this.addToStack()
     },
     updateBonus(trueScore, falseScore){
-      if(this.$store.getters.getActiveSide) {
-        this.$store.commit('changeBonusScore', {
-          id: this.$store.getters.getCurrentPlayer.id,
+      if(this.getActiveSide()) {
+        this.changeBonusScore({
+          id: this.getCurrentPlayer().id,
           trueScore: trueScore,
           falseScore: 0
         });
-      } else if(!this.$store.getters.getActiveSide) {
-        this.$store.commit('changeBonusScore', {
-          id: this.$store.getters.getCurrentPlayer.id,
+      } else if(!this.getActiveSide()) {
+        this.changeBonusScore({
+          id: this.getCurrentPlayer().id,
           trueScore: 0,
           falseScore: falseScore
         });

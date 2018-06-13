@@ -134,6 +134,7 @@ export default {
   },
   addCardToStack(state, payload) {
     let stackToAdd = state.stacks.find(st => st.stackId === payload.stackId);
+    console.log("Card: " + JSON.stringify(payload.card));
     payload.card.selected = false;
     stackToAdd.addCardToStack(payload.card);
     stackToAdd.calculateStackScore();
@@ -145,6 +146,9 @@ export default {
     stackToPop.calculateStackScore();
   },
   groupStacks(state, payload) {
+    state.groupStacks = payload.yesOrNo;
+  },
+  doGroupStacks(state,payload){
     state.groupStacks = payload.yesOrNo;
   },
   setActiveCard(state, payload) {

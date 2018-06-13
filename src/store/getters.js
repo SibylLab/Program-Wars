@@ -30,6 +30,9 @@ export default {
     else
       return
   },
+  getActivePlayer(state) {
+    return state.activePlayer
+  },
   getActiveCard(state) {
     return state.activeCard
   },
