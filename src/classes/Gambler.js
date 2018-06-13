@@ -113,6 +113,7 @@ export default class Gambler {
       }
     }
 
+    console.log("returning turn logic")
     return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus};
   }
 }

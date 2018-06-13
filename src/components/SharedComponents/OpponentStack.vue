@@ -111,11 +111,11 @@ export default {
     });
 
     bus.$on('aiHack', (newStackId) => {
-      if(this.aiTurn === true) {
-        if(this.activeCard !== undefined) {
+      if(this.getAiTurn() === true) {
+        if(this.getActiveCard() !== undefined) {
           if(this.stackId === newStackId.stackId) {
             this.hackStackClicked();
-            this.aiTurn = false;
+            this.setAiTurn(false);
           }
         }
       }
@@ -130,7 +130,8 @@ export default {
       'getHasPlayed',
       'getTutorialState',
       'getSelectedStacks',
-      'getPlayers'
+      'getPlayers',
+      'getAiTurn'
     ]),
     ...mapState([
       'aiTurn',
@@ -144,7 +145,9 @@ export default {
       'increaseFactIndex',
       'setPlayerScores',
       'setActiveCardUndefined' ,
-      'removeAllSelectedStacks'
+      'removeAllSelectedStacks',
+      'setAiTurn',
+      'setActiveCard'
     ]),
     ...mapActions([
       'playerTookTurn',

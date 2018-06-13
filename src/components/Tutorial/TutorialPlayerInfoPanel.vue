@@ -175,7 +175,8 @@
         'getCurrentPlayerHand',
         'currentPlayerName',
         'getTutorialState',
-        'getFactIndex'
+        'getFactIndex',
+        'getAiTurn'
       ]),
       ...mapMutations([
         'discardSelectedCard',
@@ -191,7 +192,8 @@
         'giveGenerator',
         'giveAntiVirus',
         'giveOverclock',
-        'giveBatteryBackup'
+        'giveBatteryBackup',
+        'setAiTurn'
       ]),
       ...mapState([
         'isDiscard',
@@ -377,8 +379,8 @@
       });
       bus.$on('aiAttack', (stackToHack) => {
         if(this.getTutorialState()) {
-          if (this.aiTurn === true) {
-            if (this.activeCard !== undefined) {
+          if (this.getAiTurn()) {
+            if (this.getActiveCard() !== undefined) {
               if (this.getActiveCard().type === 'POWEROUTAGE') {
 
                 $('.powerOutage').modal('hide');
@@ -388,7 +390,7 @@
                 if (this.getHasPlayed()) {
                   this.turn(true);
                 }
-                this.aiTurn = false;
+                this.setAiTurn(false);
               }
               else if (this.getActiveCard().type === 'VIRUS') {
 
@@ -399,7 +401,7 @@
                 if (this.getHasPlayed()) {
                   this.turn(true);
                 }
-                this.aiTurn = false;
+                this.setAiTurn(false);
               }
             }
           }
@@ -408,8 +410,8 @@
 
       bus.$on('aiProtection', () => {
         if(this.getTutorialState()) {
-          if (this.aiTurn === true) {
-            if (this.activeCard !== undefined) {
+          if (this.getAiTurn()) {
+            if (this.getActiveCard() !== undefined) {
               if (this.getActiveCard().type === 'FIREWALL') {
                 $('.firewall').modal('hide');
                 this.giveFirewall(this.getCurrentPlayer().id);
@@ -418,7 +420,7 @@
                 if (this.getHasPlayed()) {
                   this.turn(true);
                 }
-                this.aiTurn = false;
+                this.setAiTurn(false);
               }
               else if (this.getActiveCard().type === 'ANTIVIRUS') {
                 $('.antiVirus').modal('hide');
@@ -428,7 +430,7 @@
                 if (this.getHasPlayed()) {
                   this.turn(true);
                 }
-                this.aiTurn = false;
+                this.setAiTurn(false);
               }
               else if (this.getActiveCard().type === 'GENERATOR') {
                 $('.generator').modal('hide');
@@ -438,7 +440,7 @@
                 if (this.getHasPlayed()) {
                   this.turn(true);
                 }
-                this.aiTurn = false;
+                this.setAiTurn(false);
               }
             }
           }
@@ -447,8 +449,8 @@
 
       bus.$on('aiEnhance', () => {
         if(this.getTutorialState()){
-          if (this.aiTurn === true) {
-            if (this.activeCard !== undefined) {
+          if (this.getAiTurn === true) {
+            if (this.getActiveCard() !== undefined) {
               if (this.getActiveCard().type === 'BATTERYBACKUP') {
                 $('.batteryBackup').modal('hide');
                 this.giveBatteryBackup(this.getCurrentPlayer().id);
@@ -457,7 +459,7 @@
                 if (this.getHasPlayed()) {
                   this.turn(true);
                 }
-                this.aiTurn = false;
+                this.setAiTurn(false);
               }
               else if (this.getActiveCard().type === 'OVERCLOCK') {
                 $('.batteryBackup').modal('hide');
@@ -467,7 +469,7 @@
                 if (this.getHasPlayed()) {
                   this.turn(true);
                 }
-                this.aiTurn = false;
+                this.setAiTurn(false);
               }
             }
           }

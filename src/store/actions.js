@@ -60,7 +60,10 @@ export default {
             }, playerModalTimer * 1000);
           }, endTurnTimer * 1000);
           setTimeout(() => {
+            console.log("Made it to ai turn")
             if(context.getters.getCurrentPlayer.isAi) {
+
+              console.log("InAiTurn")
               context.commit('aiTakeTurn', context.getters.getAiDependent);
             }
           }, 4000)

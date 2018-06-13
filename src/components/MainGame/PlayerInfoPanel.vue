@@ -187,7 +187,8 @@ export default {
       'getCurrentPlayer',
       'getScoreLimit',
       'getCurrentPlayerHand',
-      'currentPlayerName'
+      'currentPlayerName',
+      'getAiTurn'
     ]),
     ...mapMutations([
       'discardSelectedCard',
@@ -203,7 +204,8 @@ export default {
       'giveGenerator',
       'giveAntiVirus',
       'giveOverclock',
-      'giveBatteryBackup'
+      'giveBatteryBackup',
+      'setAiTurn'
     ]),
     ...mapState([
       'isDiscard',
@@ -379,7 +381,7 @@ export default {
     });
     bus.$on('aiAttack', (stackToHack) => {
       if(!this.getTutorialState()) {
-        if (this.aiTurn === true) {
+        if (this.getAiTurn() === true) {
           if (this.activeCard !== undefined) {
             if (this.getActiveCard().type === 'POWEROUTAGE') {
 
@@ -390,7 +392,7 @@ export default {
               if (this.getHasPlayed()) {
                 this.turn(true);
               }
-              this.aiTurn = false;
+              this.setAiTurn(false);
             }
             else if (this.getActiveCard().type === 'VIRUS') {
 
@@ -401,7 +403,7 @@ export default {
               if (this.getHasPlayed()) {
                 this.turn(true);
               }
-              this.aiTurn = false;
+              this.setAiTurn(false);
             }
           }
         }
@@ -410,7 +412,7 @@ export default {
 
     bus.$on('aiProtection', () => {
       if(!this.getTutorialState()) {
-        if (this.aiTurn === true) {
+        if (this.getAiTurn() === true) {
           if (this.activeCard !== undefined) {
             if (this.getActiveCard().type === 'FIREWALL') {
               $('.firewall').modal('hide');
@@ -420,7 +422,7 @@ export default {
               if (this.getHasPlayed()) {
                 this.turn(true);
               }
-              this.aiTurn = false;
+              this.setAiTurn(false);
             }
             else if (this.getActiveCard().type === 'ANTIVIRUS') {
               $('.antiVirus').modal('hide');
@@ -430,7 +432,7 @@ export default {
               if (this.getHasPlayed()) {
                 this.turn(true);
               }
-              this.aiTurn = false;
+              this.setAiTurn(false);
             }
             else if (this.getActiveCard().type === 'GENERATOR') {
               $('.generator').modal('hide');
@@ -440,7 +442,7 @@ export default {
               if (this.getHasPlayed()) {
                 this.turn(true);
               }
-              this.aiTurn = false;
+              this.setAiTurn(false);
             }
           }
         }
@@ -449,7 +451,7 @@ export default {
 
     bus.$on('aiEnhance', () => {
       if(!this.getTutorialState()){
-          if (this.aiTurn === true) {
+          if (this.getAiTurn() === true) {
             if (this.activeCard !== undefined) {
               if (this.getActiveCard().type === 'BATTERYBACKUP') {
                 $('.batteryBackup').modal('hide');
@@ -459,7 +461,7 @@ export default {
                 if (this.getHasPlayed()) {
                   this.turn(true);
                 }
-                this.aiTurn = false;
+                this.setAiTurn(false);
               }
               else if (this.getActiveCard().type === 'OVERCLOCK') {
                 $('.batteryBackup').modal('hide');
@@ -469,7 +471,7 @@ export default {
                 if (this.getHasPlayed()) {
                   this.turn(true);
                 }
-                this.aiTurn = false;
+                this.setAiTurn(false);
               }
             }
           }

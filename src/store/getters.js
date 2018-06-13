@@ -51,6 +51,9 @@ export default {
   getIsHack(state){
     return state.isHack
   },
+  getAiTurn(state){
+    return state.aiTurn
+  },
   getHackedPlayer(state){
     return state.hackedPlayer
   },
@@ -75,6 +78,9 @@ export default {
   },
   getActiveSide(state) {
     return state.activeSide
+  },
+  getActiveStack(state){
+    return state.activeStack;
   },
   getScoreLimit(state) {
     return state.scoreLimit

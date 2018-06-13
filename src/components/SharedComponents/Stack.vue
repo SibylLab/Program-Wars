@@ -170,31 +170,31 @@ export default {
     });
 
     bus.$on('cardDeselected', () => {
-      this.activeCard = undefined
+      this.setActiveCard(undefined)
       this.setActiveCardUndefined()
       this.removeAllSelectedStacks()
       $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" )
     });
 
     bus.$on('aiAddToStack', (newStackId) => {
-      this.activeStack = newStackId;
-      if(this.aiTurn === true) {
-        if(this.activeCard !== undefined) {
+      this.setActiveStack(newStackId);
+      if(this.getAiTurn()) {
+        if(this.getActiveCard() !== undefined) {
           if(this.stackId === newStackId.stackId) {
-            this.activeStack = newStackId;
+            this.setActiveStack(newStackId);
             this.addToStack();
-            this.aiTurn = false;
+            this.setAiTurn(false);
           }
         }
       }
     });
 
     bus.$on('aiGroup', (boolSide, currentPlayerId) => {
-      if(this.aiTurn === true && this.getActiveCard() !== undefined && this.playfieldBoolean === boolSide && this.playerId === currentPlayerId) {
+      if(this.getAiTurn() === true && this.getActiveCard() !== undefined && this.playfieldBoolean === boolSide && this.playerId === currentPlayerId) {
         this.setStackSelectedBoolean({boolean: boolSide});
         this.checked = true;
         this.groupStacks();
-        this.aiTurn = false;
+        this.setAiTurn(false);
       }
     });
   },
@@ -212,7 +212,8 @@ export default {
       'getSelectedStacksBoolean',
       'getHasPlayed',
       'getPlayers',
-      'getActivePlayer'
+      'getActivePlayer',
+      'getAiTurn'
     ]),
     ...mapMutations([
       'addStackToSelected',
@@ -227,6 +228,9 @@ export default {
       'removeAllSelectedStacks',
       'popCardFromStack',
       'changeBonusScore',
+      'setAiTurn',
+      'setActiveStack',
+      'setActiveCard'
     ]),
     ...mapActions([
       'playerTookTurn',
@@ -256,7 +260,7 @@ export default {
       let groupingBonus = 5;
       if(this.getTutorialState()){
         bus.$emit('cardPlayed');
-        if(!this.aiTurn) {
+        if(!this.getAiTurn()) {
           this.increaseFactIndex();
         }
       }
@@ -270,7 +274,6 @@ export default {
         }
         let stacks = this.getStacks().filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1];
-        //console.log("Card: " + JSON.stringify(this.activeCard))
         this.addCardToStack({stackId: stack.stackId, card: this.activeCard});
         this.updateBonus(groupingBonus,groupingBonus);
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean});
