@@ -98,6 +98,10 @@ import {mapState} from 'vuex'
 
 import { bus } from '../SharedComponents/Bus';
 
+/**
+ * This is the screen that you will see when you enter a game. It's mostly used to encapsulate all of the components
+ * that the game will use.
+ */
 export default {
   name: 'main-component',
   data () {
@@ -145,6 +149,9 @@ export default {
 
   },
   methods: {
+    /**
+     * These are maps to the vuex store.
+     */
     ...mapGetters([
       'getPlayers',
       'getActiveCard',
@@ -196,6 +203,10 @@ export default {
     }
 },
   computed: {
+    /**
+     * To decide whether to show the discard modal.
+     * @returns {*}
+     */
     showMsg() {
       return (this.getIsHack() || this.getIsDiscard())
     },
@@ -244,6 +255,10 @@ export default {
         this.setTips({tutorial: this.tipsToggle, fact: val});
     }
   },
+  /**
+   * This function is called when the component is created. It acts with the actions/firstRound function to do work as the first round.
+   * It chooses the active side, gives players cards, gives the players their stacks, and inits the game.
+   */
   created() {
     this.playerList = this.getPlayers();
     this.gameStart = true;

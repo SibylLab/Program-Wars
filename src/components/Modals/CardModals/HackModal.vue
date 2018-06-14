@@ -36,6 +36,10 @@
   import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
   import { bus } from '../../SharedComponents/Bus.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
+
+  /**
+   * This is the Modal called when the hack card is clicked.
+   */
   export default {
     props: ['players'],
     components: {

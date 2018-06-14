@@ -2,6 +2,10 @@ import Sprinter from './Sprinter'
 import Hacker from './Hacker'
 import Gambler from './Gambler'
 import Protector from './Protector'
+
+/**
+ * This class picks at random one of the Ai personalities to use.
+ */
 export default class Personality {
 
   constructor() {

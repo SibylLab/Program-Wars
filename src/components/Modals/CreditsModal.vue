@@ -28,6 +28,9 @@
 </template>
 
 <script>
+  /**
+   * The Modal for when the credits button is clicked.
+   */
   export default {
   }
 </script>

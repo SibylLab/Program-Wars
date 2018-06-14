@@ -15,6 +15,10 @@
 <script>
   import RadialProgressBar from 'vue-radial-progress'
   import {mapGetters} from 'vuex'
+
+  /**
+   * This is the modal that shows which is the active side to the user at the beginning of each round.
+   */
   export default {
     data () {
       return {
