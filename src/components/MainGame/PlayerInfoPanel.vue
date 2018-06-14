@@ -165,6 +165,7 @@ export default {
         let activeSideString = String(this.getActiveSide());
         return activeSideString.toUpperCase();
     },
+
   },
   components: {
     'card': Card,

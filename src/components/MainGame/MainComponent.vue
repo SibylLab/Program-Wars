@@ -24,7 +24,7 @@
     :playerList="playerList"></winner-modal>
     <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
     <transition name="fade">
-      <player-turn v-if="playerTurn()"></player-turn>
+      <player-turn v-if="playersTurn"></player-turn>
     </transition>
 
     <transition name="fade">
@@ -153,7 +153,8 @@ export default {
       'getgameState',
       'getFirstRound',
       'getIsDiscard',
-      'getIsHack'
+      'getIsHack',
+      'getPlayerTurn'
     ]),
     ...mapMutations([
       'initDeck',
@@ -176,7 +177,6 @@ export default {
       'isDiscard',
       'trueSideColour',
       'falseSideColour',
-      'playerTurn',
       'pointerEvent',
       'currentGameState',
     ]),
@@ -218,6 +218,9 @@ export default {
     },
     gameStateChanges() {
       return this.currentGameState;
+    },
+    playersTurn() {
+      return this.getPlayerTurn();
     }
   },
 

@@ -103,6 +103,9 @@ export default {
   getTips(state) {
     return state.tips
   },
+  getPlayerTurn(state){
+    return state.playerTurn
+  },
   getCurrentPlayer(state) {
     return state.players[state.activePlayer];
   },
