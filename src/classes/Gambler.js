@@ -112,8 +112,7 @@ export default class Gambler {
         moveType = 'discard';
       }
     }
-
-    console.log("returning turn logic")
+    
     return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus};
   }
 }
