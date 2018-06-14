@@ -301,13 +301,9 @@ export default {
       if (this.getActiveCard() !== undefined) {
         let activeCard = this.getActiveCard();
         let thisStack = this.getStacks().find(stack => this.stackId === stack.stackId);
-        if(this.getPlayers()[this.getActivePlayer()].isAi) {
-          thisStack = this.activeStack;
-        }
-
         switch (activeCard.type) {
           case 'I':
-            if (thisStack.cards.length === 0) {
+            if (thisStack.cards.length === 0 || thisStack.cards === undefined) {
               this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()});
               this.playerTookTurn();
               this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})

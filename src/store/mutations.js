@@ -151,7 +151,11 @@ export default {
     state.groupStacks = payload.yesOrNo;
   },
   setActiveCard(state, payload) {
-    state.activeCard = payload.cardId;
+    if(payload !== undefined) {
+      state.activeCard = payload.cardId;
+    } else {
+      state.activeCard = payload;
+    }
   },
   setActiveCardUndefined(state) {
     state.activeCard = undefined;
