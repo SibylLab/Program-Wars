@@ -23,7 +23,6 @@ export default class {
     let antiVirusCard = undefined;
     let firewallCard = undefined;
 
-
     for(let hand of event.hand.cards) {
       if(hand.type === 'I') {
         bestICard = this.findBestCard(hand, bestICard);

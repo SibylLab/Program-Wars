@@ -29,7 +29,6 @@ export default class Player{
     this.isAi = isAi;
     this.hasOverclock = false;
     this.hasVirus = false;
-    this.hasHadVirus = false;
     this.hasHadOverclock = false;
     this.hasPlayedInstruction = false;
     this.instructionBonus = 0;

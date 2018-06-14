@@ -16,7 +16,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-default" @click="discardBatteryBackup" data-dismiss="modal" style="float: right; margin: 5px;" :style="hideButton">Discard B/B Card</button>
-          <button class="btn btn-default" @click="useClicked()" :disabled="playerCanUse"><b>Use</b></button>
+          <button class="btn btn-default" @click="useClicked" :disabled="playerCanUse"><b>Use</b></button>
           <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="batteryBackupCanceled">Cancel</button>
         </div>
       </div>
@@ -27,38 +27,55 @@
 <script>
 
   import { bus } from '../../SharedComponents/Bus.vue'
-
+  import {mapGetters, mapMutations, mapActions} from 'vuex'
   export default {
     props: ['players'],
 
     methods: {
+      /**
+       * These mapping functions map local functions to the vuex functions or state.
+       */
+      ...mapActions([
+        'playerTookTurn',
+        'turn'
+      ]),
+      ...mapGetters([
+        'getActiveCard',
+        'getCurrentPlayer',
+        'getTutorialState'
+      ]),
+      ...mapMutations([
+        'increaseFactIndex',
+        'discardSelectedCard',
+        'giveBatteryBackup'
+      ]),
       batteryBackupCanceled() {
         bus.$emit('hackCanceled');
       },
       discardBatteryBackup() {
-        if (this.$store.getters.getActiveCard !== undefined) {
-          this.$store.commit('discardSelectedCard');
-          this.$store.dispatch('playerTookTurn');
-          this.$store.dispatch('turn', true);
+        if (this.getActiveCard() !== undefined) {
+          this.discardSelectedCard();
+          this.playerTookTurn();
+          this.turn(true);
         }
       },
       useClicked() {
-        let player = this.$store.getters.getCurrentPlayer;
-        this.$store.commit('giveBatteryBackup', player.id);
+        let player = this.getCurrentPlayer();
+        this.giveBatteryBackup(player.id);
 
         $('.batteryBackup').modal('hide');
-        if(this.$store.getters.getTutorialState){
+        if(this.getTutorialState()){
           bus.$emit('cardPlayed');
-          this.$store.commit('increaseFactIndex');
+          this.increaseFactIndex();
         }
-        let ret = this.$store.dispatch('playerTookTurn');
-        let turn = this.$store.dispatch('turn', true);
+        let ret = this.playerTookTurn();
+        let turn = this.turn(true);
       },
 
     },
     computed: {
       hideButton() {
-        let activeCard = this.$store.getters.getActiveCard;
+        let activeCard = this.getActiveCard();
         if(activeCard !== undefined) {
           if(activeCard.type === 'BATTERYBACKUP' && activeCard !== undefined) {
             return 'display: block';
@@ -70,7 +87,7 @@
         }
       },
       playerCanUse() {
-        let player = this.$store.getters.getCurrentPlayer;
+        let player = this.getCurrentPlayer();
         return !player.hasPowerOutage;
       }
     },

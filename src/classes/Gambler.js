@@ -112,7 +112,7 @@ export default class Gambler {
         moveType = 'discard';
       }
     }
-
+    
     return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus};
   }
 }

@@ -14,8 +14,8 @@
           <div id="cards">
 
             <ul id="example-1">
-              <h4 class="modal-title"><b>{{ currentPlayerName }}</b>, It's Your Turn</h4>
-              <li v-for="(card,index) in hand" :id="card.type + card.value + index + currentPlayerName">
+              <h4 class="modal-title"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
+              <li v-for="(card,index) in hand" :id="card.type + card.value + index + currentPlayerName()">
                 <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
             </ul>
@@ -35,7 +35,7 @@
     <div class="container" style="border-top: 1px solid white; padding: 10px;">
       <div class="row">
         <div class="col-md-12">
-          <h4>Instructions To Win is: <b>{{ $store.getters.getScoreLimit }}</b></h4>
+          <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
         </div>
       </div>
       <div class="row">
@@ -43,20 +43,20 @@
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
           <div>
             True Path:&nbsp;
-            <meter :max="$store.getters.getScoreLimit" min=0
+            <meter :max="getScoreLimit()" min=0
                    :value="getScore(player.id).trueScore"
-                   :high="$store.getters.getScoreLimit/2"
-                   :low="$store.getters.getScoreLimit/3"
-                   :optimum="$store.getters.getScoreLimit-5"
+                   :high="getScoreLimit()/2"
+                   :low="getScoreLimit()/3"
+                   :optimum="getScoreLimit()-5"
                    style="width: 150px"
             ></meter>
             <br>
             False Path:
-            <meter :max="$store.getters.getScoreLimit" min=0
+            <meter :max="getScoreLimit()" min=0
                    :value="getScore(player.id).falseScore"
-                   :high="$store.getters.getScoreLimit/2"
-                   :low="$store.getters.getScoreLimit/3"
-                   :optimum="$store.getters.getScoreLimit-5"
+                   :high="getScoreLimit()/2"
+                   :low="getScoreLimit()/3"
+                   :optimum="getScoreLimit()-5"
                    style="width:150px"
             ></meter>
           </div>
@@ -72,6 +72,7 @@
   import Modal from '../Modals/Modal'
   import StatsPanel from '../SharedComponents/StatsPanel'
   import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
+  import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
 
   export default {
     name: 'PlayerInfoPanel',
@@ -112,14 +113,14 @@
     computed: {
 
       colSize() {
-        let size = 12/this.$store.getters.getPlayers.length;
+        let size = 12/this.getPlayers().length;
         return 'col-sm-6 col-md-'+size;
       },
       players() {
-        return this.$store.getters.getPlayers;
+        return this.getPlayers();
       },
       displayStyle() {
-        if(this.$store.getters.getTips.fact) {
+        if(this.getTips().fact) {
           return {'display':'block'}
         } else {
           return {'display':'none'}
@@ -132,21 +133,18 @@
           return ""
       },
       hasPlayed() {
-        if (this.$store.getters.getHasPlayed)
+        if (this.getHasPlayed())
           return "hasPlayed";
         else
           return ""
       },
       hand() {
-        let hand = this.$store.getters.getCurrentPlayerHand;
+        let hand = this.getCurrentPlayerHand();
         if (hand === null){
           return []
         } else {
           return hand.cards
         }
-      },
-      currentPlayerName() {
-        return this.$store.getters.currentPlayerName;
       },
       activeSide() {
         let activeSideString = String(this.$store.getters.getActiveSide)
@@ -161,15 +159,56 @@
       'display-used-cards': DisplayUsedCards
     },
     methods: {
+      ...mapActions([
+        'playerTookTurn',
+        'turn'
+      ]),
+      ...mapGetters([
+        'getPlayers',
+        'getActiveCard',
+        'getActiveSide',
+        'getTips',
+        'getTutorialState',
+        'getHasPlayed',
+        'getCurrentPlayer',
+        'getScoreLimit',
+        'getCurrentPlayerHand',
+        'currentPlayerName',
+        'getTutorialState',
+        'getFactIndex',
+        'getAiTurn'
+      ]),
+      ...mapMutations([
+        'discardSelectedCard',
+        'selectCard',
+        'removeAllSelectedStacks',
+        'setStackSelectedBoolean',
+        'setActiveCardUndefined',
+        'removeCard',
+        'addCardToHand',
+        'giveVirus',
+        'givePowerOutage',
+        'giveFirewall',
+        'giveGenerator',
+        'giveAntiVirus',
+        'giveOverclock',
+        'giveBatteryBackup',
+        'setAiTurn'
+      ]),
+      ...mapState([
+        'isDiscard',
+        'aiTurn',
+        'activeCard'
+      ]),
       getScore(player){
         let trueSide = 0;
         let falseSide = 0;
-        trueSide = this.$store.getters.getPlayers[player].trueScore + this.$store.getters.getPlayers[player].bonusTrue;
-        falseSide = this.$store.getters.getPlayers[player].falseScore + this.$store.getters.getPlayers[player].bonusFalse;
-        if(this.$store.getters.getPlayers[player].hasVirus){
+        trueSide = this.getPlayers()[player].trueScore + this.getPlayers()[player].bonusTrue;
+        falseSide = this.getPlayers()[player].falseScore + this.getPlayers()[player].bonusFalse;
+        if(this.getPlayers()[player].hasVirus){
           trueSide = trueSide/2;
           falseSide = falseSide/2;
-        } else if(this.$store.getters.getPlayers[player].hasOverclock){
+        } else if(this.getPlayers()[player].hasOverclock){
           trueSide = trueSide*2;
           falseSide = falseSide*2
         }
@@ -179,24 +218,24 @@
         $('.hack').modal('show');
       },
       discardSelected() {
-        if (this.$store.getters.getActiveCard !== undefined) {
-          this.$store.state.isDiscard = true;
+        if (this.getActiveCard() !== undefined) {
+          this.isDiscard = true;
           setTimeout(() => {
-            this.$store.state.isDiscard = false;
+            this.isDiscard = false;
           },1250);
-          this.$store.commit('discardSelectedCard');
-          this.$store.dispatch('playerTookTurn');
-          this.$store.dispatch('turn', true);
+          this.discardSelectedCard();
+          this.playerTookTurn();
+          this.turn(true);
         }
       },
       cardClicked (c) {
-        if(this.hand[0] === c || this.$store.getters.getFactIndex >= this.facts.length) {
-          if (this.$store.getters.getTips.tutorial) {
+        if(this.hand[0] === c || this.getFactIndex() >= this.facts.length) {
+          if (this.getTips().tutorial) {
             this.tipsCardSelected = this.setTipBox(c);
           } else {
             this.tipsCardSelected = this.setTipBox('default');
           }
-          let prevActive = this.$store.getters.getActiveCard;
+          let prevActive = this.getActiveCard();
           if (c.type === 'VIRUS') {
             $('.virus').modal('show')
           } else if (c.type === 'POWEROUTAGE') {
@@ -214,11 +253,11 @@
           else if (c.type === 'ANTIVIRUS') {
             $('.antiVirus').modal('show');
           }
-          this.$store.commit('selectCard', c);
+          this.selectCard(c);
           if (prevActive !== undefined) {
             if (c.type !== 'G' || c.id !== prevActive.id) {
-              this.$store.commit('removeAllSelectedStacks');
-              this.$store.commit('setStackSelectedBoolean', {payload: undefined});
+              this.removeAllSelectedStacks();
+              this.setStackSelectedBoolean({payload: undefined});
             }
           }
         }
@@ -288,8 +327,8 @@
       },
       setTutorialFact() {
         let retFact = this.facts[this.facts.length];
-        if(this.$store.getters.getFactIndex < this.facts.length) {
-          retFact = this.facts[this.$store.getters.getFactIndex];
+        if(this.getFactIndex() < this.facts.length) {
+          retFact = this.facts[this.getFactIndex()];
         }
         ++this.indexOfFact;
         return retFact;
@@ -298,7 +337,7 @@
         document.removeEventListener('click', this.hide);
         this.tipsCardSelected = this.setTipBox('default');
         bus.$emit('cardDeselected');
-        this.$store.commit('setStackSelectedBoolean', {payload: undefined})
+        this.setStackSelectedBoolean({payload: undefined})
 
         this.$store.commit('setActiveCardUndefined');
         if(this.hand !== undefined) {
@@ -311,7 +350,7 @@
         this.$store.commit('removeCard', cardId)
       },
       setActiveCard(c) {
-        this.$store.commit('selectCard', c)
+        this.selectCard(c)
       },
       removeAnimation() {
         $('#tipBox').removeClass('animated bounce');
@@ -324,9 +363,9 @@
         this.deselectAll();
       });
       bus.$on('activeCardAddedToStack', (cardId) => {
-        if(this.$store.getters.getTutorialState) {
+        if(this.getTutorialState()) {
           this.removeTutorialCard(cardId);
-          this.$store.commit('addCardToHand');
+          this.addCardToHand();
         }
       });
       bus.$on('aiDiscard', () => {
@@ -339,30 +378,30 @@
         this.tipsCardSelected = this.setTipBox('default');
       });
       bus.$on('aiAttack', (stackToHack) => {
-        if(this.$store.getters.getTutorialState) {
-          if (this.$store.state.aiTurn === true) {
-            if (this.$store.state.activeCard !== undefined) {
-              if (this.$store.getters.getActiveCard.type === 'POWEROUTAGE') {
+        if(this.getTutorialState()) {
+          if (this.getAiTurn()) {
+            if (this.getActiveCard() !== undefined) {
+              if (this.getActiveCard().type === 'POWEROUTAGE') {
 
                 $('.powerOutage').modal('hide');
-                this.$store.commit('givePowerOutage', stackToHack.playerId);
-                this.$store.dispatch('playerTookTurn');
+                this.givePowerOutage(stackToHack.playerId);
+                this.playerTookTurn();
                 bus.$emit('cardDeselected');
-                if (this.$store.getters.getHasPlayed) {
-                  this.$store.dispatch('turn', true);
+                if (this.getHasPlayed()) {
+                  this.turn(true);
                 }
-                this.$store.state.aiTurn = false;
+                this.setAiTurn(false);
               }
-              else if (this.$store.getters.getActiveCard.type === 'VIRUS') {
+              else if (this.getActiveCard().type === 'VIRUS') {
 
                 $('.virus').modal('hide');
-                this.$store.commit('giveVirus', stackToHack.playerId);
-                this.$store.dispatch('playerTookTurn');
+                this.giveVirus(stackToHack.playerId);
+                this.playerTookTurn();
                 bus.$emit('cardDeselected');
-                if (this.$store.getters.getHasPlayed) {
-                  this.$store.dispatch('turn', true);
+                if (this.getHasPlayed()) {
+                  this.turn(true);
                 }
-                this.$store.state.aiTurn = false;
+                this.setAiTurn(false);
               }
             }
           }
@@ -370,38 +409,38 @@
       });
 
       bus.$on('aiProtection', () => {
-        if(this.$store.getters.getTutorialState) {
-          if (this.$store.state.aiTurn === true) {
-            if (this.$store.state.activeCard !== undefined) {
-              if (this.$store.getters.getActiveCard.type === 'FIREWALL') {
+        if(this.getTutorialState()) {
+          if (this.getAiTurn()) {
+            if (this.getActiveCard() !== undefined) {
+              if (this.getActiveCard().type === 'FIREWALL') {
                 $('.firewall').modal('hide');
-                this.$store.commit('giveFirewall', this.$store.getters.getCurrentPlayer.id);
-                this.$store.dispatch('playerTookTurn');
+                this.giveFirewall(this.getCurrentPlayer().id);
+                this.playerTookTurn();
                 bus.$emit('cardDeselected');
-                if (this.$store.getters.getHasPlayed) {
-                  this.$store.dispatch('turn', true);
+                if (this.getHasPlayed()) {
+                  this.turn(true);
                 }
-                this.$store.state.aiTurn = false;
+                this.setAiTurn(false);
               }
-              else if (this.$store.getters.getActiveCard.type === 'ANTIVIRUS') {
+              else if (this.getActiveCard().type === 'ANTIVIRUS') {
                 $('.antiVirus').modal('hide');
-                this.$store.commit('giveAntiVirus', this.$store.getters.getCurrentPlayer.id);
-                this.$store.dispatch('playerTookTurn');
+                this.giveAntiVirus(this.getCurrentPlayer().id);
+                this.playerTookTurn();
                 bus.$emit('cardDeselected');
-                if (this.$store.getters.getHasPlayed) {
-                  this.$store.dispatch('turn', true);
+                if (this.getHasPlayed()) {
+                  this.turn(true);
                 }
-                this.$store.state.aiTurn = false;
+                this.setAiTurn(false);
               }
-              else if (this.$store.getters.getActiveCard.type === 'GENERATOR') {
+              else if (this.getActiveCard().type === 'GENERATOR') {
                 $('.generator').modal('hide');
-                this.$store.commit('giveGenerator', this.$store.getters.getCurrentPlayer.id);
-                this.$store.dispatch('playerTookTurn');
+                this.giveGenerator(this.getCurrentPlayer().id);
+                this.playerTookTurn();
                 bus.$emit('cardDeselected');
-                if (this.$store.getters.getHasPlayed) {
-                  this.$store.dispatch('turn', true);
+                if (this.getHasPlayed()) {
+                  this.turn(true);
                 }
-                this.$store.state.aiTurn = false;
+                this.setAiTurn(false);
               }
             }
           }
@@ -409,28 +448,28 @@
       });
 
       bus.$on('aiEnhance', () => {
-        if(this.$store.getters.getTutorialState){
-          if (this.$store.state.aiTurn === true) {
-            if (this.$store.state.activeCard !== undefined) {
-              if (this.$store.getters.getActiveCard.type === 'BATTERYBACKUP') {
+        if(this.getTutorialState()){
+          if (this.getAiTurn === true) {
+            if (this.getActiveCard() !== undefined) {
+              if (this.getActiveCard().type === 'BATTERYBACKUP') {
                 $('.batteryBackup').modal('hide');
-                this.$store.commit('giveBatteryBackup', this.$store.getters.getCurrentPlayer.id);
-                this.$store.dispatch('playerTookTurn');
+                this.giveBatteryBackup(this.getCurrentPlayer().id);
+                this.playerTookTurn();
                 bus.$emit('cardDeselected');
-                if (this.$store.getters.getHasPlayed) {
-                  this.$store.dispatch('turn', true);
+                if (this.getHasPlayed()) {
+                  this.turn(true);
                 }
-                this.$store.state.aiTurn = false;
+                this.setAiTurn(false);
               }
-              else if (this.$store.getters.getActiveCard.type === 'OVERCLOCK') {
+              else if (this.getActiveCard().type === 'OVERCLOCK') {
                 $('.batteryBackup').modal('hide');
-                this.$store.commit('giveOverclock', this.$store.getters.getCurrentPlayer.id);
-                this.$store.dispatch('playerTookTurn');
+                this.giveOverclock(this.getCurrentPlayer().id);
+                this.playerTookTurn();
                 bus.$emit('cardDeselected');
-                if (this.$store.getters.getHasPlayed) {
-                  this.$store.dispatch('turn', true);
+                if (this.getHasPlayed()) {
+                  this.turn(true);
                 }
-                this.$store.state.aiTurn = false;
+                this.setAiTurn(false);
               }
             }
           }

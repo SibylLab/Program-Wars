@@ -29,36 +29,53 @@
 <script>
 
   import { bus } from '../../SharedComponents/Bus.vue'
-
+  import {mapGetters, mapMutations, mapActions} from 'vuex'
   export default {
     props: ['players'],
 
 
     methods: {
+      /**
+       * These mapping functions map local functions to the vuex functions or state.
+       */
+      ...mapActions([
+        'playerTookTurn',
+        'turn'
+      ]),
+      ...mapGetters([
+        'getActiveCard',
+        'getCurrentPlayer',
+        'getTutorialState'
+      ]),
+      ...mapMutations([
+        'increaseFactIndex',
+        'discardSelectedCard',
+        'giveVirus'
+      ]),
       virusCanceled() {
         bus.$emit('hackCanceled');
       },
       discardVirus() {
-        if (this.$store.getters.getActiveCard !== undefined) {
-          this.$store.commit('discardSelectedCard');
-          this.$store.dispatch('playerTookTurn');
-          this.$store.dispatch('turn', true);
+        if (this.getActiveCard() !== undefined) {
+          this.discardSelectedCard();
+          this.playerTookTurn();
+          this.turn(true);
         }
       },
       playerClicked(player) {
-        this.$store.commit('giveVirus', player);
+        this.giveVirus(player);
         $('.virus').modal('hide');
-        if(this.$store.getters.getTutorialState){
+        if(this.getTutorialState()){
           bus.$emit('cardPlayed');
-          this.$store.commit('increaseFactIndex');
+          this.increaseFactIndex();
         }
-        let ret = this.$store.dispatch('playerTookTurn');
-        this.$store.dispatch('turn', true);
+        let ret = this.playerTookTurn();
+        this.turn(true);
       }
     },
     computed: {
       hideButton() {
-        let activeCard = this.$store.getters.getActiveCard;
+        let activeCard = this.getActiveCard();
         if(activeCard !== undefined) {
           if(activeCard.type === 'VIRUS' && activeCard !== undefined) {
             return 'display: block';

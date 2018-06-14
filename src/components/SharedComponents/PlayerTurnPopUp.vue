@@ -13,17 +13,25 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
 export default {
+   methods: {
+     ...mapGetters([
+       'getCurrentPlayer',
+       'currentPlayerName',
+       'getTutorialState'
+     ])
+  },
   computed: {
     /**
      * Displays the appropriate message for players in the tutorial or the real game.
      * @returns {string} The message to be displayed.
      */
     currentPlayer() {
-      if(this.$store.getters.getTutorialState)
+      if(this.getTutorialState())
         return 'It\'s your turn!';
       else {
-        return this.$store.getters.currentPlayerName + ', it\'s your turn.';
+        return this.currentPlayerName() + ', it\'s your turn.';
       }
     },
     /**
@@ -31,14 +39,14 @@ export default {
      * @returns {default.computed.isAi|(function())|boolean|*} True if the play is AI.
      */
     isAi() {
-      return this.$store.getters.getCurrentPlayer.isAi ;
+      return this.getCurrentPlayer().isAi ;
     },
     /**
      * Displays the AI's output message.
      * @returns {string} The output message.
      */
     displayAi() {
-      return this.$store.getters.currentPlayerName + ' (Computer), it\'s your turn.'
+      return this.currentPlayerName() + ' (Computer), it\'s your turn.'
     }
   }
 }

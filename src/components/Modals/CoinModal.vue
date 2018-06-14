@@ -14,21 +14,28 @@
 
 <script>
   import RadialProgressBar from 'vue-radial-progress'
+  import {mapGetters} from 'vuex'
   export default {
     data () {
       return {
         totalSteps: 1,
       }
     },
+    methods: {
+      ...mapGetters([
+        'getCoinFlip',
+        'getCoinMsg'
+      ])
+    },
     components: {
       RadialProgressBar
     },
     computed: {
        completedSteps() {
-        return this.$store.state.coinFlip;
+        return this.getCoinFlip();
        },
       message() {
-        let lower = this.$store.state.coinMsg.toString();
+        let lower = this.getCoinMsg().toString();
         return lower.charAt(0).toUpperCase() + lower.slice(1);
       }
     }

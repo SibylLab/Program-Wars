@@ -28,6 +28,7 @@
 
 <script>
 import OpponentStack from './OpponentStack'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'opponent-stacks',
@@ -40,10 +41,10 @@ export default {
 
   computed: {
     trueStacks () {
-      return this.$store.getters.getStacks.filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === true)
+      return this.getStacks().filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === true)
     },
     falseStacks () {
-      return this.$store.getters.getStacks.filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === false)
+      return this.getStacks().filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === false)
     },
     score() {
       return  {trueScore: this.player.trueScore,
@@ -56,6 +57,9 @@ export default {
   },
 
   methods: {
+    ...mapGetters([
+      'getStacks'
+    ]),
     hackStack(e) {
     }
   }

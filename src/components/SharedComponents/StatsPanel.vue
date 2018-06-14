@@ -18,11 +18,16 @@
 </template>
 
 <script>
-
+  import {mapGetters} from 'vuex'
   export default {
+    methods: {
+      ...mapGetters([
+        'getCurrentPlayer'
+      ])
+    },
     computed: {
       getCurrentPlayer() {
-        return this.$store.getters.getCurrentPlayer;
+        return this.getCurrentPlayer();
       }
     }
   }

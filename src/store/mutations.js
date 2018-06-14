@@ -147,8 +147,15 @@ export default {
   groupStacks(state, payload) {
     state.groupStacks = payload.yesOrNo;
   },
+  doGroupStacks(state,payload){
+    state.groupStacks = payload.yesOrNo;
+  },
   setActiveCard(state, payload) {
-    state.activeCard = payload.cardId;
+    if(payload !== undefined) {
+      state.activeCard = payload.cardId;
+    } else {
+      state.activeCard = payload;
+    }
   },
   setActiveCardUndefined(state) {
     state.activeCard = undefined;
@@ -454,5 +461,14 @@ export default {
   flipTutorialStep(state){
     state.tutorialStep = !state.tutorialStep;
   },
+  setFirstRound(state, payload){
+    state.firstRound = payload;
+  },
+  setAiTurn(state, payload){
+    state.aiTurn = payload
+  },
+  setActiveStack(state,payload){
+    state.activeStack = payload;
+  }
 
 }

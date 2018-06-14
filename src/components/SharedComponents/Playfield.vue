@@ -21,6 +21,7 @@
 
 <script>
 import Stack from './Stack'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'Playfield',
@@ -53,12 +54,12 @@ export default {
     score() {
       let trueSide = 0;
       let falseSide = 0;
-      trueSide = this.$store.getters.getCurrentPlayer.trueScore; 
-      falseSide = this.$store.getters.getCurrentPlayer.falseScore; 
-      if(this.$store.getters.getCurrentPlayer.hasVirus){
+      trueSide = this.getCurrentPlayer().trueScore;
+      falseSide = this.getCurrentPlayer().falseScore;
+      if(this.getCurrentPlayer().hasVirus){
         trueSide = trueSide/2;
         falseSide = falseSide/2;
-      } else if(this.$store.getters.getCurrentPlayer.hasOverclock){
+      } else if(this.getCurrentPlayer().hasOverclock){
         trueSide = trueSide*2;
         falseSide = falseSide*2
       }
@@ -70,8 +71,12 @@ export default {
     'stack': Stack
   },
   methods: {
+    ...mapGetters([
+      'getCurrentPlayer',
+      'getStacks'
+    ]),
     getStackList() {
-      return this.$store.getters.getStacks.filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)
+      return this.getStacks().filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)
     },
     cardAdded (id) {
       let emptyStackExists = false;

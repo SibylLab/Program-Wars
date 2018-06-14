@@ -7,6 +7,7 @@
 
 <script>
 import { bus } from './Bus'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'Card',
@@ -20,12 +21,9 @@ export default {
     }
   },
   computed: {
+
     isAi() {
-      if(this.$store.getters.getCurrentPlayer.isAi && !this.inStack) {
-        return true;
-      } else {
-        return false;
-      }
+      return (this.getCurrentPlayer.isAi && !this.inStack)
     },
     cardGraphics() {
       return this.cardData.cardImg;
@@ -43,13 +41,6 @@ export default {
       return classString
     },
     title () {
-        /*
-      if (this.cardData.category !== 'stack') {
-        return 'Card'
-      } else {
-        return ''
-      }
-      */
         return 'Card'
     },
     cardType(){
@@ -72,8 +63,16 @@ export default {
     },
   },
   methods: {
+    ...mapGetters([
+      'getCurrentPlayer',
+      'getHasPlayed',
+      'getTutorialState',
+      'getCurrentPlayerHand',
+      'getHasPlayed'
+    ]),
+
     cardClicked(e) {
-      if (this.$store.getters.getHasPlayed === false) {
+      if (this.getHasPlayed() === false) {
         this.$emit('cardClicked', this.cardData)
 
         if (this.cardData.value !== '+') {
@@ -87,9 +86,9 @@ export default {
 
     },
     cardDragged(e) {
-      if (this.$store.getters.getTutorialState) {
-        if (this.$store.getters.getCurrentPlayerHand[0] === this.cardData) {
-          if (this.$store.getters.getHasPlayed === false) {
+      if (this.getTutorialState()) {
+        if (this.getCurrentPlayerHand()[0] === this.cardData) {
+          if (this.getHasPlayed() === false) {
             this.$emit('setActiveCard', this.cardData)
             bus.$emit('cardClickedStack', e, this.cardData)
           } else {
@@ -97,7 +96,7 @@ export default {
           }
         }
       } else {
-        if (this.$store.getters.getHasPlayed === false) {
+        if (this.getHasPlayed() === false) {
           this.$emit('setActiveCard', this.cardData)
           bus.$emit('cardClickedStack', e, this.cardData)
         } else {

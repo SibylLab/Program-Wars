@@ -90,23 +90,34 @@
 <script>
 
   import { bus } from '../SharedComponents/Bus';
-
+  import {mapGetters, mapMutations} from 'vuex'
   export default {
     props: ['playerList'],
     methods: {
+      ...mapGetters([
+        'getPlayers',
+        'getCurrentPlayer',
+        'getScoreLimit',
+        'getWinnerName',
+        'getWinnerScore',
+        'getActiveSide'
+      ]),
+      ...mapMutations([
+        'setPlayfieldColour'
+      ]),
       newGame() {
-        this.$store.commit('setPlayfieldColour', false);
+        this.setPlayfieldColour(false);
         this.$router.push('/');
       },
       getScore(player){
         let trueSide = 0;
         let falseSide = 0;
-        trueSide = this.$store.getters.getPlayers[player].trueScore + this.$store.getters.getPlayers[player].bonusTrue;
-        falseSide = this.$store.getters.getPlayers[player].falseScore + this.$store.getters.getPlayers[player].bonusFalse;
-        if(this.$store.getters.getPlayers[player].hasVirus){
+        trueSide = this.getPlayers()[player].trueScore + this.getPlayers()[player].bonusTrue;
+        falseSide = this.getPlayers()[player].falseScore + this.getPlayers()[player].bonusFalse;
+        if(this.getPlayers()[player].hasVirus){
           trueSide = trueSide/2;
           falseSide = falseSide/2;
-        } else if(this.$store.getters.getPlayers[player].hasOverclock){
+        } else if(this.getPlayers()[player].hasOverclock){
           trueSide = trueSide*2;
           falseSide = falseSide*2
         }
@@ -115,10 +126,10 @@
     },
     computed: {
       winner() {
-        return this.$store.state.winnerName;
+        return this.getWinnerName();
       },
       winnerScore() {
-        return this.$store.state.winnerScore;
+        return this.getWinnerScore();
       },
       oneWinner() {
         return (this.winnerList.length < 2) ;
@@ -126,12 +137,12 @@
       winnerList() {
           let winList = [];
           for(let player of this.playerList) {
-              if (this.$store.state.activeSide) {
-                  if(this.getScore(this.$store.getters.getCurrentPlayer.id).trueScore >= this.$store.state.scoreLimit) {
+              if (this.getActiveSide()) {
+                  if(this.getScore(this.getCurrentPlayer().id).trueScore >= this.getScoreLimit()) {
                       winList.push(player.name)
                   }
               } else {
-                if(this.getScore(this.$store.getters.getCurrentPlayer.id).falseScore >= this.$store.state.scoreLimit) {
+                if(this.getScore(this.getCurrentPlayer().id).falseScore >= this.getScoreLimit()) {
                   winList.push(player.name)
                 }
               }

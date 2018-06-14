@@ -30,6 +30,9 @@ export default {
     else
       return
   },
+  getActivePlayer(state) {
+    return state.activePlayer
+  },
   getActiveCard(state) {
     return state.activeCard
   },
@@ -41,6 +44,21 @@ export default {
   },
   getDiscard(state) {
     return state.deck.discard_cards
+  },
+  getIsDiscard(state) {
+    return state.isDiscard
+  },
+  getIsHack(state){
+    return state.isHack
+  },
+  getAiTurn(state){
+    return state.aiTurn
+  },
+  getHackedPlayer(state){
+    return state.hackedPlayer
+  },
+  getCoinFlip(state){
+    return state.coinFlip
   },
   getHasPlayed(state) {
     return state.activeHasPlayed
@@ -61,6 +79,9 @@ export default {
   getActiveSide(state) {
     return state.activeSide
   },
+  getActiveStack(state){
+    return state.activeStack;
+  },
   getScoreLimit(state) {
     return state.scoreLimit
   },
@@ -73,8 +94,17 @@ export default {
   getWinner(state) {
     return state.winner
   },
+  getWinnerName(state){
+    return state.winnerName
+  },
+  getWinnerScore(state){
+    return state.winnerScore
+  },
   getTips(state) {
     return state.tips
+  },
+  getPlayerTurn(state){
+    return state.playerTurn
   },
   getCurrentPlayer(state) {
     return state.players[state.activePlayer];
