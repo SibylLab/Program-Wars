@@ -3,6 +3,10 @@ let endTurnTimer = 1.5;// sec
 let coinTimer = 2;// sec
 let runTimer = 1;// sec
 
+/**
+ * These are all of the asynchronous functions that are used by the store. You can directly call other functions from
+ * these because they are asynchronous.
+ */
 export default {
   playerTookTurn(context) {
     context.commit('removeActiveCardFromHand');
@@ -37,6 +41,13 @@ export default {
     }, coinTimer * 1000);
   },
 
+  /**
+   * At the beginning and end of every players turn this function will be called to do a variety of things related to their turn.
+   * This function will play the coin animations, choose an active side, display winners if at least one person won, and display any
+   * modals necessary.
+   * @param context
+   * @param payload
+   */
   turn(context, payload) {
     context.commit('getIsLast');
     context.state.pointerEvent = 'pointer-events: none';

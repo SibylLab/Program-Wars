@@ -70,10 +70,14 @@
   import { bus } from '../SharedComponents/Bus';
   import Card from '../SharedComponents/Card'
   import Modal from '../Modals/Modal'
-  import StatsPanel from '../SharedComponents/StatsPanel'
   import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
   import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
 
+  /**
+   * This is the component that encapsulates the tip box, the players hand, the scoring meters, discard button, and the
+   * section where their used safety/overclock and attack cards used against them will be displayed.
+   * Nearly the same functionality as the PlayerInfoPanel, but changed to work with the tutorial.
+   */
   export default {
     name: 'PlayerInfoPanel',
     data () {
@@ -155,10 +159,12 @@
     components: {
       'card': Card,
       'modal': Modal,
-      'stats-panel': StatsPanel,
       'display-used-cards': DisplayUsedCards
     },
     methods: {
+      /**
+       * These are maps to all of the functions in the vuex store.
+       */
       ...mapActions([
         'playerTookTurn',
         'turn'
@@ -377,6 +383,11 @@
       bus.$on('cardPlayed', () => {
         this.tipsCardSelected = this.setTipBox('default');
       });
+
+      /**
+       * All of the ai... are called from the aiTurn mutations function from the store.
+       * These function executes the functionality given to the cards but slightly different to work with the ai.
+       */
       bus.$on('aiAttack', (stackToHack) => {
         if(this.getTutorialState()) {
           if (this.getAiTurn()) {

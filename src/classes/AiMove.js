@@ -1,5 +1,8 @@
 import {store} from '../store/store.js'
 
+/**
+ * This is an encapsulation class for some common functions between all of the Ai Personalities
+ */
 export default class {
   constructor() {
   };
@@ -8,6 +11,11 @@ export default class {
     return store.getters.getCoinMsg;
   };
 
+  /**
+   * This will organize an Ai's hand to pick out the best of each of their cards and then return to make their playing decision.
+   * @param event
+   * @returns {{bestICard: undefined, bestRCard: undefined, rXCard: undefined, hackCard: undefined, bestVCard: undefined, bestGCard: Array, virusCard: undefined, powerOutageCard: undefined, batteryBackupCard: undefined, overclockCard: undefined, firewallCard: undefined, generatorCard: undefined, antiVirusCard: undefined}}
+   */
   organizeHand(event) {
     let bestICard = undefined;
     let bestRCard = undefined;
@@ -68,6 +76,11 @@ export default class {
     return {bestICard, bestRCard, rXCard, hackCard, bestVCard, bestGCard, virusCard, powerOutageCard, batteryBackupCard, overclockCard, firewallCard, generatorCard, antiVirusCard}
   };
 
+  /**
+   * This will choose a stack to play a repetition card on.
+   * @param e The event passed
+   * @returns stackToRepeat the stack the Ai will choose to play a repeat card on.
+   */
   getStackToRepeat(e) {
     let stackToRepeat = undefined;
     for(let i = 1; i <= 10; i++) {
@@ -79,6 +92,11 @@ export default class {
     return stackToRepeat;
   }
 
+  /**
+   * Finds the highest valued stack with a repetitionX card to play a variable card.
+   * @param e The event with the stacks.
+   * @returns {stackToRepeat} The stack to play the variable card.
+   */
   stackToAddVariable(e) {
     let stackToRepeat = undefined;
     for(let i = 1; i <= 25; i++) {
@@ -93,6 +111,11 @@ export default class {
     return stackToRepeat;
   }
 
+  /**
+   * Chooses the opponent with the highest scoring stack with no grouping card and no firewall card active to play a hack against.
+   * @param event
+   * @returns {*}
+   */
   getHackOpponent(event) {
     let tmpOpponents = event.opponents.filter(opponents => opponents.score > 0 && opponents.cards[0].type !== 'G' && opponents.hasFirewall !== true);
       let tmpScore = 0;
@@ -106,6 +129,12 @@ export default class {
       return opponentToAttack;
   }
 
+  /**
+   * This finds the opponent with the highest score to play an attack card against.
+   * @param event The event with the stacks
+   * @param type The type of attack card (important to search for the safety card)
+   * @returns {opponentToAttack} the opponent to attack
+   */
   getOpponentToAttack(event, type) {
     let tmpOpponents = undefined;
     if(type === "POWEROUTAGE") {
@@ -130,6 +159,12 @@ export default class {
     return opponentToAttack;
   }
 
+  /**
+   * Multi use function for finding the highest value card.
+   * @param card The card to test.
+   * @param cardToBeat The card to beat.
+   * @returns {*} Returns either the card given or the card to beat.
+   */
   findBestCard(card, cardToBeat) {
     if(cardToBeat !== undefined) {
       if(card.value > cardToBeat.value) {
@@ -142,6 +177,12 @@ export default class {
     }
   };
 
+  /**
+   * Compares the scores of two stacks.
+   * @param a
+   * @param b
+   * @returns {number}
+   */
   compare(a,b) {
     if (a.score < b.score || a.value < b.value)
       return 1;
@@ -150,6 +191,12 @@ export default class {
     return 0;
   }
 
+  /**
+   * This checks for any possible groups that can be made.
+   * @param stack The set of stacks
+   * @param groupCard The set of grouping cards.
+   * @returns {*}
+   */
   findGroup(stack, groupCard) {
     stack = stack.sort(this.compare);
     let tmpStack = [];
@@ -168,6 +215,12 @@ export default class {
     return undefined;
   }
 
+  /**
+   * Helper function to search for a match between a group card and the stack value.
+   * @param groupValue
+   * @param groupStacks
+   * @returns {*}
+   */
   findMatch(groupValue, groupStacks) {
     let num = groupStacks.length;
     for (let j = 0; j < num; j++) {

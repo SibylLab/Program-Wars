@@ -1,5 +1,9 @@
 import AiMove from './AiMove'
 import {store} from '../store/store'
+
+/**
+ * The Protector is an Ai personality that priorities safety and protection cards.
+ */
 export default class Gambler {
 
   /**

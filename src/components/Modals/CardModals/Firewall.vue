@@ -28,6 +28,10 @@
 
   import { bus } from '../../SharedComponents/Bus.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
+
+  /**
+   * The Modal for when the Firewall card is clicked.
+   */
   export default {
     props: ['players'],
 

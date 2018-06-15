@@ -81,6 +81,9 @@ const cardDeck = [
   {type:'V', cardValue: 5, imgSrc: '/static/cardImg/V5.png', howMany: variable5},
 ];
 
+/**
+ * This is the object repesentaiton of the tutorial's deck
+ */
 export default class TutorialDeck {
   /**
    * The constructor for the Deck class
