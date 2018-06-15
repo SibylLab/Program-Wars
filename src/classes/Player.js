@@ -4,9 +4,6 @@
  */
 import Personality from './Personality'
 
-/**
- * This class represents the player/user model
- */
 export default class Player{
   /**
    * Constructor for the Player class

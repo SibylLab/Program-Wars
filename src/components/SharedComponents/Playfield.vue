@@ -23,9 +23,6 @@
 import Stack from './Stack'
 import {mapGetters} from 'vuex'
 
-/**
- * This displays the true/false playfields with the players stacks and playfield score.
- */
 export default {
   name: 'Playfield',
   props: ['trueFalse', 'playerId', 'activeColour'],

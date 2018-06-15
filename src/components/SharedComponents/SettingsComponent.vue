@@ -75,10 +75,6 @@
   import Card from '../../classes/Card'
   import Player from '../../classes/Player'
 
-  /**
-   * This is the main screen that the user sees when they go to the website.
-   * It handles all of the input from the user.
-   */
   export default {
     name: 'settings-component',
     data () {

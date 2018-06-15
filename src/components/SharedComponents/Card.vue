@@ -9,9 +9,6 @@
 import { bus } from './Bus'
 import {mapGetters} from 'vuex'
 
-/**
- * This component works off of the Card.js object. This handles all of the visual representation of the card.
- */
 export default {
   name: 'Card',
   props: ['cardData', 'inStack'],

@@ -14,11 +14,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
-
-  /**
-   * This is a simple pop up for displaying which players turn it is.
-   */
-  export default {
+export default {
    methods: {
      ...mapGetters([
        'getCurrentPlayer',
