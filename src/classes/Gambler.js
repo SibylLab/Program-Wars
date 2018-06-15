@@ -77,7 +77,6 @@ export default class Gambler {
       cardToPlay = hand.bestRCard;
       stackToPlay = this.move.getStackToRepeat(event);
       moveType = 'play';
-
     }
     else if(hand.rXCard !== undefined && this.move.getStackToRepeat(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
       cardToPlay = hand.rXCard;
@@ -112,7 +111,7 @@ export default class Gambler {
         moveType = 'discard';
       }
     }
-    
+
     return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus};
   }
 }
