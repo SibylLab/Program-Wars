@@ -31,6 +31,9 @@
 
   import {mapGetters, mapActions, mapMutations} from 'vuex'
 
+  /**
+   * The Modal for when the AntiVirus card is clicked.
+   */
   export default {
     props: ['players'],
 

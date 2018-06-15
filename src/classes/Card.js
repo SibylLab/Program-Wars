@@ -2,6 +2,9 @@
  * @file Card.js file
  */
 
+/**
+ * This is used to represent a card object.
+ */
 export default class Card {
   /**
    * Constructor for the Card class

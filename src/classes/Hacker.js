@@ -1,6 +1,9 @@
 import AiMove from './AiMove'
 import {store} from '../store/store'
 
+/**
+ * Hacker is an Ai personality that prioritizes using hack cards.
+ */
 export default class Hacker {
   /**
    * Constructor for this AI personality.

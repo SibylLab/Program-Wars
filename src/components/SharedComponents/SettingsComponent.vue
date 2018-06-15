@@ -72,6 +72,10 @@
 
   import {mapGetters, mapMutations} from 'vuex'
 
+  /**
+   * This is the main screen that the user sees when they go to the website.
+   * It handles all of the input from the user.
+   */
   export default {
     name: 'settings-component',
     data () {

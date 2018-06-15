@@ -36,6 +36,10 @@
 
 import Card from '../SharedComponents/Card'
 
+  /**
+   * This is a general modal that can be used for general feedback from the user.
+   * The grouping modal to ask the user if they want to group their cards is an example of this.
+   */
 export default {
   name: 'modal',
   props: ['modalId', 'modalTitle', 'modalBody', 'modalCards', 'modalCallback', 'modalCallback2', 'cancel', 'image'],

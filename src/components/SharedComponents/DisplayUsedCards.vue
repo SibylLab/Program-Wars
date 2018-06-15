@@ -26,6 +26,11 @@
 <script>
   import Card from './Card'
   import {mapGetters} from 'vuex'
+
+  /**
+   * This component shows any attack cards used against the player, or any safety / overclock cards used.
+   * This is used in the player info panel.
+   */
   export default {
     data () {
       return {
