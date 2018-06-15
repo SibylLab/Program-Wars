@@ -25,6 +25,7 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
 
   import { bus } from '../../SharedComponents/Bus.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
@@ -49,48 +50,48 @@
         'discardSelectedCard',
         'giveFirewall'
       ]),
-      firewallCanceled() {
-        bus.$emit('hackCanceled');
+      firewallCanceled () {
+        bus.$emit('hackCanceled')
       },
-      discardFirewall() {
+      discardFirewall () {
         if (this.getActiveCard() !== undefined) {
-          this.discardSelectedCard();
-          this.playerTookTurn();
-          this.turn(true);
+          this.discardSelectedCard()
+          this.playerTookTurn()
+          this.turn(true)
         }
       },
-      useClicked() {
-        let player = this.getCurrentPlayer();
-        this.giveFirewall(player.id);
-        $('.firewall').modal('hide');
-        if(this.getTutorialState()){
-          bus.$emit('cardPlayed');
-          this.increaseFactIndex();
+      useClicked () {
+        let player = this.getCurrentPlayer()
+        this.giveFirewall(player.id)
+        $('.firewall').modal('hide')
+        if (this.getTutorialState()) {
+          bus.$emit('cardPlayed')
+          this.increaseFactIndex()
         }
-        let ret = this.playerTookTurn();
-        let turn = this.turn(true);
-      },
+        this.playerTookTurn()
+        this.turn(true)
+      }
 
     },
     computed: {
-      hideButton() {
-        let activeCard = this.getActiveCard();
-        if(activeCard !== undefined) {
-          if(activeCard.type === 'FIREWALL' && activeCard !== undefined) {
-            return 'display: block';
+      hideButton () {
+        let activeCard = this.getActiveCard()
+        if (activeCard !== undefined) {
+          if (activeCard.type === 'FIREWALL' && activeCard !== undefined) {
+            return 'display: block'
           } else {
-            return 'display: none';
+            return 'display: none'
           }
         } else {
           return 'display: none'
         }
       },
-      playerCanUse() {
-        let player = this.getCurrentPlayer();
-        return player.hasFirewall;
+      playerCanUse () {
+        let player = this.getCurrentPlayer()
+        return player.hasFirewall
       }
     },
-    created() {
+    created () {
       $('.firewall').modal({
         backdrop: 'static',
         keyboard: false

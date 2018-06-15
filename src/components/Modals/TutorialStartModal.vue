@@ -46,11 +46,8 @@
 
 <script>
 
-  import { bus } from '../SharedComponents/Bus.vue'
-
   export default {
   }
 
 </script>
-
 

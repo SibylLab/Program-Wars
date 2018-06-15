@@ -26,8 +26,8 @@
       ])
     },
     computed: {
-      getCurrentPlayer() {
-        return this.getCurrentPlayer();
+      getCurrentPlayer () {
+        return this.getCurrentPlayer()
       }
     }
   }

@@ -25,10 +25,11 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
 
   import { bus } from '../../SharedComponents/Bus.vue'
-  import {mapGetters, mapMutations, mapActions} from 'vuex';
-  export default {
+  import {mapGetters, mapMutations, mapActions} from 'vuex'
+export default {
     props: ['players'],
 
     methods: {
@@ -49,48 +50,47 @@
         'discardSelectedCard',
         'giveOverclock'
       ]),
-      overclockCanceled() {
-        bus.$emit('hackCanceled');
+      overclockCanceled () {
+        bus.$emit('hackCanceled')
       },
-      discardOverclock() {
+      discardOverclock () {
         if (this.getActiveCard() !== undefined) {
-          this.discardSelectedCard();
-          this.playerTookTurn();
-          this.turn(true);
+          this.discardSelectedCard()
+          this.playerTookTurn()
+          this.turn(true)
         }
       },
-      useClicked() {
-        let player = this.getCurrentPlayer();
-        this.giveOverclock(player.id);
-        $('.overclock').modal('hide');
-        if(this.getTutorialState()){
-          bus.$emit('cardPlayed');
-          this.increaseFactIndex();
+      useClicked () {
+        let player = this.getCurrentPlayer()
+        this.giveOverclock(player.id)
+        $('.overclock').modal('hide')
+        if (this.getTutorialState()) {
+          bus.$emit('cardPlayed')
+          this.increaseFactIndex()
         }
-        let ret = this.playerTookTurn();
-        let turn = this.turn(true);
-      },
-
+        this.playerTookTurn()
+        this.turn(true)
+      }
 
     },
     computed: {
-      hideButton() {
-        let activeCard = this.getActiveCard();
-        if(activeCard !== undefined) {
-          if(activeCard.type === 'OVERCLOCK' && activeCard !== undefined) {
-            return 'display: block';
+      hideButton () {
+        let activeCard = this.getActiveCard()
+        if (activeCard !== undefined) {
+          if (activeCard.type === 'OVERCLOCK' && activeCard !== undefined) {
+            return 'display: block'
           } else {
-            return 'display: none';
+            return 'display: none'
           }
         } else {
           return 'display: none'
         }
       },
-      checkUse() {
-        return(this.getCurrentPlayer().hasOverclock)
+      checkUse () {
+        return (this.getCurrentPlayer().hasOverclock)
       }
     },
-    created() {
+    created () {
       $('.overclock').modal({
         backdrop: 'static',
         keyboard: false
