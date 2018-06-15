@@ -39,3 +39,5 @@ checks:
     channel: "eslint-4"
   markdownlint:
     enabled: true
+  stylelint:
+    enabled: true

@@ -32,32 +32,32 @@
    * This is used in the player info panel.
    */
   export default {
-    data(){
-      return{
-        player: this.getCurrentPlayer(),
+    data () {
+      return {
+        player: this.getCurrentPlayer()
       }
     },
     components: {
       'card': Card
 
     },
-    methods:{
+    methods: {
       ...mapGetters([
         'getCurrentPlayer'
       ])
     },
     computed: {
-      attackedCards() {
-        let cards = this.getCurrentPlayer().attackedCards;
-        if(cards === null ){
+      attackedCards () {
+        let cards = this.getCurrentPlayer().attackedCards
+        if (cards === null) {
           return []
         } else {
           return cards
         }
       },
-      usedBonusCards() {
-        let cards = this.getCurrentPlayer().usedBonusCards;
-        if(cards === null ){
+      usedBonusCards () {
+        let cards = this.getCurrentPlayer().usedBonusCards
+        if (cards === null) {
           return []
         } else {
           return cards

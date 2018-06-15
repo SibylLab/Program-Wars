@@ -46,14 +46,8 @@
 
 <script>
 
-  import { bus } from '../SharedComponents/Bus.vue'
-
-  /**
-   * This is a game objectives modal that is displayed at the start of the tutorial.
-   */
   export default {
   }
 
 </script>
-
 

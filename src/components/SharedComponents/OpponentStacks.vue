@@ -39,7 +39,7 @@ export default {
   props: ['player'],
   data () {
     return {
-      title: 'Opponent Stacks',
+      title: 'Opponent Stacks'
     }
   },
 
@@ -50,21 +50,21 @@ export default {
     falseStacks () {
       return this.getStacks().filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === false)
     },
-    score() {
-      return  {trueScore: this.player.trueScore,
-              falseScore: this.player.falseScore};
+    score () {
+      return {trueScore: this.player.trueScore,
+        falseScore: this.player.falseScore}
     }
   },
 
   components: {
-      'opponent-stack': OpponentStack
+    'opponent-stack': OpponentStack
   },
 
   methods: {
     ...mapGetters([
       'getStacks'
     ]),
-    hackStack(e) {
+    hackStack (e) {
     }
   }
 }

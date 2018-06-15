@@ -22,194 +22,183 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
 
-  import { bus } from './Bus';
+  import { bus } from './Bus'
   import Card from './Card'
   import {mapGetters, mapState, mapMutations, mapActions} from 'vuex'
 
-  /**
-   * This component is used with OpponentStacks to display each individual stack of the opponents.
-   */
-  export default {
-  name: 'opponent-stack',
-  props: ['playfieldBoolean', 'stackId', 'playerId'],
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-      title: 'Stack',
-      id: this.stackId,
-    }
-  },
-  computed: {
-    cards () {
-
-      if (this.playerId === this.getCurrentPlayerId() ) {
-        if (this.getCurrentPlayerStacks().length !== 0) {
-          let stack = this.getCurrentPlayerStacks().find(stack => stack.stackId === this.stackId);
+export default {
+    name: 'opponent-stack',
+    props: ['playfieldBoolean', 'stackId', 'playerId'],
+    data () {
+      return {
+        msg: 'Welcome to Your Vue.js App',
+        title: 'Stack',
+        id: this.stackId
+      }
+    },
+    computed: {
+      cards () {
+        if (this.playerId === this.getCurrentPlayerId()) {
+          if (this.getCurrentPlayerStacks().length !== 0) {
+            let stack = this.getCurrentPlayerStacks().find(findStack => findStack.stackId === this.stackId)
+            if (stack !== undefined) {
+              return stack.cards
+            } else {
+              return []
+            }
+          }
+        } else {
+          let stack = this.getStacks().find(findStack => findStack.stackId === this.stackId)
           if (stack !== undefined) {
             return stack.cards
           } else {
             return []
           }
         }
-      } else {
-        let stack = this.getStacks().find(stack => stack.stackId === this.stackId);
-        if (stack !== undefined) {
-          return stack.cards
-        } else {
-          return []
-        }
-
-      }
-
-    },
-    activeCardIsHack() {
+      },
+      activeCardIsHack () {
         if (this.getActiveCard() !== undefined && this.getActiveCard().type === 'H') {
-          $('.hack').modal('show');
-          let stack = this.getStacks().find(stack => stack.stackId === this.stackId)
-            return(stack !== undefined && stack.cards[0].type !== 'G')
+          $('.hack').modal('show')
+          let stack = this.getStacks().find(findStack => findStack.stackId === this.stackId)
+          return (stack !== undefined && stack.cards[0].type !== 'G')
         } else {
-            return false
+          return false
         }
-    },
-    stackCss () {
-      return 'stack'
-    },
-    buttonStyle() {
-      return ''
-    },
-    score() {
+      },
+      stackCss () {
+        return 'stack'
+      },
+      buttonStyle () {
+        return ''
+      },
+      score () {
         let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
-         thisStack.calculateStackScore();
-          return thisStack.score
-    },
-    selectedStacksLength () {
-      let selectedStacks = this.getSelectedStacks();
+        thisStack.calculateStackScore()
+        return thisStack.score
+      },
+      selectedStacksLength () {
+        let selectedStacks = this.getSelectedStacks()
 
-      for (let stack of selectedStacks) {
-          if (stack.stackId === this.stackId)
-              return true
-      }
-      return false
-    }
-  },
-  created: function () {
-    bus.$on('cardClickedStack', (event, card) => {
-      // a card was selected
-      if (card.category !== 'stack') {
-        if (card.selected === true) {
-          this.activeCard = Object.assign({}, card);
-
-          this.activeCard.category = 'stack';
-          this.activeCard.selected = false;
+        for (let stack of selectedStacks) {
+          if (stack.stackId === this.stackId) { return true }
         }
+        return false
       }
-    });
+    },
+    created: function () {
+      bus.$on('cardClickedStack', (event, card) => {
+      // a card was selected
+        if (card.category !== 'stack') {
+          if (card.selected === true) {
+            this.activeCard = Object.assign({}, card)
 
-    bus.$on('cardDeselected', () => {
-      this.activeCard = undefined;
-      this.setActiveCardUndefined();
-      this.removeAllSelectedStacks();
-    });
-
-    bus.$on('aiHack', (newStackId) => {
-      if(this.getAiTurn() === true) {
-        if(this.getActiveCard() !== undefined) {
-          if(this.stackId === newStackId.stackId) {
-            this.hackStackClicked();
-            this.setAiTurn(false);
+            this.activeCard.category = 'stack'
+            this.activeCard.selected = false
           }
         }
-      }
-    });
-  },
-  methods: {
-    ...mapGetters([
-      'getActiveCard',
-      'getStacks',
-      'getCurrentPlayerStacks',
-      'getCurrentPlayerId',
-      'getHasPlayed',
-      'getTutorialState',
-      'getSelectedStacks',
-      'getPlayers',
-      'getAiTurn'
-    ]),
-    ...mapState([
-      'aiTurn',
-      'activeCard',
-      'hackedPlayer',
-      'isHack'
-    ]),
-    ...mapMutations([
-      'stackDiscard',
-      'removeStack',
-      'increaseFactIndex',
-      'setPlayerScores',
-      'setActiveCardUndefined' ,
-      'removeAllSelectedStacks',
-      'setAiTurn',
-      'setActiveCard'
-    ]),
-    ...mapActions([
-      'playerTookTurn',
-      'turn'
-    ]),
-    cardAddClicked () {
-      this.$emit('cardAddClicked', this.id)
-    },
-    hide () {
-    },
-    stackClicked () {
-    },
-    cardClickedInStack(event, card) {
-    },
-    /**
-     * Instead of adding the hack card to the stack, it really just removes the stack.
-     * @returns {string}
-     */
-    addToStack() {
+      })
 
-      if (this.getActiveCard() !== undefined) {
-        let activeCard = this.getActiveCard();
-        // get the stack data model that goes with this stack component
-        let thisStack = this.getStacks().find(stack => this.stackId === stack.stackId);
-        switch (activeCard.type) {
-          case 'H':
-            this.stackDiscard({stackId: this.stackId});
-            this.removeStack({stackId: this.stackId});
-            this.hackedPlayer = this.getPlayers()[thisStack.playerId].name;
-            this.playerTookTurn();
-            bus.$emit('cardDeselected');
-            this.isHack = true;
-            setTimeout(() => {
-              this.isHack = false;
-            },1250);
-            break;
-          default:
-              return '';
+      bus.$on('cardDeselected', () => {
+        this.activeCard = undefined
+        this.setActiveCardUndefined()
+        this.removeAllSelectedStacks()
+      })
+
+      bus.$on('aiHack', (newStackId) => {
+        if (this.getAiTurn() === true) {
+          if (this.getActiveCard() !== undefined) {
+            if (this.stackId === newStackId.stackId) {
+              this.hackStackClicked()
+              this.setAiTurn(false)
+            }
+          }
         }
-        if(this.getHasPlayed()) {
-          this.turn(true);
+      })
+    },
+    methods: {
+      ...mapGetters([
+        'getActiveCard',
+        'getStacks',
+        'getCurrentPlayerStacks',
+        'getCurrentPlayerId',
+        'getHasPlayed',
+        'getTutorialState',
+        'getSelectedStacks',
+        'getPlayers',
+        'getAiTurn'
+      ]),
+      ...mapState([
+        'aiTurn',
+        'activeCard',
+        'hackedPlayer',
+        'isHack'
+      ]),
+      ...mapMutations([
+        'stackDiscard',
+        'removeStack',
+        'increaseFactIndex',
+        'setPlayerScores',
+        'setActiveCardUndefined',
+        'removeAllSelectedStacks',
+        'setAiTurn',
+        'setActiveCard'
+      ]),
+      ...mapActions([
+        'playerTookTurn',
+        'turn'
+      ]),
+      cardAddClicked () {
+        this.$emit('cardAddClicked', this.id)
+      },
+      hide () {
+      },
+      stackClicked () {
+      },
+      cardClickedInStack (event, card) {
+      },
+      addToStack () {
+        if (this.getActiveCard() !== undefined) {
+          let activeCard = this.getActiveCard()
+      // get the stack data model that goes with this stack component
+          let thisStack = this.getStacks().find(stack => this.stackId === stack.stackId)
+          switch (activeCard.type) {
+            case 'H':
+              this.stackDiscard({stackId: this.stackId})
+              this.removeStack({stackId: this.stackId})
+              this.hackedPlayer = this.getPlayers()[thisStack.playerId].name
+              this.playerTookTurn()
+              bus.$emit('cardDeselected')
+              this.isHack = true
+              setTimeout(() => {
+                this.isHack = false
+              }, 1250)
+              break
+            default:
+              return ''
+          }
+          if (this.getHasPlayed()) {
+            this.turn(true)
+          }
         }
+      },
+      hackStackClicked () {
+        this.addToStack()
+        $('.hack').modal('hide')
+        if (this.getTutorialState()) {
+          bus.$emit('cardPlayed')
+          this.increaseFactIndex()
+        }
+        this.setPlayerScores()
+      },
+      drop () {
+        this.addToStack()
       }
     },
-    hackStackClicked() {
-      this.addToStack();
-      $('.hack').modal('hide');
-      if(this.getTutorialState()){
-        bus.$emit('cardPlayed');
-        this.increaseFactIndex();
-      }
-      this.setPlayerScores();
-    },
-    drop () {
-      this.addToStack()
+    components: {
+      'card': Card
     }
-  },
-  components: {
-    'card': Card
-  },
 }
 </script>
 

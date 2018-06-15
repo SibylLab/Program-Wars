@@ -22,7 +22,7 @@
   export default {
     data () {
       return {
-        totalSteps: 1,
+        totalSteps: 1
       }
     },
     methods: {
@@ -35,12 +35,12 @@
       RadialProgressBar
     },
     computed: {
-       completedSteps() {
-        return this.getCoinFlip();
-       },
-      message() {
-        let lower = this.getCoinMsg().toString();
-        return lower.charAt(0).toUpperCase() + lower.slice(1);
+      completedSteps () {
+        return this.getCoinFlip()
+      },
+      message () {
+        let lower = this.getCoinMsg().toString()
+        return lower.charAt(0).toUpperCase() + lower.slice(1)
       }
     }
   }

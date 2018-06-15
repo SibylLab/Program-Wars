@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12" id="playerTurn">
           <h4 id="text" v-if="isHack">{{ currentPlayer }} <b style="color: red;">hacked</b> {{ hackedPlayer }} </h4>
-          <h4 id="text" v-else>{{ currentPlayer }} discarded</h4>
+          <h4 id="text2" v-else>{{ currentPlayer }} discarded</h4>
         </div>
       </div>
     </div>
@@ -12,11 +12,7 @@
 </template>
 
 <script>
-  import {mapGetters, mapState} from 'vuex'
-
-  /**
-   * The Modal for when the Hack card is discarded.
-   */
+  import {mapGetters} from 'vuex'
   export default {
     methods: {
       /**
@@ -29,14 +25,14 @@
       ])
     },
     computed: {
-      currentPlayer() {
-        return this.currentPlayerName();
+      currentPlayer () {
+        return this.currentPlayerName()
       },
-      hackedPlayer() {
-        return this.getHackedPlayer();
+      hackedPlayer () {
+        return this.getHackedPlayer()
       },
-      isHack() {
-        return this.getIsHack();
+      isHack () {
+        return this.getIsHack()
       }
     }
   }

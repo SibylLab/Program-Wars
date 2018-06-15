@@ -25,45 +25,45 @@ export default {
   },
   computed: {
 
-    isAi() {
+    isAi () {
       return (this.getCurrentPlayer.isAi && !this.inStack)
     },
-    cardGraphics() {
-      return this.cardData.cardImg;
+    cardGraphics () {
+      return this.cardData.cardImg
     },
     cardCss () {
-      let classString = 'card';
+      let classString = 'card'
 
       if (this.cardData.selected) {
         classString = classString + ' selected'
       }
       if (this.inStack) {
-       classString = classString + ' stack'
-     }
+        classString = classString + ' stack'
+      }
 
       return classString
     },
     title () {
-        return 'Card'
+      return 'Card'
     },
-    cardType(){
-        if(this.cardData.type === 'R' && this.cardData.value === 1){
-            return 'Rx'
-        }else{
-            return this.cardData.type
-        }
+    cardType () {
+      if (this.cardData.type === 'R' && this.cardData.value === 1) {
+        return 'Rx'
+      } else {
+        return this.cardData.type
+      }
     },
-    cardValue(){
-      if(this.cardData.type === 'R' && this.cardData.value === 1){
+    cardValue () {
+      if (this.cardData.type === 'R' && this.cardData.value === 1) {
         return '_'
-      }else{
+      } else {
         return this.cardData.value
       }
     },
-    showCard() {
-      return (this.isAi && !this.cardData.showFace && (this.cardData.type !== 'GENERATOR' || this.cardData.type !== 'FIREWALL' || this.cardData.type !== 'ANTIVIRUS'
-        || this.cardData.type !=='VIRUS'  || this.cardData.type !=='POWEROUTAGE' || this.cardData.type !=='OVERCLOCK'));
-    },
+    showCard () {
+      return (this.isAi && !this.cardData.showFace && (this.cardData.type !== 'GENERATOR' || this.cardData.type !== 'FIREWALL' || this.cardData.type !== 'ANTIVIRUS' ||
+        this.cardData.type !== 'VIRUS' || this.cardData.type !== 'POWEROUTAGE' || this.cardData.type !== 'OVERCLOCK'))
+    }
   },
   methods: {
     ...mapGetters([
@@ -74,7 +74,7 @@ export default {
       'getHasPlayed'
     ]),
 
-    cardClicked(e) {
+    cardClicked (e) {
       if (this.getHasPlayed() === false) {
         this.$emit('cardClicked', this.cardData)
 
@@ -82,20 +82,20 @@ export default {
           bus.$emit('cardClickedStack', e, this.cardData)
         }
       } else {
-        return '';
+        return ''
       }
     },
-    hide() {
+    hide () {
 
     },
-    cardDragged(e) {
+    cardDragged (e) {
       if (this.getTutorialState()) {
         if (this.getCurrentPlayerHand()[0] === this.cardData) {
           if (this.getHasPlayed() === false) {
             this.$emit('setActiveCard', this.cardData)
             bus.$emit('cardClickedStack', e, this.cardData)
           } else {
-            return '';
+            return ''
           }
         }
       } else {
@@ -103,10 +103,10 @@ export default {
           this.$emit('setActiveCard', this.cardData)
           bus.$emit('cardClickedStack', e, this.cardData)
         } else {
-          return '';
+          return ''
         }
       }
-    },
+    }
 
   }
 }

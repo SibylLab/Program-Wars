@@ -25,6 +25,7 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
 
   import { bus } from '../../SharedComponents/Bus.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
@@ -53,48 +54,48 @@
         'discardSelectedCard',
         'giveGenerator'
       ]),
-      generatorCanceled() {
-        bus.$emit('hackCanceled');
+      generatorCanceled () {
+        bus.$emit('hackCanceled')
       },
-      discardGenerator() {
+      discardGenerator () {
         if (this.getActiveCard() !== undefined) {
-          this.discardSelectedCard();
-          this.playerTookTurn();
-          this.turn(true);
+          this.discardSelectedCard()
+          this.playerTookTurn()
+          this.turn(true)
         }
       },
-      useClicked() {
-        let player = this.getCurrentPlayer();
-        this.giveGenerator(player.id);
-        $('.generator').modal('hide');
-        if(this.getTutorialState()){
-          bus.$emit('cardPlayed');
-          this.increaseFactIndex();
+      useClicked () {
+        let player = this.getCurrentPlayer()
+        this.giveGenerator(player.id)
+        $('.generator').modal('hide')
+        if (this.getTutorialState()) {
+          bus.$emit('cardPlayed')
+          this.increaseFactIndex()
         }
-        let ret = this.playerTookTurn();
-        let turn = this.turn(true);
-      },
+        this.playerTookTurn()
+        this.turn(true)
+      }
 
     },
     computed: {
-      hideButton() {
-        let activeCard = this.getActiveCard();
-        if(activeCard !== undefined) {
-          if(activeCard.type === 'GENERATOR' && activeCard !== undefined) {
-            return 'display: block';
+      hideButton () {
+        let activeCard = this.getActiveCard()
+        if (activeCard !== undefined) {
+          if (activeCard.type === 'GENERATOR' && activeCard !== undefined) {
+            return 'display: block'
           } else {
-            return 'display: none';
+            return 'display: none'
           }
         } else {
           return 'display: none'
         }
       },
-      playerCanUse() {
-        let player = this.getCurrentPlayer();
-        return player.hasGenerator;
+      playerCanUse () {
+        let player = this.getCurrentPlayer()
+        return player.hasGenerator
       }
     },
-    created() {
+    created () {
       $('.generator').modal({
         backdrop: 'static',
         keyboard: false

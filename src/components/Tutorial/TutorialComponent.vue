@@ -66,6 +66,8 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
+
   import PlayerInfoPanel from './TutorialPlayerInfoPanel'
   import Playfield from '../SharedComponents/Playfield'
 
@@ -88,39 +90,30 @@
   import Generator from '../Modals/CardModals/Generator'
   import Firewall from '../Modals/CardModals/Firewall'
 
-  import Card from '../../classes/Card'
-  import Player from '../../classes/Player'
+  import {mapGetters, mapMutations, mapState, mapActions} from 'vuex'
+  import { bus } from '../SharedComponents/Bus'
 
-  import {mapGetters} from 'vuex'
-  import {mapMutations} from 'vuex'
-  import {mapActions} from 'vuex'
-  import {mapState} from 'vuex'
-  import { bus } from '../SharedComponents/Bus';
-
-  /**
-   * This has the same functionality as the MainComponent but is slightly different to interact with the tutorial.
-   */
-  export default {
+export default {
     name: 'TutorialComponent',
-    data() {
+    data () {
       return {
         idCounter: 0,
         dataToggle: false,
-        modalTitle: "Welcome to the Programming Wars Tutorial!",
+        modalTitle: 'Welcome to the Programming Wars Tutorial!',
         localPlayers: [],
         newPlayer: '',
         gameStart: false,
         showDismissCards: false,
         modalCards: [],
-        gameOverWinner: "",
-        gameOverText: "",
-        modalId: "gameOverModal",
+        gameOverWinner: '',
+        gameOverText: '',
+        modalId: 'gameOverModal',
         tipsToggle: true,
         factsToggle: true,
         playerList: [],
         winner: '',
         winnerScore: 0,
-        deleteData: [],
+        deleteData: []
       }
     },
     components: {
@@ -158,127 +151,121 @@
         'getIsHack',
         'getTutorialStep'
       ]),
-    ...mapMutations([
-      'initDeck',
-      'addHandToPlayer',
-      'addStackToPlayer',
-      'setTips',
-      'setTrueFalseAnim',
-      'setActiveSide',
-      'setGameState',
-      'addCardToHand',
-      'setFirstRound',
-      'initTutorialDeck',
-      'flipTutorialStep'
+      ...mapMutations([
+        'initDeck',
+        'addHandToPlayer',
+        'addStackToPlayer',
+        'setTips',
+        'setTrueFalseAnim',
+        'setActiveSide',
+        'setGameState',
+        'addCardToHand',
+        'setFirstRound',
+        'initTutorialDeck',
+        'flipTutorialStep'
 
-    ]),
-    ...mapActions([
-      'firstRound',
-      'turn',
-      'coinAnimation'
-    ]),
-    ...mapState([
-      'isHack',
-      'isDiscard',
-      'trueSideColour',
-      'falseSideColour',
-      'playerTurn',
-      'pointerEvent',
-      'currentGameState',
-    ]),
-      initGame() {
-        this.initTutorialDeck();
+      ]),
+      ...mapActions([
+        'firstRound',
+        'turn',
+        'coinAnimation'
+      ]),
+      ...mapState([
+        'isHack',
+        'isDiscard',
+        'trueSideColour',
+        'falseSideColour',
+        'playerTurn',
+        'pointerEvent',
+        'currentGameState'
+      ]),
+      initGame () {
+        this.initTutorialDeck()
       },
-      fillHands() {
+      fillHands () {
         for (let player of this.getPlayers()) {
           this.addHandToPlayer(player.id)
         }
       },
-      addStacksToPlayers() {
+      addStacksToPlayers () {
         for (let player of this.getPlayers()) {
-          this.addStackToPlayer({playerId: player.id, boolSide: true});
-          this.addStackToPlayer({playerId: player.id, boolSide: false});
+          this.addStackToPlayer({playerId: player.id, boolSide: true})
+          this.addStackToPlayer({playerId: player.id, boolSide: false})
         }
       }
     },
     computed: {
-      /**
-       * To decide whether to show the discard modal.
-       * @returns {*}
-       */
-      showMsg() {
+      showMsg () {
         return (this.getIsHack() || this.getIsDiscard())
       },
-      currentPlayerId() {
-        return this.getCurrentPlayerId();
+      currentPlayerId () {
+        return this.getCurrentPlayerId()
       },
-      players() {
-        return this.getPlayers().filter(player => player.id !== this.getCurrentPlayerId());
+      players () {
+        return this.getPlayers().filter(player => player.id !== this.getCurrentPlayerId())
       },
-      deactivateClick() {
-        return this.pointerEvent;
+      deactivateClick () {
+        return this.pointerEvent
       },
-      gameStateChanges() {
-        return this.currentGameState;
-      },
+      gameStateChanges () {
+        return this.currentGameState
+      }
     },
 
     /**
      * Called when the component is created (after mount) to run the game loop
      */
-    created() {
-      this.playerList = this.getPlayers();
-      this.gameStart = true;
+    created () {
+      this.playerList = this.getPlayers()
+      this.gameStart = true
 
-      let gameEventLoopTimer = setInterval(() => {
-        let gameState = this.getgameState();
+      setInterval(() => {
+        let gameState = this.getgameState()
         if (gameState === 'newGame') {
-          this.setGameState({gameState: 'waitingForPlayerInput'});
-          this.gameStart = true;
+          this.setGameState({gameState: 'waitingForPlayerInput'})
+          this.gameStart = true
         } else if (gameState === 'initGame') {
         } else if (gameState === 'startPlayerTurn') {
-          this.addCardToHand();
-          this.setGameState({gameState: 'playerTurn'});
+          this.addCardToHand()
+          this.setGameState({gameState: 'playerTurn'})
 
           if (this.getCurrentPlayerId() === 0) {
-            this.setTrueFalseAnim({startAnim: true});
+            this.setTrueFalseAnim({startAnim: true})
             if (this.getTutorialStep()) {
               this.setActiveSide({activeSide: true})
             } else {
               this.setActiveSide({activeSide: false})
             }
-            this.flipTutorialStep();
+            this.flipTutorialStep()
             if (this.getFirstRound()) {
-              this.firstRound();
-              this.setFirstRound(false);
+              this.firstRound()
+              this.setFirstRound(false)
             } else {
-              this.turn(false);
+              this.turn(false)
             }
             setTimeout(() => {
-              this.setTrueFalseAnim({startAnim: false});
-              this.setGameState({gameState: 'playerTurn'});
-            }, 3000);
+              this.setTrueFalseAnim({startAnim: false})
+              this.setGameState({gameState: 'playerTurn'})
+            }, 3000)
           }
         }
-      }, 500);
-      this.initGame();
-      this.fillHands();
-      this.addStacksToPlayers();
+      }, 500)
+      this.initGame()
+      this.fillHands()
+      this.addStacksToPlayers()
       this.setGameState({gameState: 'startPlayerTurn'})
-
     },
     /**
      * Called when the component is mounted to show the modals in a correct order
      */
-    mounted() {
-      $('#tutorialModal').modal('show');
+    mounted () {
+      $('#tutorialModal').modal('show')
       this.$nextTick(function () {
-        //For some reason this has the opposite effect of what you would expect. The start Modal is shown first, and the tutorialModal second.
+        // For some reason this has the opposite effect of what you would expect. The start Modal is shown first, and the tutorialModal second.
         $('#tutorialModal').on('hidden.bs.modal', () => {
           bus.$emit('playAnimation')
-          this.coinAnimation();
-        });
-
+          this.coinAnimation()
+        })
       })
     }
   }

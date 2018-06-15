@@ -4,10 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import { store }  from './store/store'
-/**
- * This is where we initalize our vue application with our App.vue file, the store, and the router.
- */
+import { store } from './store/store'
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
