@@ -1,6 +1,3 @@
-/**
- * This file includes all of the getter functions from the store to avoid directly manipulating the store.state
- */
 export default {
   getCurrentPlayerHand(state) {
     return Object.assign({}, state.hands.find(hand => hand.playerId === state.activePlayer))

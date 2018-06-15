@@ -27,10 +27,8 @@
   import Card from './Card'
   import {mapGetters, mapState, mapMutations, mapActions} from 'vuex'
 
-  /**
-   * This component is used with OpponentStacks to display each individual stack of the opponents.
-   */
-  export default {
+
+export default {
   name: 'opponent-stack',
   props: ['playfieldBoolean', 'stackId', 'playerId'],
   data () {
@@ -164,10 +162,6 @@
     },
     cardClickedInStack(event, card) {
     },
-    /**
-     * Instead of adding the hack card to the stack, it really just removes the stack.
-     * @returns {string}
-     */
     addToStack() {
 
       if (this.getActiveCard() !== undefined) {

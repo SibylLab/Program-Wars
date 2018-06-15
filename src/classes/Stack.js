@@ -5,9 +5,6 @@
 
 const uuidV1 = require('uuid/v1');
 
-/**
- * This is the object representation of a stack of cards.
- */
 export default class Stack {
 
   //constructor for the stack object

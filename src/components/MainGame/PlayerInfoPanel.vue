@@ -70,14 +70,11 @@
 import { bus } from '../SharedComponents/Bus';
 import Card from '../SharedComponents/Card'
 import Modal from '../Modals/Modal'
+import StatsPanel from '../SharedComponents/StatsPanel'
 import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
 
 import {mapGetters, mapState, mapActions, mapMutations} from 'vuex'
 
-/**
- * This is the component that encapsulates the tip box, the players hand, the scoring meters, discard button, and the
- * section where their used safety/overclock and attack cards used against them will be displayed.
- */
 export default {
   name: 'PlayerInfoPanel',
   data () {
@@ -173,12 +170,10 @@ export default {
   components: {
     'card': Card,
     'modal': Modal,
+    'stats-panel': StatsPanel,
     'display-used-cards': DisplayUsedCards,
   },
   methods: {
-    /**
-     * These are maps to all of the functions in the vuex store.
-     */
     ...mapActions([
       'playerTookTurn',
       'turn'
@@ -248,10 +243,6 @@ export default {
         this.turn(true);
       }
     },
-    /**
-     * Inital function called when any cards in the players hand are clicked. It displays any modals that need to be displayed and highlights the card.
-     * @param c The card clicked
-     */
     cardClicked (c) {
 
       if(this.getTips().tutorial && this.getActiveCard() === undefined) {
@@ -286,11 +277,6 @@ export default {
         }
       }
     },
-    /**
-     * This displays the corresponding message in the tipbox based on the card or default.
-     * @param c
-     * @returns {string}
-     */
     setTipBox(c) {
         switch(c.type) {
           case 'I' :
@@ -352,9 +338,6 @@ export default {
       let num = Math.floor(Math.random() * this.facts.length);
       return this.facts[num];
     },
-    /**
-     * Deselects all cards.
-     */
     deselectAll () {
       document.removeEventListener('click', this.hide);
       this.tipsCardSelected = this.setTipBox('default');
@@ -397,10 +380,6 @@ export default {
     bus.$on('aiDiscard', () => {
       this.discardSelected();
     });
-    /**
-     * All of the ai... are called from the aiTurn mutations function from the store.
-     * These function executes the functionality given to the cards but slightly different to work with the ai.
-     */
     bus.$on('aiAttack', (stackToHack) => {
       if(!this.getTutorialState()) {
         if (this.getAiTurn() === true) {

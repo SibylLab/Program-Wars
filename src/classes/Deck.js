@@ -74,10 +74,6 @@ const cardDeck = [
 
 ]
 
-/**
- * This is the object representation of the games deck.
- * We use one deck that grows depending on the number of players instead of multiple decks.
- */
 export default class Deck {
   /**
    * The constructor for the Deck class

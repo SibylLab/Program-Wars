@@ -30,10 +30,6 @@
   import { bus } from '../../SharedComponents/Bus.vue'
   import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
-
-  /**
-   * The Modal for when the Power Outage card is clicked.
-   */
   export default {
     props: ['players'],
     components: {

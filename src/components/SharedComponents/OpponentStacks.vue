@@ -30,10 +30,6 @@
 import OpponentStack from './OpponentStack'
 import {mapGetters} from 'vuex'
 
-/**
- * This component is used in the Hack card to show each of the opponents played stacks so the user can choose which
- * stack to hack.
- */
 export default {
   name: 'opponent-stacks',
   props: ['player'],

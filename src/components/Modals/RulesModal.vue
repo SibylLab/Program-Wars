@@ -311,10 +311,7 @@
 </template>
 
 <script>
-  /**
-   * The Modal for when the rules button is clicked.
-   * It displays all of the rules, bonuses, game objectives, and get them on the right track for learning how to program.
-   */
+
   export default {
 
   }

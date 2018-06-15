@@ -1,9 +1,6 @@
 import AiMove from './AiMove'
 import {store} from '../store/store'
 
-/**
- * Sprinter is an Ai Personality that prioritizes using variable cards
- */
 export default class Sprinter {
 
   /**
