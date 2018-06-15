@@ -45,7 +45,7 @@
   import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
 
 /**
- * The component that holds what will be used as the true and false stacks
+ * The component that holds what will be used as the visual representation of the true and false stacks
  * @file Stack.vue
  */
 export default {
@@ -62,6 +62,10 @@ export default {
     }
   },
   computed: {
+    /**
+     * Determines where to show the add button to each stack.
+     * @returns {boolean}
+     */
     showBtn() {
       if(this.getActiveCard() !== undefined) {
         let activeCard = this.getActiveCard().type;
@@ -256,6 +260,9 @@ export default {
             $('#'+this.modalId2).modal('show')
         }
     },
+    /**
+     * This will group one or more stacks together and apply a bonus to the player.
+     */
     groupStacks() {
       let groupingBonus = 5;
       if(this.getTutorialState()){
@@ -291,6 +298,10 @@ export default {
     },
     cardClickedInStack(event, card) {
     },
+    /**
+     * This chooses the correct functionality for adding a card to the stack based on the value of the card.
+     * @returns {string}
+     */
     addToStack() {
       $('button[stackId="'+this.stackId+'"]').removeAttr( "data-content" );
       $('button[stackId="'+this.stackId+'"]').popover({
@@ -391,6 +402,11 @@ export default {
     drop () {
       this.addToStack()
     },
+    /**
+     * Helper function for updating a players bonus score.
+     * @param trueScore
+     * @param falseScore
+     */
     updateBonus(trueScore, falseScore){
       if(this.getActiveSide()) {
         this.changeBonusScore({

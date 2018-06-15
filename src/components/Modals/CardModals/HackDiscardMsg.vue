@@ -13,6 +13,10 @@
 
 <script>
   import {mapGetters, mapState} from 'vuex'
+
+  /**
+   * The Modal for when the Hack card is discarded.
+   */
   export default {
     methods: {
       /**

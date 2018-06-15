@@ -91,6 +91,10 @@
 
   import { bus } from '../SharedComponents/Bus';
   import {mapGetters, mapMutations} from 'vuex'
+
+  /**
+   * This modal is displayed at the end of the round when the winning score has been reached by any or all of the players.
+   */
   export default {
     props: ['playerList'],
     methods: {

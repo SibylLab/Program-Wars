@@ -13,6 +13,10 @@ import Player from '../classes/Player'
 import Deck from '../classes/Deck'
 import TutorialDeck from '../classes/TutorialDeck.js'
 
+/**
+ * The store holds all of the information that vuex will store and use. The functions are seperated into different files.
+ * @type {Store}
+ */
 export const store = new Vuex.Store({
     state: {
       players: [],

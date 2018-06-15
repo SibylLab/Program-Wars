@@ -97,6 +97,9 @@
   import {mapState} from 'vuex'
   import { bus } from '../SharedComponents/Bus';
 
+  /**
+   * This has the same functionality as the MainComponent but is slightly different to interact with the tutorial.
+   */
   export default {
     name: 'TutorialComponent',
     data() {
@@ -199,6 +202,10 @@
       }
     },
     computed: {
+      /**
+       * To decide whether to show the discard modal.
+       * @returns {*}
+       */
       showMsg() {
         return (this.getIsHack() || this.getIsDiscard())
       },

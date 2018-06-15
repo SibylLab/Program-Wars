@@ -8,6 +8,9 @@ import Stack from '../classes/Stack'
 import Player from '../classes/Player'
 import Deck from '../classes/Deck'
 
+/**
+ * The mutations are vuex store functions that are synchronous. They can not be used to call other mutations.
+ */
 export default {
   resetState(state) {
     state.players = [];
@@ -238,6 +241,12 @@ export default {
     state.tips.tutorial = payload.tutorial;
     state.tips.fact = payload.fact;
   },
+
+  /**
+   * This is called at the end of each round to check if any of the players reached the winning score.
+   * It also applies all of the bonus scores to the player.
+   * @param state
+   */
   checkWin(state) {
     let playerList = state.players;
     let highScore = 0;
@@ -335,6 +344,11 @@ export default {
       state.falseSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)';
     }
   },
+  /**
+   * This encapsulates an Ai's entire turn then emits the appropriate bus event
+   * @param state Typical call to the stores state.
+   * @param payload
+   */
   aiTakeTurn(state, payload) {
     state.aiTurn = true;
     let aiMove = state.players[state.activePlayer].type.turnLogic(payload);

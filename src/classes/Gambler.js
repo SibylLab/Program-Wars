@@ -1,5 +1,9 @@
 import AiMove from './AiMove'
 import {store} from '../store/store'
+
+/**
+ * The Gambler is an Ai personality that prioritizes Rx/variable cards first
+ */
 export default class Gambler {
 
   /**
@@ -112,7 +116,7 @@ export default class Gambler {
         moveType = 'discard';
       }
     }
-    
+
     return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus};
   }
 }
