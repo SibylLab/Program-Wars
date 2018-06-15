@@ -2,7 +2,7 @@
   <div id="playfield" :class="playfieldClass" class="container">
     <div class="row">
       <div class="col-md-12">
-        <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5></br>
+        <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
         <h3 style="text-align: left; margin-left: 40px">if ({{ trueOrFalse }} Path Selected) {</h3>
       </div>
     </div>
@@ -48,23 +48,23 @@ export default {
         return 'notActive'
       }
     },
-    stacks() {
-      return this.getStackList(this.trueFalse);
+    stacks () {
+      return this.getStackList(this.trueFalse)
     },
-    score() {
-      let trueSide = 0;
-      let falseSide = 0;
-      trueSide = this.getCurrentPlayer().trueScore;
-      falseSide = this.getCurrentPlayer().falseScore;
-      if(this.getCurrentPlayer().hasVirus){
-        trueSide = trueSide/2;
-        falseSide = falseSide/2;
-      } else if(this.getCurrentPlayer().hasOverclock){
-        trueSide = trueSide*2;
-        falseSide = falseSide*2
+    score () {
+      let trueSide = 0
+      let falseSide = 0
+      trueSide = this.getCurrentPlayer().trueScore
+      falseSide = this.getCurrentPlayer().falseScore
+      if (this.getCurrentPlayer().hasVirus) {
+        trueSide = trueSide / 2
+        falseSide = falseSide / 2
+      } else if (this.getCurrentPlayer().hasOverclock) {
+        trueSide = trueSide * 2
+        falseSide = falseSide * 2
       }
       return {trueScore: trueSide,
-              falseScore: falseSide};
+        falseScore: falseSide}
     }
   },
   components: {
@@ -75,11 +75,11 @@ export default {
       'getCurrentPlayer',
       'getStacks'
     ]),
-    getStackList() {
+    getStackList () {
       return this.getStacks().filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)
     },
     cardAdded (id) {
-      let emptyStackExists = false;
+      let emptyStackExists = false
 
       for (let stack of this.stacks) {
         if (stack.id === id) {
@@ -94,10 +94,10 @@ export default {
       }
 
       if (!emptyStackExists) {
-        this.numberOfStacks += 1;
-        this.stacks.push({ id: this.numberOfStacks, elements: [], value: 0, cardCount: 0})
+        this.numberOfStacks += 1
+        this.stacks.push({id: this.numberOfStacks, elements: [], value: 0, cardCount: 0})
       }
-    },
+    }
   }
 }
 

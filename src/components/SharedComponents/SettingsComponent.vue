@@ -51,7 +51,7 @@
         </div>
       </div>
       <div id="HASH" class="row">
-        <div id="HASH" class="col-md-12" style="text-align: right">
+        <div id="HASH2" class="col-md-12" style="text-align: right">
           <button type="button" class="btn btn-primary" @click="startTutorial" data-toggle="modal" data-target=".tutorial">Take the Tutorial</button>
           <button type="button" class="btn btn-primary" @click="submitPlayers" :disabled="noPlayers">Start New Game</button>
         </div>
@@ -70,10 +70,7 @@
   import CreditsModal from '../Modals/CreditsModal.vue'
   import TutorialModal from '../Modals/TutorialStartModal'
 
-  import {mapGetters} from 'vuex';
-  import {mapMutations} from 'vuex';
-  import Card from '../../classes/Card'
-  import Player from '../../classes/Player'
+  import {mapGetters, mapMutations} from 'vuex'
 
   export default {
     name: 'settings-component',
@@ -81,7 +78,7 @@
       return {
         idCounter: 0,
         dataToggle: false,
-        modalTitle: "Welcome to a new game of Programming Wars!",
+        modalTitle: 'Welcome to a new game of Programming Wars!',
         localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
@@ -89,7 +86,7 @@
         noPlayers: true,
         inputDisable: false,
         maxPlayer: false,
-         isRepeat: false,
+        isRepeat: false,
         aiSelect: 'noAiSelected',
         aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
         typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
@@ -110,96 +107,93 @@
       /**
        * Called whenever the 'Add Player' button has been clicked, for the purpose of adding the player
        */
-      submit() {
-        let pass = true;
+      submit () {
+        let pass = true
         for (let player of this.localPlayers) {
           if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
-            pass = false;
-            this.isRepeat = true;
+            pass = false
+            this.isRepeat = true
           } else {
-            this.isRepeat = false;
+            this.isRepeat = false
           }
         }
-        if(!(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none')) {
-          if(this.aiSelect.length > 0 && pass) {
-            this.localPlayers.push({name: this.aiSelect, isAi: true});
+        if (!(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none')) {
+          if (this.aiSelect.length > 0 && pass) {
+            this.localPlayers.push({name: this.aiSelect, isAi: true})
           }
         }
-        if(this.newPlayer.length > 0 && pass) {
-          this.localPlayers.push({name: this.newPlayer, isAi: false});
+        if (this.newPlayer.length > 0 && pass) {
+          this.localPlayers.push({name: this.newPlayer, isAi: false})
         }
-        if(this.localPlayers.length >= 4) {
-          this.maxPlayer = true;
+        if (this.localPlayers.length >= 4) {
+          this.maxPlayer = true
         }
-        if(this.localPlayers.length > 1) {
-          this.noPlayers = false;
+        if (this.localPlayers.length > 1) {
+          this.noPlayers = false
         }
-        this.newPlayer = "";
-        this.aiSelect = 'noAiSelected';
+        this.newPlayer = ''
+        this.aiSelect = 'noAiSelected'
       },
 
       /**
        * Start the tutorial mode with just the player and one AI
        */
-      startTutorial() {
-        this.isTutorial = true;
-        this.setTutorial({gameType: true});
-        //this.$store.commit('setTutorial', {gameType: true});
-        this.localPlayers = [];
-        this.localPlayers.push({name: 'You', isAi: false});
-        this.localPlayers.push({name: 'Flash', isAi: true});
-        this.$store.commit('addPlayers', {list: this.localPlayers});
-        this.$store.commit('setScoreLimit', {scoreLimit: 100});
-        this.gameStart = true;
+      startTutorial () {
+        this.isTutorial = true
+        this.setTutorial({gameType: true})
+      // this.$store.commit('setTutorial', {gameType: true});
+        this.localPlayers = []
+        this.localPlayers.push({name: 'You', isAi: false})
+        this.localPlayers.push({name: 'Flash', isAi: true})
+        this.$store.commit('addPlayers', {list: this.localPlayers})
+        this.$store.commit('setScoreLimit', {scoreLimit: 100})
+        this.gameStart = true
         setTimeout(() => {
           this.$router.push('tutorial')
-        }, 100);
+        }, 100)
       },
 
       /**
        * Called whenever the submit button is pressed to
        */
-      submitPlayers() {
-        this.$store.commit('addPlayers', {list: this.localPlayers});
-        this.$store.commit('setScoreLimit', {scoreLimit: this.selected});
-        this.gameStart = true;
+      submitPlayers () {
+        this.$store.commit('addPlayers', {list: this.localPlayers})
+        this.$store.commit('setScoreLimit', {scoreLimit: this.selected})
+        this.gameStart = true
 
         setTimeout(() => {
           this.$router.push('game')
-        }, 100);
-
+        }, 100)
       },
 
       /**
        * Called when the remove button beside a players name is called, for the purpose of removing that player.
        * @param e The player to be removed.
        */
-      removePlayer(e) {
-        if(this.localPlayers[e] !== '') {
-          this.localPlayers.splice(e, 1);
-          if(this.localPlayers.length < 4) {
-            this.maxPlayer = false;
+      removePlayer (e) {
+        if (this.localPlayers[e] !== '') {
+          this.localPlayers.splice(e, 1)
+          if (this.localPlayers.length < 4) {
+            this.maxPlayer = false
           }
-          if(this.localPlayers.length < 2) {
-            this.noPlayers = true;
+          if (this.localPlayers.length < 2) {
+            this.noPlayers = true
           }
-        } else
-          return;
-
-      },
+        } else { return }
+      }
     },
     computed: {
-      currentPlayerId() {
-        return this.$store.getters.getCurrentPlayerId;
+      currentPlayerId () {
+        return this.$store.getters.getCurrentPlayerId
       },
-      players() {
-        return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId);
+      players () {
+        return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId)
       },
-      maxChar() {
-        if(this.newPlayer.length >= 10) {
-          return true;
+      maxChar () {
+        if (this.newPlayer.length >= 10) {
+          return true
         } else {
-          return false;
+          return false
         }
       }
     },
@@ -207,12 +201,12 @@
       /**
        * This watches the AI selector dialog box and is called when it changes.
        */
-      aiSelect() {
-        if(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none') {
-          this.inputDisable = false;
+      aiSelect () {
+        if (this.aiSelect === 'noAiSelected' || this.aiSelect === 'none') {
+          this.inputDisable = false
         } else {
-          this.inputDisable = true;
-          this.newPlayer = '';
+          this.inputDisable = true
+          this.newPlayer = ''
         }
       }
     },
@@ -224,19 +218,19 @@
       'credits-modal': CreditsModal,
       'tutorial-modal': TutorialModal
     },
-    beforeMount() {
-      this.$store.commit('resetState');
-      this.localPlayers = [];
-      if(this.$store.state.players.length > 0) {
-        for(let i = 0; i < this.$store.state.players.length; i++) {
-          if(this.$store.state.players[i].isAi) {
-            this.aiSelect = this.$store.state.players[i].name;
+    beforeMount () {
+      this.$store.commit('resetState')
+      this.localPlayers = []
+      if (this.$store.state.players.length > 0) {
+        for (let i = 0; i < this.$store.state.players.length; i++) {
+          if (this.$store.state.players[i].isAi) {
+            this.aiSelect = this.$store.state.players[i].name
           } else {
-            this.newPlayer = this.$store.state.players[i].name;
+            this.newPlayer = this.$store.state.players[i].name
           }
-          this.submit();
+          this.submit()
         }
-        this.$store.state.players = [];
+        this.$store.state.players = []
       }
     }
 
@@ -252,7 +246,7 @@
     margin-bottom: -10px
   }
 
-  #HASH {
+  #HASH #HASH2{
     display: flex;
     justify-content: space-between;
   }

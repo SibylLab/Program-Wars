@@ -34,17 +34,15 @@
 
 <script>
 
-  import { bus } from '../SharedComponents/Bus';
-  import Card from '../SharedComponents/Card'
+import Card from '../SharedComponents/Card'
 
-
-  export default {
-    name: 'modal',
-    props: ['modalId', 'modalTitle', 'modalBody', 'modalCards', 'modalCallback', 'modalCallback2', 'cancel', 'image'],
-    components: {
-        'card': Card
-    }
+export default {
+  name: 'modal',
+  props: ['modalId', 'modalTitle', 'modalBody', 'modalCards', 'modalCallback', 'modalCallback2', 'cancel', 'image'],
+  components: {
+    'card': Card
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

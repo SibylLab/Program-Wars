@@ -67,8 +67,10 @@
 </template>
 
 <script>
-  import { bus } from '../SharedComponents/Bus';
-  import Card from '../SharedComponents/Card'
+  /* eslint-disable no-undef */
+
+  import { bus } from '../SharedComponents/Bus'
+import Card from '../SharedComponents/Card'
   import Modal from '../Modals/Modal'
   import StatsPanel from '../SharedComponents/StatsPanel'
   import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
@@ -80,76 +82,70 @@
       return {
         title: 'Player Info Panel',
         idCounter: 6,
-        modalText: "",
+        modalText: '',
         modalCards: [],
         tipsToggle: true,
         factsToggle: true,
         indexOfFact: 0,
-        tipsCardSelected:'Programming Wars Tutorial!',
+        tipsCardSelected: 'Programming Wars Tutorial!',
         tipsInfoText: 'Welcome to the tutorial, you can find tips on what on what to do next here. ' +
         'Click on the first instruction card and place it in the true path to get started. If you get lost at any time click on the rules button in the top right!',
         facts: [
           'Your false path needs an instruction, let\'s add one to the false path.',
           'Great! Your paths are started, let\'s place another instruction in the true path.',
-          'It\'s time to build up one of our paths. Add the repetition card to your flase path. This will allow you'
-          + ' to add a variable on top of it to change how often it repeats.',
+          'It\'s time to build up one of our paths. Add the repetition card to your flase path. This will allow you' +
+        ' to add a variable on top of it to change how often it repeats.',
           'Either of your paths could be attacked by a hack card, which would ruin your stack. Group cards can be used on' +
-          ' one or more stacks of cards in one path that equal up to the group card value. Let\'s protect your true path with'
-          + ' a group card. Click on the check boxes above the cards in your true path to group them. You also get a small bonus for using group cards.',
+          ' one or more stacks of cards in one path that equal up to the group card value. Let\'s protect your true path with' +
+        ' a group card. Click on the check boxes above the cards in your true path to group them. You also get a small bonus for using group cards.',
           'You\'re getting closer to completing a path, add the variable (5) card to build up your false path.',
           'The computer has at least one stack that isn\'t grouped, so use the hack card on one of its stacks to set him back.',
           'Your false path is vulnerable to getting hacked, but you dont have any more group card. Use the Firewall card to get full protection from hack cards.',
           'The computer is vulnerable to getting a virus, send him a virus to slow down his program and half their total instructions.',
           'Speaking of being vulnerable to viruses, you\'re also vulnerable. Let\'s use an AntiVirus to protect you from all further viruses',
           'You have one more attack card in your hand. Use the Power Outage card to stop your opponent from playing instruction cards.',
-          'With our last attack card of course we have a protection card. You can play a generator to reverse a power outage and prevent them or just use a '+
+          'With our last attack card of course we have a protection card. You can play a generator to reverse a power outage and prevent them or just use a ' +
           'Battery Backup to reverse it. Let\'s use the generator.',
           'We have one last card to use. Maybe our most powerful. Let\'s use a overclock card to speed up your pc to run double the instructions.',
           'Congratulations, you\'ve completed the tutorial! You can continue playing or click \'End Tutorial\' in the top right corner.'
         ],
-        showTextBoxButton: true,
+        showTextBoxButton: true
       }
     },
     computed: {
 
-      colSize() {
-        let size = 12/this.getPlayers().length;
-        return 'col-sm-6 col-md-'+size;
+      colSize () {
+        let size = 12 / this.getPlayers().length
+        return 'col-sm-6 col-md-' + size
       },
-      players() {
-        return this.getPlayers();
+      players () {
+        return this.getPlayers()
       },
-      displayStyle() {
-        if(this.getTips().fact) {
-          return {'display':'block'}
+      displayStyle () {
+        if (this.getTips().fact) {
+          return {'display': 'block'}
         } else {
-          return {'display':'none'}
+          return {'display': 'none'}
         }
       },
-      changeTrueFalse() {
-        if (this.$store.getters.trueFalseAnim)
-          return "trueFalse";
-        else
-          return ""
+      changeTrueFalse () {
+        if (this.$store.getters.trueFalseAnim) { return 'trueFalse' } else { return '' }
       },
-      hasPlayed() {
-        if (this.getHasPlayed())
-          return "hasPlayed";
-        else
-          return ""
+      hasPlayed () {
+        if (this.getHasPlayed()) { return 'hasPlayed' } else { return '' }
       },
-      hand() {
-        let hand = this.getCurrentPlayerHand();
-        if (hand === null){
+      hand () {
+        let hand = this.getCurrentPlayerHand()
+        if (hand === null) {
           return []
         } else {
           return hand.cards
         }
       },
-      activeSide() {
+      activeSide () {
         let activeSideString = String(this.$store.getters.getActiveSide)
         return activeSideString.toUpperCase()
-      },
+      }
 
     },
     components: {
@@ -200,64 +196,62 @@
         'aiTurn',
         'activeCard'
       ]),
-      getScore(player){
-        let trueSide = 0;
-        let falseSide = 0;
-        trueSide = this.getPlayers()[player].trueScore + this.getPlayers()[player].bonusTrue;
-        falseSide = this.getPlayers()[player].falseScore + this.getPlayers()[player].bonusFalse;
-        if(this.getPlayers()[player].hasVirus){
-          trueSide = trueSide/2;
-          falseSide = falseSide/2;
-        } else if(this.getPlayers()[player].hasOverclock){
-          trueSide = trueSide*2;
-          falseSide = falseSide*2
+      getScore (player) {
+        let trueSide = 0
+        let falseSide = 0
+        trueSide = this.getPlayers()[player].trueScore + this.getPlayers()[player].bonusTrue
+        falseSide = this.getPlayers()[player].falseScore + this.getPlayers()[player].bonusFalse
+        if (this.getPlayers()[player].hasVirus) {
+          trueSide = trueSide / 2
+          falseSide = falseSide / 2
+        } else if (this.getPlayers()[player].hasOverclock) {
+          trueSide = trueSide * 2
+          falseSide = falseSide * 2
         }
-        return {trueScore: trueSide, falseScore: falseSide }
+        return { trueScore: trueSide, falseScore: falseSide }
       },
-      openModal() {
-        $('.hack').modal('show');
+      openModal () {
+        $('.hack').modal('show')
       },
-      discardSelected() {
+      discardSelected () {
         if (this.getActiveCard() !== undefined) {
-          this.isDiscard = true;
+          this.isDiscard = true
           setTimeout(() => {
-            this.isDiscard = false;
-          },1250);
-          this.discardSelectedCard();
-          this.playerTookTurn();
-          this.turn(true);
+            this.isDiscard = false
+          }, 1250)
+          this.discardSelectedCard()
+          this.playerTookTurn()
+          this.turn(true)
         }
       },
       cardClicked (c) {
-        if(this.hand[0] === c || this.getFactIndex() >= this.facts.length) {
+        if (this.hand[0] === c || this.getFactIndex() >= this.facts.length) {
           if (this.getTips().tutorial) {
-            this.tipsCardSelected = this.setTipBox(c);
+            this.tipsCardSelected = this.setTipBox(c)
           } else {
-            this.tipsCardSelected = this.setTipBox('default');
+            this.tipsCardSelected = this.setTipBox('default')
           }
-          let prevActive = this.getActiveCard();
+          let prevActive = this.getActiveCard()
           if (c.type === 'VIRUS') {
             $('.virus').modal('show')
           } else if (c.type === 'POWEROUTAGE') {
-            $('.powerOutage').modal('show');
+            $('.powerOutage').modal('show')
           } else if (c.type === 'BATTERYBACKUP') {
-            $('.batteryBackup').modal('show');
+            $('.batteryBackup').modal('show')
           } else if (c.type === 'OVERCLOCK') {
-            $('.overclock').modal('show');
+            $('.overclock').modal('show')
           } else if (c.type === 'FIREWALL') {
-            $('.firewall').modal('show');
+            $('.firewall').modal('show')
+          } else if (c.type === 'GENERATOR') {
+            $('.generator').modal('show')
+          } else if (c.type === 'ANTIVIRUS') {
+            $('.antiVirus').modal('show')
           }
-          else if (c.type === 'GENERATOR') {
-            $('.generator').modal('show');
-          }
-          else if (c.type === 'ANTIVIRUS') {
-            $('.antiVirus').modal('show');
-          }
-          this.selectCard(c);
+          this.selectCard(c)
           if (prevActive !== undefined) {
             if (c.type !== 'G' || c.id !== prevActive.id) {
-              this.removeAllSelectedStacks();
-              this.setStackSelectedBoolean({payload: undefined});
+              this.removeAllSelectedStacks()
+              this.setStackSelectedBoolean({payload: undefined})
             }
           }
         }
@@ -267,80 +261,79 @@
        * @param c The type of card played or default for a fact.
        * @returns {string} This returns the string that will be displayed.
        */
-      setTipBox(c) {
-        switch(c.type) {
+      setTipBox (c) {
+        switch (c.type) {
           case 'I' :
             this.tipsInfoText =
               'Use this to create your program.' +
-              ' Place it on either the "True" or "False" playing field.';
-            return 'Instruction Card'; break;
+              ' Place it on either the "True" or "False" playing field.'
+            return 'Instruction Card'
           case 'R' :
-            this.tipsInfoText = 'Play this card on top of an instruction or group card to repeat it.';
-            return 'Repetition Card'; break;
+            this.tipsInfoText = 'Play this card on top of an instruction or group card to repeat it.'
+            return 'Repetition Card'
 
           case 'V':
-            this.tipsInfoText = 'Play this card on top of Variable Repetition cards to change the number of times an instruction or group card repeats.';
-            return 'Variable Card'; break;
+            this.tipsInfoText = 'Play this card on top of Variable Repetition cards to change the number of times an instruction or group card repeats.'
+            return 'Variable Card'
 
           case 'H':
-            this.tipsInfoText = 'Use this card to remove cards from another player`s playing field. Group cards are immune to hacking.';
-            return 'Hack Card'; break;
+            this.tipsInfoText = 'Use this card to remove cards from another player`s playing field. Group cards are immune to hacking.'
+            return 'Hack Card'
 
           case 'G' :
-            this.tipsInfoText = 'Use this to combine instruction and group cards to protect them from Hack cards. The total of the instruction and group cards must match the value of this card';
-            return 'Group Card'; break;
+            this.tipsInfoText = 'Use this to combine instruction and group cards to protect them from Hack cards. The total of the instruction and group cards must match the value of this card'
+            return 'Group Card'
 
           case 'FIREWALL':
-          this.tipsInfoText = 'Use this to remove the chance of being hacked.';
-          return 'Firewall Card'; break;
+            this.tipsInfoText = 'Use this to remove the chance of being hacked.'
+            return 'Firewall Card'
 
           case 'GENERATOR':
-          this.tipsInfoText = 'Use this card to prevent prevent a power outage.';
-          return 'Generator Card'; break;
+            this.tipsInfoText = 'Use this card to prevent prevent a power outage.'
+            return 'Generator Card'
 
           case 'ANTIVIRUS':
-          this.tipsInfoText = 'Use this card to prevent all viruses.';
-          return 'AntiVirus Card'; break;
+            this.tipsInfoText = 'Use this card to prevent all viruses.'
+            return 'AntiVirus Card'
 
           case 'VIRUS':
-          this.tipsInfoText = 'Use this on an opponent to cut their current score in half.';
-          return 'Virus Card'; break;
+            this.tipsInfoText = 'Use this on an opponent to cut their current score in half.'
+            return 'Virus Card'
 
           case 'OVERCLOCK':
-          this.tipsInfoText = 'Use this card to double your current score.';
-          return 'OverClock Card'; break;
+            this.tipsInfoText = 'Use this card to double your current score.'
+            return 'OverClock Card'
 
           case 'POWEROUTAGE':
-          this.tipsInfoText = 'Use this card on an opponent to prevent them from playing instruction cards.';
-          return 'PowerOutage Card'; break;
+            this.tipsInfoText = 'Use this card on an opponent to prevent them from playing instruction cards.'
+            return 'PowerOutage Card'
 
           case 'BATTERYBACKUP':
-          this.tipsInfoText = 'Use this to be able to play instruction cards. (Negate Power Outage)';
-          return 'BatteryBackup Card'; break;
-
+            this.tipsInfoText = 'Use this to be able to play instruction cards. (Negate Power Outage)'
+            return 'BatteryBackup Card'
 
           default :
-            let fact = this.setTutorialFact();
-            this.tipsInfoText = fact;
-            return 'Next Step!';
+            let fact = this.setTutorialFact()
+            this.tipsInfoText = fact
+            return 'Next Step!'
         }
       },
-      setTutorialFact() {
-        let retFact = this.facts[this.facts.length];
-        if(this.getFactIndex() < this.facts.length) {
-          retFact = this.facts[this.getFactIndex()];
+      setTutorialFact () {
+        let retFact = this.facts[this.facts.length]
+        if (this.getFactIndex() < this.facts.length) {
+          retFact = this.facts[this.getFactIndex()]
         }
-        ++this.indexOfFact;
-        return retFact;
+        ++this.indexOfFact
+        return retFact
       },
       deselectAll () {
-        document.removeEventListener('click', this.hide);
-        this.tipsCardSelected = this.setTipBox('default');
-        bus.$emit('cardDeselected');
+        document.removeEventListener('click', this.hide)
+        this.tipsCardSelected = this.setTipBox('default')
+        bus.$emit('cardDeselected')
         this.setStackSelectedBoolean({payload: undefined})
 
-        this.$store.commit('setActiveCardUndefined');
-        if(this.hand !== undefined) {
+        this.$store.commit('setActiveCardUndefined')
+        if (this.hand !== undefined) {
           for (let card of this.hand) {
             card.selected = false
           }
@@ -349,132 +342,126 @@
       removeTutorialCard (cardId) {
         this.$store.commit('removeCard', cardId)
       },
-      setActiveCard(c) {
+      setActiveCard (c) {
         this.selectCard(c)
       },
-      removeAnimation() {
-        $('#tipBox').removeClass('animated bounce');
-        this.showTextBoxButton = !this.showTextBoxButton;
+      removeAnimation () {
+        $('#tipBox').removeClass('animated bounce')
+        this.showTextBoxButton = !this.showTextBoxButton
       }
 
     },
     created: function () {
       bus.$on('hackCanceled', () => {
-        this.deselectAll();
-      });
+        this.deselectAll()
+      })
       bus.$on('activeCardAddedToStack', (cardId) => {
-        if(this.getTutorialState()) {
-          this.removeTutorialCard(cardId);
-          this.addCardToHand();
+        if (this.getTutorialState()) {
+          this.removeTutorialCard(cardId)
+          this.addCardToHand()
         }
-      });
+      })
       bus.$on('aiDiscard', () => {
-        this.discardSelected();
-      });
-        bus.$on('playAnimation', () =>{
-          $('#tipBox').addClass('animated bounce');
-      });
+        this.discardSelected()
+      })
+      bus.$on('playAnimation', () => {
+        $('#tipBox').addClass('animated bounce')
+      })
       bus.$on('cardPlayed', () => {
-        this.tipsCardSelected = this.setTipBox('default');
-      });
+        this.tipsCardSelected = this.setTipBox('default')
+      })
       bus.$on('aiAttack', (stackToHack) => {
-        if(this.getTutorialState()) {
+        if (this.getTutorialState()) {
           if (this.getAiTurn()) {
             if (this.getActiveCard() !== undefined) {
               if (this.getActiveCard().type === 'POWEROUTAGE') {
-
-                $('.powerOutage').modal('hide');
-                this.givePowerOutage(stackToHack.playerId);
-                this.playerTookTurn();
-                bus.$emit('cardDeselected');
+                $('.powerOutage').modal('hide')
+                this.givePowerOutage(stackToHack.playerId)
+                this.playerTookTurn()
+                bus.$emit('cardDeselected')
                 if (this.getHasPlayed()) {
-                  this.turn(true);
+                  this.turn(true)
                 }
-                this.setAiTurn(false);
-              }
-              else if (this.getActiveCard().type === 'VIRUS') {
-
-                $('.virus').modal('hide');
-                this.giveVirus(stackToHack.playerId);
-                this.playerTookTurn();
-                bus.$emit('cardDeselected');
+                this.setAiTurn(false)
+              } else if (this.getActiveCard().type === 'VIRUS') {
+                $('.virus').modal('hide')
+                this.giveVirus(stackToHack.playerId)
+                this.playerTookTurn()
+                bus.$emit('cardDeselected')
                 if (this.getHasPlayed()) {
-                  this.turn(true);
+                  this.turn(true)
                 }
-                this.setAiTurn(false);
+                this.setAiTurn(false)
               }
             }
           }
         }
-      });
+      })
 
       bus.$on('aiProtection', () => {
-        if(this.getTutorialState()) {
+        if (this.getTutorialState()) {
           if (this.getAiTurn()) {
             if (this.getActiveCard() !== undefined) {
               if (this.getActiveCard().type === 'FIREWALL') {
-                $('.firewall').modal('hide');
-                this.giveFirewall(this.getCurrentPlayer().id);
-                this.playerTookTurn();
-                bus.$emit('cardDeselected');
+                $('.firewall').modal('hide')
+                this.giveFirewall(this.getCurrentPlayer().id)
+                this.playerTookTurn()
+                bus.$emit('cardDeselected')
                 if (this.getHasPlayed()) {
-                  this.turn(true);
+                  this.turn(true)
                 }
-                this.setAiTurn(false);
-              }
-              else if (this.getActiveCard().type === 'ANTIVIRUS') {
-                $('.antiVirus').modal('hide');
-                this.giveAntiVirus(this.getCurrentPlayer().id);
-                this.playerTookTurn();
-                bus.$emit('cardDeselected');
+                this.setAiTurn(false)
+              } else if (this.getActiveCard().type === 'ANTIVIRUS') {
+                $('.antiVirus').modal('hide')
+                this.giveAntiVirus(this.getCurrentPlayer().id)
+                this.playerTookTurn()
+                bus.$emit('cardDeselected')
                 if (this.getHasPlayed()) {
-                  this.turn(true);
+                  this.turn(true)
                 }
-                this.setAiTurn(false);
-              }
-              else if (this.getActiveCard().type === 'GENERATOR') {
-                $('.generator').modal('hide');
-                this.giveGenerator(this.getCurrentPlayer().id);
-                this.playerTookTurn();
-                bus.$emit('cardDeselected');
+                this.setAiTurn(false)
+              } else if (this.getActiveCard().type === 'GENERATOR') {
+                $('.generator').modal('hide')
+                this.giveGenerator(this.getCurrentPlayer().id)
+                this.playerTookTurn()
+                bus.$emit('cardDeselected')
                 if (this.getHasPlayed()) {
-                  this.turn(true);
+                  this.turn(true)
                 }
-                this.setAiTurn(false);
+                this.setAiTurn(false)
               }
             }
           }
         }
-      });
+      })
 
       bus.$on('aiEnhance', () => {
-        if(this.getTutorialState()){
+        if (this.getTutorialState()) {
           if (this.getAiTurn === true) {
             if (this.getActiveCard() !== undefined) {
               if (this.getActiveCard().type === 'BATTERYBACKUP') {
-                $('.batteryBackup').modal('hide');
-                this.giveBatteryBackup(this.getCurrentPlayer().id);
-                this.playerTookTurn();
-                bus.$emit('cardDeselected');
+                $('.batteryBackup').modal('hide')
+                this.giveBatteryBackup(this.getCurrentPlayer().id)
+                this.playerTookTurn()
+                bus.$emit('cardDeselected')
                 if (this.getHasPlayed()) {
-                  this.turn(true);
+                  this.turn(true)
                 }
-                this.setAiTurn(false);
-              }
-              else if (this.getActiveCard().type === 'OVERCLOCK') {
-                $('.batteryBackup').modal('hide');
-                this.giveOverclock(this.getCurrentPlayer().id);
-                this.playerTookTurn();
-                bus.$emit('cardDeselected');
+                this.setAiTurn(false)
+              } else if (this.getActiveCard().type === 'OVERCLOCK') {
+                $('.batteryBackup').modal('hide')
+                this.giveOverclock(this.getCurrentPlayer().id)
+                this.playerTookTurn()
+                bus.$emit('cardDeselected')
                 if (this.getHasPlayed()) {
-                  this.turn(true);
+                  this.turn(true)
                 }
-                this.setAiTurn(false);
+                this.setAiTurn(false)
               }
             }
           }
         }
-      });
+      })
     }
   }
 </script>

@@ -27,12 +27,12 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
 
   import { bus } from '../../SharedComponents/Bus.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
   export default {
     props: ['players'],
-
 
     methods: {
       /**
@@ -52,42 +52,42 @@
         'discardSelectedCard',
         'giveVirus'
       ]),
-      virusCanceled() {
-        bus.$emit('hackCanceled');
+      virusCanceled () {
+        bus.$emit('hackCanceled')
       },
-      discardVirus() {
+      discardVirus () {
         if (this.getActiveCard() !== undefined) {
-          this.discardSelectedCard();
-          this.playerTookTurn();
-          this.turn(true);
+          this.discardSelectedCard()
+          this.playerTookTurn()
+          this.turn(true)
         }
       },
-      playerClicked(player) {
-        this.giveVirus(player);
-        $('.virus').modal('hide');
-        if(this.getTutorialState()){
-          bus.$emit('cardPlayed');
-          this.increaseFactIndex();
+      playerClicked (player) {
+        this.giveVirus(player)
+        $('.virus').modal('hide')
+        if (this.getTutorialState()) {
+          bus.$emit('cardPlayed')
+          this.increaseFactIndex()
         }
-        let ret = this.playerTookTurn();
-        this.turn(true);
+        this.playerTookTurn()
+        this.turn(true)
       }
     },
     computed: {
-      hideButton() {
-        let activeCard = this.getActiveCard();
-        if(activeCard !== undefined) {
-          if(activeCard.type === 'VIRUS' && activeCard !== undefined) {
-            return 'display: block';
+      hideButton () {
+        let activeCard = this.getActiveCard()
+        if (activeCard !== undefined) {
+          if (activeCard.type === 'VIRUS' && activeCard !== undefined) {
+            return 'display: block'
           } else {
-            return 'display: none';
+            return 'display: none'
           }
         } else {
           return 'display: none'
         }
-      },
+      }
     },
-    created() {
+    created () {
       $('.virus').modal({
         backdrop: 'static',
         keyboard: false

@@ -251,7 +251,7 @@
                 <div role="tabpanel" class="tab-pane" id="gamePlay">
                   <h4>Playing the Game</h4>
                   <p>On each of your turns:</p>
-                  <ol id="gamePlay">
+                  <ol id="gamePlay2">
                     <li>Select a card to put in the "True" or "False" playing field that was chosen at the beginning of the round, or to discard.</li>
                     <li>At the beginning of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.</li>
                     <li>You get bonus points for good programming practice. For more information on this go to the 'Bonus Points' tab.</li>
