@@ -2,6 +2,9 @@
  * @file Card.js file
  */
 
+/**
+ * This is used to represent a card object.
+ */
 export default class Card {
   /**
    * Constructor for the Card class
@@ -11,18 +14,17 @@ export default class Card {
    * @param {char} type The type of the card
    * @param {char} cardImg is a string pointing to the image of the card
    */
-  constructor(id, value, type, cardImg) {
-
-    this.value = value;
-    this.type = type;
-    this.selected = false;
-    this.id = id;
-    this.cardImg = cardImg;
-    this.showFace = false;
+  constructor (id, value, type, cardImg) {
+    this.value = value
+    this.type = type
+    this.selected = false
+    this.id = id
+    this.cardImg = cardImg
+    this.showFace = false
   }
 
-  flipCardFace() {
-    this.showFace = !this.showFace;
+  flipCardFace () {
+    this.showFace = !this.showFace
   }
 }
 

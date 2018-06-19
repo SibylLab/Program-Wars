@@ -26,10 +26,15 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
 
   import { bus } from '../../SharedComponents/Bus.vue'
   import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
+
+  /**
+   * The Modal for when the Power Outage card is clicked.
+   */
   export default {
     props: ['players'],
     components: {
@@ -54,42 +59,42 @@
         'discardSelectedCard',
         'givePowerOutage'
       ]),
-      powerOutageCanceled() {
-        bus.$emit('hackCanceled');
+      powerOutageCanceled () {
+        bus.$emit('hackCanceled')
       },
-      discardPowerOutage() {
+      discardPowerOutage () {
         if (this.getActiveCard() !== undefined) {
-          this.discardSelectedCard();
-          this.playerTookTurn();
-          this.turn(true);
+          this.discardSelectedCard()
+          this.playerTookTurn()
+          this.turn(true)
         }
       },
-      playerClicked(player) {
-        this.givePowerOutage(player);
-        $('.powerOutage').modal('hide');
-        if(this.getTutorialState()){
-          bus.$emit('cardPlayed');
-          this.increaseFactIndex();
+      playerClicked (player) {
+        this.givePowerOutage(player)
+        $('.powerOutage').modal('hide')
+        if (this.getTutorialState()) {
+          bus.$emit('cardPlayed')
+          this.increaseFactIndex()
         }
-        let ret = this.playerTookTurn();
-        this.turn(true);
+        this.playerTookTurn()
+        this.turn(true)
       }
     },
     computed: {
-      hideButton() {
-        let activeCard = this.getActiveCard();
-        if(activeCard !== undefined) {
-          if(activeCard.type === 'POWEROUTAGE' && activeCard !== undefined) {
-            return 'display: block';
+      hideButton () {
+        let activeCard = this.getActiveCard()
+        if (activeCard !== undefined) {
+          if (activeCard.type === 'POWEROUTAGE' && activeCard !== undefined) {
+            return 'display: block'
           } else {
-            return 'display: none';
+            return 'display: none'
           }
         } else {
           return 'display: none'
         }
-      },
+      }
     },
-    created() {
+    created () {
       $('.powerOutage').modal({
         backdrop: 'static',
         keyboard: false

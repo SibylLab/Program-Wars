@@ -6,9 +6,9 @@ export default class Gambler {
   /**
    * Constructor for this AI personality.
    */
-  constructor() {
-    this.move = new AiMove();
-    this.boolSide = this.move.getBoolSide();
+  constructor () {
+    this.move = new AiMove()
+    this.boolSide = this.move.getBoolSide()
   }
 
   /**
@@ -16,22 +16,23 @@ export default class Gambler {
    * @param event
    * @returns {*} The card to play, the stack to play, the opponent to attack, and the move type.
    */
-  turnLogic(event) {
-    //This will be executed in either OpponentStacks or PlayerInfoPanel
-    let cardToPlay = undefined;
-    //This will be executed in AiMove.js
-    let stackToPlay = undefined;
-    //This will be executed in AiMove.js
-    let opponentToAttack = undefined;
-    //This is used in mutations under AiTakeTurn
-    let moveType = undefined;
 
-    let opponentPO = this.move.getOpponentToAttack(event,'POWEROUTAGE');
-    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS');
+  turnLogic (event) {
+    // This will be executed in either OpponentStacks or PlayerInfoPanel
+    let cardToPlay
+    // This will be executed in AiMove.js
+    let stackToPlay
+    // This will be executed in AiMove.js
+    let opponentToAttack
+    // This is used in mutations under AiTakeTurn
+    let moveType
 
-    let hand = this.move.organizeHand(event);
-    this.boolSide = store.getters.getCoinMsg;
-    let canGroup = this.move.findGroup(event.stack, hand.bestGCard);
+    let opponentPO = this.move.getOpponentToAttack(event, 'POWEROUTAGE')
+    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS')
+
+    let hand = this.move.organizeHand(event)
+    this.boolSide = store.getters.getCoinMsg
+    let canGroup = this.move.findGroup(event.stack, hand.bestGCard)
 
     let handler = new Handler('Gambler')
 
@@ -114,6 +115,6 @@ export default class Gambler {
     //   }
     // }
 
-    return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus};
+    return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus}
   }
 }

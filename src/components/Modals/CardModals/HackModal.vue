@@ -32,10 +32,15 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
 
   import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
   import { bus } from '../../SharedComponents/Bus.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
+
+  /**
+   * This is the Modal called when the hack card is clicked.
+   */
   export default {
     props: ['players'],
     components: {
@@ -55,32 +60,32 @@
       ...mapMutations([
         'discardSelectedCard'
       ]),
-      hackCanceled() {
-        bus.$emit('hackCanceled');
+      hackCanceled () {
+        bus.$emit('hackCanceled')
       },
-      discardHack() {
+      discardHack () {
         if (this.getActiveCard() !== undefined) {
-          this.discardSelectedCard();
-          this.playerTookTurn();
-          this.turn(true);
+          this.discardSelectedCard()
+          this.playerTookTurn()
+          this.turn(true)
         }
       }
     },
     computed: {
-      hideButton() {
-          let activeCard = this.getActiveCard();
-          if(activeCard !== undefined) {
-            if(activeCard.type === 'H' && activeCard !== undefined) {
-              return 'display: block';
-            } else {
-              return 'display: none';
-            }
+      hideButton () {
+        let activeCard = this.getActiveCard()
+        if (activeCard !== undefined) {
+          if (activeCard.type === 'H' && activeCard !== undefined) {
+            return 'display: block'
           } else {
-              return 'display: none'
+            return 'display: none'
           }
+        } else {
+          return 'display: none'
+        }
       }
     },
-    created() {
+    created () {
       $('.hack').modal({
         backdrop: 'static',
         keyboard: false

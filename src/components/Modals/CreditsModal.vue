@@ -12,7 +12,7 @@
         <p><b>Version 1.0 coded by</b> Dustin Fowler, Jonathan Vos, Josh Vandenhoek,<br/> Lance Chisholm, and Shaun Cullen</p>
         <p><b>Current version by</b> Jace Riehl, Vincent Cote, Shaun Cullen, and Dr. John Anvik</p>
         <p><b>Graphics by</b> Katherine Hatton</p>
-        </br><p><b>Follow the project page on </b><a href="https://github.com/johnanvik/program-wars" target="_blank">GitHub</a></p>
+        <p><b>Follow the project page on </b><a href="https://github.com/johnanvik/program-wars" target="_blank">GitHub</a></p>
       <div class="modal-footer">
         <div style="text-align: left; float: left; font-size: 85%">
           <p><b>Version: </b>2.0</p></div>
@@ -28,6 +28,9 @@
 </template>
 
 <script>
+  /**
+   * The Modal for when the credits button is clicked.
+   */
   export default {
   }
 </script>

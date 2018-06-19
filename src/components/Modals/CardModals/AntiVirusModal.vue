@@ -25,11 +25,15 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
 
   import { bus } from '../../SharedComponents/Bus.vue'
 
   import {mapGetters, mapActions, mapMutations} from 'vuex'
 
+  /**
+   * The Modal for when the AntiVirus card is clicked.
+   */
   export default {
     props: ['players'],
 
@@ -51,49 +55,49 @@
         'discardSelectedCard',
         'giveAntiVirus'
       ]),
-      antiVirusCanceled() {
-        bus.$emit('hackCanceled');
+      antiVirusCanceled () {
+        bus.$emit('hackCanceled')
       },
-      discardAntiVirus() {
+      discardAntiVirus () {
         if (this.getActiveCard() !== undefined) {
-          this.discardSelectedCard();
-          this.playerTookTurn();
-          this.turn(true);
+          this.discardSelectedCard()
+          this.playerTookTurn()
+          this.turn(true)
         }
       },
-      useClicked() {
-        let player = this.getCurrentPlayer();
-        this.giveAntiVirus(player.id);
+      useClicked () {
+        let player = this.getCurrentPlayer()
+        this.giveAntiVirus(player.id)
 
-        $('.antiVirus').modal('hide');
-        if(this.getTutorialState()){
-          bus.$emit('cardPlayed');
-          this.increaseFactIndex();
+        $('.antiVirus').modal('hide')
+        if (this.getTutorialState()) {
+          bus.$emit('cardPlayed')
+          this.increaseFactIndex()
         }
-        let ret = this.playerTookTurn();
-        let turn = this.turn(true);
-      },
+        this.playerTookTurn()
+        this.turn(true)
+      }
 
     },
     computed: {
-      hideButton() {
-        let activeCard = this.getActiveCard();
-        if(activeCard !== undefined) {
-          if(activeCard.type === 'ANTIVIRUS' && activeCard !== undefined) {
-            return 'display: block';
+      hideButton () {
+        let activeCard = this.getActiveCard()
+        if (activeCard !== undefined) {
+          if (activeCard.type === 'ANTIVIRUS' && activeCard !== undefined) {
+            return 'display: block'
           } else {
-            return 'display: none';
+            return 'display: none'
           }
         } else {
           return 'display: none'
         }
       },
-      playerCanUse() {
-        let player = this.getCurrentPlayer();
-        return player.hasAntiVirus;
+      playerCanUse () {
+        let player = this.getCurrentPlayer()
+        return player.hasAntiVirus
       }
     },
-    created() {
+    created () {
       $('.antiVirus').modal({
         backdrop: 'static',
         keyboard: false

@@ -68,7 +68,9 @@
 </template>
 
 <script>
-import PlayerInfoPanel from './PlayerInfoPanel'
+  /* eslint-disable no-undef */
+
+  import PlayerInfoPanel from './PlayerInfoPanel'
 import Playfield from '../SharedComponents/Playfield'
 
 import OpponentStacks from '../SharedComponents/OpponentStacks'
@@ -88,211 +90,204 @@ import AntiVirus from '../Modals/CardModals/AntiVirusModal'
 import Generator from '../Modals/CardModals/Generator'
 import Firewall from '../Modals/CardModals/Firewall'
 
-import Card from '../../classes/Card'
-import Player from '../../classes/Player'
+import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
 
-import {mapGetters} from 'vuex'
-import {mapMutations} from 'vuex'
-import {mapActions} from 'vuex'
-import {mapState} from 'vuex'
-
-import { bus } from '../SharedComponents/Bus';
+import { bus } from '../SharedComponents/Bus'
 
 export default {
-  name: 'main-component',
-  data () {
-    return {
-      idCounter:0,
-      dataToggle: false,
-      modalTitle: "Welcome to a new game of Programming Wars!",
-      localPlayers: [],
-      newPlayer: '',
-      gameStart: false,
-      showDismissCards: false,
-      modalCards: [],
-      gameOverWinner: "",
-      gameOverText: "",
-      modalId: "gameOverModal",
-      tipsToggle: true,
-      factsToggle: true,
-      playerList: [],
-      winner: '',
-      winnerScore: 0,
-      deleteData: []
-    }
-  },
-  components: {
-    HackDiscard,
-    'player-info-panel': PlayerInfoPanel,
-    'playfield': Playfield,
-    'opponent-stacks': OpponentStacks,
-    'modal': Modal,
-    'rules-modal': RulesModal,
-    'credits-modal': CreditsModal,
-    'hack-modal': HackModal,
-
-    'winner-modal': WinnerModal,
-    'coin-modal': CoinModal,
-    'player-turn': PlayerTurn,
-    'hack-discard': HackDiscard,
-    'virus-modal': VirusModal,
-    'power-outage-modal': PowerOutageModal,
-    'battery-backup-modal': BatteryBackup,
-    'overclock-modal': Overclock,
-    'firewall-modal': Firewall,
-    'generator-modal': Generator,
-    'anti-virus-modal': AntiVirus,
-
-  },
-  methods: {
-    ...mapGetters([
-      'getPlayers',
-      'getActiveCard',
-      'getPlayers',
-      'getCurrentPlayerId',
-      'getgameState',
-      'getFirstRound',
-      'getIsDiscard',
-      'getIsHack',
-      'getPlayerTurn'
-    ]),
-    ...mapMutations([
-      'initDeck',
-      'addHandToPlayer',
-      'addStackToPlayer',
-      'setTips',
-      'setTrueFalseAnim',
-      'setActiveSide',
-      'setGameState',
-      'addCardToHand',
-      'setFirstRound'
-
-    ]),
-    ...mapActions([
-      'firstRound',
-      'turn'
-    ]),
-    ...mapState([
-      'isHack',
-      'isDiscard',
-      'trueSideColour',
-      'falseSideColour',
-      'pointerEvent',
-      'currentGameState',
-    ]),
-    initGame(){
-        this.initDeck();
-    },
-    fillHands() {
-        for(let player of this.getPlayers()) {
-          this.addHandToPlayer(player.id);
-        }
-    },
-    addStacksToPlayers() {
-      for(let player of this.getPlayers()) {
-        this.addStackToPlayer({playerId: player.id, boolSide: true});
-        this.addStackToPlayer({playerId: player.id, boolSide: false});
+    name: 'main-component',
+    data () {
+      return {
+        idCounter: 0,
+        dataToggle: false,
+        modalTitle: 'Welcome to a new game of Programming Wars!',
+        localPlayers: [],
+        newPlayer: '',
+        gameStart: false,
+        showDismissCards: false,
+        modalCards: [],
+        gameOverWinner: '',
+        gameOverText: '',
+        modalId: 'gameOverModal',
+        tipsToggle: true,
+        factsToggle: true,
+        playerList: [],
+        winner: '',
+        winnerScore: 0,
+        deleteData: []
       }
-    }
-},
-  computed: {
-    showMsg() {
-      return (this.getIsHack() || this.getIsDiscard())
     },
-    showVirus() {
-      let c = this.getActiveCard();
-      if(c !== undefined) {
-        if (c.type === 'VIRUS') {
-          $('.virus').modal('show');
-          return true;
-        } else {
-          return false;
+    components: {
+      HackDiscard,
+      'player-info-panel': PlayerInfoPanel,
+      'playfield': Playfield,
+      'opponent-stacks': OpponentStacks,
+      'modal': Modal,
+      'rules-modal': RulesModal,
+      'credits-modal': CreditsModal,
+      'hack-modal': HackModal,
+
+      'winner-modal': WinnerModal,
+      'coin-modal': CoinModal,
+      'player-turn': PlayerTurn,
+      'hack-discard': HackDiscard,
+      'virus-modal': VirusModal,
+      'power-outage-modal': PowerOutageModal,
+      'battery-backup-modal': BatteryBackup,
+      'overclock-modal': Overclock,
+      'firewall-modal': Firewall,
+      'generator-modal': Generator,
+      'anti-virus-modal': AntiVirus
+
+    },
+    methods: {
+      ...mapGetters([
+        'getPlayers',
+        'getActiveCard',
+        'getPlayers',
+        'getCurrentPlayerId',
+        'getgameState',
+        'getFirstRound',
+        'getIsDiscard',
+        'getIsHack',
+        'getPlayerTurn'
+      ]),
+      ...mapMutations([
+        'initDeck',
+        'addHandToPlayer',
+        'addStackToPlayer',
+        'setTips',
+        'setTrueFalseAnim',
+        'setActiveSide',
+        'setGameState',
+        'addCardToHand',
+        'setFirstRound'
+
+      ]),
+      ...mapActions([
+        'firstRound',
+        'turn'
+      ]),
+      ...mapState([
+        'isHack',
+        'isDiscard',
+        'trueSideColour',
+        'falseSideColour',
+        'pointerEvent',
+        'currentGameState'
+      ]),
+      initGame () {
+        this.initDeck()
+      },
+      fillHands () {
+        for (let player of this.getPlayers()) {
+          this.addHandToPlayer(player.id)
+        }
+      },
+      addStacksToPlayers () {
+        for (let player of this.getPlayers()) {
+          this.addStackToPlayer({playerId: player.id, boolSide: true})
+          this.addStackToPlayer({playerId: player.id, boolSide: false})
         }
       }
     },
-    players() {
-        return this.getPlayers().filter(player => player.id !== this.getCurrentPlayerId());
+    computed: {
+      showMsg () {
+        return (this.getIsHack() || this.getIsDiscard())
+      },
+      showVirus () {
+        let c = this.getActiveCard()
+        if (c !== undefined) {
+          if (c.type === 'VIRUS') {
+            $('.virus').modal('show')
+            return true
+          } else {
+            return false
+          }
+        }
+      },
+      players () {
+        return this.getPlayers().filter(player => player.id !== this.getCurrentPlayerId())
+      },
+      deactivateClick () {
+        return this.pointerEvent
+      },
+      gameStateChanges () {
+        return this.currentGameState
+      },
+      playersTurn () {
+        return this.getPlayerTurn()
+      }
     },
-    deactivateClick() {
-      return this.pointerEvent;
-    },
-    gameStateChanges() {
-      return this.currentGameState;
-    },
-    playersTurn() {
-      return this.getPlayerTurn();
-    }
-  },
 
-  watch: {
-    tipsToggle(val) {
-        if(val === true && this.factsToggle === false) {
-            this.factsToggle = true;
+    watch: {
+      tipsToggle (val) {
+        if (val === true && this.factsToggle === false) {
+          this.factsToggle = true
         }
-        if(val === false) {
-            bus.$emit('tutorialOff');
+        if (val === false) {
+          bus.$emit('tutorialOff')
         }
-        if(val) {
-          bus.$emit('tutorialOn');
+        if (val) {
+          bus.$emit('tutorialOn')
         }
-        this.setTips({tutorial: val, fact: this.factsToggle});
+        this.setTips({tutorial: val, fact: this.factsToggle})
+      },
+      factsToggle (val) {
+        if (val === false) {
+          this.tipsToggle = false
+        }
+        this.setTips({tutorial: this.tipsToggle, fact: val})
+      }
     },
-    factsToggle(val) {
-        if(val === false) {
-            this.tipsToggle = false;
-        }
-        this.setTips({tutorial: this.tipsToggle, fact: val});
-    }
-  },
-  created() {
-    this.playerList = this.getPlayers();
-    this.gameStart = true;
-    let j = Math.floor(Math.random() * 2);
-    this.setTrueFalseAnim({startAnim: true});
-    if (j === 0) {
-      this.setActiveSide({activeSide: true})
-    } else {
-      this.setActiveSide({activeSide: false})
-    }
-    let gameEventLoopTimer = setInterval(() => {
-      let gameState = this.getgameState();
-      if (gameState === 'newGame') {
-        this.setGameState({gameState: 'waitingForPlayerInput'});
-        this.gameStart = true;
-      } else if (gameState === 'initGame') {
-      } else if (gameState === 'startPlayerTurn') {
-          this.addCardToHand();
-          this.setGameState({gameState: 'playerTurn'});
+    created () {
+      this.playerList = this.getPlayers()
+      this.gameStart = true
+      let j = Math.floor(Math.random() * 2)
+      this.setTrueFalseAnim({startAnim: true})
+      if (j === 0) {
+        this.setActiveSide({activeSide: true})
+      } else {
+        this.setActiveSide({activeSide: false})
+      }
+      setInterval(() => {
+        let gameState = this.getgameState()
+        if (gameState === 'newGame') {
+          this.setGameState({gameState: 'waitingForPlayerInput'})
+          this.gameStart = true
+        } else if (gameState === 'initGame') {
+        } else if (gameState === 'startPlayerTurn') {
+          this.addCardToHand()
+          this.setGameState({gameState: 'playerTurn'})
 
-            if (this.getCurrentPlayerId() === 0) {
-             let j = Math.floor(Math.random() * 2);
-             this.setTrueFalseAnim({startAnim: true});
-              if (j === 0) {
-                this.setActiveSide({activeSide: true})
-              } else {
-                  this.setActiveSide({activeSide: false})
-                }
-              if(this.getFirstRound()) {
-                this.firstRound();
-                this.setFirstRound(false);
-              } else {
-                this.turn(false);
-              }
-              setTimeout(() => {
-                this.setTrueFalseAnim({startAnim: false});
-                this.setGameState({gameState: 'playerTurn'});
-              }, 3000);
+          if (this.getCurrentPlayerId() === 0) {
+            j = Math.floor(Math.random() * 2)
+            this.setTrueFalseAnim({startAnim: true})
+            if (j === 0) {
+              this.setActiveSide({activeSide: true})
+            } else {
+              this.setActiveSide({activeSide: false})
             }
-      }
-    }, 500);
-    this.initGame();
-    this.fillHands();
-    this.addStacksToPlayers();
+            if (this.getFirstRound()) {
+              this.firstRound()
+              this.setFirstRound(false)
+            } else {
+              this.turn(false)
+            }
+            setTimeout(() => {
+              this.setTrueFalseAnim({startAnim: false})
+              this.setGameState({gameState: 'playerTurn'})
+            }, 3000)
+          }
+        }
+      }, 500)
+      this.initGame()
+      this.fillHands()
+      this.addStacksToPlayers()
 
-    this.setGameState({gameState: 'startPlayerTurn'})
-
-  },
- }
+      this.setGameState({gameState: 'startPlayerTurn'})
+    }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

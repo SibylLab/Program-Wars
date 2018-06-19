@@ -25,9 +25,13 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
 
   import { bus } from '../../SharedComponents/Bus.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
+  /**
+   * The Modal for when the Battery Backup card is clicked.
+   */
   export default {
     props: ['players'],
 
@@ -49,49 +53,49 @@
         'discardSelectedCard',
         'giveBatteryBackup'
       ]),
-      batteryBackupCanceled() {
-        bus.$emit('hackCanceled');
+      batteryBackupCanceled () {
+        bus.$emit('hackCanceled')
       },
-      discardBatteryBackup() {
+      discardBatteryBackup () {
         if (this.getActiveCard() !== undefined) {
-          this.discardSelectedCard();
-          this.playerTookTurn();
-          this.turn(true);
+          this.discardSelectedCard()
+          this.playerTookTurn()
+          this.turn(true)
         }
       },
-      useClicked() {
-        let player = this.getCurrentPlayer();
-        this.giveBatteryBackup(player.id);
+      useClicked () {
+        let player = this.getCurrentPlayer()
+        this.giveBatteryBackup(player.id)
 
-        $('.batteryBackup').modal('hide');
-        if(this.getTutorialState()){
-          bus.$emit('cardPlayed');
-          this.increaseFactIndex();
+        $('.batteryBackup').modal('hide')
+        if (this.getTutorialState()) {
+          bus.$emit('cardPlayed')
+          this.increaseFactIndex()
         }
-        let ret = this.playerTookTurn();
-        let turn = this.turn(true);
-      },
+        this.playerTookTurn()
+        this.turn(true)
+      }
 
     },
     computed: {
-      hideButton() {
-        let activeCard = this.getActiveCard();
-        if(activeCard !== undefined) {
-          if(activeCard.type === 'BATTERYBACKUP' && activeCard !== undefined) {
-            return 'display: block';
+      hideButton () {
+        let activeCard = this.getActiveCard()
+        if (activeCard !== undefined) {
+          if (activeCard.type === 'BATTERYBACKUP' && activeCard !== undefined) {
+            return 'display: block'
           } else {
-            return 'display: none';
+            return 'display: none'
           }
         } else {
           return 'display: none'
         }
       },
-      playerCanUse() {
-        let player = this.getCurrentPlayer();
-        return !player.hasPowerOutage;
+      playerCanUse () {
+        let player = this.getCurrentPlayer()
+        return !player.hasPowerOutage
       }
     },
-    created() {
+    created () {
       $('.batteryBackup').modal({
         backdrop: 'static',
         keyboard: false
