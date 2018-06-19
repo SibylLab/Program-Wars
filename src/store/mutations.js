@@ -337,7 +337,7 @@ export default {
   aiTakeTurn (state, payload) {
     state.aiTurn = true
     let aiMove = state.players[state.activePlayer].type.turnLogic(payload)
-    // console.log(aiMove)
+    console.log(aiMove)
     let cardToPlay = aiMove.getCard()
     let stackToPlay = aiMove.getStack()
     let stackToHack = aiMove.getOpponent()

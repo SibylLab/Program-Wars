@@ -17,26 +17,99 @@ var Handler = (event) => {
   this.moveType = undefined
 }
 
+Handler.prototype.setVariables = () => {
+  this.stackToPlay = this.turn.getStack()
+  this.cardToPlay = this.turn.getCard()
+  this.opponentToAttack = this.turn.getOpponent()
+  this.moveType = this.turn.getMove()
+}
+
 Handler.prototype = {
   gambler: () => {
-    this.turn.stepInstruction()
-    this.turn.stepGroup()
-    this.turn.stepHack()
-    this.turn.stepRepeatX()
-    this.turn.stepRepeat()
-    this.turn.stepBatteryBackup()
-    this.turn.stepPowerOutage()
-    this.turn.stepOverclock()
-    this.turn.stepAntiVirus()
-    this.turn.stepGenerator()
-    this.turn.stepFirewall()
-    this.turn.stepVirus()
-    this.turn.stepVar()
+    let turn = this.turn
+    turn.stepDiscard()
+    turn.stepInstruction()
+    turn.stepGroup()
+    turn.stepHack()
+    turn.stepRepeatX()
+    turn.stepRepeat()
+    turn.stepBatteryBackup()
+    turn.stepPowerOutage()
+    turn.stepOverclock()
+    turn.stepAntiVirus()
+    turn.stepGenerator()
+    turn.stepFirewall()
+    turn.stepVirus()
+    turn.stepVar()
     this.stackToPlay = this.turn.getStack()
     this.cardToPlay = this.turn.getCard()
     this.opponentToAttack = this.turn.getOpponent()
     this.moveType = this.turn.getMove()
-    // console.log('handler movetype ' + this.turn.getMoveType())
+  },
+  hacker: () => {
+    let turn = this.turn
+    turn.stepDiscard()
+    turn.stepGroup()
+    turn.stepRepeatX()
+    turn.stepInstruction()
+    turn.stepRepeat()
+    turn.stepVar()
+    turn.stepBatteryBackup()
+    turn.stepOverclock()
+    turn.stepAntiVirus()
+    turn.stepGenerator()
+    turn.stepFirewall()
+    turn.stepPowerOutage()
+    turn.stepVirus()
+    turn.stepHack()
+    this.stackToPlay = this.turn.getStack()
+    this.cardToPlay = this.turn.getCard()
+    this.opponentToAttack = this.turn.getOpponent()
+    this.moveType = this.turn.getMove()
+  },
+  sprinter: () => {
+    let turn = this.turn
+    turn.stepDiscard()
+    turn.stepInstruction()
+    turn.stepGroup()
+    turn.stepHack()
+    turn.stepInstruction()
+    turn.stepBatteryBackup()
+    turn.stepPowerOutage()
+    turn.stepAntiVirus()
+    turn.stepGenerator()
+    turn.stepFirewall()
+    turn.stepVirus()
+    turn.stepRepeat()
+    turn.stepRepeatX()
+    turn.stepOverclock()
+    turn.stepVar()
+    this.stackToPlay = this.turn.getStack()
+    this.cardToPlay = this.turn.getCard()
+    this.opponentToAttack = this.turn.getOpponent()
+    this.moveType = this.turn.getMove()
+  },
+  protector: () => {
+    let turn = this.turn
+    turn.stepDiscard()
+    turn.stepInstruction()
+    turn.stepHack()
+    turn.stepRepeatX()
+    turn.stepInstruction()
+    turn.stepRepeat()
+    turn.stepVar()
+    turn.stepBatteryBackup()
+    turn.stepPowerOutage()
+    turn.stepVirus()
+    turn.stepOverclock()
+    turn.stepAntiVirus()
+    turn.stepGenerator()
+    turn.stepFirewall()
+    turn.stepGroup()
+    this.stackToPlay = this.turn.getStack()
+    this.cardToPlay = this.turn.getCard()
+    this.opponentToAttack = this.turn.getOpponent()
+    this.moveType = this.turn.getMove()
   },
   getMove: () => {
     return this.moveType
@@ -56,6 +129,7 @@ Handler.prototype = {
   getOpponentVirus: () => {
     return this.opponentVirus
   }
+
 }
 
 export {Handler}

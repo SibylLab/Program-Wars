@@ -20,8 +20,8 @@ Turn.prototype = {
       this.cardToPlay = this.hand.bestVCard
       this.stackToPlay = this.move.stackToAddVariable(this.event)
       this.moveType = 'play'
-      console.log('in stepVar')
     }
+    return this
   },
   stepFirewall: () => {
     if (this.hand.firewallCard !== undefined) {
@@ -34,24 +34,28 @@ Turn.prototype = {
       this.cardToPlay = this.hand.generatorCard
       this.moveType = 'protection'
     }
+    return this
   },
   stepAntiVirus: () => {
     if (this.hand.antiVirusCard !== undefined) {
       this.cardToPlay = this.hand.antiVirusCard
       this.moveType = 'protection'
     }
+    return this
   },
   stepBatteryBackup: () => {
     if (this.hand.batteryBackupCard !== undefined && store.getters.getCurrentPlayer.hasPowerOutage) {
       this.cardToPlay = this.hand.batteryBackupCard
       this.moveType = 'enhance'
     }
+    return this
   },
   stepOverclock: () => {
     if (this.hand.overclockCard !== undefined && !store.getters.getCurrentPlayer.hasOverclock) {
       this.cardToPlay = this.hand.overclockCard
       this.moveType = 'enhance'
     }
+    return this
   },
   stepGroup: () => {
     if (this.hand.bestGCard.length > 0 && this.canGroup !== undefined && this.event.stack.find(stack => stack.boolSide === this.boolSide)) {
@@ -59,6 +63,7 @@ Turn.prototype = {
       this.stackToPlay = this.canGroup.stackToPlay
       this.moveType = 'group'
     }
+    return this
   },
   stepVirus: () => {
     if (this.hand.virusCard !== undefined && !store.getters.getFirstRound && this.opponentVirus !== undefined) {
@@ -66,6 +71,7 @@ Turn.prototype = {
       this.cardToPlay = this.hand.virusCard
       this.moveType = 'virus'
     }
+    return this
   },
   stepHack: () => {
     if (this.hand.hackCard !== undefined && this.move.getHackOpponent(this.event) !== undefined && this.event.stack.find(stack => stack.boolSide === this.boolSide)) {
@@ -73,6 +79,7 @@ Turn.prototype = {
       this.opponentToAttack = this.move.getHackOpponent(this.event)
       this.moveType = 'hack'
     }
+    return this
   },
   stepPowerOutage: () => {
     if (this.hand.powerOutageCard !== undefined && this.opponentPO !== undefined) {
@@ -80,15 +87,15 @@ Turn.prototype = {
       this.cardToPlay = this.hand.powerOutageCard
       this.moveType = 'po'
     }
+    return this
   },
   stepInstruction: () => {
     if (this.hand.bestICard !== undefined && !store.getters.getCurrentPlayer.hasPowerOutage) {
       this.cardToPlay = this.hand.bestICard
       this.stackToPlay = this.event.stack.find(stack => stack.boolSide === this.boolSide && stack.score === 0)
       this.moveType = 'play'
-      console.log('in instruction')
-      console.log('inst type: ' + this.moveType)
     }
+    return this
   },
   stepRepeat: () => {
     if (this.hand.bestRCard !== undefined && this.move.getStackToRepeat(this.event) !== undefined && this.event.stack.find(stack => stack.boolSide === this.boolSide)) {
@@ -96,6 +103,7 @@ Turn.prototype = {
       this.stackToPlay = this.move.getStackToRepeat(this.event)
       this.moveType = 'play'
     }
+    return this
   },
   stepRepeatX: () => {
     if (this.hand.rXCard !== undefined && this.move.getStackToRepeat(this.event) !== undefined && this.event.stack.find(stack => stack.boolSide === this.boolSide)) {
@@ -103,10 +111,12 @@ Turn.prototype = {
       this.stackToPlay = this.move.getStackToRepeat(this.event)
       this.moveType = 'play'
     }
+    return this
   },
-
-  setNextStack: (nextStep) => {
-    this.next = nextStep
+  stepDiscard: () => {
+    this.cardToPlay = this.event.hand.cards[0]
+    this.moveType = 'discard'
+    return this
   },
   getMove: () => {
     return this.moveType
