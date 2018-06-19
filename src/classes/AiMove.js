@@ -68,10 +68,12 @@ export default class {
 
   getStackToRepeat (e) {
     let stackToRepeat
-    for (let i = 1; i <= 10; i++) {
-      let tmpStack = e.stack.find(stack => stack.score === i && !stack.maxRepeats() && (stack.stackTopCard().type !== 'R' || stack.stackTopCard().value !== 1))
-      if (tmpStack !== undefined && tmpStack.boolSide === store.getters.getCoinMsg) {
-        stackToRepeat = tmpStack
+    if (e.stack !== undefined) {
+      for (let i = 1; i <= 10; i++) {
+        let tmpStack = e.stack.find(stack => stack.score === i && !stack.maxRepeats() && (stack.stackTopCard().type !== 'R' || stack.stackTopCard().value !== 1))
+        if (tmpStack !== undefined && tmpStack.boolSide === store.getters.getCoinMsg) {
+          stackToRepeat = tmpStack
+        }
       }
     }
     return stackToRepeat

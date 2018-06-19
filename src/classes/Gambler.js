@@ -1,15 +1,15 @@
-import AiMove from './AiMove'
-import {store} from '../store/store'
-import Handler from './AiHandler'
+// import AiMove from './AiMove'
+// import {store} from '../store/store'
+import {Handler} from './AiHandler'
 export default class Gambler {
 
   /**
    * Constructor for this AI personality.
    */
-  constructor () {
-    this.move = new AiMove()
-    this.boolSide = this.move.getBoolSide()
-  }
+  // constructor () {
+  //   this.move = new AiMove()
+  //   this.boolSide = this.move.getBoolSide()
+  // }
 
   /**
    * This function will figure out what card the AI should play.
@@ -19,23 +19,24 @@ export default class Gambler {
 
   turnLogic (event) {
     // This will be executed in either OpponentStacks or PlayerInfoPanel
-    let cardToPlay
-    // This will be executed in AiMove.js
-    let stackToPlay
-    // This will be executed in AiMove.js
-    let opponentToAttack
-    // This is used in mutations under AiTakeTurn
-    let moveType
+    // let cardToPlay
+    // // This will be executed in AiMove.js
+    // let stackToPlay
+    // // This will be executed in AiMove.js
+    // let opponentToAttack
+    // // This is used in mutations under AiTakeTurn
+    // let moveType
 
-    let opponentPO = this.move.getOpponentToAttack(event, 'POWEROUTAGE')
-    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS')
+    // let opponentPO = this.move.getOpponentToAttack(event, 'POWEROUTAGE')
+    // let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS')
+    //
+    // let hand = this.move.organizeHand(event)
+    // this.boolSide = store.getters.getCoinMsg
+    // let canGroup = this.move.findGroup(event.stack, hand.bestGCard)
 
-    let hand = this.move.organizeHand(event)
-    this.boolSide = store.getters.getCoinMsg
-    let canGroup = this.move.findGroup(event.stack, hand.bestGCard)
-
-    let handler = new Handler('Gambler')
-
+    let handler = new Handler(event)
+    handler.gambler()
+    return handler
     // if(hand.bestVCard !== undefined && this.move.stackToAddVariable(event) !== undefined && event.stack.find(stack => stack.boolSide === this.boolSide)) {
     //   cardToPlay = hand.bestVCard;
     //   stackToPlay = this.move.stackToAddVariable(event);
@@ -114,7 +115,5 @@ export default class Gambler {
     //     moveType = 'discard';
     //   }
     // }
-
-    return {cardToPlay, stackToPlay, opponentToAttack, moveType, opponentPO, opponentVirus}
   }
 }

@@ -12,7 +12,7 @@ export default class Personality {
     // let num = Math.floor((Math.random() * 5) + 1);
     let num = 4
     switch (num) {
-      case 1: this.isTimid = true
+      case 1: this.isTimid = true; break
       case 2: this.personality = new Sprinter(); break
       case 3: this.personality = new Hacker(); break
       case 4: this.personality = new Gambler(); break

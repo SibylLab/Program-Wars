@@ -337,30 +337,36 @@ export default {
   aiTakeTurn (state, payload) {
     state.aiTurn = true
     let aiMove = state.players[state.activePlayer].type.turnLogic(payload)
-    let cardToPlay = aiMove.cardToPlay
-    let stackToPlay = aiMove.stackToPlay
-    let stackToHack = aiMove.opponentToAttack
+    // console.log(aiMove)
+    let cardToPlay = aiMove.getCard()
+    let stackToPlay = aiMove.getStack()
+    let stackToHack = aiMove.getOpponent()
+    let moveType = aiMove.getMove()
+    let opponentPO = aiMove.getOpponentPO()
+    let opponentVirus = aiMove.getOpponentVirus()
+    console.log(cardToPlay)
+    console.log('MoveType: ' + moveType)
     state.activeCard = cardToPlay
-    if (aiMove.moveType === 'play') {
+    if (moveType === 'play') {
       bus.$emit('aiAddToStack', stackToPlay)
-    } else if (aiMove.moveType === 'discard') {
+    } else if (moveType === 'discard') {
       bus.$emit('aiDiscard')
-    } else if (aiMove.moveType === 'hack') {
+    } else if (moveType === 'hack') {
       bus.$emit('aiHack', stackToHack)
-    } else if (aiMove.moveType === 'group') {
+    } else if (moveType === 'group') {
       for (let id of stackToPlay) {
         state.selectedStacks.push(id.stackId)
       }
       state.selectedStackBoolean = stackToPlay[0].boolSide
       state.groupStacks = false
       bus.$emit('aiGroup', stackToPlay[0].boolSide, state.players[state.activePlayer].id)
-    } else if (aiMove.moveType === 'po') {
-      bus.$emit('aiAttack', aiMove.opponentPO)
-    } else if (aiMove.moveType === 'virus') {
-      bus.$emit('aiAttack', aiMove.opponentVirus)
-    } else if (aiMove.moveType === 'protection') {
+    } else if (moveType === 'po') {
+      bus.$emit('aiAttack', opponentPO)
+    } else if (moveType === 'virus') {
+      bus.$emit('aiAttack', opponentVirus)
+    } else if (moveType === 'protection') {
       bus.$emit('aiProtection')
-    } else if (aiMove.moveType === 'enhance') {
+    } else if (moveType === 'enhance') {
       bus.$emit('aiEnhance')
     }
   },
