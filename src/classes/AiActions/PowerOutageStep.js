@@ -8,7 +8,8 @@ export default class PowerOutage extends Turn {
 
   execute () {
     if (this.hand.powerOutageCard !== undefined && this.opponentPO !== undefined) {
-      this.opponentToAttack = this.move.getOpponentToAttack(this.event)
+      this.opponentToAttack = this.move.getOpponentToAttack(this.event, 'POWEROUTAGE')
+      console.log('power outage opponent ' + this.opponentToAttack)
       this.cardToPlay = this.hand.powerOutageCard
       this.moveType = 'po'
       return true

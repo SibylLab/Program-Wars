@@ -19,10 +19,9 @@ import {store} from '../../store/store'
 export default class Handler {
   constructor (event) {
     this.move = new AiMove()
-    let opponentPO = this.move.getOpponentToAttack(event, 'POWEROUTAGE')
-    let opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS')
+    this.opponentPO = this.move.getOpponentToAttack(event, 'POWEROUTAGE')
+    this.opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS')
     let hand = this.move.organizeHand(event)
-    console.log(hand)
     let boolSide = store.getters.getCoinMsg
     let canGroup = this.move.findGroup(event.stack, hand.bestGCard)
     this.antiVirus = new AntiVirus(hand, boolSide, this.move, event)
@@ -31,9 +30,9 @@ export default class Handler {
     this.overclock = new OverClock(hand, boolSide, this.move, event)
     this.batteryBackup = new BatteryBackup(hand, boolSide, this.move, event)
     this.group = new Group(hand, boolSide, this.move, event, canGroup)
-    this.virus = new Virus(hand, boolSide, this.move, event, opponentVirus)
+    this.virus = new Virus(hand, boolSide, this.move, event, this.opponentVirus)
     this.hack = new Hack(hand, boolSide, this.move, event)
-    this.powerOutage = new PowerOutage(hand, boolSide, this.move, event, opponentPO)
+    this.powerOutage = new PowerOutage(hand, boolSide, this.move, event, this.opponentPO)
     this.instruction = new Instruction(hand, boolSide, this.move, event)
     this.repeat = new Repeat(hand, boolSide, this.move, event)
     this.repeatX = new RepeatX(hand, boolSide, this.move, event)
@@ -44,13 +43,6 @@ export default class Handler {
     this.opponentToAttack = undefined
     this.moveType = undefined
   }
-
-// Handler.prototype.setVariables = () => {
-//   this.stackToPlay = this.turn.getStack()
-//   this.cardToPlay = this.turn.getCard()
-//   this.opponentToAttack = this.turn.getOpponent()
-//   this.moveType = this.turn.getMove()
-// }
 
   gambler () {
     // this.instruction.execute()
