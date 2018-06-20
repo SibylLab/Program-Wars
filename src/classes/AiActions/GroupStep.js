@@ -15,5 +15,3 @@ export default class Group extends Turn {
     }
   }
 }
-
-export {Group}

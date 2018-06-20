@@ -13,9 +13,13 @@ import Virus from './VirusStep'
 import PowerOutage from './PowerOutageStep'
 import Discard from './DiscardStep'
 
-import AiMove from '../AiMove'
+import AiMove from './AiMove'
 import {store} from '../../store/store'
 
+/**
+ * This is the handler for the chain of responsibility pattern. It handles running through all of the steps (or chains
+ * that the Ai will execute.
+ */
 export default class Handler {
   constructor (event) {
     this.move = new AiMove()
@@ -44,6 +48,10 @@ export default class Handler {
     this.moveType = undefined
   }
 
+  /**
+   * This creates the order of operations for the ai steps and executes them until a step has been chosen.
+   * @param type The type of Ai.
+   */
   setAi (type) {
     let moveList = []
     if (type === 'gambler') {

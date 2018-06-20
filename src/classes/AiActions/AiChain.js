@@ -1,3 +1,6 @@
+/**
+ * This is the superclass of all of the Ai's possible moves
+ */
 export class Turn {
   constructor (hand, boolSide, move, event) {
     this.cardToPlay = undefined
