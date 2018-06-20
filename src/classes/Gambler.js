@@ -1,6 +1,6 @@
 // import AiMove from './AiMove'
 // import {store} from '../store/store'
-import {Handler} from './AiHandler'
+import Handler from './AiActions/AiHandler'
 export default class Gambler {
 
   /**

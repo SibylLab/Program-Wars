@@ -1,4 +1,4 @@
-import {Handler} from './AiHandler'
+import {Handler} from './AiActions/AiHandler'
 
 /**
  * Sprinter is an Ai Personality that prioritizes using variable cards

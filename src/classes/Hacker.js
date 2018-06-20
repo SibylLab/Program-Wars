@@ -1,4 +1,4 @@
-import {Handler} from './AiHandler'
+import {Handler} from './AiActions/AiHandler'
 
 /**
  * Hacker is an Ai personality that prioritizes using hack cards.

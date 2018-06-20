@@ -1,9 +1,9 @@
-import {Handler} from './AiHandler'
+import {Handler} from './AiActions/AiHandler'
 
 /**
  * The Protector is an Ai personality that priorities safety and protection cards.
  */
-export default class Gambler {
+export default class Protector {
 
   /**
    * This function will figure out what card the AI should play.
