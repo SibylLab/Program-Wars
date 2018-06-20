@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
-import TutorialDeck from '../classes/TutorialDeck'
+import TutorialDeck from '../classes/Models/TutorialDeck'
 
 const uuidV1 = require('uuid/v1')
 
 import { bus } from '../components/SharedComponents/Bus'
 
-import Stack from '../classes/Stack'
-import Player from '../classes/Player'
-import Deck from '../classes/Deck'
+import Stack from '../classes/Models/Stack'
+import Player from '../classes/Models/Player'
+import Deck from '../classes/Models/Deck'
 
 export default {
   resetState (state) {

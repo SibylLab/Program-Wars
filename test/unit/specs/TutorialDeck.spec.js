@@ -1,4 +1,4 @@
-import TutorialDeck from '../../../src/classes/TutorialDeck'
+import TutorialDeck from '../../../src/classes/Models/TutorialDeck'
 // import Card from '../../../src/classes/Card'
 
 describe('TutorialDeck.js', () => {

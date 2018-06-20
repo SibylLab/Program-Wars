@@ -1,4 +1,4 @@
-import Handler from './AiActions/AiHandler'
+import Handler from './AiHandler'
 
 /**
  * This class picks at random one of the Ai personalities to use.

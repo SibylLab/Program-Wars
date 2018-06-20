@@ -9,10 +9,10 @@ const instruction2 = 9
 const instruction3 = 9
 // const instruction4 = 0;
 
-const group2 = 7
-const group3 = 7
-const group4 = 7
-const group5 = 7
+const group2 = 1
+const group3 = 2
+const group4 = 3
+const group5 = 2
 const group6 = 1
 // const group7 = 0;
 // const group8 = 0;

@@ -1,4 +1,4 @@
-import Player from '../../../src/classes/Player'
+import Player from '../../../src/classes/Models/Player'
 
 let testPlayer = new Player(1, 'jeff', undefined, 0, 0, true)
 
