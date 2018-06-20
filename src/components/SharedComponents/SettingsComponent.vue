@@ -162,7 +162,6 @@
        */
       submitPlayers () {
         this.$store.commit('addPlayers', {list: this.localPlayers})
-        console.log('made it here')
         this.$store.commit('setScoreLimit', {scoreLimit: this.selected})
         this.gameStart = true
 

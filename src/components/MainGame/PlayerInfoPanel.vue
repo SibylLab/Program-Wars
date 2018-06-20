@@ -379,7 +379,6 @@ export default {
             if (this.activeCard !== undefined) {
               if (this.getActiveCard().type === 'POWEROUTAGE') {
                 $('.powerOutage').modal('hide')
-                console.log('stackToHack ' + JSON.stringify(stackToHack))
                 this.givePowerOutage(stackToHack.id)
                 this.playerTookTurn()
                 bus.$emit('cardDeselected')

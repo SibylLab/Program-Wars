@@ -1,7 +1,4 @@
-import Sprinter from './Sprinter'
-import Hacker from './Hacker'
-import Gambler from './Gambler'
-import Protector from './Protector'
+import Handler from './AiActions/AiHandler'
 
 /**
  * This class picks at random one of the Ai personalities to use.
@@ -9,18 +6,17 @@ import Protector from './Protector'
 export default class Personality {
 
   constructor () {
-    // let num = Math.floor((Math.random() * 5) + 1);
-    let num = 4
-    switch (num) {
-      case 1: this.isTimid = true; break
-      case 2: this.personality = new Sprinter(); break
-      case 3: this.personality = new Hacker(); break
-      case 4: this.personality = new Gambler(); break
-      case 5: this.personality = new Protector(); break
-    }
+    this.num = Math.floor((Math.random() * 4) + 1)
   };
 
   turnLogic (event) {
-    return this.personality.turnLogic(event, this.isTimid)
+    let personality = new Handler(event)
+    switch (this.num) {
+      case 1: personality.setAi('sprinter'); break
+      case 2: personality.setAi('hacker'); break
+      case 3: personality.setAi('gambler'); break
+      case 4: personality.setAi('protector'); break
+    }
+    return personality
   }
 }
