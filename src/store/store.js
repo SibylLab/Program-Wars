@@ -6,8 +6,8 @@ Vue.use(Vuex)
 import actions from './actions.js'
 import mutations from './mutations.js'
 import getters from './getters.js'
-import Deck from '../classes/Deck'
-import TutorialDeck from '../classes/TutorialDeck.js'
+import Deck from '../classes/Models/Deck'
+import TutorialDeck from '../classes/Models/TutorialDeck.js'
 
 /**
  * The store holds all of the information that vuex will store and use. The functions are seperated into different files.

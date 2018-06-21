@@ -2,7 +2,7 @@
  * @file player.js file
  * @author Lance on 2017-03-10.
  */
-import Personality from './Personality'
+import Personality from '../AiActions/Personality'
 
 export default class Player {
   /**

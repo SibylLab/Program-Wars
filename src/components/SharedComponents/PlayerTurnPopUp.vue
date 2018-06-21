@@ -51,13 +51,13 @@ export default {
 </script>
 
 <style>
-.screen {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 99;
-}
+  .screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 99;
+  }
 
   #playerTurn {
     border-radius: 30px;

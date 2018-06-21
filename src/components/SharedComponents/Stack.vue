@@ -187,7 +187,7 @@ export default {
       })
 
       bus.$on('aiGroup', (boolSide, currentPlayerId) => {
-        if (this.getAiTurn() === true && this.getActiveCard() !== undefined && this.playfieldBoolean === boolSide && this.playerId === currentPlayerId) {
+        if (this.getAiTurn() && this.getActiveCard() !== undefined && this.playfieldBoolean === boolSide && this.playerId === currentPlayerId) {
           this.setStackSelectedBoolean({boolean: boolSide})
           this.checked = true
           this.groupStacks()
@@ -271,7 +271,7 @@ export default {
         }
         let stacks = this.getStacks().filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1]
-        this.addCardToStack({stackId: stack.stackId, card: this.activeCard})
+        this.addCardToStack({stackId: stack.stackId, card: this.getActiveCard()})
         this.updateBonus(groupingBonus, groupingBonus)
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()
@@ -432,7 +432,7 @@ h1, h2 {
 ul {
   list-style-type: none;
   padding: 0;
-  margin: 0; padding: 0;
+  margin: 0;
   margin-top: 5px;
 }
 
@@ -457,9 +457,9 @@ a {
 }
 
 .selected {
-    -webkit-box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
-    -moz-box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
-    box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
+    -webkit-box-shadow: 0 0 25px 4px rgba(119,194,6,1);
+    -moz-box-shadow: 0 0 25px 4px rgba(119,194,6,1);
+    box-shadow: 0 0 25px 4px rgba(119,194,6,1);
 }
 
 </style>

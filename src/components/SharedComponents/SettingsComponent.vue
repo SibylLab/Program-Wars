@@ -297,7 +297,7 @@
   }
 
   select.custom-select {
-        width: 160px;
+    width: 160px;
     align-items: center;
   }
 

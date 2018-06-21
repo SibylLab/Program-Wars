@@ -1,4 +1,4 @@
-import Deck from '../../../src/classes/Deck'
+import Deck from '../../../src/classes/Models/Deck'
 // import Card from '../../../src/classes/Card'
 
 describe('Deck.js', () => {

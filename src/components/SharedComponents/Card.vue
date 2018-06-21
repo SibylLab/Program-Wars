@@ -174,29 +174,18 @@ a {
 }
 
 #card.stack {
-
-
     align-content: center;
-
     background-color: #fff;
-
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
     padding: 0;
     margin: 0;
-
     min-height:50px;
     min-width: 50px;
-
-  max-width: 20px;
-
-
-
+    max-width: 20px;
 }
 
 #card.addCard {
