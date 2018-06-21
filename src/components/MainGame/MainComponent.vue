@@ -316,7 +316,8 @@ export default {
     margin: 0;
     font-weight: bold;
     font-size: 1.2em;
-    }
+  }
+
   #playerinfopanel {
     flex-grow:0;
     width: 100%;
@@ -364,6 +365,7 @@ export default {
     font-size: 220px;
     color: darkred;
   }
+
   h1, h2 {
     font-weight: normal;
   }

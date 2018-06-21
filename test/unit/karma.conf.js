@@ -6,7 +6,7 @@
 var webpackConfig = require('../../build/webpack.test.conf')
 module.exports = function (config) {
   config.set({
-    browsers: ['Firefox'],
+    browsers: ['Firefox', 'Safari'],
     frameworks: ['mocha', 'sinon-chai', 'jasmine'],
     reporters: ['spec', 'coverage'],
     files: [
