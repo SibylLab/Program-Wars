@@ -87,7 +87,6 @@ export default {
         cardsTemp.push(localState.deck.draw())
       }
     }
-    state = localState
     hand.cards = cardsTemp
     state.hands.push(hand)
     state.players.find(player => player.id === playerId).hand = hand.handId

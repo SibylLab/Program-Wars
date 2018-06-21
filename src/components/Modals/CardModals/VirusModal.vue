@@ -81,7 +81,7 @@
       hideButton () {
         let activeCard = this.getActiveCard()
         if (activeCard !== undefined) {
-          if (activeCard.type === 'VIRUS' && activeCard !== undefined) {
+          if (activeCard.type === 'VIRUS') {
             return 'display: block'
           } else {
             return 'display: none'

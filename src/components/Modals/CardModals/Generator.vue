@@ -81,7 +81,7 @@
       hideButton () {
         let activeCard = this.getActiveCard()
         if (activeCard !== undefined) {
-          if (activeCard.type === 'GENERATOR' && activeCard !== undefined) {
+          if (activeCard.type === 'GENERATOR') {
             return 'display: block'
           } else {
             return 'display: none'

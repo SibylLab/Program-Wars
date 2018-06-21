@@ -81,7 +81,7 @@
       hideButton () {
         let activeCard = this.getActiveCard()
         if (activeCard !== undefined) {
-          if (activeCard.type === 'FIREWALL' && activeCard !== undefined) {
+          if (activeCard.type === 'FIREWALL') {
             return 'display: block'
           } else {
             return 'display: none'

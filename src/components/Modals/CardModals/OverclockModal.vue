@@ -77,7 +77,7 @@ export default {
       hideButton () {
         let activeCard = this.getActiveCard()
         if (activeCard !== undefined) {
-          if (activeCard.type === 'OVERCLOCK' && activeCard !== undefined) {
+          if (activeCard.type === 'OVERCLOCK') {
             return 'display: block'
           } else {
             return 'display: none'
