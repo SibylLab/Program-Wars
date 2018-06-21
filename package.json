@@ -1,8 +1,8 @@
 {
   "name": "programming-wars",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "Shaun Cullen <shauncullen@gmail.com>",
+  "version": "1.7.0",
+  "description": "An education game for teaching programming concepts.",
+  "author": "John Anvik <johnanvik@uleth.ca>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
