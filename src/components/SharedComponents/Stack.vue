@@ -300,7 +300,7 @@ export default {
           let thisStack = this.getStacks().find(stack => this.stackId === stack.stackId)
           switch (activeCard.type) {
             case 'I':
-              if (thisStack.cards.length === 0 || thisStack.cards === undefined) {
+              if (thisStack.cards.length === 0) {
                 this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()})
                 this.playerTookTurn()
                 this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})

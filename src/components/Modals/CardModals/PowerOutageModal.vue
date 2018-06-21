@@ -84,7 +84,7 @@
       hideButton () {
         let activeCard = this.getActiveCard()
         if (activeCard !== undefined) {
-          if (activeCard.type === 'POWEROUTAGE' && activeCard !== undefined) {
+          if (activeCard.type === 'POWEROUTAGE') {
             return 'display: block'
           } else {
             return 'display: none'

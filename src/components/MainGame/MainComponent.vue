@@ -255,7 +255,6 @@ export default {
         if (gameState === 'newGame') {
           this.setGameState({gameState: 'waitingForPlayerInput'})
           this.gameStart = true
-        } else if (gameState === 'initGame') {
         } else if (gameState === 'startPlayerTurn') {
           this.addCardToHand()
           this.setGameState({gameState: 'playerTurn'})

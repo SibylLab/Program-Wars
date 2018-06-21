@@ -81,7 +81,7 @@
       hideButton () {
         let activeCard = this.getActiveCard()
         if (activeCard !== undefined) {
-          if (activeCard.type === 'BATTERYBACKUP' && activeCard !== undefined) {
+          if (activeCard.type === 'BATTERYBACKUP') {
             return 'display: block'
           } else {
             return 'display: none'
