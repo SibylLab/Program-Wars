@@ -294,12 +294,10 @@ export default {
     justify-content: space-between;
     align-items: center;
     flex-grow:0;
-    //position:relative;/* bring on top;*/
-    //box-shadow:0 0 0 1600px rgba(0,0,0,0.65);/* dark around it */
   }
 
   #header > p {
-    margin: 0px;
+    margin: 0;
     font-weight: bold;
     font-size: 1.2em;
   }
@@ -378,10 +376,6 @@ export default {
 
   .fade-enter-active {
     transition: opacity .5s;
-  }
-
-  .fade-leave {
-
   }
 
   .fade-leave-active {

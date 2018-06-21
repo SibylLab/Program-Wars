@@ -243,9 +243,9 @@ a {
 }
 
 .selected {
-    -webkit-box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
-    -moz-box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
-    box-shadow: 0px 0px 25px 4px rgba(119,194,6,1);
+    -webkit-box-shadow: 0 0 25px 4px rgba(119,194,6,1);
+    -moz-box-shadow: 0 0 25px 4px rgba(119,194,6,1);
+    box-shadow: 0 0 25px 4px rgba(119,194,6,1);
 }
 
 
