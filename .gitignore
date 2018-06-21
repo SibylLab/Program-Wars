@@ -7,3 +7,4 @@ test/unit/coverage
 index.sublime-workspace
 npm-shrinkwrap.json
 coverage/
+.nyc_output/

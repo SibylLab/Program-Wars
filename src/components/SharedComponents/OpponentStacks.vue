@@ -72,13 +72,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
   .stacks {
     width: 120px;
   }
-.row {
+  .row {
   width: 850px;
-}
+  }
   .opponentStacks {
     margin: 5px;
   }

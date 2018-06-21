@@ -292,101 +292,101 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#maincontainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
-  min-height: inherit;
-  min-width: inherit;
-  overflow-y: auto;
-  /*height: inherit;*/
+  #maincontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    min-height: inherit;
+    min-width: inherit;
+    overflow-y: auto;
+    }
+
+  #header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow:0;
+    }
+
+  #header > p {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  #playerinfopanel {
+    flex-grow:0;
+    width: 100%;
+  }
+
+  #opponent-stacks {
+    min-width: 30%;
+    max-width: 30%;
+    flex-grow: 0;
 
   }
 
-#header {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  padding: 5px 10px;
-  justify-content: space-between;
-  align-items: center;
-  flex-grow:0;
+  #flex-opponent-stacks {
+    overflow-y: scroll;
+    height: 87%;
+    position: relative;
+    width: 100%;
   }
 
-#header > p {
-  margin: 0px;
-  font-weight: bold;
-  font-size: 1.2em;
-  }
-#playerinfopanel {
-  flex-grow:0;
-  width: 100%;
-}
+  ::-webkit-scrollbar {
+      display: none;
+    }
 
-#opponent-stacks {
-  min-width: 30%;
-  max-width: 30%;
-  flex-grow: 0;
-
-}
-
-#flex-opponent-stacks {
-  overflow-y: scroll;
-  height: 87%;
-  position: relative;
-  width: 100%;
-}
-
-::-webkit-scrollbar {
-    display: none;
+  #accordion {
+    height: 40%;
   }
 
-#accordion {
-  height: 40%;
-}
+  .playfieldSides{
+    padding: 8px;
+    border-radius: 15px;
+    min-height: 375px;
+  }
 
-.playfieldSides{
-  padding: 8px;
-  border-radius: 15px;
-  min-height: 375px;
-}
+  .hacked {
+    position: fixed;
+    z-index: 10;
+    top: 30%;
+    left: 50%;
+    width: 1100px;
+    margin-left: -550px;
+  }
 
-.hacked {
-  position: fixed;
-  z-index: 10;
-  top: 30%;
-  left: 50%;
-  width: 1100px;
-  margin-left: -550px;
-}
+  #hackStyle {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 220px;
+    color: darkred;
+  }
 
-#hackStyle {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 220px;
-  color: darkred;
-}
-h1, h2 {
-  font-weight: normal;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
 
-h1, h2, h3, h4, h5 {
-  margin-top: 5px;
-}
+  h1, h2, h3, h4, h5 {
+    margin-top: 5px;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
 
-a {
-  color: #fff;
-}
+  a {
+    color: #fff;
+  }
 
   .fade-enter {
     opacity: 0;
@@ -394,10 +394,6 @@ a {
 
   .fade-enter-active {
     transition: opacity .5s;
-  }
-
-  .fade-leave {
-
   }
 
   .fade-leave-active {

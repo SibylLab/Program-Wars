@@ -472,9 +472,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .hasPlayed {
-    -webkit-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
-    -moz-box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
-    box-shadow: 0px 0px 24px 4px rgba(0,255,60,1);
+    -webkit-box-shadow: 0 0 24px 4px rgba(0,255,60,1);
+    -moz-box-shadow: 0 0 24px 4px rgba(0,255,60,1);
+    box-shadow: 0 0 24px 4px rgba(0,255,60,1);
   }
 
   #flexcontainer {
@@ -488,7 +488,7 @@ export default {
   #controls {
     display: flex;
     flex-direction: column;
-    padding: 0px;
+    padding: 0;
     vertical-align: middle;
     align-items: center;
     flex-basis: content;
@@ -531,33 +531,33 @@ export default {
     margin-top: 0px;
   }
 
-h1, h2 {
-  font-weight: normal;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
 
-h4.boolState {
-  margin-bottom: 0px;
-  margin-top: 20px;
-}
+  h4.boolState {
+    margin-bottom: 0px;
+    margin-top: 20px;
+  }
 
-h4.playerName {
-  /*margin-top: 10px;*/
-  padding-top:10px;
-}
+  h4.playerName {
+    /*margin-top: 10px;*/
+    padding-top:10px;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
 
-a {
-  color: #42b983;
-}
+  a {
+    color: #42b983;
+  }
 
   .endTurnButton {
     width: 200px;
