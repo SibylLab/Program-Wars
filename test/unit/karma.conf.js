@@ -8,7 +8,7 @@ module.exports = function (config) {
   config.set({
     browsers: ['Firefox'],
     frameworks: ['mocha', 'sinon-chai', 'jasmine'],
-    reporters: ['spec', 'coverage'],
+    reporters: ['spec', 'coverage', 'coveralls'],
     files: [
       './index.js'
     ],
@@ -24,7 +24,8 @@ module.exports = function (config) {
       'karma-webpack',
       'karma-sourcemap-loader',
       'karma-spec-reporter',
-      'karma-coverage'
+      'karma-coverage',
+      'karma-coveralls'
     ],
     webpack: webpackConfig,
     webpackMiddleware: {
