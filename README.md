@@ -5,7 +5,7 @@
 [![Dependency Status](https://david-dm.org/johnanvik/badges.svg)](https://david-dm.org/johnanvik/badges)
 [![Dev Dependency Status](https://david-dm.org/johnanvik/program-wars/badges/dev-status.svg)](https://david-dm.org/johnanvik/program-wars//badges#info=devDependencies)
 
-[![DeepScan grade](https://deepscan.io/api/projects/2681/branches/18540/badge/grade.svg)](https://deepscan.io/dashboard#view=project&pid=2681&bid=18540)
+[![DeepScan grade](https://deepscan.io/api/projects/2681/branches/18539/badge/grade.svg)](https://deepscan.io/dashboard#view=project&pid=2681&bid=18539)
 [![Coverage Status](https://coveralls.io/repos/github/johnanvik/program-wars/badge.svg)](https://coveralls.io/github/johnanvik/program-wars)
 
 [![GitHub release](https://img.shields.io/github/release/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/releases/latest)
