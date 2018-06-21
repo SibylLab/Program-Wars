@@ -42,6 +42,11 @@ export default class Handler {
     this.repeatX = new RepeatX(hand, boolSide, this.move, event)
     this.variable = new Variable(hand, boolSide, this.move, event)
     this.discard = new Discard(hand, boolSide, this.move, event)
+    this.safetyAndProtectMoves = [this.firewall, this.generator, this.antiVirus, this.overclock, this.batteryBackup, this.group]
+    this.sprinterMoves = [this.variable, this.repeatX, this.repeat, this.virus, this.powerOutage, this.instruction, this.hack]
+    this.gamblerMoves = [this.variable, this.virus, this.powerOutage, this.repeat, this.instruction, this.repeatX, this.hack]
+    this.protectorMoves = [this.virus, this.powerOutage, this.variable, this.repeat, this.instruction, this.repeatX, this.hack]
+    this.hackerMoves = [this.hack, this.virus, this.powerOutage, this.variable, this.repeat, this.instruction, this.repeatX]
     this.stackToPlay = undefined
     this.cardToPlay = undefined
     this.opponentToAttack = undefined
@@ -53,19 +58,19 @@ export default class Handler {
    * @param type The type of Ai.
    */
   setAi (type) {
+    let instructionRan = false
     let moveList = []
     if (type === 'gambler') {
-      moveList = [this.hack, this.virus, this.powerOutage, this.firewall, this.generator, this.antiVirus, this.overclock,
-        this.batteryBackup, this.variable, this.repeat, this.instruction, this.repeatX, this.group, this.discard]
+      moveList = this.gamblerMoves
     } else if (type === 'hacker') {
-      moveList = [this.hack, this.virus, this.powerOutage, this.firewall, this.generator, this.antiVirus, this.overclock, this.batteryBackup, this.variable, this.repeat,
-        this.instruction, this.repeatX, this.group, this.discard]
+      moveList = this.hackerMoves
     } else if (type === 'sprinter') {
-      moveList = [this.variable, this.overclock, this.repeatX, this.repeat, this.virus, this.firewall, this.generator, this.antiVirus, this.powerOutage, this.batteryBackup,
-        this.instruction, this.hack, this.group, this.instruction, this.discard]
+      moveList = this.sprinterMoves
     } else if (type === 'protector') {
-      moveList = [this.group, this.firewall, this.generator, this.antiVirus, this.overclock, this.virus, this.powerOutage, this.batteryBackup, this.variable,
-        this.repeat, this.instruction, this.repeatX, this.hack, this.instruction, this.discard]
+      moveList = this.protectorMoves
+    }
+    for (let element in this.safetyAndProtectMoves) {
+      moveList.unshift(this.safetyAndProtectMoves[element])
     }
     for (let turn in moveList) {
       if (moveList[turn].execute()) {
@@ -73,8 +78,14 @@ export default class Handler {
         this.cardToPlay = moveList[turn].getCard()
         this.opponentToAttack = moveList[turn].getOpponent()
         this.moveType = moveList[turn].getMove()
+        instructionRan = true
         break
       }
+    }
+    if (!instructionRan) {
+      this.discard.execute()
+      this.cardToPlay = this.discard.getCard()
+      this.moveType = this.discard.getMove()
     }
   }
   getMove () {
