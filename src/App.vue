@@ -9,7 +9,7 @@
    * This is the main component of any vue application, this is what will be injected into the index.html file.
    */
   export default {
-  name: 'app'
+    name: 'app'
 }
 </script>
 

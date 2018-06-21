@@ -1,4 +1,4 @@
-import {store} from '../store/store.js'
+import {store} from '../../store/store.js'
 
 export default class {
 
@@ -66,12 +66,23 @@ export default class {
     return {bestICard, bestRCard, rXCard, hackCard, bestVCard, bestGCard, virusCard, powerOutageCard, batteryBackupCard, overclockCard, firewallCard, generatorCard, antiVirusCard}
   };
 
+  /**
+   * This allows us to find a stack to repeat. It checks if the top of each stack is a ReapeatX and if it is it won't try to repeat it,
+   * otherwise it will find a stack to repeat under the specified stack value.
+   * @param e
+   * @returns {*}
+   */
   getStackToRepeat (e) {
     let stackToRepeat
-    for (let i = 1; i <= 10; i++) {
-      let tmpStack = e.stack.find(stack => stack.score === i && !stack.maxRepeats() && (stack.stackTopCard().type !== 'R' || stack.stackTopCard().value !== 1))
-      if (tmpStack !== undefined && tmpStack.boolSide === store.getters.getCoinMsg) {
-        stackToRepeat = tmpStack
+    let aRepeatCard = 'R'
+    let aRepeatX = 1
+    let maxStackValue = 10
+    if (e.stack !== undefined) {
+      for (let curStackValue = 1; curStackValue <= maxStackValue; curStackValue++) {
+        let tmpStack = e.stack.find(stack => stack.score === curStackValue && !stack.maxRepeats() && (stack.stackTopCard().type !== aRepeatCard || stack.stackTopCard().value !== aRepeatX))
+        if (tmpStack !== undefined && tmpStack.boolSide === store.getters.getCoinMsg) {
+          stackToRepeat = tmpStack
+        }
       }
     }
     return stackToRepeat

@@ -1,5 +1,5 @@
-import Stack from '../../../src/classes/Stack'
-import Card from '../../../src/classes/Card'
+import Stack from '../../../src/classes/Models/Stack'
+import Card from '../../../src/classes/Models/Card'
 
 let testStack = new Stack(1, true)
 let testCard = new Card(2, 3, 'I')

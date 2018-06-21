@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Card from 'src/components/SharedComponents/Card'
-import CardObj from '../../../src/classes/Card'
+import CardObj from '../../../src/classes/Models/Card'
 
 function getCssString (Component, propsData) {
   const Ctor = Vue.extend(Component)
