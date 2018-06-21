@@ -5,9 +5,7 @@
 [![Dependency Status](https://david-dm.org/johnanvik/badges.svg)](https://david-dm.org/johnanvik/badges)
 [![Dev Dependency Status](https://david-dm.org/johnanvik/program-wars/badges/dev-status.svg)](https://david-dm.org/johnanvik/program-wars//badges#info=devDependencies)
 
-[![Code Climate](https://codeclimate.com/github/johnanvik/program-wars/badges/gpa.svg)](https://codeclimate.com/github/johnanvik/program-wars)
-[![Test Coverage](https://codeclimate.com/github/johnanvik/program-wars/badges/coverage.svg)](https://codeclimate.com/github/johnanvik/program-wars/coverage)
-[![Code Climate Issue Count](https://codeclimate.com/github/johnanvik/program-wars/badges/issue_count.svg)](https://codeclimate.com/github/johnanvik/program-wars/issues)
+[![DeepScan grade](https://deepscan.io/api/projects/2681/branches/18540/badge/grade.svg)](https://deepscan.io/dashboard#view=project&pid=2681&bid=18540)
 
 [![GitHub release](https://img.shields.io/github/release/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/releases/latest)
 [![GitHub contributors](https://img.shields.io/github/contributors/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/graphs/contributors)
