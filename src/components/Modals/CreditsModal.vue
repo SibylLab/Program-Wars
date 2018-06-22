@@ -30,12 +30,5 @@
    * The Modal for when the credits button is clicked.
    */
   export default {
-    data () {
-      return {
-        version: 1,
-        version2: 7,
-        version3: 0
-      }
-    }
   }
 </script>
