@@ -26,7 +26,7 @@ export default {
   computed: {
 
     isAi () {
-      return (this.getCurrentPlayer.isAi && !this.inStack)
+      return (this.getCurrentPlayer().isAi && !this.inStack)
     },
     cardGraphics () {
       return this.cardData.cardImg
