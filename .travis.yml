@@ -21,17 +21,21 @@ env:
   - secure: P2VduVXNWti/yjbrtWWJEgyJluq/9BKL0f5ijuKYebF1giesmQ3SKoZZamho3tS8TCiST0hX2RvshwoNdNr1/4M6ucImaDo6KA0sj5HuX6xb5PnXrIbHLd9ZFaB/yHE3XZCDASWYF6mnPmgVh+rv2PIwX7yYLetOrrqk/qVgnPs8mLO+0Z+rctMeBcc6aFKmlZO205jDOvriFcflPgmgDjLJ+Hp7VwAkS3cMVsiwQH7oxjYgNRQ8WWHoUOhNM/5S0vD4z1eeoRB8rPlT8+U8PIkQCAwQh5u/NxgS3IyLst6YujbxgqX5Sb4mesW4m7cEQa/j3FsK1M7aWf3YlLnzZbmDm8+NusGK6m4k9R01NAABMiQUezGmZFZ/Nczy16nVSfemlO4IO7aGPc+jhRxDJXmWZRU5cpCngxHb0ekXiNaC2VzVg+CGiz0hgpPzyWXs4NeEfORxuK+4W3R6jh8zvf40L3fwWoJd7HNFWvJCNq2Q2mW6Kyr5ce2C+mGiqCH5nVci4tIUlAsGrdyHVuSFXgwWwwrv/9GT+SjB7T4U3dbYSztHx99tJQppD/4IdMk3VTtyyprR0zz/Bi7sDdpU7qKsZfOWsrDWRgjrv1mzjmKX9Eytp4uHkn4rTDowgoxLMsKMi5KXvm/gtVBoraW3mv+MVnnNMY3MF6/lNh7GTZ4=
 
 before_script:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 
 install:
-- npm install
+  - npm install
 
 script:
-- npm run test #Run unit tests
+  - npm run test #Run unit tests
 
 after_success:
-- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js # Run code coverage
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js # Run code coverage
+
+before_deploy:
+  - npm run  build
+  if: branch = firebaseDeploy
 
 deploy: #Deploy to server if built master branch
   provider: firebase
