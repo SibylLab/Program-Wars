@@ -35,7 +35,7 @@ after_success:
 
 before_deploy:
 - npm run  build
-if: branch = firebaseDeploy
+if: branch = master
 
 deploy: #Deploy to server if built master branch
   provider: firebase
@@ -43,5 +43,5 @@ deploy: #Deploy to server if built master branch
   token:
     secure: 1/7GlKN_Ghwt1TMAXmyGBy6Ll-f11pla3cK99k-EogQ5M
   on:
-     branch: firebaseDeploy
+     branch: master
     
