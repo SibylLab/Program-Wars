@@ -34,8 +34,8 @@ after_success:
 - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js # Run code coverage
 
 before_deploy:
-  - npm run  build
-  if: branch = firebaseDeploy
+- npm run  build
+if: branch = firebaseDeploy
 
 deploy: #Deploy to server if built master branch
   provider: firebase
