@@ -15,12 +15,10 @@
         <p><b>Follow the project page on </b><a href="https://github.com/johnanvik/program-wars" target="_blank">GitHub</a></p>
       <div class="modal-footer">
         <div style="text-align: left; float: left; font-size: 85%">
-          <p><b>Version: </b>2.0</p></div>
+          <p><b>Current Version: </b> <a href="https://github.com/johnanvik/program-wars/releases/latest" target="_blank"><img src="https://img.shields.io/github/release/johnanvik/program-wars.svg" alt="versionNumber"></a></p>
+        </div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float: right">Close</button>
       </div>
-        <div>
-
-        </div>
     </div>
     </div>
   </div>
@@ -32,9 +30,12 @@
    * The Modal for when the credits button is clicked.
    */
   export default {
+    data () {
+      return {
+        version: 1,
+        version2: 7,
+        version3: 0
+      }
+    }
   }
 </script>
-
-<style scoped>
-
-</style>
