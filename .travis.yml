@@ -1,6 +1,8 @@
 language: node_js
+
 node_js:
 - node
+
 notifications:
   email: false
   slack:
@@ -8,29 +10,38 @@ notifications:
     - programwarscardgame:u1VhNgRjj1X8gxpEWhfLw6MP#builds
     on_success: change
     on_failure: always
-addons:
-  ssh_known_hosts:
-  - cullen.io
-deploy:
-  provider: firebase
-  token:
-    secure: 1/7GlKN_Ghwt1TMAXmyGBy6Ll-f11pla3cK99k-EogQ5M
-before_script:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-  > ./cc-test-reporter
-- chmod +x ./cc-test-reporter
+
 cache:
   directories:
   - node_modules
-install:
-- npm install
-script:
-- npm run test
-after_success:
-- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+
 env:
   global:
   - secure: HyJuoLRVsNJR0TVgd9/pozY0pddTyQhXERZkespaQeAFWppg+XZDl6WR9Cw2oMuIIzWr3UIIhMT976PetEBdIcBV8bNrbjSJOI118rsieHOI8CR4ycTyjWQpRU9iU94rOkM1+H0q0j0mDLg0QjA5bkh3BVj0/IdrSCgRF1gb7UDK+Q/RQYpAOvovKIRlOZrC9Va+YygeGmjrR/A0GGw6wVf/K0DLNkMEdHEbrSSpfQ2Un5YlzqskL22jzbzWNN32jEuwJqc9cIQlFRZAZBAinxBRW4fGNIbcN/ZLnwSI3fvqUuRi00g67dmU+ebFCMfymGAECM//DGcFLdPVa/MzfuyW2IRkMarW3ZPEr5O5ApOC6TlqY0RXBXimPBIMCORfmQipd7LN57EzLyjFcFxW2Symmvv4664BxZ/HiI2KDC0dG+PgpAX/Mffywet0Zxuu37kQZyytie5EynY03haPjQFI66ZCpXOHOl7PxH9CSTdAkP8RddlJHW2VeuIJejxzZNE8U6AVu2j/YRmTqOLB7f90hDZvaAZMQIxECHhOE3TdiTHZ8xcfhZOZxWGqZAQiJrLkWRmNn78yG/MaAMV+iF5vocC+oYOZ8wPEgBWM9zWUbSMbjn50UbA4W698vjlWcOU3N0Fqa3u1ZQKR7CwpHgYY2OnzRpFz4Uur4KXtopc=
   - secure: P2VduVXNWti/yjbrtWWJEgyJluq/9BKL0f5ijuKYebF1giesmQ3SKoZZamho3tS8TCiST0hX2RvshwoNdNr1/4M6ucImaDo6KA0sj5HuX6xb5PnXrIbHLd9ZFaB/yHE3XZCDASWYF6mnPmgVh+rv2PIwX7yYLetOrrqk/qVgnPs8mLO+0Z+rctMeBcc6aFKmlZO205jDOvriFcflPgmgDjLJ+Hp7VwAkS3cMVsiwQH7oxjYgNRQ8WWHoUOhNM/5S0vD4z1eeoRB8rPlT8+U8PIkQCAwQh5u/NxgS3IyLst6YujbxgqX5Sb4mesW4m7cEQa/j3FsK1M7aWf3YlLnzZbmDm8+NusGK6m4k9R01NAABMiQUezGmZFZ/Nczy16nVSfemlO4IO7aGPc+jhRxDJXmWZRU5cpCngxHb0ekXiNaC2VzVg+CGiz0hgpPzyWXs4NeEfORxuK+4W3R6jh8zvf40L3fwWoJd7HNFWvJCNq2Q2mW6Kyr5ce2C+mGiqCH5nVci4tIUlAsGrdyHVuSFXgwWwwrv/9GT+SjB7T4U3dbYSztHx99tJQppD/4IdMk3VTtyyprR0zz/Bi7sDdpU7qKsZfOWsrDWRgjrv1mzjmKX9Eytp4uHkn4rTDowgoxLMsKMi5KXvm/gtVBoraW3mv+MVnnNMY3MF6/lNh7GTZ4=
+
+before_script:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+
+install:
+- npm install
+
+script:
+- npm run test #Run unit tests
+
+after_success:
+- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js # Run code coverage
+
+before_deploy:
+- npm run  build
+if: branch = master
+
+deploy: #Deploy to server if built master branch
+  provider: firebase
+  skip_cleanup: true
+  token:
+    secure: 1/7GlKN_Ghwt1TMAXmyGBy6Ll-f11pla3cK99k-EogQ5M
+  on:
+     branch: master
+    
