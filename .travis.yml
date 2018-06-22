@@ -35,6 +35,7 @@ after_success:
 
 deploy: #Deploy to server if built master branch
   provider: firebase
+  skip_cleanup: true
   token:
     secure: 1/7GlKN_Ghwt1TMAXmyGBy6Ll-f11pla3cK99k-EogQ5M
   on:
