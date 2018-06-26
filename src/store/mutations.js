@@ -129,6 +129,7 @@ export default {
   },
   addCardToStack (state, payload) {
     let stackToAdd = state.stacks.find(st => st.stackId === payload.stackId)
+    console.log(JSON.stringify(stackToAdd))
     payload.card.selected = false
     stackToAdd.addCardToStack(payload.card)
     stackToAdd.calculateStackScore()
