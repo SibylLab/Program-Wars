@@ -54,17 +54,20 @@ export default {
     let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
     console.log(JSON.stringify(state.hands))
     console.log(state.activePlayer)
+    console.log(JSON.stringify(playerHand))
     bus.$emit('cardHasBeenSelected')
-    for (let card of playerHand.cards) {
-      if (card.id === c.id) {
-        card.selected = !card.selected
-        if (!card.selected) {
-          bus.$emit('cardDeselected')
+    for (let card in playerHand.cards) {
+      if (playerHand.cards[card] !== undefined) {
+        if (playerHand.cards[card].id === c.id) {
+          playerHand.cards[card].selected = !playerHand.cards[card].selected
+          if (!playerHand.cards[card].selected) {
+            bus.$emit('cardDeselected')
+          } else {
+            state.activeCard = c
+          }
         } else {
-          state.activeCard = c
+          playerHand.cards[card].selected = false
         }
-      } else {
-        card.selected = false
       }
     }
   },
