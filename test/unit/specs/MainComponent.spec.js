@@ -1,5 +1,4 @@
 import MainComponent from '../../../src/components/MainGame/MainComponent.vue'
-import { store } from '../../../src/store/store'
 
 // function getSubmit (Component, propsData) {
 //   const Ctor = Vue.extend(Component)

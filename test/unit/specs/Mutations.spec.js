@@ -114,7 +114,7 @@ describe('test store.js getters', () => {
     store.state.players[1].hasOverclock = true
     store.state.players[0].hasVirus = true
     store.commit('checkWin')
-    expect(store.state.winner).to.equal(false)
+    expect(store.state.winner).to.equal(true)
   })
   it('test the setTips function', () => {
     store.commit('setTips', {tutorial: 'isTutorial', fact: 'isFact'})
@@ -133,7 +133,7 @@ describe('test store.js getters', () => {
     expect(store.state.playerTurn).to.equal(false)
   })
   it('test the setSelectedStacksBoolean function', () => {
-    store.commit('setSelectedStacksBoolean', {boolean: false})
+    store.commit('setSelectedStackBoolean', {boolean: false})
     expect(store.state.selectedStackBoolean).to.equal(false)
   })
   it('test the removeAllSelectedStacks function', () => {
@@ -150,7 +150,7 @@ describe('test store.js getters', () => {
   })
   it('test the removeActiveCardFromHand function', () => {
     store.state.activePlayer = 0
-    store.state.players[0].hand.push(card)
+    store.state.players[0].hand = card
     store.state.activeCard = card
     store.commit('removeActiveCardFromHand')
     expect(store.state.activeCard).to.equal(undefined)
