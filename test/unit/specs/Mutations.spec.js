@@ -14,7 +14,7 @@ describe('test store.js getters', () => {
   })
   it('test the initTutorialDeck function', () => {
     store.commit('initTutorialDeck')
-    expect(store.state.tutorialDeck.cards.length).to.equal(77)
+    expect(store.state.tutorialDeck.cards.length).to.equal(66)
   })
   it('test the store changeBonusScore function', () => {
     store.commit('changeBonusScore', {id: 0, trueScore: 1, falseScore: 0})
