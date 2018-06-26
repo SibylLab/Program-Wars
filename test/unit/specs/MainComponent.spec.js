@@ -1,6 +1,5 @@
 import MainComponent from '../../../src/components/MainComponent.vue'
 import { store } from '../../../src/store/store'
-// import { actions } from '../../../src/store/actions'
 
 // function getSubmit (Component, propsData) {
 //   const Ctor = Vue.extend(Component)
