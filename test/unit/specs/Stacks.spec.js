@@ -5,6 +5,8 @@ let testStack = new Stack(1, true)
 let testCard = new Card(2, 3, 'I')
 let testGroup = new Card(3, 3, 'G')
 let testRep = new Card(4, 3, 'R')
+let testRep2 = new Card(4, 3, 'R')
+let testRep3 = new Card(4, 3, 'R')
 
 describe('Stack.js', () => {
   it('test player id in stack', () => {
@@ -42,5 +44,13 @@ describe('Stack.js', () => {
 
   it('test stackBottomCard', () => {
     expect(testStack.stackBottomCard()).to.equal(testCard)
+  })
+  it('test maxRepeats', () => {
+    testStack.calculateStackScore()
+    expect(testStack.maxRepeats()).to.equal(false)
+    testStack.addCardToStack(testRep)
+    testStack.addCardToStack(testRep2)
+    testStack.addCardToStack(testRep3)
+    expect(testStack.maxRepeats()).to.equal(true)
   })
 })

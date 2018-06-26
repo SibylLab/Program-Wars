@@ -77,9 +77,6 @@ export default {
   getActiveSide (state) {
     return state.activeSide
   },
-  getActiveStack (state) {
-    return state.activeStack
-  },
   getScoreLimit (state) {
     return state.scoreLimit
   },

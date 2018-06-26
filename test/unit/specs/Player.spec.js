@@ -1,6 +1,7 @@
 import Player from '../../../src/classes/Models/Player'
 
 let testPlayer = new Player(1, 'jeff', undefined, 0, 0, true)
+let testPlayer2 = new Player(2, 'jose', undefined, 0, 0, false)
 
 describe('Player.js', () => {
   it('test the Player constructor id', () => {
@@ -45,6 +46,9 @@ describe('Player.js', () => {
 
   it('test the Player constructor isAi', () => {
     expect(testPlayer.isAi).to.equal(true)
+  })
+  it('test the Player2 constructor isAi', () => {
+    expect(testPlayer2.isAi).to.equal(false)
   })
 
   it('test the Player constructor hasPowerOutage', () => {

@@ -24,6 +24,11 @@ function getCardValue (Component, propsData) {
   const vm = new Ctor({ propsData }).$mount()
   return vm.cardValue
 }
+function getCardGraphics (Component, propsData) {
+  const Ctor = Vue.extend(Component)
+  const vm = new Ctor({ propsData }).$mount()
+  return vm.cardGraphics
+}
 
 describe('Card.vue', () => {
     // test if name is there
@@ -107,5 +112,10 @@ describe('Card.vue', () => {
     let testCard = new CardObj(0, 1, 'I')
     testCard.flipCardFace()
     expect(testCard.showFace).to.equal(true)
+  })
+
+  it('testing cardGraphics', () => {
+    let testCard = new CardObj(0, 1, 'I', '/static/cardImg/V6.png')
+    expect(getCardGraphics(Card, {cardData: testCard})).to.equal('/static/cardImg/V6.png')
   })
 })
