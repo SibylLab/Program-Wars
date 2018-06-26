@@ -12,7 +12,7 @@ describe('test store.js getters', () => {
     expect(store.getters.currentPlayerName).to.equal('')
   })
   it('test the store getCurrentPlayerHand function', () => {
-    expect(JSON.stringify(store.getters.getCurrentPlayerHand) === JSON.stringify({})).toEqual(true)
+    expect(JSON.stringify(store.getters.getCurrentPlayerHand) === JSON.stringify({})).to.equal(true)
   })
   it('test the store getCurrentPlayerStacks function', () => {
     expect(store.getters.getCurrentPlayerStacks).to.equal(undefined)
