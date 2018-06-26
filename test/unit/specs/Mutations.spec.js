@@ -163,5 +163,34 @@ describe('test store.js getters', () => {
   it('test the setActiveCard function', () => {
     store.commit('setActiveCard')
     expect(store.state.activeCard).to.equal(undefined)
+    store.commit('setActiveCard', {cardId: 55})
+    expect(store.state.activeCard).to.equal(55)
+  })
+  it('test the addCardToHand function', () => {
+    store.state.hands = []
+    store.state.hands.push({cards: [], playerId: 0})
+    store.state.isTutorial = false
+    store.commit('addCardToHand')
+    expect(store.state.hands[0].length).to.equal(6)
+    store.state.hands.push({cards: [], playerId: 1})
+    store.state.isTutorial = true
+    store.commit('addCardToHand')
+    expect(store.state.hands[1].length).to.equal(6)
+  })
+  it('test the addHandToPlayer function', () => {
+    store.state.hands = []
+    store.state.isTutorial = false
+    store.commit('addHandToPlayer', 0)
+    expect(Array.isArray(store.state.hands[0])).to.equal(true)
+    store.state.isTutorial = true
+    store.commit('addHandToPlayer', 1)
+    expect(Array.isArray(store.state.hands[1])).to.equal(true)
+  })
+  it('test the selectCard function', () => {
+    store.state.activePlayer = 0
+    store.state.isTutorial = false
+    store.state.hands[0].push(card)
+    store.commit('selectCard', 0)
+    expect(store.state.activeCard.id).to.equal(card.id)
   })
 })
