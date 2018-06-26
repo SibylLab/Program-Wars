@@ -209,9 +209,6 @@ export default {
   setTrueFalseAnim (state, payload) {
     state.trueFalseAnim = payload.startAnim
   },
-  setWinner (state, payload) {
-    state.winner = payload
-  },
   setPlayerScores (state) {
     let players = state.players
     let stacks = state.stacks

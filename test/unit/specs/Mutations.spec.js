@@ -1,6 +1,7 @@
 import {store} from '../../../src/store/store'
 import Card from '../../../src/classes/Models/Card'
 
+let card = new Card(55, 3, 'I', 'f')
 describe('test store.js getters', () => {
   it('test the store resetState function', () => {
     store.commit('resetState')
@@ -80,19 +81,19 @@ describe('test store.js getters', () => {
     store.commit('setPlayfieldColour', false)
     // expect(store.state.trueSideColour).to.equal('background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)')
     // expect(store.state.falseSideColour).to.equal('background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)')
-    store.commit('setActiveSide', true)
+    store.state.activeSide = true
     store.commit('setPlayfieldColour', true)
-    expect(store.state.falseSideColour).to.equal('background-color: rgba(0, 255, 0, 0.26); box-shadow: 0 0 15px 10px forestgreen')
-    expect(store.state.trueSideColour).to.equal('rgba(242, 0, 0, 0.36)')
+    expect(store.state.trueSideColour).to.equal('background-color: rgba(0, 255, 0, 0.26); box-shadow: 0 0 15px 10px forestgreen')
+    expect(store.state.falseSideColour).to.equal('rgba(242, 0, 0, 0.36)')
     store.commit('setActiveSide', false)
     store.commit('setPlayfieldColour', true)
     expect(store.state.falseSideColour).to.equal('background-color: rgba(0, 255, 0, 0.26); box-shadow: 0 0 15px 10px forestgreen')
     expect(store.state.trueSideColour).to.equal('rgba(242, 0, 0, 0.36)')
   })
-  it('test the setCoinFlip function', () => {
+  it('test the setCoinFlipAnim function', () => {
     expect(store.state.coinFlip).to.equal(0)
-    store.commit('setCoinFlip', 1)
-    expect(store.state.coinFlip).to.equal(0)
+    store.commit('setCoinFlipAnim', 1)
+    expect(store.state.coinFlip).to.equal(1)
   })
   it('test the playerModalTrigger function', () => {
     expect(store.state.playerTurn).to.equal(false)
@@ -112,7 +113,55 @@ describe('test store.js getters', () => {
     store.state.players[1].hasPlayedInstruction = false
     store.state.players[1].hasOverclock = true
     store.state.players[0].hasVirus = true
+    store.commit('checkWin')
     expect(store.state.winner).to.equal(false)
   })
-
+  it('test the setTips function', () => {
+    store.commit('setTips', {tutorial: 'isTutorial', fact: 'isFact'})
+    expect(store.state.playerTurn).to.equal(false)
+  })
+  it('test the setPlayerScores function', () => {
+    store.commit('setPlayerScores')
+    expect(store.state.players[0].trueScore).to.equal(0)
+  })
+  it('test the setTrueFalseAnim function', () => {
+    store.commit('setTrueFalseAnim', {startAnim: true})
+    expect(store.state.playerTurn).to.equal(false)
+  })
+  it('test the setScoreLimit function', () => {
+    store.commit('setScoreLimit', {scoreLimit: 10})
+    expect(store.state.playerTurn).to.equal(false)
+  })
+  it('test the setSelectedStacksBoolean function', () => {
+    store.commit('setSelectedStacksBoolean', {boolean: false})
+    expect(store.state.selectedStackBoolean).to.equal(false)
+  })
+  it('test the removeAllSelectedStacks function', () => {
+    store.commit('removeAllSelectedStacks')
+    expect(Array.isArray(store.state.selectedStacks)).to.equal(true)
+  })
+  it('test the discardSelectedCard function', () => {
+    store.state.activeCard = card
+    store.commit('discardSelectedCard')
+    store.state.isTutorial = true
+    store.commit('discardSelectedCard')
+    expect(store.state.deck.discard_cards[0].id).to.equal(55)
+    expect(store.state.tutorialDeck.discard_cards[0].id).to.equal(55)
+  })
+  it('test the removeActiveCardFromHand function', () => {
+    store.state.activePlayer = 0
+    store.state.players[0].hand.push(card)
+    store.state.activeCard = card
+    store.commit('removeActiveCardFromHand')
+    expect(store.state.activeCard).to.equal(undefined)
+  })
+  it('test the setActiveCardUndefined function', () => {
+    store.state.activeCard = card
+    store.commit('setActiveCardUndefined')
+    expect(store.state.activeCard).to.equal(undefined)
+  })
+  it('test the setActiveCard function', () => {
+    store.commit('setActiveCard')
+    expect(store.state.activeCard).to.equal(undefined)
+  })
 })
