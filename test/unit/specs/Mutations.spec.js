@@ -242,9 +242,9 @@ describe('test store.js getters', () => {
   })
   it('test the addStackToSelected function', () => {
     store.commit('addStackToSelected', {stackId: store.state.stacks[2].stackId})
-    expect(store.state.selectedStacks.stackId).to.equal(store.state.stacks[2].stackId)
+    expect(store.state.selectedStacks[0].stackId).to.equal(store.state.stacks[2].stackId)
     store.commit('addStackToSelected', {stackId: 4})
-    expect(store.state.selectedStacks.stackId).to.equal(4)
+    expect(store.state.selectedStacks[0].stackId).to.equal(4)
   })
   it('test the stackDiscard function', () => {
     store.state.isTutorial = false
@@ -252,7 +252,7 @@ describe('test store.js getters', () => {
     expect(store.state.deck.discard_cards.length).to.equal(1)
     store.state.isTutorial = true
     store.commit('stackDiscard', {stackId: store.state.stacks[0].stackId})
-    expect(store.state.tutorialDeck.discard_cards.length).to.equal(1)
+    expect(store.state.tutorialDeck.discard_cards.length).to.equal(2)
   })
   it('test the getIsLast function', () => {
     store.state.activePlayer = 1
