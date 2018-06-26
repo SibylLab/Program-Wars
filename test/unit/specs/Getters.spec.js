@@ -104,4 +104,7 @@ describe('test store.js getters', () => {
   it('test the store getTutorialStep function', () => {
     expect(store.getters.getTutorialStep).to.equal(true)
   })
+  it('test the store getDiscard function', () => {
+    expect(store.getters.getDiscard).to.equal(undefined)
+  })
 })

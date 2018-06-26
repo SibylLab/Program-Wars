@@ -35,9 +35,3 @@ describe('MainComponent.js', () => {
   //   getSubmit()
   // })
 })
-
-describe('store tests', () => {
-  it('testing store', () => {
-    expect(store.state.activeSide).to.equal(true)
-  })
-})

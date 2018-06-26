@@ -66,12 +66,6 @@ export default {
       }
     }
   },
-  addCardToDeck (state, card) {
-    state.deck.cards.push(card)
-  },
-  shuffleTheDeck (state) {
-    state.deck.shuffle()
-  },
   addHandToPlayer (state, playerId) {
     let hand = {
       handId: uuidV1(),
