@@ -181,10 +181,10 @@ describe('test store.js getters', () => {
     store.state.hands = []
     store.state.isTutorial = false
     store.commit('addHandToPlayer', 0)
-    expect(store.state.hands[0]).to.notEqual(undefined)
+    expect(store.state.players[0].hand.length).to.equal(6)
     store.state.isTutorial = true
     store.commit('addHandToPlayer', 1)
-    expect(store.state.hands[1]).to.notEqual(undefined)
+    expect(store.state.players[1].hand.length).to.equal(6)
   })
   it('test the selectCard function', () => {
     store.state.activePlayer = 0

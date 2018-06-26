@@ -52,6 +52,8 @@ export default {
 
   selectCard (state, c) {
     let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
+    console.log(JSON.stringify(state.hands))
+    console.log(state.activePlayer)
     bus.$emit('cardHasBeenSelected')
     for (let card of playerHand.cards) {
       if (card.id === c.id) {
@@ -88,7 +90,6 @@ export default {
   addCardToHand (state) {
     if (state.isTutorial) {
       if (state.tutorialDeck.cards.length <= 1 && state.tutorialDeck.discard_cards.length > 0) {
-        state.tutorialDeck.shuffle(state.tutorialDeck.discard_cards)
         for (let i = 0; i < state.tutorialDeck.discard_cards.length; i++) {
           state.tutorialDeck.cards.push(state.tutorialDeck.discard_cards[i])
         }
