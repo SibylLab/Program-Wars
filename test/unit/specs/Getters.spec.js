@@ -6,13 +6,13 @@ describe('test store.js getters', () => {
   })
 
   it('test the store maxPlayers function maxPlayers', () => {
-    expect(store.getters.maxplayers).to.equal(undefined)
+    expect(store.getters.maxplayers).to.equal(0)
   })
   it('test the store currentPlayerNamefunction', () => {
     expect(store.getters.currentPlayerName).to.equal('')
   })
   it('test the store getCurrentPlayerHand function', () => {
-    expect(store.getters.getCurrentPlayerHand).to.equal(undefined)
+    expect(store.getters.getCurrentPlayerHand).to.equal({})
   })
   it('test the store getCurrentPlayerStacks function', () => {
     expect(store.getters.getCurrentPlayerStacks).to.equal(undefined)
@@ -24,10 +24,10 @@ describe('test store.js getters', () => {
     expect(store.getters.getActiveCard).to.equal(undefined)
   })
   it('test the store getStacks function', () => {
-    expect(store.getters.getStacks).to.equal(undefined)
+    expect(store.getters.getStacks).to.equal([])
   })
   it('test the store getPlayers function', () => {
-    expect(store.getters.getPlayers).to.equal(undefined)
+    expect(store.getters.getPlayers).to.equal([])
   })
   it('test the store getIsDiscard function', () => {
     expect(store.getters.getIsDiscard).to.equal(false)
@@ -51,7 +51,7 @@ describe('test store.js getters', () => {
     expect(store.getters.getgameState).to.equal('newGame')
   })
   it('test the store getSelectedStacks function', () => {
-    expect(store.getters.getSelectedStacks).to.equal(undefined)
+    expect(store.getters.getSelectedStacks).to.equal([])
   })
   it('test the store getSelectedStacksBoolean function', () => {
     expect(store.getters.getSelectedStacksBoolean).to.equal(undefined)
@@ -78,7 +78,7 @@ describe('test store.js getters', () => {
     expect(store.getters.getWinnerScore).to.equal(0)
   })
   it('test the store getTips function', () => {
-    expect(store.getters.getTips).to.equal({fact: false, tutorial: true})
+    expect(store.getters.getTips.tutorial).to.equal(true)
   })
   it('test the store getPlayerTurn function', () => {
     expect(store.getters.getPlayerTurn).to.equal(false)
@@ -90,7 +90,7 @@ describe('test store.js getters', () => {
     expect(store.getters.getFirstRound).to.equal(true)
   })
   it('test the store getAiDependent function', () => {
-    expect(store.getters.getAiDependent).to.equal({hand: undefined, stack: undefined, opponents: undefined, player: undefined, scoreLimit: 10})
+    expect(store.getters.getAiDependent.scoreLimit).to.equal(10)
   })
   it('test the store getCoinMsg function', () => {
     expect(store.getters.getCoinMsg).to.equal(false)
