@@ -14,7 +14,7 @@ describe('MainComponent.js', () => {
 
   it('sets the correct default data', () => {
     expect(typeof MainComponent.data).to.equal('function')
-    const defaultData = MyComponent.data()
+    const defaultData = MainComponent.data()
     expect(defaultData.idCounter).to.equal(0)
     expect(defaultData.dataToggle).to.equal(false)
     expect(defaultData.localPlayers).to.equal([])

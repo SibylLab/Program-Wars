@@ -12,7 +12,7 @@ describe('test store.js getters', () => {
     expect(store.getters.currentPlayerName).to.equal('')
   })
   it('test the store getCurrentPlayerHand function', () => {
-    expect(store.getters.getCurrentPlayerHand).to.equal({})
+    expect(JSON.stringify(store.getters.getCurrentPlayerHand) === JSON.stringify({})).toEqual(true)
   })
   it('test the store getCurrentPlayerStacks function', () => {
     expect(store.getters.getCurrentPlayerStacks).to.equal(undefined)
@@ -24,10 +24,10 @@ describe('test store.js getters', () => {
     expect(store.getters.getActiveCard).to.equal(undefined)
   })
   it('test the store getStacks function', () => {
-    expect(store.getters.getStacks).to.equal([])
+    expect(Array.isArray(store.getters.getStacks)).to.equal(true)
   })
   it('test the store getPlayers function', () => {
-    expect(store.getters.getPlayers).to.equal([])
+    expect(Array.isArray(store.getters.getPlayers)).to.equal(true)
   })
   it('test the store getIsDiscard function', () => {
     expect(store.getters.getIsDiscard).to.equal(false)
@@ -51,7 +51,7 @@ describe('test store.js getters', () => {
     expect(store.getters.getgameState).to.equal('newGame')
   })
   it('test the store getSelectedStacks function', () => {
-    expect(store.getters.getSelectedStacks).to.equal([])
+    expect(Array.isArray(store.getters.getSelectedStacks)).to.equal(true)
   })
   it('test the store getSelectedStacksBoolean function', () => {
     expect(store.getters.getSelectedStacksBoolean).to.equal(undefined)
