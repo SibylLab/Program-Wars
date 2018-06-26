@@ -171,25 +171,25 @@ describe('test store.js getters', () => {
     store.state.hands.push({cards: [], playerId: 0})
     store.state.isTutorial = false
     store.commit('addCardToHand')
-    expect(store.state.hands[0].length).to.equal(6)
+    expect(store.state.hands[0].cards.length).to.equal(6)
     store.state.hands.push({cards: [], playerId: 1})
     store.state.isTutorial = true
     store.commit('addCardToHand')
-    expect(store.state.hands[1].length).to.equal(6)
+    expect(store.state.hands[1].cards.length).to.equal(6)
   })
   it('test the addHandToPlayer function', () => {
     store.state.hands = []
     store.state.isTutorial = false
     store.commit('addHandToPlayer', 0)
-    expect(Array.isArray(store.state.hands[0])).to.equal(true)
+    expect(store.state.hands[0]).to.notEqual(undefined)
     store.state.isTutorial = true
     store.commit('addHandToPlayer', 1)
-    expect(Array.isArray(store.state.hands[1])).to.equal(true)
+    expect(store.state.hands[1]).to.notEqual(undefined)
   })
   it('test the selectCard function', () => {
     store.state.activePlayer = 0
     store.state.isTutorial = false
-    store.state.hands[0].push(card)
+    store.state.hands[0].cards.push(card)
     store.commit('selectCard', 0)
     expect(store.state.activeCard.id).to.equal(card.id)
   })
