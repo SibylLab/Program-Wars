@@ -150,7 +150,7 @@ describe('test store.js getters', () => {
   })
   it('test the removeActiveCardFromHand function', () => {
     store.state.activePlayer = 0
-    store.state.players[0].hand = {cards: [card], playerId: 0}
+    store.state.hands.push({cards: [card], playerId: 0})
     store.state.activeCard = card
     store.commit('removeActiveCardFromHand')
     expect(store.state.activeCard).to.equal(undefined)
