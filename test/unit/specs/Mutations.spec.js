@@ -132,8 +132,8 @@ describe('test store.js getters', () => {
     store.commit('setScoreLimit', {scoreLimit: 10})
     expect(store.state.playerTurn).to.equal(false)
   })
-  it('test the setSelectedStacksBoolean function', () => {
-    store.commit('setSelectedStackBoolean', {boolean: false})
+  it('test the setStackSelectedBoolean function', () => {
+    store.commit('setStackSelectedBoolean', {boolean: false})
     expect(store.state.selectedStackBoolean).to.equal(false)
   })
   it('test the removeAllSelectedStacks function', () => {
@@ -150,7 +150,7 @@ describe('test store.js getters', () => {
   })
   it('test the removeActiveCardFromHand function', () => {
     store.state.activePlayer = 0
-    store.state.players[0].hand = card
+    store.state.players[0].hand = {cards: [card], playerId: 0}
     store.state.activeCard = card
     store.commit('removeActiveCardFromHand')
     expect(store.state.activeCard).to.equal(undefined)
