@@ -3,6 +3,10 @@ import Card from '../../../src/classes/Models/Card'
 
 let card = new Card(55, 3, 'I', 'f')
 describe('test store.js getters', () => {
+  it('test the initTutorialDeck function', () => {
+    store.commit('initTutorialDeck')
+    expect(store.state.tutorialDeck.cards.length).to.equal(77)
+  })
   it('test the store resetState function', () => {
     store.commit('resetState')
     expect(store.getters.getWinner).to.equal(false)
@@ -192,5 +196,44 @@ describe('test store.js getters', () => {
     store.state.hands[0].cards.push(card)
     store.commit('selectCard', card)
     expect(store.state.activeCard.id).to.equal(card.id)
+  })
+  it('test the groupStacks function', () => {
+    store.commit('groupStacks', true)
+    expect(store.state.groupStacks).to.equal(true)
+  })
+  it('test the doGroupStacks function', () => {
+    store.commit('doGroupStacks', false)
+    expect(store.state.groupStacks).to.equal(false)
+  })
+  it('test the setTutorial function', () => {
+    store.commit('setTutorial', {gameType: true})
+    expect(store.state.isTutorial).to.equal(true)
+  })
+  it('test the initDeck function', () => {
+    store.commit('initDeck')
+    expect(store.state.deck.cards.length).to.equal(148)
+  })
+  it('test the setHasPlayed function', () => {
+    store.commit('setHasPlayed', {hasPlayed: true})
+    expect(store.state.activeHasPlayed).to.equal(true)
+  })
+  it('test the setGameState function', () => {
+    store.commit('setGameState', {gameState: 'test'})
+    expect(store.state.currentGameState).to.equal('test')
+  })
+  it('test the addStackToPlayer function', () => {
+    store.commit('addStackToPlayer', {playerId: 0, boolSide: true})
+    store.commit('addStackToPlayer', {playerId: 0, boolSide: false})
+    store.commit('addStackToPlayer', {playerId: 1, boolSide: true})
+    store.commit('addStackToPlayer', {playerId: 1, boolSide: false})
+    expect(store.state.stacks.length).to.equal(4)
+  })
+  it('test the addCardToStack function', () => {
+    store.commit('addCardToStack', {stackId: store.state.stacks[0].stackId, card: card})
+    expect(store.state.stacks[0].length).to.equal(1)
+  })
+  it('test the  function', () => {
+    store.commit('popCardFromStack', {stackId: store.state.stacks[0].stackId, card: card})
+    expect(store.state.stacks[0].length).to.equal(0)
   })
 })

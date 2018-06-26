@@ -52,9 +52,6 @@ export default {
 
   selectCard (state, c) {
     let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
-    console.log(JSON.stringify(state.hands))
-    console.log(state.activePlayer)
-    console.log(JSON.stringify(playerHand))
     bus.$emit('cardHasBeenSelected')
     for (let card in playerHand.cards) {
       if (playerHand.cards[card] !== undefined) {
