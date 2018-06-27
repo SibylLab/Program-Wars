@@ -11,6 +11,8 @@ describe('test store.js getters', () => {
     let pay = {list: [{name: 'joe', isAi: false}, {name: 'lucy', isAi: true}]}
     store.commit('addPlayers', pay)
     expect(store.getters.getPlayers[0].name).to.equal('joe')
+    store.state.activePlayer = 0
+    expect(store.getters.currentPlayerName).to.equal('joe')
   })
   it('test the initTutorialDeck function', () => {
     store.commit('initTutorialDeck')
@@ -227,6 +229,8 @@ describe('test store.js getters', () => {
     store.commit('addStackToPlayer', {playerId: 1, boolSide: true})
     store.commit('addStackToPlayer', {playerId: 1, boolSide: false})
     expect(store.state.stacks.length).to.equal(4)
+    store.state.activePlayer = 0
+    expect(store.getters.getCurrentPlayerStacks.length).to.equal(2)
   })
   it('test the addCardToStack function', () => {
     store.commit('addCardToStack', {stackId: store.state.stacks[0].stackId, card: card})
@@ -242,10 +246,9 @@ describe('test store.js getters', () => {
   })
   it('test the addStackToSelected function', () => {
     store.commit('addStackToSelected', {stackId: store.state.stacks[2].stackId})
-    console.log(JSON.stringify(store.state.selectedStacks))
     expect(store.getters.getSelectedStacks[0].stackId).to.equal(store.state.stacks[2].stackId)
-    store.commit('addStackToSelected', {stackId: 4})
-    expect(store.state.selectedStacks[1].stackId).to.equal(undefined)
+    store.commit('addStackToSelected', {stackId: store.state.stacks[2].stackId})
+    expect(store.state.selectedStacks[0].stackId).to.equal(store.state.stacks[2].stackId)
   })
   it('test the stackDiscard function', () => {
     store.state.isTutorial = false

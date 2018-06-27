@@ -8,7 +8,7 @@ describe('test store.js getters', () => {
   it('test the store maxPlayers function maxPlayers', () => {
     expect(store.getters.maxplayers).to.equal(0)
   })
-  it('test the store currentPlayerNamefunction', () => {
+  it('test the store currentPlayerName function', () => {
     expect(store.getters.currentPlayerName).to.equal('')
   })
   it('test the store getCurrentPlayerHand function', () => {
