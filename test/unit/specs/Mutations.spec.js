@@ -248,7 +248,7 @@ describe('test store.js getters', () => {
     store.commit('addStackToSelected', {stackId: store.state.stacks[2].stackId})
     expect(store.getters.getSelectedStacks[0].stackId).to.equal(store.state.stacks[2].stackId)
     store.commit('addStackToSelected', {stackId: store.state.stacks[2].stackId})
-    expect(store.state.selectedStacks[0].stackId).to.equal(store.state.stacks[2].stackId)
+    expect(store.state.selectedStacks).to.equal(undefined)
   })
   it('test the stackDiscard function', () => {
     store.state.isTutorial = false
