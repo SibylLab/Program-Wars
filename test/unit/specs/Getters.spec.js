@@ -1,5 +1,8 @@
 import {store} from '../../../src/store/store'
+import Card from '../../../src/classes/Models/Card'
 
+let card = new Card(55, 3, 'I', 'f')
+let card2 = new Card(34, 2, 'R', 'v')
 describe('test store.js getters', () => {
   it('test the store getCurrentPlayerId function', () => {
     store.state.activePlayer = 0
@@ -111,10 +114,13 @@ describe('test store.js getters', () => {
     expect(store.getters.getAiDependent.scoreLimit).to.equal(10)
     let pay = {list: [{name: 'joe', isAi: false}, {name: 'lucy', isAi: true}]}
     store.commit('addPlayers', pay)
+    store.state.hands.push({cards: [card], playerId: 0})
+    store.state.hands.push({cards: [card2], playerId: 1})
     store.state.activePlayer = 0
     store.commit('addStackToPlayer', {playerId: 0, boolSide: true})
     store.commit('addStackToPlayer', {playerId: 0, boolSide: false})
     store.commit('addStackToPlayer', {playerId: 1, boolSide: true})
     store.commit('addStackToPlayer', {playerId: 1, boolSide: false})
+    expect(store.getters.getAiDependent.hand.cards[0].type).to.equal('I')
   })
 })
