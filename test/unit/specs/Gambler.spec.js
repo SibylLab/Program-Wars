@@ -62,12 +62,13 @@ let discMock = new Discard(hand, boolSide, move, event)
 // let discSpy = sinon.spy(aVMock, 'execute')
 let handler = new Handler(oPO, oV, aVMock, fWMock, genMock, oCMock, bBMock, groupMock, virusMock, hackMock, pOMock, instMock, rMock, rXMock, variableMock, discMock)
 let handlerMock = sinon.mock(handler)
-describe('Gambler Ai Spy', () => {
+describe('Gambler Ai Mock', () => {
   it('calls the object execute correctly', () => {
     store.state.activePlayer = 0
     store.state.players = [player, player2]
     // should.have.been.calledWith("foo")
     handlerMock.expects('setAi').once().withArgs('gambler')
+    handler.setAi('gambler')
     handlerMock.verify()
   })
   // it('calls the object execute correctly', () => {
