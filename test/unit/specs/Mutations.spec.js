@@ -135,7 +135,7 @@ describe('test store.js getters', () => {
     store.state.players[1].falseScore = 0
     store.state.players[1].trueScore = 0
     store.commit('checkWin')
-    expect(store.state.winner).to.equal(true)
+    expect(store.state.winner).to.equal(false)
   })
   it('test the setTips function', () => {
     store.commit('setTips', {tutorial: 'isTutorial', fact: 'isFact'})
@@ -223,7 +223,7 @@ describe('test store.js getters', () => {
     store.state.hands[0].cards[0].selected = true
     store.commit('selectCard', card)
     expect(store.state.hands[0].cards[0].selected).to.equal(false)
-    store.state.hands[0].cards[0].push(undefined)
+    store.state.hands[0].cards.push(undefined)
     store.commit('selectCard', card)
     expect(store.state.hands[0].cards[0].selected).to.equal(false)
   })
