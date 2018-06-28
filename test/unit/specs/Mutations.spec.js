@@ -225,7 +225,7 @@ describe('test store.js getters', () => {
     expect(store.state.hands[0].cards[0].selected).to.equal(false)
     store.state.hands[0].cards.push(undefined)
     store.commit('selectCard', card)
-    expect(store.state.hands[0].cards[0].selected).to.equal(false)
+    expect(store.state.hands[0].cards[0].selected).to.equal(true)
   })
   it('test the groupStacks function', () => {
     store.commit('groupStacks', {yesOrNo: true})
