@@ -193,10 +193,11 @@ describe('test store.js getters', () => {
     store.state.isTutorial = true
     store.commit('addCardToHand')
     expect(store.state.hands[1].cards.length).to.equal(0)
-    store.state.tutorialDeck = []
+    store.state.tutorialDeck.cards = []
     store.state.activePlayer = 1
     store.commit('addCardToHand')
     expect(store.state.hands[1].cards.length).to.equal(6)
+    store.commit('initTutorialDeck')
   })
   it('test the addHandToPlayer function', () => {
     store.state.hands = []
@@ -231,7 +232,7 @@ describe('test store.js getters', () => {
   })
   it('test the initDeck function', () => {
     store.commit('initDeck')
-    expect(store.state.deck.cards.length).to.equal(147)
+    expect(store.state.deck.cards.length).to.equal(289)
   })
   it('test the setHasPlayed function', () => {
     store.commit('setHasPlayed', {hasPlayed: true})
