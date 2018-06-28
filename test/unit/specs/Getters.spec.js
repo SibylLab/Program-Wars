@@ -121,6 +121,6 @@ describe('test store.js getters', () => {
     store.commit('addStackToPlayer', {playerId: 0, boolSide: false})
     store.commit('addStackToPlayer', {playerId: 1, boolSide: true})
     store.commit('addStackToPlayer', {playerId: 1, boolSide: false})
-    expect(store.getters.getAiDependent.hand.cards[0].type).to.equal('I')
+    expect(store.getters.getAiDependent.hand.cards[0].type).to.equal('R')
   })
 })

@@ -34,6 +34,7 @@ describe('test store.js getters', () => {
     expect(store.getters.getPlayers[0].hasFirewall).to.equal(true)
   })
   it('test the store giveGenerator function', () => {
+    store.getters.getPlayers[0].attackedCards = [new Card(22, 0, 'FIREWALL', 't')]
     store.commit('giveGenerator', 0)
     expect(store.getters.getPlayers[0].hasGenerator).to.equal(true)
   })
@@ -41,6 +42,11 @@ describe('test store.js getters', () => {
     store.commit('giveAntiVirus', 0)
     store.commit('giveFirewall', 0)
     store.commit('giveGenerator', 0)
+    expect(store.getters.getPlayers[0].hasAntiVirus).to.equal(true)
+    store.getters.getPlayers[0].hasFirewall = false
+    store.getters.getPlayers[0].hasAntiVirus = false
+    store.getters.getPlayers[0].attackedCards = [new Card(22, 0, 'VIRUS', 't')]
+    store.commit('giveAntiVirus', 0)
     expect(store.getters.getPlayers[0].hasAntiVirus).to.equal(true)
   })
   it('test the store giveOverclock and giveVirus functions', () => {
@@ -122,14 +128,15 @@ describe('test store.js getters', () => {
     store.state.players[0].hasVirus = true
     store.commit('checkWin')
     expect(store.state.winner).to.equal(true)
+    store.state.players[1].hasOverclock = false
+    store.state.players[1].hasPlayedInstruction = true
+    store.state.players[1].isDefensive = false
+    store.state.players[1].falseScore = 0
+    store.state.players[1].trueScore = 0
   })
   it('test the setTips function', () => {
     store.commit('setTips', {tutorial: 'isTutorial', fact: 'isFact'})
     expect(store.state.playerTurn).to.equal(false)
-  })
-  it('test the setPlayerScores function', () => {
-    store.commit('setPlayerScores')
-    expect(store.state.players[0].trueScore).to.equal(0)
   })
   it('test the setTrueFalseAnim function', () => {
     store.commit('setTrueFalseAnim', {startAnim: true})
@@ -179,10 +186,17 @@ describe('test store.js getters', () => {
     store.state.isTutorial = false
     store.commit('addCardToHand')
     expect(store.state.hands[0].cards.length).to.equal(6)
+    store.commit('initDeck')
+    store.commit('addCardToHand')
+    expect(store.state.hands[0].cards.length).to.equal(6)
     store.state.hands.push({cards: [], playerId: 1})
     store.state.isTutorial = true
     store.commit('addCardToHand')
     expect(store.state.hands[1].cards.length).to.equal(0)
+    store.state.tutorialDeck = []
+    store.state.activePlayer = 1
+    store.commit('addCardToHand')
+    expect(store.state.hands[1].cards.length).to.equal(6)
   })
   it('test the addHandToPlayer function', () => {
     store.state.hands = []
@@ -235,6 +249,10 @@ describe('test store.js getters', () => {
     expect(store.state.stacks.length).to.equal(4)
     store.state.activePlayer = 0
     expect(store.getters.getCurrentPlayerStacks.length).to.equal(2)
+  })
+  it('test the setPlayerScores function', () => {
+    store.commit('setPlayerScores')
+    expect(store.state.players[0].trueScore).to.equal(0)
   })
   it('test the addCardToStack function', () => {
     store.commit('addCardToStack', {stackId: store.state.stacks[0].stackId, card: card})
