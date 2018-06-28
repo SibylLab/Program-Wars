@@ -91,9 +91,7 @@ describe('test store.js getters', () => {
   it('test the store getFirstRound function', () => {
     expect(store.getters.getFirstRound).to.equal(true)
   })
-  it('test the store getAiDependent function', () => {
-    expect(store.getters.getAiDependent.scoreLimit).to.equal(10)
-  })
+
   it('test the store getCoinMsg function', () => {
     expect(store.getters.getCoinMsg).to.equal(false)
   })
@@ -108,5 +106,15 @@ describe('test store.js getters', () => {
   })
   it('test the store getDiscard function', () => {
     expect(Array.isArray(store.getters.getDiscard)).to.equal(true)
+  })
+  it('test the store getAiDependent function', () => {
+    expect(store.getters.getAiDependent.scoreLimit).to.equal(10)
+    let pay = {list: [{name: 'joe', isAi: false}, {name: 'lucy', isAi: true}]}
+    store.commit('addPlayers', pay)
+    store.state.activePlayer = 0
+    store.commit('addStackToPlayer', {playerId: 0, boolSide: true})
+    store.commit('addStackToPlayer', {playerId: 0, boolSide: false})
+    store.commit('addStackToPlayer', {playerId: 1, boolSide: true})
+    store.commit('addStackToPlayer', {playerId: 1, boolSide: false})
   })
 })

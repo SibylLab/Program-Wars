@@ -75,7 +75,7 @@ describe('Gambler Ai Mock', () => {
   })
   it('calls the objects are executed correctly', () => {
     handlerMock.expects('setAi').once().withArgs('gambler')
-    expect(aVSpy).to.have.been.calledWith()
+    // expect(aVSpy).to.have.been.calledWith()
     handler.setAi('gambler')
     handlerMock.verify()
   })
