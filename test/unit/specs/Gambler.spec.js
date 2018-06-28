@@ -28,35 +28,50 @@ let hand = [new Card(0, 0, 'FIREWALL'), new Card(1, 0, 'GENERATOR'), new Card(2,
 let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)]}
 
 let player = new Player(0, 'aiMock', hand, 0, 0, true)
-let player2 = new Player(1, 'aiMock', hand, 0, 0, true)
+let player2 = new Player(1, 'aiMock2', hand, 0, 0, true)
 
 let oPO = player2
 let oV = player2
-let aVMock = sinon.mock(new AntiVirus(hand, boolSide, move, event))
-let fWMock = sinon.mock(new Firewall(hand, boolSide, move, event))
-let genMock = sinon.mock(new Generator(hand, boolSide, move, event))
-let oCMock = sinon.mock(new OverClock(hand, boolSide, move, event))
-let bBMock = sinon.mock(new BatteryBackup(hand, boolSide, move, event))
-let rMock = sinon.mock(new Repeat(hand, boolSide, move, event))
-let rXMock = sinon.mock(new RepeatX(hand, boolSide, move, event))
-let groupMock = sinon.mock(new Group(hand, boolSide, move, event, canGroup))
-let instMock = sinon.mock(new Instruction(hand, boolSide, move, event))
-let hackMock = sinon.mock(new Hack(hand, boolSide, move, event))
-let variableMock = sinon.mock(new Variable(hand, boolSide, move, event))
-let virusMock = sinon.mock(new Virus(hand, boolSide, move, event))
-let pOMock = sinon.mock(new PowerOutage(hand, boolSide, move, event))
-let discMock = sinon.mock(new Discard(hand, boolSide, move, event))
-let handlerMock = sinon.mock(new Handler(oPO, oV, aVMock, fWMock, genMock, oCMock, bBMock, groupMock, virusMock, hackMock, pOMock, instMock, rMock, rXMock, variableMock, discMock))
-describe('Gambler Ai Mock', () => {
+let aVMock = new AntiVirus(hand, boolSide, move, event)
+// let aVSpy = sinon.spy(aVMock, 'execute')
+let fWMock = new Firewall(hand, boolSide, move, event)
+// let fWSpy = sinon.spy(Mock, 'execute')
+let genMock = new Generator(hand, boolSide, move, event)
+// let genSpy = sinon.spy(Mock, 'execute')
+let oCMock = new OverClock(hand, boolSide, move, event)
+// let oCSpy = sinon.spy(aVMock, 'execute')
+let bBMock = new BatteryBackup(hand, boolSide, move, event)
+// let bBSpy = sinon.spy(aVMock, 'execute')
+let rMock = new Repeat(hand, boolSide, move, event)
+// let rSpy = sinon.spy(aVMock, 'execute')
+let rXMock = new RepeatX(hand, boolSide, move, event)
+// let rXSpy = sinon.spy(aVMock, 'execute')
+let groupMock = new Group(hand, boolSide, move, event, canGroup)
+// let groupSpy = sinon.spy(aVMock, 'execute')
+let instMock = new Instruction(hand, boolSide, move, event)
+// let instSpy = sinon.spy(aVMock, 'execute')
+let hackMock = new Hack(hand, boolSide, move, event)
+// let hackSpy = sinon.spy(aVMock, 'execute')
+let variableMock = new Variable(hand, boolSide, move, event)
+// let variableSpy = sinon.spy(aVMock, 'execute')
+let virusMock = new Virus(hand, boolSide, move, event)
+// let virusSpy = sinon.spy(aVMock, 'execute')
+let pOMock = new PowerOutage(hand, boolSide, move, event)
+// let pOSpy = sinon.spy(aVMock, 'execute')
+let discMock = new Discard(hand, boolSide, move, event)
+// let discSpy = sinon.spy(aVMock, 'execute')
+let handler = new Handler(oPO, oV, aVMock, fWMock, genMock, oCMock, bBMock, groupMock, virusMock, hackMock, pOMock, instMock, rMock, rXMock, variableMock, discMock)
+let handlerMock = sinon.mock(handler)
+describe('Gambler Ai Spy', () => {
   it('calls the object execute correctly', () => {
-    store.state.coinMsg = true
-    store.state.activePlayer = player
+    store.state.activePlayer = 0
     store.state.players = [player, player2]
-    handlerMock.expects('setAi').once.withArgs('gambler')
+    // should.have.been.calledWith("foo")
+    handlerMock.expects('setAi').once().withArgs('gambler')
     handlerMock.verify()
   })
   // it('calls the object execute correctly', () => {
-    // mock.expects('setAi').once.withArgs('gambler')
-    // mock.verify()
+    // Spy.expects('setAi').once.withArgs('gambler')
+    // Spy.verify()
   // })
 })

@@ -2,10 +2,12 @@ import {store} from '../../../src/store/store'
 
 describe('test store.js getters', () => {
   it('test the store getCurrentPlayerId function', () => {
+    store.state.activePlayer = 0
     expect(store.getters.getCurrentPlayerId).to.equal(0)
   })
 
   it('test the store maxPlayers function maxPlayers', () => {
+    store.state.players = []
     expect(store.getters.maxplayers).to.equal(0)
   })
   it('test the store currentPlayerName function', () => {

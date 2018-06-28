@@ -196,7 +196,7 @@ describe('test store.js getters', () => {
   it('test the selectCard function', () => {
     store.state.activePlayer = 0
     store.state.isTutorial = false
-    store.state.hands[0].cards.push(card)
+    store.state.hands[0].cards = [card]
     store.state.hands[0].cards[0].selected = true
     store.state.hands[0].cards.push(card2)
     store.commit('selectCard', card2)
