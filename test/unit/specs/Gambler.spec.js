@@ -1,5 +1,5 @@
 // var chai = require('chai');
-var sinon = require('sinon');
+var sinon = require('sinon')
 import {store} from '../../../src/store/store'
 import Card from '../../../src/classes/Models/Card'
 import Player from '../../../src/classes/Models/Player'
