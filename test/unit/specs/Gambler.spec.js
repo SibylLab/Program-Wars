@@ -33,7 +33,7 @@ let player2 = new Player(1, 'aiMock2', hand, 0, 0, true)
 let oPO = player2
 let oV = player2
 let aVMock = new AntiVirus(hand, boolSide, move, event)
-// let aVSpy = sinon.spy(aVMock, 'execute')
+let aVSpy = sinon.spy(aVMock, 'execute')
 let fWMock = new Firewall(hand, boolSide, move, event)
 // let fWSpy = sinon.spy(Mock, 'execute')
 let genMock = new Generator(hand, boolSide, move, event)
@@ -54,7 +54,7 @@ let hackMock = new Hack(hand, boolSide, move, event)
 // let hackSpy = sinon.spy(aVMock, 'execute')
 let variableMock = new Variable(hand, boolSide, move, event)
 // let variableSpy = sinon.spy(aVMock, 'execute')
-let virusMock = new Virus(hand, boolSide, move, event)
+let virusMock = new Virus(hand, boolSide, move, event, opponentVirus)
 // let virusSpy = sinon.spy(aVMock, 'execute')
 let pOMock = new PowerOutage(hand, boolSide, move, event)
 // let pOSpy = sinon.spy(aVMock, 'execute')
@@ -66,13 +66,17 @@ describe('Gambler Ai Mock', () => {
   it('calls the object execute correctly', () => {
     store.state.activePlayer = 0
     store.state.players = [player, player2]
-    // should.have.been.calledWith("foo")
+    expect(handler.getOpponentVirus().id).to.equal(oV.id)
+    expect(handler.getOpponentPO().id).to.equal(oPO.id)
+    expect(handler.getMove().id).to.equal(undefined)
+    expect(handler.getCard().id).to.equal(undefined)
+    expect(handler.getOpponent().id).to.equal(undefined)
+    expect(handler.getStack().id).to.equal(undefined)
+  })
+  it('calls the objects are executed correctly', () => {
     handlerMock.expects('setAi').once().withArgs('gambler')
+    expect(aVSpy).to.have.been.calledWith('setAi')
     handler.setAi('gambler')
     handlerMock.verify()
   })
-  // it('calls the object execute correctly', () => {
-    // Spy.expects('setAi').once.withArgs('gambler')
-    // Spy.verify()
-  // })
 })
