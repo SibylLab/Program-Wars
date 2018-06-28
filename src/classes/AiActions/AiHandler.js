@@ -1,47 +1,26 @@
-import AntiVirus from './AntiVirusStep'
-import Firewall from './FirewallStep'
-import Generator from './GeneratorStep'
-import OverClock from './OverClockStep'
-import BatteryBackup from './BatteryBackupStep'
-import Repeat from './RepeatStep'
-import RepeatX from './RepeatXStep'
-import Group from './GroupStep'
-import Instruction from './InstStep'
-import Hack from './HackStep'
-import Variable from './VarStep'
-import Virus from './VirusStep'
-import PowerOutage from './PowerOutageStep'
-import Discard from './DiscardStep'
-
-import AiMove from './AiMove'
-import {store} from '../../store/store'
 
 /**
  * This is the handler for the chain of responsibility pattern. It handles running through all of the steps (or chains
  * that the Ai will execute.
  */
 export default class Handler {
-  constructor (event) {
-    this.move = new AiMove()
-    this.opponentPO = this.move.getOpponentToAttack(event, 'POWEROUTAGE')
-    this.opponentVirus = this.move.getOpponentToAttack(event, 'VIRUS')
-    let hand = this.move.organizeHand(event)
-    let boolSide = store.getters.getCoinMsg
-    let canGroup = this.move.findGroup(event.stack, hand.bestGCard)
-    this.antiVirus = new AntiVirus(hand, boolSide, this.move, event)
-    this.firewall = new Firewall(hand, boolSide, this.move, event)
-    this.generator = new Generator(hand, boolSide, this.move, event)
-    this.overclock = new OverClock(hand, boolSide, this.move, event)
-    this.batteryBackup = new BatteryBackup(hand, boolSide, this.move, event)
-    this.group = new Group(hand, boolSide, this.move, event, canGroup)
-    this.virus = new Virus(hand, boolSide, this.move, event, this.opponentVirus)
-    this.hack = new Hack(hand, boolSide, this.move, event)
-    this.powerOutage = new PowerOutage(hand, boolSide, this.move, event, this.opponentPO)
-    this.instruction = new Instruction(hand, boolSide, this.move, event)
-    this.repeat = new Repeat(hand, boolSide, this.move, event)
-    this.repeatX = new RepeatX(hand, boolSide, this.move, event)
-    this.variable = new Variable(hand, boolSide, this.move, event)
-    this.discard = new Discard(hand, boolSide, this.move, event)
+  constructor (oPO, oV, aV, fW, gen, oC, bB, group, virus, hack, pO, inst, rep, repX, variable, disc) {
+    this.opponentPO = oPO
+    this.opponentVirus = oV
+    this.antiVirus = aV
+    this.firewall = fW
+    this.generator = gen
+    this.overclock = oC
+    this.batteryBackup = bB
+    this.group = group
+    this.virus = virus
+    this.hack = hack
+    this.powerOutage = pO
+    this.instruction = inst
+    this.repeat = rep
+    this.repeatX = repX
+    this.variable = variable
+    this.discard = disc
     this.safetyAndProtectMoves = [this.firewall, this.generator, this.antiVirus, this.overclock, this.batteryBackup, this.group]
     this.sprinterMoves = [this.variable, this.repeatX, this.repeat, this.virus, this.powerOutage, this.instruction, this.hack]
     this.gamblerMoves = [this.variable, this.virus, this.powerOutage, this.repeat, this.instruction, this.repeatX, this.hack]

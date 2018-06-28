@@ -2,6 +2,7 @@ import {store} from '../../../src/store/store'
 import Card from '../../../src/classes/Models/Card'
 
 let card = new Card(55, 3, 'I', 'f')
+let card2 = new Card(34, 2, 'R', 'v')
 describe('test store.js getters', () => {
   it('test the store resetState function', () => {
     store.commit('resetState')
@@ -196,8 +197,11 @@ describe('test store.js getters', () => {
     store.state.activePlayer = 0
     store.state.isTutorial = false
     store.state.hands[0].cards.push(card)
+    store.state.hands[0].cards[0].selected = true
+    store.state.hands[0].cards.push(card2)
+    store.commit('selectCard', card2)
+    expect(store.state.activeCard.id).to.equal(card2.id)
     store.commit('selectCard', card)
-    expect(store.state.activeCard.id).to.equal(card.id)
   })
   it('test the groupStacks function', () => {
     store.commit('groupStacks', {yesOrNo: true})
