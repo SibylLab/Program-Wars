@@ -217,6 +217,9 @@ describe('test store.js getters', () => {
     store.commit('selectCard', card2)
     expect(store.state.activeCard.id).to.equal(card2.id)
     store.commit('selectCard', card)
+    store.state.hands[0].cards[0].selected = false
+    store.commit('selectCard', card)
+    expect(store.state.hands[0].cards[0].selected).to.equal(true)
   })
   it('test the groupStacks function', () => {
     store.commit('groupStacks', {yesOrNo: true})
@@ -279,7 +282,7 @@ describe('test store.js getters', () => {
     expect(store.state.deck.discard_cards.length).to.equal(1)
     store.state.isTutorial = true
     store.commit('stackDiscard', {stackId: store.state.stacks[0].stackId})
-    expect(store.state.tutorialDeck.discard_cards.length).to.equal(2)
+    expect(store.state.tutorialDeck.discard_cards.length).to.equal(1)
   })
   it('test the getIsLast function', () => {
     store.state.activePlayer = 1
