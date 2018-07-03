@@ -1,11 +1,5 @@
 import MainComponent from '../../../src/components/MainGame/MainComponent.vue'
 
-// function getSubmit (Component, propsData) {
-//   const Ctor = Vue.extend(Component)
-//   const vm = new Ctor({ propsData }).$mount()
-//   return vm.submit
-// }
-
 describe('MainComponent.js', () => {
   it('has a created hook', () => {
     expect(typeof MainComponent.created).to.equal('function')
@@ -29,8 +23,4 @@ describe('MainComponent.js', () => {
     expect(defaultData.winnerScore).to.equal(0)
     expect(Array.isArray(defaultData.deleteData)).to.equal(true)
   })
-  // it('testing the submit funtion', () => {
-  //   let newPlayer = 'jane'
-  //   getSubmit()
-  // })
 })

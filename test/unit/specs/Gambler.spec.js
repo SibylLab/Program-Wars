@@ -1,4 +1,4 @@
-// var chai = require('chai');
+/* eslint-disable no-trailing-spaces */
 var sinon = require('sinon')
 import {store} from '../../../src/store/store'
 import Card from '../../../src/classes/Models/Card'
@@ -33,6 +33,7 @@ let player2 = new Player(1, 'aiMock2', hand, 0, 0, true)
 let oPO = player2
 let oV = player2
 let aVMock = new AntiVirus(hand, boolSide, move, event)
+// These spies are left in intentionally as they could be useful later on
 // let aVSpy = sinon.spy(aVMock, 'execute')
 let fWMock = new Firewall(hand, boolSide, move, event)
 // let fWSpy = sinon.spy(Mock, 'execute')
@@ -73,6 +74,7 @@ describe('Gambler Ai Mock', () => {
     expect(handler.getOpponent()).to.equal(undefined)
     expect(handler.getStack()).to.equal(undefined)
   })
+
   it('calls the objects are executed correctly', () => {
     handlerMock.expects('setAi').once().withArgs('gambler')
     // expect(aVSpy).to.have.been.calledWith()
