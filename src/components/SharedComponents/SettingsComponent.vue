@@ -194,11 +194,7 @@
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId)
       },
       maxChar () {
-        if (this.newPlayer.length >= 10) {
-          return true
-        } else {
-          return false
-        }
+        return (this.newPlayer.length >= 10)
       }
     },
     watch: {

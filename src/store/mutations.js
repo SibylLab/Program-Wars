@@ -53,24 +53,20 @@ export default {
   selectCard (state, c) {
     let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
     bus.$emit('cardHasBeenSelected')
-    for (let card of playerHand.cards) {
-      if (card.id === c.id) {
-        card.selected = !card.selected
-        if (!card.selected) {
-          bus.$emit('cardDeselected')
+    for (let card in playerHand.cards) {
+      if (playerHand.cards[card] !== undefined) {
+        if (playerHand.cards[card].id === c.id) {
+          playerHand.cards[card].selected = !playerHand.cards[card].selected
+          if (!playerHand.cards[card].selected) {
+            bus.$emit('cardDeselected')
+          } else {
+            state.activeCard = c
+          }
         } else {
-          state.activeCard = c
+          playerHand.cards[card].selected = false
         }
-      } else {
-        card.selected = false
       }
     }
-  },
-  addCardToDeck (state, card) {
-    state.deck.cards.push(card)
-  },
-  shuffleTheDeck (state) {
-    state.deck.shuffle()
   },
   addHandToPlayer (state, playerId) {
     let hand = {
@@ -94,7 +90,6 @@ export default {
   addCardToHand (state) {
     if (state.isTutorial) {
       if (state.tutorialDeck.cards.length <= 1 && state.tutorialDeck.discard_cards.length > 0) {
-        state.tutorialDeck.shuffle(state.tutorialDeck.discard_cards)
         for (let i = 0; i < state.tutorialDeck.discard_cards.length; i++) {
           state.tutorialDeck.cards.push(state.tutorialDeck.discard_cards[i])
         }
@@ -214,9 +209,6 @@ export default {
   },
   setTrueFalseAnim (state, payload) {
     state.trueFalseAnim = payload.startAnim
-  },
-  setWinner (state, payload) {
-    state.winner = payload
   },
   setPlayerScores (state) {
     let players = state.players
