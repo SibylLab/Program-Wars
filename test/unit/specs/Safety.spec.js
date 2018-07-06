@@ -138,7 +138,7 @@ describe('Safety cards', () => {
     nonSafetyCards()
   })
 
-function nonSafetyCards(){
+  function nonSafetyCards () {
     expect(rSpy.notCalled)
     expect(rxSpy.notCalled)
     expect(gSpy.notCalled)

@@ -50,7 +50,7 @@ export default class Handler {
     // console.log('Movelist size: ' + moveList.length)
     // Add the saftey & protect moved to the start of the move list
     for (let move in safetyAndProtectMoves) {
-     moveList.unshift(safetyAndProtectMoves[move])
+      moveList.unshift(safetyAndProtectMoves[move])
     }
      // console.log('Movelist size: ' + moveList.length)
 

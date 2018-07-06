@@ -13,7 +13,7 @@ module.exports = function (config) {
       './index.js'
     ],
     preprocessors: {
-      './index.js': ['webpack', 'sourcemap', 'coverage']
+      './index.js': ['webpack', 'sourcemap']
     },
     plugins: [
       'karma-chrome-launcher',
