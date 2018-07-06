@@ -8,5 +8,6 @@ export default class Generator extends Turn {
       this.moveType = 'protection'
       return true
     }
+    return false
   }
 }
