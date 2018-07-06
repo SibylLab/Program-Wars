@@ -47,14 +47,12 @@ export default class Handler {
       moveList = [this.group, this.virus, this.powerOutage, this.variable, this.repeat, this.instruction, this.repeatX, this.hack]
     }
 
-    // console.log('Movelist size: ' + moveList.length)
     // Add the saftey & protect moved to the start of the move list
-    for (let move of safetyAndProtectMoves) {
+    for (let move in safetyAndProtectMoves) {
       moveList.unshift(safetyAndProtectMoves[move])
     }
-     // console.log('Movelist size: ' + moveList.length)
 
-    for (let turn of moveList) {
+    for (let turn in moveList) {
       if (typeof moveList[turn] !== 'undefined' && moveList[turn].execute()) {
         this.stackToPlay = moveList[turn].getStack()
         this.cardToPlay = moveList[turn].getCard()
