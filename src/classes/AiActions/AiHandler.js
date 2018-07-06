@@ -49,12 +49,12 @@ export default class Handler {
 
     // console.log('Movelist size: ' + moveList.length)
     // Add the saftey & protect moved to the start of the move list
-    for (let move in safetyAndProtectMoves) {
+    for (let move of safetyAndProtectMoves) {
       moveList.unshift(safetyAndProtectMoves[move])
     }
      // console.log('Movelist size: ' + moveList.length)
 
-    for (let turn in moveList) {
+    for (let turn of moveList) {
       if (typeof moveList[turn] !== 'undefined' && moveList[turn].execute()) {
         this.stackToPlay = moveList[turn].getStack()
         this.cardToPlay = moveList[turn].getCard()
