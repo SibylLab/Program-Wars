@@ -12,7 +12,7 @@
         <div id="cards">
           <ul id="example-1">
             <h4 class="modal-title"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
-              <li v-for="(card) in hand" style="padding-top: 5px">
+              <li v-for="(card) in hand" style="margin-top: 5px">
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
