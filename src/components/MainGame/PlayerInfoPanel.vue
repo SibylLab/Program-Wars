@@ -355,6 +355,9 @@ export default {
       bus.$on('hackCanceled', () => {
         this.deselectAll()
       })
+      bus.$on('cardPlayed', () => {
+        this.deselectAll()
+      })
       bus.$on('activeCardAddedToStack', (cardId) => {
         this.removeCard(cardId)
         this.addCardToHand()

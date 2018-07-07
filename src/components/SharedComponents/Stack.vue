@@ -381,7 +381,7 @@ export default {
           bus.$emit('cardPlayed')
           this.increaseFactIndex()
         }
-
+        bus.$emit('cardPlayed')
         this.setActiveCardUndefined()
       },
       drop () {
