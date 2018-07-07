@@ -355,7 +355,7 @@ export default {
       bus.$on('hackCanceled', () => {
         this.deselectAll()
       })
-      bus.$on('cardPlayed', () => {
+      bus.$on('alterTipBox', () => {
         this.deselectAll()
       })
       bus.$on('activeCardAddedToStack', (cardId) => {

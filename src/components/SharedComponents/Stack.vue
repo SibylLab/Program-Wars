@@ -261,7 +261,6 @@ export default {
             this.increaseFactIndex()
           }
         }
-
         let selectedStacks = this.getSelectedStacks()
         for (let stack of selectedStacks) {
           while (stack.cards.length !== 0) {
@@ -276,6 +275,7 @@ export default {
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()
         bus.$emit('cardDeselected')
+        bus.$emit('alterTipBox')
         this.doGroupStacks({yesOrNo: false})
         this.turn(true)
       },
@@ -381,7 +381,7 @@ export default {
           bus.$emit('cardPlayed')
           this.increaseFactIndex()
         }
-        bus.$emit('cardPlayed')
+        bus.$emit('alterTipBox')
         this.setActiveCardUndefined()
       },
       drop () {
