@@ -21,46 +21,46 @@ export default class {
     let antiVirusCard
     let firewallCard
 
-    for (let hand of event.hand.cards) {
-      if (hand.type === 'I') {
+    for (let card of event.hand.cards) {
+      if (card.type === 'I') {
         bestICard = this.findBestCard(hand, bestICard)
       }
-      if (hand.type === 'R') {
-        if (hand.value === 1) {
-          rXCard = hand
+      if (card.type === 'R') {
+        if (card.value === 1) {
+          rXCard = card
         } else {
-          bestRCard = this.findBestCard(hand, bestRCard)
+          bestRCard = this.findBestCard(card, bestRCard)
         }
       }
-      if (hand.type === 'V') {
-        bestVCard = this.findBestCard(hand, bestVCard)
+      if (card.type === 'V') {
+        bestVCard = this.findBestCard(card, bestVCard)
       }
-      if (hand.type === 'G') {
-        bestGCard.push(hand)
+      if (card.type === 'G') {
+        bestGCard.push(card)
       }
       if (hand.type === 'H') {
-        hackCard = hand
+        hackCard = card
       }
       if (hand.type === 'VIRUS') {
-        virusCard = hand
+        virusCard = card
       }
       if (hand.type === 'POWEROUTAGE') {
-        powerOutageCard = hand
+        powerOutageCard = card
       }
       if (hand.type === 'BATTERYBACKUP') {
-        batteryBackupCard = hand
+        batteryBackupCard = card
       }
       if (hand.type === 'OVERCLOCK') {
-        overclockCard = hand
+        overclockCard = card
       }
       if (hand.type === 'FIREWALL') {
-        firewallCard = hand
+        firewallCard = card
       }
       if (hand.type === 'GENERATOR') {
-        generatorCard = hand
+        generatorCard = card
       }
       if (hand.type === 'ANTIVIRUS') {
-        antiVirusCard = hand
+        antiVirusCard = card
       }
     }
     return {bestICard, bestRCard, rXCard, hackCard, bestVCard, bestGCard, virusCard, powerOutageCard, batteryBackupCard, overclockCard, firewallCard, generatorCard, antiVirusCard}
@@ -196,4 +196,3 @@ export default class {
     return undefined
   }
 }
-

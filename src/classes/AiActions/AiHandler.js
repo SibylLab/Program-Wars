@@ -1,6 +1,6 @@
 
 /**
- * This is the handler for the chain of responsibility pattern. It handles running through all of the steps (or chains
+ * This is the handler for the chain of responsibility pattern. It handles running through all of the steps (or chains)
  * that the Ai will execute.
  */
 export default class Handler {
@@ -21,11 +21,6 @@ export default class Handler {
     this.repeatX = repX
     this.variable = variable
     this.discard = disc
-    this.safetyAndProtectMoves = [this.firewall, this.generator, this.antiVirus, this.overclock, this.batteryBackup, this.group]
-    this.sprinterMoves = [this.variable, this.repeatX, this.repeat, this.virus, this.powerOutage, this.instruction, this.hack]
-    this.gamblerMoves = [this.variable, this.virus, this.powerOutage, this.repeat, this.instruction, this.repeatX, this.hack]
-    this.protectorMoves = [this.virus, this.powerOutage, this.variable, this.repeat, this.instruction, this.repeatX, this.hack]
-    this.hackerMoves = [this.hack, this.virus, this.powerOutage, this.variable, this.repeat, this.instruction, this.repeatX]
     this.stackToPlay = undefined
     this.cardToPlay = undefined
     this.opponentToAttack = undefined
@@ -37,51 +32,63 @@ export default class Handler {
    * @param type The type of Ai.
    */
   setAi (type) {
-    let instructionRan = false
+    // Reversed order of importance to get correct behaviour from unshift
+    let safetyAndProtectMoves = [this.overclock, this.antiVirus, this.batteryBackup, this.firewall, this.generator]
+
+    let cardPlayed = false
     let moveList = []
     if (type === 'gambler') {
-      moveList = this.gamblerMoves
+      moveList = [this.variable, this.repeatX, this.repeat, this.instruction, this.hack, this.virus, this.powerOutage, this.group]
     } else if (type === 'hacker') {
-      moveList = this.hackerMoves
+      moveList = [this.hack, this.virus, this.powerOutage, this.variable, this.repeatX, this.repeat, this.instruction, this.group]
     } else if (type === 'sprinter') {
-      moveList = this.sprinterMoves
+      moveList = [this.variable, this.repeatX, this.repeat, this.instruction, this.hack, this.virus, this.powerOutage, this.group]
     } else if (type === 'protector') {
-      moveList = this.protectorMoves
+      moveList = [this.group, this.virus, this.powerOutage, this.variable, this.repeat, this.instruction, this.repeatX, this.hack]
     }
-    for (let element in this.safetyAndProtectMoves) {
-      moveList.unshift(this.safetyAndProtectMoves[element])
+
+    // Add the saftey & protect moved to the start of the move list
+    for (let move in safetyAndProtectMoves) {
+      moveList.unshift(safetyAndProtectMoves[move])
     }
+
     for (let turn in moveList) {
-      if (moveList[turn].execute()) {
+      if (typeof moveList[turn] !== 'undefined' && moveList[turn].execute()) {
         this.stackToPlay = moveList[turn].getStack()
         this.cardToPlay = moveList[turn].getCard()
         this.opponentToAttack = moveList[turn].getOpponent()
         this.moveType = moveList[turn].getMove()
-        instructionRan = true
+        cardPlayed = true
         break
       }
     }
-    if (!instructionRan) {
+    if (!cardPlayed && typeof this.discard !== 'undefined') {
       this.discard.execute()
       this.cardToPlay = this.discard.getCard()
       this.moveType = this.discard.getMove()
     }
   }
+
   getMove () {
     return this.moveType
   }
+
   getStack () {
     return this.stackToPlay
   }
+
   getCard () {
     return this.cardToPlay
   }
+
   getOpponent () {
     return this.opponentToAttack
   }
+
   getOpponentPO () {
     return this.opponentPO
   }
+
   getOpponentVirus () {
     return this.opponentVirus
   }
