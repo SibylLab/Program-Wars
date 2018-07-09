@@ -113,8 +113,7 @@ export default {
         playerList: [],
         winner: '',
         winnerScore: 0,
-        deleteData: [],
-        firstRoundLocal: true
+        deleteData: []
       }
     },
     components: {
@@ -229,9 +228,6 @@ export default {
           this.addCardToHand()
           this.setGameState({gameState: 'playerTurn'})
           if (this.getCurrentPlayerId() === 0) {
-            if (this.firstRoundLocal) {
-              this.setTutorialStep(true)
-            }
             this.setTrueFalseAnim({startAnim: true})
             if (this.getTutorialStep()) {
               this.setActiveSide({activeSide: true})
@@ -251,7 +247,6 @@ export default {
             }, 3000)
           }
         }
-        this.firstRoundLocal = false
       }, 500)
       this.initGame()
       this.fillHands()
