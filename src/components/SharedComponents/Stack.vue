@@ -258,7 +258,6 @@ export default {
         if (this.getTutorialState()) {
           if (!this.getAiTurn()) {
             bus.$emit('cardPlayed')
-            console.log('increased group fact index')
             this.increaseFactIndex()
           }
         }
@@ -381,7 +380,6 @@ export default {
         if (this.getTutorialState()) {
           bus.$emit('cardPlayed')
           this.increaseFactIndex()
-          console.log('increased index')
         }
         bus.$emit('alterTipBox')
         this.setActiveCardUndefined()

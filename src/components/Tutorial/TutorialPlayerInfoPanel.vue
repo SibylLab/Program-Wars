@@ -319,7 +319,6 @@ import Card from '../SharedComponents/Card'
         }
       },
       setTutorialFact () {
-        console.log('tip box called')
         let retFact = this.facts[this.facts.length]
         if (this.getFactIndex() < this.facts.length) {
           retFact = this.facts[this.getFactIndex()]
@@ -332,7 +331,6 @@ import Card from '../SharedComponents/Card'
         this.tipsCardSelected = this.setTipBox('default')
         bus.$emit('cardDeselected')
         this.setStackSelectedBoolean({payload: undefined})
-        console.log('deselectAll called')
         this.$store.commit('setActiveCardUndefined')
         if (this.hand !== undefined) {
           for (let card of this.hand) {

@@ -218,10 +218,8 @@ export default {
      * Called when the component is created (after mount) to run the game loop
      */
     created () {
-      console.log('componentCreated')
       this.playerList = this.getPlayers()
       this.gameStart = true
-
       setInterval(() => {
         let gameState = this.getgameState()
         if (gameState === 'newGame') {
@@ -231,9 +229,7 @@ export default {
           this.addCardToHand()
           this.setGameState({gameState: 'playerTurn'})
           if (this.getCurrentPlayerId() === 0) {
-            console.log('first round: ' + this.firstRoundLocal)
             if (this.firstRoundLocal) {
-              console.log('changed the state')
               this.setTutorialStep(true)
             }
             this.setTrueFalseAnim({startAnim: true})
