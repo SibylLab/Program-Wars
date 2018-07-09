@@ -113,7 +113,8 @@ export default {
         playerList: [],
         winner: '',
         winnerScore: 0,
-        deleteData: []
+        deleteData: [],
+        firstRoundLocal: true
       }
     },
     components: {
@@ -162,7 +163,8 @@ export default {
         'addCardToHand',
         'setFirstRound',
         'initTutorialDeck',
-        'flipTutorialStep'
+        'flipTutorialStep',
+        'setTutorialStep'
 
       ]),
       ...mapActions([
@@ -216,6 +218,7 @@ export default {
      * Called when the component is created (after mount) to run the game loop
      */
     created () {
+      console.log('componentCreated')
       this.playerList = this.getPlayers()
       this.gameStart = true
 
@@ -227,8 +230,12 @@ export default {
         } else if (gameState === 'startPlayerTurn') {
           this.addCardToHand()
           this.setGameState({gameState: 'playerTurn'})
-
           if (this.getCurrentPlayerId() === 0) {
+            console.log('first round: ' + this.firstRoundLocal)
+            if (this.firstRoundLocal) {
+              console.log('changed the state')
+              this.setTutorialStep(true)
+            }
             this.setTrueFalseAnim({startAnim: true})
             if (this.getTutorialStep()) {
               this.setActiveSide({activeSide: true})
@@ -248,6 +255,7 @@ export default {
             }, 3000)
           }
         }
+        this.firstRoundLocal = false
       }, 500)
       this.initGame()
       this.fillHands()

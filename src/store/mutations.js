@@ -459,6 +459,8 @@ export default {
   },
   setActiveStack (state, payload) {
     state.activeStack = payload
+  },
+  setTutorialStep (state, payload) {
+    this.tutorialStep = payload
   }
-
 }

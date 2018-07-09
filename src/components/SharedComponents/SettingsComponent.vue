@@ -145,7 +145,6 @@
       startTutorial () {
         this.isTutorial = true
         this.setTutorial({gameType: true})
-      // this.$store.commit('setTutorial', {gameType: true});
         this.localPlayers = []
         this.localPlayers.push({name: 'You', isAi: false})
         this.localPlayers.push({name: 'Flash', isAi: true})

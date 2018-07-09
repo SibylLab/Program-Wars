@@ -93,14 +93,14 @@ import Card from '../SharedComponents/Card'
         facts: [
           'Your false path needs an instruction, let\'s add one to the false path.',
           'Great! Your paths are started, let\'s place another instruction in the true path.',
-          'It\'s time to build up one of our paths. Add the repetition card to your flase path. This will allow you' +
+          'It\'s time to build up one of our paths. Add the repetition card to your false path. This will allow you' +
         ' to add a variable on top of it to change how often it repeats.',
           'Either of your paths could be attacked by a hack card, which would ruin your stack. Group cards can be used on' +
           ' one or more stacks of cards in one path that equal up to the group card value. Let\'s protect your true path with' +
         ' a group card. Click on the check boxes above the cards in your true path to group them. You also get a small bonus for using group cards.',
           'You\'re getting closer to completing a path, add the variable (5) card to build up your false path.',
           'The computer has at least one stack that isn\'t grouped, so use the hack card on one of its stacks to set him back.',
-          'Your false path is vulnerable to getting hacked, but you dont have any more group card. Use the Firewall card to get full protection from hack cards.',
+          'Your false path is vulnerable to getting hacked, but you don\'t have any more group card. Use the Firewall card to get full protection from hack cards.',
           'The computer is vulnerable to getting a virus, send him a virus to slow down his program and half their total instructions.',
           'Speaking of being vulnerable to viruses, you\'re also vulnerable. Let\'s use an AntiVirus to protect you from all further viruses',
           'You have one more attack card in your hand. Use the Power Outage card to stop your opponent from playing instruction cards.',
@@ -319,6 +319,7 @@ import Card from '../SharedComponents/Card'
         }
       },
       setTutorialFact () {
+        console.log('tip box called')
         let retFact = this.facts[this.facts.length]
         if (this.getFactIndex() < this.facts.length) {
           retFact = this.facts[this.getFactIndex()]
@@ -331,7 +332,7 @@ import Card from '../SharedComponents/Card'
         this.tipsCardSelected = this.setTipBox('default')
         bus.$emit('cardDeselected')
         this.setStackSelectedBoolean({payload: undefined})
-
+        console.log('deselectAll called')
         this.$store.commit('setActiveCardUndefined')
         if (this.hand !== undefined) {
           for (let card of this.hand) {
