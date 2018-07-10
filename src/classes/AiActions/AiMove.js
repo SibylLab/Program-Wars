@@ -23,7 +23,7 @@ export default class {
 
     for (let card of event.hand.cards) {
       if (card.type === 'I') {
-        bestICard = this.findBestCard(hand, bestICard)
+        bestICard = this.findBestCard(card, bestICard)
       }
       if (card.type === 'R') {
         if (card.value === 1) {
@@ -38,28 +38,28 @@ export default class {
       if (card.type === 'G') {
         bestGCard.push(card)
       }
-      if (hand.type === 'H') {
+      if (card.type === 'H') {
         hackCard = card
       }
-      if (hand.type === 'VIRUS') {
+      if (card.type === 'VIRUS') {
         virusCard = card
       }
-      if (hand.type === 'POWEROUTAGE') {
+      if (card.type === 'POWEROUTAGE') {
         powerOutageCard = card
       }
-      if (hand.type === 'BATTERYBACKUP') {
+      if (card.type === 'BATTERYBACKUP') {
         batteryBackupCard = card
       }
-      if (hand.type === 'OVERCLOCK') {
+      if (card.type === 'OVERCLOCK') {
         overclockCard = card
       }
-      if (hand.type === 'FIREWALL') {
+      if (card.type === 'FIREWALL') {
         firewallCard = card
       }
-      if (hand.type === 'GENERATOR') {
+      if (card.type === 'GENERATOR') {
         generatorCard = card
       }
-      if (hand.type === 'ANTIVIRUS') {
+      if (card.type === 'ANTIVIRUS') {
         antiVirusCard = card
       }
     }

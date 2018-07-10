@@ -225,6 +225,7 @@ import Card from '../SharedComponents/Card'
         }
       },
       cardClicked (c) {
+        console.log('card clicked in tutorial')
         if (this.hand[0] === c || this.getFactIndex() >= this.facts.length) {
           if (this.getTips().tutorial) {
             this.tipsCardSelected = this.setTipBox(c)
