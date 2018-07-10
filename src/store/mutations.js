@@ -25,6 +25,8 @@ export default {
     state.selectedStacks = []
     state.selectedStackBoolean = undefined
     state.winner = false
+    state.winnerName = ''
+    state.winnerScore = 0
     state.tips.tutorial = true
     state.tips.fact = true
     state.firstRound = true

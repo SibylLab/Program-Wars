@@ -243,13 +243,11 @@ export default {
       }
     },
     beforeRouteLeave (to, from, next) {
-      console.log('in beforerouteLeave')
       this.resetState()
       clearInterval(this.interval)
       next()
     },
     created () {
-      console.log('created main')
       this.playerList = this.getPlayers()
       this.gameStart = true
       let j = Math.floor(Math.random() * 2)
@@ -260,7 +258,6 @@ export default {
         this.setActiveSide({activeSide: false})
       }
       this.interval = setInterval(() => {
-        console.log('in main loop')
         let gameState = this.getgameState()
         if (gameState === 'newGame') {
           this.setGameState({gameState: 'waitingForPlayerInput'})
