@@ -162,9 +162,7 @@ export default {
         'addCardToHand',
         'setFirstRound',
         'initTutorialDeck',
-        'flipTutorialStep',
-        'setTutorialStep'
-
+        'flipTutorialStep'
       ]),
       ...mapActions([
         'firstRound',
