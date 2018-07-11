@@ -7,13 +7,12 @@
             <div class="panel-body">{{ tipsInfoText }}</div>
           </div>
         </div>
-        <div class="container" style="width: 900px; float: left">
-        <div class="row">
+        <div class="container" style="width: 700px; float: left">
+        <div class="row" style="width: 700px; align-content: center">
         <div id="cards">
-
           <ul id="example-1">
             <h4 class="modal-title"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
-              <li v-for="(card) in hand">
+              <li v-for="(card) in hand" style="margin-top: 5px">
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
@@ -355,6 +354,9 @@ export default {
       bus.$on('hackCanceled', () => {
         this.deselectAll()
       })
+      bus.$on('alterTipBox', () => {
+        this.deselectAll()
+      })
       bus.$on('activeCardAddedToStack', (cardId) => {
         this.removeCard(cardId)
         this.addCardToHand()
@@ -509,6 +511,7 @@ export default {
 
   #cards {
     flex-grow: 4;
+    -webkit-flex-grow: 4;
     align-self: flex-start;
   }
 

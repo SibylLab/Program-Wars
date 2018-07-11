@@ -165,7 +165,6 @@ export default {
         'initTutorialDeck',
         'flipTutorialStep',
         'resetState'
-
       ]),
       ...mapActions([
         'firstRound',
@@ -233,7 +232,6 @@ export default {
         } else if (gameState === 'startPlayerTurn') {
           this.addCardToHand()
           this.setGameState({gameState: 'playerTurn'})
-
           if (this.getCurrentPlayerId() === 0) {
             this.setTrueFalseAnim({startAnim: true})
             if (this.getTutorialStep()) {

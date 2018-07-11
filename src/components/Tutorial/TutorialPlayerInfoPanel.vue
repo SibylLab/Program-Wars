@@ -2,20 +2,20 @@
   <div id="player-info-panel">
     <div id="flexcontainer">
       <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
-        <div class="panel panel-default" style="border-radius: 10px">
+        <div class="panel panel-default" style="border-radius: 10px;">
           <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
           <div class="panel-body">{{ tipsInfoText }}</div>
           <button class="btn btn-primary" v-if="showTextBoxButton" @click="removeAnimation()" style="align-content: right">OK</button>
           <br v-if="showTextBoxButton"><br v-if="showTextBoxButton">
         </div>
       </div>
-      <div class="container" style="width: 900px; float: left">
-        <div class="row">
+      <div class="container" style="width: 700px; float: left">
+        <div class="row" style="width: 700px; align-content: center">
           <div id="cards">
 
             <ul id="example-1">
               <h4 class="modal-title"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
-              <li v-for="(card,index) in hand" :id="card.type + card.value + index + currentPlayerName()">
+              <li v-for="(card,index) in hand" :id="card.type + card.value + index + currentPlayerName()" style="margin-top: 5px">
                 <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
             </ul>
@@ -32,7 +32,7 @@
       <display-used-cards></display-used-cards>
 
     </div>
-    <div class="container" style="border-top: 1px solid white; padding: 10px;">
+    <div class="container" style="border-top: 1px solid white; padding: 10px; width: 600px">
       <div class="row">
         <div class="col-md-12">
           <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
@@ -93,14 +93,14 @@ import Card from '../SharedComponents/Card'
         facts: [
           'Your false path needs an instruction, let\'s add one to the false path.',
           'Great! Your paths are started, let\'s place another instruction in the true path.',
-          'It\'s time to build up one of our paths. Add the repetition card to your flase path. This will allow you' +
+          'It\'s time to build up one of our paths. Add the repetition card to your false path. This will allow you' +
         ' to add a variable on top of it to change how often it repeats.',
           'Either of your paths could be attacked by a hack card, which would ruin your stack. Group cards can be used on' +
           ' one or more stacks of cards in one path that equal up to the group card value. Let\'s protect your true path with' +
         ' a group card. Click on the check boxes above the cards in your true path to group them. You also get a small bonus for using group cards.',
           'You\'re getting closer to completing a path, add the variable (5) card to build up your false path.',
           'The computer has at least one stack that isn\'t grouped, so use the hack card on one of its stacks to set him back.',
-          'Your false path is vulnerable to getting hacked, but you dont have any more group card. Use the Firewall card to get full protection from hack cards.',
+          'Your false path is vulnerable to getting hacked, but you don\'t have any more group card. Use the Firewall card to get full protection from hack cards.',
           'The computer is vulnerable to getting a virus, send him a virus to slow down his program and half their total instructions.',
           'Speaking of being vulnerable to viruses, you\'re also vulnerable. Let\'s use an AntiVirus to protect you from all further viruses',
           'You have one more attack card in your hand. Use the Power Outage card to stop your opponent from playing instruction cards.',
@@ -331,7 +331,6 @@ import Card from '../SharedComponents/Card'
         this.tipsCardSelected = this.setTipBox('default')
         bus.$emit('cardDeselected')
         this.setStackSelectedBoolean({payload: undefined})
-
         this.$store.commit('setActiveCardUndefined')
         if (this.hand !== undefined) {
           for (let card of this.hand) {
@@ -521,12 +520,9 @@ import Card from '../SharedComponents/Card'
     flex-direction: column;
     padding: 0px;
     vertical-align: middle;
-  //justify-content: space-between;
     align-items: center;
-  //padding-right: 50px;
     flex-basis: content;
     flex-shrink: 5;
-  //margin-top: -120px;
   }
 
   #disabilityPanel {

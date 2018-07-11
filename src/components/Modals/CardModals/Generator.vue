@@ -2,19 +2,19 @@
   <div>
     <div class="modal-dialog modal-lg" role="document" data-backdrop="static" data-keyboard="false">
       <div class="modal-content" style="border-radius: 30px">
-        <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="generatorCanceled">
+        <div class="modal-header" style="border: none"> <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="generatorCanceled">
           <span aria-hidden="true">&times;</span>
         </button>
           <h3 class="modal-title">Generator</h3>
         </div>
         <div class="modal-body">
           <div class="container col-lg-12">
-            <div class="row">
+            <div class="row" style="font-size: 24px">
               <p>Do you want to use the Generator to prevent all power outages?</p>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="border: none">
           <button class="btn btn-default" @click="discardGenerator" data-dismiss="modal" style="float: right; margin: 5px;" :style="hideButton">Discard Generator</button>
           <button class="btn btn-default" @click="useClicked()" :disabled="playerCanUse"><b>Use</b></button>
           <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="generatorCanceled">Cancel</button>
@@ -74,6 +74,7 @@
         }
         this.playerTookTurn()
         this.turn(true)
+        bus.$emit('alterTipBox')
       }
 
     },
