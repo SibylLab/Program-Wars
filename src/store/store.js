@@ -69,7 +69,9 @@ export const store = new Vuex.Store({
     currentId: 0,
     activeCard: undefined,
     selectedStacks: [],
-    selectedStackBoolean: undefined
+    selectedStackBoolean: undefined,
+    tutorialStep: true,
+    tutorialOver: false
   },
   getters,
   mutations,

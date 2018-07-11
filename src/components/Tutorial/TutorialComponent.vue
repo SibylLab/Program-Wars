@@ -163,7 +163,6 @@ export default {
         'setFirstRound',
         'initTutorialDeck',
         'flipTutorialStep'
-
       ]),
       ...mapActions([
         'firstRound',
@@ -218,7 +217,6 @@ export default {
     created () {
       this.playerList = this.getPlayers()
       this.gameStart = true
-
       setInterval(() => {
         let gameState = this.getgameState()
         if (gameState === 'newGame') {
@@ -227,7 +225,6 @@ export default {
         } else if (gameState === 'startPlayerTurn') {
           this.addCardToHand()
           this.setGameState({gameState: 'playerTurn'})
-
           if (this.getCurrentPlayerId() === 0) {
             this.setTrueFalseAnim({startAnim: true})
             if (this.getTutorialStep()) {

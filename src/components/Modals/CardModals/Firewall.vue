@@ -74,6 +74,7 @@
         }
         this.playerTookTurn()
         this.turn(true)
+        bus.$emit('alterTipBox')
       }
 
     },

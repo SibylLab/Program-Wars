@@ -460,5 +460,4 @@ export default {
   setActiveStack (state, payload) {
     state.activeStack = payload
   }
-
 }
