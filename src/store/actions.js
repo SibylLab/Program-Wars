@@ -1,4 +1,3 @@
-/* eslint-disable no-undef,no-console */
 let playerModalTimer = 2// sec
 let endTurnTimer = 1.5// sec
 let coinTimer = 2// sec
@@ -60,9 +59,7 @@ export default {
             }, playerModalTimer * 1000)
           }, endTurnTimer * 1000)
           setTimeout(() => {
-            console.log('Made it to ai turn')
             if (context.getters.getCurrentPlayer.isAi) {
-              console.log('InAiTurn')
               context.commit('aiTakeTurn', context.getters.getAiDependent)
             }
           }, 4000)

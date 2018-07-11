@@ -37,7 +37,7 @@
 
       <div id="header-buttons">
 
-        <button class="btn btn-primary" @click="() => {this.$router.push('/')}">End Tutorial</button>
+        <button class="btn btn-primary" @click="() => {this.$router.push('home');}">End Tutorial</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".tutorial">Game Objectives</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
@@ -113,7 +113,8 @@ export default {
         playerList: [],
         winner: '',
         winnerScore: 0,
-        deleteData: []
+        deleteData: [],
+        interval: undefined
       }
     },
     components: {
@@ -162,8 +163,8 @@ export default {
         'addCardToHand',
         'setFirstRound',
         'initTutorialDeck',
-        'flipTutorialStep'
-
+        'flipTutorialStep',
+        'resetState'
       ]),
       ...mapActions([
         'firstRound',
@@ -211,6 +212,11 @@ export default {
         return this.currentGameState
       }
     },
+    beforeRouteLeave (to, from, next) {
+      this.resetState()
+      clearInterval(this.interval)
+      next()
+    },
 
     /**
      * Called when the component is created (after mount) to run the game loop
@@ -218,8 +224,7 @@ export default {
     created () {
       this.playerList = this.getPlayers()
       this.gameStart = true
-
-      setInterval(() => {
+      this.interval = setInterval(() => {
         let gameState = this.getgameState()
         if (gameState === 'newGame') {
           this.setGameState({gameState: 'waitingForPlayerInput'})
@@ -227,7 +232,6 @@ export default {
         } else if (gameState === 'startPlayerTurn') {
           this.addCardToHand()
           this.setGameState({gameState: 'playerTurn'})
-
           if (this.getCurrentPlayerId() === 0) {
             this.setTrueFalseAnim({startAnim: true})
             if (this.getTutorialStep()) {

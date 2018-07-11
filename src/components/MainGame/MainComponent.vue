@@ -114,7 +114,8 @@ export default {
         playerList: [],
         winner: '',
         winnerScore: 0,
-        deleteData: []
+        deleteData: [],
+        interval: undefined
       }
     },
     components: {
@@ -161,7 +162,8 @@ export default {
         'setActiveSide',
         'setGameState',
         'addCardToHand',
-        'setFirstRound'
+        'setFirstRound',
+        'resetState'
 
       ]),
       ...mapActions([
@@ -240,6 +242,11 @@ export default {
         this.setTips({tutorial: this.tipsToggle, fact: val})
       }
     },
+    beforeRouteLeave (to, from, next) {
+      this.resetState()
+      clearInterval(this.interval)
+      next()
+    },
     created () {
       this.playerList = this.getPlayers()
       this.gameStart = true
@@ -250,7 +257,7 @@ export default {
       } else {
         this.setActiveSide({activeSide: false})
       }
-      setInterval(() => {
+      this.interval = setInterval(() => {
         let gameState = this.getgameState()
         if (gameState === 'newGame') {
           this.setGameState({gameState: 'waitingForPlayerInput'})

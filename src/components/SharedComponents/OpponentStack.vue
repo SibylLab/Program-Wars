@@ -191,6 +191,7 @@ export default {
           this.increaseFactIndex()
         }
         this.setPlayerScores()
+        bus.$emit('alterTipBox')
       },
       drop () {
         this.addToStack()

@@ -20,8 +20,8 @@
       </div>
       <div class="row">
         <div class="col-md-12" id="addPlayer">
-        <select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; height: 32px">
-            <option value="none" selected>(None)</option>
+        <select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; width: 170px; height: 32px">
+            <option value="none" selected>(None)</option>s
             <option value="noAiSelected" disabled selected>Select AI Opponent:</option>
             <option v-for="opponents in aiOpponents" :value="opponents">{{ opponents }}</option>
           </select> or
@@ -146,7 +146,6 @@
       startTutorial () {
         this.isTutorial = true
         this.setTutorial({gameType: true})
-      // this.$store.commit('setTutorial', {gameType: true});
         this.localPlayers = []
         this.localPlayers.push({name: 'You', isAi: false})
         this.localPlayers.push({name: 'Flash', isAi: true})
