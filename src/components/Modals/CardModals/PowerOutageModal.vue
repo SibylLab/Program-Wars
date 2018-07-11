@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="modal-dialog modal-lg" role="document" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document" data-backdrop="static" data-keyboard="false" style="height: 700px">
       <div class="modal-content" style="border-radius: 30px">
-        <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="powerOutageCanceled">
+        <div class="modal-header" style="border: none"> <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="powerOutageCanceled">
           <span aria-hidden="true">&times;</span>
         </button>
           <h3 class="modal-title">Opponents to Crash</h3>
@@ -11,12 +11,12 @@
           <div class="container col-lg-12">
             <div class="row">
               <div v-for="player in players" :id="player.id" class="col-lg-4" style="-webkit-align-items: center">
-                <button class="btn btn-primary" @click="playerClicked(player.id)" v-if="!player.hasGenerator && !player.hasPowerOutage">Blackout <b>{{player.name}}</b></button>
+                <button class="btn btn-primary" @click="playerClicked(player.id)" v-if="!player.hasGenerator && !player.hasPowerOutage" style="font-size: 20px">Blackout <b>{{player.name}}</b></button>
               </div>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="border: none">
           <button class="btn btn-default" @click="discardPowerOutage" data-dismiss="modal" style="float: right; margin: 5px;" :style="hideButton">Discard P/O Card</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="powerOutageCanceled">Cancel</button>
         </div>

@@ -2,20 +2,20 @@
   <div id="player-info-panel">
     <div id="flexcontainer">
       <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
-        <div class="panel panel-default" style="border-radius: 10px">
+        <div class="panel panel-default" style="border-radius: 10px;">
           <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
           <div class="panel-body">{{ tipsInfoText }}</div>
           <button class="btn btn-primary" v-if="showTextBoxButton" @click="removeAnimation()" style="align-content: right">OK</button>
           <br v-if="showTextBoxButton"><br v-if="showTextBoxButton">
         </div>
       </div>
-      <div class="container" style="width: 900px; float: left">
-        <div class="row">
+      <div class="container" style="width: 700px; float: left">
+        <div class="row" style="width: 700px; align-content: center">
           <div id="cards">
 
             <ul id="example-1">
               <h4 class="modal-title"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
-              <li v-for="(card,index) in hand" :id="card.type + card.value + index + currentPlayerName()">
+              <li v-for="(card,index) in hand" :id="card.type + card.value + index + currentPlayerName()" style="margin-top: 5px">
                 <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
             </ul>
@@ -32,7 +32,7 @@
       <display-used-cards></display-used-cards>
 
     </div>
-    <div class="container" style="border-top: 1px solid white; padding: 10px;">
+    <div class="container" style="border-top: 1px solid white; padding: 10px; width: 600px">
       <div class="row">
         <div class="col-md-12">
           <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
@@ -521,12 +521,9 @@ import Card from '../SharedComponents/Card'
     flex-direction: column;
     padding: 0px;
     vertical-align: middle;
-  //justify-content: space-between;
     align-items: center;
-  //padding-right: 50px;
     flex-basis: content;
     flex-shrink: 5;
-  //margin-top: -120px;
   }
 
   #disabilityPanel {
