@@ -9,7 +9,7 @@
       <div class="headerBtn">
         <button class="btn btn-primary headerBtn" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary headerBtn" data-toggle="modal" data-target=".credits">Credits</button>
-        <button type="button" class="btn btn-primary" @click="submitIssue" data-toggle="modal" data-target=".issue">Submit an Issue</button>
+        <a class="btn btn-primary" href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
     </div>
     <div class="container settingMenu">
@@ -154,15 +154,6 @@
         this.gameStart = true
         setTimeout(() => {
           this.$router.push('tutorial')
-        }, 100)
-      },
-      /**
-       * Takes the user to the submit issue report form.
-       */
-      submitIssue () {
-        console.log('called submit issue')
-        setTimeout(() => {
-          this.$router.push('userreport')
         }, 100)
       },
 
