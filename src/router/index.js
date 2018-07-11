@@ -27,12 +27,6 @@ export default new Router({
       name: 'settings-component',
       component: SettingsComponent
     },
-    {
-      path: '/userreport',
-      canReuse: false,
-      name: 'report-form',
-      component: ReportForm
-    },
     {path: '*', redirect: '/'}
   ],
   mode: 'history'
