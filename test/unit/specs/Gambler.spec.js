@@ -64,7 +64,7 @@ let hSpy = sinon.spy(hAction, 'execute')
 let varSpy = sinon.spy(varAction, 'execute')
 let vSpy = sinon.spy(vAction, 'execute')
 let poSpy = sinon.spy(poAction, 'execute')
-// let dSpy = sinon.spy(dAction, 'execute')
+let dSpy = sinon.spy(dAction, 'execute')
 
 let handler = new Handler(oPO, oV, avAction, fwAction, genAction, ocAction, bbAction, gAction, vAction, hAction, poAction, iAction, rAction, rxAction, varAction, dAction)
 
@@ -174,6 +174,20 @@ describe('Gambler', () => {
     expect(poSpy.calledBefore(vSpy))
     expect(vSpy.calledBefore(gSpy))
     expect(gSpy.calledOnce)
+  })
+
+  it('discard played eighth', () => {
+    changeHand()
+    handler.setAi('gambler')
+    expect(varSpy.calledBefore(rxSpy))
+    expect(rxSpy.calledBefore(rSpy))
+    expect(rSpy.calledBefore(iSpy))
+    expect(iSpy.calledBefore(hSpy))
+    expect(hSpy.calledBefore(poSpy))
+    expect(poSpy.calledBefore(vSpy))
+    expect(vSpy.calledBefore(gSpy))
+    expect(gSpy.calledBefore(dSpy))
+    expect(dSpy.calledOnce)
   })
 
   function changeHand () {
