@@ -31,5 +31,8 @@ export class Turn {
   setHand (h) {
     this.hand = h
   }
+  setEvent (e) {
+    this.event = e
+  }
 }
 

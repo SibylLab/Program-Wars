@@ -85,7 +85,6 @@ describe('Gambler', () => {
   })
 
   it('The ordering of cards is correct', () => {
-    changeHand()
     handler.setAi('gambler')
     expect(varSpy.calledBefore(rxSpy))
     expect(rxSpy.calledBefore(rSpy))
@@ -195,11 +194,13 @@ describe('Gambler', () => {
   //   expect(gSpy.calledOnce)
   // })
 
-  function changeHand () {
-    defaultHand.cards.shift()
-    hand = move.organizeHand({hand: defaultHand})
-    for (let action in actionObject) {
-      actionObject[action].setHand(hand)
-    }
-  }
+  // function changeHand () {
+  //   defaultHand.cards.shift()
+  //   hand = move.organizeHand({hand: defaultHand})
+  //   event.hand = hand
+  //   for (let action in actionObject) {
+  //     actionObject[action].setHand(hand)
+  //     actionObject[action].setEvent(event)
+  //   }
+  // }
 })
