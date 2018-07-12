@@ -96,6 +96,7 @@ describe('Gambler', () => {
     expect(poSpy.calledBefore(gSpy))
     expect(gSpy.calledBefore(dSpy))
     expect(dSpy.calledOnce)
+    expect(handler.getCard().type.to.equal('V'))
   })
   // it('Variable played first', () => {
   //   handler.setAi('gambler')
