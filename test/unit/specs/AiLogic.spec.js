@@ -26,14 +26,14 @@ let move = new AiMove()
 let boolSide = true
 
 // INFO: Tests depend on this order
-let defaultHand = {cards: [new Card(0, 0, 'V'), new Card(1, 0, 'R'), new Card(2, 0, 'R'), new Card(3, 0, 'I'), new Card(4, 0, 'H'), new Card(5, 0, 'VIRUS')]}
+let defaultHand = {cards: [new Card(0, 0, 'V')]}
 let hand = move.organizeHand({hand: defaultHand})
 
 let player = new Player(0, 'aiTest', hand, 0, 0, true)
 let player2 = new Player(1, 'aiTest2', hand, 0, 0, true)
 
 let event = {cards: hand, hand: defaultHand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)], opponents: [player2]}
-
+event.stack[0].cards = new Card(8, 1, 'R')
 let oPO = player2
 let oV = player2
 
@@ -58,15 +58,15 @@ let actionObject = {
 // let genSpy = sinon.spy(genAction, 'execute')
 // let ocSpy = sinon.spy(ocAction, 'execute')
 // let bbSpy = sinon.spy(bbAction, 'execute')
-let rSpy = sinon.spy(actionObject.rAction, 'execute')
-let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
-let gSpy = sinon.spy(actionObject.gAction, 'execute')
-let iSpy = sinon.spy(actionObject.iAction, 'execute')
-let hSpy = sinon.spy(actionObject.hAction, 'execute')
+// let rSpy = sinon.spy(actionObject.rAction, 'execute')
+// let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
+// let gSpy = sinon.spy(actionObject.gAction, 'execute')
+// let iSpy = sinon.spy(actionObject.iAction, 'execute')
+// let hSpy = sinon.spy(actionObject.hAction, 'execute')
 let varSpy = sinon.spy(actionObject.varAction, 'execute')
-let vSpy = sinon.spy(actionObject.vAction, 'execute')
-let poSpy = sinon.spy(actionObject.poAction, 'execute')
-let dSpy = sinon.spy(actionObject.dAction, 'execute')
+// let vSpy = sinon.spy(actionObject.vAction, 'execute')
+// let poSpy = sinon.spy(actionObject.poAction, 'execute')
+// let dSpy = sinon.spy(actionObject.dAction, 'execute')
 
 let handler = new Handler(oPO, oV, actionObject.avAction, actionObject.fwAction, actionObject.genAction, actionObject.ocAction, actionObject.bbAction, actionObject.gAction,
   actionObject.vAction, actionObject.hAction, actionObject.poAction, actionObject.iAction, actionObject.rAction, actionObject.rxAction, actionObject.varAction, actionObject.dAction)
@@ -84,30 +84,12 @@ describe('Gambler', () => {
     expect(handler.getStack()).to.equal(undefined)
   })
 
-  it('The ordering of cards is correct', () => {
+  it('Variable logic', () => {
     handler.setAi('gambler')
-    expect(varSpy.calledBefore(rxSpy))
-    expect(rxSpy.calledBefore(rSpy))
-    expect(rSpy.calledBefore(iSpy))
-    expect(iSpy.calledBefore(hSpy))
-    expect(hSpy.calledBefore(vSpy))
-    expect(vSpy.calledBefore(poSpy))
-    expect(poSpy.calledBefore(gSpy))
-    expect(gSpy.calledBefore(dSpy))
-    expect(dSpy.calledOnce)
-    expect(handler.getCard().type).to.equal(hand[0].type)
+    expect(varSpy.calledOnce)
+    expect(handler.getMove).to.equal('play')
+    expect(handler.cardToPlay.type).to.equal('V')
   })
-  // it('Variable played first', () => {
-  //   handler.setAi('gambler')
-  //   expect(varSpy.calledOnce)
-  //   expect(rxSpy.notCalled)
-  //   expect(rSpy.notCalled)
-  //   expect(iSpy.notCalled)
-  //   expect(hSpy.notCalled)
-  //   expect(poSpy.notCalled)
-  //   expect(vSpy.notCalled)
-  //   expect(gSpy.notCalled)
-  // })
   // it('RepeatX played second', () => {
   //   changeHand()
   //   handler.setAi('gambler')
@@ -194,13 +176,13 @@ describe('Gambler', () => {
   //   expect(gSpy.calledOnce)
   // })
 
-  // function changeHand () {
-  //   defaultHand.cards.shift()
-  //   hand = move.organizeHand({hand: defaultHand})
-  //   event.hand = hand
-  //   for (let action in actionObject) {
-  //     actionObject[action].setHand(hand)
-  //     actionObject[action].setEvent(event)
-  //   }
-  // }
+  function changeHand (h) {
+    defaultHand = {cards: h}
+    hand = move.organizeHand({hand: defaultHand})
+    event.hand = hand
+    for (let action in actionObject) {
+      actionObject[action].setHand(hand)
+      actionObject[action].setEvent(event)
+    }
+  }
 })
