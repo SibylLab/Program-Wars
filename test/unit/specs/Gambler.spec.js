@@ -68,7 +68,8 @@ let vSpy = sinon.spy(actionObject.vAction, 'execute')
 let poSpy = sinon.spy(actionObject.poAction, 'execute')
 let dSpy = sinon.spy(actionObject.dAction, 'execute')
 
-let handler = new Handler(oPO, oV, avAction, fwAction, genAction, ocAction, bbAction, gAction, vAction, hAction, poAction, iAction, rAction, rxAction, varAction, dAction)
+let handler = new Handler(oPO, oV, actionObject.avAction, actionObject.fwAction, actionObject.genAction, actionObject.ocAction, actionObject.bbAction, actionObject.gAction,
+  actionObject.vAction, actionObject.hAction, actionObject.poAction, actionObject.iAction, actionObject.rAction, actionObject.rxAction, actionObject.varAction, actionObject.dAction)
 
 describe('Gambler', () => {
   it('calls execute() correctly', () => {
