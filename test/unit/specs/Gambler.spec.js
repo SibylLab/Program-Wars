@@ -26,7 +26,7 @@ let move = new AiMove()
 let boolSide = true
 
 // INFO: Tests depend on this order
-let defaultHand = [new Card(0, 0, 'V'), new Card(1, 0, 'R'), new Card(2, 0, 'R'), new Card(3, 0, 'I'), new Card(4, 0, 'H'), new Card(1, 0, 'VIRUS'), new Card(3, 0, 'POWEROUTAGE'), new Card(4, 0, 'G')]
+let defaultHand = {cards: [new Card(0, 0, 'V'), new Card(1, 0, 'R'), new Card(2, 0, 'R'), new Card(3, 0, 'I'), new Card(4, 0, 'H'), new Card(1, 0, 'VIRUS'), new Card(3, 0, 'POWEROUTAGE'), new Card(4, 0, 'G')]}
 let hand = move.organizeHand({hand: defaultHand})
 let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)]}
 
