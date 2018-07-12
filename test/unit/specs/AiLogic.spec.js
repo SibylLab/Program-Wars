@@ -34,6 +34,7 @@ let player2 = new Player(1, 'aiTest2', hand, 0, 0, true)
 
 let event = {cards: hand, hand: defaultHand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)], opponents: [player2]}
 event.stack[0].cards = [new Card(9, 3, 'I'), new Card(8, 1, 'R')]
+event.stack[0].score = 3
 let oPO = player2
 let oV = player2
 
