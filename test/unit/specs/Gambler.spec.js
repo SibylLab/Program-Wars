@@ -177,7 +177,7 @@ describe('Gambler', () => {
   })
 
   function changeHand () {
-    defaultHand.shift()
+    defaultHand.cards.shift()
     hand = move.organizeHand({hand: defaultHand})
   }
 })
