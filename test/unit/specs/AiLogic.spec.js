@@ -89,7 +89,8 @@ describe('Gambler', () => {
   it('Variable logic', () => {
     handler.setAi('gambler')
     expect(varSpy.calledOnce)
-    expect(handler.getMove).to.equal('play')
+    console.log('move: ' + handler.getMove())
+    expect(handler.getMove()).to.equal('play')
     expect(handler.cardToPlay.type).to.equal('V')
     store.state.coinMsg = false
   })
