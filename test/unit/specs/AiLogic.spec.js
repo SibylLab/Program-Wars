@@ -35,6 +35,7 @@ let player2 = new Player(1, 'aiTest2', hand, 0, 0, true)
 let event = {cards: hand, hand: defaultHand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)], opponents: [player2]}
 event.stack[0].cards = [new Card(9, 3, 'I'), new Card(8, 1, 'R')]
 event.stack[0].score = 3
+event.stack[1].score = 3
 let oPO = player2
 let oV = player2
 
@@ -60,7 +61,7 @@ let actionObject = {
 // let ocSpy = sinon.spy(ocAction, 'execute')
 // let bbSpy = sinon.spy(bbAction, 'execute')
 // let rSpy = sinon.spy(actionObject.rAction, 'execute')
-// let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
+let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
 // let gSpy = sinon.spy(actionObject.gAction, 'execute')
 // let iSpy = sinon.spy(actionObject.iAction, 'execute')
 // let hSpy = sinon.spy(actionObject.hAction, 'execute')
@@ -89,23 +90,18 @@ describe('Gambler', () => {
   it('Variable logic', () => {
     handler.setAi('gambler')
     expect(varSpy.calledOnce)
-    console.log('move: ' + handler.getMove())
     expect(handler.getMove()).to.equal('play')
     expect(handler.cardToPlay.type).to.equal('V')
     store.state.coinMsg = false
   })
-  // it('RepeatX played second', () => {
-  //   changeHand()
-  //   handler.setAi('gambler')
-  //   expect(varSpy.calledBefore(rxSpy))
-  //   expect(rxSpy.calledOnce)
-  //   expect(rSpy.notCalled)
-  //   expect(iSpy.notCalled)
-  //   expect(hSpy.notCalled)
-  //   expect(poSpy.notCalled)
-  //   expect(vSpy.notCalled)
-  //   expect(gSpy.notCalled)
-  // })
+  it('RepeatX played', () => {
+    changeHand(new Card(1, 1, 'R'))
+    handler.setAi('gambler')
+    expect(rxSpy.calledOnce)
+    expect(handler.getMove()).to.equal('play')
+    expect(handler.cardToPlay.type).to.equal('R')
+    expect(handler.cardToPlay.value).to.equal(1)
+  })
   // it('Repeat played third', () => {
   //   changeHand()
   //   handler.setAi('gambler')
