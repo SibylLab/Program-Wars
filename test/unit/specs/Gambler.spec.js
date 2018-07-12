@@ -81,6 +81,7 @@ describe('Gambler', () => {
     expect(handler.getOpponent()).to.equal(undefined)
     expect(handler.getStack()).to.equal(undefined)
   })
+
   // it('Variable played first', () => {
   //   handler.setAi('gambler')
   //   expect(varSpy.calledOnce)
