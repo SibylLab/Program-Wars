@@ -28,10 +28,11 @@ let boolSide = true
 // INFO: Tests depend on this order
 let defaultHand = {cards: [new Card(0, 0, 'V'), new Card(1, 0, 'R'), new Card(2, 0, 'R'), new Card(3, 0, 'I'), new Card(4, 0, 'H'), new Card(5, 0, 'VIRUS'), new Card(6, 0, 'POWEROUTAGE'), new Card(7, 0, 'G')]}
 let hand = move.organizeHand({hand: defaultHand})
-let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)]}
 
 let player = new Player(0, 'aiTest', hand, 0, 0, true)
 let player2 = new Player(1, 'aiTest2', hand, 0, 0, true)
+
+let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)], opponents: [player2]}
 
 let oPO = player2
 let oV = player2
