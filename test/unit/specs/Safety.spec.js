@@ -29,7 +29,7 @@ let boolSide = true
 let defaultHand = {cards: [new Card(0, 0, 'FIREWALL'), new Card(1, 0, 'GENERATOR'), new Card(2, 0, 'ANTIVIRUS'), new Card(3, 0, 'OVERCLOCK'), new Card(4, 0, 'BATTERYBACKUP')]}
 let hand = move.organizeHand({hand: defaultHand})
 
-let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)]}
+let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)], opponents: []}
 
 let player = new Player(0, 'aiTest', hand, 0, 0, true)
 let player2 = new Player(1, 'aiTest2', hand, 0, 0, true)
