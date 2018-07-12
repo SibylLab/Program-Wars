@@ -26,7 +26,7 @@ let move = new AiMove()
 let boolSide = true
 
 // INFO: Tests depend on this order
-let defaultHand = {cards: [new Card(0, 0, 'V'), new Card(1, 0, 'R'), new Card(2, 0, 'R'), new Card(3, 0, 'I'), new Card(4, 0, 'H'), new Card(5, 0, 'VIRUS'), new Card(7, 0, 'G')]}
+let defaultHand = {cards: [new Card(0, 0, 'V'), new Card(1, 0, 'R'), new Card(2, 0, 'R'), new Card(3, 0, 'I'), new Card(4, 0, 'H'), new Card(5, 0, 'VIRUS')]}
 let hand = move.organizeHand({hand: defaultHand})
 
 let player = new Player(0, 'aiTest', hand, 0, 0, true)
@@ -37,35 +37,36 @@ let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new St
 let oPO = player2
 let oV = player2
 
-let avAction = new AntiVirus(hand, boolSide, move, event)
-let fwAction = new Firewall(hand, boolSide, move, event)
-let genAction = new Generator(hand, boolSide, move, event)
-let ocAction = new OverClock(hand, boolSide, move, event)
-let bbAction = new BatteryBackup(hand, boolSide, move, event)
-let rAction = new Repeat(hand, boolSide, move, event)
-let rxAction = new RepeatX(hand, boolSide, move, event)
-let gAction = new Group(hand, boolSide, move, event, canGroup)
-let iAction = new Instruction(hand, boolSide, move, event)
-let hAction = new Hack(hand, boolSide, move, event)
-let varAction = new Variable(hand, boolSide, move, event)
-let vAction = new Virus(hand, boolSide, move, event, oV)
-let poAction = new PowerOutage(hand, boolSide, move, event, oPO)
-let dAction = new Discard(hand, boolSide, move, event)
-
+let actionObject = {
+  avAction: new AntiVirus(hand, boolSide, move, event),
+  fwAction: new Firewall(hand, boolSide, move, event),
+  genAction: new Generator(hand, boolSide, move, event),
+  ocAction: new OverClock(hand, boolSide, move, event),
+  bbAction: new BatteryBackup(hand, boolSide, move, event),
+  rAction: new Repeat(hand, boolSide, move, event),
+  rxAction: new RepeatX(hand, boolSide, move, event),
+  gAction: new Group(hand, boolSide, move, event, canGroup),
+  iAction: new Instruction(hand, boolSide, move, event),
+  hAction: new Hack(hand, boolSide, move, event),
+  varAction: new Variable(hand, boolSide, move, event),
+  vAction: new Virus(hand, boolSide, move, event, oV),
+  poAction: new PowerOutage(hand, boolSide, move, event, oPO),
+  dAction: new Discard(hand, boolSide, move, event)
+}
 // let avSpy = sinon.spy(avAction, 'execute')
 // let fwSpy = sinon.spy(fwAction, 'execute')
 // let genSpy = sinon.spy(genAction, 'execute')
 // let ocSpy = sinon.spy(ocAction, 'execute')
 // let bbSpy = sinon.spy(bbAction, 'execute')
-let rSpy = sinon.spy(rAction, 'execute')
-let rxSpy = sinon.spy(rxAction, 'execute')
-let gSpy = sinon.spy(gAction, 'execute')
-let iSpy = sinon.spy(iAction, 'execute')
-let hSpy = sinon.spy(hAction, 'execute')
-let varSpy = sinon.spy(varAction, 'execute')
-let vSpy = sinon.spy(vAction, 'execute')
-let poSpy = sinon.spy(poAction, 'execute')
-let dSpy = sinon.spy(dAction, 'execute')
+let rSpy = sinon.spy(actionObject.rAction, 'execute')
+let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
+let gSpy = sinon.spy(actionObject.gAction, 'execute')
+let iSpy = sinon.spy(actionObject.iAction, 'execute')
+let hSpy = sinon.spy(actionObject.hAction, 'execute')
+let varSpy = sinon.spy(actionObject.varAction, 'execute')
+let vSpy = sinon.spy(actionObject.vAction, 'execute')
+let poSpy = sinon.spy(actionObject.poAction, 'execute')
+let dSpy = sinon.spy(actionObject.dAction, 'execute')
 
 let handler = new Handler(oPO, oV, avAction, fwAction, genAction, ocAction, bbAction, gAction, vAction, hAction, poAction, iAction, rAction, rxAction, varAction, dAction)
 
@@ -80,6 +81,20 @@ describe('Gambler', () => {
     expect(handler.getCard()).to.equal(undefined)
     expect(handler.getOpponent()).to.equal(undefined)
     expect(handler.getStack()).to.equal(undefined)
+  })
+
+  it('The ordering of cards is correct', () => {
+    changeHand()
+    handler.setAi('gambler')
+    expect(varSpy.calledBefore(rxSpy))
+    expect(rxSpy.calledBefore(rSpy))
+    expect(rSpy.calledBefore(iSpy))
+    expect(iSpy.calledBefore(hSpy))
+    expect(hSpy.calledBefore(vSpy))
+    expect(vSpy.calledBefore(poSpy))
+    expect(poSpy.calledBefore(gSpy))
+    expect(gSpy.calledBefore(dSpy))
+    expect(dSpy.calledOnce)
   })
   // it('Variable played first', () => {
   //   handler.setAi('gambler')
@@ -178,22 +193,11 @@ describe('Gambler', () => {
   //   expect(gSpy.calledOnce)
   // })
 
-  it('The ordering of cards is correct', () => {
-    changeHand()
-    handler.setAi('gambler')
-    expect(varSpy.calledBefore(rxSpy))
-    expect(rxSpy.calledBefore(rSpy))
-    expect(rSpy.calledBefore(iSpy))
-    expect(iSpy.calledBefore(hSpy))
-    expect(hSpy.calledBefore(vSpy))
-    expect(vSpy.calledBefore(poSpy))
-    expect(poSpy.calledBefore(gSpy))
-    expect(gSpy.calledBefore(dSpy))
-    expect(dSpy.calledOnce)
-  })
-
   function changeHand () {
     defaultHand.cards.shift()
     hand = move.organizeHand({hand: defaultHand})
+    for (let action in actionObject) {
+      actionObject[action].setHand(hand)
+    }
   }
 })
