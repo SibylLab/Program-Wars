@@ -74,8 +74,8 @@ describe('Gambler', () => {
     store.state.activePlayer = 0
     store.state.players = [player, player2]
     store.state.players[0].hasPowerOutage = true
-    expect(handler.getOpponentVirus().id).to.equal(oV.id)
-    expect(handler.getOpponentPO().id).to.equal(oPO.id)
+    // expect(handler.getOpponentVirus().id).to.equal(oV.id)
+    // expect(handler.getOpponentPO().id).to.equal(oPO.id)
     expect(handler.getMove()).to.equal(undefined)
     expect(handler.getCard()).to.equal(undefined)
     expect(handler.getOpponent()).to.equal(undefined)
