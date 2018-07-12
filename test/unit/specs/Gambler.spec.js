@@ -34,8 +34,8 @@ let player2 = new Player(1, 'aiTest2', hand, 0, 0, true)
 
 let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)], opponents: [player2]}
 
-let oPO = player2
-let oV = player2
+let oPO
+let oV
 
 let avAction = new AntiVirus(hand, boolSide, move, event)
 let fwAction = new Firewall(hand, boolSide, move, event)
@@ -185,9 +185,9 @@ describe('Gambler', () => {
     expect(rxSpy.calledBefore(rSpy))
     expect(rSpy.calledBefore(iSpy))
     expect(iSpy.calledBefore(hSpy))
-    expect(hSpy.calledBefore(poSpy))
-    expect(poSpy.calledBefore(vSpy))
-    expect(vSpy.calledBefore(gSpy))
+    expect(hSpy.calledBefore(vSpy))
+    expect(vSpy.calledBefore(poSpy))
+    expect(poSpy.calledBefore(gSpy))
     expect(gSpy.calledBefore(dSpy))
     expect(dSpy.calledOnce)
   })
