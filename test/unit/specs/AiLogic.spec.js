@@ -91,6 +91,7 @@ describe('Gambler', () => {
     expect(varSpy.calledOnce)
     expect(handler.getMove).to.equal('play')
     expect(handler.cardToPlay.type).to.equal('V')
+    store.state.coinMsg = false
   })
   // it('RepeatX played second', () => {
   //   changeHand()
