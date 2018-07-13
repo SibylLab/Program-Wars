@@ -31,7 +31,7 @@ let hand = move.organizeHand({hand: defaultHand})
 
 let player = new Player(0, 'aiTest', hand, 0, 0, true)
 let player2 = new Player(1, 'aiTest2', hand, 0, 0, true)
-
+player2.score = 1
 let event = {cards: hand, hand: defaultHand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)], opponents: [player2]}
 event.stack[0].cards = [new Card(9, 3, 'I'), new Card(8, 1, 'R')]
 event.stack[0].score = 3
@@ -69,7 +69,7 @@ let rSpy = sinon.spy(actionObject.rAction, 'execute')
 let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
 // let gSpy = sinon.spy(actionObject.gAction, 'execute')
 let iSpy = sinon.spy(actionObject.iAction, 'execute')
-// let hSpy = sinon.spy(actionObject.hAction, 'execute')
+let hSpy = sinon.spy(actionObject.hAction, 'execute')
 let varSpy = sinon.spy(actionObject.varAction, 'execute')
 // let vSpy = sinon.spy(actionObject.vAction, 'execute')
 // let poSpy = sinon.spy(actionObject.poAction, 'execute')
@@ -122,17 +122,16 @@ describe('Gambler', () => {
     expect(handler.getMove()).to.equal('play')
     expect(handler.cardToPlay.type).to.equal('I')
     expect(handler.cardToPlay.value).to.equal(2)
+  })
+  it('Hack played fifth', () => {
+    changeHand([new Card(1, 1, 'H')])
+    handler.setAi('gambler')
+    expect(hSpy.calledOnce)
+    expect(handler.getMove()).to.equal('hack')
+    expect(handler.cardToPlay.type).to.equal('H')
+    expect(handler.cardToPlay.value).to.equal(1)
     store.state.coinMsg = false
   })
-  // it('Hack played fifth', () => {
-  //   changeHand([new Card(1, 2, 'I')])
-  //   handler.setAi('gambler')
-  //   expect(iSpy.calledOnce)
-  //   expect(handler.getMove()).to.equal('play')
-  //   expect(handler.cardToPlay.type).to.equal('I')
-  //   expect(handler.cardToPlay.value).to.equal(2)
-  //   store.state.coinMsg = false
-  // })
   // it('Overclock played fifth', () => {
   //   changeHand()
   //   handler.setAi('gambler')
