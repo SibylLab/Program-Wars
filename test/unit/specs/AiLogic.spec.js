@@ -80,7 +80,7 @@ let poSpy = sinon.spy(actionObject.poAction, 'execute')
 let handler = new Handler(oPO, oV, actionObject.avAction, actionObject.fwAction, actionObject.genAction, actionObject.ocAction, actionObject.bbAction, actionObject.gAction,
   actionObject.vAction, actionObject.hAction, actionObject.poAction, actionObject.iAction, actionObject.rAction, actionObject.rxAction, actionObject.varAction, actionObject.dAction)
 
-describe('Gambler', () => {
+describe('AILogic', () => {
   it('calls execute() correctly', () => {
     store.state.activePlayer = 0
     store.state.players = [player, player2]
@@ -178,7 +178,7 @@ describe('Gambler', () => {
   it('Firewall played', () => {
     changeHand([new Card(16, 1, 'FIREWALL')])
     handler.setAi('gambler')
-    expect(gSpy.calledOnce)
+    expect(fwSpy.calledOnce)
     expect(handler.getMove()).to.equal('protection')
     expect(handler.cardToPlay.type).to.equal('FIREWALL')
     expect(handler.cardToPlay.value).to.equal(1)
