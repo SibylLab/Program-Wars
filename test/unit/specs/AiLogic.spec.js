@@ -64,7 +64,7 @@ let actionObject = {
 // let avSpy = sinon.spy(avAction, 'execute')
 // let fwSpy = sinon.spy(fwAction, 'execute')
 // let genSpy = sinon.spy(genAction, 'execute')
-// let ocSpy = sinon.spy(ocAction, 'execute')
+let ocSpy = sinon.spy(ocAction, 'execute')
 // let bbSpy = sinon.spy(bbAction, 'execute')
 let rSpy = sinon.spy(actionObject.rAction, 'execute')
 let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
@@ -131,20 +131,16 @@ describe('Gambler', () => {
     expect(handler.getMove()).to.equal('hack')
     expect(handler.cardToPlay.type).to.equal('H')
     expect(handler.cardToPlay.value).to.equal(1)
+  })
+  it('Overclock played sixth', () => {
+    changeHand([new Card(10, 1, 'OVERCLOCK')])
+    handler.setAi('gambler')
+    expect(ocSpy.calledOnce)
+    expect(handler.getMove()).to.equal('enhance')
+    expect(handler.cardToPlay.type).to.equal('OVERCLOCK')
+    expect(handler.cardToPlay.value).to.equal(1)
     store.state.coinMsg = false
   })
-  // it('Overclock played fifth', () => {
-  //   changeHand()
-  //   handler.setAi('gambler')
-  //   expect(varSpy.calledBefore(rxSpy))
-  //   expect(rxSpy.calledBefore(rSpy))
-  //   expect(rSpy.calledBefore(iSpy))
-  //   expect(iSpy.calledBefore(hSpy))
-  //   expect(hSpy.calledOnce)
-  //   expect(poSpy.notCalled)
-  //   expect(vSpy.notCalled)
-  //   expect(gSpy.notCalled)
-  // })
   //
   // it('Power Outage played sixth', () => {
   //   changeHand()
