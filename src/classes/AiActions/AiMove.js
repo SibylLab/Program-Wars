@@ -79,6 +79,8 @@ export default class {
     let maxStackValue = 10
     if (e.stack !== undefined) {
       for (let curStackValue = 1; curStackValue <= maxStackValue; curStackValue++) {
+        console.log('getStack to Repeat ran once')
+        console.log('event: ' + JSON.stringify(e))
         let tmpStack = e.stack.find(stack => stack.score === curStackValue && !stack.maxRepeats() && (stack.stackTopCard().type !== aRepeatCard || stack.stackTopCard().value !== aRepeatX))
         if (tmpStack !== undefined && tmpStack.boolSide === store.getters.getCoinMsg) {
           stackToRepeat = tmpStack
