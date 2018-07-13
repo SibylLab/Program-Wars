@@ -97,7 +97,6 @@ describe('Gambler', () => {
     expect(varSpy.calledOnce)
     expect(handler.getMove()).to.equal('play')
     expect(handler.cardToPlay.type).to.equal('V')
-    store.state.coinMsg = false
   })
   it('RepeatX played', () => {
     changeHand([new Card(1, 1, 'R')])
@@ -106,6 +105,7 @@ describe('Gambler', () => {
     expect(handler.getMove()).to.equal('play')
     expect(handler.cardToPlay.type).to.equal('R')
     expect(handler.cardToPlay.value).to.equal(1)
+    store.state.coinMsg = false
   })
   // it('Repeat played third', () => {
   //   changeHand()
