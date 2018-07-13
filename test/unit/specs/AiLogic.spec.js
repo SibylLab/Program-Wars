@@ -105,20 +105,16 @@ describe('Gambler', () => {
     expect(handler.getMove()).to.equal('play')
     expect(handler.cardToPlay.type).to.equal('R')
     expect(handler.cardToPlay.value).to.equal(1)
+  })
+  it('Repeat played third', () => {
+    changeHand([new Card(1, 2, 'R')])
+    handler.setAi('gambler')
+    expect(rxSpy.calledOnce)
+    expect(handler.getMove()).to.equal('play')
+    expect(handler.cardToPlay.type).to.equal('R')
+    expect(handler.cardToPlay.value).to.equal(2)
     store.state.coinMsg = false
   })
-  // it('Repeat played third', () => {
-  //   changeHand()
-  //   handler.setAi('gambler')
-  //   expect(varSpy.calledBefore(rxSpy))
-  //   expect(rxSpy.calledBefore(rSpy))
-  //   expect(rSpy.calledOnce)
-  //   expect(iSpy.notCalled)
-  //   expect(hSpy.notCalled)
-  //   expect(poSpy.notCalled)
-  //   expect(vSpy.notCalled)
-  //   expect(gSpy.notCalled)
-  // })
   // it('instruction played fourth', () => {
   //   changeHand()
   //   handler.setAi('gambler')
