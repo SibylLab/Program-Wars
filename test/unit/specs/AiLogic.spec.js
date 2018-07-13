@@ -65,10 +65,10 @@ let actionObject = {
 // let genSpy = sinon.spy(genAction, 'execute')
 // let ocSpy = sinon.spy(ocAction, 'execute')
 // let bbSpy = sinon.spy(bbAction, 'execute')
-// let rSpy = sinon.spy(actionObject.rAction, 'execute')
+let rSpy = sinon.spy(actionObject.rAction, 'execute')
 let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
 // let gSpy = sinon.spy(actionObject.gAction, 'execute')
-// let iSpy = sinon.spy(actionObject.iAction, 'execute')
+let iSpy = sinon.spy(actionObject.iAction, 'execute')
 // let hSpy = sinon.spy(actionObject.hAction, 'execute')
 let varSpy = sinon.spy(actionObject.varAction, 'execute')
 // let vSpy = sinon.spy(actionObject.vAction, 'execute')
@@ -82,7 +82,6 @@ describe('Gambler', () => {
   it('calls execute() correctly', () => {
     store.state.activePlayer = 0
     store.state.players = [player, player2]
-    store.state.players[0].hasPowerOutage = true
     store.state.coinMsg = true
     expect(handler.getOpponentVirus().id).to.equal(oV.id)
     expect(handler.getOpponentPO().id).to.equal(oPO.id)
@@ -109,23 +108,30 @@ describe('Gambler', () => {
   it('Repeat played third', () => {
     changeHand([new Card(1, 2, 'R')])
     handler.setAi('gambler')
-    expect(rxSpy.calledOnce)
+    expect(rSpy.calledOnce)
     expect(handler.getMove()).to.equal('play')
     expect(handler.cardToPlay.type).to.equal('R')
     expect(handler.cardToPlay.value).to.equal(2)
+  })
+  it('instruction played fourth', () => {
+    event.stack.push(new Stack(0, true))
+    event.stack[event.stack.length - 1].score = 0
+    changeHand([new Card(1, 2, 'I')])
+    handler.setAi('gambler')
+    expect(iSpy.calledOnce)
+    expect(handler.getMove()).to.equal('play')
+    expect(handler.cardToPlay.type).to.equal('I')
+    expect(handler.cardToPlay.value).to.equal(2)
     store.state.coinMsg = false
   })
-  // it('instruction played fourth', () => {
-  //   changeHand()
+  // it('Hack played fifth', () => {
+  //   changeHand([new Card(1, 2, 'I')])
   //   handler.setAi('gambler')
-  //   expect(varSpy.calledBefore(rxSpy))
-  //   expect(rxSpy.calledBefore(rSpy))
-  //   expect(rSpy.calledBefore(iSpy))
   //   expect(iSpy.calledOnce)
-  //   expect(hSpy.notCalled)
-  //   expect(poSpy.notCalled)
-  //   expect(vSpy.notCalled)
-  //   expect(gSpy.notCalled)
+  //   expect(handler.getMove()).to.equal('play')
+  //   expect(handler.cardToPlay.type).to.equal('I')
+  //   expect(handler.cardToPlay.value).to.equal(2)
+  //   store.state.coinMsg = false
   // })
   // it('Overclock played fifth', () => {
   //   changeHand()
