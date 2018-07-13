@@ -179,7 +179,8 @@ describe('Gambler', () => {
   function changeHand (h) {
     defaultHand = {cards: h}
     hand = move.organizeHand({hand: defaultHand})
-    event.hand = hand
+    event.hand = defaultHand
+    event.cards = hand
     for (let action in actionObject) {
       actionObject[action].setHand(hand)
       actionObject[action].setEvent(event)
