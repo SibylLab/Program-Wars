@@ -80,7 +80,7 @@ describe('Hacker', () => {
   })
 
   it('The ordering of cards is correct', () => {
-    handler.setAi('gambler')
+    handler.setAi('hacker')
     expect(hSpy.calledBefore(vSpy))
     expect(vSpy.calledBefore(poSpy))
     expect(poSpy.calledBefore(varSpy))
