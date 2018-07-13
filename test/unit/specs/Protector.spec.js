@@ -66,7 +66,7 @@ let dSpy = sinon.spy(actionObject.dAction, 'execute')
 let handler = new Handler(oPO, oV, actionObject.avAction, actionObject.fwAction, actionObject.genAction, actionObject.ocAction, actionObject.bbAction, actionObject.gAction,
   actionObject.vAction, actionObject.hAction, actionObject.poAction, actionObject.iAction, actionObject.rAction, actionObject.rxAction, actionObject.varAction, actionObject.dAction)
 
-describe('Sprinter', () => {
+describe('Protector', () => {
   it('calls execute() correctly', () => {
     store.state.activePlayer = 0
     store.state.players = [player, player2]
@@ -90,6 +90,6 @@ describe('Sprinter', () => {
     expect(rxSpy.calledBefore(hSpy))
     expect(hSpy.calledBefore(dSpy))
     expect(dSpy.calledOnce)
-    expect(handler.getCard().type).to.equal(defaultHand.cards[0].type)
+    expect(handler.getCard().type).to.equal('VIRUS')
   })
 })

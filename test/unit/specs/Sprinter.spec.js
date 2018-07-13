@@ -90,6 +90,6 @@ describe('Sprinter', () => {
     expect(poSpy.calledBefore(gSpy))
     expect(gSpy.calledBefore(dSpy))
     expect(dSpy.calledOnce)
-    expect(handler.getCard().type).to.equal(defaultHand.cards[0].type)
+    expect(handler.getCard().type).to.equal('VIRUS')
   })
 })
