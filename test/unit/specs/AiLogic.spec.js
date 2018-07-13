@@ -61,11 +61,11 @@ let actionObject = {
   poAction: new PowerOutage(hand, boolSide, move, event, oPO),
   dAction: new Discard(hand, boolSide, move, event)
 }
-// let avSpy = sinon.spy(avAction, 'execute')
-// let fwSpy = sinon.spy(fwAction, 'execute')
-// let genSpy = sinon.spy(genAction, 'execute')
-let ocSpy = sinon.spy(ocAction, 'execute')
-// let bbSpy = sinon.spy(bbAction, 'execute')
+// let avSpy = sinon.spy(actionObject.avAction, 'execute')
+// let fwSpy = sinon.spy(actionObject.fwAction, 'execute')
+// let genSpy = sinon.spy(actionObject.genAction, 'execute')
+let ocSpy = sinon.spy(actionObject.ocAction, 'execute')
+// let bbSpy = sinon.spy(actionObject.bbAction, 'execute')
 let rSpy = sinon.spy(actionObject.rAction, 'execute')
 let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
 // let gSpy = sinon.spy(actionObject.gAction, 'execute')
@@ -73,7 +73,7 @@ let iSpy = sinon.spy(actionObject.iAction, 'execute')
 let hSpy = sinon.spy(actionObject.hAction, 'execute')
 let varSpy = sinon.spy(actionObject.varAction, 'execute')
 // let vSpy = sinon.spy(actionObject.vAction, 'execute')
-// let poSpy = sinon.spy(actionObject.poAction, 'execute')
+let poSpy = sinon.spy(actionObject.poAction, 'execute')
 // let dSpy = sinon.spy(actionObject.dAction, 'execute')
 
 let handler = new Handler(oPO, oV, actionObject.avAction, actionObject.fwAction, actionObject.genAction, actionObject.ocAction, actionObject.bbAction, actionObject.gAction,
@@ -139,21 +139,16 @@ describe('Gambler', () => {
     expect(handler.getMove()).to.equal('enhance')
     expect(handler.cardToPlay.type).to.equal('OVERCLOCK')
     expect(handler.cardToPlay.value).to.equal(1)
+  })
+  it('Power Outage played sixth', () => {
+    changeHand([new Card(10, 1, 'POWEROUTAGE')])
+    handler.setAi('gambler')
+    expect(poSpy.calledOnce)
+    expect(handler.getMove()).to.equal('attack')
+    expect(handler.cardToPlay.type).to.equal('POWEROUTAGE')
+    expect(handler.cardToPlay.value).to.equal(1)
     store.state.coinMsg = false
   })
-  //
-  // it('Power Outage played sixth', () => {
-  //   changeHand()
-  //   handler.setAi('gambler')
-  //   expect(varSpy.calledBefore(rxSpy))
-  //   expect(rxSpy.calledBefore(rSpy))
-  //   expect(rSpy.calledBefore(iSpy))
-  //   expect(iSpy.calledBefore(hSpy))
-  //   expect(hSpy.calledBefore(poSpy))
-  //   expect(poSpy.calledOnce)
-  //   expect(vSpy.notCalled)
-  //   expect(gSpy.notCalled)
-  // })
   // it('virus played seventh', () => {
   //   changeHand()
   //   handler.setAi('gambler')
