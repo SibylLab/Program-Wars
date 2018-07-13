@@ -63,11 +63,11 @@ let actionObject = {
   poAction: new PowerOutage(hand, boolSide, move, event, oPO),
   dAction: new Discard(hand, boolSide, move, event)
 }
-// let avSpy = sinon.spy(actionObject.avAction, 'execute')
-// let fwSpy = sinon.spy(actionObject.fwAction, 'execute')
-// let genSpy = sinon.spy(actionObject.genAction, 'execute')
+let avSpy = sinon.spy(actionObject.avAction, 'execute')
+let fwSpy = sinon.spy(actionObject.fwAction, 'execute')
+let genSpy = sinon.spy(actionObject.genAction, 'execute')
 let ocSpy = sinon.spy(actionObject.ocAction, 'execute')
-// let bbSpy = sinon.spy(actionObject.bbAction, 'execute')
+let bbSpy = sinon.spy(actionObject.bbAction, 'execute')
 let rSpy = sinon.spy(actionObject.rAction, 'execute')
 let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
 let gSpy = sinon.spy(actionObject.gAction, 'execute')
@@ -76,7 +76,6 @@ let hSpy = sinon.spy(actionObject.hAction, 'execute')
 let varSpy = sinon.spy(actionObject.varAction, 'execute')
 let vSpy = sinon.spy(actionObject.vAction, 'execute')
 let poSpy = sinon.spy(actionObject.poAction, 'execute')
-// let dSpy = sinon.spy(actionObject.dAction, 'execute')
 
 let handler = new Handler(oPO, oV, actionObject.avAction, actionObject.fwAction, actionObject.genAction, actionObject.ocAction, actionObject.bbAction, actionObject.gAction,
   actionObject.vAction, actionObject.hAction, actionObject.poAction, actionObject.iAction, actionObject.rAction, actionObject.rxAction, actionObject.varAction, actionObject.dAction)
@@ -160,12 +159,45 @@ describe('Gambler', () => {
     expect(handler.cardToPlay.value).to.equal(1)
   })
   it('group played ninth', () => {
-    changeHand([new Card(13, 3, 'G')])
+    changeHand([new Card(14, 3, 'G')])
     handler.setAi('gambler')
     expect(gSpy.calledOnce)
     expect(handler.getMove()).to.equal('group')
     expect(handler.cardToPlay.type).to.equal('G')
     expect(handler.cardToPlay.value).to.equal(3)
+  })
+  it('Battery Backup played', () => {
+    changeHand([new Card(15, 1, 'BATTERYBACKUP')])
+    store.state.players[store.state.activePlayer].hasPowerOutage = true
+    handler.setAi('gambler')
+    expect(bbSpy.calledOnce)
+    expect(handler.getMove()).to.equal('enhance')
+    expect(handler.cardToPlay.type).to.equal('BATTERYBACKUP')
+    expect(handler.cardToPlay.value).to.equal(1)
+  })
+  it('Firewall played', () => {
+    changeHand([new Card(16, 1, 'FIREWALL')])
+    handler.setAi('gambler')
+    expect(gSpy.calledOnce)
+    expect(handler.getMove()).to.equal('protection')
+    expect(handler.cardToPlay.type).to.equal('FIREWALL')
+    expect(handler.cardToPlay.value).to.equal(1)
+  })
+  it('Generator played', () => {
+    changeHand([new Card(15, 1, 'GENERATOR')])
+    handler.setAi('gambler')
+    expect(genSpy.calledOnce)
+    expect(handler.getMove()).to.equal('protection')
+    expect(handler.cardToPlay.type).to.equal('GENERATOR')
+    expect(handler.cardToPlay.value).to.equal(1)
+  })
+  it('AntiVirus played', () => {
+    changeHand([new Card(15, 1, 'ANTIVIRUS')])
+    handler.setAi('gambler')
+    expect(avSpy.calledOnce)
+    expect(handler.getMove()).to.equal('protection')
+    expect(handler.cardToPlay.type).to.equal('ANTIVIRUS')
+    expect(handler.cardToPlay.value).to.equal(1)
     store.state.coinMsg = false
     store.state.firstRound = true
   })
