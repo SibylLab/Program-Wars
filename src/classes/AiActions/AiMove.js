@@ -102,7 +102,6 @@ export default class {
   }
 
   getHackOpponent (event) {
-    console.log('opponents: ' + JSON.stringify(event.opponents))
     let tmpOpponents = event.opponents.filter(opponents => opponents.score > 0 && opponents.cards[0].type !== 'G' && opponents.hasFirewall !== true)
     let tmpScore = 0
     let opponentToAttack

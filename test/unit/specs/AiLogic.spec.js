@@ -21,14 +21,16 @@ import Virus from '../../../src/classes/AiActions/VirusStep'
 import PowerOutage from '../../../src/classes/AiActions/PowerOutageStep'
 import Discard from '../../../src/classes/AiActions/DiscardStep'
 
-let canGroup = true
 let move = new AiMove()
 let boolSide = true
 
 // INFO: Tests depend on this order
 let defaultHand = {cards: [new Card(0, 0, 'V')]}
 let hand = move.organizeHand({hand: defaultHand})
-
+let canGroup = {
+  cardToPlay: new Card('14', 3, 'G'),
+  stackToPlay: new Stack(1, true)
+}
 let player = new Player(0, 'aiTest', hand, 0, 0, true)
 let player2 = new Player(1, 'aiTest2', hand, 0, 0, true)
 player2.score = 1
@@ -149,6 +151,7 @@ describe('Gambler', () => {
     expect(handler.cardToPlay.value).to.equal(1)
   })
   it('virus played eighth', () => {
+    store.state.firstRound = false
     changeHand([new Card(12, 1, 'VIRUS')])
     handler.setAi('gambler')
     expect(vSpy.calledOnce)
@@ -157,17 +160,17 @@ describe('Gambler', () => {
     expect(handler.cardToPlay.value).to.equal(1)
   })
   it('group played ninth', () => {
-    changeHand([new Card(13, 3, 'GROUP')])
+    changeHand([new Card(13, 3, 'G')])
     handler.setAi('gambler')
     expect(gSpy.calledOnce)
     expect(handler.getMove()).to.equal('group')
-    expect(handler.cardToPlay.type).to.equal('GROUP')
+    expect(handler.cardToPlay.type).to.equal('G')
     expect(handler.cardToPlay.value).to.equal(3)
     store.state.coinMsg = false
+    store.state.firstRound = true
   })
 
   function changeHand (h) {
-    store.state.firstRound = false
     defaultHand = {cards: h}
     hand = move.organizeHand({hand: defaultHand})
     event.hand = defaultHand
