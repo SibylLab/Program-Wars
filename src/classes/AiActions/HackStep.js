@@ -8,6 +8,7 @@ export default class Hack extends Turn {
       this.moveType = 'hack'
       return true
     }
+    return false
   }
 }
 
