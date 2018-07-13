@@ -95,7 +95,7 @@ describe('Gambler', () => {
     store.state.coinMsg = false
   })
   it('RepeatX played', () => {
-    changeHand(new Card(1, 1, 'R'))
+    changeHand([new Card(1, 1, 'R')])
     handler.setAi('gambler')
     expect(rxSpy.calledOnce)
     expect(handler.getMove()).to.equal('play')
