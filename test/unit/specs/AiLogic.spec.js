@@ -21,7 +21,7 @@ import Virus from '../../../src/classes/AiActions/VirusStep'
 import PowerOutage from '../../../src/classes/AiActions/PowerOutageStep'
 import Discard from '../../../src/classes/AiActions/DiscardStep'
 
-let canGroup = false
+let canGroup = true
 let move = new AiMove()
 let boolSide = true
 
@@ -68,11 +68,11 @@ let ocSpy = sinon.spy(actionObject.ocAction, 'execute')
 // let bbSpy = sinon.spy(actionObject.bbAction, 'execute')
 let rSpy = sinon.spy(actionObject.rAction, 'execute')
 let rxSpy = sinon.spy(actionObject.rxAction, 'execute')
-// let gSpy = sinon.spy(actionObject.gAction, 'execute')
+let gSpy = sinon.spy(actionObject.gAction, 'execute')
 let iSpy = sinon.spy(actionObject.iAction, 'execute')
 let hSpy = sinon.spy(actionObject.hAction, 'execute')
 let varSpy = sinon.spy(actionObject.varAction, 'execute')
-// let vSpy = sinon.spy(actionObject.vAction, 'execute')
+let vSpy = sinon.spy(actionObject.vAction, 'execute')
 let poSpy = sinon.spy(actionObject.poAction, 'execute')
 // let dSpy = sinon.spy(actionObject.dAction, 'execute')
 
@@ -140,41 +140,34 @@ describe('Gambler', () => {
     expect(handler.cardToPlay.type).to.equal('OVERCLOCK')
     expect(handler.cardToPlay.value).to.equal(1)
   })
-  it('Power Outage played sixth', () => {
-    changeHand([new Card(10, 1, 'POWEROUTAGE')])
+  it('Power Outage played seventh', () => {
+    changeHand([new Card(11, 1, 'POWEROUTAGE')])
     handler.setAi('gambler')
     expect(poSpy.calledOnce)
-    expect(handler.getMove()).to.equal('attack')
+    expect(handler.getMove()).to.equal('po')
     expect(handler.cardToPlay.type).to.equal('POWEROUTAGE')
     expect(handler.cardToPlay.value).to.equal(1)
+  })
+  it('virus played eighth', () => {
+    changeHand([new Card(12, 1, 'VIRUS')])
+    handler.setAi('gambler')
+    expect(vSpy.calledOnce)
+    expect(handler.getMove()).to.equal('virus')
+    expect(handler.cardToPlay.type).to.equal('VIRUS')
+    expect(handler.cardToPlay.value).to.equal(1)
+  })
+  it('group played ninth', () => {
+    changeHand([new Card(13, 3, 'GROUP')])
+    handler.setAi('gambler')
+    expect(gSpy.calledOnce)
+    expect(handler.getMove()).to.equal('group')
+    expect(handler.cardToPlay.type).to.equal('GROUP')
+    expect(handler.cardToPlay.value).to.equal(3)
     store.state.coinMsg = false
   })
-  // it('virus played seventh', () => {
-  //   changeHand()
-  //   handler.setAi('gambler')
-  //   expect(varSpy.calledBefore(rxSpy))
-  //   expect(rxSpy.calledBefore(rSpy))
-  //   expect(rSpy.calledBefore(iSpy))
-  //   expect(iSpy.calledBefore(hSpy))
-  //   expect(hSpy.calledBefore(poSpy))
-  //   expect(poSpy.calledBefore(vSpy))
-  //   expect(vSpy.calledOnce)
-  //   expect(gSpy.notCalled)
-  // })
-  // it('group played eighth', () => {
-  //   changeHand()
-  //   handler.setAi('gambler')
-  //   expect(varSpy.calledBefore(rxSpy))
-  //   expect(rxSpy.calledBefore(rSpy))
-  //   expect(rSpy.calledBefore(iSpy))
-  //   expect(iSpy.calledBefore(hSpy))
-  //   expect(hSpy.calledBefore(poSpy))
-  //   expect(poSpy.calledBefore(vSpy))
-  //   expect(vSpy.calledBefore(gSpy))
-  //   expect(gSpy.calledOnce)
-  // })
 
   function changeHand (h) {
+    store.state.firstRound = false
     defaultHand = {cards: h}
     hand = move.organizeHand({hand: defaultHand})
     event.hand = defaultHand

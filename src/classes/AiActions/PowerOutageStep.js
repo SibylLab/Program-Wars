@@ -13,6 +13,7 @@ export default class PowerOutage extends Turn {
       this.moveType = 'po'
       return true
     }
+    return false
   }
 }
 
