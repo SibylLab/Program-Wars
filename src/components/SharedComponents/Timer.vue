@@ -20,9 +20,6 @@
       ...mapMutations([
         'setTimerInterval'
       ]),
-      stopTimer () {
-        this.timer.stop()
-      }
     },
     created () {
       let timer = new Timer()
