@@ -19,7 +19,7 @@
     methods: {
       ...mapMutations([
         'setTimerInterval'
-      ]),
+      ])
     },
     created () {
       let timer = new Timer()
