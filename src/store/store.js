@@ -53,7 +53,8 @@ export const store = new Vuex.Store({
     pointerEvent: 'pointer-events: none',
     factIndex: 0,
     tutorialStep: true,
-    tutorialOver: false
+    tutorialOver: false,
+    timerInterval: undefined
   },
 
   originalState: {
