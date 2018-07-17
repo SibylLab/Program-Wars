@@ -127,6 +127,9 @@ export default {
   },
   getTutorialStep (state) {
     return state.tutorialStep
+  },
+  getTimerInterval (state) {
+    return state.timerInterval
   }
 }
 

@@ -35,7 +35,6 @@ export default {
       $('.coin').modal('hide')
     }, coinTimer * 1000)
   },
-
   turn (context, payload) {
     context.commit('getIsLast')
     context.state.pointerEvent = 'pointer-events: none'

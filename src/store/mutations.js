@@ -461,5 +461,11 @@ export default {
   },
   setActiveStack (state, payload) {
     state.activeStack = payload
+  },
+  setTimerInterval (state, payload) {
+    state.timerInterval = payload
+  },
+  stopTimer (state) {
+    state.timerInterval.stop()
   }
 }
