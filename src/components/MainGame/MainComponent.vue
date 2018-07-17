@@ -43,7 +43,7 @@
         <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-        <a class="btn btn-primary" href="https://programmingwars.cullen.io/reportissue/" target="_blank">Report Issue</a>
+        <a class="btn btn-primary" href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
     </div>
     <div id="playerinfopanel" :style="deactivateClick">
