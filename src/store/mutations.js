@@ -247,11 +247,11 @@ export default {
       scoreFalse = player.falseScore
 
       if (player.hasVirus) {
-        scoreFalse = scoreFalse / 2
-        scoreTrue = scoreTrue / 2
+        scoreFalse = scoreFalse * 0.75
+        scoreTrue = scoreTrue * 0.75
       } else if (player.hasOverclock) {
-        scoreFalse = scoreFalse * 2
-        scoreTrue = scoreTrue * 2
+        scoreFalse = scoreFalse * 1.25
+        scoreTrue = scoreTrue * 1.25
         player.overclockIncrease += (scoreFalse / 2) + (scoreTrue / 2)
       }
 
