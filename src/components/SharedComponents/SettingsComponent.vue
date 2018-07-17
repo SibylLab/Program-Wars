@@ -46,8 +46,8 @@
           <p>Score to Win:
           <select class="custom-select" name="select" v-model="selected">
             <option value="35">Short (score 35)</option>
-            <option value="45">Medium (score 45)</option>
-            <option value="55">Long (score 55)</option>
+            <option value="70">Medium (score 70)</option>
+            <option value="105">Long (score 105)</option>
           </select></p>
         </div>
       </div>
