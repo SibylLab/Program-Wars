@@ -8,6 +8,7 @@ export default class Variable extends Turn {
       this.moveType = 'play'
       return true
     }
+    return false
   }
 }
 

@@ -28,5 +28,11 @@ export class Turn {
   getOpponent () {
     return this.opponentToAttack
   }
+  setHand (h) {
+    this.hand = h
+  }
+  setEvent (e) {
+    this.event = e
+  }
 }
 

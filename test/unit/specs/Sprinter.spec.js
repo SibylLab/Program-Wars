@@ -66,7 +66,7 @@ let dSpy = sinon.spy(actionObject.dAction, 'execute')
 let handler = new Handler(oPO, oV, actionObject.avAction, actionObject.fwAction, actionObject.genAction, actionObject.ocAction, actionObject.bbAction, actionObject.gAction,
   actionObject.vAction, actionObject.hAction, actionObject.poAction, actionObject.iAction, actionObject.rAction, actionObject.rxAction, actionObject.varAction, actionObject.dAction)
 
-describe('Gambler', () => {
+describe('Sprinter', () => {
   it('calls execute() correctly', () => {
     store.state.activePlayer = 0
     store.state.players = [player, player2]
@@ -80,7 +80,7 @@ describe('Gambler', () => {
   })
 
   it('The ordering of cards is correct', () => {
-    handler.setAi('gambler')
+    handler.setAi('sprinter')
     expect(varSpy.calledBefore(rxSpy))
     expect(rxSpy.calledBefore(rSpy))
     expect(rSpy.calledBefore(iSpy))
@@ -90,6 +90,6 @@ describe('Gambler', () => {
     expect(poSpy.calledBefore(gSpy))
     expect(gSpy.calledBefore(dSpy))
     expect(dSpy.calledOnce)
-    expect(handler.getCard().type).to.equal(defaultHand.cards[0].type)
+    expect(handler.getCard().type).to.equal('VIRUS')
   })
 })

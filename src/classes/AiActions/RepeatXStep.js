@@ -8,6 +8,7 @@ export default class RepeatX extends Turn {
       this.moveType = 'play'
       return true
     }
+    return false
   }
 }
 
