@@ -252,7 +252,7 @@ export default {
       } else if (player.hasOverclock) {
         scoreFalse = scoreFalse * 1.25
         scoreTrue = scoreTrue * 1.25
-        player.overclockIncrease += (scoreFalse / 2) + (scoreTrue / 2)
+        player.overclockIncrease += (scoreFalse * 0.25) + (scoreTrue * 0.25)
       }
 
       if (scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit) {
