@@ -34,14 +34,13 @@
 
     <div id="header">
       <p>Programming Wars Tutorial</p>
-
+      <timer class="timer" ></timer>
       <div id="header-buttons">
-
         <button class="btn btn-primary" @click="() => {this.$router.push('home');}">End Tutorial</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".tutorial">Game Objectives</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-        <a class="btn btn-primary" href="https://programmingwars.cullen.io/reportissue/" target="_blank">Report Issue</a>
+        <a class="btn btn-primary" href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
     </div>
     <div id="playerinfopanel" :style="deactivateClick">
@@ -90,6 +89,8 @@
   import Generator from '../Modals/CardModals/Generator'
   import Firewall from '../Modals/CardModals/Firewall'
 
+  import Timer from '../SharedComponents/Timer'
+
   import {mapGetters, mapMutations, mapState, mapActions} from 'vuex'
   import { bus } from '../SharedComponents/Bus'
 
@@ -137,7 +138,8 @@ export default {
       'overclock-modal': Overclock,
       'firewall-modal': Firewall,
       'generator-modal': Generator,
-      'anti-virus-modal': AntiVirus
+      'anti-virus-modal': AntiVirus,
+      'timer': Timer
 
     },
     methods: {
@@ -371,6 +373,14 @@ export default {
 
   a {
     color: #fff;
+  }
+
+  .timer {
+    align-self: right;
+    left: 50%;
+    padding: 5px;
+    border: solid black 2px;
+    position: absolute;
   }
 
   .fade-enter {

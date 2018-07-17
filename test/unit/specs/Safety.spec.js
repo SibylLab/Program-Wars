@@ -26,12 +26,8 @@ let move = new AiMove()
 let boolSide = true
 
 // INFO: Tests depend on this order
-let hand = [new Card(0, 0, 'FIREWALL'), new Card(1, 0, 'GENERATOR'), new Card(2, 0, 'ANTIVIRUS'), new Card(3, 0, 'OVERCLOCK'), new Card(4, 0, 'BATTERYBACKUP')]
-hand.generatorCard = true
-hand.firewallCard = true
-hand.antiVirusCard = true
-hand.overclockCard = true
-hand.batteryBackupCard = true
+let defaultHand = {cards: [new Card(0, 0, 'FIREWALL'), new Card(1, 0, 'GENERATOR'), new Card(2, 0, 'ANTIVIRUS'), new Card(3, 0, 'OVERCLOCK'), new Card(4, 0, 'BATTERYBACKUP')]}
+let hand = move.organizeHand({hand: defaultHand})
 
 let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)]}
 
@@ -94,8 +90,7 @@ describe('Safety cards', () => {
     nonSafetyCards()
   })
   it('Firewall played second', () => {
-    hand[1] = new Card(0, 3, 'I')
-    hand.generatorCard = false
+    changeHand()
     handler.setAi('')
     expect(genSpy.calledBefore(fwSpy))
     expect(fwSpy.calledOnce)
@@ -105,8 +100,7 @@ describe('Safety cards', () => {
     nonSafetyCards()
   })
   it('Battery Backup played third', () => {
-    hand[0] = new Card(0, 3, 'I')
-    hand.firewallCard = false
+    changeHand()
     handler.setAi('')
     expect(genSpy.calledBefore(fwSpy))
     expect(fwSpy.calledBefore(bbSpy))
@@ -115,8 +109,7 @@ describe('Safety cards', () => {
     nonSafetyCards()
   })
   it('Antivirus played fourth', () => {
-    hand[4] = new Card(0, 3, 'I')
-    hand.batteryBackupCard = false
+    changeHand()
     handler.setAi('')
     expect(genSpy.calledBefore(fwSpy))
     expect(fwSpy.calledBefore(bbSpy))
@@ -127,8 +120,7 @@ describe('Safety cards', () => {
     nonSafetyCards()
   })
   it('Overclock played fifth', () => {
-    hand[2] = new Card(0, 3, 'I')
-    hand.antiVirusCard = false
+    changeHand()
     handler.setAi('')
     expect(genSpy.calledBefore(fwSpy))
     expect(fwSpy.calledBefore(bbSpy))
@@ -148,5 +140,10 @@ describe('Safety cards', () => {
     expect(vSpy.notCalled)
     expect(poSpy.notCalled)
     expect(dSpy.notCalled)
+  }
+
+  function changeHand () {
+    defaultHand.cards.shift()
+    hand = move.organizeHand({hand: defaultHand})
   }
 })

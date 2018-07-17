@@ -9,6 +9,7 @@
       <div class="headerBtn">
         <button class="btn btn-primary headerBtn" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary headerBtn" data-toggle="modal" data-target=".credits">Credits</button>
+        <a class="btn btn-primary" href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
     </div>
     <div class="container settingMenu">

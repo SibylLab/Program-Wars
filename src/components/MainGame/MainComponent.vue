@@ -34,6 +34,7 @@
 
     <div id="header">
       <p>Programming Wars</p>
+      <timer class="timer" ></timer>
       <div style="margin-left: auto; padding: 0 10px 0 0">
       <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
@@ -43,7 +44,7 @@
         <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-        <a class="btn btn-primary" href="https://programmingwars.cullen.io/reportissue/" target="_blank">Report Issue</a>
+        <a class="btn btn-primary" href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
     </div>
     <div id="playerinfopanel" :style="deactivateClick">
@@ -89,6 +90,7 @@ import Overclock from '../Modals/CardModals/OverclockModal'
 import AntiVirus from '../Modals/CardModals/AntiVirusModal'
 import Generator from '../Modals/CardModals/Generator'
 import Firewall from '../Modals/CardModals/Firewall'
+import Timer from '../SharedComponents/Timer'
 
 import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
 
@@ -138,7 +140,8 @@ export default {
       'overclock-modal': Overclock,
       'firewall-modal': Firewall,
       'generator-modal': Generator,
-      'anti-virus-modal': AntiVirus
+      'anti-virus-modal': AntiVirus,
+      'timer': Timer
 
     },
     methods: {
@@ -163,7 +166,8 @@ export default {
         'setGameState',
         'addCardToHand',
         'setFirstRound',
-        'resetState'
+        'resetState',
+        'stopTimer'
 
       ]),
       ...mapActions([
@@ -176,7 +180,8 @@ export default {
         'trueSideColour',
         'falseSideColour',
         'pointerEvent',
-        'currentGameState'
+        'currentGameState',
+        'timerInterval'
       ]),
       initGame () {
         this.initDeck()
@@ -245,6 +250,7 @@ export default {
     beforeRouteLeave (to, from, next) {
       this.resetState()
       clearInterval(this.interval)
+      this.stopTimer()
       next()
     },
     created () {
@@ -392,6 +398,14 @@ export default {
 
   a {
     color: #fff;
+  }
+
+  .timer {
+    align-self: right;
+    left: 50%;
+    padding: 5px;
+    border: solid black 2px;
+    position: absolute;
   }
 
   .fade-enter {
