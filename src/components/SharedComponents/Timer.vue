@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="basicUsage">00:00:00</div>
+    <div id="basicUsage" class="p-3 mb-2 bg-primary text-white">00:00:00</div>
     <!--<label id='minutes'>00</label>:<label id='seconds'>00</label>-->
   </div>
 </template>
@@ -31,3 +31,15 @@
     }
   }
 </script>
+
+<style scoped>
+  #basicUsage {
+    font-size: 13px;
+    text-decoration: blue;
+    padding: 5px;
+    margin-top: 0px;
+    border: solid black 2px;
+    border-radius: 5px;
+    vertical-align: baseline;
+  }
+</style>

@@ -1,12 +1,43 @@
 <template>
     <div id="player-info-panel">
-      <div id="flexcontainer">
+      <div id="tipContainer">
         <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
-          <div class="panel panel-default" style="border-radius: 10px">
-            <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
-            <div class="panel-body">{{ tipsInfoText }}</div>
-          </div>
+          {{ tipsInfoText }}
         </div>
+      </div>
+      <div class="container" style="border-top: 1px solid white; padding: 10px;">
+        <div>
+          <div class="row">
+            <div class="col-md-12">
+              <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
+            </div>
+          </div>
+          <div :class="colSize" v-for="player in players" style="text-align: left; display: inline">
+            <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
+            <div>
+            <div class="row">
+              True Path:&nbsp;
+              <meter :max="getScoreLimit()" min=0
+                     :value="getScore(player.id).trueScore"
+                     :high="getScoreLimit() * 0.75"
+                     :low="getScoreLimit()/2"
+                     :optimum="getScoreLimit()-5"
+                     style="width: 150px"
+              ></meter>
+              <div class="row">
+              False Path:
+              <meter :max="getScoreLimit()" min=0
+                     :value="getScore(player.id).falseScore"
+                     :high="getScoreLimit() * 0.75"
+                     :low="getScoreLimit()/2"
+                     :optimum="getScoreLimit()-5"
+                     style="width:150px"
+              ></meter>
+            </div>
+            </div>
+            </div>
+          </div>
+      <div id="flexcontainer">
         <div class="container" style="width: 700px; float: left">
         <div class="row" style="width: 700px; align-content: center">
         <div id="cards">
@@ -18,49 +49,17 @@
           </ul>
         </div>
         </div>
+        </div>
         <div class="row">
           <div id="controls" class="col-sm" style="height: 80px; justify-content: center; align-items: center">
             <button class="btn btn-primary btn-lg" v-on:click="discardSelected" style="border-radius: 40px">
-              Discard <br/> Selected Card
+              Discard
             </button>
           </div>
+          <display-used-cards></display-used-cards>
         </div>
-        </div>
-        <display-used-cards></display-used-cards>
-
       </div>
-      <div class="container" style="border-top: 1px solid white; padding: 10px;">
-        <div class="row">
-          <div class="col-md-12">
-            <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
-          </div>
-        </div>
-        <div class="row">
-          <div :class="colSize" v-for="player in players" style="text-align: left;">
-            <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-             <div>
-               True Path:&nbsp;
-               <meter :max="getScoreLimit()" min=0
-                      :value="getScore(player.id).trueScore"
-                      :high="getScoreLimit() * 0.75"
-                      :low="getScoreLimit()/2"
-                      :optimum="getScoreLimit()-5"
-                      style="width: 150px"
-               ></meter>
-               <br>
-               False Path:
-               <meter :max="getScoreLimit()" min=0
-                      :value="getScore(player.id).falseScore"
-                      :high="getScoreLimit() * 0.75"
-                      :low="getScoreLimit()/2"
-                      :optimum="getScoreLimit()-5"
-                      style="width:150px"
-               ></meter>
-             </div>
-              <!--<div> True Path: {{ getScore(player.id).trueScore }}-->
-                <!--Instructions <br> False Path: {{ getScore(player.id).falseScore }} Instructions</div>-->
-          </div>
-        </div>
+      </div>
       </div>
     </div>
 </template>
@@ -521,8 +520,26 @@ export default {
 }
 
   #tipBox {
-    max-width: 350px;
-    vertical-align: middle;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow:0;
+  }
+
+  #tipContainer {
+    background: white;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    min-height: 45px;
+    max-height: 100px;
+  }
+
+  #tips {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
   }
 
   #playerTurn {
