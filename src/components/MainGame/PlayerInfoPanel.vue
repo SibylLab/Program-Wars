@@ -5,16 +5,16 @@
           {{ tipsInfoText }}
         </div>
       </div>
-      <div class="container" style="border-top: 1px solid white; padding: 10px;">
+      <div class="container" style="padding: 10px; width: 100%">
         <div>
-          <div class="row">
-            <div class="col-md-12">
-              <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
-            </div>
-          </div>
-          <div :class="colSize" v-for="player in players" style="text-align: left; display: inline">
-            <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-            <div>
+
+      <div id="flexcontainer">
+        <div class="container" style="width: 400px">
+        <div class="row">
+            <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
+        </div>
+        <div v-for="player in players" style="text-align: left; display: inline">
+          <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
             <div class="row">
               True Path:&nbsp;
               <meter :max="getScoreLimit()" min=0
@@ -25,19 +25,18 @@
                      style="width: 150px"
               ></meter>
               <div class="row">
-              False Path:
-              <meter :max="getScoreLimit()" min=0
-                     :value="getScore(player.id).falseScore"
-                     :high="getScoreLimit() * 0.75"
-                     :low="getScoreLimit()/2"
-                     :optimum="getScoreLimit()-5"
-                     style="width:150px"
-              ></meter>
+                False Path:
+                <meter :max="getScoreLimit()" min=0
+                       :value="getScore(player.id).falseScore"
+                       :high="getScoreLimit() * 0.75"
+                       :low="getScoreLimit()/2"
+                       :optimum="getScoreLimit()-5"
+                       style="width:150px"
+                ></meter><br>
+              </div>
             </div>
-            </div>
-            </div>
-          </div>
-      <div id="flexcontainer">
+        </div>
+        </div>
         <div class="container" style="width: 700px; float: left">
         <div class="row" style="width: 700px; align-content: center">
         <div id="cards">
@@ -527,13 +526,14 @@ export default {
     justify-content: space-between;
     align-items: center;
     flex-grow:0;
+    min-height: 40px;
   }
 
   #tipContainer {
     background: white;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
-    min-height: 45px;
+    min-height: 40px;
     max-height: 100px;
   }
 
