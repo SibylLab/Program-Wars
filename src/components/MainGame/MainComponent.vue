@@ -36,7 +36,6 @@
       <p>Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
       <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
-        <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <timer class="timer" ></timer>
         <div id="header-buttons">
@@ -111,7 +110,6 @@ export default {
         gameOverText: '',
         modalId: 'gameOverModal',
         tipsToggle: true,
-        factsToggle: true,
         playerList: [],
         winner: '',
         winnerScore: 0,
@@ -228,22 +226,13 @@ export default {
 
     watch: {
       tipsToggle (val) {
-        if (val === true && this.factsToggle === false) {
-          this.factsToggle = true
-        }
         if (val === false) {
           bus.$emit('tutorialOff')
         }
         if (val) {
           bus.$emit('tutorialOn')
         }
-        this.setTips({tutorial: val, fact: this.factsToggle})
-      },
-      factsToggle (val) {
-        if (val === false) {
-          this.tipsToggle = false
-        }
-        this.setTips({tutorial: this.tipsToggle, fact: val})
+        this.setTips({tutorial: val})
       }
     },
     beforeRouteLeave (to, from, next) {
