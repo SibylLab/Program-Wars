@@ -34,7 +34,9 @@
 
     <div id="header">
       <p>Programming Wars Tutorial</p>
-      <timer class="timer" ></timer>
+      <div style="margin-left: auto; padding: 0 5px 0 0">
+        <timer class="timer"></timer>
+      </div>
       <div id="header-buttons">
         <button class="btn btn-primary" @click="() => {this.$router.push('home');}">End Tutorial</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
@@ -166,7 +168,8 @@ export default {
         'setFirstRound',
         'initTutorialDeck',
         'flipTutorialStep',
-        'resetState'
+        'resetState',
+        'stopTimer'
       ]),
       ...mapActions([
         'firstRound',
@@ -180,7 +183,8 @@ export default {
         'falseSideColour',
         'playerTurn',
         'pointerEvent',
-        'currentGameState'
+        'currentGameState',
+        'timerInterval'
       ]),
       initGame () {
         this.initTutorialDeck()
@@ -217,6 +221,7 @@ export default {
     beforeRouteLeave (to, from, next) {
       this.resetState()
       clearInterval(this.interval)
+      this.stopTimer()
       next()
     },
 
@@ -377,10 +382,6 @@ export default {
 
   .timer {
     align-self: right;
-    left: 50%;
-    padding: 5px;
-    border: solid black 2px;
-    position: absolute;
   }
 
   .fade-enter {
