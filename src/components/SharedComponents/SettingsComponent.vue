@@ -45,9 +45,9 @@
         <div class="col-md-12" id="scoreSelect">
           <p>Score to Win:
           <select class="custom-select" name="select" v-model="selected">
-            <option value="75">Short (score 75)</option>
-            <option value="100">Medium (score 100)</option>
-            <option value="125">Long (score 125)</option>
+            <option value="35">Short (score 35)</option>
+            <option value="70">Medium (score 70)</option>
+            <option value="105">Long (score 105)</option>
           </select></p>
         </div>
       </div>
@@ -87,7 +87,7 @@
         localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
-        selected: '75',
+        selected: '35',
         noPlayers: true,
         inputDisable: false,
         maxPlayer: false,

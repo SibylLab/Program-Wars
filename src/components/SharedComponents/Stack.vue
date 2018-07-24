@@ -66,8 +66,8 @@ export default {
         if (this.getActiveCard() !== undefined) {
           let activeCard = this.getActiveCard().type
           let thisStack = this.getStacks().find(findStack => this.stackId === findStack.stackId)
-          if (this.getCoinMsg().valueOf() === this.playfieldBoolean && !this.getCurrentPlayer().hasPowerOutage) {
-            if (activeCard === 'I' && thisStack.cards.length === 0) {
+          if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
+            if (activeCard === 'I' && thisStack.cards.length === 0 && !this.getCurrentPlayer().hasPowerOutage) {
               return true
             } else if (activeCard === 'R') {
               let rCount = 0

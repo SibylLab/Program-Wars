@@ -34,11 +34,11 @@
               <tbody>
               <tr>
                 <th>True Score:</th>
-                <td v-for="player in playerList">{{ getScore(player.id).trueScore}}</td>
+                <td v-for="player in playerList">{{ Math.ceil(getScore(player.id).trueScore) }}</td>
               </tr>
               <tr>
                 <th>False Score:</th>
-                <td v-for="player in playerList">{{ getScore(player.id).falseScore}}</td>
+                <td v-for="player in playerList">{{ Math.ceil(getScore(player.id).falseScore) }}</td>
               </tr>
               <tr>
                 <th>Completion Bonus:</th>
@@ -54,7 +54,7 @@
               </tr>
               <tr>
                 <th>No Overclocking Bonus:</th>
-                <td v-for="player in playerList">{{player.overClockBonus}}</td>
+                <td v-for="player in playerList">{{Math.ceil(player.overClockBonus)}}</td>
               </tr>
               <tr>
                 <th>Master Coder Bonus:</th>
@@ -66,7 +66,7 @@
               </tr>
               <tr>
                 <th>Overclock Card Bonus:</th>
-                <td v-for="player in playerList">{{player.overclockIncrease}}</td>
+                <td v-for="player in playerList">{{ Math.ceil(player.overclockIncrease) }}</td>
               </tr>
               <tr>
                 <th>Grouping Cards Bonus:</th>
@@ -111,14 +111,14 @@ export default {
     getScore (player) {
       let trueSide = 0
       let falseSide = 0
-      trueSide = this.getPlayers()[player].trueScore + this.getPlayers()[player].bonusTrue
-      falseSide = this.getPlayers()[player].falseScore + this.getPlayers()[player].bonusFalse
+      trueSide = this.getPlayers()[player].trueScore
+      falseSide = this.getPlayers()[player].falseScore
       if (this.getPlayers()[player].hasVirus) {
-        trueSide = trueSide / 2
-        falseSide = falseSide / 2
+        trueSide = trueSide * 0.75
+        falseSide = falseSide * 0.75
       } else if (this.getPlayers()[player].hasOverclock) {
-        trueSide = trueSide * 2
-        falseSide = falseSide * 2
+        trueSide = trueSide * 1.25
+        falseSide = falseSide * 1.25
       }
       return {trueScore: trueSide, falseScore: falseSide}
     }

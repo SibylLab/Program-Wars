@@ -215,11 +215,11 @@ export default {
         trueSide = this.getPlayers()[player].trueScore
         falseSide = this.getPlayers()[player].falseScore
         if (this.getPlayers()[player].hasVirus) {
-          trueSide = trueSide / 2
-          falseSide = falseSide / 2
+          trueSide = trueSide * 0.75
+          falseSide = falseSide * 0.75
         } else if (this.getPlayers()[player].hasOverclock) {
-          trueSide = trueSide * 2
-          falseSide = falseSide * 2
+          trueSide = trueSide * 1.25
+          falseSide = falseSide * 1.25
         }
         return {trueScore: trueSide, falseScore: falseSide}
       },

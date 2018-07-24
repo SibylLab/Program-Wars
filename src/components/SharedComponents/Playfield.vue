@@ -60,11 +60,11 @@ export default {
       trueSide = this.getCurrentPlayer().trueScore
       falseSide = this.getCurrentPlayer().falseScore
       if (this.getCurrentPlayer().hasVirus) {
-        trueSide = trueSide / 2
-        falseSide = falseSide / 2
+        trueSide = Math.ceil(trueSide * 0.75)
+        falseSide = Math.ceil(falseSide * 0.75)
       } else if (this.getCurrentPlayer().hasOverclock) {
-        trueSide = trueSide * 2
-        falseSide = falseSide * 2
+        trueSide = Math.ceil(trueSide * 1.25)
+        falseSide = Math.ceil(falseSide * 1.25)
       }
       return {trueScore: trueSide,
         falseScore: falseSide}

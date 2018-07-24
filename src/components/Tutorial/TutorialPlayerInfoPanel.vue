@@ -202,11 +202,11 @@ import Card from '../SharedComponents/Card'
         trueSide = this.getPlayers()[player].trueScore + this.getPlayers()[player].bonusTrue
         falseSide = this.getPlayers()[player].falseScore + this.getPlayers()[player].bonusFalse
         if (this.getPlayers()[player].hasVirus) {
-          trueSide = trueSide / 2
-          falseSide = falseSide / 2
+          trueSide = trueSide * 0.75
+          falseSide = falseSide * 0.75
         } else if (this.getPlayers()[player].hasOverclock) {
-          trueSide = trueSide * 2
-          falseSide = falseSide * 2
+          trueSide = trueSide * 1.25
+          falseSide = falseSide * 1.25
         }
         return { trueScore: trueSide, falseScore: falseSide }
       },
