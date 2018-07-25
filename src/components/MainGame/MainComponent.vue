@@ -34,6 +34,8 @@
 
     <div id="header">
       <p>Programming Wars</p>
+
+
       <div style="margin-left: auto; padding: 0 10px 0 0">
       <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
         </div>
@@ -49,8 +51,7 @@
       <player-info-panel></player-info-panel>
     </div>
     <div id="flexcontainer">
-      <div id="player-stacks">
-        <h3>Your Stacks</h3>
+      <div id="player-stacks" style="padding-top: 12px">
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
@@ -151,7 +152,8 @@ export default {
         'getFirstRound',
         'getIsDiscard',
         'getIsHack',
-        'getPlayerTurn'
+        'getPlayerTurn',
+        'getScoreLimit'
       ]),
       ...mapMutations([
         'initDeck',

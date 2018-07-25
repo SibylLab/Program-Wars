@@ -1,7 +1,7 @@
 <template>
     <div id="player-info-panel">
-      <div id="tipContainer" v-if="getTips().tutorial && (getActiveCard() !== undefined)">
-        <div id="tipBox" class="container" :cardClicked="tipsCardSelected">
+      <div id="tipContainer" v-if="getTips().tutorial">
+        <div id="tipBox" class="container" :cardClicked="tipsCardSelected" style="font-size: 14px;">
           {{ tipsInfoText }}
         </div>
       </div>
@@ -10,12 +10,9 @@
 
       <div id="flexcontainer">
         <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center">
-        <div class="row">
-            <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
-        </div>
         <div v-for="player in players" style="text-align: left; display: inline">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center ">{{ player.name }}:</a></b></h4></div>
-            <div class="row" style="width: 300px; -webkit-align-items: center; margin-right: 0px; margin-left: 25px">
+            <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px">
               <div class="row"></div>
               True Path:&nbsp;&thinsp;
               <meter :max="getScoreLimit()" min=0
@@ -42,6 +39,7 @@
         <div class="row" style="width: 700px; align-content: center">
         <div id="cards">
           <ul id="example-1">
+            <h5 style="vertical-align: center; margin-left: auto; margin-right: auto">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card) in hand" style="margin-top: 5px">
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
@@ -521,7 +519,7 @@ export default {
 
   li {
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 8px;
   }
 
   a {

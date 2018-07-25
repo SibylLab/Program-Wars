@@ -1,7 +1,7 @@
 <template>
   <div id="card" :class="cardCss" class="panel panel-default" @click="cardClicked ($event)" @click.stop draggable="true" @dragstart="cardDragged">
-    <img src="../../../static/cardImg/backOfCard.png" alt="back of Card" width ="90" height="134" v-if="showCard">
-    <img class="cardImg" :src="cardGraphics" alt="Playing Card" width ="90" height="134" v-else>
+    <img src="../../../static/cardImg/backOfCard.png" alt="back of Card" :width ="cardWidth" height="cardHeight" v-if="showCard">
+    <img class="cardImg" :src="cardGraphics" alt="Playing Card" :width ="cardWidth" :height="cardHeight" v-else>
   </div>
 </template>
 
@@ -42,6 +42,20 @@ export default {
       }
 
       return classString
+    },
+    cardWidth () {
+      if (this.cardData.isUsed) {
+        return 90 * 2 / 3
+      } else {
+        return 90
+      }
+    },
+    cardHeight () {
+      if (this.cardData.isUsed) {
+        return 134 * 2 / 3
+      } else {
+        return 134
+      }
     },
     title () {
       return 'Card'
@@ -118,14 +132,14 @@ export default {
 
 
     background-color: #fff;
-    min-width: 90px;
+    max-width: 90px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    min-height: 120px;
+    max-height: 134px;
     border: 0 solid #000;
     border-radius: 10px;
     /*padding: 10px 0px 10px 0px;*/

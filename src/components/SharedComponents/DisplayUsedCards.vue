@@ -4,7 +4,7 @@
     <div id="cards">
     <ul class="list-inline">
       <h4 class="modal-title"> Your Bonuses: </h4>
-      <li v-for="(card) in usedBonusCards" style="max-width: 90px; margin-right: 5px">
+      <li v-for="(card) in usedBonusCards" style="max-width: 90px; margin-right: 1px; padding-right: 1px">
         <card :cardData="card"></card>
       </li>
     </ul>
@@ -14,7 +14,7 @@
     <div id="cards2">
     <ul id="example-1" class="list-inline" style="padding: 10px">
       <h4 class="modal-title"> Your Handicaps: </h4>
-      <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
+      <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 1px; padding-right: 2px; margin-bottom: 5px">
         <card :cardData="card"></card>
       </li>
     </ul>
@@ -52,6 +52,9 @@
         if (cards === null) {
           return []
         } else {
+          for (let card in cards) {
+            cards[card].isUsed = true
+          }
           return cards
         }
       },
@@ -60,6 +63,9 @@
         if (cards === null) {
           return []
         } else {
+          for (let card in cards) {
+            cards[card].isUsed = true
+          }
           return cards
         }
       }
