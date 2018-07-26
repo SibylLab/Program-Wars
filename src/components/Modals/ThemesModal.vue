@@ -9,21 +9,16 @@
           <div class="container" style="width: 100%">
             <div class="row">
               <div class="col-sm">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="classic" value="classic" v-model="themeType" checked>
-                  <label class="form-check-label" for="classic">
-                    Classic
-                  </label>
-                </div>
+                <select class="custom-select" name="select" v-model="themeType" style="width: 25%">
+                  <option value="classic">Classic</option>
+                  <option value="dark">Dark</option>
+                  <option value="solarized">Solarized</option>
+                </select>
               </div>
-              <div class="form-check">
-                <input class="form-check-input inline" type="radio" name="exampleRadios" id="dark" value="dark" v-model="themeType" checked>
-                <label class="form-check-label" for="dark">
-                  Dark&nbsp;&nbsp;
-                </label>
-            </div>
-            </div>
           </div>
+            <div class="row">
+              <img :src="getSrc()" alt="ThemePick" style="width: 50%; height: 45%">
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" @click="changeTheme()" style="margin: 5px;">Apply</button>
@@ -32,7 +27,7 @@
       </div>
     </div>
   </div>
-
+  </div>
 </template>
 
 <script>
@@ -44,7 +39,8 @@
   export default {
     data () {
       return {
-        themeType: undefined
+        themeType: 'classic',
+        themeSrc: '/static/Themes/classicTheme.jpg'
       }
     },
     methods: {
@@ -52,14 +48,14 @@
         'updateTheme'
       ]),
       changeTheme () {
-        console.log(this.themeType)
         if (this.themeType === 'classic') {
           this.updateTheme({
-            mainBC: 'background-color: #000000',
+            mainBC: 'background-color: #ffffff',
             playfieldBC: 'background-color: #cccccc',
             mainTC: 'color: #000000; background-colour: #ffffff',
             playfieldTC: 'color: #000000; background-color: #cccccc'
           })
+          this.themeSrc = '/static/Themes/classicTheme.jpg'
         } else if (this.themeType === 'dark') {
           this.updateTheme({
             mainBC: 'background-color: #000000',
@@ -67,6 +63,24 @@
             mainTC: 'color: #ffffff; background-color: #000000',
             playfieldTC: 'color: #ffffff; background-color: #2b394f'
           })
+          this.themeSrc = '/static/Themes/darkTheme/jpg'
+        } else if (this.themeType === 'solarized') {
+          this.updateTheme({
+            mainBC: 'background-color: #175b89',
+            playfieldBC: 'background-color: #4183af',
+            mainTC: 'color: #ffffff; background-color: #175b89',
+            playfieldTC: 'color: #ffffff; background-color: #4183af'
+          })
+          this.themeSrc = '/static/Themes/solarizedTheme.jpg'
+        }
+      },
+      getSrc () {
+        if (this.themeType === 'classic') {
+          return '/static/Themes/classicTheme.jpg'
+        } else if (this.themeType === 'dark') {
+          return '/static/Themes/darkTheme.jpg'
+        } else if (this.themeType === 'solarized') {
+          return '/static/Themes/solarizedTheme.jpg'
         }
       }
     }

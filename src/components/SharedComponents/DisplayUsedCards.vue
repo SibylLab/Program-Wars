@@ -3,7 +3,7 @@
   <div class="row">
     <div id="cards">
     <ul class="list-inline">
-      <h4 class="modal-title"> Your Bonuses: </h4>
+      <h4 class="modal-title" :style="pIPTextColour()"> Your Bonuses: </h4>
       <li v-for="(card) in usedBonusCards" style="max-width: 90px; margin-right: 5px">
         <card :cardData="card"></card>
       </li>

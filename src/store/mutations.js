@@ -316,10 +316,10 @@ export default {
   setPlayfieldColour (state, payload) {
     if (payload) {
       if (state.activeSide) {
-        state.trueSideColour = 'background-color: rgba(57, 219, 67, 0.9); box-shadow: 0 0 15px 10px forestgreen'
+        state.trueSideColour = 'background-color: rgba(14, 183, 99, 0.9); box-shadow: 0 0 15px 10px forestgreen'
         state.falseSideColour = 'background-color: rgba(242, 0, 0, 0.4)'
       } else {
-        state.falseSideColour = 'background-color: rgba(57, 219, 67, 0.9); box-shadow: 0 0 15px 10px forestgreen'
+        state.falseSideColour = 'background-color: rgba(14, 183, 99, 0.9); box-shadow: 0 0 15px 10px forestgreen'
         state.trueSideColour = 'background-color: rgba(242, 0, 0, 0.4)'
       }
     } else {

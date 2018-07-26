@@ -50,6 +50,7 @@ export const store = new Vuex.Store({
     pIPBackgroundColour: 'background-color: #cccccc',
     pIPTextColour: 'color: #000000; background-color: #cccccc',
     mainTextColour: 'color: #000000; background-color: #ffffff',
+    playfieldTextColour: 'color: #ffffff',
     isHack: false,
     isVirus: false,
     hackedPlayer: '',
