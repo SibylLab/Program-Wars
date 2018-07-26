@@ -1,6 +1,7 @@
 <template>
   <div id="maincontainer">
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
+    <themes-modal id="themesModal" class="modal fade themes" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></themes-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby=""
                 aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"
@@ -32,11 +33,11 @@
     </transition>
 
 
-    <div id="header">
-      <p>Programming Wars</p>
+    <div id="header" :style="mainBackgroundColour()">
+      <p :style="mainTextColour()">Programming Wars</p>
       <timer class="timer" ></timer>
       <div style="margin-left: auto; padding: 0 10px 0 0">
-      <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
+      <label class="checkbox-inline" :style="mainTextColour()"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
         <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
         <div id="header-buttons">
@@ -44,27 +45,29 @@
         <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target=".themes">Themes</button>
         <a class="btn btn-primary" href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
     </div>
     <div id="playerinfopanel" :style="deactivateClick">
       <player-info-panel></player-info-panel>
     </div>
-    <div id="flexcontainer">
+    <div id="flexcontainer" :style="mainBackgroundColour()">
       <div id="player-stacks">
         <h3>Your Stacks</h3>
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <playfield  :trueFalse="true" :playerId="getCurrentPlayerId()" :style="trueSideColour()" class="playfieldSides"></playfield>
+              <playfield  :trueFalse="true" :playerId="getCurrentPlayerId()" class="playfieldSides"></playfield>
             </div>
             <div class="col-md-6 col-sm-6">
-              <playfield :trueFalse="false" :playerId="getCurrentPlayerId()" :style="falseSideColour()" class="playfieldSides"></playfield>
+              <playfield :trueFalse="false" :playerId="getCurrentPlayerId()" class="playfieldSides"></playfield>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div style="height: 200px; width: 100%;" :style="mainBackgroundColour()"></div>
   </div>
 </template>
 
@@ -91,6 +94,8 @@ import AntiVirus from '../Modals/CardModals/AntiVirusModal'
 import Generator from '../Modals/CardModals/Generator'
 import Firewall from '../Modals/CardModals/Firewall'
 import Timer from '../SharedComponents/Timer'
+
+import Themes from '../Modals/ThemesModal'
 
 import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
 
@@ -141,7 +146,8 @@ export default {
       'firewall-modal': Firewall,
       'generator-modal': Generator,
       'anti-virus-modal': AntiVirus,
-      'timer': Timer
+      'timer': Timer,
+      'themes-modal': Themes
 
     },
     methods: {
@@ -181,7 +187,9 @@ export default {
         'falseSideColour',
         'pointerEvent',
         'currentGameState',
-        'timerInterval'
+        'timerInterval',
+        'mainBackgroundColour',
+        'mainTextColour'
       ]),
       initGame () {
         this.initDeck()
