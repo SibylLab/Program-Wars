@@ -316,15 +316,15 @@ export default {
   setPlayfieldColour (state, payload) {
     if (payload) {
       if (state.activeSide) {
-        state.trueSideColour = 'background-color: rgba(0, 255, 0, 0.26); box-shadow: 0 0 15px 10px forestgreen'
-        state.falseSideColour = 'rgba(242, 0, 0, 0.36)'
+        state.trueSideColour = 'background-color: rgba(14, 183, 99, 0.9); box-shadow: 0 0 15px 10px forestgreen'
+        state.falseSideColour = 'background-color: rgba(242, 0, 0, 0.4)'
       } else {
-        state.falseSideColour = 'background-color: rgba(0, 255, 0, 0.26); box-shadow: 0 0 15px 10px forestgreen'
-        state.trueSideColour = 'rgba(242, 0, 0, 0.36)'
+        state.falseSideColour = 'background-color: rgba(14, 183, 99, 0.9); box-shadow: 0 0 15px 10px forestgreen'
+        state.trueSideColour = 'background-color: rgba(242, 0, 0, 0.4)'
       }
     } else {
-      state.trueSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)'
-      state.falseSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)'
+      state.trueSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgb(0,0,0)'
+      state.falseSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgb(0,0,0)'
     }
   },
   aiTakeTurn (state, payload) {
@@ -467,5 +467,12 @@ export default {
   },
   stopTimer (state) {
     state.timerInterval.stop()
+  },
+  updateTheme (state, payload) {
+    state.mainBackgroundColour = payload.mainBC
+    state.mainTextColour = payload.mainTC
+    state.pIPBackgroundColour = payload.playfieldBC
+    state.pIPTextColour = payload.playfieldTC
   }
 }
+

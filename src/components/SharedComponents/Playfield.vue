@@ -1,9 +1,9 @@
 <template>
-  <div id="playfield" :class="playfieldClass" class="container">
+  <div id="playfield" :class="playfieldClass" class="container" :style="getStyle()">
     <div class="row">
       <div class="col-md-12">
-        <h5>Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
-        <h3 style="text-align: left; margin-left: 40px">if ({{ trueOrFalse }} Path Selected) {</h3>
+        <h5 :style="playfieldTextColour()">Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
+        <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">if ({{ trueOrFalse }} Path Selected) {</h3>
       </div>
     </div>
     <div class="row">
@@ -13,7 +13,7 @@
     </div>
     <div class="row">
       <div class="col-md-12" style="text-align: left; margin: 30px 0 0 50px">
-        <h3>}</h3>
+        <h3 :style="playfieldTextColour()">}</h3>
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
 
 <script>
 import Stack from './Stack'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 
 /**
  * This displays the true/false playfields with the players stacks and playfield score.
@@ -78,6 +78,12 @@ export default {
       'getCurrentPlayer',
       'getStacks'
     ]),
+    ...mapState([
+      'trueSideColour',
+      'falseSideColour',
+      'pIPTextColour',
+      'playfieldTextColour'
+    ]),
     getStackList () {
       return this.getStacks().filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)
     },
@@ -99,6 +105,13 @@ export default {
       if (!emptyStackExists) {
         this.numberOfStacks += 1
         this.stacks.push({id: this.numberOfStacks, elements: [], value: 0, cardCount: 0})
+      }
+    },
+    getStyle () {
+      if (this.trueFalse) {
+        return this.trueSideColour()
+      } else {
+        return this.falseSideColour()
       }
     }
   }

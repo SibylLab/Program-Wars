@@ -4,7 +4,7 @@ import Card from '../../../src/classes/Models/Card'
 
 let card = new Card(55, 3, 'I', 'f')
 let card2 = new Card(34, 2, 'R', 'v')
-describe('test store.js getters', () => {
+describe('test store.js mutations', () => {
   it('test the store resetState function', () => {
     store.commit('resetState')
     expect(store.getters.getWinner).to.equal(false)
@@ -111,12 +111,12 @@ describe('test store.js getters', () => {
     // expect(store.state.falseSideColour).to.equal('background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)')
     store.state.activeSide = true
     store.commit('setPlayfieldColour', true)
-    expect(store.state.trueSideColour).to.equal('background-color: rgba(0, 255, 0, 0.26); box-shadow: 0 0 15px 10px forestgreen')
-    expect(store.state.falseSideColour).to.equal('rgba(242, 0, 0, 0.36)')
+    expect(store.state.trueSideColour).to.equal('background-color: rgba(14, 183, 99, 0.9); box-shadow: 0 0 15px 10px forestgreen')
+    expect(store.state.falseSideColour).to.equal('background-color: rgba(242, 0, 0, 0.4)')
     store.commit('setActiveSide', false)
     store.commit('setPlayfieldColour', true)
-    expect(store.state.falseSideColour).to.equal('background-color: rgba(0, 255, 0, 0.26); box-shadow: 0 0 15px 10px forestgreen')
-    expect(store.state.trueSideColour).to.equal('rgba(242, 0, 0, 0.36)')
+    expect(store.state.falseSideColour).to.equal('background-color: rgba(14, 183, 99, 0.9); box-shadow: 0 0 15px 10px forestgreen')
+    expect(store.state.trueSideColour).to.equal('background-color: rgba(242, 0, 0, 0.4)')
   })
 
   it('test the setCoinFlipAnim function', () => {

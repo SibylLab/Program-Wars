@@ -3,8 +3,8 @@
   <div class="row">
     <div id="cards">
     <ul class="list-inline">
-      <h4 class="modal-title"> Your Bonuses: </h4>
-      <li v-for="(card) in usedBonusCards" style="max-width: 90px; margin-right: 1px; padding-right: 1px">
+      <h4 class="modal-title" :style="pIPTextColour()"> Your Bonuses: </h4>
+      <li v-for="(card) in usedBonusCards" style="max-width: 90px; margin-right: 5px">
         <card :cardData="card"></card>
       </li>
     </ul>
@@ -13,8 +13,8 @@
   <div class="row">
     <div id="cards2">
     <ul id="example-1" class="list-inline" style="padding: 10px">
-      <h4 class="modal-title"> Your Handicaps: </h4>
-      <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 1px; padding-right: 2px; margin-bottom: 5px">
+      <h4 class="modal-title" :style="pIPTextColour()"> Your Handicaps: </h4>
+      <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
         <card :cardData="card"></card>
       </li>
     </ul>
@@ -25,7 +25,7 @@
 
 <script>
   import Card from './Card'
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapState} from 'vuex'
 
   /**
    * This component shows any attack cards used against the player, or any safety / overclock cards used.
@@ -44,6 +44,10 @@
     methods: {
       ...mapGetters([
         'getCurrentPlayer'
+      ]),
+      ...mapState([
+        'pIPTextColour',
+        'pIPBackgroundColour'
       ])
     },
     computed: {
