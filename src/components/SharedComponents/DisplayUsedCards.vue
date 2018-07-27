@@ -56,6 +56,9 @@
         if (cards === null) {
           return []
         } else {
+          for (let card in cards) {
+            cards[card].isUsed = true
+          }
           return cards
         }
       },
@@ -64,6 +67,9 @@
         if (cards === null) {
           return []
         } else {
+          for (let card in cards) {
+            cards[card].isUsed = true
+          }
           return cards
         }
       }

@@ -147,7 +147,7 @@
 
                       <div>
                         <ol>
-                          <li>Virus cards let you infect another player's program, cutting their score in half.</li>
+                          <li>Virus cards let you infect another player's program, cutting their score by 25%.</li>
                           <li>When you play a Virus card, you choose which player will be infected. </li>
                           <li>You cannot infect someone with a AntiVirus card played.</li>
                         </ol>
@@ -197,7 +197,7 @@
 
                       <div>
                         <ol>
-                          <li>Overclocking cards allow you to double your current score.</li>
+                          <li>Overclocking cards allow you to increase your current score by 25%.</li>
                         </ol>
                         <b>Relation to computer programming:</b>
                         When you overclock your computer your computer runs faster, allowing your programs to run much quicker.

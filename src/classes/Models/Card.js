@@ -21,6 +21,7 @@ export default class Card {
     this.id = id
     this.cardImg = cardImg
     this.showFace = false
+    this.isUsed = false
   }
 
   flipCardFace () {
