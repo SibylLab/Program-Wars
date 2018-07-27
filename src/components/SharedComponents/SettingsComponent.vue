@@ -2,9 +2,9 @@
   <div id="settingsPage">
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
-    <div class="header">
+    <div class="header" :style="mainBackgroundColour()">
       <div class="title" style="float: left">
-        <h4><b>Programming Wars</b></h4>
+        <h4 :style="mainTextColour()"><b>Programming Wars</b></h4>
       </div>
       <div class="headerBtn">
         <button class="btn btn-primary headerBtn" data-toggle="modal" data-target=".rules">Rules</button>
@@ -71,7 +71,7 @@
   import CreditsModal from '../Modals/CreditsModal.vue'
   import TutorialModal from '../Modals/TutorialStartModal'
 
-  import {mapGetters, mapMutations} from 'vuex'
+  import {mapGetters, mapMutations, mapState} from 'vuex'
 
   /**
    * This is the main screen that the user sees when they go to the website.
@@ -108,6 +108,10 @@
       ]),
       ...mapMutations([
         'setTutorial'
+      ]),
+      ...mapState([
+        'mainTextColour',
+        'mainBackgroundColour'
       ]),
       /**
        * Called whenever the 'Add Player' button has been clicked, for the purpose of adding the player
