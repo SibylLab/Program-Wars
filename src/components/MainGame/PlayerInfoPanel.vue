@@ -1,16 +1,45 @@
 <template>
     <div id="player-info-panel">
-      <div id="flexcontainer">
-        <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
-          <div class="panel panel-default" style="border-radius: 10px">
-            <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
-            <div class="panel-body">{{ tipsInfoText }}</div>
-          </div>
+      <div id="tipContainer" v-if="getTips().tutorial">
+        <div id="tipBox" class="container" :cardClicked="tipsCardSelected" style="font-size: 14px;">
+          {{ tipsInfoText }}
         </div>
-        <div class="container" style="width: 700px; float: left">
+      </div>
+      <div class="container" style="padding: 10px; width: 100%">
+        <div>
+
+      <div id="flexcontainer">
+        <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center">
+        <div v-for="player in players" style="text-align: left; display: inline">
+          <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center ">{{ player.name }}:</a></b></h4></div>
+            <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px">
+              <div class="row"></div>
+              True Path:&nbsp;&thinsp;
+              <meter :max="getScoreLimit()" min=0
+                     :value="getScore(player.id).trueScore"
+                     :high="getScoreLimit() * 0.75"
+                     :low="getScoreLimit()/2"
+                     :optimum="getScoreLimit()-5"
+                     style="width: 150px"
+              ></meter>
+              <div class="row"></div>
+                False Path:
+                <meter :max="getScoreLimit()" min=0
+                       :value="getScore(player.id).falseScore"
+                       :high="getScoreLimit() * 0.75"
+                       :low="getScoreLimit()/2"
+                       :optimum="getScoreLimit()-5"
+                       style="width:150px"
+                ></meter>
+
+            </div>
+        </div>
+        </div>
+        <div class="container" style="width: 700px; float: left; margin: auto">
         <div class="row" style="width: 700px; align-content: center">
         <div id="cards">
           <ul id="example-1">
+            <h5 style="vertical-align: center; margin-left: auto; margin-right: auto">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card) in hand" style="margin-top: 5px">
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
@@ -18,49 +47,17 @@
           </ul>
         </div>
         </div>
+        </div>
         <div class="row">
           <div id="controls" class="col-sm" style="height: 80px; justify-content: center; align-items: center">
             <button class="btn btn-primary btn-lg" v-on:click="discardSelected" style="border-radius: 40px">
-              Discard <br/> Selected Card
+              Discard
             </button>
           </div>
+          <display-used-cards></display-used-cards>
         </div>
-        </div>
-        <display-used-cards></display-used-cards>
-
       </div>
-      <div class="container" style="border-top: 1px solid white; padding: 10px;">
-        <div class="row">
-          <div class="col-md-12">
-            <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
-          </div>
-        </div>
-        <div class="row">
-          <div :class="colSize" v-for="player in players" style="text-align: left;">
-            <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-             <div>
-               True Path:&nbsp;
-               <meter :max="getScoreLimit()" min=0
-                      :value="getScore(player.id).trueScore"
-                      :high="getScoreLimit() * 0.75"
-                      :low="getScoreLimit()/2"
-                      :optimum="getScoreLimit()-5"
-                      style="width: 150px"
-               ></meter>
-               <br>
-               False Path:
-               <meter :max="getScoreLimit()" min=0
-                      :value="getScore(player.id).falseScore"
-                      :high="getScoreLimit() * 0.75"
-                      :low="getScoreLimit()/2"
-                      :optimum="getScoreLimit()-5"
-                      style="width:150px"
-               ></meter>
-             </div>
-              <!--<div> True Path: {{ getScore(player.id).trueScore }}-->
-                <!--Instructions <br> False Path: {{ getScore(player.id).falseScore }} Instructions</div>-->
-          </div>
-        </div>
+      </div>
       </div>
     </div>
 </template>
@@ -85,45 +82,9 @@ export default {
         modalText: '',
         modalCards: [],
         tipsToggle: true,
-        factsToggle: true,
         tipsCardSelected: 'Did you know?',
         tipsInfoText: 'You can toggle on or off this information window by checking the "FUN FACTS" box in the top right corner. ' +
-      'You can also turn off the tutorials but keep the fun facts by checking the "TUTORIAL" box.',
-        facts: [
-          'The first high-level programming language was FORTRAN. invented in 1954 by IBM’s John Backus.',
-          'The first computer programmer was Ada Lovelace, a woman.',
-          'A "Hello, World!" program is often the first program written when learning a new programming language.',
-          'The first electronic computer ENIAC weighed more than 27 tons and took up 1800 square feet.',
-          'Only about 10% of the world’s currency is physical money, the rest only exists on computers.',
-          'TYPEWRITER is the longest word that you can write using the letters only on one row of the keyboard of your computer.',
-          'Doug Engelbart invented the first computer mouse in around 1964 which was made of wood.',
-          'There are more than 5000 new computer viruses are released every month.',
-          'Around 50% of all Wikipedia vandalism is caught by a single computer program with more than 90% accuracy.',
-          'In programming, counting starts at 0, not 1.',
-          ' If there was a computer as powerful as the human brain, it would be able to do 38 thousand trillion operations per second and hold more than 3580 terabytes of memory.',
-          'The password for the computer controls of nuclear tipped missiles of the U.S was 00000000 for eight years.',
-          'Approximately 70% of virus writers are said to work under contract for organized crime syndicates.',
-          'HP, Microsoft and Apple have one very interesting thing in common – they were all started in a garage.',
-          'An average person normally blinks 20 times a minute, but when using a computer he/she blinks only 7 times a minute.',
-          'The house where Bill Gates lives, was designed using a Macintosh computer.',
-          'The first ever hard disk drive was made in 1979, and could hold only 5MB of data.',
-          'The first 1GB hard disk drive was announced in 1980 which weighed about 550 pounds, and had a price tag of $40,000.',
-          'More than 80% of the emails sent daily are spams.',
-          'A group of 12 engineers designed IBM PC and they were called "The Dirty Dozen"',
-          'The original name of Windows was "Interface Manager".',
-          'The first microprocessor created by Intel was the 4004. It was designed for a calculator, and in that time nobody imagined where it would lead.',
-          'IBM 5120 from 1980 was the heaviest desktop computer ever made. It weighed about 105 pounds, not including the 130 pounds external floppy drive.',
-          'Genesis Device demonstration video in Star Trek II: The Wrath of Khan was the the first entirely computer generated movie sequence in the history of cinema. That studio later become Pixar.',
-          'In 1833 a man by the name of Charles Babbage invented all the parts that are now used for a modern computer. But it was only 120 years later that the first ‘modern’ computers were invented.',
-          'The Motion Picture Academy refused to nominate Tron (1982) for a special-effects award because, according to director Steven Lisberger, "The Academy thought we cheated by using computers".',
-          ' John Lasseter (CEO of Pixar) was fired from Disney for promoting computer animation.',
-          'CAPTCHA is an acronym for "Completely Automated Public Turing test to tell Computers and Humans Apart"',
-          'You will not be affected by viruses just by opening an email. It is only activated when you click a link or access an attachment.',
-          'MyDoom was the fastest-spreading virus ever created. The total damage done by MyDoom is a whopping $38 billion.',
-          '9 out of 10 of the world’s supercomputers run on Linux.',
-          'E-mail has been around longer than the World Wide Web.',
-          'In the 1980s, an IBM computer wasn’t considered 100% compatible unless it could run Microsoft Flight Simulator*.'
-        ]
+      'You can also turn off the tutorials but keep the fun facts by checking the "TUTORIAL" box.'
       }
     },
     computed: {
@@ -134,13 +95,6 @@ export default {
       },
       players () {
         return this.getPlayers()
-      },
-      displayStyle () {
-        if (this.getTips().fact) {
-          return {'display': 'block'}
-        } else {
-          return {'display': 'none'}
-        }
       },
       changeTrueFalse () {
         if (this.trueFalseAnim()) { return 'trueFalse' } else { return '' }
@@ -239,11 +193,7 @@ export default {
         }
       },
       cardClicked (c) {
-        if (this.getTips().tutorial && this.getActiveCard() === undefined) {
-          this.tipsCardSelected = this.setTipBox(c)
-        } else {
-          this.tipsCardSelected = this.setTipBox('default')
-        }
+        this.tipsCardSelected = this.setTipBox(c)
         let prevActive = this.getActiveCard()
         if (c.type === 'VIRUS') {
           $('.virus').modal('show')
@@ -321,14 +271,9 @@ export default {
             return 'BatteryBackup Card'
 
           default :
-            let fact = this.setFact()
+            let fact = ''
             this.tipsInfoText = fact
-            return 'Did you know?'
         }
-      },
-      setFact () {
-        let num = Math.floor(Math.random() * this.facts.length)
-        return this.facts[num]
       },
       deselectAll () {
         document.removeEventListener('click', this.hide)
@@ -521,8 +466,27 @@ export default {
 }
 
   #tipBox {
-    max-width: 350px;
-    vertical-align: middle;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow:0;
+    min-height: 40px;
+  }
+
+  #tipContainer {
+    background: white;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    min-height: 40px;
+    max-height: 100px;
+  }
+
+  #tips {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
   }
 
   #playerTurn {
@@ -555,7 +519,7 @@ export default {
 
   li {
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 8px;
   }
 
   a {

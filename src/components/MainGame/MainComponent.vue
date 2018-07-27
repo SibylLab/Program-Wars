@@ -34,13 +34,13 @@
 
     <div id="header">
       <p>Programming Wars</p>
-      <timer class="timer" ></timer>
+
+
       <div style="margin-left: auto; padding: 0 10px 0 0">
       <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
-        <label class="checkbox-inline"><input type="checkbox" value="true" v-model="factsToggle" checked>FUN FACTS</label>
         </div>
+        <timer class="timer" ></timer>
         <div id="header-buttons">
-
         <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
@@ -51,8 +51,7 @@
       <player-info-panel></player-info-panel>
     </div>
     <div id="flexcontainer">
-      <div id="player-stacks">
-        <h3>Your Stacks</h3>
+      <div id="player-stacks" style="padding-top: 12px">
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
@@ -112,7 +111,6 @@ export default {
         gameOverText: '',
         modalId: 'gameOverModal',
         tipsToggle: true,
-        factsToggle: true,
         playerList: [],
         winner: '',
         winnerScore: 0,
@@ -154,7 +152,8 @@ export default {
         'getFirstRound',
         'getIsDiscard',
         'getIsHack',
-        'getPlayerTurn'
+        'getPlayerTurn',
+        'getScoreLimit'
       ]),
       ...mapMutations([
         'initDeck',
@@ -229,22 +228,13 @@ export default {
 
     watch: {
       tipsToggle (val) {
-        if (val === true && this.factsToggle === false) {
-          this.factsToggle = true
-        }
         if (val === false) {
           bus.$emit('tutorialOff')
         }
         if (val) {
           bus.$emit('tutorialOn')
         }
-        this.setTips({tutorial: val, fact: this.factsToggle})
-      },
-      factsToggle (val) {
-        if (val === false) {
-          this.tipsToggle = false
-        }
-        this.setTips({tutorial: this.tipsToggle, fact: val})
+        this.setTips({tutorial: val})
       }
     },
     beforeRouteLeave (to, from, next) {
@@ -400,12 +390,9 @@ export default {
     color: #fff;
   }
 
-  .timer {
+  .timer{
     align-self: right;
-    left: 50%;
-    padding: 5px;
-    border: solid black 2px;
-    position: absolute;
+    padding-right: 2px;
   }
 
   .fade-enter {

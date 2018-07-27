@@ -439,7 +439,7 @@ ul {
 li {
   margin: 0;
   padding: 0;
-  margin-right: 13px;
+  margin-right: 8px;
   display: inline-block;
 }
 
