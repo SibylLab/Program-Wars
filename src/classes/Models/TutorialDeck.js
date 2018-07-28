@@ -22,7 +22,7 @@ const variable5 = 3
 const variable6 = 1
 
 const hack = 3
-const virus = 3
+const malware = 3
 const powerOutage = 3
 
 const overClock = 3
@@ -63,7 +63,7 @@ const cardDeck = [
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
   {type: 'POWEROUTAGE', cardValue: 0, imgSrc: '/static/cardImg/PowerOutage.png', howMany: powerOutage},
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
-  {type: 'ANTIVIRUS', cardValue: 0, imgSrc: '/static/cardImg/AntiVirus.png', howMany: antiVirus}
+  {type: 'ANTIVIRUS', cardValue: 0, imgSrc: '/static/cardImg/AntiVirus.png', howMany: antiVirus},
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
   {type: 'MALWARE', cardValue: 0, imgSrc: '/static/cardImg/Malware.png', howMany: malware},
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
@@ -71,7 +71,7 @@ const cardDeck = [
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
   {type: 'HACK', cardValue: 0, imgSrc: '/static/cardImg/Hacker.png', howMany: hack},
   {type: 'V', cardValue: 3, imgSrc: '/static/cardImg/Variable3.png', howMany: variable3},
-  {type: 'V', cardValue: 5, imgSrc: '/static/cardImg/Variable5.png', howMany: variable5},
+  {type: 'V', cardValue: 5, imgSrc: '/static/cardImg/Variable5.png', howMany: variable5}
 ]
 
 /**

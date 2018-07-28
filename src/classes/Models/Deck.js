@@ -29,7 +29,7 @@ const variable5 = 2
 const variable6 = 1
 
 const hack = 3
-const virus = 3
+const malware = 3
 const powerOutage = 3
 
 const overClock = 3
