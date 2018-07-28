@@ -52,6 +52,9 @@
             <button class="btn btn-primary btn-lg" v-on:click="discardSelected" style="border-radius: 40px">
               Discard
             </button>
+            <button class="btn btn-lg btn-warning" v-on:click="reDraw" style="border-radius: 40px; margin-top: 5px;">
+              REDRAW
+            </button>
           </div>
           <display-used-cards></display-used-cards>
         </div>
@@ -147,6 +150,7 @@ export default {
         'setActiveCardUndefined',
         'removeCard',
         'addCardToHand',
+        'reDrawPlayerCards',
         'giveVirus',
         'givePowerOutage',
         'giveFirewall',
@@ -191,6 +195,13 @@ export default {
           this.playerTookTurn()
           this.turn(true)
         }
+      },
+      reDraw () {
+        // TODO: Prevent multiple press on redraw
+        this.reDrawPlayerCards(this.getCurrentPlayer().id)
+        this.tipsCardSelected = this.setTipBox('default')
+        this.playerTookTurn()
+        this.turn(true)
       },
       cardClicked (c) {
         this.tipsCardSelected = this.setTipBox(c)
