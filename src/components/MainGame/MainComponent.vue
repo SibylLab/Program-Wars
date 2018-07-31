@@ -39,12 +39,22 @@
       <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
         </div>
         <timer class="timer" ></timer>
+      <div class="pos-f-t">
+        <div class="collapse" id="navbarToggleExternalContent">
+          <div class="bg-dark p-4">
         <div id="header-buttons">
         <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
         <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
           <button class="btn btn-primary" data-toggle="modal" data-target=".themes">Themes</button>
         <a class="btn btn-primary" href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
+        </div></div></div>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
+                  style="margin-bottom: 0; padding-bottom: 0; height: 25px; vertical-align: middle">
+            <span class="glyphicon glyphicon-align-justify" style="height: 20px; display: inline-block"></span>
+          </button>
+
       </div>
     </div>
     <div id="playerinfopanel" :style="deactivateClick">
@@ -398,7 +408,7 @@ export default {
 
   .timer{
     align-self: right;
-    padding-right: 2px;
+    padding-right: 10px;
   }
 
   .fade-enter {
