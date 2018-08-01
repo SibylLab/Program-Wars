@@ -6,11 +6,16 @@
       <div class="title" style="float: left">
         <h4 :style="mainTextColour()"><b>Programming Wars</b></h4>
       </div>
-      <div class="headerBtn">
-        <button class="btn btn-primary headerBtn" data-toggle="modal" data-target=".rules">Rules</button>
-        <button class="btn btn-primary headerBtn" data-toggle="modal" data-target=".credits">Credits</button>
-        <a class="btn btn-primary" href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
+        <a href="#" data-toggle="modal" data-target=".rules">Rules</a>
+        <a href="#" data-toggle="modal" data-target=".credits">Credits</a>
+        <a href="#" data-toggle="modal" data-target=".themes">Themes</a>
+        <a href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
+
+      <!-- Use any element to open the sidenav -->
+      <img @click="openNav()" src="/static/miscIcons/burgerIcon.png" style="width: 36px; height: 36px; float: right">
     </div>
     <div class="container settingMenu">
       <div class="row">
@@ -113,6 +118,18 @@
         'mainTextColour',
         'mainBackgroundColour'
       ]),
+      openNav () {
+        this.sideNavOpen = !this.sideNavOpen
+        if (this.sideNavOpen) {
+          document.getElementById('mySidenav').style.width = '250px'
+        } else {
+          document.getElementById('mySidenav').style.width = '0'
+        }
+      },
+      closeNav () {
+        this.sideNavOpen = !this.sideNavOpen
+        document.getElementById('mySidenav').style.width = '0'
+      },
       /**
        * Called whenever the 'Add Player' button has been clicked, for the purpose of adding the player
        */
@@ -279,7 +296,8 @@
   .header {
     background-color: white;
     padding: 5px;
-    padding-right:50px;
+    height: 45px;
+    width: 100%;
   }
 
   .headerBtn {
@@ -299,6 +317,45 @@
   select.custom-select {
     width: 160px;
     align-items: center;
+  }
+
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+    right: 0;
+  }
+
+  .sidenav a {
+    padding: 0px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 3px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
   }
 
 </style>

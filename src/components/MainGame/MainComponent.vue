@@ -49,7 +49,7 @@
       </div>
 
       <!-- Use any element to open the sidenav -->
-      <span @click="openNav()" class="glyphicon glyphicon-menu-hamburger" style="width: 26px; height: 26px"></span>
+      <img @click="openNav()" src="/static/miscIcons/burgerIcon.png" style="width: 36px; height: 36px">
 
     </div>
     <div id="playerinfopanel" :style="deactivateClick">
@@ -123,7 +123,8 @@ export default {
         winner: '',
         winnerScore: 0,
         deleteData: [],
-        interval: undefined
+        interval: undefined,
+        sideNavOpen: false
       }
     },
     components: {
@@ -194,9 +195,15 @@ export default {
         'mainTextColour'
       ]),
       openNav () {
-        document.getElementById('mySidenav').style.width = '250px'
+        this.sideNavOpen = !this.sideNavOpen
+        if (this.sideNavOpen) {
+          document.getElementById('mySidenav').style.width = '250px'
+        } else {
+          document.getElementById('mySidenav').style.width = '0'
+        }
       },
       closeNav () {
+        this.sideNavOpen = !this.sideNavOpen
         document.getElementById('mySidenav').style.width = '0'
       },
       initGame () {
@@ -425,24 +432,21 @@ export default {
     opacity: 0;
   }
 
-  /* The side navigation menu */
   .sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    background-color: #111; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
     right: 0;
   }
 
-  /* The navigation menu links */
   .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 0 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: #818181;
@@ -450,27 +454,18 @@ export default {
     transition: 0.3s;
   }
 
-  /* When you mouse over the navigation links, change their color */
   .sidenav a:hover {
     color: #f1f1f1;
   }
 
-  /* Position and style the close button (top right corner) */
   .sidenav .closebtn {
     position: absolute;
     top: 0;
-    right: 25px;
+    right: 3px;
     font-size: 36px;
     margin-left: 50px;
   }
 
-  /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-  #main {
-    transition: margin-left .5s;
-    padding: 20px;
-  }
-
-  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
