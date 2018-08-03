@@ -39,13 +39,18 @@
       <label class="checkbox-inline" :style="mainTextColour()"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
         </div>
         <timer class="timer" ></timer>
-        <div id="header-buttons">
-        <button class="btn btn-primary" @click="() => {this.$router.push('/')}">New Game</button>
-        <button class="btn btn-primary" data-toggle="modal" data-target=".rules">Rules</button>
-        <button class="btn btn-primary" data-toggle="modal" data-target=".credits">Credits</button>
-          <button class="btn btn-primary" data-toggle="modal" data-target=".themes">Themes</button>
-        <a class="btn btn-primary" href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
+        <a href="#" @click="() => {this.$router.push('/')}">New Game</a>
+        <a href="#" data-toggle="modal" data-target=".rules">Rules</a>
+        <a href="#" data-toggle="modal" data-target=".credits">Credits</a>
+        <a href="#" data-toggle="modal" data-target=".themes">Themes</a>
+        <a href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
+
+      <!-- Use any element to open the sidenav -->
+      <img @click="openNav()" src="/static/miscIcons/burgerIcon.png" style="width: 36px; height: 36px">
+
     </div>
     <div id="playerinfopanel" :style="deactivateClick">
       <player-info-panel></player-info-panel>
@@ -118,7 +123,8 @@ export default {
         winner: '',
         winnerScore: 0,
         deleteData: [],
-        interval: undefined
+        interval: undefined,
+        sideNavOpen: false
       }
     },
     components: {
@@ -188,6 +194,18 @@ export default {
         'mainBackgroundColour',
         'mainTextColour'
       ]),
+      openNav () {
+        this.sideNavOpen = !this.sideNavOpen
+        if (this.sideNavOpen) {
+          document.getElementById('mySidenav').style.width = '250px'
+        } else {
+          document.getElementById('mySidenav').style.width = '0'
+        }
+      },
+      closeNav () {
+        this.sideNavOpen = !this.sideNavOpen
+        document.getElementById('mySidenav').style.width = '0'
+      },
       initGame () {
         this.initDeck()
       },
@@ -398,7 +416,7 @@ export default {
 
   .timer{
     align-self: right;
-    padding-right: 2px;
+    padding-right: 10px;
   }
 
   .fade-enter {
@@ -412,5 +430,44 @@ export default {
   .fade-leave-active {
     transition: opacity .5s;
     opacity: 0;
+  }
+
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+    right: 0;
+  }
+
+  .sidenav a {
+    padding: 0 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 3px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
   }
 </style>
