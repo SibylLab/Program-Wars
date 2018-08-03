@@ -36,7 +36,7 @@
     <div id="header" :style="mainBackgroundColour()">
       <p :style="mainTextColour()">Programming Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
-      <label class="checkbox-inline"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
+      <label class="checkbox-inline" :style="mainTextColour()"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
         </div>
         <timer class="timer" ></timer>
         <div id="header-buttons">
@@ -64,7 +64,7 @@
         </div>
       </div>
     </div>
-    <div style="height: 200px; width: 100%;" :style="mainBackgroundColour()"></div>
+    <div style="height: 300px; width: 100%;" :style="mainBackgroundColour()"></div>
   </div>
 </template>
 

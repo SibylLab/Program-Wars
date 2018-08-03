@@ -32,8 +32,8 @@
       <hack-discard v-if="showMsg"></hack-discard>
     </transition>
 
-    <div id="header">
-      <p>Programming Wars Tutorial</p>
+    <div id="header" :style="mainBackgroundColour()">
+      <p :style="mainTextColour()">Programming Wars Tutorial</p>
       <div style="margin-left: auto; padding: 0 5px 0 0">
         <timer class="timer"></timer>
       </div>
@@ -48,9 +48,8 @@
     <div id="playerinfopanel" :style="deactivateClick">
       <player-info-panel></player-info-panel>
     </div>
-    <div id="flexcontainer">
+    <div id="flexcontainer" :style="mainBackgroundColour()">
       <div id="player-stacks">
-        <h3>Your Stacks</h3>
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
@@ -63,6 +62,7 @@
         </div>
       </div>
     </div>
+    <div style="height: 300px; width: 100%;" :style="mainBackgroundColour()"></div>
   </div>
 </template>
 
@@ -184,7 +184,9 @@ export default {
         'playerTurn',
         'pointerEvent',
         'currentGameState',
-        'timerInterval'
+        'timerInterval',
+        'mainBackgroundColour',
+        'mainTextColour'
       ]),
       initGame () {
         this.initTutorialDeck()

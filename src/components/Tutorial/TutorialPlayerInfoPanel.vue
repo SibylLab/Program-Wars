@@ -1,5 +1,5 @@
 <template xmlns="http://www.w3.org/1999/html">
-  <div id="player-info-panel">
+  <div id="player-info-panel" :style="pIPBackgroundColour()">
     <div id="flexcontainer">
       <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
         <div class="panel panel-default" style="border-radius: 10px;">
@@ -14,7 +14,7 @@
           <div id="cards">
 
             <ul id="example-1">
-              <h4 class="modal-title"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
+              <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card,index) in hand" :id="card.type + card.value + index + currentPlayerName()" style="margin-top: 5px">
                 <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
@@ -35,13 +35,13 @@
     <div class="container" style="border-top: 1px solid white; padding: 10px; width: 600px">
       <div class="row">
         <div class="col-md-12">
-          <h4>Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
+          <h4 :style="pIPTextColour()">Instructions To Win is: <b>{{ getScoreLimit() }}</b></h4>
         </div>
       </div>
       <div class="row">
         <div :class="colSize" v-for="player in players" style="text-align: left;">
-          <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px">{{ player.name }}:</a></b></h4></div>
-          <div>
+          <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px" :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
+          <div :style="pIPTextColour()">
             True Path:&nbsp;
             <meter :max="getScoreLimit()" min=0
                    :value="getScore(player.id).trueScore"
@@ -194,7 +194,9 @@ import Card from '../SharedComponents/Card'
       ...mapState([
         'isDiscard',
         'aiTurn',
-        'activeCard'
+        'activeCard',
+        'pIPBackgroundColour',
+        'pIPTextColour'
       ]),
       getScore (player) {
         let trueSide = 0
