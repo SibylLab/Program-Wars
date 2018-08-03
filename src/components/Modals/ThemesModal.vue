@@ -17,7 +17,7 @@
               </div>
           </div>
             <div class="row">
-              <img :src="getSrc()" alt="ThemePick" style="width: 50%; height: 45%">
+              <img :src="getSrc()" alt="ThemePick" style="width: 50%; height: 45%; margin-top: 13px;">
             </div>
         </div>
         <div class="modal-footer">
@@ -107,6 +107,13 @@
 
   #gamePlay, #cardPlaying {
     font-size: medium;
+  }
+
+  select {
+    background-color: whitesmoke;
+    -webkit-box-shadow: 1px 1px 1px 1px darkgray;
+    -moz-box-shadow: 1px 1px 1px 1px darkgray;
+    box-shadow: 1px 1px 1px 1px darkgray;
   }
 
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div id="settingsPage">
+    <themes-modal id="themesModal" class="modal fade themes" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></themes-modal>
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <div class="header" :style="mainBackgroundColour()">
@@ -75,6 +76,8 @@
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
   import TutorialModal from '../Modals/TutorialStartModal'
+
+  import Themes from '../Modals/ThemesModal'
 
   import {mapGetters, mapMutations, mapState} from 'vuex'
 
@@ -237,7 +240,8 @@
       'opponent-stacks': OpponentStacks,
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
-      'tutorial-modal': TutorialModal
+      'tutorial-modal': TutorialModal,
+      'themes-modal': Themes
     },
     beforeMount () {
       this.$store.commit('resetState')
