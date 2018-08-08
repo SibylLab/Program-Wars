@@ -1,7 +1,7 @@
 <template>
     <div id="player-info-panel" :style="pIPBackgroundColour()">
       <div id="tipContainer" v-if="getTips().tutorial">
-        <div id="tipBox" class="container" :cardClicked="tipsCardSelected" style="font-size: 14px;">
+        <div id="tipBox" class="container" :cardClicked="tipsCardSelected" style="font-size: 14px;" :style="pIPTextColour()">
           {{ tipsInfoText }}
         </div>
       </div>
@@ -10,9 +10,9 @@
       <div id="flexcontainer">
         <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center">
         <div v-for="player in players" style="text-align: left; display: inline">
-          <div style="float: left; margin-right: 10px;"><h4 :style="pIPTextColour()"><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center ">{{ player.name }}:</a></b></h4></div>
-            <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px">
-              <div class="row" :style="pIPTextColour()"></div>
+          <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
+            <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px" :style="pIPTextColour()">
+              <div class="row"></div>
               True Path:&nbsp;&thinsp;
               <meter :max="getScoreLimit()" min=0
                      :value="getScore(player.id).trueScore"
@@ -49,9 +49,10 @@
         </div>
         <div class="row">
           <div id="controls" class="col-sm" style="height: 80px; justify-content: center; align-items: center">
-            <button class="btn btn-primary btn-lg" v-on:click="discardSelected" style="border-radius: 40px">
-              Discard
-            </button>
+            <div>
+              <button class="btn btn-primary btn-lg col-6" v-on:click="discardSelected" style="border-radius: 40px">Discard </button>
+              <button class="btn btn-lg btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
+            </div>
           </div>
           <display-used-cards></display-used-cards>
         </div>
@@ -147,6 +148,7 @@ export default {
         'setActiveCardUndefined',
         'removeCard',
         'addCardToHand',
+        'reDrawPlayerCards',
         'giveVirus',
         'givePowerOutage',
         'giveFirewall',
@@ -191,6 +193,13 @@ export default {
           this.playerTookTurn()
           this.turn(true)
         }
+      },
+      reDraw () {
+        // TODO: Prevent multiple press on redraw
+        this.reDrawPlayerCards(this.getCurrentPlayer().id)
+        this.tipsCardSelected = this.setTipBox('default')
+        this.playerTookTurn()
+        this.turn(true)
       },
       cardClicked (c) {
         this.tipsCardSelected = this.setTipBox(c)
