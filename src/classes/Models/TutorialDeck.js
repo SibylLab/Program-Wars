@@ -57,7 +57,7 @@ const cardDeck = [
   {type: 'V', cardValue: 4, imgSrc: '/static/cardImg/Variable4.png', howMany: variable4},
   {type: 'V', cardValue: 6, imgSrc: '/static/cardImg/Variable6.png', howMany: variable6},
 
-  {type: 'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/Overclock.png', howMany: overClock},
+  {type: 'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/OverClock.png', howMany: overClock},
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
   {type: 'GENERATOR', cardValue: 0, imgSrc: '/static/cardImg/Generator.png', howMany: generator},
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
@@ -65,11 +65,11 @@ const cardDeck = [
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
   {type: 'ANTIVIRUS', cardValue: 0, imgSrc: '/static/cardImg/AntiVirus.png', howMany: antiVirus},
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
-  {type: 'MALWARE', cardValue: 0, imgSrc: '/static/cardImg/Malware.png', howMany: malware},
+  {type: 'VIRUS', cardValue: 0, imgSrc: '/static/cardImg/Malware.png', howMany: malware},
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
   {type: 'FIREWALL', cardValue: 0, imgSrc: '/static/cardImg/Firewall.png', howMany: firewall},
   {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
-  {type: 'HACK', cardValue: 0, imgSrc: '/static/cardImg/Hacker.png', howMany: hack},
+  {type: 'H', cardValue: 0, imgSrc: '/static/cardImg/Hacker.png', howMany: hack},
   {type: 'V', cardValue: 3, imgSrc: '/static/cardImg/Variable3.png', howMany: variable3},
   {type: 'V', cardValue: 5, imgSrc: '/static/cardImg/Variable5.png', howMany: variable5}
 ]

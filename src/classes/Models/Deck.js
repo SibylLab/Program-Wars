@@ -60,8 +60,8 @@ const cardDeck = [
   {type: 'V', cardValue: 5, imgSrc: '/static/cardImg/Variable5.png', howMany: variable5},
   {type: 'V', cardValue: 6, imgSrc: '/static/cardImg/Variable6.png', howMany: variable6},
 
-  {type: 'HACK', cardValue: 0, imgSrc: '/static/cardImg/Hacker.png', howMany: hack},
-  {type: 'MALWARE', cardValue: 0, imgSrc: '/static/cardImg/Malware.png', howMany: malware},
+  {type: 'H', cardValue: 0, imgSrc: '/static/cardImg/Hacker.png', howMany: hack},
+  {type: 'VIRUS', cardValue: 0, imgSrc: '/static/cardImg/Malware.png', howMany: malware},
   {type: 'POWEROUTAGE', cardValue: 0, imgSrc: '/static/cardImg/PowerOutage.png', howMany: powerOutage},
 
   {type: 'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/Overclock.png', howMany: overClock},
