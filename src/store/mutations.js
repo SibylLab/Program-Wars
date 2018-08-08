@@ -89,6 +89,20 @@ export default {
     state.hands.push(hand)
     state.players.find(player => player.id === playerId).hand = hand.handId
   },
+  reDrawPlayerCards (state, playerId) {
+    let localState = state
+    localState.deck.shuffle(localState.deck.cards)
+    let cardsTemp = []
+    for (let i = 0; i < 6; i++) {
+      if (state.isTutorial) {
+        cardsTemp.push(localState.tutorialDeck.draw())
+      } else {
+        cardsTemp.push(localState.deck.draw())
+      }
+    }
+    state.hands.find(hand => hand.playerId === state.activePlayer).cards = cardsTemp
+    state.activeCard = undefined
+  },
   addCardToHand (state) {
     if (state.isTutorial) {
       if (state.tutorialDeck.cards.length <= 1 && state.tutorialDeck.discard_cards.length > 0) {
@@ -158,10 +172,12 @@ export default {
     state.activeCard = undefined
   },
   removeActiveCardFromHand (state) {
-    let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
-    let playerHandUpdated = playerHand.cards.filter(card => card.id !== state.activeCard.id)
-    state.hands.find(hand => hand.playerId === state.activePlayer).cards = playerHandUpdated
-    state.activeCard = undefined
+    if (state.activeCard !== undefined) {
+      let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
+      let playerHandUpdated = playerHand.cards.filter(card => card.id !== state.activeCard.id)
+      playerHand.cards = playerHandUpdated
+      state.activeCard = undefined
+    }
   },
   stackDiscard (state, payload) {
     let card = state.stacks.find(stack => stack.stackId === payload.stackId).popTopCard()
