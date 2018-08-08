@@ -29,7 +29,7 @@ const variable5 = 2
 const variable6 = 1
 
 const hack = 3
-const virus = 3
+const malware = 3
 const powerOutage = 3
 
 const overClock = 3
@@ -40,32 +40,31 @@ const firewall = 1
 const generator = 1
 
 const cardDeck = [
-  {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/I1.png', howMany: instruction1},
-  {type: 'I', cardValue: 2, imgSrc: '/static/cardImg/I2.png', howMany: instruction2},
-  {type: 'I', cardValue: 3, imgSrc: '/static/cardImg/I3.png', howMany: instruction3},
+  {type: 'I', cardValue: 1, imgSrc: '/static/cardImg/Instruction1.png', howMany: instruction1},
+  {type: 'I', cardValue: 2, imgSrc: '/static/cardImg/Instruction2.png', howMany: instruction2},
+  {type: 'I', cardValue: 3, imgSrc: '/static/cardImg/Instruction3.png', howMany: instruction3},
 
-  {type: 'R', cardValue: 2, imgSrc: '/static/cardImg/R2.png', howMany: repetition2},
-  {type: 'R', cardValue: 3, imgSrc: '/static/cardImg/R3.png', howMany: repetition3},
-  {type: 'R', cardValue: 4, imgSrc: '/static/cardImg/R4.png', howMany: repetition4},
-  {type: 'R', cardValue: 1, imgSrc: '/static/cardImg/Rx.png', howMany: repetitionX},
+  {type: 'R', cardValue: 2, imgSrc: '/static/cardImg/Repetition2.png', howMany: repetition2},
+  {type: 'R', cardValue: 3, imgSrc: '/static/cardImg/Repetition3.png', howMany: repetition3},
+  {type: 'R', cardValue: 4, imgSrc: '/static/cardImg/Repetition4.png', howMany: repetition4},
+  {type: 'R', cardValue: 1, imgSrc: '/static/cardImg/RepetitionX.png', howMany: repetitionX},
 
-  {type: 'G', cardValue: 2, imgSrc: '/static/cardImg/G2.png', howMany: group2},
-  {type: 'G', cardValue: 3, imgSrc: '/static/cardImg/G3.png', howMany: group3},
-  {type: 'G', cardValue: 4, imgSrc: '/static/cardImg/G4.png', howMany: group4},
-  {type: 'G', cardValue: 5, imgSrc: '/static/cardImg/G5.png', howMany: group5},
-  {type: 'G', cardValue: 6, imgSrc: '/static/cardImg/G6.png', howMany: group6},
+  {type: 'G', cardValue: 2, imgSrc: '/static/cardImg/Group2.png', howMany: group2},
+  {type: 'G', cardValue: 3, imgSrc: '/static/cardImg/Group3.png', howMany: group3},
+  {type: 'G', cardValue: 4, imgSrc: '/static/cardImg/Group4.png', howMany: group4},
+  {type: 'G', cardValue: 5, imgSrc: '/static/cardImg/Group5.png', howMany: group5},
+  {type: 'G', cardValue: 6, imgSrc: '/static/cardImg/Group6.png', howMany: group6},
 
-  // {type:'V', cardValue: 2, imgSrc: '/static/cardImg/V2.png', howMany: variable2},
-  {type: 'V', cardValue: 3, imgSrc: '/static/cardImg/V3.png', howMany: variable3},
-  {type: 'V', cardValue: 4, imgSrc: '/static/cardImg/V4.png', howMany: variable4},
-  {type: 'V', cardValue: 5, imgSrc: '/static/cardImg/V5.png', howMany: variable5},
-  {type: 'V', cardValue: 6, imgSrc: '/static/cardImg/V6.png', howMany: variable6},
+  {type: 'V', cardValue: 3, imgSrc: '/static/cardImg/Variable3.png', howMany: variable3},
+  {type: 'V', cardValue: 4, imgSrc: '/static/cardImg/Variable4.png', howMany: variable4},
+  {type: 'V', cardValue: 5, imgSrc: '/static/cardImg/Variable5.png', howMany: variable5},
+  {type: 'V', cardValue: 6, imgSrc: '/static/cardImg/Variable6.png', howMany: variable6},
 
-  {type: 'H', cardValue: 0, imgSrc: '/static/cardImg/H.png', howMany: hack},
-  {type: 'VIRUS', cardValue: 0, imgSrc: '/static/cardImg/Virus.png', howMany: virus},
+  {type: 'H', cardValue: 0, imgSrc: '/static/cardImg/Hacker.png', howMany: hack},
+  {type: 'VIRUS', cardValue: 0, imgSrc: '/static/cardImg/Malware.png', howMany: malware},
   {type: 'POWEROUTAGE', cardValue: 0, imgSrc: '/static/cardImg/PowerOutage.png', howMany: powerOutage},
 
-  {type: 'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/OverClock.png', howMany: overClock},
+  {type: 'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/Overclock.png', howMany: overClock},
   {type: 'BATTERYBACKUP', cardValue: 0, imgSrc: '/static/cardImg/BatteryBackup.png', howMany: batteryBackup},
 
   {type: 'FIREWALL', cardValue: 0, imgSrc: '/static/cardImg/Firewall.png', howMany: firewall},
