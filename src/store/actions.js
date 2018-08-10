@@ -33,7 +33,7 @@ export default {
     setTimeout(() => {
       $('.coin').modal('handleUpdate')
       $('.coin').modal('hide')
-    }, coinTimer * 1000)
+    }, coinTimer * 600)
   },
   turn (context, payload) {
     context.commit('getIsLast')
@@ -55,7 +55,7 @@ export default {
             context.commit('playerModalTrigger')
             setTimeout(() => {
               context.commit('playerModalHide')
-            }, playerModalTimer * 1000)
+            }, playerModalTimer * 1600)
           }, endTurnTimer * 1000)
           setTimeout(() => {
             if (context.getters.getCurrentPlayer.isAi) {
@@ -81,7 +81,7 @@ export default {
             setTimeout(() => {
               context.commit('playerModalHide')
               context.state.pointerEvent = ''
-            }, playerModalTimer * 1000)
+            }, playerModalTimer * 1600)
           }, (coinTimer + runTimer) * 1000 + 350)
           setTimeout(() => {
             if (context.getters.getCurrentPlayer.isAi) {

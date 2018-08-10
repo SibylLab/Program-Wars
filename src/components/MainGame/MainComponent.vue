@@ -23,9 +23,9 @@
 
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
-    <coin-modal id="coinModal" class="modal fade coin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
+    <coin-modal id="coinModal" class="modal fade coin" tabindex="1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
     <transition name="fade">
-      <player-turn v-if="playersTurn"></player-turn>
+      <player-turn v-if="playersTurn" style="z-index: 1"></player-turn>
     </transition>
 
     <transition name="fade">
