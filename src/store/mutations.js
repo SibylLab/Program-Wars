@@ -271,25 +271,21 @@ export default {
         player.overclockIncrease += (scoreFalse * 0.25) + (scoreTrue * 0.25)
       }
 
+      // complete program
       if (scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit) {
         player.completionBonus = 10
       }
 
-      for (let p of playerList) {
-        if (p.id !== player.id) {
-          if (!p.hasPlayedInstruction) {
-            player.instructionBonus += 10
-          }
-        }
-      }
-
+      // defensive programmer
       if (player.isDefensive) {
         player.defensiveBonus = 15
       }
+      // cool system
       if (!player.hasHadOverclock) {
         player.overClockBonus = 10
       }
 
+      // clean system
       if (!player.hasVirus) {
         player.virusBonus = 10
       }

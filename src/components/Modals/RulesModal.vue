@@ -11,7 +11,7 @@
                 <li role="presentation" class="active"><a href="#introduction" aria-controls="introduction" role="tab" data-toggle="tab">Introduction</a></li>
                 <li role="presentation"><a href="#cardType" aria-controls="cardType" role="tab" data-toggle="tab">Card Types</a></li>
                 <li role="presentation"><a href="#gamePlay" aria-controls="gamePlay" role="tab" data-toggle="tab">Playing the Game</a></li>
-                <li role="presentation"><a href="#bonusPoints" aria-controls="bonusPoints" role="tab" data-toggle="tab">Bonus Points</a></li>
+                <li role="presentation"><a href="#scoring" aria-controls="scoring" role="tab" data-toggle="tab">Scoring</a></li>
                 <li role="presentation"><a href="#coding" aria-controls="coding" role="tab" data-toggle="tab">Learning Programming</a></li>
               </ul>
 
@@ -95,7 +95,7 @@
                     </li>
                     <li><h5>Variables</h5>
                       <div>
-                        <img src="../../../static/cardImg/RepetitionX.png" alt="Variable Repetition Card" class="cardImage">                        
+                        <img src="../../../static/cardImg/RepetitionX.png" alt="Variable Repetition Card" class="cardImage">
                         <img src="../../../static/cardImg/Variable3.png" alt="Variable 3 Card" class="cardImage">
                         <img src="../../../static/cardImg/Variable4.png" alt="Variable 4 Card" class="cardImage">
                         <img src="../../../static/cardImg/Variable5.png" alt="Variable 5 Card" class="cardImage">
@@ -256,35 +256,42 @@
                     <li>You get bonus points for good programming practice. For more information on this go to the 'Bonus Points' tab.</li>
                     <li>The game is over if a player reaches the score limit in either paths:</li>
                     <ul>
-                      <li>Short: 75 instructions</li>
-                      <li>Medium: 100 instructions</li>
-                      <li>Long: 125 instructions</li>
+                      <li>Short: 35 instructions</li>
+                      <li>Medium: 70 instructions</li>
+                      <li>Long: 105 instructions</li>
                       </ul>
                   </ol>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="bonusPoints">
-                  <h4>Bonus Points</h4>
-                  <p>Various cards, good coding practices, or game play types will give you bonus points!  </p>
+                <div role="tabpanel" class="tab-pane" id="scoring">
                   <ul id="bonusPointsList">
-                    <li><h3>Master Coder - 10 points per opponent</h3></li>
-                    <p>By completing your program before an opponent has played an instruction you will gain the Master Coder bonus of 10 points per opponent.</p>
-                    <li><h3>Defensive Programmer - 15 points</h3></li>
-                    <p>Defensive Programmer is a bonus for playing all 3 safety cards</p>
-                    <li><h3>Clean System - 10 points</h3></li>
-                    <p>Clean System is a bonus for not having an active virus by the end of the game.</p>
-                    <li><h3>Cool System - 10 points</h3></li>
-                    <p>If you don't play any overclocking cards, without already having a virus, then you will be given a bonus 10 points.</p>
-                    <li><h3>Complete Program - 10 points</h3></li>
-                    <p>If you have a complete program on either path you'll get a bonus 10 points to be rewarded for your success.</p>
-                    <li><h3>Programming Practices Bonuses</h3></li>
-                    <p>You will be given several bonuses for using good programming practices: </p>
+                    <h3><b>Scoring</b></h3>
+                    <h4>Card Scoring</h4>
+                    <li><h5>Instructions</h5></li>
+                    <p>Instructions being the basis of your programs will be the inital score of your stacks.</p>
+                    <li><h5>Repeats</h5></li>
+                    <p>Repeat cards multiply the current stack score by the value of the repeat card.</p>
+                    <li><h5>Groups</h5></li>
+                    <p>Group cards don't change your score, but they will combine multiple stacks, making repeats more powerful.</p>
+                    <h4>Card Bonuses</h4>
+                    <p>Various cards, good coding practices, or game play types will give you bonus points to reward good programming practices!  </p>
+                    <p>Although these bonuses are not directly added to your score, they are invisible bonuses that are added to your final score.</p>
                     <ol>
                       <li><b>Grouping Cards - 5</b>: Grouping instructions or other grouped instructions is a good and essential programming practice, so you'll get a bonus score of 5 for using a group card.</li>
                       <li><b>Repetition - 3</b>: Repetition in programs is an efficient way of having instructions run multiple times, so you'll be given a bonus score of 3 for using a repetition card. </li>
                       <li><b>Variables - 2</b>: Variables can be used to store a number, making it easier to change. Which is why we give you a bonus score of 2</li>
                       <li><b>Safeties - 10</b>: Safety cards are a great way to protect your programs, so we give you a bonus score of 10 for using one.</li>
                     </ol>
+                    <h3><b>Bonus Scores</b></h3>
+                    <li><h4>Defensive Programmer - 15 points</h4></li>
+                    <p>Defensive Programmer is a bonus for playing all 3 safety cards</p>
+                    <li><h4>Clean System - 10 points</h4></li>
+                    <p>Clean System is a bonus for not having an active virus by the end of the game.</p>
+                    <li><h4>Cool System - 10 points</h4></li>
+                    <p>If you don't play any overclocking cards, without already having a virus, then you will be given a bonus 10 points.</p>
+                    <li><h4>Complete Program - 10 points</h4></li>
+                    <p>If you have a complete program on either path you'll get a bonus 10 points to be rewarded for your success.</p>
+
 
                   </ul>
                 </div>
