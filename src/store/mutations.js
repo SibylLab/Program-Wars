@@ -393,16 +393,29 @@ export default {
     state.players[payload].hadVirus = true
   },
   givePowerOutage (state, payload) {
-    state.players[payload].hasPowerOutage = true
-    state.activeCard.showFace = true
-    state.players[payload].attackedCards.push(state.activeCard)
+    if (state.players[payload].hasBatteryBackup) {
+      state.players[payload].hasBatteryBackup = false
+      state.players[payload].usedBonusCards = state.players[payload].usedBonusCards.filter((obj) => {
+        return obj.type !== 'BATTERYBACKUP'
+      })
+    } else {
+      state.players[payload].hasPowerOutage = true
+      state.activeCard.showFace = true
+      state.players[payload].attackedCards.push(state.activeCard)
+    }
   },
   giveBatteryBackup (state, payload) {
-    state.players[payload].hasPowerOutage = false
-    state.players[payload].attackedCards = state.players[payload].attackedCards.filter((obj) => {
-      return obj.type !== 'POWEROUTAGE'
-    })
-    state.players[payload].updateBonus(1, 1)
+    if (state.players[payload].hasPowerOutage) {
+      state.players[payload].hasPowerOutage = false
+      state.activeCard.showFace = true
+      state.players[payload].attackedCards = state.players[payload].attackedCards.filter((obj) => {
+        return obj.type !== 'POWEROUTAGE'
+      })
+    } else {
+      state.players[payload].hasBatteryBackup = true
+      state.activeCard.showFace = true
+      state.players[payload].usedBonusCards.push(state.activeCard)
+    }
   },
   giveOverclock (state, payload) {
     // state.players[payload].updateOverclock();

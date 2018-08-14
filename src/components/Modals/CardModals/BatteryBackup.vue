@@ -10,7 +10,7 @@
         <div class="modal-body">
           <div class="container col-lg-12">
             <div class="row">
-              <p style="font-size: 24px;">Do you want to use the Battery Backup to negate a power outage?</p>
+              <p style="font-size: 24px;">Do you want to use the Battery Backup to negate a power outage or prevent your next one?</p>
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@
       },
       playerCanUse () {
         let player = this.getCurrentPlayer()
-        return !player.hasPowerOutage
+        return player.hasBatteryBackup
       }
     },
     created () {

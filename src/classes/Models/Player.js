@@ -26,6 +26,7 @@ export default class Player {
     this.hasAntiVirus = false
     this.hasFirewall = false
     this.hasPowerOutage = false
+    this.hasBatteryBackup = false
     this.isAi = isAi
     this.hasOverclock = false
     this.hasVirus = false
