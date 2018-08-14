@@ -13,8 +13,7 @@ module.exports = function (config) {
       './index.js'
     ],
     preprocessors: {
-      './index.js': ['webpack', 'sourcemap'],
-      'src/**/!(*).vue': ['coverage']
+      './index.js': ['webpack', 'sourcemap']
     },
     plugins: [
       'karma-chrome-launcher',
