@@ -14,7 +14,7 @@
 
 Program Wars is a web-based educational card game that teaches the basic concepts of programming.
 
-To play Program Wars go to [https://programming-wars.firebaseapp.com](http://programmingwars.cullen.io)
+To play Program Wars go to [https://programming-wars.firebaseapp.com](https://programming-wars.firebaseapp.com)
 
 If you would like to contribute to the project, see [CONTRIBUTING](CONTRIBUTING.md).
 
