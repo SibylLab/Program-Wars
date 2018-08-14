@@ -264,6 +264,7 @@ export default {
         let selectedStacks = this.getSelectedStacks()
         let rXCard
         for (let stack of selectedStacks) {
+          console.log(JSON.stringify(stack))
           if (stack.stackTopCard().value === 1 && stack.stackTopCard().type === 'R') {
             rXCard = stack.stackTopCard()
           }
@@ -273,9 +274,13 @@ export default {
           this.removeStack({stackId: stack.stackId})
         }
         let stacks = this.getStacks().filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
+        console.log('stacks: ' + JSON.stringify(stacks))
         let stack = stacks[stacks.length - 1]
+        console.log('stack: ' + JSON.stringify(stacks))
         this.addCardToStack({stackId: stack.stackId, card: this.getActiveCard()})
-        this.addCardToStack({stackId: stack.stackId, card: rXCard})
+        if (rXCard !== undefined) {
+          this.addCardToStack({stackId: stack.stackId, card: rXCard})
+        }
         this.updateBonus(groupingBonus, groupingBonus)
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()
