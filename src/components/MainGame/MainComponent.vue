@@ -312,9 +312,6 @@ export default {
       this.addStacksToPlayers()
 
       this.setGameState({gameState: 'startPlayerTurn'})
-    },
-    mounted () {
-      $('#winnerModal').modal('show')
     }
 }
 </script>
