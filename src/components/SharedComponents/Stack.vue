@@ -275,7 +275,9 @@ export default {
         let stacks = this.getStacks().filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1]
         this.addCardToStack({stackId: stack.stackId, card: this.getActiveCard()})
-        this.addCardToStack({stackId: stack.stackId, card: rXCard})
+        if (rXCard !== undefined) {
+          this.addCardToStack({stackId: stack.stackId, card: rXCard})
+        }
         this.updateBonus(groupingBonus, groupingBonus)
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()
