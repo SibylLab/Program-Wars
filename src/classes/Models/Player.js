@@ -47,6 +47,7 @@ export default class Player {
     this.bonusFalse = 0
     this.isDefensive = false
     this.isCleanSystem = true
+    this.redrawing = false
     if (this.isAi) {
       this.type = new Personality()
     }
