@@ -197,8 +197,6 @@ export default {
       },
       reDraw () {
         let playerRedrawing = this.getActivePlayer()
-        console.log(playerRedrawing)
-        console.log(this.getPlayers()[playerRedrawing].redrawing)
         if (!this.getPlayers()[playerRedrawing].redrawing) {
           this.getPlayers()[playerRedrawing].redrawing = true
           this.reDrawPlayerCards(this.getCurrentPlayer().id)
