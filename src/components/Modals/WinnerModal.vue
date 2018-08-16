@@ -82,6 +82,17 @@
                   (No Overclock):</th>
                 <td v-for="player in playerList">{{Math.ceil(player.overClockBonus)}}</td>
               </tr>
+              <tr>
+                <td colspan="3"><h5><b>Total Score</b></h5></td>
+              </tr>
+              <tr>
+                <th>Total True Score:</th>
+                <td v-for="player in playerList">{{player.totalTrue}}</td>
+              </tr>
+              <tr>
+                <th>Total False Score:</th>
+                <td v-for="player in playerList">{{player.totalFalse}}</td>
+              </tr>
               </tbody>
             </table>
           </div>

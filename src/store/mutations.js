@@ -257,11 +257,16 @@ export default {
       player.overClockBonus = 0
       player.completionBonus = 0
       player.overclockIncrease = 0
+      player.totalTrue = 0
+      player.totalFalse = 0
       let scoreTrue = 0
       let scoreFalse = 0
+      let completionBonus = 10
+      let overClockBonus = 10
+      let defensiveBonus = 15
+      let virusBonus = 10
       scoreTrue = player.trueScore
       scoreFalse = player.falseScore
-
       if (player.hasVirus) {
         scoreFalse = scoreFalse * 0.75
         scoreTrue = scoreTrue * 0.75
@@ -270,32 +275,43 @@ export default {
         scoreTrue = scoreTrue * 1.25
         player.overclockIncrease += (scoreFalse * 0.25) + (scoreTrue * 0.25)
       }
-
+      player.totalTrue = scoreTrue
+      player.totalFalse = scoreFalse
       // complete program
       if (scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit) {
-        player.completionBonus = 10
+        player.completionBonus = completionBonus
+        player.scoreTrue += completionBonus
+        player.scoreFalse += completionBonus
       }
 
       // defensive programmer
       if (player.isDefensive) {
-        player.defensiveBonus = 15
+        player.defensiveBonus = defensiveBonus
+        player.scoreTrue += defensiveBonus
+        player.scoreFalse += defensiveBonus
       }
       // cool system
       if (!player.hasHadOverclock) {
-        player.overClockBonus = 10
+        player.overClockBonus = overClockBonus
+        player.scoreTrue += overClockBonus
+        player.scoreFalse += overClockBonus
       }
 
       // clean system
       if (!player.hasVirus) {
-        player.virusBonus = 10
+        player.virusBonus = virusBonus
+        player.scoreTrue += virusBonus
+        player.scoreFalse += virusBonus
       }
 
-      if ((scoreTrue >= state.scoreLimit) || (scoreFalse >= state.scoreLimit)) {
-        if ((scoreTrue > highScore) || (scoreFalse > highScore)) {
+      if ((player.totalTrue >= state.scoreLimit) || (player.totalFalse >= state.scoreLimit)) {
+        if ((player.totalTrue > highScore) || (player.totalFalse > highScore)) {
           highScore = Math.max(scoreTrue, scoreFalse)
           state.winnerName = player.name
-          state.winnerScore = Math.max(scoreTrue, scoreFalse)
-          state.winner = true
+          state.winnerScore = Math.max(player.totalTrue, player.totalFalse)
+          if ((scoreTrue >= state.scoreLimit) ||| (scoreFalse >= state.scoreLimit)) {
+            state.winner = true
+          }
         }
       }
     }
