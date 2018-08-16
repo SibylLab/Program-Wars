@@ -280,38 +280,37 @@ export default {
       // complete program
       if (scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit) {
         player.completionBonus = completionBonus
-        player.scoreTrue += completionBonus
-        player.scoreFalse += completionBonus
+        player.totalTrue += completionBonus
+        player.totalFalse += completionBonus
       }
 
       // defensive programmer
       if (player.isDefensive) {
         player.defensiveBonus = defensiveBonus
-        player.scoreTrue += defensiveBonus
-        player.scoreFalse += defensiveBonus
+        player.totalTrue += defensiveBonus
+        player.totalFalse += defensiveBonus
       }
       // cool system
       if (!player.hasHadOverclock) {
         player.overClockBonus = overClockBonus
-        player.scoreTrue += overClockBonus
-        player.scoreFalse += overClockBonus
+        player.totalTrue += overClockBonus
+        player.totalFalse += overClockBonus
       }
 
       // clean system
       if (!player.hasVirus) {
         player.virusBonus = virusBonus
-        player.scoreTrue += virusBonus
-        player.scoreFalse += virusBonus
+        player.totalTrue += virusBonus
+        player.totalFalse += virusBonus
       }
-
       if ((player.totalTrue >= state.scoreLimit) || (player.totalFalse >= state.scoreLimit)) {
         if ((player.totalTrue > highScore) || (player.totalFalse > highScore)) {
           highScore = Math.max(scoreTrue, scoreFalse)
           state.winnerName = player.name
           state.winnerScore = Math.max(player.totalTrue, player.totalFalse)
-          if ((scoreTrue >= state.scoreLimit) ||| (scoreFalse >= state.scoreLimit)) {
-            state.winner = true
-          }
+        }
+        if ((scoreTrue >= state.scoreLimit) || (scoreFalse >= state.scoreLimit)) {
+          state.winner = true
         }
       }
     }
@@ -405,16 +404,29 @@ export default {
     state.players[payload].hadVirus = true
   },
   givePowerOutage (state, payload) {
-    state.players[payload].hasPowerOutage = true
-    state.activeCard.showFace = true
-    state.players[payload].attackedCards.push(state.activeCard)
+    if (state.players[payload].hasBatteryBackup) {
+      state.players[payload].hasBatteryBackup = false
+      state.players[payload].usedBonusCards = state.players[payload].usedBonusCards.filter((obj) => {
+        return obj.type !== 'BATTERYBACKUP'
+      })
+    } else {
+      state.players[payload].hasPowerOutage = true
+      state.activeCard.showFace = true
+      state.players[payload].attackedCards.push(state.activeCard)
+    }
   },
   giveBatteryBackup (state, payload) {
-    state.players[payload].hasPowerOutage = false
-    state.players[payload].attackedCards = state.players[payload].attackedCards.filter((obj) => {
-      return obj.type !== 'POWEROUTAGE'
-    })
-    state.players[payload].updateBonus(1, 1)
+    if (state.players[payload].hasPowerOutage) {
+      state.players[payload].hasPowerOutage = false
+      state.activeCard.showFace = true
+      state.players[payload].attackedCards = state.players[payload].attackedCards.filter((obj) => {
+        return obj.type !== 'POWEROUTAGE'
+      })
+    } else {
+      state.players[payload].hasBatteryBackup = true
+      state.activeCard.showFace = true
+      state.players[payload].usedBonusCards.push(state.activeCard)
+    }
   },
   giveOverclock (state, payload) {
     // state.players[payload].updateOverclock();

@@ -26,6 +26,7 @@ export default class Player {
     this.hasAntiVirus = false
     this.hasFirewall = false
     this.hasPowerOutage = false
+    this.hasBatteryBackup = false
     this.isAi = isAi
     this.hasOverclock = false
     this.hasVirus = false
@@ -48,6 +49,7 @@ export default class Player {
     this.isCleanSystem = true
     this.totalTrue = 0
     this.totalFalse = 0
+    this.redrawing = false
     if (this.isAi) {
       this.type = new Personality()
     }

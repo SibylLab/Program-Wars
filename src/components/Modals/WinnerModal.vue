@@ -87,11 +87,11 @@
               </tr>
               <tr>
                 <th>Total True Score:</th>
-                <td v-for="player in playerList">{{player.totalTrue}}</td>
+                <td v-for="player in playerList">{{Math.ceil(player.totalTrue)}}</td>
               </tr>
               <tr>
                 <th>Total False Score:</th>
-                <td v-for="player in playerList">{{player.totalFalse}}</td>
+                <td v-for="player in playerList">{{Math.ceil(player.totalFalse)}}</td>
               </tr>
               </tbody>
             </table>

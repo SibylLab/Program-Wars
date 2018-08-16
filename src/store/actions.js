@@ -33,7 +33,7 @@ export default {
     setTimeout(() => {
       $('.coin').modal('handleUpdate')
       $('.coin').modal('hide')
-    }, coinTimer * 1000)
+    }, coinTimer * 600)
   },
   turn (context, payload) {
     context.commit('getIsLast')

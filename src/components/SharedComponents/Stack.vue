@@ -69,7 +69,7 @@ export default {
           if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
             if (activeCard === 'I' && thisStack.cards.length === 0 && !this.getCurrentPlayer().hasPowerOutage) {
               return true
-            } else if (activeCard === 'R') {
+            } else if (activeCard === 'R' && !this.getCurrentPlayer().hasPowerOutage) {
               let rCount = 0
               if (thisStack.cards.length !== 0 && (thisStack.stackTopCard().type !== 'R' || thisStack.stackTopCard().value !== 1)) {
                 for (let i = 0; i < thisStack.cards.length; i++) {
@@ -81,7 +81,7 @@ export default {
                   return true
                 }
               }
-            } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 5) {
+            } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 5 && !this.getCurrentPlayer().hasPowerOutage) {
               if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1) {
                 return true
               }
@@ -129,7 +129,7 @@ export default {
       activeCardIsGroup () {
         let thisActiveCard = this.getActiveCard()
 
-        return (thisActiveCard !== undefined && thisActiveCard.type === 'G')
+        return (thisActiveCard !== undefined && thisActiveCard.type === 'G' && !this.getCurrentPlayer().hasPowerOutage)
       },
       currentSelectedStacksMatch () {
         if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
@@ -275,7 +275,9 @@ export default {
         let stacks = this.getStacks().filter(stack => this.playerId === stack.playerId && this.playfieldBoolean === stack.boolSide)
         let stack = stacks[stacks.length - 1]
         this.addCardToStack({stackId: stack.stackId, card: this.getActiveCard()})
-        this.addCardToStack({stackId: stack.stackId, card: rXCard})
+        if (rXCard !== undefined) {
+          this.addCardToStack({stackId: stack.stackId, card: rXCard})
+        }
         this.updateBonus(groupingBonus, groupingBonus)
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()

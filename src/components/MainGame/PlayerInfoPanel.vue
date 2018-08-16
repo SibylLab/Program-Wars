@@ -138,7 +138,8 @@ export default {
         'getScoreLimit',
         'getCurrentPlayerHand',
         'currentPlayerName',
-        'getAiTurn'
+        'getAiTurn',
+        'getActivePlayer'
       ]),
       ...mapMutations([
         'discardSelectedCard',
@@ -195,11 +196,17 @@ export default {
         }
       },
       reDraw () {
-        // TODO: Prevent multiple press on redraw
-        this.reDrawPlayerCards(this.getCurrentPlayer().id)
-        this.tipsCardSelected = this.setTipBox('default')
-        this.playerTookTurn()
-        this.turn(true)
+        let playerRedrawing = this.getActivePlayer()
+        if (!this.getPlayers()[playerRedrawing].redrawing) {
+          this.getPlayers()[playerRedrawing].redrawing = true
+          this.reDrawPlayerCards(this.getCurrentPlayer().id)
+          this.tipsCardSelected = this.setTipBox('default')
+          this.playerTookTurn()
+          this.turn(true)
+          setTimeout(() => {
+            this.getPlayers()[playerRedrawing].redrawing = false
+          }, 3000)
+        }
       },
       cardClicked (c) {
         this.tipsCardSelected = this.setTipBox(c)
