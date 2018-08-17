@@ -71,10 +71,6 @@
         }
       },
       showStacks (player) {
-        console.log(!player.hasFirewall)
-        console.log(JSON.stringify(this.getActiveCard()))
-        console.log(this.getActiveCard().type !== 'H')
-        console.log((this.getActiveCard() !== undefined && this.getActiveCard().type !== 'H'))
         return (!player.hasFirewall || (this.getActiveCard() !== undefined && this.getActiveCard().type !== 'H'))
       }
     },
