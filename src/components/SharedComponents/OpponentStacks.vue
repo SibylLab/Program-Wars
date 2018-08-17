@@ -17,7 +17,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-3 col-md-4" v-for="stack in falseStacks" style="max-width: 440px; min-width: 250px">
-              <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id" class="opponentStacks"></opponent-stack>
+              <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id" :player="player" class="opponentStacks"></opponent-stack>
           </div>
         </div>
       </div>
@@ -62,7 +62,8 @@ export default {
 
   methods: {
     ...mapGetters([
-      'getStacks'
+      'getStacks',
+      'getActiveCard'
     ]),
     hackStack (e) {
     }

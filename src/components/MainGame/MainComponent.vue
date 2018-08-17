@@ -4,8 +4,11 @@
     <themes-modal id="themesModal" class="modal fade themes" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></themes-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby=""
-                aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"
+                aria-hidden="true" :players="players" data-keyboard="false"
     ></hack-modal>
+    <stack-modal id="stackModal" class="modal fade stack" tabindex="-1" role="dialog" aria-labelledby=""
+                 aria-hidden="true" :players="players" data-backdrop="false" data-keyboard="false"
+    ></stack-modal>
     <virus-modal id="virusModal" class="modal fade virus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
                  data-backdrop="static" data-keyboard="false"></virus-modal>
     <power-outage-modal id="powerOutageModal" class="modal fade powerOutage" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
@@ -84,6 +87,7 @@ import Modal from '../Modals/Modal'
 import RulesModal from '../Modals/RulesModal.vue'
 import CreditsModal from '../Modals/CreditsModal.vue'
 import HackModal from '../Modals/CardModals/HackModal.vue'
+import StacksModal from '../Modals/StackViewModal.vue'
 import WinnerModal from '../Modals/WinnerModal.vue'
 import CoinModal from '../Modals/CoinModal.vue'
 import PlayerTurn from '../SharedComponents/PlayerTurnPopUp.vue'
@@ -149,7 +153,8 @@ export default {
       'generator-modal': Generator,
       'anti-virus-modal': AntiVirus,
       'timer': Timer,
-      'themes-modal': Themes
+      'themes-modal': Themes,
+      'stack-modal': StacksModal
 
     },
     methods: {

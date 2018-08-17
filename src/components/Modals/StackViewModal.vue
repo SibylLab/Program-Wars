@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="modal-dialog modal-lg" role="document" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document" data-backdrop="false" data-keyboard="false">
       <div class="modal-content" style="border-radius: 30px">
-        <div class="modal-header" style="border: none "> <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="hackCanceled">
+        <div class="modal-header" style="border: none "> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
           <h3 class="modal-title">Opponent Stacks</h3>
@@ -10,20 +10,19 @@
         <div class="modal-body">
           <div class="container" style="width: 100%">
             <ul class="nav nav-tabs" style="font-size: 25px; width: 100%; align-content: center; border: none">
-              <li v-for="player in players" v-if="showStacks(player)" style="align-items: center; width: auto; border-bottom: 1px solid black; margin-right: 10px"><a data-toggle="tab" :href="'#' + player.id">{{ player.name }}</a></li>
+              <li v-for="player in players"  style="align-items: center; width: auto; border-bottom: 1px solid black; margin-right: 10px"><a data-toggle="tab" :href="'#' + player.name">{{ player.name }}</a></li>
             </ul>
 
             <div class="tab-content" style="text-align: left">
-              <div v-for="player in players" :id="player.id" class="tab-pane fade">
-                <opponent-stacks :player="player" v-if="showStacks(player)"></opponent-stacks>
+              <div v-for="player in players" :id="player.name" class="tab-pane fade">
+                <opponent-stacks :player="player"></opponent-stacks>
               </div>
             </div>
-        </div>
+          </div>
 
         </div>
         <div class="modal-footer" style="border: none">
-          <button class="btn btn-default" @click="discardHack" data-dismiss="modal" style="float: right; margin: 5px;" :style="hideButton">Discard Hack Card</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;" @click="hackCanceled">Cancel</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin: 5px;">Cancel</button>
         </div>
       </div>
     </div>
@@ -34,8 +33,8 @@
 <script>
   /* eslint-disable no-undef */
 
-  import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
-  import { bus } from '../../SharedComponents/Bus.vue'
+  import OpponentStacks from '../SharedComponents/OpponentStacks.vue'
+  import { bus } from '../SharedComponents/Bus.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
 
   /**
@@ -69,13 +68,6 @@
           this.playerTookTurn()
           this.turn(true)
         }
-      },
-      showStacks (player) {
-        console.log(!player.hasFirewall)
-        console.log(JSON.stringify(this.getActiveCard()))
-        console.log(this.getActiveCard().type !== 'H')
-        console.log((this.getActiveCard() !== undefined && this.getActiveCard().type !== 'H'))
-        return (!player.hasFirewall || (this.getActiveCard() !== undefined && this.getActiveCard().type !== 'H'))
       }
     },
     computed: {
@@ -93,19 +85,18 @@
       }
     },
     created () {
-      $('.hack').modal({
-        backdrop: 'static',
+      $('.stack').modal({
+        backdrop: 'false',
         keyboard: false
       })
     }
-
   }
 
 </script>
 
 <style scoped>
-.stacks {
-  width: 120px;
-  border: 1px solid black;
-}
+  .stacks {
+    width: 120px;
+    border: 1px solid black;
+  }
 </style>

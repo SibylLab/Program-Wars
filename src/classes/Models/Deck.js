@@ -36,7 +36,7 @@ const overClock = 3
 const batteryBackup = 3
 
 const antiVirus = 1
-const firewall = 1
+const firewall = 7
 const generator = 1
 
 const cardDeck = [
@@ -94,28 +94,30 @@ export default class Deck {
    */
   initDeck (value) {
     let cardId = 0
-    let fwPlayed = false
-    let avPlayed = false
-    let genPlayed = false
+    // let fwPlayed = false
+    // let avPlayed = false
+    // let genPlayed = false
     for (let k = 0; k < value; k++) {
       for (let i = 0; i < cardDeck.length; i++) {
         for (let j = 0; j < cardDeck[i].howMany; j++) {
-          if (cardDeck[i].type === 'FIREWALL' && !fwPlayed) {
-            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
-            cardId++
-            fwPlayed = true
-          } else if (cardDeck[i].type === 'GENERATOR' && !genPlayed) {
-            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
-            cardId++
-            genPlayed = true
-          } else if (cardDeck[i].type === 'ANTIVIRUS' && !avPlayed) {
-            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
-            cardId++
-            avPlayed = true
-          } else if (cardDeck[i].type !== 'ANTIVIRUS' && cardDeck[i].type !== 'FIREWALL' && cardDeck[i].type !== 'GENERATOR') {
-            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
-            cardId++
-          }
+          this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
+          cardId++
+          // if (cardDeck[i].type === 'FIREWALL' && !fwPlayed) {
+          //   this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
+          //   cardId++
+          //   fwPlayed = true
+          // } else if (cardDeck[i].type === 'GENERATOR' && !genPlayed) {
+          //   this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
+          //   cardId++
+          //   genPlayed = true
+          // } else if (cardDeck[i].type === 'ANTIVIRUS' && !avPlayed) {
+          //   this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
+          //   cardId++
+          //   avPlayed = true
+          // } else if (cardDeck[i].type !== 'ANTIVIRUS' && cardDeck[i].type !== 'FIREWALL' && cardDeck[i].type !== 'GENERATOR') {
+          //   this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
+          //   cardId++
+          // }
         }
       }
     }
