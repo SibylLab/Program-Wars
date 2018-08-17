@@ -198,6 +198,9 @@ import Card from '../SharedComponents/Card'
         'pIPBackgroundColour',
         'pIPTextColour'
       ]),
+      /**
+       * Used to display the correct score for the scoring meters. In the future this should be centralized in the state.
+       */
       getScore (player) {
         let trueSide = 0
         let falseSide = 0
@@ -328,6 +331,9 @@ import Card from '../SharedComponents/Card'
         ++this.indexOfFact
         return retFact
       },
+      /**
+       * This is typically called when a modal has been closed without action being done to deselect the card.
+       */
       deselectAll () {
         document.removeEventListener('click', this.hide)
         this.tipsCardSelected = this.setTipBox('default')
@@ -371,6 +377,9 @@ import Card from '../SharedComponents/Card'
       bus.$on('cardPlayed', () => {
         this.tipsCardSelected = this.setTipBox('default')
       })
+      /**
+       * This is called from the mutations whenever an Ai has picked an attack card to play.
+       */
       bus.$on('aiAttack', (stackToHack) => {
         if (this.getTutorialState()) {
           if (this.getAiTurn()) {
@@ -398,7 +407,9 @@ import Card from '../SharedComponents/Card'
           }
         }
       })
-
+      /**
+       * This is called from the mutations whenever an Ai has picked a protection card to play.
+       */
       bus.$on('aiProtection', () => {
         if (this.getTutorialState()) {
           if (this.getAiTurn()) {
@@ -435,7 +446,9 @@ import Card from '../SharedComponents/Card'
           }
         }
       })
-
+      /**
+       * This is called from the mutations whenever an Ai has picked an enhancement card to play.
+       */
       bus.$on('aiEnhance', () => {
         if (this.getTutorialState()) {
           if (this.getAiTurn === true) {

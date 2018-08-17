@@ -253,6 +253,10 @@ export default {
           $('#' + this.modalId2).modal('show')
         }
       },
+      /**
+       * This will remove any stacks being grouped and replace them with a new stack with only a group card. If you stack
+       * a Rx card that doesn't have a variable on top of it then it will place the Rx card on top of the stack.
+       */
       groupStacks () {
         let groupingBonus = 5
         if (this.getTutorialState()) {
@@ -295,6 +299,10 @@ export default {
       },
       cardClickedInStack (event, card) {
       },
+      /**
+       * Used to add each standard card (Inst, Repeat, RepeatX, and Variable)
+       * @returns {string}
+       */
       addToStack () {
         $('button[stackId="' + this.stackId + '"]').removeAttr('data-content')
         $('button[stackId="' + this.stackId + '"]').popover({

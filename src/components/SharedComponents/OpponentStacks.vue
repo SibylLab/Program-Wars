@@ -32,7 +32,7 @@ import {mapGetters} from 'vuex'
 
 /**
  * This component is used in the Hack card to show each of the opponents played stacks so the user can choose which
- * stack to hack.
+ * stack to hack. The individual stacks are displayed in the OpponentStack.vue
  */
 export default {
   name: 'opponent-stacks',

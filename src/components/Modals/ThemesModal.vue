@@ -47,6 +47,9 @@
       ...mapMutations([
         'updateTheme'
       ]),
+      /**
+       * This is the main function for changing the theme for all of the colours.
+       */
       changeTheme () {
         if (this.themeType === 'classic') {
           this.updateTheme({

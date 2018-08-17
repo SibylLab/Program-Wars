@@ -261,12 +261,19 @@ export default {
         this.setTips({tutorial: val})
       }
     },
+  /**
+   * This stops the function interval from running to prevent the main components from affecting each other and
+   * stops from preventing the timers from ruining each other.
+   */
     beforeRouteLeave (to, from, next) {
       this.resetState()
       clearInterval(this.interval)
       this.stopTimer()
       next()
     },
+  /**
+   * Called when the component is created (after mount) to run the game loop
+   */
     created () {
       this.playerList = this.getPlayers()
       this.gameStart = true

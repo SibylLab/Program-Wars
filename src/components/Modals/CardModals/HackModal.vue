@@ -72,6 +72,11 @@
       }
     },
     computed: {
+      /**
+       * This is used to change whether or not the discard button is displayed. It will not be displayed when this modal
+       * is opened by clicking on a players name to view their stacks.
+       * @returns {string}
+       */
       hideButton () {
         let activeCard = this.getActiveCard()
         if (activeCard !== undefined) {
