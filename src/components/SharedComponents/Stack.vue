@@ -360,7 +360,7 @@ export default {
                 this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()})
                 this.playerTookTurn()
                 bus.$emit('cardDeselected')
-                this.getCurrentPlayer().repetitionBonus += varBonus
+                this.getCurrentPlayer().variablesBonus += varBonus
                 this.updateBonus(varBonus, varBonus)
               } else if (thisStack.stackTopCard().type === 'V' && thisStack.stackTopCard().value < activeCard.value) {
                 this.stackDiscard({stackId: this.stackId})

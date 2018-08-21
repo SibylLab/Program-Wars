@@ -257,49 +257,62 @@ export default {
       player.overClockBonus = 0
       player.completionBonus = 0
       player.overclockIncrease = 0
+      player.totalScore = 0
       let scoreTrue = 0
       let scoreFalse = 0
+      let completionBonus = 10
+      let overClockBonus = 10
+      let defensiveBonus = 15
+      let virusBonus = 10
       scoreTrue = player.trueScore
       scoreFalse = player.falseScore
-
       if (player.hasVirus) {
         scoreFalse = scoreFalse * 0.75
         scoreTrue = scoreTrue * 0.75
       } else if (player.hasOverclock) {
         scoreFalse = scoreFalse * 1.25
         scoreTrue = scoreTrue * 1.25
-        player.overclockIncrease += (scoreFalse * 0.25) + (scoreTrue * 0.25)
       }
+      player.totalTrue = scoreTrue
+      player.totalFalse = scoreFalse
+      player.totalScore = scoreTrue + scoreFalse
 
+      // Complete Program Bonus
       if (scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit) {
-        player.completionBonus = 10
+        player.completionBonus = completionBonus
       }
 
-      for (let p of playerList) {
-        if (p.id !== player.id) {
-          if (!p.hasPlayedInstruction) {
-            player.instructionBonus += 10
-          }
-        }
-      }
-
+      // Defensive Programmer Bonus
       if (player.isDefensive) {
-        player.defensiveBonus = 15
+        player.defensiveBonus = defensiveBonus
       }
+
+      // Cool System Bonus
       if (!player.hasHadOverclock) {
-        player.overClockBonus = 10
+        player.overClockBonus = overClockBonus
       }
 
+      // Clean System bonus
       if (!player.hasVirus) {
-        player.virusBonus = 10
+        player.virusBonus = virusBonus
       }
 
-      if ((scoreTrue >= state.scoreLimit) || (scoreFalse >= state.scoreLimit)) {
-        if ((scoreTrue > highScore) || (scoreFalse > highScore)) {
-          highScore = Math.max(scoreTrue, scoreFalse)
+      player.totalScore += player.virusBonus
+      player.totalScore += player.completionBonus
+      player.totalScore += player.defensiveBonus
+      player.totalScore += player.overClockBonus
+      player.totalScore += player.protectionCardsBonus
+      player.totalScore += player.groupingBonus
+      player.totalScore += player.repetitionBonus
+      player.totalScore += player.variablesBonus
+
+      // Check if game won
+      if ((player.totalTrue >= state.scoreLimit) || (player.totalFalse >= state.scoreLimit)) {
+        state.winner = true
+        if ((player.totalScore > highScore)) {
+          highScore = player.totalScore
           state.winnerName = player.name
-          state.winnerScore = Math.max(scoreTrue, scoreFalse)
-          state.winner = true
+          state.winnerScore = highScore
         }
       }
     }
@@ -504,4 +517,3 @@ export default {
     state.pIPTextColour = payload.playfieldTC
   }
 }
-

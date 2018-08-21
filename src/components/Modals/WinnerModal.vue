@@ -8,7 +8,7 @@
         <div class="modal-body" style="padding-top: 0;" v-if="oneWinner">
           <h3 class="modal-title"><b>Congratulations {{ winner }}!!</b></h3>
           <div style="border: 4px ridge darkblue; padding: 5px; border-radius: 5px; background-color: royalblue;">
-            <h5 style="color: white">{{ winner }} is the winner with a score of {{ winnerScore }}</h5>
+            <h5 style="color: white">{{ winner }} is the winner with a score of {{ Math.floor(winnerScore) }}</h5>
           </div>
           </div>
             <div class="modal-body" style="padding-top: 0;" v-else>
@@ -23,12 +23,12 @@
             </div>
           <div>
             <h5><b>Scores</b></h5>
-            <table class="table table-condensed" style="width: 60%; margin: auto">
+            <table class="table table-condensed" style="width: 70%; margin: auto">
               <thead>
 
               <tr>
                 <th>Player Name:</th>
-                <th v-for="player in playerList" >{{ player.name }}</th>
+                <th v-for="player in playerList">{{ player.name }}</th>
               </tr>
               </thead>
               <tbody>
@@ -41,40 +41,49 @@
                 <td v-for="player in playerList">{{ Math.ceil(getScore(player.id).falseScore) }}</td>
               </tr>
               <tr>
-                <th>Completion Bonus:</th>
-                <td v-for="player in playerList">{{player.completionBonus}}</td>
+                <td colspan="3"><h5><b>Bonuses</b></h5></td>
               </tr>
               <tr>
-                <th>Defensive Bonus:</th>
-                <td v-for="player in playerList">{{player.defensiveBonus}}</td>
-              </tr>
-              <tr>
-                <th>No Viruses Bonus:</th>
-                <td v-for="player in playerList">{{player.virusBonus}}</td>
-              </tr>
-              <tr>
-                <th>No Overclocking Bonus:</th>
-                <td v-for="player in playerList">{{Math.ceil(player.overClockBonus)}}</td>
-              </tr>
-              <tr>
-                <th>Master Coder Bonus:</th>
-                <td v-for="player in playerList">{{player.instructionBonus}}</td>
-              </tr>
-              <tr>
-                <th>Protection Cards Bonus:</th>
-                <td v-for="player in playerList">{{player.protectionCardsBonus}}</td>
-              </tr>
-              <tr>
-                <th>Overclock Card Bonus:</th>
-                <td v-for="player in playerList">{{ Math.ceil(player.overclockIncrease) }}</td>
-              </tr>
-              <tr>
-                <th>Grouping Cards Bonus:</th>
+                <th>Grouping Cards:</th>
                 <td v-for="player in playerList">{{player.groupingBonus}}</td>
               </tr>
               <tr>
-                <th>Repetition Cards Bonus:</th>
+                <th>Repetition Cards:</th>
                 <td v-for="player in playerList">{{player.repetitionBonus}}</td>
+              </tr>
+              <tr>
+                <th>Variable Cards:</th>
+                <td v-for="player in playerList">{{player.variablesBonus}}</td>
+              </tr>
+              <tr>
+                <th>Safety Cards:</th>
+                <td v-for="player in playerList">{{player.protectionCardsBonus}}</td>
+              </tr>
+              <tr>
+                <th>Complete Program:</th>
+                <td v-for="player in playerList">{{player.completionBonus}}</td>
+              </tr>
+              <tr>
+                <th>Defensive Programmer <br>
+                  (All Safeties):</th>
+                <td v-for="player in playerList">{{player.defensiveBonus}}</td>
+              </tr>
+              <tr>
+                <th>Clean System <br>
+                  (No Virus):</th>
+                <td v-for="player in playerList">{{player.virusBonus}}</td>
+              </tr>
+              <tr>
+                <th>Cool System <br>
+                  (No Overclock):</th>
+                <td v-for="player in playerList">{{Math.ceil(player.overClockBonus)}}</td>
+              </tr>
+              <tr>
+                <td colspan="3"><h5><b>Total Score</b></h5></td>
+              </tr>
+              <tr>
+                <th>Total Score:</th>
+                <td v-for="player in playerList">{{Math.ceil(player.totalScore)}}</td>
               </tr>
               </tbody>
             </table>
@@ -157,6 +166,7 @@ export default {
 th {
   text-align: center;
 }
+
   h4 {
     padding:0;
     margin: 0;

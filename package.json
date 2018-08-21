@@ -15,7 +15,6 @@
     "animate.css": "^3.7.0",
     "easytimer.js": "^2.2.3",
     "jsdoc-vue": "^1.0.0",
-    "mime-types": "^2.1.19",
     "vue": "^2.5.17",
     "vue-radial-progress": "^0.2.10",
     "vue-router": "^2.2.0",
