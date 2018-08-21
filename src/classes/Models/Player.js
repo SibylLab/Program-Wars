@@ -49,6 +49,7 @@ export default class Player {
     this.isCleanSystem = true
     this.totalTrue = 0
     this.totalFalse = 0
+    this.totalScore = 0
     this.redrawing = false
     if (this.isAi) {
       this.type = new Personality()

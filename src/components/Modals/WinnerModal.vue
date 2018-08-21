@@ -56,10 +56,6 @@
                 <td v-for="player in playerList">{{player.variablesBonus}}</td>
               </tr>
               <tr>
-                <th>Overclock Card:</th>
-                <td v-for="player in playerList">{{ Math.ceil(player.overclockIncrease) }}</td>
-              </tr>
-              <tr>
                 <th>Safety Cards:</th>
                 <td v-for="player in playerList">{{player.protectionCardsBonus}}</td>
               </tr>
@@ -86,12 +82,8 @@
                 <td colspan="3"><h5><b>Total Score</b></h5></td>
               </tr>
               <tr>
-                <th>Total True Score:</th>
-                <td v-for="player in playerList">{{Math.ceil(player.totalTrue)}}</td>
-              </tr>
-              <tr>
-                <th>Total False Score:</th>
-                <td v-for="player in playerList">{{Math.ceil(player.totalFalse)}}</td>
+                <th>Total Score:</th>
+                <td v-for="player in playerList">{{Math.ceil(player.totalScore)}}</td>
               </tr>
               </tbody>
             </table>

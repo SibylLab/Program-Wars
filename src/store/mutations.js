@@ -257,8 +257,7 @@ export default {
       player.overClockBonus = 0
       player.completionBonus = 0
       player.overclockIncrease = 0
-      player.totalTrue = 0
-      player.totalFalse = 0
+      player.totalScore = 0
       let scoreTrue = 0
       let scoreFalse = 0
       let completionBonus = 10
@@ -273,44 +272,47 @@ export default {
       } else if (player.hasOverclock) {
         scoreFalse = scoreFalse * 1.25
         scoreTrue = scoreTrue * 1.25
-        player.overclockIncrease += (scoreFalse * 0.25) + (scoreTrue * 0.25)
       }
       player.totalTrue = scoreTrue
       player.totalFalse = scoreFalse
-      // complete program
+      player.totalScore = scoreTrue + scoreFalse
+
+      // Complete Program Bonus
       if (scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit) {
         player.completionBonus = completionBonus
-        player.totalTrue += completionBonus
-        player.totalFalse += completionBonus
       }
 
-      // defensive programmer
+      // Defensive Programmer Bonus
       if (player.isDefensive) {
         player.defensiveBonus = defensiveBonus
-        player.totalTrue += defensiveBonus
-        player.totalFalse += defensiveBonus
-      }
-      // cool system
-      if (!player.hasHadOverclock) {
-        player.overClockBonus = overClockBonus
-        player.totalTrue += overClockBonus
-        player.totalFalse += overClockBonus
       }
 
-      // clean system
+      // Cool System Bonus
+      if (!player.hasHadOverclock) {
+        player.overClockBonus = overClockBonus
+      }
+
+      // Clean System bonus
       if (!player.hasVirus) {
         player.virusBonus = virusBonus
-        player.totalTrue += virusBonus
-        player.totalFalse += virusBonus
       }
+
+      player.totalScore += player.virusBonus
+      player.totalScore += player.completionBonus
+      player.totalScore += player.defensiveBonus
+      player.totalScore += player.overClockBonus
+      player.totalScore += player.protectionCardsBonus
+      player.totalScore += player.groupingBonus
+      player.totalScore += player.repetitionBonus
+      player.totalScore += player.variablesBonus
+
+      // Check if game won
       if ((player.totalTrue >= state.scoreLimit) || (player.totalFalse >= state.scoreLimit)) {
-        if ((player.totalTrue > highScore) || (player.totalFalse > highScore)) {
-          highScore = Math.max(scoreTrue, scoreFalse)
+        state.winner = true
+        if ((player.totalScore > highScore)) {
+          highScore = player.totalScore
           state.winnerName = player.name
-          state.winnerScore = Math.max(player.totalTrue, player.totalFalse)
-        }
-        if ((scoreTrue >= state.scoreLimit) || (scoreFalse >= state.scoreLimit)) {
-          state.winner = true
+          state.winnerScore = highScore
         }
       }
     }
@@ -515,4 +517,3 @@ export default {
     state.pIPTextColour = payload.playfieldTC
   }
 }
-
