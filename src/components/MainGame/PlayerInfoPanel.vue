@@ -166,6 +166,9 @@ export default {
         'pIPBackgroundColour',
         'pIPTextColour'
       ]),
+      /**
+       * Used to display the correct score for the scoring meters. In the future this should be centralized in the state.
+       */
       getScore (player) {
         let trueSide = 0
         let falseSide = 0
@@ -195,6 +198,9 @@ export default {
           this.turn(true)
         }
       },
+      /**
+       * Called to redraw a players hand, can only be done once per turn.
+       */
       reDraw () {
         let playerRedrawing = this.getActivePlayer()
         if (!this.getPlayers()[playerRedrawing].redrawing) {
@@ -235,6 +241,11 @@ export default {
           }
         }
       },
+      /**
+       * This changes gathers which instruction to display in the text box
+       * @param c The type of card played or default for a fact.
+       * @returns {string} This returns the string that will be displayed.
+       */
       setTipBox (c) {
         switch (c.type) {
           case 'I' :
@@ -291,6 +302,9 @@ export default {
             this.tipsInfoText = fact
         }
       },
+      /**
+       * This is typically called when a modal has been closed without action being done to deselect the card.
+       */
       deselectAll () {
         document.removeEventListener('click', this.hide)
         this.tipsCardSelected = this.setTipBox('default')
@@ -336,6 +350,9 @@ export default {
       bus.$on('aiDiscard', () => {
         this.discardSelected()
       })
+      /**
+       * This is called from the mutations whenever an Ai has picked an attack card to play.
+       */
       bus.$on('aiAttack', (stackToHack) => {
         if (!this.getTutorialState()) {
           if (this.getAiTurn() === true) {
@@ -363,7 +380,9 @@ export default {
           }
         }
       })
-
+      /**
+       * This is called from the mutations whenever an Ai has picked a protection card to play.
+       */
       bus.$on('aiProtection', () => {
         if (!this.getTutorialState()) {
           if (this.getAiTurn() === true) {
@@ -400,7 +419,9 @@ export default {
           }
         }
       })
-
+      /**
+       * This is called from the mutations whenever an Ai has picked an enhancement card to play.
+       */
       bus.$on('aiEnhance', () => {
         if (!this.getTutorialState()) {
           if (this.getAiTurn() === true) {

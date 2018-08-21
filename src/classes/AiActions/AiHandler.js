@@ -37,6 +37,7 @@ export default class Handler {
 
     let cardPlayed = false
     let moveList = []
+    // These are the moves taken after the inital steps are taken, these differentiate the personalities
     if (type === 'gambler') {
       moveList = [this.variable, this.repeatX, this.repeat, this.instruction, this.hack, this.virus, this.powerOutage, this.group]
     } else if (type === 'hacker') {

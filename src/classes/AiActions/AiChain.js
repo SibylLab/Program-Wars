@@ -2,6 +2,13 @@
  * This is the superclass of all of the Ai's possible moves
  */
 export class Turn {
+  /**
+   * These assign the shared traits among all steps.
+   * @param hand - The Ai's hand
+   * @param boolSide - The current side to be played.
+   * @param move - the AiMove.js object
+   * @param event - JSON object to contain a lot of extra information inputted from the Personality.js object
+   */
   constructor (hand, boolSide, move, event) {
     this.cardToPlay = undefined
     this.stackToPlay = undefined
