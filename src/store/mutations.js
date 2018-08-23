@@ -465,6 +465,9 @@ export default {
     state.players[payload].attackedCards = state.players[payload].attackedCards.filter((obj) => {
       return obj.type !== 'POWEROUTAGE'
     })
+    state.players[payload].usedBonusCards = state.players[payload].usedBonusCards.filter((obj) => {
+      return obj.type !== 'BATTERYBACKUP'
+    })
     state.activeCard.showFace = true
     state.players[payload].usedBonusCards.push(state.activeCard)
     state.players[payload].updateBonus(bonus, bonus)
