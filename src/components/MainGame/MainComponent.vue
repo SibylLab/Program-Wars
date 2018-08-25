@@ -4,7 +4,7 @@
     <themes-modal id="themesModal" class="modal fade themes" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></themes-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby=""
-                aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"
+                aria-hidden="true" :players="players" data-keyboard="false"
     ></hack-modal>
     <virus-modal id="virusModal" class="modal fade virus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
                  data-backdrop="static" data-keyboard="false"></virus-modal>

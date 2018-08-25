@@ -30,7 +30,7 @@
 
 export default {
     name: 'opponent-stack',
-    props: ['playfieldBoolean', 'stackId', 'playerId'],
+    props: ['playfieldBoolean', 'stackId', 'playerId', 'player'],
     data () {
       return {
         msg: 'Welcome to Your Vue.js App',
