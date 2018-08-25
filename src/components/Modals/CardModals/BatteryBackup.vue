@@ -93,7 +93,7 @@
       },
       playerCanUse () {
         let player = this.getCurrentPlayer()
-        return player.hasBatteryBackup
+        return player.hasBatteryBackup && player.hasGenerator
       }
     },
     created () {
