@@ -283,6 +283,7 @@ export default {
           this.addCardToStack({stackId: stack.stackId, card: rXCard})
         }
         this.updateBonus(groupingBonus, groupingBonus)
+        this.getCurrentPlayer().groupingBonus += groupingBonus
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()
         bus.$emit('cardDeselected')
