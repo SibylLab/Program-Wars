@@ -3,7 +3,7 @@
   <div class="row">
     <div id="cards">
     <ul class="list-inline">
-      <h4 class="modal-title" :style="pIPTextColour()"> Your Securities: </h4>
+      <h4 class="modal-title" :style="pIPTextColour()"> Cybersecurity </h4>
       <li v-for="(card) in usedBonusCards" style="max-width: 90px; margin-right: 5px">
         <card :cardData="card"></card>
       </li>
@@ -13,7 +13,7 @@
   <div class="row">
     <div id="cards2">
     <ul id="example-1" class="list-inline" style="padding: 10px">
-      <h4 class="modal-title" :style="pIPTextColour()"> Your Hazards: </h4>
+      <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack </h4>
       <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
         <card :cardData="card"></card>
       </li>
