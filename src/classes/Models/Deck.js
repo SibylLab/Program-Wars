@@ -64,7 +64,7 @@ const cardDeck = [
   {type: 'VIRUS', cardValue: 0, imgSrc: '/static/cardImg/Malware.png', howMany: malware},
   {type: 'POWEROUTAGE', cardValue: 0, imgSrc: '/static/cardImg/PowerOutage.png', howMany: powerOutage},
 
-  {type: 'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/Overclock.png', howMany: overClock},
+  {type: 'OVERCLOCK', cardValue: 0, imgSrc: '/static/cardImg/OverClock.png', howMany: overClock},
   {type: 'BATTERYBACKUP', cardValue: 0, imgSrc: '/static/cardImg/BatteryBackup.png', howMany: batteryBackup},
 
   {type: 'FIREWALL', cardValue: 0, imgSrc: '/static/cardImg/Firewall.png', howMany: firewall},
