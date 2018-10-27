@@ -67,7 +67,6 @@
 
 import { bus } from '../SharedComponents/Bus'
 import Card from '../SharedComponents/Card'
-import Modal from '../Modals/Modal'
 import StatsPanel from '../SharedComponents/StatsPanel'
 import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
 
@@ -118,7 +117,6 @@ export default {
     },
     components: {
       'card': Card,
-      'modal': Modal,
       'stats-panel': StatsPanel,
       'display-used-cards': DisplayUsedCards
     },

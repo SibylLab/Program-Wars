@@ -72,7 +72,6 @@
   import { bus } from '../SharedComponents/Bus'
 import Card from '../SharedComponents/Card'
   import Modal from '../Modals/Modal'
-  import StatsPanel from '../SharedComponents/StatsPanel'
   import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
   import {mapGetters, mapMutations, mapActions, mapState} from 'vuex'
 
@@ -151,7 +150,6 @@ import Card from '../SharedComponents/Card'
     components: {
       'card': Card,
       'modal': Modal,
-      'stats-panel': StatsPanel,
       'display-used-cards': DisplayUsedCards
     },
     methods: {
