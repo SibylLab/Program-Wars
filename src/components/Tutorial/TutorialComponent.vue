@@ -77,7 +77,6 @@
   import PlayerInfoPanel from './TutorialPlayerInfoPanel'
   import Playfield from '../SharedComponents/Playfield'
 
-  import OpponentStacks from '../SharedComponents/OpponentStacks'
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
   import HackModal from '../Modals/CardModals/HackModal.vue'
@@ -129,7 +128,6 @@ export default {
       HackDiscard,
       'player-info-panel': PlayerInfoPanel,
       'playfield': Playfield,
-      'opponent-stacks': OpponentStacks,
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
       'hack-modal': HackModal,

@@ -71,7 +71,6 @@
 
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
-  import TutorialModal from '../Modals/TutorialStartModal'
 
   import Themes from '../Modals/ThemesModal'
 
@@ -233,7 +232,6 @@
     components: {
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
-      'tutorial-modal': TutorialModal,
       'themes-modal': Themes
     },
     beforeMount () {
