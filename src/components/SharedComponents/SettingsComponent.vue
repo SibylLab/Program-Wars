@@ -69,13 +69,8 @@
 
 <script>
 
-  import PlayerInfoPanel from '../MainGame/PlayerInfoPanel'
-  import Playfield from './Playfield'
-  import OpponentStacks from './OpponentStacks'
-
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
-  import TutorialModal from '../Modals/TutorialStartModal'
 
   import Themes from '../Modals/ThemesModal'
 
@@ -235,12 +230,8 @@
       }
     },
     components: {
-      'player-info-panel': PlayerInfoPanel,
-      'playfield': Playfield,
-      'opponent-stacks': OpponentStacks,
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
-      'tutorial-modal': TutorialModal,
       'themes-modal': Themes
     },
     beforeMount () {

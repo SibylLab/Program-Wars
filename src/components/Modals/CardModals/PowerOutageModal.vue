@@ -29,7 +29,6 @@
   /* eslint-disable no-undef */
 
   import { bus } from '../../SharedComponents/Bus.vue'
-  import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
 
   /**
@@ -37,9 +36,6 @@
    */
   export default {
     props: ['players'],
-    components: {
-      'opponent-stacks': OpponentStacks
-    },
 
     methods: {
       /**

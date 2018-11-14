@@ -191,7 +191,7 @@
                     </li>
                     <li><h5>Overclocking</h5>
                       <div>
-                        <img src="../../../static/cardImg/Overclock.png" alt="Overclock Card" class="cardImage">
+                        <img src="../../../static/cardImg/OverClock.png" alt="OverClock Card" class="cardImage">
                       </div>
 
                       <div>
@@ -313,7 +313,6 @@
         </div>
       </div>
   </div>
-
 </template>
 
 <script>
