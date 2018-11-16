@@ -10,7 +10,7 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/graphs/contributors)
 [![Open Source Love](https://badges.frapsoft.com/os/gpl/gpl.svg?v=102)](https://github.com/johnanvik/open-source-badge/)
 
-Program Wars is a web-based educational card game that teaches the basic concepts of programming.
+Program Wars is a web-based educational card game that teaches the basic concepts of programming and cybersecurity.
 
 To play Program Wars go to [https://programming-wars.firebaseapp.com](https://programming-wars.firebaseapp.com)
 
