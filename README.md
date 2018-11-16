@@ -10,7 +10,11 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/graphs/contributors)
 [![Open Source Love](https://badges.frapsoft.com/os/gpl/gpl.svg?v=102)](https://github.com/johnanvik/open-source-badge/)
 
-Program Wars is a web-based educational card game that teaches the basic concepts of programming and cybersecurity.
+Program Wars is a web-based card game for teaching or reinforcing the fundamental concepts of programming and cybersecurity to
+those with limited or no programming experience. In the game, players construct a computer program that meets or
+exceeds a goal number of statements. Players build their program using “instruction” cards and “repetition” cards. Some repetition
+cards allow the player to change the number of repetitions using “variable” cards. Players can also “group” instructions to protect
+portions of their program from being cyberattacked (i.e. “hacked”). Players can also use other cyberattacks (Malware and Power Outage) to stop their opponents from winning.
 
 To play Program Wars go to [https://programming-wars.firebaseapp.com](https://programming-wars.firebaseapp.com)
 
