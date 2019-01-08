@@ -5,7 +5,7 @@
           <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-            <h3 class="modal-title">Programming Wars Rules</h3>
+            <h3 class="modal-title">Program Wars Rules</h3>
             <div>
               <ul class="nav nav-tabs" role="tablist" style="font-size: 20px">
                 <li role="presentation" class="active"><a href="#introduction" aria-controls="introduction" role="tab" data-toggle="tab">Introduction</a></li>
@@ -299,7 +299,7 @@
                   <h4>Learning Computer Programming</h4>
                   <p>Learning computer program can be tough for some people.
                   Some programming languages are easier to learn than others. </p>
-                  <p>Python is one of the easier-to-learn programming language and it uses all of the ideas from Programming Wars.
+                  <p>Python is one of the easier-to-learn programming language and it uses all of the ideas from Program Wars.
                   A good place to start is with this <a href="http://interactivepython.org/runestone/static/IntroPythonTurtles/index.html">interactive Python tutorial.</a>
                   <p>There are also many other Python tutorials available, such as these ones from <a href="https://www.codecademy.com/learn/learn-python">Code Academy.</a>
                   </p>

@@ -34,7 +34,7 @@
 
 
     <div id="header" :style="mainBackgroundColour()">
-      <p :style="mainTextColour()">Programming Wars</p>
+      <p :style="mainTextColour()">Program Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
       <label class="checkbox-inline" :style="mainTextColour()"><input type="checkbox" value="true" v-model="tipsToggle" checked>TUTORIAL</label>
         </div>
@@ -107,7 +107,7 @@ export default {
       return {
         idCounter: 0,
         dataToggle: false,
-        modalTitle: 'Welcome to a new game of Programming Wars!',
+        modalTitle: 'Welcome to a new game of Program Wars!',
         localPlayers: [],
         newPlayer: '',
         gameStart: false,

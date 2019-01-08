@@ -5,7 +5,7 @@
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <div class="header" :style="mainBackgroundColour()">
       <div class="title" style="float: left">
-        <h4 :style="mainTextColour()"><b>Programming Wars</b></h4>
+        <h4 :style="mainTextColour()"><b>Program Wars</b></h4>
       </div>
       <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
@@ -21,7 +21,7 @@
     <div class="container settingMenu">
       <div class="row">
         <div class="col-md-12">
-          <h4>Welcome to a new game of Programming Wars!</h4>
+          <h4>Welcome to a new game of Program Wars!</h4>
         </div>
       </div>
       <div class="row">
