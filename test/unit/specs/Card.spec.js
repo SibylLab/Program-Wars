@@ -49,7 +49,7 @@ describe('Card.vue', () => {
   // first test is for msg field
   it('test to see if data field msg field is populated correctly', () => {
     const defaultData = Card.data()
-    expect(defaultData.msg).to.equal('Programming Wars')
+    expect(defaultData.msg).to.equal('Program Wars')
   })
   // next test the valueCss
   it('test to see if data field valueCSS is set properly initially', () => {
