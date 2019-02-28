@@ -16,7 +16,7 @@ exceeds a goal number of statements. Players build their program using “instru
 cards allow the player to change the number of repetitions using “variable” cards. Players can also “group” instructions to protect
 portions of their program from being cyberattacked (i.e. “hacked”). Players can also use other cyberattacks (Malware and Power Outage) to stop their opponents from winning.
 
-To play Program Wars go to [https://programming-wars.firebaseapp.com](https://programming-wars.firebaseapp.com)
+To play Program Wars go to [https://program-wars.firebaseapp.com](https://programming-wars.firebaseapp.com)
 
 If you would like to contribute to the project, see [CONTRIBUTING](CONTRIBUTING.md).
 

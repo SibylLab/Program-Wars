@@ -5,13 +5,13 @@
         <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-          <h3 class="modal-title">Programming Wars Objectives</h3>
+          <h3 class="modal-title">Program Wars Objectives</h3>
           <div>
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="introduction">
                 <h4>Introduction</h4>
-                <p style="font-size: 16px">Thanks for playing the tutorial! In Programming Wars you pretend to create a computer program using cards.
-                Each part of Programming Wars represents a real part of a computer program.
+                <p style="font-size: 16px">Thanks for playing the tutorial! In Program Wars you pretend to create a computer program using cards.
+                Each part of Program Wars represents a real part of a computer program.
                 <p>Your computer program has two parts: a "True" side and a "False" side (called <i>branches</i> in a computer program). This represents making a decision in a computer program.
                 A coin is flipped and chooses between two sides, True or False, to choose which side of your computer program has to be played in each turn.
                 Your goal is to build program that has the target number (or more) of instructions.

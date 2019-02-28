@@ -85,7 +85,7 @@ import Card from '../SharedComponents/Card'
         tipsToggle: true,
         factsToggle: true,
         indexOfFact: 0,
-        tipsCardSelected: 'Programming Wars Tutorial!',
+        tipsCardSelected: 'Program Wars Tutorial!',
         tipsInfoText: 'Welcome to the tutorial, you can find tips on what on what to do next here. ' +
         'Click on the first instruction card and place it in the true path to get started. If you get lost at any time click on the rules button in the top right!',
         facts: [
