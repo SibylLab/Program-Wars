@@ -12,13 +12,26 @@
   </div>
   <div class="row">
     <div id="cards2">
-    <ul id="example-1" class="list-inline" style="padding: 10px">
-      <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack </h4>
-      <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
-        <card :cardData="card"></card>
-      </li>
-    </ul>
+      <ul id="example-1" class="list-inline" style="padding: 10px">
+        <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack </h4>
+        <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
+          <card :cardData="card"></card>
+        </li>
+      </ul>
+    </div>
   </div>
+  <div class="row">
+    <div id="effects">
+      <ul class="list-inline">
+        <h4 class="modal-title" :style="pIPTextColour()"> Active Effects </h4>
+        <li v-for="(card) in usedBonusCards" style="max-width: 350px; margin-right: 5px">
+          <p> This is where defense effects will go </p>
+        </li>
+        <li v-for="(card) in attackedCards" style="max-width: 350px; margin-right: 5px">
+          <p> This is where attack effects will go </p>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 </template>
