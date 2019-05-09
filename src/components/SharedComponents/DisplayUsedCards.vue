@@ -24,11 +24,8 @@
     <div id="effects">
       <ul class="list-inline">
         <h4 class="modal-title" :style="pIPTextColour()"> Active Effects </h4>
-        <li v-for="(card) in usedBonusCards" style="max-width: 350px; margin-right: 5px">
-          <p> This is where defense effects will go </p>
-        </li>
-        <li v-for="(card) in attackedCards" style="max-width: 350px; margin-right: 5px">
-          <p> This is where attack effects will go </p>
+        <li v-for="(effect) in cardEffect" style="max-width: 350px; margin-right: 5px">
+          <p> {{ effect }} </p>
         </li>
       </ul>
     </div>
@@ -47,9 +44,16 @@
   export default {
     data () {
       return {
-        player: this.getCurrentPlayer()
+        player: this.getCurrentPlayer()// ,
+        // showCardEffect: null,
+        // cardEffect: showCardEffect(card)
       }
     },
+    /* created () {
+      Bus.$on('cardEffect', (showCardEffect) => {
+      this.showCardEffect = showCardEffect;
+      });
+    }, */
     components: {
       'card': Card
 
@@ -85,6 +89,39 @@
           }
           return cards
         }
+      },
+      cardEffect () {
+        let effects = []
+        let cards = this.getCurrentPlayer().attackedCards.concat(this.getCurrentPlayer().usedBonusCards)
+        for (let card in cards) {
+          switch (cards[card].type) {
+            case 'VIRUS' :
+              effects.push('-25% score')
+              break
+            case 'POWEROUTAGE' :
+              effects.push('Unable to play base cards')
+              break
+            case 'GENERATOR' :
+              effects.push('Protected from power outage')
+              break
+            case 'BATTERYBACKUP' :
+              effects.push('Protected from next power outage')
+              break
+            case 'FIREWALL' :
+              effects.push('Protected from hackers')
+              break
+            case 'ANTIVIRUS' :
+              effects.push('Protected from virus')
+              break
+            case 'OVERCLOCK' :
+              effects.push('+25% score')
+              break
+            default :
+              effects.push('Undefined effect')
+              break
+          }
+        }
+        return effects
       }
     }
   }

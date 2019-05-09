@@ -21,7 +21,7 @@
     <div class="container settingMenu">
       <div class="row">
         <div class="col-md-12">
-          <h4>Welcome to a new game of Program Wars!</h4>
+          <h4>Welcome to Program Wars!</h4>
         </div>
       </div>
       <div class="row">
@@ -71,7 +71,7 @@
 
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
-
+  
   import Themes from '../Modals/ThemesModal'
 
   import {mapGetters, mapMutations, mapState} from 'vuex'
