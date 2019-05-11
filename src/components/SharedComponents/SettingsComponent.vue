@@ -1,17 +1,20 @@
 <template>
   <div id="settingsPage">
+    <backstory-modal id="backStoryModal" class="modal fade backstory" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></backstory-modal>
     <themes-modal id="themesModal" class="modal fade themes" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></themes-modal>
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <div class="header" :style="mainBackgroundColour()">
       <div class="title" style="float: left">
-        <h4 :style="mainTextColour()"><b>Program Wars</b></h4>
+        <h4 :style="mainTextColour()"><b>Settings and Credits</b></h4>
       </div>
       <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
+        <a href="#" data-toggle="modal" data-target=".backstory">Backstory</a>
         <a href="#" data-toggle="modal" data-target=".rules">Rules</a>
         <a href="#" data-toggle="modal" data-target=".credits">Credits</a>
         <a href="#" data-toggle="modal" data-target=".themes">Themes</a>
+        <!-- <a href="#" data-toggle="modal" data-target=".backstory">Backstory</a> -->
         <a href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
 
@@ -63,6 +66,9 @@
           <button type="button" class="btn btn-primary" @click="submitPlayers" :disabled="noPlayers">Start New Game</button>
         </div>
       </div>
+      <div v-if="openBackStory === true">
+        <a data-toggle="modal" data-target=".backstory"></a>
+      </div>
     </div>
   </div>
 </template>
@@ -71,8 +77,8 @@
 
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
-  
   import Themes from '../Modals/ThemesModal'
+  import BackStoryModal from '../Modals/BackStoryModal.vue'
 
   import {mapGetters, mapMutations, mapState} from 'vuex'
 
@@ -86,7 +92,7 @@
       return {
         idCounter: 0,
         dataToggle: false,
-        modalTitle: 'Welcome to a new game of Programming Wars!',
+        modalTitle: 'Welcome to a Program Wars!',
         localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
@@ -99,7 +105,8 @@
         aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
         typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
         isTutorial: false,
-        tutorialBegin: false
+        tutorialBegin: false// ,
+        // showBackStory: true
       }
     },
     methods: {
@@ -116,6 +123,9 @@
         'mainTextColour',
         'mainBackgroundColour'
       ]),
+      /* openBackStory () {
+        return this.showBackStory
+      }, */
       openNav () {
         this.sideNavOpen = !this.sideNavOpen
         if (this.sideNavOpen) {
@@ -209,6 +219,9 @@
       currentPlayerId () {
         return this.$store.getters.getCurrentPlayerId
       },
+      /* openBackStory () {
+        return this.showBackStory
+      }, */
       players () {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId)
       },
@@ -232,7 +245,8 @@
     components: {
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
-      'themes-modal': Themes
+      'themes-modal': Themes,
+      'backstory-modal': BackStoryModal
     },
     beforeMount () {
       this.$store.commit('resetState')
