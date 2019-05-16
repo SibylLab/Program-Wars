@@ -1,6 +1,6 @@
 <template>
   <div id="settingsPage">
-    <backstory-modal id="backStoryModal" class="modal fade backstory" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></backstory-modal>
+    <backstory-modal id="backstoryModal" class="modal fade backstory" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></backstory-modal>
     <themes-modal id="themesModal" class="modal fade themes" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></themes-modal>
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
@@ -66,9 +66,9 @@
           <button type="button" class="btn btn-primary" @click="submitPlayers" :disabled="noPlayers">Start New Game</button>
         </div>
       </div>
-      <div v-if="openBackStory === true">
+      <!-- <div v-if="openBackstory === true">
         <a data-toggle="modal" data-target=".backstory"></a>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -78,7 +78,7 @@
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
   import Themes from '../Modals/ThemesModal'
-  import BackStoryModal from '../Modals/BackStoryModal.vue'
+  import BackstoryModal from '../Modals/BackstoryModal.vue'
 
   import {mapGetters, mapMutations, mapState} from 'vuex'
 
@@ -106,7 +106,7 @@
         typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
         isTutorial: false,
         tutorialBegin: false// ,
-        // showBackStory: true
+        // showBackstory: true
       }
     },
     methods: {
@@ -122,9 +122,9 @@
       ...mapState([
         'mainTextColour',
         'mainBackgroundColour'
-      ]),
-      /* openBackStory () {
-        return this.showBackStory
+      ]), /*
+      openBackstory () {
+        this.$id['.backstory'].show()
       }, */
       openNav () {
         this.sideNavOpen = !this.sideNavOpen
@@ -219,9 +219,6 @@
       currentPlayerId () {
         return this.$store.getters.getCurrentPlayerId
       },
-      /* openBackStory () {
-        return this.showBackStory
-      }, */
       players () {
         return this.$store.getters.getPlayers.filter(player => player.id !== this.$store.getters.getCurrentPlayerId)
       },
@@ -243,10 +240,11 @@
       }
     },
     components: {
+      'backstory-modal': BackstoryModal,
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
-      'themes-modal': Themes,
-      'backstory-modal': BackStoryModal
+      'themes-modal': Themes
+      // 'backstory-modal': BackStoryModal
     },
     beforeMount () {
       this.$store.commit('resetState')
@@ -262,7 +260,10 @@
         }
         this.$store.state.players = []
       }
-    }
+    }/* ,
+    mounted () {
+      $['.backstory-modal'].show()
+    } */
 
   }
 </script>

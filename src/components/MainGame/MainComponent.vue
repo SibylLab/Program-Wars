@@ -152,7 +152,6 @@ export default {
       ...mapGetters([
         'getPlayers',
         'getActiveCard',
-        'getPlayers',
         'getCurrentPlayerId',
         'getgameState',
         'getFirstRound',

@@ -7,8 +7,8 @@
         <span style="padding: 10px; font-size: 16px" v-if="showBtn || score > 0">Stack Score: {{ score }}</span>
       </div>
       <div class="col-md-12">
-        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
-        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
+        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch && groupableStack" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
+        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch && groupableStack" for="stackId"><b>Group Select</b></label>
       </div>
       <div class="col-md-12" style="margin-left: 20px">
         <button
@@ -130,6 +130,16 @@ export default {
         let thisActiveCard = this.getActiveCard()
 
         return (thisActiveCard !== undefined && thisActiveCard.type === 'G' && !this.getCurrentPlayer().hasPowerOutage)
+      },
+      groupableStack () {
+        let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
+        let selectedStacks = this.getSelectedStacks()
+        let groupCard = this.getActiveCard()
+        let potScore = thisStack.score
+        for (let stack in selectedStacks) {
+          potScore += stack.score
+        }
+        return (groupCard.value === potScore)
       },
       currentSelectedStacksMatch () {
         if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
