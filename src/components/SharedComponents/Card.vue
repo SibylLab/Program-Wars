@@ -77,24 +77,7 @@ export default {
     showCard () {
       return (this.isAi && !this.cardData.showFace && (this.cardData.type !== 'GENERATOR' || this.cardData.type !== 'FIREWALL' || this.cardData.type !== 'ANTIVIRUS' ||
         this.cardData.type !== 'VIRUS' || this.cardData.type !== 'POWEROUTAGE' || this.cardData.type !== 'OVERCLOCK'))
-    }/* ,
-    showCardEffect () {
-      if (this.cardData.type === 'VIRUS') {
-        return '-25% score'
-      } else if (this.cardData.type === 'POWEROUTAGE') {
-        return 'Unable to play base cards'
-      } else if (this.cardData.type === 'GENERATOR') {
-        return 'Protected from power outage'
-      } else if (this.cardData.type === 'FIREWALL') {
-        return 'Protected from hackers'
-      } else if (this.cardData.type === 'ANTIVIRUS') {
-        return 'Protected from virus'
-      } else if (this.cardData.type === 'OVERCLOCK') {
-        return '+25% score'
-      } else {
-        return 'Undefined effect'
-      }
-    } */
+    }
   },
   methods: {
     ...mapGetters([

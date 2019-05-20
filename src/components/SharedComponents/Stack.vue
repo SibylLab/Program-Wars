@@ -7,8 +7,8 @@
         <span style="padding: 10px; font-size: 16px" v-if="showBtn || score > 0">Stack Score: {{ score }}</span>
       </div>
       <div class="col-md-12">
-        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch && groupableStack" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
-        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch && groupableStack" for="stackId"><b>Group Select</b></label>
+        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
+        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
       </div>
       <div class="col-md-12" style="margin-left: 20px">
         <button
@@ -131,16 +131,13 @@ export default {
 
         return (thisActiveCard !== undefined && thisActiveCard.type === 'G' && !this.getCurrentPlayer().hasPowerOutage)
       },
-      groupableStack () {
+      /* groupableStack () {
         let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
-        let selectedStacks = this.getSelectedStacks()
-        let groupCard = this.getActiveCard()
-        let potScore = thisStack.score
-        for (let stack in selectedStacks) {
-          potScore += stack.score
-        }
-        return (groupCard.value === potScore)
-      },
+        // let selectedStacks = this.getSelectedStacks()
+        // let groupCard = this.getActiveCard()
+        let potScore = thisStack.stackId.score// + selectedStacks.score
+        return potScore
+      }, */
       currentSelectedStacksMatch () {
         if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
           if (this.getSelectedStacksBoolean() === undefined) {
@@ -303,6 +300,18 @@ export default {
       },
       cardAddClicked () {
         this.$emit('cardAddClicked', this.id)
+      },
+      /**
+       * groupableStacks()
+       * returns an array of all the stacks that are available to be grouped
+       */
+      groupableStacks () {
+        // let groupable = []
+        let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
+        let selectedStacks = this.getSelectedStacks()
+        // let groupCard = this.getActiveCard()
+        for ()
+        return thisStack.stackId.score// + selectedStacks.score
       },
       hide () {
       },
