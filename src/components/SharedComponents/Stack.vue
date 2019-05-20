@@ -308,9 +308,9 @@ export default {
       groupableStacks () {
         // let groupable = []
         let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
-        let selectedStacks = this.getSelectedStacks()
+        // let selectedStacks = this.getSelectedStacks()
         // let groupCard = this.getActiveCard()
-        for ()
+        // for ()
         return thisStack.stackId.score// + selectedStacks.score
       },
       hide () {
