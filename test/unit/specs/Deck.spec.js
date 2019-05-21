@@ -18,7 +18,7 @@ describe('Deck.js', () => {
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
-    expect(testDeck.cards.length).to.equal(75)
+    expect(testDeck.cards.length).to.equal(72)
   })
 
   // test initDeck function 3 players
@@ -194,7 +194,7 @@ describe('Deck.js', () => {
         counter++
       }
     }
-    expect(counter).to.equal(1)
+    expect(counter).to.equal(0)
   })
 
   // test the number of Generator cards in the deck 1 player
@@ -208,7 +208,7 @@ describe('Deck.js', () => {
         counter++
       }
     }
-    expect(counter).to.equal(1)
+    expect(counter).to.equal(0)
   })
 
   // test the number of Firewall cards in the deck 1 player
@@ -222,7 +222,7 @@ describe('Deck.js', () => {
         counter++
       }
     }
-    expect(counter).to.equal(1)
+    expect(counter).to.equal(0)
   })
 
   // test the number of hack cards in the deck 3 players
@@ -316,7 +316,7 @@ describe('Deck.js', () => {
     testDeck.initDeck(1)
     // let testCard = new Card(0, 1, 'I')
     let drawnCard = testDeck.draw()
-    expect(testDeck.cards.length).to.equal(74)
+    expect(testDeck.cards.length).to.equal(71)
 
     expect(typeof drawnCard).to.equal('object')
     // The deck shuffles itself when created, no way of know what the top card is
