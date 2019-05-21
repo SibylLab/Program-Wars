@@ -131,13 +131,6 @@ export default {
 
         return (thisActiveCard !== undefined && thisActiveCard.type === 'G' && !this.getCurrentPlayer().hasPowerOutage)
       },
-      /* groupableStack () {
-        let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
-        // let selectedStacks = this.getSelectedStacks()
-        // let groupCard = this.getActiveCard()
-        let potScore = thisStack.stackId.score// + selectedStacks.score
-        return potScore
-      }, */
       currentSelectedStacksMatch () {
         if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
           if (this.getSelectedStacksBoolean() === undefined) {
@@ -304,15 +297,16 @@ export default {
       /**
        * groupableStacks()
        * returns an array of all the stacks that are available to be grouped
+       * <This is temporarily commented out for performance reasons until I decide if this will be its final resting place>
        */
-      groupableStacks () {
+      /* groupableStacks () {
         // let groupable = []
         let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
         // let selectedStacks = this.getSelectedStacks()
         // let groupCard = this.getActiveCard()
         // for ()
         return thisStack.stackId.score// + selectedStacks.score
-      },
+      }, */
       hide () {
       },
       stackClicked () {

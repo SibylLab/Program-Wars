@@ -74,12 +74,12 @@
 </template>
 
 <script>
-
+  import BackstoryModal from '../Modals/BackstoryModal.vue'
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
   import Themes from '../Modals/ThemesModal'
   
-  import BackstoryModal from '../Modals/BackstoryModal.vue'
+  // import BackstoryModal from '../Modals/BackstoryModal.vue'
 
   import {mapGetters, mapMutations, mapState} from 'vuex'
 
