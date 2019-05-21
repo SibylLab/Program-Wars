@@ -184,7 +184,7 @@ describe('Deck.js', () => {
 
   // PROTECTION CARDS
   // test the number of AntiVirus cards in the deck 1 player
-  it('test the number of AntiVirus cards in the deck', () => {
+  it('test the number of AntiVirus cards in the deck(1)', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
     let cardsArray = testDeck.cards
@@ -197,8 +197,50 @@ describe('Deck.js', () => {
     expect(counter).to.equal(0)
   })
 
+  // test the number of AntiVirus cards in the deck 2 players
+  it('test the number of AntiVirus cards in the deck(2)', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(2)
+    let cardsArray = testDeck.cards
+    let counter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'ANTIVIRUS') {
+        counter++
+      }
+    }
+    expect(counter).to.equal(1)
+  })
+
+  // test the number of AntiVirus cards in the deck 3 players
+  it('test the number of AntiVirus cards in the deck(3)', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(3)
+    let cardsArray = testDeck.cards
+    let counter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'ANTIVIRUS') {
+        counter++
+      }
+    }
+    expect(counter).to.equal(1)
+  })
+
+  // test the number of AntiVirus cards in the deck 4 players
+  it('test the number of AntiVirus cards in the deck(4)', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(4)
+    let cardsArray = testDeck.cards
+    let counter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'ANTIVIRUS') {
+        counter++
+      }
+    }
+    expect(counter).to.equal(2)
+  })
+
   // test the number of Generator cards in the deck 1 player
-  it('test the number of Generator cards in the deck', () => {
+  it('test the number of Generator cards in the deck(1)', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
     let cardsArray = testDeck.cards
@@ -211,8 +253,50 @@ describe('Deck.js', () => {
     expect(counter).to.equal(0)
   })
 
+  // test the number of Generator cards in the deck 2 players
+  it('test the number of Generator cards in the deck(2)', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(2)
+    let cardsArray = testDeck.cards
+    let counter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'GENERATOR') {
+        counter++
+      }
+    }
+    expect(counter).to.equal(1)
+  })
+
+  // test the number of Generator cards in the deck 3 players
+  it('test the number of Generator cards in the deck(3)', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(3)
+    let cardsArray = testDeck.cards
+    let counter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'GENERATOR') {
+        counter++
+      }
+    }
+    expect(counter).to.equal(1)
+  })
+
+  // test the number of Generator cards in the deck 4 players
+  it('test the number of Generator cards in the deck(4)', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(4)
+    let cardsArray = testDeck.cards
+    let counter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'GENERATOR') {
+        counter++
+      }
+    }
+    expect(counter).to.equal(2)
+  })
+
   // test the number of Firewall cards in the deck 1 player
-  it('test the number of Firewall cards in the deck', () => {
+  it('test the number of Firewall cards in the deck(1)', () => {
     let testDeck = new Deck()
     testDeck.initDeck(1)
     let cardsArray = testDeck.cards
@@ -223,6 +307,48 @@ describe('Deck.js', () => {
       }
     }
     expect(counter).to.equal(0)
+  })
+
+  // test the number of Firewall cards in the deck 2 players
+  it('test the number of Firewall cards in the deck(2)', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(2)
+    let cardsArray = testDeck.cards
+    let counter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'FIREWALL') {
+        counter++
+      }
+    }
+    expect(counter).to.equal(1)
+  })
+
+  // test the number of Firewall cards in the deck 3 players
+  it('test the number of Firewall cards in the deck(3)', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(3)
+    let cardsArray = testDeck.cards
+    let counter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'FIREWALL') {
+        counter++
+      }
+    }
+    expect(counter).to.equal(1)
+  })
+
+  // test the number of Firewall cards in the deck 4 players
+  it('test the number of Firewall cards in the deck(4)', () => {
+    let testDeck = new Deck()
+    testDeck.initDeck(4)
+    let cardsArray = testDeck.cards
+    let counter = 0
+    for (let idx of cardsArray) {
+      if (idx.type === 'FIREWALL') {
+        counter++
+      }
+    }
+    expect(counter).to.equal(2)
   })
 
   // test the number of hack cards in the deck 3 players
