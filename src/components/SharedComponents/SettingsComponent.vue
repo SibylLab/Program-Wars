@@ -1,17 +1,20 @@
 <template>
   <div id="settingsPage">
+    <!-- <backstory-modal id="backstoryModal" class="modal fade backstory" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></backstory-modal> -->
     <themes-modal id="themesModal" class="modal fade themes" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></themes-modal>
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
     <div class="header" :style="mainBackgroundColour()">
       <div class="title" style="float: left">
-        <h4 :style="mainTextColour()"><b>Program Wars</b></h4>
+        <h4 :style="mainTextColour()"><b>Settings and Credits</b></h4>
       </div>
       <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
+        <!--<a href="#" data-toggle="modal" data-target=".backstory">Backstory</a>-->
         <a href="#" data-toggle="modal" data-target=".rules">Rules</a>
         <a href="#" data-toggle="modal" data-target=".credits">Credits</a>
         <a href="#" data-toggle="modal" data-target=".themes">Themes</a>
+        <!-- <a href="#" data-toggle="modal" data-target=".backstory">Backstory</a> -->
         <a href="https://gitreports.com/issue/johnanvik/program-wars" target="_blank">Report Issue</a>
       </div>
 
@@ -21,7 +24,7 @@
     <div class="container settingMenu">
       <div class="row">
         <div class="col-md-12">
-          <h4>Welcome to a new game of Program Wars!</h4>
+          <h4>Welcome to Program Wars!</h4>
         </div>
       </div>
       <div class="row">
@@ -63,17 +66,19 @@
           <button type="button" class="btn btn-primary" @click="submitPlayers" :disabled="noPlayers">Start New Game</button>
         </div>
       </div>
+      <!-- <div v-if="openBackstory === true">
+        <a data-toggle="modal" data-target=".backstory"></a>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
-
+  // import BackstoryModal from '../Modals/BackstoryModal.vue'
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
-
   import Themes from '../Modals/ThemesModal'
-
+  
   import {mapGetters, mapMutations, mapState} from 'vuex'
 
   /**
@@ -86,7 +91,7 @@
       return {
         idCounter: 0,
         dataToggle: false,
-        modalTitle: 'Welcome to a new game of Programming Wars!',
+        modalTitle: 'Welcome to Program Wars!',
         localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
@@ -115,7 +120,10 @@
       ...mapState([
         'mainTextColour',
         'mainBackgroundColour'
-      ]),
+      ]), /*
+      openBackstory () {
+        this.$id['.backstory'].show()
+      }, */
       openNav () {
         this.sideNavOpen = !this.sideNavOpen
         if (this.sideNavOpen) {
@@ -230,6 +238,7 @@
       }
     },
     components: {
+      // 'backstory-modal': BackstoryModal,
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
       'themes-modal': Themes
@@ -248,7 +257,10 @@
         }
         this.$store.state.players = []
       }
-    }
+    }/* ,
+    mounted () {
+      $['.backstory-modal'].show()
+    } */
 
   }
 </script>

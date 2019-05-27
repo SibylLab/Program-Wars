@@ -7,8 +7,8 @@
         <span style="padding: 10px; font-size: 16px" v-if="showBtn || score > 0">Stack Score: {{ score }}</span>
       </div>
       <div class="col-md-12">
-        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
-        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
+        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch && groupableStack" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
+        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch && groupableStack" for="stackId"><b>Group Select</b></label>
       </div>
       <div class="col-md-12" style="margin-left: 20px">
         <button
@@ -130,6 +130,19 @@ export default {
         let thisActiveCard = this.getActiveCard()
 
         return (thisActiveCard !== undefined && thisActiveCard.type === 'G' && !this.getCurrentPlayer().hasPowerOutage)
+      },
+      /**
+       * groupableStack()
+       * Purpose: Checks if a stack score is too high to be grouped
+       * Returns: True if the value of the selected group card is greater than
+       *          or equal to the score of the stack. False if the score of a
+       *          stack is greater than the value of the group card.
+       */
+      groupableStack () {
+        let groupCard = this.getActiveCard()
+        let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
+        thisStack.calculateStackScore()
+        return (groupCard.value >= thisStack.score)
       },
       currentSelectedStacksMatch () {
         if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
