@@ -45,6 +45,7 @@ describe('Stack.js', () => {
   it('test stackBottomCard', () => {
     expect(testStack.stackBottomCard()).to.equal(testCard)
   })
+
   it('test maxRepeats', () => {
     testStack.calculateStackScore()
     expect(testStack.maxRepeats()).to.equal(false)
