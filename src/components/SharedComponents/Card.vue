@@ -14,7 +14,7 @@ import {mapGetters} from 'vuex'
  */
 export default {
   name: 'Card',
-  props: ['cardData', 'inStack'],
+  props: ['cardData', 'inStack', 'cardEffect'],
   data () {
     return {
       msg: 'Program Wars',
@@ -121,7 +121,6 @@ export default {
         }
       }
     }
-
   }
 }
 </script>
