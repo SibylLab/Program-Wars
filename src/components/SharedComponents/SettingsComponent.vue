@@ -49,12 +49,7 @@
       </div>
       <div class="row">
         <div class="col-md-12" id="scoreSelect">
-          <p>Score to Win:
-          <select class="custom-select" name="select" v-model="selected">
-            <option value="35">Short (score 35)</option>
-            <option value="70">Medium (score 70)</option>
-            <option value="105">Long (score 105)</option>
-          </select></p>
+          <p> Goal: Score 35 points in a path before your opponents! </p>
         </div>
       </div>
       <div id="HASH" class="row">
