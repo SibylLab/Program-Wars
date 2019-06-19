@@ -92,7 +92,6 @@
         isRepeat: false,
         aiSelect: 'noAiSelected',
         aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
-        typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
         isTutorial: false,
         tutorialBegin: false
       }

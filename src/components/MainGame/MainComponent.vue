@@ -60,7 +60,7 @@
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <playfield  :trueFalse="true" :playerId="getCurrentPlayerId()" class="playfieldSides"></playfield>
+              <methods-field id="methodsField" :trueFalse="true" :playerId="getCurrentPlayerId()" class="playfieldSides"></methods-field>
             </div>
             <div class="col-md-6 col-sm-6">
               <playfield :trueFalse="false" :playerId="getCurrentPlayerId()" class="playfieldSides"></playfield>
@@ -78,6 +78,7 @@
 
   import PlayerInfoPanel from './PlayerInfoPanel'
 import Playfield from '../SharedComponents/Playfield'
+import MethodsField from '../SharedComponents/MethodsField'
 
 import RulesModal from '../Modals/RulesModal.vue'
 import CreditsModal from '../Modals/CreditsModal.vue'
@@ -128,6 +129,7 @@ export default {
     components: {
       HackDiscard,
       'player-info-panel': PlayerInfoPanel,
+      'methods-field': MethodsField,
       'playfield': Playfield,
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
