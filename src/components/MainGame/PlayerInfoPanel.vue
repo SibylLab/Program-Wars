@@ -13,7 +13,7 @@
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
             <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px" :style="pIPTextColour()">
               <div class="row"></div>
-              True Path:&nbsp;&thinsp;
+                methods: 
               <meter :max="getScoreLimit()" min=0
                      :value="getScore(player.id).trueScore"
                      :high="getScoreLimit() * 0.75"
@@ -22,7 +22,7 @@
                      style="width: 150px"
               ></meter>
               <div class="row"></div>
-                False Path:
+                main(): &nbsp;&thinsp;
                 <meter :max="getScoreLimit()" min=0
                        :value="getScore(player.id).falseScore"
                        :high="getScoreLimit() * 0.75"
@@ -38,7 +38,6 @@
         <div class="row" style="width: 700px; align-content: center">
         <div id="cards">
           <ul id="example-1">
-            <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card) in hand" style="margin-top: 5px">
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>

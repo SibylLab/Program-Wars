@@ -2,8 +2,8 @@
   <div id="methods" :class="playfieldClass" class="container" :style="getStyle()">
     <div class="row">
       <div class="col-md-12">
-        <h5 :style="playfieldTextColour()">Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
-        <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">if ({{ trueOrFalse }} Path Selected) {</h3>
+        <h5 :style="playfieldTextColour()">Methods Score: {{ score.trueScore }}</h5>
+        <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()"> methods: {</h3>
       </div>
     </div>
     <div class="row">
@@ -57,7 +57,7 @@ export default {
     score () {
       let trueSide = 0
       let falseSide = 0
-      // trueSide = this.getCurrentPlayer().trueScore
+      trueSide = this.getCurrentPlayer().trueScore
       falseSide = this.getCurrentPlayer().falseScore
       if (this.getCurrentPlayer().hasVirus) {
         trueSide = Math.ceil(trueSide * 0.75)
