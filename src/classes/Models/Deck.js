@@ -12,28 +12,28 @@ const instruction3 = 9
 const group2 = 1
 const group3 = 2
 const group4 = 3
-const group5 = 2
-const group6 = 1
+const group5 = 3
+const group6 = 2
 // const group7 = 0;
 // const group8 = 0;
 
-const repetition2 = 3
+const repetition2 = 5
 const repetition3 = 3
-const repetition4 = 3
+const repetition4 = 2
 const repetitionX = 5
 
 // const variable2 = 2;
-const variable3 = 2
+const variable3 = 0
 const variable4 = 2
 const variable5 = 2
-const variable6 = 1
+const variable6 = 2
 
 const hack = 3
-const malware = 3
-const powerOutage = 3
+const malware = 2
+const powerOutage = 2
 
-const overClock = 3
-const batteryBackup = 3
+const overClock = 2
+const batteryBackup = 2
 
 const antiVirus = 1
 const firewall = 1

@@ -37,13 +37,13 @@ export default {
     }
   },
   computed: {
-    trueOrFalse () {
+    /* trueOrFalse () {
       if (this.trueFalse) {
         return 'True'
       } else {
         return 'False'
       }
-    },
+    }, */
     playfieldClass () {
       if (this.activeColour) {
         return 'active'
@@ -52,7 +52,7 @@ export default {
       }
     },
     stacks () {
-      return this.getStackList(this.trueFalse)
+      return this.getStackList(true)
     },
     score () {
       let trueSide = 0

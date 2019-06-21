@@ -7,8 +7,8 @@
         <span style="padding: 10px; font-size: 16px" v-if="showBtn || score > 0">Stack Score: {{ score }}</span>
       </div>
       <div class="col-md-12">
-        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
-        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
+        <input v-if="activeCardIsGroup && cards.length > 0" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
+        <label  v-if="activeCardIsGroup && cards.length > 0" for="stackId"><b>Group Select</b></label>
       </div>
       <div class="col-md-12" style="margin-left: 20px">
         <button
@@ -62,31 +62,35 @@ export default {
       }
     },
     computed: {
+      /**
+       * showBtn()
+       * Purpose: Determines whether or not to display the button to add a stack to a playing field
+       */
       showBtn () {
         if (this.getActiveCard() !== undefined) {
           let activeCard = this.getActiveCard().type
           let thisStack = this.getStacks().find(findStack => this.stackId === findStack.stackId)
-          if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
-            if (activeCard === 'I' && thisStack.cards.length === 0 && !this.getCurrentPlayer().hasPowerOutage) {
-              return true
-            } else if (activeCard === 'R' && !this.getCurrentPlayer().hasPowerOutage) {
-              let rCount = 0
-              if (thisStack.cards.length !== 0 && (thisStack.stackTopCard().type !== 'R' || thisStack.stackTopCard().value !== 1)) {
-                for (let i = 0; i < thisStack.cards.length; i++) {
-                  if (thisStack.cards[i].type === 'R') {
-                    rCount++
-                  }
-                }
-                if (rCount < 2) {
-                  return true
+          // if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
+          if (activeCard === 'I' && thisStack.cards.length === 0 && !this.getCurrentPlayer().hasPowerOutage) {
+            return true
+          } else if (activeCard === 'R' && !this.getCurrentPlayer().hasPowerOutage) {
+            let rCount = 0
+            if (thisStack.cards.length !== 0 && (thisStack.stackTopCard().type !== 'R' || thisStack.stackTopCard().value !== 1)) {
+              for (let i = 0; i < thisStack.cards.length; i++) {
+                if (thisStack.cards[i].type === 'R') {
+                  rCount++
                 }
               }
-            } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 5 && !this.getCurrentPlayer().hasPowerOutage) {
-              if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1) {
+              if (rCount < 2) {
                 return true
               }
             }
+          } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 5 && !this.getCurrentPlayer().hasPowerOutage) {
+            if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1) {
+              return true
+            }
           }
+          // }
         }
         return false
       },
@@ -131,7 +135,7 @@ export default {
 
         return (thisActiveCard !== undefined && thisActiveCard.type === 'G' && !this.getCurrentPlayer().hasPowerOutage)
       },
-      currentSelectedStacksMatch () {
+      /* currentSelectedStacksMatch () {
         if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
           if (this.getSelectedStacksBoolean() === undefined) {
             return true
@@ -141,7 +145,7 @@ export default {
             return false
           }
         }
-      },
+      }, */
       selectedStacksLength () {
         let selectedStacks = this.getSelectedStacks()
 

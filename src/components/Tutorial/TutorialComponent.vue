@@ -58,10 +58,10 @@
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <methods-field  :trueFalse="true" :playerId="currentPlayerId" :style="trueSideColour()" class="playfieldSides"></methods-field>
+              <methods-field id="methodsField" :trueFalse="true" :playerId="currentPlayerId" :style="trueSideColour()" class="playfieldSides"></methods-field>
             </div>
             <div class="col-md-6 col-sm-6">
-              <main-field :trueFalse="false" :playerId="currentPlayerId" :style="falseSideColour()" class="playfieldSides"></main-field>
+              <main-field id="mainField" :trueFalse="false" :playerId="currentPlayerId" :style="falseSideColour()" class="playfieldSides"></main-field>
             </div>
           </div>
         </div>
