@@ -40,7 +40,7 @@
           <ul id="example-1">
             <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card) in hand" style="margin-top: 5px">
-                  <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
+                  <card :cardData="card" @cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
         </div>

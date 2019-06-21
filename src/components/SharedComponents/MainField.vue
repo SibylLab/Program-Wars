@@ -24,14 +24,14 @@ import Stack from './Stack'
 import {mapGetters, mapState} from 'vuex'
 
 /**
- * This displays the true/false playfields with the players stacks and playfield score.
+ * This displays the main() field with the players stacks and playfield score.
  */
 export default {
-  name: 'Playfield',
+  name: 'main-field',
   props: ['trueFalse', 'playerId', 'activeColour'],
   data () {
     return {
-      title: 'Playfield',
+      title: 'Main',
       numberOfStacks: 1,
       test: 'default'
     }
@@ -121,7 +121,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#playfield {
+#mainField {
     background-color: #ddd;
     width: 100%;
     height: 90%;
@@ -150,12 +150,12 @@ a {
   color: #42b983;
 }
 
-#playfield.active {
+#mainField.active {
   background-color: rgba(0, 255, 0, 0.26);
   color: #fff;
 }
 
-#playfield.notActive {
+#mainField.notActive {
   background-color: rgba(242, 0, 0, 0.36);
 }
 

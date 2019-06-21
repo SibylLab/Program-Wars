@@ -91,7 +91,7 @@
         maxPlayer: false,
         isRepeat: false,
         aiSelect: 'noAiSelected',
-        aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
+        aiOpponents: ['n00b_BOT mk.1', 'h3110-WLd', 'codeBot3000', 'PR0G_master mk.6'],
         isTutorial: false,
         tutorialBegin: false
       }

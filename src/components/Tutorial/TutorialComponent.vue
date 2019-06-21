@@ -58,10 +58,10 @@
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <playfield  :trueFalse="true" :playerId="currentPlayerId" :style="trueSideColour()" class="playfieldSides"></playfield>
+              <methods-field  :trueFalse="true" :playerId="currentPlayerId" :style="trueSideColour()" class="playfieldSides"></methods-field>
             </div>
             <div class="col-md-6 col-sm-6">
-              <playfield :trueFalse="false" :playerId="currentPlayerId" :style="falseSideColour()" class="playfieldSides"></playfield>
+              <main-field :trueFalse="false" :playerId="currentPlayerId" :style="falseSideColour()" class="playfieldSides"></main-field>
             </div>
           </div>
         </div>
@@ -75,7 +75,8 @@
   /* eslint-disable no-undef */
 
   import PlayerInfoPanel from './TutorialPlayerInfoPanel'
-  import Playfield from '../SharedComponents/Playfield'
+  import MainField from '../SharedComponents/MainField'
+  import MethodsField from '../SharedComponents/MethodsField'
 
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
@@ -127,7 +128,8 @@ export default {
     components: {
       HackDiscard,
       'player-info-panel': PlayerInfoPanel,
-      'playfield': Playfield,
+      'main-field': MainField,
+      'methods-field': MethodsField,
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
       'hack-modal': HackModal,

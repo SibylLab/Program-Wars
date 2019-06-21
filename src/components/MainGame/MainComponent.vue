@@ -63,7 +63,7 @@
               <methods-field id="methodsField" :trueFalse="true" :playerId="getCurrentPlayerId()" class="playfieldSides"></methods-field>
             </div>
             <div class="col-md-6 col-sm-6">
-              <playfield :trueFalse="false" :playerId="getCurrentPlayerId()" class="playfieldSides"></playfield>
+              <main-field id="mainField" :trueFalse="false" :playerId="getCurrentPlayerId()" class="playfieldSides"></main-field>
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@
   /* eslint-disable no-undef */
 
   import PlayerInfoPanel from './PlayerInfoPanel'
-import Playfield from '../SharedComponents/Playfield'
+import MainField from '../SharedComponents/MainField'
 import MethodsField from '../SharedComponents/MethodsField'
 
 import RulesModal from '../Modals/RulesModal.vue'
@@ -130,7 +130,7 @@ export default {
       HackDiscard,
       'player-info-panel': PlayerInfoPanel,
       'methods-field': MethodsField,
-      'playfield': Playfield,
+      'main-field': MainField,
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
       'hack-modal': HackModal,
