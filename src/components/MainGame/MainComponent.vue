@@ -59,10 +59,10 @@
       <div id="player-stacks" style="padding-top: 12px">
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-4 col-sm-6">
               <methods-field id="methodsField" :trueFalse="true" :playerId="getCurrentPlayerId()" class="playfieldSides"></methods-field>
             </div>
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-8 col-sm-6">
               <main-field id="mainField" :trueFalse="false" :playerId="getCurrentPlayerId()" class="playfieldSides"></main-field>
             </div>
           </div>
