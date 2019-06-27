@@ -1,14 +1,14 @@
 <template>
 
   <div class="container" @dragover.prevent @drop="drop" @ontouchend="drop"  @click="stackClicked()" @click.stop style="text-align: left; color: black;">
-    <modal :modalId="modalId2" :modalTitle="groupSelectConfirm" :modalBody="groupSelectText" :cancel="true" :modalCards="[]" :modalCallback="() => {groupStacks()}" data-backdrop="static" data-keyboard="false"></modal>
+    <modal :modalId="modalId2" :modalTitle="groupSelect" :modalBody="groupSelectText" :cancel="true" :modalCards="[]" :modalCallback="() => {groupStacks()}" data-backdrop="static" data-keyboard="false"></modal>
     <div class="row">
       <div class="col-md-12">
         <span style="padding: 10px; font-size: 16px" v-if="showBtn || score > 0">Stack Score: {{ score }}</span>
       </div>
       <div class="col-md-12">
-        <input v-if="activeCardIsGroup && cards.length > 0" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
-        <label  v-if="activeCardIsGroup && cards.length > 0" for="stackId"><b>Group Select</b></label>
+        <input v-if="groupableStack && cards.length > 0" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
+        <label  v-if="groupableStack && cards.length > 0" for="stackId"><b>{{groupSelect}}</b></label>
       </div>
       <div class="col-md-12" style="margin-left: 20px">
         <button
@@ -50,14 +50,14 @@
  */
 export default {
     name: 'Stack',
-    props: ['playfieldBoolean', 'stackId', 'playerId'],
+    props: ['methodsField', 'playfieldBoolean', 'stackId', 'playerId'],
     data () {
       return {
         title: 'Stack',
         id: this.stackId,
         activeStack: '',
         dataContent: 'hello',
-        groupSelectConfirm: 'Group Stacks',
+        groupSelect: 'Group Stack',
         groupSelectText: 'Would you like to group these stacks?'
       }
     },
@@ -70,27 +70,27 @@ export default {
         if (this.getActiveCard() !== undefined) {
           let activeCard = this.getActiveCard().type
           let thisStack = this.getStacks().find(findStack => this.stackId === findStack.stackId)
-          // if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
-          if (activeCard === 'I' && thisStack.cards.length === 0 && !this.getCurrentPlayer().hasPowerOutage) {
-            return true
-          } else if (activeCard === 'R' && !this.getCurrentPlayer().hasPowerOutage) {
-            let rCount = 0
-            if (thisStack.cards.length !== 0 && (thisStack.stackTopCard().type !== 'R' || thisStack.stackTopCard().value !== 1)) {
-              for (let i = 0; i < thisStack.cards.length; i++) {
-                if (thisStack.cards[i].type === 'R') {
-                  rCount++
+          if (this.playfieldBoolean === false) {
+            if (activeCard === 'I' && thisStack.cards.length === 0 && !this.getCurrentPlayer().hasPowerOutage) {
+              return true
+            } else if (activeCard === 'R' && !this.getCurrentPlayer().hasPowerOutage) {
+              let rCount = 0
+              if (thisStack.cards.length !== 0 && (thisStack.stackTopCard().type !== 'R' || thisStack.stackTopCard().value !== 1)) {
+                for (let i = 0; i < thisStack.cards.length; i++) {
+                  if (thisStack.cards[i].type === 'R') {
+                    rCount++
+                  }
+                }
+                if (rCount < 2) {
+                  return true
                 }
               }
-              if (rCount < 2) {
+            } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 5 && !this.getCurrentPlayer().hasPowerOutage) {
+              if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1) {
                 return true
               }
             }
-          } else if (activeCard === 'V' && thisStack.cards.length > 1 && thisStack.cards.length < 5 && !this.getCurrentPlayer().hasPowerOutage) {
-            if (thisStack.stackTopCard().type === 'R' && thisStack.stackTopCard().value === 1) {
-              return true
-            }
           }
-          // }
         }
         return false
       },
@@ -130,12 +130,12 @@ export default {
         thisStack.calculateStackScore()
         return thisStack.score
       },
-      activeCardIsGroup () {
+      /* ****DEADCODE****  activeCardIsGroup () {
         let thisActiveCard = this.getActiveCard()
 
         return (thisActiveCard !== undefined && thisActiveCard.type === 'G' && !this.getCurrentPlayer().hasPowerOutage)
       },
-      /* currentSelectedStacksMatch () {
+      currentSelectedStacksMatch () {
         if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
           if (this.getSelectedStacksBoolean() === undefined) {
             return true
@@ -146,6 +146,21 @@ export default {
           }
         }
       }, */
+      /**
+       * Purpose: determining which stack gets a checkbox above it when grouping
+       */
+      groupableStack () {
+        // assign useable var name
+        let activeCard = this.getActiveCard()
+
+        // create set of boolean values
+        let properField = this.playfieldBoolean === false
+        let isGroup = (activeCard !== undefined && activeCard.type === 'G')
+        let noPO = this.getCurrentPlayer().hasPowerOutage === false
+
+        // return booleans
+        return (properField && isGroup && noPO)
+      },
       selectedStacksLength () {
         let selectedStacks = this.getSelectedStacks()
 
@@ -243,7 +258,7 @@ export default {
       ]),
       stackSelected () {
         this.addStackToSelected({stackId: this.stackId})
-        this.setStackSelectedBoolean({boolean: this.playfieldBoolean})
+        this.setStackSelectedBoolean({boolean: true})
         let selectedStacks = this.getSelectedStacks()
         if (selectedStacks.length === 0) {
           this.setStackSelectedBoolean({boolean: undefined})
@@ -288,6 +303,7 @@ export default {
         }
         this.updateBonus(groupingBonus, groupingBonus)
         this.getCurrentPlayer().groupingBonus += groupingBonus
+        // this.setStackSelectedBoolean({boolean: true})
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()
         bus.$emit('cardDeselected')

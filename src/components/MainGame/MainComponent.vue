@@ -275,13 +275,14 @@ export default {
     created () {
       this.playerList = this.getPlayers()
       this.gameStart = true
-      let j = Math.floor(Math.random() * 2)
-      this.setTrueFalseAnim({startAnim: true})
-      if (j === 0) {
+      this.setActiveSide({activeSide: false})
+      // let j = Math.floor(Math.random() * 2)
+      // this.setTrueFalseAnim({startAnim: true})
+      /* if (j === 0) {
         this.setActiveSide({activeSide: true})
       } else {
         this.setActiveSide({activeSide: false})
-      }
+      } */
       this.interval = setInterval(() => {
         let gameState = this.getgameState()
         if (gameState === 'newGame') {
@@ -292,13 +293,13 @@ export default {
           this.setGameState({gameState: 'playerTurn'})
 
           if (this.getCurrentPlayerId() === 0) {
-            j = Math.floor(Math.random() * 2)
-            this.setTrueFalseAnim({startAnim: true})
+            // j = Math.floor(Math.random() * 2)
+            /* this.setTrueFalseAnim({startAnim: true})
             if (j === 0) {
               this.setActiveSide({activeSide: true})
             } else {
               this.setActiveSide({activeSide: false})
-            }
+            } */
             if (this.getFirstRound()) {
               this.firstRound()
               this.setFirstRound(false)

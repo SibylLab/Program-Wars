@@ -49,7 +49,7 @@
       </div>
       <div class="row">
         <div class="col-md-12" id="scoreSelect">
-          <p> Goal: Score 35 points in a path before your opponents! </p>
+          <p> Goal: Score {{selected}} points before your opponents! </p>
         </div>
       </div>
       <div id="HASH" class="row">
@@ -85,7 +85,7 @@
         localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
-        selected: '35',
+        selected: '50',
         noPlayers: true,
         inputDisable: false,
         maxPlayer: false,
