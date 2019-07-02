@@ -21,18 +21,24 @@
     <div class="container settingMenu">
       <div class="row">
         <div class="col-md-12">
-          <h4>Welcome to a new game of Program Wars!</h4>
+          <h4>Welcome to a new game of Programming Wars!</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" id="aiPlayers">
+          <h6>Choose the number of opponents you wish to face:</h6>
+          <select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; width: 170px; height: 32px">
+            <option value="none" selected>(None)</option>s
+            <option value="noAiSelected" disabled selected>Select AI Opponent:</option>
+            <option v-for="opponents in aiOpponents" :value="opponents">{{ opponents }}</option>
+          </select><br>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12" id="addPlayer">
-        <select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; width: 170px; height: 32px">
-            <option value="none" selected>(None)</option>s
-            <option value="noAiSelected" disabled selected>Select AI Opponent:</option>
-            <option v-for="opponents in aiOpponents" :value="opponents">{{ opponents }}</option>
-          </select> or
+          <h6>Choose your player name:</h6>
           <input type="text" placeholder="Add a player..." maxlength="10" v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="inputDisable" style="margin-left: 20px">
-         <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
+          <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
           <p v-if="maxChar && !maxPlayer" class="infoMsg">Maximum Characters Reached</p>
           <p v-if="isRepeat && !maxPlayer" class="infoMsg">Player Already exists</p>
         </div>
