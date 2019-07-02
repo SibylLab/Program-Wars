@@ -205,20 +205,22 @@ export default {
       cardClicked (c) {
         this.tipsCardSelected = this.setTipBox(c)
         let prevActive = this.getActiveCard()
-        if (c.type === 'VIRUS') {
-          $('.virus').modal('show')
-        } else if (c.type === 'POWEROUTAGE') {
-          $('.powerOutage').modal('show')
-        } else if (c.type === 'BATTERYBACKUP') {
-          $('.batteryBackup').modal('show')
-        } else if (c.type === 'OVERCLOCK') {
-          $('.overclock').modal('show')
-        } else if (c.type === 'FIREWALL') {
-          $('.firewall').modal('show')
-        } else if (c.type === 'GENERATOR') {
-          $('.generator').modal('show')
-        } else if (c.type === 'ANTIVIRUS') {
-          $('.antiVirus').modal('show')
+        switch (c.type) {
+          case 'VIRUS': $('.virus').modal('show')
+            break
+          case 'POWEROUTAGE': $('.powerOutage').modal('show')
+            break
+          case 'BATTERYBACKUP': $('.batteryBackup').modal('show')
+            break
+          case 'OVERCLOCK': $('.overclock').modal('show')
+            break
+          case 'FIREWALL': $('.firewall').modal('show')
+            break
+          case 'GENERATOR': $('.generator').modal('show')
+            break
+          case 'ANTIVIRUS': $('.antiVirus').modal('show')
+            break
+          case 'H': $('.hack').modal('show')
         }
 
         this.selectCard(c)

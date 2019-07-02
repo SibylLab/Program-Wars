@@ -7,8 +7,8 @@
       </div>
     </div>
     <div class="row">
-        <div class="stacks col-lg-3 col-md-4 col-sm-6" v-for="stack in stacks">
-          <stack :playfieldBoolean="true" :stackId="stack.stackId" @cardAdded="cardAdded" :playerId="playerId"></stack>
+        <div class="col-md-3 col-sm-6" @showGroup='showGroup()' v-for="group in groups">
+          <group-field :playerId="playerId"></group-field>
       </div>
     </div>
     <div class="row">
@@ -21,6 +21,7 @@
 
 <script>
 import Stack from './Stack'
+import Group from './Group'
 import {mapGetters, mapState} from 'vuex'
 
 /**
@@ -37,13 +38,6 @@ export default {
     }
   },
   computed: {
-    /* trueOrFalse () {
-      if (this.trueFalse) {
-        return 'True'
-      } else {
-        return 'False'
-      }
-    }, */
     playfieldClass () {
       if (this.activeColour) {
         return 'active'
@@ -63,10 +57,14 @@ export default {
         trueSide = Math.ceil(trueSide * 1.25)
       }
       return trueSide
+    },
+    groups () {
+      return []
     }
   },
   components: {
-    'stack': Stack
+    'stack': Stack,
+    'group-field': Group
   },
   methods: {
     ...mapGetters([
@@ -79,6 +77,9 @@ export default {
       'pIPTextColour',
       'playfieldTextColour'
     ]),
+    showGroups () {
+      return []
+    },
     getStackList () {
       return this.getStacks().filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)
     },

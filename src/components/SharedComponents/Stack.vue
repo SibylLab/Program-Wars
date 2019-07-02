@@ -50,7 +50,7 @@
  */
 export default {
     name: 'Stack',
-    props: ['methodsField', 'playfieldBoolean', 'stackId', 'playerId'],
+    props: ['fieldName', 'playfieldBoolean', 'stackId', 'playerId'],
     data () {
       return {
         title: 'Stack',
@@ -70,7 +70,7 @@ export default {
         if (this.getActiveCard() !== undefined) {
           let activeCard = this.getActiveCard().type
           let thisStack = this.getStacks().find(findStack => this.stackId === findStack.stackId)
-          if (this.playfieldBoolean === false) {
+          if (this.fieldName === 'Main') {
             if (activeCard === 'I' && thisStack.cards.length === 0 && !this.getCurrentPlayer().hasPowerOutage) {
               return true
             } else if (activeCard === 'R' && !this.getCurrentPlayer().hasPowerOutage) {
@@ -154,7 +154,7 @@ export default {
         let activeCard = this.getActiveCard()
 
         // create set of boolean values
-        let properField = this.playfieldBoolean === false
+        let properField = this.fieldName === 'Main'
         let isGroup = (activeCard !== undefined && activeCard.type === 'G')
         let noPO = this.getCurrentPlayer().hasPowerOutage === false
 
@@ -278,6 +278,7 @@ export default {
        */
       groupStacks () {
         let groupingBonus = 5
+        // let methods = this.getCurrentPlayer().
         if (this.getTutorialState()) {
           if (!this.getAiTurn()) {
             bus.$emit('cardPlayed')
@@ -303,7 +304,6 @@ export default {
         }
         this.updateBonus(groupingBonus, groupingBonus)
         this.getCurrentPlayer().groupingBonus += groupingBonus
-        // this.setStackSelectedBoolean({boolean: true})
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()
         bus.$emit('cardDeselected')
