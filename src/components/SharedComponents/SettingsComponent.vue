@@ -49,12 +49,7 @@
       </div>
       <div class="row">
         <div class="col-md-12" id="scoreSelect">
-          <p>Score to Win:
-          <select class="custom-select" name="select" v-model="selected">
-            <option value="35">Short (score 35)</option>
-            <option value="70">Medium (score 70)</option>
-            <option value="105">Long (score 105)</option>
-          </select></p>
+          <p>Goal: Score {{ selected }} on a path before your opponents!</p>
         </div>
       </div>
       <div id="HASH" class="row">
@@ -90,14 +85,14 @@
         localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
-        selected: '35',
+        selected: '50',
         noPlayers: true,
         inputDisable: false,
         maxPlayer: false,
         isRepeat: false,
         aiSelect: 'noAiSelected',
         aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
-        typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
+        // typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
         isTutorial: false,
         tutorialBegin: false
       }
@@ -169,7 +164,7 @@
         this.localPlayers.push({name: 'You', isAi: false})
         this.localPlayers.push({name: 'Flash', isAi: true})
         this.$store.commit('addPlayers', {list: this.localPlayers})
-        this.$store.commit('setScoreLimit', {scoreLimit: 100})
+        this.$store.commit('setScoreLimit', {scoreLimit: 50})
         this.gameStart = true
         setTimeout(() => {
           this.$router.push('tutorial')
