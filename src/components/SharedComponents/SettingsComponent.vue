@@ -29,15 +29,15 @@
           <h6>Choose the number of opponents you wish to face:</h6>
           <div class="container gameTypes">
             <div class="col-md-2">
-              <input type="checkbox" id="hotseat">
+              <input type="radio" id="hotseat" name="gameType" value="hotseat">
               <label for="hotseat"><b>Hotseat: </b><br>Add up to 4 player names for local multiplayer</label>
             </div>
             <div class="col-md-2">
-              <input type="checkbox" id="oneAI" @click="addAI(1)">
+              <input type="radio" id="oneAI" name="gameType" value="oneAI" @click="addAI(1)">
               <label for="oneAI"><b>One bot: </b><br>Face off against an AI opponent in a 1v1 grudge match</label>
             </div>
             <div class="col-md-2">
-              <input type="checkbox" id="threeAI" @click="addAI(3)">
+              <input type="radio" id="threeAI" name="gameType" value="threeAI" @click="addAI(3)">
               <label for="threeAI"><b>Three bots: </b><br>A free-for-all against 3 AI opponents</label>
             </div>
           </div>
@@ -111,7 +111,7 @@
         maxPlayer: false,
         isRepeat: false,
         aiSelect: 'noAiSelected',
-        aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
+        aiOpponents: ['', 'n00b_bot mk.1', 'codeMaster3000', 'sudo_bot mk.5'],
         // typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
         isTutorial: false,
         tutorialBegin: false
@@ -220,9 +220,17 @@
         } else { return }
       },
       addAI (num) {
-        while (num > 0) {
-          this.localPlayers.push({name: this.aiOpponents[num], isAi: true})
-          num--
+        if (this.localPlayers.length > 0) {
+          for (let player in this.localPlayers) {
+            if (player.isAi === true) {
+              player.removePlayer()
+            }
+          }
+        } else {
+          while (num > 0) {
+            this.localPlayers.push({name: this.aiOpponents[num], isAi: true})
+            num--
+          }
         }
       }
     },
