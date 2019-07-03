@@ -29,7 +29,7 @@
           <h6>Choose the number of opponents you wish to face:</h6>
           <div class="container gameTypes">
             <div class="col-md-2">
-              <input type="radio" id="hotseat" name="gameType" value="hotseat">
+              <input type="radio" id="hotseat" name="gameType" value="hotseat" @click="clearAI()">
               <label for="hotseat"><b>Hotseat: </b><br>Add up to 4 player names for local multiplayer</label>
             </div>
             <div class="col-md-2">
@@ -112,7 +112,6 @@
         isRepeat: false,
         aiSelect: 'noAiSelected',
         aiOpponents: ['', 'n00b_bot mk.1', 'codeMaster3000', 'sudo_bot mk.5'],
-        // typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
         isTutorial: false,
         tutorialBegin: false
       }
@@ -149,12 +148,14 @@
       submit () {
         let pass = true
         for (let player of this.localPlayers) {
-          if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
+          pass = this.repeatCheck(player).passFail
+          this.isRepeat = this.repeatCheck(player).repeat
+          /* if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
             pass = false
             this.isRepeat = true
           } else {
             this.isRepeat = false
-          }
+          } */
         }
         if (!(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none')) {
           if (this.aiSelect.length > 0 && pass) {
@@ -164,14 +165,38 @@
         if (this.newPlayer.length > 0 && pass) {
           this.localPlayers.push({name: this.newPlayer, isAi: false})
         }
+        this.numPlayersCheck()
+        /* if (this.localPlayers.length >= 4) {
+          this.maxPlayer = true
+        }
+        if (this.localPlayers.length > 1) {
+          this.noPlayers = false
+        } */
+        this.newPlayer = ''
+        this.aiSelect = 'noAiSelected'
+      },
+
+      /**
+       * Checks for repeat names in localPlayers
+       */
+      repeatCheck (player) {
+        if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
+          return {passFail: false, repeat: true}
+        } else {
+          return {passFail: true, repeat: false}
+        }
+      },
+
+      /**
+       * sets the value of maxPlayers and noPlayers
+       */
+      numPlayersCheck () {
         if (this.localPlayers.length >= 4) {
           this.maxPlayer = true
         }
         if (this.localPlayers.length > 1) {
           this.noPlayers = false
         }
-        this.newPlayer = ''
-        this.aiSelect = 'noAiSelected'
       },
 
       /**
@@ -219,17 +244,30 @@
           }
         } else { return }
       },
+
+      /**
+       * Automatically adds AI players according to the gameType option selected by the player
+       */
       addAI (num) {
-        if (this.localPlayers.length > 0) {
-          for (let player in this.localPlayers) {
-            if (player.isAi === true) {
-              player.removePlayer()
-            }
-          }
-        } else {
-          while (num > 0) {
-            this.localPlayers.push({name: this.aiOpponents[num], isAi: true})
-            num--
+        let players = this.localPlayers
+        this.clearAI()
+        while (num > 0) {
+          players.push({name: this.aiOpponents[num], isAi: true})
+          num--
+        }
+        this.numPlayersCheck()
+      },
+
+      /**
+       * Clears the localPlayers list of any players
+       */
+      clearAI () {
+        let players = this.localPlayers
+        if (players !== []) {
+          for (let index in players) {
+            // if (players[index].isAi === true) {
+            this.$delete(players, index)
+            // }
           }
         }
       }
