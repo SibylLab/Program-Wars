@@ -27,11 +27,25 @@
       <div class="row">
         <div class="col-md-12" id="aiPlayers">
           <h6>Choose the number of opponents you wish to face:</h6>
-          <select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; width: 170px; height: 32px">
+          <div class="container gameTypes">
+            <div class="col-md-2">
+              <input type="checkbox" id="hotseat">
+              <label for="hotseat"><b>Hotseat: </b><br>Add up to 4 player names for local multiplayer</label>
+            </div>
+            <div class="col-md-2">
+              <input type="checkbox" id="oneAI">
+              <label for="oneAI"><b>One bot: </b><br>Face off against an AI opponent in a 1v1 grudge match</label>
+            </div>
+            <div class="col-md-2">
+              <input type="checkbox" id="threeAI">
+              <label for="threeAI"><b>Three bots: </b><br>A free-for-all against 3 AI opponents</label>
+            </div>
+          </div>
+          <!--<select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; width: 170px; height: 32px">
             <option value="none" selected>(None)</option>s
             <option value="noAiSelected" disabled selected>Select AI Opponent:</option>
             <option v-for="opponents in aiOpponents" :value="opponents">{{ opponents }}</option>
-          </select><br>
+          </select>--><br>
         </div>
       </div>
       <div class="row">
@@ -283,6 +297,12 @@
     box-shadow: 2px 2px 50px 5px black;
     margin-top: 10%;
 
+  }
+
+  .gameTypes {
+    max-width: 800px;
+    display: flex;
+    justify-content: space-evenly;
   }
 
   .playerList {
