@@ -285,7 +285,7 @@
 
   #HASH #HASH2{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
 
   #settingsPage {
