@@ -265,9 +265,9 @@
         let players = this.localPlayers
         if (players !== []) {
           for (let index in players) {
-            // if (players[index].isAi === true) {
-            this.$delete(players, index)
-            // }
+            if (players[index].isAi === true && players[index].name !== '') {
+              this.$delete(players, index)
+            }
           }
         }
       }

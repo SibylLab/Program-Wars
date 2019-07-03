@@ -309,9 +309,7 @@ export default {
     min-height: inherit;
     min-width: inherit;
     overflow-y: auto;
-    /*height: inherit;*/
-
-  }
+   }
 
   #header {
     width: 100%;
@@ -329,6 +327,7 @@ export default {
     font-weight: bold;
     font-size: 1.2em;
   }
+
   #playerinfopanel {
     flex-grow:0;
     width: 100%;
