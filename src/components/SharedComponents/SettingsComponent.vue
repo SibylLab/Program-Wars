@@ -33,11 +33,11 @@
               <label for="hotseat"><b>Hotseat: </b><br>Add up to 4 player names for local multiplayer</label>
             </div>
             <div class="col-md-2">
-              <input type="checkbox" id="oneAI">
+              <input type="checkbox" id="oneAI" @click="addAI(1)">
               <label for="oneAI"><b>One bot: </b><br>Face off against an AI opponent in a 1v1 grudge match</label>
             </div>
             <div class="col-md-2">
-              <input type="checkbox" id="threeAI">
+              <input type="checkbox" id="threeAI" @click="addAI(3)">
               <label for="threeAI"><b>Three bots: </b><br>A free-for-all against 3 AI opponents</label>
             </div>
           </div>
@@ -218,6 +218,12 @@
             this.noPlayers = true
           }
         } else { return }
+      },
+      addAI (num) {
+        while (num > 0) {
+          this.localPlayers.push({name: this.aiOpponents[num], isAi: true})
+          num--
+        }
       }
     },
     computed: {
