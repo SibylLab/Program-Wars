@@ -30,22 +30,19 @@
           <div class="container gameTypes">
             <div class="col-md-2">
               <input type="radio" id="hotseat" name="gameType" value="hotseat" @click="clearAI()">
-              <label for="hotseat"><b>Hotseat: </b><br>Add up to 4 player names for local multiplayer</label>
+              <label for="hotseat"><b>Hotseat: </b><br>Add two player names for local multiplayer</label>
             </div>
             <div class="col-md-2">
               <input type="radio" id="oneAI" name="gameType" value="oneAI" @click="addAI(1)">
               <label for="oneAI"><b>One bot: </b><br>Face off against an AI opponent in a 1v1 grudge match</label>
             </div>
-            <div class="col-md-2">
+            <!-- The div below is commented out because its the only version that still causes issues and I want to do a pull request for a working version tonight. Will try to fix tomorrow morning -->
+            <!--<div class="col-md-2">
               <input type="radio" id="threeAI" name="gameType" value="threeAI" @click="addAI(3)">
               <label for="threeAI"><b>Three bots: </b><br>A free-for-all against 3 AI opponents</label>
-            </div>
+            </div>-->
           </div>
-          <!--<select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; width: 170px; height: 32px">
-            <option value="none" selected>(None)</option>s
-            <option value="noAiSelected" disabled selected>Select AI Opponent:</option>
-            <option v-for="opponents in aiOpponents" :value="opponents">{{ opponents }}</option>
-          </select>--><br>
+          <br>
         </div>
       </div>
       <div class="row">
@@ -150,28 +147,11 @@
         for (let player of this.localPlayers) {
           pass = this.repeatCheck(player).passFail
           this.isRepeat = this.repeatCheck(player).repeat
-          /* if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
-            pass = false
-            this.isRepeat = true
-          } else {
-            this.isRepeat = false
-          } */
-        }
-        if (!(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none')) {
-          if (this.aiSelect.length > 0 && pass) {
-            this.localPlayers.push({name: this.aiSelect, isAi: true})
-          }
         }
         if (this.newPlayer.length > 0 && pass) {
           this.localPlayers.push({name: this.newPlayer, isAi: false})
         }
         this.numPlayersCheck()
-        /* if (this.localPlayers.length >= 4) {
-          this.maxPlayer = true
-        }
-        if (this.localPlayers.length > 1) {
-          this.noPlayers = false
-        } */
         this.newPlayer = ''
         this.aiSelect = 'noAiSelected'
       },
@@ -191,7 +171,7 @@
        * sets the value of maxPlayers and noPlayers
        */
       numPlayersCheck () {
-        if (this.localPlayers.length >= 4) {
+        if (this.localPlayers.length >= 2) {
           this.maxPlayer = true
         }
         if (this.localPlayers.length > 1) {
@@ -207,7 +187,7 @@
         this.setTutorial({gameType: true})
         this.localPlayers = []
         this.localPlayers.push({name: 'You', isAi: false})
-        this.localPlayers.push({name: 'Flash', isAi: true})
+        this.localPlayers.push({name: 'training_bot', isAi: true})
         this.$store.commit('addPlayers', {list: this.localPlayers})
         this.$store.commit('setScoreLimit', {scoreLimit: 50})
         this.gameStart = true
@@ -267,6 +247,7 @@
           for (let index in players) {
             if (players[index].isAi === true && players[index].name !== '') {
               this.$delete(players, index)
+              this.maxPlayer = false
             }
           }
         }
