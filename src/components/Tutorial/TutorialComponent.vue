@@ -33,7 +33,7 @@
     </transition>
 
     <div id="header" :style="mainBackgroundColour()">
-      <p :style="mainTextColour()">Program Wars Tutorial</p>
+      <p :style="mainTextColour()">Programming Wars Tutorial</p>
       <div style="margin-left: auto; padding: 0 5px 0 0">
         <timer class="timer"></timer>
       </div>
@@ -105,7 +105,7 @@ export default {
       return {
         idCounter: 0,
         dataToggle: false,
-        modalTitle: 'Welcome to the Program Wars Tutorial!',
+        modalTitle: 'Welcome to the Programming Wars Tutorial!',
         localPlayers: [],
         newPlayer: '',
         gameStart: false,
@@ -144,7 +144,6 @@ export default {
       'generator-modal': Generator,
       'anti-virus-modal': AntiVirus,
       'timer': Timer
-
     },
     methods: {
       ...mapGetters([
