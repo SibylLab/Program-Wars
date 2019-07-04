@@ -6,9 +6,10 @@
       <div class="col-md-12">
         <span style="padding: 10px; font-size: 16px" v-if="showBtn || score > 0">Stack Score: {{ score }}</span>
       </div>
+      <!-- Where the checkboxes for grouping are output -->
       <div class="col-md-12">
-        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
-        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch" for="stackId"><b>Group Select</b></label>
+        <input v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch && groupableStack" type="checkbox" :id="stackId" @click="stackSelected" :checked="selectedStacksLength">
+        <label  v-if="activeCardIsGroup && cards.length > 0 && currentSelectedStacksMatch && groupableStack" for="stackId"><b> Group stack </b></label>
       </div>
       <div class="col-md-12" style="margin-left: 20px">
         <button
@@ -121,16 +122,50 @@ export default {
       buttonStyle () {
         return ''
       },
+
+      /**
+       * score()
+       * Purpose: To have access to a stacks score
+       * Return: The total score value of a stack
+       */
       score () {
         let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
         thisStack.calculateStackScore()
         return thisStack.score
       },
+
+      /**
+       * activeCardIsGroup()
+       * Purpose: To determine if a group card has been selected
+       * Returns: True if the currently selected card is a group card and the player
+       *          does not currently have a power outage against them.
+       */
       activeCardIsGroup () {
         let thisActiveCard = this.getActiveCard()
 
         return (thisActiveCard !== undefined && thisActiveCard.type === 'G' && !this.getCurrentPlayer().hasPowerOutage)
       },
+
+      /**
+       * groupableStack()
+       * Purpose: Checks if a stack score is too high to be grouped
+       * Returns: True if the value of the selected group card is greater than
+       *          or equal to the score of the stack. False if the score of a
+       *          stack is greater than the value of the group card.
+       */
+      groupableStack () {
+        let groupCard = this.getActiveCard()
+        let thisStack = this.getStacks().find(stack => stack.stackId === this.stackId)
+        thisStack.calculateStackScore()
+        return (groupCard.value >= thisStack.score)
+      },
+
+      /**
+       * currentSelectedStacksMatch()
+       * Purpose: Determines if a stack is in the currently active playfield
+       * Returns: True if the playfield a stack is in is undefined or if its
+       *          in the current active playing. False otherwise.
+       */
       currentSelectedStacksMatch () {
         if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
           if (this.getSelectedStacksBoolean() === undefined) {
@@ -142,6 +177,12 @@ export default {
           }
         }
       },
+
+      /**
+       * selectedStacksLength()
+       * Purpose: To determine if the conditions of a group card have been met
+       * Returns: True if the id of all the stacks selected for grouping match *not sure what the have to match actually*
+       */
       selectedStacksLength () {
         let selectedStacks = this.getSelectedStacks()
 

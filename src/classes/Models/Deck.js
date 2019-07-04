@@ -94,24 +94,18 @@ export default class Deck {
    */
   initDeck (value) {
     let cardId = 0
-    let fwPlayed = false
-    let avPlayed = false
-    let genPlayed = false
     for (let k = 0; k < value; k++) {
       for (let i = 0; i < cardDeck.length; i++) {
         for (let j = 0; j < cardDeck[i].howMany; j++) {
-          if (cardDeck[i].type === 'FIREWALL' && !fwPlayed) {
+          if (cardDeck[i].type === 'FIREWALL' && (k === 1 || k === 3)) {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++
-            fwPlayed = true
-          } else if (cardDeck[i].type === 'GENERATOR' && !genPlayed) {
+          } else if (cardDeck[i].type === 'GENERATOR' && (k === 1 || k === 3)) {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++
-            genPlayed = true
-          } else if (cardDeck[i].type === 'ANTIVIRUS' && !avPlayed) {
+          } else if (cardDeck[i].type === 'ANTIVIRUS' && (k === 1 || k === 3)) {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++
-            avPlayed = true
           } else if (cardDeck[i].type !== 'ANTIVIRUS' && cardDeck[i].type !== 'FIREWALL' && cardDeck[i].type !== 'GENERATOR') {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++

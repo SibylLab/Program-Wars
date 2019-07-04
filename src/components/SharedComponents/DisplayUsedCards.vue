@@ -12,13 +12,23 @@
   </div>
   <div class="row">
     <div id="cards2">
-    <ul id="example-1" class="list-inline" style="padding: 10px">
-      <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack </h4>
-      <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
-        <card :cardData="card"></card>
-      </li>
-    </ul>
+      <ul id="example-1" class="list-inline" style="padding: 10px">
+        <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack </h4>
+        <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
+          <card :cardData="card"></card>
+        </li>
+      </ul>
+    </div>
   </div>
+  <div class="row">
+    <div id="effects">
+      <ul class="list-inline">
+        <h4 class="modal-title" :style="pIPTextColour()"> Active Effects </h4>
+        <li v-for="(effect) in cardEffect" style="max-width: 350px; margin-right: 5px">
+          <p> {{ effect }} </p>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 </template>
@@ -72,6 +82,39 @@
           }
           return cards
         }
+      },
+      cardEffect () {
+        let effects = []
+        let cards = this.getCurrentPlayer().attackedCards.concat(this.getCurrentPlayer().usedBonusCards)
+        for (let card in cards) {
+          switch (cards[card].type) {
+            case 'VIRUS' :
+              effects.push('-25% score')
+              break
+            case 'POWEROUTAGE' :
+              effects.push('Unable to play base cards')
+              break
+            case 'GENERATOR' :
+              effects.push('Protected from power outage')
+              break
+            case 'BATTERYBACKUP' :
+              effects.push('Protected from next power outage')
+              break
+            case 'FIREWALL' :
+              effects.push('Protected from hackers')
+              break
+            case 'ANTIVIRUS' :
+              effects.push('Protected from virus')
+              break
+            case 'OVERCLOCK' :
+              effects.push('+25% score')
+              break
+            default :
+              effects.push('Undefined effect')
+              break
+          }
+        }
+        return effects
       }
     }
   }
