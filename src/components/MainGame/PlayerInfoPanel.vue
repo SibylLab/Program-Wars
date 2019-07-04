@@ -48,10 +48,10 @@
         </div>
         </div>
         <div class="row">
-          <div id="controls" class="col-sm" style="height: 80px; justify-content: center; align-items: center">
+          <div id="controls" class="col-sm" style="height: 40px; justify-content: center; align-items: center">
             <div>
-              <button class="btn btn-primary btn-lg col-6" v-on:click="discardSelected" style="border-radius: 40px">Discard </button>
-              <button class="btn btn-lg btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
+              <button class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="border-radius: 40px">Discard </button>
+              <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
             </div>
           </div>
           <display-used-cards></display-used-cards>

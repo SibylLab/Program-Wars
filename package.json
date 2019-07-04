@@ -85,8 +85,9 @@
     "vue-loader": "^10.3.0",
     "vue-style-loader": "^2.0.0",
     "vue-template-compiler": "^2.5.17",
+    "vue2-slideout-panel": "^2.2.3",
     "webpack": "^2.2.1",
-    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.22.3",
     "webpack-merge": "^2.6.1"
