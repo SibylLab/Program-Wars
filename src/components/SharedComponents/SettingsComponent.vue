@@ -29,7 +29,7 @@
           <h6>Choose the number of opponents you wish to face:</h6>
           <div class="container gameTypes">
             <div class="col-md-2">
-              <input type="radio" id="hotseat" name="gameType" value="hotseat" @click="clearAI()">
+              <input type="radio" id="hotseat" name="gameType" value="hotseat" @click="checkStoredPlayers()">
               <label for="hotseat"><b>Hotseat: </b><br>Add two player names for local multiplayer</label>
             </div>
             <div class="col-md-2">
@@ -100,6 +100,7 @@
         dataToggle: false,
         modalTitle: 'Welcome to a new game of Programming Wars!',
         localPlayers: [{name: '', isAi: false}],
+        storedPlayers: [],
         newPlayer: '',
         gameStart: false,
         selected: '50',
@@ -216,7 +217,7 @@
       removePlayer (e) {
         if (this.localPlayers[e] !== '') {
           this.localPlayers.splice(e, 1)
-          if (this.localPlayers.length < 4) {
+          if (this.localPlayers.length < 2) {
             this.maxPlayer = false
           }
           if (this.localPlayers.length < 2) {
@@ -239,18 +240,34 @@
       },
 
       /**
-       * Clears the localPlayers list of any players
+       * Clears the localPlayers list of any AI players and all but one user
        */
       clearAI () {
         let players = this.localPlayers
+        let isUser = 0
         if (players !== []) {
           for (let index in players) {
             if (players[index].isAi === true && players[index].name !== '') {
               this.$delete(players, index)
               this.maxPlayer = false
+            } else if (players[index].isAi === false && players[index].name !== '') {
+              if (isUser > 0) {
+                this.storedPlayers.push(players[index].name)
+                this.$delete(players, index)
+                this.maxPlayer = false
+              }
+              isUser++
             }
           }
         }
+      },
+      checkStoredPlayers () {
+        this.clearAI()
+        for (let player in this.storedPlayers) {
+          this.localPlayers.push({name: this.storedPlayers[player], isAi: false})
+        }
+        this.numPlayersCheck()
+        this.storedPlayers = []
       }
     },
     computed: {
