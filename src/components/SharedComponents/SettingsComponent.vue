@@ -91,8 +91,6 @@
   import CreditsModal from '../Modals/CreditsModal.vue'
   import Themes from '../Modals/ThemesModal'
   
-  // import BackstoryModal from '../Modals/BackstoryModal.vue'
-
   import {mapGetters, mapMutations, mapState} from 'vuex'
 
   /**
@@ -134,10 +132,7 @@
       ...mapState([
         'mainTextColour',
         'mainBackgroundColour'
-      ]), /*
-      openBackstory () {
-        this.$id['.backstory'].show()
-      }, */
+      ]),
       openNav () {
         this.sideNavOpen = !this.sideNavOpen
         if (this.sideNavOpen) {
@@ -309,7 +304,6 @@
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
       'themes-modal': Themes
-      // 'backstory-modal': BackStoryModal
     },
     beforeMount () {
       this.$store.commit('resetState')
@@ -325,11 +319,13 @@
         }
         this.$store.state.players = []
       }
-    }/* ,
+    },
     mounted () {
-      $['.backstory-modal'].show()
-    } */
-
+      if (this.$store.state.showBackstory === true) {
+        $('#backstoryModal').modal('show')
+        this.$store.state.showBackstory = false
+      }
+    }
   }
 </script>
 
