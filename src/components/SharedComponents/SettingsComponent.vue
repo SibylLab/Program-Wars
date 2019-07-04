@@ -24,18 +24,35 @@
     <div class="container settingMenu">
       <div class="row">
         <div class="col-md-12">
-          <h4>Welcome to Program Wars!</h4>
+          <h4>Welcome to a new game of Programming Wars!</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" id="aiPlayers">
+          <h6>Choose the number of opponents you wish to face:</h6>
+          <div class="container gameTypes">
+            <div class="col-md-2">
+              <input type="radio" id="hotseat" name="gameType" value="hotseat" @click="clearAI()">
+              <label for="hotseat"><b>Hotseat: </b><br>Add two player names for local multiplayer</label>
+            </div>
+            <div class="col-md-2">
+              <input type="radio" id="oneAI" name="gameType" value="oneAI" @click="addAI(1)">
+              <label for="oneAI"><b>One bot: </b><br>Face off against an AI opponent in a 1v1 grudge match</label>
+            </div>
+            <!-- The div below is commented out because its the only version that still causes issues and I want to do a pull request for a working version tonight. Will try to fix tomorrow morning -->
+            <!--<div class="col-md-2">
+              <input type="radio" id="threeAI" name="gameType" value="threeAI" @click="addAI(3)">
+              <label for="threeAI"><b>Three bots: </b><br>A free-for-all against 3 AI opponents</label>
+            </div>-->
+          </div>
+          <br>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12" id="addPlayer">
-        <select class="custom-select" name="ai" v-model="aiSelect" style="margin-right: 20px; width: 170px; height: 32px">
-            <option value="none" selected>(None)</option>s
-            <option value="noAiSelected" disabled selected>Select AI Opponent:</option>
-            <option v-for="opponents in aiOpponents" :value="opponents">{{ opponents }}</option>
-          </select> or
+          <h6>Choose your player name:</h6>
           <input type="text" placeholder="Add a player..." maxlength="10" v-model="newPlayer" v-on:keyup.enter="submit" autofocus :disabled="inputDisable" style="margin-left: 20px">
-         <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
+          <button type="button" class="btn btn-primary" v-on:click="submit" :disabled="maxPlayer">Add Player</button>
           <p v-if="maxChar && !maxPlayer" class="infoMsg">Maximum Characters Reached</p>
           <p v-if="isRepeat && !maxPlayer" class="infoMsg">Player Already exists</p>
         </div>
@@ -52,12 +69,7 @@
       </div>
       <div class="row">
         <div class="col-md-12" id="scoreSelect">
-          <p>Score to Win:
-          <select class="custom-select" name="select" v-model="selected">
-            <option value="35">Short (score 35)</option>
-            <option value="70">Medium (score 70)</option>
-            <option value="105">Long (score 105)</option>
-          </select></p>
+          <p>Goal: Score {{ selected }} on a path before your opponents!</p>
         </div>
       </div>
       <div id="HASH" class="row">
@@ -97,14 +109,13 @@
         localPlayers: [{name: '', isAi: false}],
         newPlayer: '',
         gameStart: false,
-        selected: '35',
+        selected: '50',
         noPlayers: true,
         inputDisable: false,
         maxPlayer: false,
         isRepeat: false,
         aiSelect: 'noAiSelected',
-        aiOpponents: ['Flash', 'Joker', 'Aquaman', 'Superman'],
-        typesOfGames: ['Short (100)', 'Medium (150)', 'Long (200)'],
+        aiOpponents: ['', 'n00b_bot mk.1', 'codeMaster3000', 'sudo_bot mk.5'],
         isTutorial: false,
         tutorialBegin: false
       }
@@ -144,29 +155,38 @@
       submit () {
         let pass = true
         for (let player of this.localPlayers) {
-          if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
-            pass = false
-            this.isRepeat = true
-          } else {
-            this.isRepeat = false
-          }
-        }
-        if (!(this.aiSelect === 'noAiSelected' || this.aiSelect === 'none')) {
-          if (this.aiSelect.length > 0 && pass) {
-            this.localPlayers.push({name: this.aiSelect, isAi: true})
-          }
+          pass = this.repeatCheck(player).passFail
+          this.isRepeat = this.repeatCheck(player).repeat
         }
         if (this.newPlayer.length > 0 && pass) {
           this.localPlayers.push({name: this.newPlayer, isAi: false})
         }
-        if (this.localPlayers.length >= 4) {
+        this.numPlayersCheck()
+        this.newPlayer = ''
+        this.aiSelect = 'noAiSelected'
+      },
+
+      /**
+       * Checks for repeat names in localPlayers
+       */
+      repeatCheck (player) {
+        if (player.name === this.aiSelect || player.name === this.newPlayer || this.maxPlayer) {
+          return {passFail: false, repeat: true}
+        } else {
+          return {passFail: true, repeat: false}
+        }
+      },
+
+      /**
+       * sets the value of maxPlayers and noPlayers
+       */
+      numPlayersCheck () {
+        if (this.localPlayers.length >= 2) {
           this.maxPlayer = true
         }
         if (this.localPlayers.length > 1) {
           this.noPlayers = false
         }
-        this.newPlayer = ''
-        this.aiSelect = 'noAiSelected'
       },
 
       /**
@@ -177,9 +197,9 @@
         this.setTutorial({gameType: true})
         this.localPlayers = []
         this.localPlayers.push({name: 'You', isAi: false})
-        this.localPlayers.push({name: 'Flash', isAi: true})
+        this.localPlayers.push({name: 'training_bot', isAi: true})
         this.$store.commit('addPlayers', {list: this.localPlayers})
-        this.$store.commit('setScoreLimit', {scoreLimit: 100})
+        this.$store.commit('setScoreLimit', {scoreLimit: 50})
         this.gameStart = true
         setTimeout(() => {
           this.$router.push('tutorial')
@@ -213,6 +233,34 @@
             this.noPlayers = true
           }
         } else { return }
+      },
+
+      /**
+       * Automatically adds AI players according to the gameType option selected by the player
+       */
+      addAI (num) {
+        let players = this.localPlayers
+        this.clearAI()
+        while (num > 0) {
+          players.push({name: this.aiOpponents[num], isAi: true})
+          num--
+        }
+        this.numPlayersCheck()
+      },
+
+      /**
+       * Clears the localPlayers list of any players
+       */
+      clearAI () {
+        let players = this.localPlayers
+        if (players !== []) {
+          for (let index in players) {
+            if (players[index].isAi === true && players[index].name !== '') {
+              this.$delete(players, index)
+              this.maxPlayer = false
+            }
+          }
+        }
       }
     },
     computed: {
@@ -279,7 +327,7 @@
 
   #HASH #HASH2{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
 
   #settingsPage {
@@ -297,6 +345,12 @@
     box-shadow: 2px 2px 50px 5px black;
     margin-top: 10%;
 
+  }
+
+  .gameTypes {
+    max-width: 800px;
+    display: flex;
+    justify-content: space-evenly;
   }
 
   .playerList {

@@ -6,7 +6,8 @@
           <div class="panel-heading" style="border-radius: 10px"><h5>{{ tipsCardSelected }}</h5></div>
           <div class="panel-body">{{ tipsInfoText }}</div>
           <button class="btn btn-primary" v-if="showTextBoxButton" @click="removeAnimation()" style="align-content: right">OK</button>
-          <br v-if="showTextBoxButton"><br v-if="showTextBoxButton">
+          <a class="btn btn primary" v-if="lastFact" @click="() => {this.$router.push('/')}" style="margin: 5px;">Ready!</a>
+          <br v-if="showTextBoxButton || lastFact"><br v-if="showTextBoxButton || lastFact">
         </div>
       </div>
       <div class="container" style="width: 700px; float: left">
@@ -85,6 +86,7 @@ import Card from '../SharedComponents/Card'
         tipsToggle: true,
         factsToggle: true,
         indexOfFact: 0,
+        lastFact: false,
         tipsCardSelected: 'Program Wars Tutorial!',
         tipsInfoText: 'Welcome to the tutorial, you can find tips on what on what to do next here. ' +
         'Click on the first instruction card and place it in the true path to get started. If you get lost at any time click on the rules button in the top right!',
@@ -104,14 +106,13 @@ import Card from '../SharedComponents/Card'
           'You have one more attack card in your hand. Use the Power Outage card to stop your opponent from playing instruction cards.',
           'With our last attack card of course we have a protection card. You can play a generator to reverse a power outage and prevent them or just use a ' +
           'Battery Backup to reverse it. Let\'s use the generator.',
-          'We have one last card to use. Maybe our most powerful. Let\'s use a overclock card to speed up your pc to run double the instructions.',
-          'Congratulations, you\'ve completed the tutorial! You can continue playing or click \'End Tutorial\' in the top right corner.'
+          'We have one last card to use. Maybe our most powerful. Let\'s use a overclock card to boost your PC\'s performance by 25%.',
+          'Congratulations, you\'ve completed the tutorial! Click \'Ready!\' to head back to the main menu and start a real game.'
         ],
         showTextBoxButton: true
       }
     },
     computed: {
-
       colSize () {
         let size = 12 / this.getPlayers().length
         return 'col-sm-6 col-md-' + size
@@ -302,7 +303,7 @@ import Card from '../SharedComponents/Card'
             return 'Virus Card'
 
           case 'OVERCLOCK':
-            this.tipsInfoText = 'Use this card to double your current score.'
+            this.tipsInfoText = 'Use this card to boost your current score by 25%.'
             return 'OverClock Card'
 
           case 'POWEROUTAGE':
@@ -325,6 +326,9 @@ import Card from '../SharedComponents/Card'
           retFact = this.facts[this.getFactIndex()]
         }
         ++this.indexOfFact
+        if (this.indexOfFact === this.facts.length) {
+          this.lastFact = true
+        }
         return retFact
       },
       /**
