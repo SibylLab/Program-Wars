@@ -59,7 +59,8 @@ export const store = new Vuex.Store({
     factIndex: 0,
     tutorialStep: true,
     tutorialOver: false,
-    timerInterval: undefined
+    timerInterval: undefined,
+    createdGroups: [{groupCard: undefined, stacksInGroup: []}]
   },
 
   originalState: {

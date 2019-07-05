@@ -7,8 +7,8 @@
       </div>
     </div>
     <div class="row">
-        <div class="col-md-3 col-sm-6" @showGroup='showGroup()' v-for="group in groups">
-          <group-field :playerId="playerId"></group-field>
+        <div class="col-md-3 col-sm-6" v-if="groupsPlayed.length > 0" v-for="group in groupsPlayed">
+          <group-field :groupId="this.groupsPlayed[group].groupCard" :stacks="this.groupsPlayed[group].stacks" :playerId="playerId"></group-field>
       </div>
     </div>
     <div class="row">
@@ -34,7 +34,8 @@ export default {
     return {
       title: 'Methods',
       numberOfStacks: 1,
-      test: 'default'
+      test: 'default',
+      groupsPlayed: []
     }
   },
   computed: {
@@ -57,10 +58,13 @@ export default {
         trueSide = Math.ceil(trueSide * 1.25)
       }
       return trueSide
-    },
+    }/* ,
     groups () {
-      return []
-    }
+      let groups = this.getCreatedGroups()
+      for (let group in groups) {
+
+      }
+    } */
   },
   components: {
     'stack': Stack,
@@ -69,7 +73,8 @@ export default {
   methods: {
     ...mapGetters([
       'getCurrentPlayer',
-      'getStacks'
+      'getStacks',
+      'getCreatedGroups'
     ]),
     ...mapState([
       'trueSideColour',
@@ -77,8 +82,11 @@ export default {
       'pIPTextColour',
       'playfieldTextColour'
     ]),
-    showGroups () {
-      return []
+    grabGroups () {
+      let groups = this.getCreatedGroups()
+      for (let group in groups) {
+        this.groupsPlayed.push({groupCard: groups[group].groupCard, stacks: groups[group].stacksInGroup})
+      }
     },
     getStackList () {
       return this.getStacks().filter(stack => stack.playerId === this.playerId && stack.boolSide === this.trueFalse)

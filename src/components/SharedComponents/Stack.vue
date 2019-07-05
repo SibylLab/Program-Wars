@@ -130,22 +130,6 @@ export default {
         thisStack.calculateStackScore()
         return thisStack.score
       },
-      /* ****DEADCODE****  activeCardIsGroup () {
-        let thisActiveCard = this.getActiveCard()
-
-        return (thisActiveCard !== undefined && thisActiveCard.type === 'G' && !this.getCurrentPlayer().hasPowerOutage)
-      },
-      currentSelectedStacksMatch () {
-        if (this.getCoinMsg().valueOf() === this.playfieldBoolean) {
-          if (this.getSelectedStacksBoolean() === undefined) {
-            return true
-          } else if (this.playfieldBoolean === this.getSelectedStacksBoolean()) {
-            return true
-          } else {
-            return false
-          }
-        }
-      }, */
       /**
        * Purpose: determining which stack gets a checkbox above it when grouping
        */
@@ -286,6 +270,8 @@ export default {
           }
         }
         let selectedStacks = this.getSelectedStacks()
+        let groupCard = this.getActiveCard()
+        this.$store.state.createdGroups.push({groupCard: groupCard, stacksInGroup: selectedStacks})
         let rXCard
         for (let stack of selectedStacks) {
           if (stack.stackTopCard().value === 1 && stack.stackTopCard().type === 'R') {

@@ -28,7 +28,7 @@ import {mapGetters, mapState} from 'vuex'
  */
 export default {
   name: 'group-field',
-  props: ['playerId'],
+  props: ['groupId', 'stacks', 'playerId'],
   data () {
     return {
       title: 'Group',
@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     ...mapGetters([
+      'getSelectedStacks',
       'getCurrentPlayer',
       'getStacks'
     ]),
