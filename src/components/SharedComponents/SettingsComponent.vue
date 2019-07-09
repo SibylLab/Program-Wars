@@ -245,11 +245,10 @@
       },
 
       /**
-       * Clears the localPlayers list of any AI players and all but one user
+       * Clears the localPlayers list of any players
        */
       clearAI () {
         let players = this.localPlayers
-        let isUser = 0
         if (players !== []) {
           for (let index in players) {
             if (players[index].isAi === true && players[index].name !== '') {
