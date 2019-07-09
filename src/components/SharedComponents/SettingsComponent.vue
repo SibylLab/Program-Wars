@@ -32,7 +32,7 @@
           <h6>Choose the number of opponents you wish to face:</h6>
           <div class="container gameTypes">
             <div class="col-md-2">
-              <input type="radio" id="hotseat" name="gameType" value="hotseat" @click="clearAI()">
+              <input type="radio" id="hotseat" name="gameType" value="hotseat" @click="checkStoredPlayers()">
               <label for="hotseat"><b>Hotseat: </b><br>Add two player names for local multiplayer</label>
             </div>
             <div class="col-md-2">
@@ -91,8 +91,6 @@
   import CreditsModal from '../Modals/CreditsModal.vue'
   import Themes from '../Modals/ThemesModal'
   
-  // import BackstoryModal from '../Modals/BackstoryModal.vue'
-
   import {mapGetters, mapMutations, mapState} from 'vuex'
 
   /**
@@ -107,6 +105,7 @@
         dataToggle: false,
         modalTitle: 'Welcome to a Program Wars!',
         localPlayers: [{name: '', isAi: false}],
+        storedPlayers: [],
         newPlayer: '',
         gameStart: false,
         selected: '50',
@@ -133,10 +132,7 @@
       ...mapState([
         'mainTextColour',
         'mainBackgroundColour'
-      ]), /*
-      openBackstory () {
-        this.$id['.backstory'].show()
-      }, */
+      ]),
       openNav () {
         this.sideNavOpen = !this.sideNavOpen
         if (this.sideNavOpen) {
@@ -226,7 +222,7 @@
       removePlayer (e) {
         if (this.localPlayers[e] !== '') {
           this.localPlayers.splice(e, 1)
-          if (this.localPlayers.length < 4) {
+          if (this.localPlayers.length < 2) {
             this.maxPlayer = false
           }
           if (this.localPlayers.length < 2) {
@@ -258,9 +254,24 @@
             if (players[index].isAi === true && players[index].name !== '') {
               this.$delete(players, index)
               this.maxPlayer = false
+            } else if (players[index].isAi === false && players[index].name !== '') {
+              if (isUser > 0) {
+                this.storedPlayers.push(players[index].name)
+                this.$delete(players, index)
+                this.maxPlayer = false
+              }
+              isUser++
             }
           }
         }
+      },
+      checkStoredPlayers () {
+        this.clearAI()
+        for (let player in this.storedPlayers) {
+          this.localPlayers.push({name: this.storedPlayers[player], isAi: false})
+        }
+        this.numPlayersCheck()
+        this.storedPlayers = []
       }
     },
     computed: {
@@ -292,7 +303,6 @@
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
       'themes-modal': Themes
-      // 'backstory-modal': BackStoryModal
     },
     beforeMount () {
       this.$store.commit('resetState')
@@ -308,11 +318,13 @@
         }
         this.$store.state.players = []
       }
-    }/* ,
+    },
     mounted () {
-      $['.backstory-modal'].show()
-    } */
-
+      if (this.$store.state.showBackstory === true) {
+        $('#backstoryModal').modal('show')
+        this.$store.state.showBackstory = false
+      }
+    }
   }
 </script>
 
