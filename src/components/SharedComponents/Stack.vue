@@ -358,6 +358,7 @@ export default {
           let thisStack = this.getStacks().find(stack => this.stackId === stack.stackId)
           switch (activeCard.type) {
             case 'I':
+              // this.numOfCardType(activeCard.type)
               if (thisStack.cards.length === 0) {
                 this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()})
                 this.playerTookTurn()
@@ -371,8 +372,7 @@ export default {
               break
             case 'R':
               let repBonus = 3
-              // this.getCurrentPlayer().numRepeats++
-              this.numOfCardType(activeCard.type)
+              // this.numOfCardType(activeCard.type)
               if (thisStack.cards.length === 0) {
                 $('button[stackId="' + this.stackId + '"]').attr('data-content', 'You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card.')
                 $('button[stackId="' + this.stackId + '"]').popover('toggle')
@@ -398,6 +398,7 @@ export default {
 
             case 'V':
               let varBonus = 2
+              // this.numOfCardType(activeCard.type)
               if (thisStack.cards.length === 0) {
                 $('button[stackId="' + this.stackId + '"]').attr('data-content', 'You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card.')
                 $('button[stackId="' + this.stackId + '"]').popover('toggle')
@@ -431,25 +432,45 @@ export default {
               return ''
           }
         }
+        this.numOfCardType()
         if (this.getHasPlayed()) {
           this.turn(true)
         }
       },
-      numOfCardType (card) {
-        let numOfCard = 0
+      numOfCardType () {
+        this.getCurrentPlayer().numInstructions = 0
+        this.getCurrentPlayer().numRepeats = 0
+        this.getCurrentPlayer().numVariables = 0
+
         let playerStacks = this.getStacks().filter(stack => stack.playerId === this.playerId)
-        switch (card) {
-          case 'R':
-            for (let stack in playerStacks) {
-              for (let index in playerStacks[stack].cards) {
-                if (playerStacks[stack].cards[index].type === card) {
-                  numOfCard++
-                }
-              }
+        for (let stack in playerStacks) {
+          for (let index in playerStacks[stack].cards) {
+            switch (playerStacks[stack].cards[index].type) {
+              case 'I':
+                this.getCurrentPlayer().numInstructions++
+                break
+              case 'R':
+                this.getCurrentPlayer().numRepeats++
+                break
+              case 'V':
+                this.getCurrentPlayer().numVariables++
+                break
             }
+            /* if (playerStacks[stack].cards[index].type === card) {
+              numOfCard++
+            } */
+          }
+        }
+        /* switch (card) {
+          case 'I':
+            this.getCurrentPlayer().numInstructions = numOfCard + 1
+            break
+          case 'R':
             this.getCurrentPlayer().numRepeats = numOfCard + 1
             break
-        }
+          case 'V':
+            this.getCurrentPlayer().numVariables = numOfCard + 1
+        } */
       },
       addToStackClicked () {
         this.addToStack()

@@ -33,6 +33,7 @@ export default class Player {
     this.hasHadOverclock = false
     this.hasPlayedInstruction = false
     this.instructionBonus = 0
+    this.numInstructions = 0
     this.completionBonus = 0
     this.virusBonus = 0
     this.overClockBonus = 0

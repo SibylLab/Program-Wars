@@ -14,26 +14,24 @@
 
 export default {
   name: 'conditionals-list',
+  props: ['playerId'],
   data () {
     return {
-      title: 'conds',
+      title: 'conds'/* ,
       condList: [{condIf: '(more than 5 groups)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
                     {condIf: '(more than 5 repeats)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
                     {condIf: '(more than 3 players hacked)', condThen: '{earn 15 points}', condElse: '{lose 3 points}', completed: false},
                     {condIf: '(no virus on PC)', condThen: '{earn 5 points}', condElse: '{lose 10 points}', completed: false},
-                    {condIf: '(all safeties)', condThen: '{earn 50 points}', condElse: '{lose 5 points}', completed: false}]
+                    {condIf: '(all safeties)', condThen: '{earn 50 points}', condElse: '{lose 5 points}', completed: false}] */
     }
-  }// ,
-  /* computed: {
+  }/* ,
+  computed: {
     condList () {
-      return [{condIf: '(more than 5 groups)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
-                    {condIf: '(more than 5 repeats)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
-                    {condIf: '(more than 3 players hacked)', condThen: '{earn 15 points}', condElse: '{lose 3 points}', completed: false},
-                    {condIf: '(no virus on PC)', condThen: '{earn 5 points}', condElse: '{lose 10 points}', completed: false},
-                    {condIf: '(all safeties)', condThen: '{earn 50 points}', condElse: '{lose 5 points}', completed: false}]
+      let condList = this.getCondList()
+      return condList[0]
     }
-  }, */
-  // methods: {
+  },
+  methods: {
     /* ...mapGetters([
       'getConditionsList'
     ]) */
@@ -45,6 +43,13 @@ export default {
     },
     getCondElse (index) {
       return this.condList[index].condElse
+    }
+    getCondList () {
+      return [{condIf: '(more than 5 groups)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
+                    {condIf: '(more than 5 repeats)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
+                    {condIf: '(more than 3 players hacked)', condThen: '{earn 15 points}', condElse: '{lose 3 points}', completed: false},
+                    {condIf: '(no virus on PC)', condThen: '{earn 5 points}', condElse: '{lose 10 points}', completed: false},
+                    {condIf: '(all safeties)', condThen: '{earn 50 points}', condElse: '{lose 5 points}', completed: false}]
     }
   } */
 

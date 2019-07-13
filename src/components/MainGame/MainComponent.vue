@@ -66,7 +66,7 @@
               <playfield :trueFalse="true" :playerId="getCurrentPlayerId()" class="playfieldSides"></playfield>
             </div>
             <div class="col-md-6 col-md-6">
-              <cond-list></cond-list>
+              <cond-list :playerId="getCurrentPlayerId()"></cond-list>
             </div>
           </div>
         </div>
