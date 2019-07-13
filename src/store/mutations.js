@@ -431,8 +431,6 @@ export default {
     }
   },
   giveOverclock (state, payload) {
-    // state.players[payload].updateOverclock();
-
     if (state.players[payload].hasVirus) {
       state.players[payload].hasVirus = false
       state.activeCard.showFace = true

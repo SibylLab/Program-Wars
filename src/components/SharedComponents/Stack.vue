@@ -325,6 +325,7 @@ export default {
         }
         this.updateBonus(groupingBonus, groupingBonus)
         this.getCurrentPlayer().groupingBonus += groupingBonus
+        this.getCurrentPlayer().numGroups++
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()
         bus.$emit('cardDeselected')
@@ -370,6 +371,7 @@ export default {
               break
             case 'R':
               let repBonus = 3
+              this.getCurrentPlayer().numRepeats++
               if (thisStack.cards.length === 0) {
                 $('button[stackId="' + this.stackId + '"]').attr('data-content', 'You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card.')
                 $('button[stackId="' + this.stackId + '"]').popover('toggle')
