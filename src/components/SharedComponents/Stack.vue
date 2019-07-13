@@ -371,7 +371,8 @@ export default {
               break
             case 'R':
               let repBonus = 3
-              this.getCurrentPlayer().numRepeats++
+              // this.getCurrentPlayer().numRepeats++
+              this.numOfCardType(activeCard.type)
               if (thisStack.cards.length === 0) {
                 $('button[stackId="' + this.stackId + '"]').attr('data-content', 'You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card.')
                 $('button[stackId="' + this.stackId + '"]').popover('toggle')
@@ -432,6 +433,22 @@ export default {
         }
         if (this.getHasPlayed()) {
           this.turn(true)
+        }
+      },
+      numOfCardType (card) {
+        let numOfCard = 0
+        let playerStacks = this.getStacks().filter(stack => stack.playerId === this.playerId)
+        switch (card) {
+          case 'R':
+            for (let stack in playerStacks) {
+              for (let index in playerStacks[stack].cards) {
+                if (playerStacks[stack].cards[index].type === card) {
+                  numOfCard++
+                }
+              }
+            }
+            this.getCurrentPlayer().numRepeats = numOfCard + 1
+            break
         }
       },
       addToStackClicked () {

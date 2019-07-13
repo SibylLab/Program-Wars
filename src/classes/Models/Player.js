@@ -43,6 +43,7 @@ export default class Player {
     this.repetitionBonus = 0
     this.numRepeats = 0
     this.variablesBonus = 0
+    this.numVariables
     this.overclockIncrease = 0
     this.cards = []
     this.bonusTrue = 0
