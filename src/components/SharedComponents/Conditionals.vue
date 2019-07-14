@@ -2,16 +2,16 @@
   <div id="condsField">
     <div class="container conditionals">
       <div class="row" v-if="groupsCond === true">
-        <p> This is where the group conditional will go </p>
+        <h5> This is where the group conditional will go </h5>
       </div>
       <div class="row" v-if="instCond === true">
-        <p> This is where the inst conditional will go </p>
+        <h5> This is where the inst conditional will go </h5>
       </div>
       <div class="row" v-if="repsCond === true">
-        <p> This is where the reps conditional will go </p>
+        <h5> This is where the reps conditional will go </h5>
       </div>
       <div class="row" v-if="varsCond === true">
-        <p> This is where the vars conditional will go </p>
+        <h5> This is where the vars conditional will go </h5>
       </div>
     </div>
   </div>
@@ -47,16 +47,16 @@ export default {
       'getCurrentPlayer'
     ]),
     checkNumGroups () {
-      return this.getCurrentPlayer().numGroups > 3
+      return this.getCurrentPlayer().numGroups >= 3
     },
     checkNumInst () {
       return this.getCurrentPlayer().numInstructions !== 0
     },
     checkNumReps () {
-      return this.getCurrentPlayer().numRepeats > 3
+      return this.getCurrentPlayer().numRepeats >= 3
     },
     checkNumVars () {
-      return this.getCurrentPlayer().numVariables > 2
+      return this.getCurrentPlayer().numVariables >= 2
     }
   }
 }
@@ -64,9 +64,15 @@ export default {
 
 <style scoped>
   #condsField {
-    background-color: rgb(149, 204, 38);
+    background-color: gray;
     width: 100%;
     height: 90%;
     min-height: 100px;
+    border-radius: 15px
+  }
+
+  h5 {
+    text-align: left;
+    margin: 20px;
   }
 </style>
