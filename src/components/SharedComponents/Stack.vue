@@ -358,7 +358,6 @@ export default {
           let thisStack = this.getStacks().find(stack => this.stackId === stack.stackId)
           switch (activeCard.type) {
             case 'I':
-              // this.numOfCardType(activeCard.type)
               if (thisStack.cards.length === 0) {
                 this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()})
                 this.playerTookTurn()
@@ -372,7 +371,6 @@ export default {
               break
             case 'R':
               let repBonus = 3
-              // this.numOfCardType(activeCard.type)
               if (thisStack.cards.length === 0) {
                 $('button[stackId="' + this.stackId + '"]').attr('data-content', 'You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card.')
                 $('button[stackId="' + this.stackId + '"]').popover('toggle')
@@ -398,7 +396,6 @@ export default {
 
             case 'V':
               let varBonus = 2
-              // this.numOfCardType(activeCard.type)
               if (thisStack.cards.length === 0) {
                 $('button[stackId="' + this.stackId + '"]').attr('data-content', 'You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card.')
                 $('button[stackId="' + this.stackId + '"]').popover('toggle')
@@ -456,21 +453,8 @@ export default {
                 this.getCurrentPlayer().numVariables++
                 break
             }
-            /* if (playerStacks[stack].cards[index].type === card) {
-              numOfCard++
-            } */
           }
         }
-        /* switch (card) {
-          case 'I':
-            this.getCurrentPlayer().numInstructions = numOfCard + 1
-            break
-          case 'R':
-            this.getCurrentPlayer().numRepeats = numOfCard + 1
-            break
-          case 'V':
-            this.getCurrentPlayer().numVariables = numOfCard + 1
-        } */
       },
       addToStackClicked () {
         this.addToStack()

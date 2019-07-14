@@ -1,64 +1,70 @@
 <template>
   <div id="condsField">
     <div class="container conditionals">
-      <p> This is where the conditionals list will go </p>
-      <!--<ol class="condList">
-        <li v-for="cond in condList"> if {{getCondIf(cond)}} <br> then {{getCondThen(cond)}} <br> else {{getCondElse(cond)}}</li>
-      </ol>-->
+      <div class="row" v-if="groupsCond === true">
+        <p> This is where the group conditional will go </p>
+      </div>
+      <div class="row" v-if="instCond === true">
+        <p> This is where the inst conditional will go </p>
+      </div>
+      <div class="row" v-if="repsCond === true">
+        <p> This is where the reps conditional will go </p>
+      </div>
+      <div class="row" v-if="varsCond === true">
+        <p> This is where the vars conditional will go </p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-// import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'conditionals-list',
   props: ['playerId'],
   data () {
     return {
-      title: 'conds'/* ,
-      condList: [{condIf: '(more than 5 groups)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
-                    {condIf: '(more than 5 repeats)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
-                    {condIf: '(more than 3 players hacked)', condThen: '{earn 15 points}', condElse: '{lose 3 points}', completed: false},
-                    {condIf: '(no virus on PC)', condThen: '{earn 5 points}', condElse: '{lose 10 points}', completed: false},
-                    {condIf: '(all safeties)', condThen: '{earn 50 points}', condElse: '{lose 5 points}', completed: false}] */
+      title: 'conds'
     }
-  }/* ,
+  },
   computed: {
-    condList () {
-      let condList = this.getCondList()
-      return condList[0]
+    groupsCond () {
+      return this.checkNumGroups()
+    },
+    instCond () {
+      return this.checkNumInst()
+    },
+    repsCond () {
+      return this.checkNumReps()
+    },
+    varsCond () {
+      return this.checkNumVars()
     }
   },
   methods: {
-    /* ...mapGetters([
-      'getConditionsList'
-    ]) */
-    /* getCondIf (index) {
-      return this.condList[index].condIf
+    ...mapGetters([
+      'getCurrentPlayer'
+    ]),
+    checkNumGroups () {
+      return this.getCurrentPlayer().numGroups > 3
     },
-    getCondThen (index) {
-      return this.condList[index].condThen
+    checkNumInst () {
+      return this.getCurrentPlayer().numInstructions !== 0
     },
-    getCondElse (index) {
-      return this.condList[index].condElse
+    checkNumReps () {
+      return this.getCurrentPlayer().numRepeats > 3
+    },
+    checkNumVars () {
+      return this.getCurrentPlayer().numVariables > 2
     }
-    getCondList () {
-      return [{condIf: '(more than 5 groups)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
-                    {condIf: '(more than 5 repeats)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
-                    {condIf: '(more than 3 players hacked)', condThen: '{earn 15 points}', condElse: '{lose 3 points}', completed: false},
-                    {condIf: '(no virus on PC)', condThen: '{earn 5 points}', condElse: '{lose 10 points}', completed: false},
-                    {condIf: '(all safeties)', condThen: '{earn 50 points}', condElse: '{lose 5 points}', completed: false}]
-    }
-  } */
-
+  }
 }
 </script>
 
 <style scoped>
   #condsField {
-    background-color: yellowgreen;
+    background-color: rgb(149, 204, 38);
     width: 100%;
     height: 90%;
     min-height: 100px;
