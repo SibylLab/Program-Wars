@@ -2,28 +2,16 @@
   <div id="condsField">
     <div class="container conditionals">
       <div class="row">
-        <h3 style="text-align: left; margin-left: 40px; color: white"> Conditional points: { </h3>
+        <h3 style="text-align: left; margin-left: 20px; color: white"> Side Objectives: { </h3>
       </div>
-      <!--<div class="row" v-if="groupsCond === true">
-        <h5> This is where the group conditional will go </h5>
-      </div>
-      <div class="row" v-if="instCond === true">
-        <h5> This is where the inst conditional will go </h5>
-      </div>
-      <div class="row" v-if="repsCond === true">
-        <h5> This is where the reps conditional will go </h5>
-      </div>
-      <div class="row" v-if="varsCond === true">
-        <h5> This is where the vars conditional will go </h5>
-      </div>-->
-      <div class="row" v-for="cond in condList">
-        <div class="row">
+      <ul class="row" v-for="cond in condList">
+        <li>
           <h5> if ( {{cond.condIf}} ) { </h5>
-          <h6 :class="condTextColor(cond.condBool)"> then: {{cond.condThen}} </h6>
-          <h6 :class="condTextColor(!cond.condBool)"> else: {{cond.condElse}} </h6>
+          <h6 :class="condTextColor(cond.condBool)"> reward: {{cond.condThen}} </h6>
           <h5> } </h5>
-        </div>
-      </div>
+          <br>
+        </li>
+      </ul>
       <div class="row">
         <h3 style="text-align: left; margin-left: 40px; color: white"> } </h3>
       </div>
@@ -45,10 +33,14 @@ export default {
   computed: {
     condList () {
       let condList = []
-      condList.push(this.buildCondObj('more than 1 instruction', '+10 points', '-5 points', this.checkNumInst()))
-      condList.push(this.buildCondObj('more than 3 repeats', '+10 points', '-5 points', this.checkNumReps()))
-      condList.push(this.buildCondObj('more than 2 variables', '+10 points', '-5 points', this.checkNumVars()))
-      condList.push(this.buildCondObj('more than 4 groups', '+10 points', '-5 points', this.checkNumGroups()))
+      condList.push(this.buildCondObj('group card played', '+5 pts/card', this.checkNumInst()))
+      condList.push(this.buildCondObj('repeat card played', '+2 pts/card', this.checkNumReps()))
+      condList.push(this.buildCondObj('variable card played', '+3 pts/card', this.checkNumVars()))
+      condList.push(this.buildCondObj('safety card played', '+5 points', false))
+      condList.push(this.buildCondObj('complete program', '+10 points', false))
+      condList.push(this.buildCondObj('all safety cards', '+10 points', false))
+      condList.push(this.buildCondObj('no virus', '+10 points', false))
+      condList.push(this.buildCondObj('no overclock', '+10 points', false))
       return condList
     },
     groupsCond () {
@@ -68,8 +60,8 @@ export default {
     ...mapGetters([
       'getCurrentPlayer'
     ]),
-    buildCondObj (condIf, condThen, condElse, condBool) {
-      return {condIf: condIf, condThen: condThen, condElse: condElse, condBool: condBool}
+    buildCondObj (condIf, condThen, condBool) {
+      return {condIf: condIf, condThen: condThen, condBool: condBool}
     },
     condTextColor (cond) {
       return cond !== undefined && cond === true ? 'active' : 'notActive'
@@ -94,29 +86,45 @@ export default {
   #condsField {
     background-color: gray;
     width: 100%;
-    max-width: 400px;
+    /* max-width: 400px; */
     height: 90%;
     min-height: 100px;
     border-radius: 15px
   }
 
   h5 {
-    text-align: left;
-    margin-left: 40px;
-    color: white
+    /* text-align: left; */
+    margin-left: 5px;
+    color: white;
   }
 
+   /* h6 {
+    margin: 10px;
+    /* margin-left: 10px;
+    margin-right: 10px;  
+  } */
+
   h6.active {
-    text-align: left;
-    margin-left: 80px;
+    /* display: inline; */
+    /* text-align: left; */
+    margin: 5px;
     text-shadow: 0px 0px 6px green;
     color: lightgreen;
   }
 
   h6.notActive {
-    text-align: left;
-    margin-left: 80px;
+    /* display: inline; */
+    /* text-align: left; */
+    margin: 5px;
     text-shadow: 0px 0px 3px maroon;
     color: lightpink;
+  }
+
+  h5, h6{
+    display: inline;
+    float: left;
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
   }
 </style>
