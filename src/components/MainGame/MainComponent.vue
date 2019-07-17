@@ -23,11 +23,7 @@
 
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
-    <coin-modal id="coinModal" class="modal fade coin" tabindex="1" role="dialog" aria-labelledby="" aria-hidden="true"></coin-modal>
-    <!--<transition name="fade">
-      <player-turn v-if="playersTurn" style="z-index: 1"></player-turn>
-    </transition>-->
-
+    
     <transition name="fade">
       <hack-discard v-if="showMsg"></hack-discard>
     </transition>
@@ -59,9 +55,6 @@
       <div id="player-stacks" style="padding-top: 12px">
         <div id="stacks" class="container" style="width: inherit;">
           <div class="row">
-            <!--<div class="col-md-6 col-sm-6">
-              <playfield  :trueFalse="true" :playerId="getCurrentPlayerId()" class="playfieldSides"></playfield>
-            </div>-->
             <div class="col-md-6 col-sm-6">
               <playfield :trueFalse="true" :playerId="getCurrentPlayerId()" class="playfieldSides"></playfield>
             </div>
