@@ -130,8 +130,6 @@ export default {
       'hack-modal': HackModal,
       'cond-list': Conditionals,
       'winner-modal': WinnerModal,
-      'coin-modal': CoinModal,
-      'player-turn': PlayerTurn,
       'hack-discard': HackDiscard,
       'virus-modal': VirusModal,
       'power-outage-modal': PowerOutageModal,
