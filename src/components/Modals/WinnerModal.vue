@@ -41,22 +41,22 @@
                 <td v-for="player in playerList">{{ Math.ceil(getScore(player.id).falseScore) }}</td>
               </tr>
               <tr>
-                <td colspan="3"><h5><b>Bonuses</b></h5></td>
+                <td colspan="3"><h5><b>Side Objectives:</b></h5></td>
               </tr>
               <tr>
-                <th>Grouping Cards:</th>
+                <th>Grouping Bonus:</th>
                 <td v-for="player in playerList">{{player.groupingBonus}}</td>
               </tr>
               <tr>
-                <th>Repetition Cards:</th>
+                <th>Repetition Bonus:</th>
                 <td v-for="player in playerList">{{player.repetitionBonus}}</td>
               </tr>
               <tr>
-                <th>Variable Cards:</th>
+                <th>Variable Bonus:</th>
                 <td v-for="player in playerList">{{player.variablesBonus}}</td>
               </tr>
               <tr>
-                <th>Safety Cards:</th>
+                <th>Safety Bonus:</th>
                 <td v-for="player in playerList">{{player.protectionCardsBonus}}</td>
               </tr>
               <tr>

@@ -325,6 +325,7 @@ export default {
         }
         this.updateBonus(groupingBonus, groupingBonus)
         this.getCurrentPlayer().groupingBonus += groupingBonus
+        this.getCurrentPlayer().numGroups++
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
         this.playerTookTurn()
         bus.$emit('cardDeselected')
@@ -428,8 +429,31 @@ export default {
               return ''
           }
         }
+        this.numOfCardType()
         if (this.getHasPlayed()) {
           this.turn(true)
+        }
+      },
+      numOfCardType () {
+        this.getCurrentPlayer().numInstructions = 0
+        this.getCurrentPlayer().numRepeats = 0
+        this.getCurrentPlayer().numVariables = 0
+
+        let playerStacks = this.getStacks().filter(stack => stack.playerId === this.playerId)
+        for (let stack in playerStacks) {
+          for (let index in playerStacks[stack].cards) {
+            switch (playerStacks[stack].cards[index].type) {
+              case 'I':
+                this.getCurrentPlayer().numInstructions++
+                break
+              case 'R':
+                this.getCurrentPlayer().numRepeats++
+                break
+              case 'V':
+                this.getCurrentPlayer().numVariables++
+                break
+            }
+          }
         }
       },
       addToStackClicked () {

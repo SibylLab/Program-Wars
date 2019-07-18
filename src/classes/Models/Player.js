@@ -33,14 +33,18 @@ export default class Player {
     this.hasHadOverclock = false
     this.hasPlayedInstruction = false
     this.instructionBonus = 0
+    this.numInstructions = 0
     this.completionBonus = 0
     this.virusBonus = 0
     this.overClockBonus = 0
     this.defensiveBonus = 0
     this.protectionCardsBonus = 0
     this.groupingBonus = 0
+    this.numGroups = 0
     this.repetitionBonus = 0
+    this.numRepeats = 0
     this.variablesBonus = 0
+    this.numVariables
     this.overclockIncrease = 0
     this.cards = []
     this.bonusTrue = 0

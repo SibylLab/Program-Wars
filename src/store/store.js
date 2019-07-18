@@ -60,7 +60,12 @@ export const store = new Vuex.Store({
     tutorialStep: true,
     tutorialOver: false,
     timerInterval: undefined,
-    showBackstory: true
+    showBackstory: true/* ,
+    conditionsList: [{condIf: '(more than 5 groups)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
+                    {condIf: '(more than 5 repeats)', condThen: '{earn 10 points}', condElse: '{lose 5 points}', completed: false},
+                    {condIf: '(more than 3 players hacked)', condThen: '{earn 15 points}', condElse: '{lose 3 points}', completed: false},
+                    {condIf: '(no virus on PC)', condThen: '{earn 5 points}', condElse: '{lose 10 points}', completed: false},
+                    {condI: '(all safeties)', condThen: '{earn 50 points}', condElse: '{lose 5 points}', completed: false}] */
   },
 
   originalState: {

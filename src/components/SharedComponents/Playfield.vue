@@ -2,8 +2,8 @@
   <div id="playfield" :class="playfieldClass" class="container" :style="getStyle()">
     <div class="row">
       <div class="col-md-12">
-        <h5 :style="playfieldTextColour()">Total Playfield Score: {{ trueFalse ? score.trueScore : score.falseScore }}</h5>
-        <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">if ({{ trueOrFalse }} Path Selected) {</h3>
+        <h5 :style="playfieldTextColour()">Score: {{ score.trueScore }}</h5>
+        <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
       </div>
     </div>
     <div class="row">

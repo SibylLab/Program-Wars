@@ -35,6 +35,7 @@ export default {
       $('.coin').modal('hide')
     }, coinTimer * 600)
   },
+
   turn (context, payload) {
     context.commit('getIsLast')
     context.state.pointerEvent = 'pointer-events: none'
@@ -52,10 +53,10 @@ export default {
             context.commit('setHasPlayed', {hasPlayed: false})
             context.commit('endTurn', context.state.players.length)
             context.commit('setGameState', {gameState: 'startPlayerTurn'})
-            context.commit('playerModalTrigger')
+            /* context.commit('playerModalTrigger')
             setTimeout(() => {
               context.commit('playerModalHide')
-            }, playerModalTimer * 1000)
+            }, playerModalTimer * 1000) */
           }, endTurnTimer * 1000)
           setTimeout(() => {
             if (context.getters.getCurrentPlayer.isAi) {
