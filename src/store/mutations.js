@@ -233,12 +233,9 @@ export default {
     let stacks = state.stacks
     for (let player of players) {
       player.trueScore = 0
-      player.falseScore = 0
       for (let stack of stacks) {
         if (stack.playerId === player.id) {
-          if (stack.boolSide) {
-            player.trueScore += stack.score
-          } else { player.falseScore += stack.score }
+          player.trueScore += stack.score
         }
       }
     }
@@ -265,17 +262,13 @@ export default {
       let defensiveBonus = 15
       let virusBonus = 10
       scoreTrue = player.trueScore
-      scoreFalse = player.falseScore
       if (player.hasVirus) {
-        scoreFalse = scoreFalse * 0.75
         scoreTrue = scoreTrue * 0.75
       } else if (player.hasOverclock) {
-        scoreFalse = scoreFalse * 1.25
         scoreTrue = scoreTrue * 1.25
       }
       player.totalTrue = scoreTrue
-      player.totalFalse = scoreFalse
-      player.totalScore = scoreTrue + scoreFalse
+      player.totalScore = scoreTrue
 
       // Complete Program Bonus
       if (scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit) {
@@ -491,7 +484,6 @@ export default {
   },
   changeBonusScore (state, payload) {
     state.players[payload.id].bonusTrue += payload.trueScore
-    state.players[payload.id].bonusFalse += payload.falseScore
   },
   flipTutorialStep (state) {
     state.tutorialStep = !state.tutorialStep

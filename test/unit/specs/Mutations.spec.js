@@ -139,7 +139,6 @@ describe('test store.js mutations', () => {
 
   it('test the checkWin function', () => {
     expect(store.state.winner).to.equal(false)
-    store.state.players[1].falseScore = 100
     store.state.players[1].isDefensive = true
     store.state.players[1].hasHadOverclock = false
     store.state.players[1].hasPlayedInstruction = false
@@ -150,8 +149,7 @@ describe('test store.js mutations', () => {
     store.state.winner = false
     store.state.players[1].hasOverclock = false
     store.state.players[1].hasPlayedInstruction = true
-    store.state.players[1].isDefensive = false
-    store.state.players[1].falseScore = 0
+    store.state.players[1].isDefensive = false    
     store.state.players[1].trueScore = 0
     store.commit('checkWin')
     expect(store.state.winner).to.equal(false)

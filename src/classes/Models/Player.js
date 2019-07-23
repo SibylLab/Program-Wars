@@ -20,7 +20,6 @@ export default class Player {
     this.usedBonusCards = []
     this.attackedCards = []
     this.trueScore = trueScore
-    this.falseScore = falseScore
     this.id = id
     this.hasGenerator = false
     this.hasAntiVirus = false
