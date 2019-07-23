@@ -468,18 +468,16 @@ export default {
       drop () {
         this.addToStack()
       },
-      updateBonus (trueScore, falseScore) {
+      updateBonus (trueScore) {
         if (this.getActiveSide()) {
           this.changeBonusScore({
             id: this.getCurrentPlayer().id,
-            trueScore: trueScore,
-            falseScore: 0
+            trueScore: trueScore
           })
         } else if (!this.getActiveSide()) {
           this.changeBonusScore({
             id: this.getCurrentPlayer().id,
-            trueScore: 0,
-            falseScore: falseScore
+            trueScore: 0
           })
         }
       }

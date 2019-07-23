@@ -41,7 +41,7 @@ export default {
   addPlayers (state, payload) {
     let id = 0
     for (let p of payload.list) {
-      let pp = new Player(id, p.name, undefined, 0, 0, p.isAi)
+      let pp = new Player(id, p.name, undefined, 0, p.isAi)
       state.players.push(pp)
       id++
     }
@@ -256,7 +256,6 @@ export default {
       player.overclockIncrease = 0
       player.totalScore = 0
       let scoreTrue = 0
-      let scoreFalse = 0
       let completionBonus = 10
       let overClockBonus = 10
       let defensiveBonus = 15
@@ -271,7 +270,7 @@ export default {
       player.totalScore = scoreTrue
 
       // Complete Program Bonus
-      if (scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit) {
+      if (scoreTrue >= state.scoreLimit) {
         player.completionBonus = completionBonus
       }
 
@@ -300,7 +299,7 @@ export default {
       player.totalScore += player.variablesBonus
 
       // Check if game won
-      if ((player.totalTrue >= state.scoreLimit) || (player.totalFalse >= state.scoreLimit)) {
+      if (player.totalTrue >= state.scoreLimit) {
         state.winner = true
         if ((player.totalScore > highScore)) {
           highScore = player.totalScore

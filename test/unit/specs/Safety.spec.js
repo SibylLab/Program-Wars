@@ -31,8 +31,8 @@ let hand = move.organizeHand({hand: defaultHand})
 
 let event = {cards: hand, stack: [new Stack(0, true), new Stack(0, true), new Stack(1, true), new Stack(1, true)]}
 
-let player = new Player(0, 'aiTest', hand, 0, 0, true)
-let player2 = new Player(1, 'aiTest2', hand, 0, 0, true)
+let player = new Player(0, 'aiTest', hand, 0, true)
+let player2 = new Player(1, 'aiTest2', hand, 0, true)
 
 let oPO = player2
 let oV = player2

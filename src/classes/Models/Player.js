@@ -12,9 +12,8 @@ export default class Player {
    * @param {string} name The name of the Player
    * @param {int} hand The hand ID of the player
    * @param {int} trueScore The current score of the player on the true side
-   *  @param {int} falseScore The current score of the player on the false side
    */
-  constructor (id, name, hand, trueScore, falseScore, isAi) {
+  constructor (id, name, hand, trueScore, isAi) {
     this.name = name
     this.hand = hand
     this.usedBonusCards = []

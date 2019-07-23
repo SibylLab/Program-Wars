@@ -1,7 +1,7 @@
 import Player from '../../../src/classes/Models/Player'
 
-let testPlayer = new Player(1, 'jeff', undefined, 0, 0, true)
-let testPlayer2 = new Player(2, 'jose', undefined, 0, 0, false)
+let testPlayer = new Player(1, 'jeff', undefined, 0, true)
+let testPlayer2 = new Player(2, 'jose', undefined, 0, false)
 
 describe('Player.js', () => {
   it('test the Player constructor id', () => {
@@ -19,7 +19,7 @@ describe('Player.js', () => {
   it('test the Player constructor true score', () => {
     expect(testPlayer.trueScore).to.equal(0)
   })
-  
+
   it('test the Player constructor usedBonusCards', () => {
     expect(Array.isArray(testPlayer.usedBonusCards)).to.equal(true)
   })
