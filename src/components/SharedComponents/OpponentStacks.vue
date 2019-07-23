@@ -1,7 +1,7 @@
 <template>
   <div>
     <br>
-    <h5><b>True Stacks: {{ player.trueScore }}</b></h5>
+    <h5><b>Stacks: {{ player.score }}</b></h5>
     <div v-if="trueStacks.length !== 0" class="stacks">
         <div class="container" style="max-width: 50%">
           <div class="row" style="max-width: 50%">
@@ -37,7 +37,7 @@ export default {
       return this.getStacks().filter(stack => stack.playerId === this.player.id && stack.cards.length !== 0 && stack.boolSide === true)
     },
     score () {
-      return {trueScore: this.player.trueScore}
+      return {score: this.player.score}
     }
   },
 

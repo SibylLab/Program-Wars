@@ -2,7 +2,7 @@
   <div id="playfield" :class="playfieldClass" class="container" :style="getStyle()">
     <div class="row">
       <div class="col-md-12">
-        <h5 :style="playfieldTextColour()">Score: {{ score.trueScore }}</h5>
+        <h5 :style="playfieldTextColour()">Score: {{ score.score }}</h5>
         <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
       </div>
     </div>
@@ -56,7 +56,7 @@ export default {
     },
     score () {
       let trueSide = 0
-      trueSide = this.getCurrentPlayer().trueScore
+      trueSide = this.getCurrentPlayer().score
       if (this.getCurrentPlayer().hasVirus) {
         trueSide = Math.ceil(trueSide * 0.75)
       } else if (this.getCurrentPlayer().hasOverclock) {

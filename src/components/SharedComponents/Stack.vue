@@ -323,7 +323,7 @@ export default {
         if (rXCard !== undefined) {
           this.addCardToStack({stackId: stack.stackId, card: rXCard})
         }
-        this.updateBonus(groupingBonus, groupingBonus)
+        this.updateBonus(groupingBonus)
         this.getCurrentPlayer().groupingBonus += groupingBonus
         this.getCurrentPlayer().numGroups++
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})

@@ -128,9 +128,9 @@ export default class {
     let opponentToAttack
     if (tmpOpponents !== undefined) {
       for (let player of tmpOpponents) {
-        if (player.trueScore >= tmpScore) {
+        if (player.score >= tmpScore) {
           opponentToAttack = player
-          tmpScore = player.trueScore
+          tmpScore = player.score
         }
       }
     }

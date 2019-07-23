@@ -11,14 +11,14 @@ export default class Player {
    * @param {int} id The ID of the Player
    * @param {string} name The name of the Player
    * @param {int} hand The hand ID of the player
-   * @param {int} trueScore The current score of the player on the true side
+   * @param {int} score The current score of the player
    */
-  constructor (id, name, hand, trueScore, isAi) {
+  constructor (id, name, hand, score, isAi) {
     this.name = name
     this.hand = hand
     this.usedBonusCards = []
     this.attackedCards = []
-    this.trueScore = trueScore
+    this.score = score
     this.id = id
     this.hasGenerator = false
     this.hasAntiVirus = false

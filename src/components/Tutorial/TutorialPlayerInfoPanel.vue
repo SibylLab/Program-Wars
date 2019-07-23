@@ -45,7 +45,7 @@
           <div :style="pIPTextColour()">
             True Path:&nbsp;
             <meter :max="getScoreLimit()" min=0
-                   :value="getScore(player.id).trueScore"
+                   :value="getScore(player.id).score"
                    :high="getScoreLimit()/2"
                    :low="getScoreLimit()/3"
                    :optimum="getScoreLimit()-5"
@@ -191,7 +191,7 @@ import Card from '../SharedComponents/Card'
        */
       getScore (player) {
         let trueSide = 0
-        trueSide = this.getPlayers()[player].trueScore + this.getPlayers()[player].bonusTrue
+        trueSide = this.getPlayers()[player].score + this.getPlayers()[player].bonusTrue
         if (this.getPlayers()[player].hasVirus) {
           trueSide = trueSide * 0.75
         } else if (this.getPlayers()[player].hasOverclock) {

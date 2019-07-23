@@ -17,7 +17,7 @@ describe('Player.js', () => {
   })
 
   it('test the Player constructor true score', () => {
-    expect(testPlayer.trueScore).to.equal(0)
+    expect(testPlayer.score).to.equal(0)
   })
 
   it('test the Player constructor usedBonusCards', () => {

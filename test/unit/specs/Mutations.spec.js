@@ -24,7 +24,7 @@ describe('test store.js mutations', () => {
   })
 
   it('test the store changeBonusScore function', () => {
-    store.commit('changeBonusScore', {id: 0, trueScore: 1})
+    store.commit('changeBonusScore', {id: 0, score: 1})
     expect(store.getters.getPlayers[0].bonusTrue).to.equal(1)
   })
 
@@ -138,7 +138,7 @@ describe('test store.js mutations', () => {
 
   it('test the checkWin function', () => {
     expect(store.state.winner).to.equal(false)
-    store.state.players[1].trueScore = 100
+    store.state.players[1].score = 100
     store.state.players[1].isDefensive = true
     store.state.players[1].hasHadOverclock = false
     store.state.players[1].hasPlayedInstruction = false
@@ -150,7 +150,7 @@ describe('test store.js mutations', () => {
     store.state.players[1].hasOverclock = false
     store.state.players[1].hasPlayedInstruction = true
     store.state.players[1].isDefensive = false
-    store.state.players[1].trueScore = 0
+    store.state.players[1].score = 0
     store.commit('checkWin')
     expect(store.state.winner).to.equal(false)
   })
@@ -299,7 +299,7 @@ describe('test store.js mutations', () => {
 
   it('test the setPlayerScores function', () => {
     store.commit('setPlayerScores')
-    expect(store.state.players[0].trueScore).to.equal(0)
+    expect(store.state.players[0].score).to.equal(0)
   })
 
   it('test the addCardToStack function', () => {
