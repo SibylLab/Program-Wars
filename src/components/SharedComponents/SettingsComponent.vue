@@ -74,7 +74,10 @@
       </div>
       <div id="HASH" class="row">
         <div id="HASH2" class="col-md-12" style="text-align: right">
-          <button type="button" class="btn btn-primary" @click="startTutorial" data-toggle="modal" data-target=".tutorial">Take the Tutorial</button>
+
+<!-- Disable tutorial until work for Bug #510 is completed -->
+<!--          <button type="button" class="btn btn-primary" @click="startTutorial" data-toggle="modal" data-target=".tutorial">Take the Tutorial</button> -->
+
           <button type="button" class="btn btn-primary" @click="submitPlayers" :disabled="noPlayers">Start New Game</button>
         </div>
       </div>
@@ -90,7 +93,7 @@
   import RulesModal from '../Modals/RulesModal.vue'
   import CreditsModal from '../Modals/CreditsModal.vue'
   import Themes from '../Modals/ThemesModal'
-  
+
   import {mapGetters, mapMutations, mapState} from 'vuex'
 
   /**
