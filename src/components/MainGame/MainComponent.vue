@@ -79,8 +79,6 @@ import RulesModal from '../Modals/RulesModal.vue'
 import CreditsModal from '../Modals/CreditsModal.vue'
 import HackModal from '../Modals/CardModals/HackModal.vue'
 import WinnerModal from '../Modals/WinnerModal.vue'
-import CoinModal from '../Modals/CoinModal.vue'
-import PlayerTurn from '../SharedComponents/PlayerTurnPopUp.vue'
 import HackDiscard from '../Modals/CardModals/HackDiscardMsg.vue'
 import VirusModal from '../Modals/CardModals/VirusModal.vue'
 import PowerOutageModal from '../Modals/CardModals/PowerOutageModal'
@@ -130,8 +128,6 @@ export default {
       'hack-modal': HackModal,
       'cond-list': Conditionals,
       'winner-modal': WinnerModal,
-      'coin-modal': CoinModal,
-      'player-turn': PlayerTurn,
       'hack-discard': HackDiscard,
       'virus-modal': VirusModal,
       'power-outage-modal': PowerOutageModal,
