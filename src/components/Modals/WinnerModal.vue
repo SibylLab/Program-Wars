@@ -33,12 +33,8 @@
               </thead>
               <tbody>
               <tr>
-                <th>True Score:</th>
+                <th>Instruction Score:</th>
                 <td v-for="player in playerList">{{ Math.ceil(getScore(player.id).trueScore) }}</td>
-              </tr>
-              <tr>
-                <th>False Score:</th>
-                <td v-for="player in playerList">{{ Math.ceil(getScore(player.id).falseScore) }}</td>
               </tr>
               <tr>
                 <td colspan="3"><h5><b>Side Objectives:</b></h5></td>
