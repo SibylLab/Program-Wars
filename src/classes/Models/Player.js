@@ -48,8 +48,7 @@ export default class Player {
     this.bonus = 0
     this.isDefensive = false
     this.isCleanSystem = true
-    this.totalTrue = 0
-    this.totalFalse = 0
+    this.totalInstructions = 0
     this.totalScore = 0
     this.redrawing = false
     if (this.isAi) {

@@ -266,7 +266,7 @@ export default {
       } else if (player.hasOverclock) {
         instructions = instructions * 1.25
       }
-      player.totalTrue = instructions
+      player.totalInstructions = instructions
       player.totalScore = instructions
 
       // Complete Program Bonus
@@ -299,7 +299,7 @@ export default {
       player.totalScore += player.variablesBonus
 
       // Check if game won
-      if (player.totalTrue >= state.scoreLimit) {
+      if (player.totalInstructions >= state.scoreLimit) {
         state.winner = true
         if ((player.totalScore > highScore)) {
           highScore = player.totalScore
