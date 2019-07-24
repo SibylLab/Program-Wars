@@ -191,7 +191,7 @@ import Card from '../SharedComponents/Card'
        */
       getScore (player) {
         let trueSide = 0
-        trueSide = this.getPlayers()[player].instructions + this.getPlayers()[player].bonusTrue
+        trueSide = this.getPlayers()[player].instructions + this.getPlayers()[player].bonus
         if (this.getPlayers()[player].hasVirus) {
           trueSide = trueSide * 0.75
         } else if (this.getPlayers()[player].hasOverclock) {

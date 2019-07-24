@@ -482,7 +482,7 @@ export default {
     }
   },
   changeBonusScore (state, payload) {
-    state.players[payload.id].bonusTrue += payload.score
+    state.players[payload.id].bonus += payload.score
   },
   flipTutorialStep (state) {
     state.tutorialStep = !state.tutorialStep

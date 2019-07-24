@@ -107,12 +107,8 @@ describe('Player.js', () => {
     expect(testPlayer.overclockIncrease).to.equal(0)
   })
 
-  it('test the Player constructor bonusTrue', () => {
-    expect(testPlayer.bonusTrue).to.equal(0)
-  })
-
-  it('test the Player constructor bonusFalse', () => {
-    expect(testPlayer.bonusFalse).to.equal(0)
+  it('test the Player constructor bonus', () => {
+    expect(testPlayer.bonus).to.equal(0)
   })
 
   it('test the Player constructor isDefensive', () => {
@@ -124,12 +120,7 @@ describe('Player.js', () => {
   })
 
   it('test the Player updateBonus', () => {
-    testPlayer.updateBonus(5, 5)
-    expect(testPlayer.bonusFalse).to.equal(5)
-  })
-
-  it('test the Player updateBonus', () => {
-    testPlayer.updateBonus(6, 5)
-    expect(testPlayer.bonusTrue).to.equal(11)
+    testPlayer.updateBonus(5)
+    expect(testPlayer.bonus).to.equal(5)
   })
 })

@@ -45,8 +45,7 @@ export default class Player {
     this.numVariables
     this.overclockIncrease = 0
     this.cards = []
-    this.bonusTrue = 0
-    this.bonusFalse = 0
+    this.bonus = 0
     this.isDefensive = false
     this.isCleanSystem = true
     this.totalTrue = 0
@@ -58,8 +57,7 @@ export default class Player {
     }
   };
 
-  updateBonus (scoreTrue, scoreFalse) {
-    this.bonusTrue += scoreTrue
-    this.bonusFalse += scoreFalse
+  updateBonus (score) {
+    this.bonus += score
   }
 }
