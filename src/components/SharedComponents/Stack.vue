@@ -472,12 +472,12 @@ export default {
         if (this.getActiveSide()) {
           this.changeBonusScore({
             id: this.getCurrentPlayer().id,
-            trueScore: trueScore
+            score: trueScore
           })
         } else if (!this.getActiveSide()) {
           this.changeBonusScore({
             id: this.getCurrentPlayer().id,
-            trueScore: 0
+            score: 0
           })
         }
       }

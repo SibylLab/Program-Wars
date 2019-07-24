@@ -24,7 +24,7 @@ describe('test store.js mutations', () => {
   })
 
   it('test the store changeBonusScore function', () => {
-    store.commit('changeBonusScore', {id: 0, trueScore: 1})
+    store.commit('changeBonusScore', {id: 0, score: 1})
     expect(store.getters.getPlayers[0].bonusTrue).to.equal(1)
   })
 

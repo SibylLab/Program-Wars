@@ -255,22 +255,22 @@ export default {
       player.completionBonus = 0
       player.overclockIncrease = 0
       player.totalScore = 0
-      let score = 0
+      let instructions = 0
       let completionBonus = 10
       let overClockBonus = 10
       let defensiveBonus = 15
       let virusBonus = 10
-      scoreTrue = player.instructions
+      instructions = player.instructions
       if (player.hasVirus) {
-        score = score * 0.75
+        instructions = instructions * 0.75
       } else if (player.hasOverclock) {
-        score = score * 1.25
+        instructions = instructions * 1.25
       }
-      player.totalTrue = score
-      player.totalScore = score
+      player.totalTrue = instructions
+      player.totalScore = instructions
 
       // Complete Program Bonus
-      if (score >= state.scoreLimit) {
+      if (instructions >= state.scoreLimit) {
         player.completionBonus = completionBonus
       }
 
