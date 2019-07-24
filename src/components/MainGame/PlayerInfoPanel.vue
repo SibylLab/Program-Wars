@@ -15,7 +15,7 @@
               <div class="row"></div>
               True Path:&nbsp;&thinsp;
               <meter :max="getScoreLimit()" min=0
-                     :value="getScore(player.id).score"
+                     :value="getScore(player.id).trueScore"
                      :high="getScoreLimit() * 0.75"
                      :low="getScoreLimit()/2"
                      :optimum="getScoreLimit()-5"
@@ -157,7 +157,7 @@ export default {
        */
       getScore (player) {
         let trueSide = 0
-        trueSide = this.getPlayers()[player].score
+        trueSide = this.getPlayers()[player].instructions
         if (this.getPlayers()[player].hasVirus) {
           trueSide = trueSide * 0.75
         } else if (this.getPlayers()[player].hasOverclock) {

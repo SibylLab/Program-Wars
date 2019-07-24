@@ -232,10 +232,10 @@ export default {
     let players = state.players
     let stacks = state.stacks
     for (let player of players) {
-      player.score = 0
+      player.instructions = 0
       for (let stack of stacks) {
         if (stack.playerId === player.id) {
-          player.score += stack.score
+          player.instructions += stack.score
         }
       }
     }
@@ -260,7 +260,7 @@ export default {
       let overClockBonus = 10
       let defensiveBonus = 15
       let virusBonus = 10
-      score = player.score
+      scoreTrue = player.instructions
       if (player.hasVirus) {
         score = score * 0.75
       } else if (player.hasOverclock) {

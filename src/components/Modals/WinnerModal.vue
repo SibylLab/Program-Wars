@@ -34,7 +34,7 @@
               <tbody>
               <tr>
                 <th>Instruction Score:</th>
-                <td v-for="player in playerList">{{ Math.ceil(getScore(player.id)score) }}</td>
+                <td v-for="player in playerList">{{ Math.ceil(getScore(player.id).trueScore) }}</td>
               </tr>
               <tr>
                 <td colspan="3"><h5><b>Side Objectives:</b></h5></td>
@@ -115,7 +115,7 @@ export default {
     },
     getScore (player) {
       let trueSide = 0
-      trueSide = this.getPlayers()[player].score
+      trueSide = this.getPlayers()[player].instructions
       if (this.getPlayers()[player].hasVirus) {
         trueSide = trueSide * 0.75
       } else if (this.getPlayers()[player].hasOverclock) {
