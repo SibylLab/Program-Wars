@@ -6,8 +6,6 @@
 var webpackConfig = require('../../build/webpack.test.conf')
 module.exports = function (config) {
   config.set({
-    // Choose the browser(s) that is installed on your system
-    //browsers: ['Firefox','Chrome','Safari','IE'],
     browsers: ['Firefox'],
     frameworks: ['mocha', 'sinon-chai', 'jasmine'],
     reporters: ['spec', 'coverage', 'coveralls'],
@@ -20,8 +18,6 @@ module.exports = function (config) {
     plugins: [
       'karma-chrome-launcher',
       'karma-firefox-launcher',
-      'karma-ie-launcher',
-      'karma-safari-launcher',
       'karma-mocha',
       'karma-jasmine',
       'karma-sinon-chai',
