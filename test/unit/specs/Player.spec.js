@@ -1,7 +1,7 @@
 import Player from '../../../src/classes/Models/Player'
 
-let testPlayer = new Player(1, 'jeff', undefined, 0, 0, true)
-let testPlayer2 = new Player(2, 'jose', undefined, 0, 0, false)
+let testPlayer = new Player(1, 'jeff', undefined, 0, true)
+let testPlayer2 = new Player(2, 'jose', undefined, 0, false)
 
 describe('Player.js', () => {
   it('test the Player constructor id', () => {
@@ -17,11 +17,7 @@ describe('Player.js', () => {
   })
 
   it('test the Player constructor true score', () => {
-    expect(testPlayer.trueScore).to.equal(0)
-  })
-
-  it('test the Player constructor false score', () => {
-    expect(testPlayer.falseScore).to.equal(0)
+    expect(testPlayer.instructions).to.equal(0)
   })
 
   it('test the Player constructor usedBonusCards', () => {
@@ -111,12 +107,8 @@ describe('Player.js', () => {
     expect(testPlayer.overclockIncrease).to.equal(0)
   })
 
-  it('test the Player constructor bonusTrue', () => {
-    expect(testPlayer.bonusTrue).to.equal(0)
-  })
-
-  it('test the Player constructor bonusFalse', () => {
-    expect(testPlayer.bonusFalse).to.equal(0)
+  it('test the Player constructor bonus', () => {
+    expect(testPlayer.bonus).to.equal(0)
   })
 
   it('test the Player constructor isDefensive', () => {
@@ -128,12 +120,7 @@ describe('Player.js', () => {
   })
 
   it('test the Player updateBonus', () => {
-    testPlayer.updateBonus(5, 5)
-    expect(testPlayer.bonusFalse).to.equal(5)
-  })
-
-  it('test the Player updateBonus', () => {
-    testPlayer.updateBonus(6, 5)
-    expect(testPlayer.bonusTrue).to.equal(11)
+    testPlayer.updateBonus(5)
+    expect(testPlayer.bonus).to.equal(5)
   })
 })

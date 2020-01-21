@@ -13,7 +13,7 @@
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
             <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px" :style="pIPTextColour()">
               <div class="row"></div>
-              True Path:&nbsp;&thinsp;
+              Instructions:&nbsp;&thinsp;
               <meter :max="getScoreLimit()" min=0
                      :value="getScore(player.id).trueScore"
                      :high="getScoreLimit() * 0.75"
@@ -21,16 +21,6 @@
                      :optimum="getScoreLimit()-5"
                      style="width: 150px"
               ></meter>
-              <div class="row"></div>
-                False Path:
-                <meter :max="getScoreLimit()" min=0
-                       :value="getScore(player.id).falseScore"
-                       :high="getScoreLimit() * 0.75"
-                       :low="getScoreLimit()/2"
-                       :optimum="getScoreLimit()-5"
-                       style="width:150px"
-                ></meter>
-
             </div>
         </div>
         </div>
@@ -167,17 +157,13 @@ export default {
        */
       getScore (player) {
         let trueSide = 0
-        let falseSide = 0
-        trueSide = this.getPlayers()[player].trueScore
-        falseSide = this.getPlayers()[player].falseScore
+        trueSide = this.getPlayers()[player].instructions
         if (this.getPlayers()[player].hasVirus) {
           trueSide = trueSide * 0.75
-          falseSide = falseSide * 0.75
         } else if (this.getPlayers()[player].hasOverclock) {
           trueSide = trueSide * 1.25
-          falseSide = falseSide * 1.25
         }
-        return {trueScore: trueSide, falseScore: falseSide}
+        return {trueScore: trueSide}
       },
       openModal () {
         $('.hack').modal('show')

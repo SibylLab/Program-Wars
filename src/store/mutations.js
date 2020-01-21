@@ -41,7 +41,7 @@ export default {
   addPlayers (state, payload) {
     let id = 0
     for (let p of payload.list) {
-      let pp = new Player(id, p.name, undefined, 0, 0, p.isAi)
+      let pp = new Player(id, p.name, undefined, 0, p.isAi)
       state.players.push(pp)
       id++
     }
@@ -232,13 +232,10 @@ export default {
     let players = state.players
     let stacks = state.stacks
     for (let player of players) {
-      player.trueScore = 0
-      player.falseScore = 0
+      player.instructions = 0
       for (let stack of stacks) {
         if (stack.playerId === player.id) {
-          if (stack.boolSide) {
-            player.trueScore += stack.score
-          } else { player.falseScore += stack.score }
+          player.instructions += stack.score
         }
       }
     }
@@ -258,27 +255,22 @@ export default {
       player.completionBonus = 0
       player.overclockIncrease = 0
       player.totalScore = 0
-      let scoreTrue = 0
-      let scoreFalse = 0
+      let instructions = 0
       let completionBonus = 10
       let overClockBonus = 10
       let defensiveBonus = 15
       let virusBonus = 10
-      scoreTrue = player.trueScore
-      scoreFalse = player.falseScore
+      instructions = player.instructions
       if (player.hasVirus) {
-        scoreFalse = scoreFalse * 0.75
-        scoreTrue = scoreTrue * 0.75
+        instructions = instructions * 0.75
       } else if (player.hasOverclock) {
-        scoreFalse = scoreFalse * 1.25
-        scoreTrue = scoreTrue * 1.25
+        instructions = instructions * 1.25
       }
-      player.totalTrue = scoreTrue
-      player.totalFalse = scoreFalse
-      player.totalScore = scoreTrue + scoreFalse
+      player.totalInstructions = instructions
+      player.totalScore = instructions
 
       // Complete Program Bonus
-      if (scoreTrue >= state.scoreLimit || scoreFalse >= state.scoreLimit) {
+      if (instructions >= state.scoreLimit) {
         player.completionBonus = completionBonus
       }
 
@@ -307,7 +299,7 @@ export default {
       player.totalScore += player.variablesBonus
 
       // Check if game won
-      if ((player.totalTrue >= state.scoreLimit) || (player.totalFalse >= state.scoreLimit)) {
+      if (player.totalInstructions >= state.scoreLimit) {
         state.winner = true
         if ((player.totalScore > highScore)) {
           highScore = player.totalScore
@@ -490,8 +482,7 @@ export default {
     }
   },
   changeBonusScore (state, payload) {
-    state.players[payload.id].bonusTrue += payload.trueScore
-    state.players[payload.id].bonusFalse += payload.falseScore
+    state.players[payload.id].bonus += payload.score
   },
   flipTutorialStep (state) {
     state.tutorialStep = !state.tutorialStep

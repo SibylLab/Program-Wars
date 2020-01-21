@@ -11,16 +11,14 @@ export default class Player {
    * @param {int} id The ID of the Player
    * @param {string} name The name of the Player
    * @param {int} hand The hand ID of the player
-   * @param {int} trueScore The current score of the player on the true side
-   *  @param {int} falseScore The current score of the player on the false side
+   * @param {int} instructions The current number of instructions of the player
    */
-  constructor (id, name, hand, trueScore, falseScore, isAi) {
+  constructor (id, name, hand, instructions, isAi) {
     this.name = name
     this.hand = hand
     this.usedBonusCards = []
     this.attackedCards = []
-    this.trueScore = trueScore
-    this.falseScore = falseScore
+    this.instructions = instructions
     this.id = id
     this.hasGenerator = false
     this.hasAntiVirus = false
@@ -47,12 +45,10 @@ export default class Player {
     this.numVariables
     this.overclockIncrease = 0
     this.cards = []
-    this.bonusTrue = 0
-    this.bonusFalse = 0
+    this.bonus = 0
     this.isDefensive = false
     this.isCleanSystem = true
-    this.totalTrue = 0
-    this.totalFalse = 0
+    this.totalInstructions = 0
     this.totalScore = 0
     this.redrawing = false
     if (this.isAi) {
@@ -60,8 +56,7 @@ export default class Player {
     }
   };
 
-  updateBonus (scoreTrue, scoreFalse) {
-    this.bonusTrue += scoreTrue
-    this.bonusFalse += scoreFalse
+  updateBonus (score) {
+    this.bonus += score
   }
 }

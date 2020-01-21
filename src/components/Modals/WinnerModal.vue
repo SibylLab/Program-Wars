@@ -33,12 +33,8 @@
               </thead>
               <tbody>
               <tr>
-                <th>True Score:</th>
+                <th>Instruction Score:</th>
                 <td v-for="player in playerList">{{ Math.ceil(getScore(player.id).trueScore) }}</td>
-              </tr>
-              <tr>
-                <th>False Score:</th>
-                <td v-for="player in playerList">{{ Math.ceil(getScore(player.id).falseScore) }}</td>
               </tr>
               <tr>
                 <td colspan="3"><h5><b>Side Objectives:</b></h5></td>
@@ -119,17 +115,13 @@ export default {
     },
     getScore (player) {
       let trueSide = 0
-      let falseSide = 0
-      trueSide = this.getPlayers()[player].trueScore
-      falseSide = this.getPlayers()[player].falseScore
+      trueSide = this.getPlayers()[player].instructions
       if (this.getPlayers()[player].hasVirus) {
         trueSide = trueSide * 0.75
-        falseSide = falseSide * 0.75
       } else if (this.getPlayers()[player].hasOverclock) {
         trueSide = trueSide * 1.25
-        falseSide = falseSide * 1.25
       }
-      return {trueScore: trueSide, falseScore: falseSide}
+      return {trueScore: trueSide}
     }
   },
   computed: {
@@ -146,11 +138,7 @@ export default {
       let winList = []
       for (let player of this.playerList) {
         if (this.getActiveSide()) {
-          if (this.getScore(this.getCurrentPlayer().id).trueScore >= this.getScoreLimit()) {
-            winList.push(player.name)
-          }
-        } else {
-          if (this.getScore(this.getCurrentPlayer().id).falseScore >= this.getScoreLimit()) {
+          if (this.getScore(this.getCurrentPlayer().id).score >= this.getScoreLimit()) {
             winList.push(player.name)
           }
         }

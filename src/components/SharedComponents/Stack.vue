@@ -323,7 +323,7 @@ export default {
         if (rXCard !== undefined) {
           this.addCardToStack({stackId: stack.stackId, card: rXCard})
         }
-        this.updateBonus(groupingBonus, groupingBonus)
+        this.updateBonus(groupingBonus)
         this.getCurrentPlayer().groupingBonus += groupingBonus
         this.getCurrentPlayer().numGroups++
         this.addStackToPlayer({playerId: this.playerId, boolSide: this.playfieldBoolean})
@@ -468,18 +468,16 @@ export default {
       drop () {
         this.addToStack()
       },
-      updateBonus (trueScore, falseScore) {
+      updateBonus (trueScore) {
         if (this.getActiveSide()) {
           this.changeBonusScore({
             id: this.getCurrentPlayer().id,
-            trueScore: trueScore,
-            falseScore: 0
+            score: trueScore
           })
         } else if (!this.getActiveSide()) {
           this.changeBonusScore({
             id: this.getCurrentPlayer().id,
-            trueScore: 0,
-            falseScore: falseScore
+            score: 0
           })
         }
       }
