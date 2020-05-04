@@ -251,10 +251,16 @@
                   <h4>Playing the Game</h4>
                   <p>On each of your turns:</p>
                   <ol id="gamePlay2">
-                    <li>Select a card to put in the "True" or "False" playing field that was chosen at the beginning of the round, or to discard.</li>
-                    <li>At the beginning of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.</li>
+                    <li>Select a card to play.</li>
+
+                      <ul>
+                        <li>The Instruction, Repeat, Variable, and Group cards can be added to open stacks on the playing field.</li>
+                        <li>The Attack, Backup, and Saftey cards will give you options for how they can be played.</li>
+                        <li>If you don't like any of your choices, or a you have a card that cannot be played, you can discard the selected card instead.</li>
+                      </ul>
+
                     <li>You get bonus points for good programming practice. For more information on this go to the 'Bonus Points' tab.</li>
-                    <li>The game ends when a player reaches the score limit in either path:</li>
+                    <li>The game ends when a player reaches the score limit:</li>
                     <ul>
                       <li>Short: 35 instructions</li>
                       <li>Medium: 70 instructions</li>
