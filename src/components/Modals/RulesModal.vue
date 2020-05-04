@@ -254,12 +254,14 @@
                     <li>Select a card to put in the "True" or "False" playing field that was chosen at the beginning of the round, or to discard.</li>
                     <li>At the beginning of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.</li>
                     <li>You get bonus points for good programming practice. For more information on this go to the 'Bonus Points' tab.</li>
-                    <li>The game is over if a player reaches the score limit in either paths:</li>
+                    <li>The game ends when a player reaches the score limit in either paths:</li>
                     <ul>
                       <li>Short: 35 instructions</li>
                       <li>Medium: 70 instructions</li>
                       <li>Long: 105 instructions</li>
-                      </ul>
+                    </ul>
+
+                    <li>After the game each player's final scores will be calculated to pick the winner. A player's final score is a combination of their instruction score and any card and gameplay bonuses. The player who reaches the instructions limit score first is not guaranteed to be the winner.</li>
                   </ol>
                 </div>
 
@@ -275,7 +277,7 @@
                     <p>Group cards don't change your score, but they will combine multiple stacks, making repeats more powerful.</p>
                     <h4>Card Bonuses</h4>
                     <p>Various cards, good coding practices, or game play types will give you bonus points to reward good programming practices!  </p>
-                    <p>Although these bonuses are not directly added to your score, they are invisible bonuses that are added to your final score.</p>
+                    <p>These bonuses do not count toward your instruction score during the game. They will be added to your final score when the game is over.</p>
                     <ol>
                       <li><b>Grouping Cards - 5</b>: Grouping instructions or other grouped instructions is a good and essential programming practice, so you'll get a bonus score of 5 for using a group card.</li>
                       <li><b>Repetition - 3</b>: Repetition in programs is an efficient way of having instructions run multiple times, so you'll be given a bonus score of 3 for using a repetition card. </li>
