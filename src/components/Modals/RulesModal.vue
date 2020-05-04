@@ -259,6 +259,7 @@
                         <li>If you don't like any of your choices, or a you have a card that cannot be played, you can discard the selected card instead.</li>
                       </ul>
 
+                    <li>If you don't like any of the cards in your hand you can use your turn to draw a new hand.</li>
                     <li>You get bonus points for good programming practice. For more information on this go to the 'Bonus Points' tab.</li>
                     <li>The game ends when a player reaches the score limit:</li>
                     <ul>
