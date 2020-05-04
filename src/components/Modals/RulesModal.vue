@@ -254,7 +254,7 @@
                     <li>Select a card to put in the "True" or "False" playing field that was chosen at the beginning of the round, or to discard.</li>
                     <li>At the beginning of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.</li>
                     <li>You get bonus points for good programming practice. For more information on this go to the 'Bonus Points' tab.</li>
-                    <li>The game ends when a player reaches the score limit in either paths:</li>
+                    <li>The game ends when a player reaches the score limit in either path:</li>
                     <ul>
                       <li>Short: 35 instructions</li>
                       <li>Medium: 70 instructions</li>
