@@ -68,7 +68,7 @@
                       </div>
                     </li>
                     <li><h5>Group</h5>
-                      <div> 
+                      <div>
                         <img src="../../../static/cardImg/Group2.png" alt="Group 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Group3.png" alt="Group 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Group4.png" alt="Group 2 Card" class="cardImage">
@@ -93,8 +93,6 @@
                         here.</a>
                       </div>
                     </li>
-                  
-                    
                     <li><h5>Variables</h5>
                       <div>
                         <img src="../../../static/cardImg/RepetitionX.png" alt="Variable Repetition Card" class="cardImage">
