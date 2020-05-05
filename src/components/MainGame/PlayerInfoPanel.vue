@@ -31,7 +31,14 @@
             <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card) in hand" style="margin-top: 5px">
-                  <button v-if="isActiveCard(card)" class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="margin-bottom: 2px; width: 21px; height: 20px;"><img src="/static/miscIcons/trash.png" style="width: 15px; height: 15px; margin-left: -7px; margin-top: -9px"></button>
+                  <button v-if="isActiveCard(card)"
+                          class="btn btn-primary btn-sm col-6"
+                          v-on:click="discardSelected"
+                          title="Discard"
+                          style="margin-bottom: 2px; width: 21px; height: 20px;">
+                    <img src="/static/miscIcons/trash.png"
+                         style="width: 15px; height: 15px; margin-left: -7px; margin-top: -9px">
+                  </button>
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
