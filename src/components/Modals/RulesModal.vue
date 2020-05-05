@@ -28,7 +28,7 @@
 
                     <p style="text-align: center; font-size: 24px;"><b>Playing Cards</b></p>
                     <li><h5>Instruction</h5>
-                      <div >
+                      <div>
                         <img src="../../../static/cardImg/Instruction1.png" alt="Instruction 1 Card" class="cardImage">
                         <img src="../../../static/cardImg/Instruction2.png" alt="Instruction 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Instruction3.png" alt="Instruction 3 Card" class="cardImage">
@@ -46,7 +46,7 @@
                     </li>
 
                     <li><h5>Repetition</h5>
-                     <div >
+                     <div>
                         <img src="../../../static/cardImg/Repetition2.png" alt="Repetition 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Repetition3.png" alt="Repetition 3 Card" class="cardImage">
                         <img src="../../../static/cardImg/Repetition4.png" alt="Repetition 4 Card" class="cardImage">
@@ -68,7 +68,7 @@
                       </div>
                     </li>
                     <li><h5>Group</h5>
-                      <div > 
+                      <div> 
                         <img src="../../../static/cardImg/Group2.png" alt="Group 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Group3.png" alt="Group 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Group4.png" alt="Group 2 Card" class="cardImage">
@@ -93,10 +93,10 @@
                         here.</a>
                       </div>
                     </li>
-                    <!-- changes -->
+                  
                     
                     <li><h5>Variables</h5>
-                      <div >
+                      <div>
                         <img src="../../../static/cardImg/RepetitionX.png" alt="Variable Repetition Card" class="cardImage">
                         <img src="../../../static/cardImg/Variable3.png" alt="Variable 3 Card" class="cardImage">
                         <img src="../../../static/cardImg/Variable4.png" alt="Variable 4 Card" class="cardImage">
