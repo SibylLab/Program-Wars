@@ -7,7 +7,8 @@
       </div>
     </div>
     <div class="row">
-        <div class="stacks col-lg-3 col-md-4 col-sm-6" v-for="stack in stacks">
+
+        <div class="stacks col-lg-3 col-md-4 col-sm-6" v-for="stack in stacks" style="margin:0 60px">
           <stack :playfieldBoolean="trueFalse" :stackId="stack.stackId" @cardAdded="cardAdded" :playerId="playerId"></stack>
       </div>
     </div>
