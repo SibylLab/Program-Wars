@@ -6,13 +6,13 @@
         <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
       </div>
     </div>
-    <div class="row my-4">
+    <div class="row">
 
         <div class="stacks col-lg-3 col-md-4 col-sm-6" v-for="stack in stacks" style="margin:0 60px">
           <stack :playfieldBoolean="trueFalse" :stackId="stack.stackId" @cardAdded="cardAdded" :playerId="playerId"></stack>
       </div>
     </div>
-    <div class="row  my-4">
+    <div class="row">
       <div class="col-md-12" style="text-align: left; margin: 30px 0 0 50px">
         <h3 :style="playfieldTextColour()">}</h3>
       </div>
