@@ -31,6 +31,7 @@
             <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card) in hand" style="margin-top: 5px">
+                  <button v-if="isActiveCard(card)" class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="margin-bottom: 2px; width: 21px; height: 20px;"><img src="/static/miscIcons/trash.png" style="width: 15px; height: 15px; margin-left: -7px; margin-top: -9px"></button>
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
@@ -40,7 +41,6 @@
         <div class="row">
           <div id="controls" class="col-sm" style="height: 40px; justify-content: center; align-items: center">
             <div>
-              <button class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="border-radius: 40px">Discard </button>
               <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
             </div>
           </div>
@@ -305,6 +305,9 @@ export default {
       },
       setActiveCard (c) {
         this.selectCard(c)
+      },
+      isActiveCard (c) {
+        return this.getActiveCard() === c
       }
     },
     created: function () {
