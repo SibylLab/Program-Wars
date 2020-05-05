@@ -3,7 +3,11 @@
   <div class="row">
     <div id="cards">
     <ul class="list-inline">
-      <h4 class="modal-title" :style="pIPTextColour()"> Cybersecurity </h4>
+      <h4 class="modal-title" :style="pIPTextColour()"> Cybersecurity 
+        <img src="/static/miscIcons/info.png"
+             style="width: 15px; height: 15px;"
+             v-bind:title="helpfulCardsInfoText">
+        </h4>
       <li v-for="(card) in usedBonusCards" style="max-width: 90px; margin-right: 5px">
         <card :cardData="card"></card>
       </li>
@@ -13,7 +17,11 @@
   <div class="row">
     <div id="cards2">
       <ul id="example-1" class="list-inline" style="padding: 10px">
-        <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack </h4>
+        <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack
+          <img src="/static/miscIcons/info.png"
+               style="width: 15px; height: 15px;"
+               v-bind:title="attackCardsInfoText">
+         </h4>
         <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
           <card :cardData="card"></card>
         </li>
@@ -23,7 +31,11 @@
   <div class="row">
     <div id="effects">
       <ul class="list-inline">
-        <h4 class="modal-title" :style="pIPTextColour()"> Active Effects </h4>
+        <h4 class="modal-title" :style="pIPTextColour()"> Active Effects
+          <img src="/static/miscIcons/info.png"
+               style="width: 15px; height: 15px;"
+               v-bind:title="activeEffectsInfoText">
+        </h4>
         <li v-for="(effect) in cardEffect" style="max-width: 350px; margin-right: 5px">
           <p> {{ effect }} </p>
         </li>
@@ -44,7 +56,10 @@
   export default {
     data () {
       return {
-        player: this.getCurrentPlayer()
+        player: this.getCurrentPlayer(),
+        helpfulCardsInfoText: 'some information about the helpful cyber security cards area',
+        attackCardsInfoText: 'some information about the attack cards area',
+        activeEffectsInfoText: 'some information about the active effects area'
       }
     },
     components: {
