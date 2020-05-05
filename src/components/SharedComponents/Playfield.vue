@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <img src="/static/miscIcons/info.png"
              style="float: right; margin-right: 2px; margin-top: 2px; width: 15px; height: 15px;"
-             title="Some info text about the player pane">
+             v-bind:title="infoText">
         <h5 :style="playfieldTextColour()">Score: {{ score.trueScore }}</h5>
         <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
       </div>
@@ -36,7 +36,8 @@ export default {
     return {
       title: 'Playfield',
       numberOfStacks: 1,
-      test: 'default'
+      test: 'default',
+      infoText: 'some information about the playing field'
     }
   },
   computed: {
