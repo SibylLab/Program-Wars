@@ -1,5 +1,8 @@
 <template>
   <div id="condsField">
+    <img src="/static/miscIcons/info.png"
+         style="float: right; margin-right:10px; margin-top:10px; width: 15px; height: 15px"
+         title="Some help text about the conditionals component">
     <div class="container conditionals">
       <div class="row">
         <h3 style="text-align: left; margin-left: 20px; color: white"> Side Objectives: { </h3><br>
