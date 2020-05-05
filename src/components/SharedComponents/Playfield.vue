@@ -1,8 +1,17 @@
 <template>
   <div id="playfield" :class="playfieldClass" class="container" :style="getStyle()">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-11">
         <h5 :style="playfieldTextColour()">Score: {{ score.trueScore }}</h5>
+      </div>
+      <div class="col-md-1">
+        <img src="/static/miscIcons/info.png"
+             style="width: 15px; height: 15px;"
+             title="Some info text about the player pane">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
         <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
       </div>
     </div>
