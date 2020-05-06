@@ -1,10 +1,12 @@
 <template>
   <div id="playfield" :class="playfieldClass" class="container" :style="getStyle()">
+    <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
     <div class="row">
       <div class="col-md-12">
         <img src="/static/miscIcons/info.png"
              style="float: right; margin-right: 2px; margin-top: 2px; width: 15px; height: 15px;"
-             v-bind:title="infoText">
+             v-bind:title="infoText"
+             v-on:click="showInfo">
         <h5 :style="playfieldTextColour()">Score: {{ score.trueScore }}</h5>
         <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
       </div>
@@ -24,6 +26,7 @@
 
 <script>
 import Stack from './Stack'
+import Modal from '../Modals/Modal'
 import {mapGetters, mapState} from 'vuex'
 
 /**
@@ -37,7 +40,10 @@ export default {
       title: 'Playfield',
       numberOfStacks: 1,
       test: 'default',
-      infoText: 'some information about the playing field'
+      infoText: 'some information about the playing field',
+      modalTitle: '',
+      modalText: '',
+      modalCards: []
     }
   },
   computed: {
@@ -70,7 +76,8 @@ export default {
     }
   },
   components: {
-    'stack': Stack
+    'stack': Stack,
+    'modal': Modal
   },
   methods: {
     ...mapGetters([
@@ -112,6 +119,15 @@ export default {
       } else {
         return this.falseSideColour()
       }
+    },
+    infoModalId () {
+      return 'play-field-InfoModal'
+    },
+    showInfo () {
+      this.modalTitle = 'Play Field Information'
+      this.modalText = 'Some information about the play field'
+      this.modalCards = []
+      $('#' + this.infoModalId()).modal('show')
     }
   }
 }
