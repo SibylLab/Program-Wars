@@ -1,13 +1,14 @@
 <template>
 <div class="container" style="max-width: 400px">
+  <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
   <div class="row">
+    <img src="/static/miscIcons/info.png"
+         style="float:right; margin-right: 20px; width: 15px; height: 15px;"
+         v-bind:title="usedCardsInfoText"
+         v-on:click="showInfoModal">
     <div id="cards">
     <ul class="list-inline">
-      <h4 class="modal-title" :style="pIPTextColour()"> Cybersecurity 
-        <img src="/static/miscIcons/info.png"
-             style="width: 15px; height: 15px;"
-             v-bind:title="helpfulCardsInfoText">
-        </h4>
+      <h4 class="modal-title" :style="pIPTextColour()"> Cybersecurity </h4>
       <li v-for="(card) in usedBonusCards" style="max-width: 90px; margin-right: 5px">
         <card :cardData="card"></card>
       </li>
@@ -17,11 +18,7 @@
   <div class="row">
     <div id="cards2">
       <ul id="example-1" class="list-inline" style="padding: 10px">
-        <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack
-          <img src="/static/miscIcons/info.png"
-               style="width: 15px; height: 15px;"
-               v-bind:title="attackCardsInfoText">
-         </h4>
+        <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack </h4>
         <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
           <card :cardData="card"></card>
         </li>
@@ -31,11 +28,7 @@
   <div class="row">
     <div id="effects">
       <ul class="list-inline">
-        <h4 class="modal-title" :style="pIPTextColour()"> Active Effects
-          <img src="/static/miscIcons/info.png"
-               style="width: 15px; height: 15px;"
-               v-bind:title="activeEffectsInfoText">
-        </h4>
+        <h4 class="modal-title" :style="pIPTextColour()"> Active Effects </h4>
         <li v-for="(effect) in cardEffect" style="max-width: 350px; margin-right: 5px">
           <p> {{ effect }} </p>
         </li>
@@ -47,6 +40,7 @@
 
 <script>
   import Card from './Card'
+  import Modal from '../Modals/Modal'
   import {mapGetters, mapState} from 'vuex'
 
   /**
@@ -57,14 +51,15 @@
     data () {
       return {
         player: this.getCurrentPlayer(),
-        helpfulCardsInfoText: 'some information about the helpful cyber security cards area',
-        attackCardsInfoText: 'some information about the attack cards area',
-        activeEffectsInfoText: 'some information about the active effects area'
+        usedCardsInfoText: 'Special cards and the effects applied to you. Click for more detailed information.',
+        modalTitle: '',
+        modalText: '',
+        modalCards: []
       }
     },
     components: {
-      'card': Card
-
+      'card': Card,
+      'modal': Modal
     },
     methods: {
       ...mapGetters([
@@ -73,7 +68,16 @@
       ...mapState([
         'pIPTextColour',
         'pIPBackgroundColour'
-      ])
+      ]),
+      infoModalId () {
+        return 'display-used-cards-infoModal'
+      },
+      showInfoModal () {
+        this.modalTitle = 'Used Cards Area Information'
+        this.modalText = 'some information about the defense and attack cards and status effects'
+        this.modalCards = []
+        $('#' + this.infoModalId()).modal('show')
+      }
     },
     computed: {
       attackedCards () {
