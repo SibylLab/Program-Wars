@@ -1,8 +1,10 @@
 <template>
   <div id="condsField">
+    <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
     <img src="/static/miscIcons/info.png"
          style="float: right; margin-right:10px; margin-top:10px; width: 15px; height: 15px"
-         v-bind:title="infoText">
+         v-bind:title="infoText"
+         v-on:click="showInfoModal">
     <div class="container conditionals">
       <div class="row">
         <h3 style="text-align: left; margin-left: 20px; color: white"> Side Objectives: { </h3><br>
@@ -23,6 +25,7 @@
 </template>
 
 <script>
+import Modal from '../Modals/Modal'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -31,8 +34,14 @@ export default {
   data () {
     return {
       title: 'conds',
-      infoText: 'some information about the conditional pane'
+      infoText: 'some information about the conditional pane',
+      modalTitle: '',
+      modalText: '',
+      modalCards: []
     }
+  },
+  components: {
+    'modal': Modal
   },
   computed: {
     condList () {
@@ -116,6 +125,16 @@ export default {
           break
       }
       return msg
+    },
+    infoModalId () {
+      return 'conditionals-infoModal'
+    },
+    showInfoModal () {
+      this.modalTitle = 'Side Objectives Information'
+      this.modalText = 'Some information about the side objectives area'
+      this.modalCards = []
+      this.infoText = 'it has changed'
+      $('#' + this.infoModalId()).modal('show')
     }
   }
 }
