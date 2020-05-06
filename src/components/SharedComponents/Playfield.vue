@@ -6,7 +6,7 @@
         <img src="/static/miscIcons/info.png"
              style="float: right; margin-right: 2px; margin-top: 2px; width: 15px; height: 15px;"
              v-bind:title="infoText"
-             v-on:click="showInfo">
+             v-on:click="showInfoModal">
         <h5 :style="playfieldTextColour()">Score: {{ score.trueScore }}</h5>
         <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
       </div>
@@ -123,7 +123,7 @@ export default {
     infoModalId () {
       return 'play-field-InfoModal'
     },
-    showInfo () {
+    showInfoModal () {
       this.modalTitle = 'Play Field Information'
       this.modalText = 'Some information about the play field'
       this.modalCards = []

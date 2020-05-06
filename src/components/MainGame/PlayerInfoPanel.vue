@@ -14,7 +14,7 @@
         <img src="/static/miscIcons/info.png"
              style="float:right; width: 15px; height: 15px;"
              v-bind:title="scoreMeterTooltip"
-             v-on:click="showInfo('scoreArea')">
+             v-on:click="ShowInfoModal('scoreArea')">
         <div v-for="player in players" style="text-align: left; display: inline">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
             <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px" :style="pIPTextColour()">
@@ -34,7 +34,7 @@
           <img src="/static/miscIcons/info.png"
                style="float:right; width: 15px; height: 15px;"
                v-bind:title="cardAreaTooltip"
-               v-on:click="showInfo('cardArea')">
+               v-on:click="ShowInfoModal('cardArea')">
         <div class="row" style="width: 700px; align-content: center">
         <div id="cards">
           <ul id="example-1">
@@ -53,7 +53,7 @@
               <img src="/static/miscIcons/info.png"
                    style="float:right; margin-left:15px; width: 15px; height: 15px;"
                    v-bind:title="drawButtonsTooltip"
-                   v-on:click="showInfo('buttonArea')">
+                   v-on:click="ShowInfoModal('buttonArea')">
               <button class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="border-radius: 40px">Discard </button>
               <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
             </div>
@@ -333,7 +333,7 @@ export default {
       /**
        * Updates and displays an information modal for a given area of the screen.
        */
-      showInfo (areaName) {
+      ShowInfoModal (areaName) {
         if (areaName === 'scoreArea') {
           this.modalTitle = 'Score Area Information'
           this.modalText = 'some information on the score area'
