@@ -35,7 +35,7 @@
                           class="btn btn-primary btn-sm col-6"
                           v-on:click="discardSelected"
                           title="Discard"
-                          style="margin-bottom: 2px; width: 21px; height: 20px;">
+                          style="border-radius: 30px; position: relative; right: 40px; top: 12px; width: 21px; height: 20px;">
                     <img src="/static/miscIcons/trash.png"
                          style="width: 15px; height: 15px; margin-left: -7px; margin-top: -9px">
                   </button>
