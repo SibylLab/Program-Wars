@@ -1,5 +1,7 @@
 <template>
     <div id="player-info-panel" :style="pIPBackgroundColour()">
+    <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
+      
       <div id="tipContainer" v-if="getTips().tutorial">
         <div id="tipBox" class="container" :cardClicked="tipsCardSelected" style="font-size: 14px;" :style="pIPTextColour()">
           {{ tipsInfoText }}
@@ -11,7 +13,8 @@
         <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center">
         <img src="/static/miscIcons/info.png"
              style="float:right; width: 15px; height: 15px;"
-             v-bind:title="scoreMeterInfoText">
+             v-bind:title="scoreMeterTooltip"
+             v-on:click="selectInfo('scoreArea')">
         <div v-for="player in players" style="text-align: left; display: inline">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
             <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px" :style="pIPTextColour()">
@@ -30,7 +33,8 @@
         <div class="container" style="width: 700px; float: left; margin: auto">
           <img src="/static/miscIcons/info.png"
                style="float:right; width: 15px; height: 15px;"
-               v-bind:title="cardAreaInfoText">
+               v-bind:title="cardAreaTooltip"
+               v-on:click="selectInfo('cardArea')">
         <div class="row" style="width: 700px; align-content: center">
         <div id="cards">
           <ul id="example-1">
@@ -48,7 +52,8 @@
             <div>
               <img src="/static/miscIcons/info.png"
                    style="float:right; margin-left:15px; width: 15px; height: 15px;"
-                   v-bind:title="drawButtonsInfoText">
+                   v-bind:title="drawButtonsTooltip"
+                   v-on:click="selectInfo('buttonArea')">
               <button class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="border-radius: 40px">Discard </button>
               <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
             </div>
@@ -66,6 +71,7 @@
 
 import { bus } from '../SharedComponents/Bus'
 import Card from '../SharedComponents/Card'
+import Modal from '../Modals/Modal'
 import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
 
 import {mapGetters, mapState, mapActions, mapMutations} from 'vuex'
@@ -76,15 +82,16 @@ export default {
       return {
         title: 'Player Info Panel',
         idCounter: 6,
+        modalTitle: '',
         modalText: '',
         modalCards: [],
         tipsToggle: true,
         tipsCardSelected: 'Did you know?',
         tipsInfoText: 'You can toggle on or off this information window by checking the "FUN FACTS" box in the top right corner. ' +
       'You can also turn off the tutorials but keep the fun facts by checking the "TUTORIAL" box.',
-        scoreMeterInfoText: 'some information about the score meter area',
-        cardAreaInfoText: 'some information about the card area',
-        drawButtonsInfoText: 'some info about the draw/redraw buttons'
+        scoreMeterTooltip: 'some information about the score meter area',
+        cardAreaTooltip: 'some information about the card area',
+        drawButtonsTooltip: 'some info about the draw/redraw buttons'
       }
     },
     computed: {
@@ -118,7 +125,8 @@ export default {
     },
     components: {
       'card': Card,
-      'display-used-cards': DisplayUsedCards
+      'display-used-cards': DisplayUsedCards,
+      'modal': Modal
     },
     methods: {
       ...mapActions([
@@ -317,6 +325,29 @@ export default {
       },
       setActiveCard (c) {
         this.selectCard(c)
+      },
+      infoModalId () {
+        return 'player-info-panel-InfoModal'
+      },
+
+      /**
+       * Updates and displays an information modal for a given area of the screen.
+       */
+      selectInfo (areaName) {
+        if (areaName === 'scoreArea') {
+          this.modalTitle = 'Score Area Information'
+          this.modalText = 'some information on the score area'
+        } else if (areaName === 'cardArea') {
+          this.modalTitle = 'Card Area Information'
+          this.modalText = 'some information on the card area'
+        } else if (areaName === 'buttonArea') {
+          this.modalTitle = 'Button Area Information'
+          this.modalText = 'some information on the button area'
+        } else {
+          return
+        }
+        this.modalCards = []
+        $('#' + this.infoModalId()).modal('show')
       }
     },
     created: function () {
