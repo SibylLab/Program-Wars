@@ -333,13 +333,10 @@ export default {
       ShowInfoModal (areaName) {
         if (areaName === 'scoreArea') {
           this.modalTitle = 'Score Area Information'
-          this.modalText = 'some information on the score area'
+          this.modalText = 'The score area shows each player\'s progress toward the score limit. When a players instruction meter is full they have reached, or passed, the limit and the game is over.\n\nClicking on a players name will allow you to view the stacks they are building.'
         } else if (areaName === 'cardArea') {
           this.modalTitle = 'Card Area Information'
-          this.modalText = 'some information on the card area'
-        } else if (areaName === 'buttonArea') {
-          this.modalTitle = 'Button Area Information'
-          this.modalText = 'some information on the button area'
+          this.modalText = 'The card area shows the current player\'s name and hand, as well as the score limit for the game. On your turn you can select a card to play or discard, or you can choose to discard all your cards and draw a new hand.\n\nWhen an Instruction, Repeat, or Variable card is selected an ADD button will appear above any stack the card can be played on.\n\nWhen a group card is selected it any stack that may be grouped will show a check box. If the value of all checked stacks is equal to the Group cards value you will be given the option to group them.\n\nWhen selected Cyber Security and Cyber Attack cards will present you with some choices if the card can be played. You will also be given the option to discard the card.\n\nMore information on what each card does can be found in the menu under Rules.'
         } else {
           return
         }
