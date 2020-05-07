@@ -13,6 +13,7 @@
         <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center">
         <img src="/static/miscIcons/info.png"
              style="float:right; width: 15px; height: 15px;"
+             v-if="getTips().tutorial"
              v-bind:title="scoreMeterTooltip"
              v-on:click="ShowInfoModal('scoreArea')">
         <div v-for="player in players" style="text-align: left; display: inline">
@@ -33,6 +34,7 @@
         <div class="container" style="width: 700px; float: left; margin: auto">
           <img src="/static/miscIcons/info.png"
                style="float:right; width: 15px; height: 15px;"
+               v-if="getTips().tutorial"
                v-bind:title="cardAreaTooltip"
                v-on:click="ShowInfoModal('cardArea')">
         <div class="row" style="width: 700px; align-content: center">
@@ -50,10 +52,6 @@
         <div class="row">
           <div id="controls" class="col-sm" style="height: 40px; justify-content: center; align-items: center">
             <div>
-              <img src="/static/miscIcons/info.png"
-                   style="float:right; margin-left:15px; width: 15px; height: 15px;"
-                   v-bind:title="drawButtonsTooltip"
-                   v-on:click="ShowInfoModal('buttonArea')">
               <button class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="border-radius: 40px">Discard </button>
               <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
             </div>

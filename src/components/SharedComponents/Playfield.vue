@@ -5,6 +5,7 @@
       <div class="col-md-12">
         <img src="/static/miscIcons/info.png"
              style="float: right; margin-right: 2px; margin-top: 2px; width: 15px; height: 15px;"
+             v-if="getTips().tutorial"
              v-bind:title="infoText"
              v-on:click="showInfoModal">
         <h5 :style="playfieldTextColour()">Score: {{ score.trueScore }}</h5>
@@ -82,7 +83,8 @@ export default {
   methods: {
     ...mapGetters([
       'getCurrentPlayer',
-      'getStacks'
+      'getStacks',
+      'getTips'
     ]),
     ...mapState([
       'trueSideColour',

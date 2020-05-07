@@ -4,6 +4,7 @@
   <div class="row">
     <img src="/static/miscIcons/info.png"
          style="float:right; margin-right: 20px; width: 15px; height: 15px;"
+         v-if="getTips().tutorial"
          v-bind:title="usedCardsInfoText"
          v-on:click="showInfoModal">
     <div id="cards">
@@ -63,7 +64,8 @@
     },
     methods: {
       ...mapGetters([
-        'getCurrentPlayer'
+        'getCurrentPlayer',
+        'getTips'
       ]),
       ...mapState([
         'pIPTextColour',
