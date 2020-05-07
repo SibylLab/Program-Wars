@@ -4,7 +4,7 @@
     <img src="/static/miscIcons/info.png"
          style="float: right; margin-right:10px; margin-top:10px; width: 15px; height: 15px; cursor: pointer"
          v-if="getTips().tutorial"
-         v-bind:title="infoText"
+         v-bind:title="infoTooltip"
          v-on:click="showInfoModal">
     <div class="container conditionals">
       <div class="row">
@@ -35,7 +35,7 @@ export default {
   data () {
     return {
       title: 'conds',
-      infoText: 'some information about the conditional pane',
+      infoTooltip: 'Conditions for bonus points added after game. Click for more info.',
       modalTitle: '',
       modalText: '',
       modalCards: []

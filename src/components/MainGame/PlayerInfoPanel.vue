@@ -14,7 +14,7 @@
         <img src="/static/miscIcons/info.png"
              style="float:right; width: 15px; height: 15px; cursor: pointer"
              v-if="getTips().tutorial"
-             v-bind:title="scoreMeterTooltip"
+             v-bind:title="scoreAreaTooltip"
              v-on:click="ShowInfoModal('scoreArea')">
         <div v-for="player in players" style="text-align: left; display: inline">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
@@ -87,9 +87,8 @@ export default {
         tipsCardSelected: 'Did you know?',
         tipsInfoText: 'You can toggle on or off this information window by checking the "FUN FACTS" box in the top right corner. ' +
       'You can also turn off the tutorials but keep the fun facts by checking the "TUTORIAL" box.',
-        scoreMeterTooltip: 'some information about the score meter area',
-        cardAreaTooltip: 'some information about the card area',
-        drawButtonsTooltip: 'some info about the draw/redraw buttons'
+        scoreAreaTooltip: 'Instruction progress for each player. Click for more info.',
+        cardAreaTooltip: 'Current player\'s hand. Click for more info'
       }
     },
     computed: {

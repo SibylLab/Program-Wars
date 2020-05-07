@@ -6,7 +6,7 @@
         <img src="/static/miscIcons/info.png"
              style="float: right; margin-right: 2px; margin-top: 2px; width: 15px; height: 15px; cursor: pointer"
              v-if="getTips().tutorial"
-             v-bind:title="infoText"
+             v-bind:title="infoTooltip"
              v-on:click="showInfoModal">
         <h5 :style="playfieldTextColour()">Score: {{ score.trueScore }}</h5>
         <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
@@ -41,7 +41,7 @@ export default {
       title: 'Playfield',
       numberOfStacks: 1,
       test: 'default',
-      infoText: 'some information about the playing field',
+      infoTooltip: 'Current player\'s played instruction and modifier cards. Click for more info.',
       modalTitle: '',
       modalText: '',
       modalCards: []
