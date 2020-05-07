@@ -30,15 +30,12 @@
           <ul id="example-1">
             <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
-              <li v-for="(card) in hand" style="margin-top: 5px">
-                  <button v-if="isActiveCard(card)"
-                          class="btn btn-primary btn-sm col-6"
-                          v-on:click="discardSelected"
-                          title="Discard"
-                          style="border-radius: 30px; position: relative; right: 40px; top: 12px; width: 21px; height: 20px;">
-                    <img src="/static/miscIcons/trash.png"
-                         style="width: 15px; height: 15px; margin-left: -7px; margin-top: -9px">
-                  </button>
+              <li v-for="(card) in hand" style="margin-top: 5px; position: relative;">
+                  <input type="image"
+                     src="/static/miscIcons/trash.png"
+                     v-if="isActiveCard(card)"
+                     v-on:click="discardSelected"
+                     style="width: 25px; height: 25px; left: -8px; top: -8px; position: absolute">
                   <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
           </ul>
