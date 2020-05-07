@@ -52,7 +52,7 @@
         <div class="row">
           <div id="controls" class="col-sm" style="height: 40px; justify-content: center; align-items: center">
             <div>
-              <button class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="border-radius: 40px">Discard </button>
+              <button class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="border-radius: 40px" title="Discard the selected card">Discard </button>
               <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;" title="Discard your hand and draw 5 new cards">REDRAW</button>
             </div>
           </div>
@@ -333,7 +333,7 @@ export default {
       ShowInfoModal (areaName) {
         if (areaName === 'scoreArea') {
           this.modalTitle = 'Score Area Information'
-          this.modalText = 'The score area shows each player\'s progress toward the score limit. When a players instruction meter is full they have reached, or passed, the limit and the game is over.\n\nClicking on a players name will allow you to view the stacks they are building.'
+          this.modalText = 'The score area shows each player\'s progress toward the score limit. When a players instruction meter is full they have reached, or passed, the limit and the game is over.\n\nClicking on a players name will allow you to view the stacks they are building.\n\nMore information on Scoring can be found in the menu under Rules.'
         } else if (areaName === 'cardArea') {
           this.modalTitle = 'Card Area Information'
           this.modalText = 'The card area shows the current player\'s name and hand, as well as the score limit for the game. On your turn you can select a card to play or discard, or you can choose to discard all your cards and draw a new hand.\n\nWhen an Instruction, Repeat, or Variable card is selected an ADD button will appear above any stack the card can be played on.\n\nWhen a group card is selected it any stack that may be grouped will show a check box. If the value of all checked stacks is equal to the Group cards value you will be given the option to group them.\n\nWhen selected Cyber Security and Cyber Attack cards will present you with some choices if the card can be played. You will also be given the option to discard the card.\n\nMore information on what each card does can be found in the menu under Rules.'
