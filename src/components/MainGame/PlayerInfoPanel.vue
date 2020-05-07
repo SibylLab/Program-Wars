@@ -12,7 +12,7 @@
       <div id="flexcontainer">
         <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center">
         <img src="/static/miscIcons/info.png"
-             style="float:right; width: 15px; height: 15px;"
+             style="float:right; width: 15px; height: 15px; cursor: pointer"
              v-if="getTips().tutorial"
              v-bind:title="scoreMeterTooltip"
              v-on:click="ShowInfoModal('scoreArea')">
@@ -33,7 +33,7 @@
         </div>
         <div class="container" style="width: 700px; float: left; margin: auto">
           <img src="/static/miscIcons/info.png"
-               style="float:right; width: 15px; height: 15px;"
+               style="float:right; width: 15px; height: 15px; cursor: pointer"
                v-if="getTips().tutorial"
                v-bind:title="cardAreaTooltip"
                v-on:click="ShowInfoModal('cardArea')">
@@ -53,7 +53,7 @@
           <div id="controls" class="col-sm" style="height: 40px; justify-content: center; align-items: center">
             <div>
               <button class="btn btn-primary btn-sm col-6" v-on:click="discardSelected" style="border-radius: 40px">Discard </button>
-              <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
+              <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;" title="Discard your hand and draw 5 new cards">REDRAW</button>
             </div>
           </div>
           <display-used-cards></display-used-cards>

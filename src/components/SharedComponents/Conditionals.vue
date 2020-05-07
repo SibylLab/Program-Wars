@@ -2,7 +2,7 @@
   <div id="condsField">
     <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
     <img src="/static/miscIcons/info.png"
-         style="float: right; margin-right:10px; margin-top:10px; width: 15px; height: 15px"
+         style="float: right; margin-right:10px; margin-top:10px; width: 15px; height: 15px; cursor: pointer"
          v-if="getTips().tutorial"
          v-bind:title="infoText"
          v-on:click="showInfoModal">

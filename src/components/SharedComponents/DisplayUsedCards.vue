@@ -3,7 +3,7 @@
   <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
   <div class="row">
     <img src="/static/miscIcons/info.png"
-         style="float:right; margin-right: 20px; width: 15px; height: 15px;"
+         style="float:right; margin-right: 20px; width: 15px; height: 15px; cursor: pointer"
          v-if="getTips().tutorial"
          v-bind:title="usedCardsInfoText"
          v-on:click="showInfoModal">
