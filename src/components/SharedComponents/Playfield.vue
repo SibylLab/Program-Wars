@@ -127,7 +127,7 @@ export default {
     },
     showInfoModal () {
       this.modalTitle = 'Play Field Information'
-      this.modalText = 'Some information about the play field'
+      this.modalText = 'The Player stacks area holds all the instructions you have played along with their modifiers. When a selected card can be added to a stack an ADD button will appear over that stack.\n\nEach stack starts with a base Instruction card, or a Group card if one or more stacks have been grouped together. On top of these base cards Repeat and Variable cards are played to increase the score of the stack.\n\nThe score of each stack is shown directly above the stack and the total score of all stacks is shown at the top of the area. The total score is also updated in the players score meter in the score area of the screen.\n\nMore information on specific cards and scoring can be found in the menu under Rules.'
       this.modalCards = []
       $('#' + this.infoModalId()).modal('show')
     }
