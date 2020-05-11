@@ -10,9 +10,9 @@
       <div class="container" style="padding: 10px; width: 100%">
         <div>
       <div id="flexcontainer">
-        <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center">
-        <img src="/static/miscIcons/info.png"
-             style="float:right; width: 15px; height: 15px; cursor: pointer"
+        <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center; position: relative">
+        <input type="image" src="/static/miscIcons/info.png"
+             style="position: absolute; left: -5px; top: -5px; width: 15px; height: 15px;"
              v-if="getTips().tutorial"
              v-bind:title="scoreAreaTooltip"
              v-on:click="ShowInfoModal('scoreArea')">
@@ -32,12 +32,12 @@
         </div>
         </div>
         <div class="container" style="width: 700px; float: left; margin: auto">
-          <img src="/static/miscIcons/info.png"
-               style="float:right; width: 15px; height: 15px; cursor: pointer"
+        <div class="row" style="width: 700px; align-content: center; position: relative;">
+          <input type="image" src="/static/miscIcons/info.png"
+               style="position: absolute; top: -20px; width: 15px; height: 15px;"
                v-if="getTips().tutorial"
                v-bind:title="cardAreaTooltip"
                v-on:click="ShowInfoModal('cardArea')">
-        <div class="row" style="width: 700px; align-content: center">
         <div id="cards">
           <ul id="example-1">
             <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>

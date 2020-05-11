@@ -2,9 +2,9 @@
   <div id="playfield" :class="playfieldClass" class="container" :style="getStyle()">
     <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
     <div class="row">
-      <div class="col-md-12">
-        <img src="/static/miscIcons/info.png"
-             style="float: right; margin-right: 2px; margin-top: 2px; width: 15px; height: 15px; cursor: pointer"
+      <div class="col-md-12" style="position: relative;">
+        <input type="image" src="/static/miscIcons/info.png"
+             style="position: absolute; right: 15px; width: 15px; height: 15px;"
              v-if="getTips().tutorial"
              v-bind:title="infoTooltip"
              v-on:click="showInfoModal">

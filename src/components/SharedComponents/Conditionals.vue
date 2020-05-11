@@ -1,8 +1,8 @@
 <template>
-  <div id="condsField">
+  <div id="condsField" style="position: relative">
     <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
-    <img src="/static/miscIcons/info.png"
-         style="float: right; margin-right:10px; margin-top:10px; width: 15px; height: 15px; cursor: pointer"
+    <input type="image" src="/static/miscIcons/info.png"
+         style="position: absolute; right: 8px; top: 8px; width: 15px; height: 15px;"
          v-if="getTips().tutorial"
          v-bind:title="infoTooltip"
          v-on:click="showInfoModal">

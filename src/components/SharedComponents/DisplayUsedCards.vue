@@ -1,9 +1,9 @@
 <template>
 <div class="container" style="max-width: 400px">
   <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
-  <div class="row">
-    <img src="/static/miscIcons/info.png"
-         style="float:right; margin-right: 20px; width: 15px; height: 15px; cursor: pointer"
+  <div class="row" style="position: relative">
+    <input type="image" src="/static/miscIcons/info.png"
+         style="position: absolute; top: 30px; right: 80px; width: 15px; height: 15px;"
          v-if="getTips().tutorial"
          v-bind:title="usedCardsTooltip"
          v-on:click="showInfoModal">
