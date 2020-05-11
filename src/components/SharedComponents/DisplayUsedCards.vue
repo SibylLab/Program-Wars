@@ -1,6 +1,12 @@
 <template>
 <div class="container" style="max-width: 400px">
+  <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
   <div class="row">
+    <img src="/static/miscIcons/info.png"
+         style="float:right; margin-right: 20px; width: 15px; height: 15px; cursor: pointer"
+         v-if="getTips().tutorial"
+         v-bind:title="usedCardsTooltip"
+         v-on:click="showInfoModal">
     <div id="cards">
     <ul class="list-inline">
       <h4 class="modal-title" :style="pIPTextColour()"> Cybersecurity </h4>
@@ -35,6 +41,7 @@
 
 <script>
   import Card from './Card'
+  import Modal from '../Modals/Modal'
   import {mapGetters, mapState} from 'vuex'
 
   /**
@@ -44,21 +51,35 @@
   export default {
     data () {
       return {
-        player: this.getCurrentPlayer()
+        player: this.getCurrentPlayer(),
+        usedCardsTooltip: 'Special cards and the effects applied to you. Click for more detailed information.',
+        modalTitle: '',
+        modalText: '',
+        modalCards: []
       }
     },
     components: {
-      'card': Card
-
+      'card': Card,
+      'modal': Modal
     },
     methods: {
       ...mapGetters([
-        'getCurrentPlayer'
+        'getCurrentPlayer',
+        'getTips'
       ]),
       ...mapState([
         'pIPTextColour',
         'pIPBackgroundColour'
-      ])
+      ]),
+      infoModalId () {
+        return 'display-used-cards-infoModal'
+      },
+      showInfoModal () {
+        this.modalTitle = 'Active Cards Information'
+        this.modalText = 'The active cards area shows the Cyber Security and Cyber Attack cards that have been played on the current player. It also shows a list of status effects those cards may be applying to the player.\n\nCyber Security cards give beneficial effects, like blocking certain Cyber Attack cards from being played on the player or increasing your score. You play these cards on yourself. They will last until they protect you from a Cyber Attack card, their effect runs out, or the game ends.\n\nCyber Attack cards give negative effects, like preventing you from playing certain cards or reducing your score. These cards are played on you by other players. They will last until removed by Cyber Security cards or the end of the game.\n\nThe Active Effects list any bonuses or limitations applied to the player by the Cyber Security and Cyber Attack Cards. For example, when the Malware card is active on a player their score is reduced by 25%. This will be displayed under Active Effects.\n\nMore information on Cyber Security and Cyber Attack cards can be found in the menu under Rules.'
+        this.modalCards = []
+        $('#' + this.infoModalId()).modal('show')
+      }
     },
     computed: {
       attackedCards () {

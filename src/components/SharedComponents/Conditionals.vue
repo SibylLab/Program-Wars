@@ -1,5 +1,11 @@
 <template>
   <div id="condsField">
+    <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
+    <img src="/static/miscIcons/info.png"
+         style="float: right; margin-right:10px; margin-top:10px; width: 15px; height: 15px; cursor: pointer"
+         v-if="getTips().tutorial"
+         v-bind:title="infoTooltip"
+         v-on:click="showInfoModal">
     <div class="container conditionals">
       <div class="row">
         <h3 style="text-align: left; margin-left: 20px; color: white"> Side Objectives: { </h3><br>
@@ -20,6 +26,7 @@
 </template>
 
 <script>
+import Modal from '../Modals/Modal'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -27,8 +34,15 @@ export default {
   props: ['playerId'],
   data () {
     return {
-      title: 'conds'
+      title: 'conds',
+      infoTooltip: 'Conditions for bonus points added after game. Click for more info.',
+      modalTitle: '',
+      modalText: '',
+      modalCards: []
     }
+  },
+  components: {
+    'modal': Modal
   },
   computed: {
     condList () {
@@ -48,7 +62,8 @@ export default {
     ...mapGetters([
       'getCurrentPlayer',
       'getScoreLimit',
-      'getFirstRound'
+      'getFirstRound',
+      'getTips'
     ]),
     buildCondObj (condIf, condThen, condId) {
       return {condIf: condIf, condThen: condThen, condId: condId}
@@ -112,6 +127,16 @@ export default {
           break
       }
       return msg
+    },
+    infoModalId () {
+      return 'conditionals-infoModal'
+    },
+    showInfoModal () {
+      this.modalTitle = 'Conditionals Area Information'
+      this.modalText = 'The Conditionals Area keeps track of a player\'s progress toward various side objectives. The points gained for completing these objectives are added to a players score when the game is over.\n\nThe first few objectives are card based objectives that give bonus points for every card of a specific type that is played. For example, at the end of the game a player will recieve 2 bonus points for each repeat card in their stacks.\n\nThe other objectives track conditions that have been met during the round. The color of the condition body will be green if the condition is met and red if the condition is not met. For example, if a player is under the effects of all saftey cards the \'all saftey cards\' bonus will be met. However, the player will only get the 15 bonus points if they still have all saftey cards when the round ends.\n\nMore information on Conditions and Scoring can be found in the menu under Rules.'
+      this.modalCards = []
+      this.infoText = 'it has changed'
+      $('#' + this.infoModalId()).modal('show')
     }
   }
 }

@@ -1,7 +1,13 @@
 <template>
   <div id="playfield" :class="playfieldClass" class="container" :style="getStyle()">
+    <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
     <div class="row">
       <div class="col-md-12">
+        <img src="/static/miscIcons/info.png"
+             style="float: right; margin-right: 2px; margin-top: 2px; width: 15px; height: 15px; cursor: pointer"
+             v-if="getTips().tutorial"
+             v-bind:title="infoTooltip"
+             v-on:click="showInfoModal">
         <h5 :style="playfieldTextColour()">Score: {{ score.trueScore }}</h5>
         <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
       </div>
@@ -22,6 +28,7 @@
 
 <script>
 import Stack from './Stack'
+import Modal from '../Modals/Modal'
 import {mapGetters, mapState} from 'vuex'
 
 /**
@@ -34,7 +41,11 @@ export default {
     return {
       title: 'Playfield',
       numberOfStacks: 1,
-      test: 'default'
+      test: 'default',
+      infoTooltip: 'Current player\'s played instruction and modifier cards. Click for more info.',
+      modalTitle: '',
+      modalText: '',
+      modalCards: []
     }
   },
   computed: {
@@ -67,12 +78,14 @@ export default {
     }
   },
   components: {
-    'stack': Stack
+    'stack': Stack,
+    'modal': Modal
   },
   methods: {
     ...mapGetters([
       'getCurrentPlayer',
-      'getStacks'
+      'getStacks',
+      'getTips'
     ]),
     ...mapState([
       'trueSideColour',
@@ -109,6 +122,15 @@ export default {
       } else {
         return this.falseSideColour()
       }
+    },
+    infoModalId () {
+      return 'play-field-InfoModal'
+    },
+    showInfoModal () {
+      this.modalTitle = 'Play Field Information'
+      this.modalText = 'The Player stacks area holds all the instructions you have played along with their modifiers. When a selected card can be added to a stack an ADD button will appear over that stack.\n\nEach stack starts with a base Instruction card, or a Group card if one or more stacks have been grouped together. On top of these base cards Repeat and Variable cards are played to increase the score of the stack.\n\nThe score of each stack is shown directly above the stack and the total score of all stacks is shown at the top of the area. The total score is also updated in the players score meter in the score area of the screen.\n\nMore information on specific cards and scoring can be found in the menu under Rules.'
+      this.modalCards = []
+      $('#' + this.infoModalId()).modal('show')
     }
   }
 }
