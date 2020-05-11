@@ -11,7 +11,9 @@
           <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
         </div>
         <div v-if="modalCards.length === 0" class="modal-body">
+          <span style="white-space: pre-wrap">
           {{ modalBody }}
+          </span>
           <div v-if="image">
             <img src="https://media.giphy.com/media/MGaacoiAlAti0/giphy.gif">
           </div>

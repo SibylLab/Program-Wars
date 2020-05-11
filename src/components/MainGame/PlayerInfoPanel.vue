@@ -1,5 +1,7 @@
 <template>
     <div id="player-info-panel" :style="pIPBackgroundColour()">
+    <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
+      
       <div id="tipContainer" v-if="getTips().tutorial">
         <div id="tipBox" class="container" :cardClicked="tipsCardSelected" style="font-size: 14px;" :style="pIPTextColour()">
           {{ tipsInfoText }}
@@ -8,7 +10,12 @@
       <div class="container" style="padding: 10px; width: 100%">
         <div>
       <div id="flexcontainer">
-        <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center">
+        <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center; position: relative">
+        <input type="image" src="/static/miscIcons/info.png"
+             style="position: absolute; left: -5px; top: -5px; width: 15px; height: 15px;"
+             v-if="getTips().tutorial"
+             v-bind:title="scoreAreaTooltip"
+             v-on:click="ShowInfoModal('scoreArea')">
         <div v-for="player in players" style="text-align: left; display: inline">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
             <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px" :style="pIPTextColour()">
@@ -25,7 +32,12 @@
         </div>
         </div>
         <div class="container" style="width: 700px; float: left; margin: auto">
-        <div class="row" style="width: 700px; align-content: center">
+        <div class="row" style="width: 700px; align-content: center; position: relative;">
+          <input type="image" src="/static/miscIcons/info.png"
+               style="position: absolute; top: -20px; width: 15px; height: 15px;"
+               v-if="getTips().tutorial"
+               v-bind:title="cardAreaTooltip"
+               v-on:click="ShowInfoModal('cardArea')">
         <div id="cards">
           <ul id="example-1">
             <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>
@@ -61,6 +73,7 @@
 
 import { bus } from '../SharedComponents/Bus'
 import Card from '../SharedComponents/Card'
+import Modal from '../Modals/Modal'
 import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
 
 import {mapGetters, mapState, mapActions, mapMutations} from 'vuex'
@@ -71,12 +84,15 @@ export default {
       return {
         title: 'Player Info Panel',
         idCounter: 6,
+        modalTitle: '',
         modalText: '',
         modalCards: [],
         tipsToggle: true,
         tipsCardSelected: 'Did you know?',
         tipsInfoText: 'You can toggle on or off this information window by checking the "FUN FACTS" box in the top right corner. ' +
-      'You can also turn off the tutorials but keep the fun facts by checking the "TUTORIAL" box.'
+      'You can also turn off the tutorials but keep the fun facts by checking the "TUTORIAL" box.',
+        scoreAreaTooltip: 'Instruction progress for each player. Click for more info.',
+        cardAreaTooltip: 'Current player\'s hand. Click for more info'
       }
     },
     computed: {
@@ -110,7 +126,8 @@ export default {
     },
     components: {
       'card': Card,
-      'display-used-cards': DisplayUsedCards
+      'display-used-cards': DisplayUsedCards,
+      'modal': Modal
     },
     methods: {
       ...mapActions([
@@ -309,6 +326,26 @@ export default {
       },
       setActiveCard (c) {
         this.selectCard(c)
+      },
+      infoModalId () {
+        return 'player-info-panel-InfoModal'
+      },
+
+      /**
+       * Updates and displays an information modal for a given area of the screen.
+       */
+      ShowInfoModal (areaName) {
+        if (areaName === 'scoreArea') {
+          this.modalTitle = 'Score Area Information'
+          this.modalText = 'The score area shows each player\'s progress toward the score limit. When a players instruction meter is full they have reached, or passed, the limit and the game is over.\n\nClicking on a players name will allow you to view the stacks they are building.\n\nMore information on Scoring can be found in the menu under Rules.'
+        } else if (areaName === 'cardArea') {
+          this.modalTitle = 'Card Area Information'
+          this.modalText = 'The card area shows the current player\'s name and hand, as well as the score limit for the game. On your turn you can select a card to play or discard, or you can choose to discard all your cards and draw a new hand.\n\nWhen an Instruction, Repeat, or Variable card is selected an ADD button will appear above any stack the card can be played on.\n\nWhen a group card is selected it any stack that may be grouped will show a check box. If the value of all checked stacks is equal to the Group cards value you will be given the option to group them.\n\nWhen selected Cyber Security and Cyber Attack cards will present you with some choices if the card can be played. You will also be given the option to discard the card.\n\nMore information on what each card does can be found in the menu under Rules.'
+        } else {
+          return
+        }
+        this.modalCards = []
+        $('#' + this.infoModalId()).modal('show')
       },
       isActiveCard (c) {
         return this.getActiveCard() === c
