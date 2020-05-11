@@ -24,6 +24,7 @@ export default {
     }, 2500)
   },
 
+  /* $ is undefined right now (steven may 2020)
   coinAnimation (context) {
     context.commit('coinModalTrigger')
     context.commit('setCoinFlipAnim', 0)
@@ -35,6 +36,7 @@ export default {
       $('.coin').modal('hide')
     }, coinTimer * 600)
   },
+  */
 
   turn (context, payload) {
     context.commit('getIsLast')

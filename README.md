@@ -1,23 +1,29 @@
-# Program Wars
-[![Build Status](https://travis-ci.org/johnanvik/program-wars.svg?branch=master)](https://travis-ci.org/johnanvik/program-wars)
-[![GitHub open issues](https://img.shields.io/github/issues-raw/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/issues)
-[![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/issues)
+# pwars
 
-[![DeepScan grade](https://deepscan.io/api/projects/2681/branches/18539/badge/grade.svg)](https://deepscan.io/dashboard#view=project&pid=2681&bid=18539)
-[![Coverage Status](https://coveralls.io/repos/github/johnanvik/program-wars/badge.svg?branch=master)](https://coveralls.io/github/johnanvik/program-wars?branch=master)
+## Project setup
+```
+npm install
+```
 
-[![GitHub release](https://img.shields.io/github/release/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/releases/latest)
-[![GitHub contributors](https://img.shields.io/github/contributors/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/graphs/contributors)
-[![Open Source Love](https://badges.frapsoft.com/os/gpl/gpl.svg?v=102)](https://github.com/johnanvik/open-source-badge/)
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-Program Wars is a web-based card game for teaching or reinforcing the fundamental concepts of programming and cybersecurity to
-those with limited or no programming experience. In the game, players construct a computer program that meets or
-exceeds a goal number of statements. Players build their program using “instruction” cards and “repetition” cards. Some repetition
-cards allow the player to change the number of repetitions using “variable” cards. Players can also “group” instructions to protect
-portions of their program from being cyberattacked (i.e. “hacked”). Players can also use other cyberattacks (Malware and Power Outage) to stop their opponents from winning.
+### Compiles and minifies for production
+```
+npm run build
+```
 
-To play Program Wars go to [https://program-wars.firebaseapp.com](https://programming-wars.firebaseapp.com)
+### Run your unit tests
+```
+npm run test:unit
+```
 
-If you would like to contribute to the project, see [CONTRIBUTING](CONTRIBUTING.md).
+### Lints and fixes files
+```
+npm run lint
+```
 
-For more information about the project, refer to the [wiki](https://github.com/johnanvik/program-wars/wiki).
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

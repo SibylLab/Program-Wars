@@ -1,41 +1,32 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
 
-<script>
-  /**
-   * This is the main component of any vue application, this is what will be injected into the index.html file.
-   */
-  export default {
-    name: 'app'
-  }
-</script>
-
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  min-height: 100%;
-  height: 100%;
 }
 
-body {
-  min-height: 100%;
+#nav {
+  padding: 30px;
 }
 
-html,body{
-  min-height:100%;
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
 }
 
-body {
-  height: 100vh;
-}
-body {
-  min-height: 100vh;
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

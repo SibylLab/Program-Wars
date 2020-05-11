@@ -90,6 +90,7 @@ export default {
     state.players.find(player => player.id === playerId).hand = hand.handId
   },
   reDrawPlayerCards (state, playerId) {
+    playerId  // was not used, but I dont know if I can remove it (steve may 2020)
     let localState = state
     localState.deck.shuffle(localState.deck.cards)
     let cardsTemp = []

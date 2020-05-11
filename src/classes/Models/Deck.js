@@ -86,7 +86,7 @@ export default class Deck {
     // this.initDeck();
     this.cards = []
     this.discard_cards = []
-  };
+  }
 
   /**
    * initDeck function to initialize the deck with a pre determined number and type of cards
@@ -114,7 +114,7 @@ export default class Deck {
       }
     }
     this.shuffle(this.cards)
-  };// end Init game
+  }// end Init game
 
   /**
    * draw function returns the card at the front (top) of the deck and removes it from the deck
@@ -125,7 +125,7 @@ export default class Deck {
     let card = this.cards[0]// [0] is the top of the deck
     this.cards.shift()// unshift removes the first element.
     return card
-  };
+  }
 
   /**
    * shuffle function that will psuedo shuffle the contents of the deck into a random order
