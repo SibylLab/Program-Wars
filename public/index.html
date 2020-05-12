@@ -1,17 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta charset='utf-8'>
+    <script src='https://www.gstatic.com/firebasejs/5.7.2/firebase.js'></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: 'AIzaSyCY69WOuaXGnceqA5oXEmw2mhn_g5nvh2I',
+        authDomain: 'program-wars.firebaseapp.com',
+        databaseURL: 'https://program-wars.firebaseio.com',
+        projectId: 'program-wars',
+        storageBucket: '',
+        messagingSenderId: '268876343967'
+      }
+      firebase.initializeApp(config)
+    </script>
+    <title>program-wars</title>
+    <script src='https://code.jquery.com/jquery-3.1.1.slim.min.js' integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n' crossorigin='anonymous'></script>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>
+    <!--Paper theme-->
+    <link rel='stylesheet' href='https://bootswatch.com/3/paper/bootstrap.min.css'>
+    <link rel='stylesheet'
+          href='https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>
+    
+    <style>
+      #playfield::-webkit-scrollbar {
+        display: none;
+      }
+
+      .cardImage {
+        width: 100px;
+        padding: 10px;
+      }
+  </style>
   </head>
+
   <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
+    <div id='app'></div>
     <!-- built files will be auto injected -->
   </body>
 </html>
