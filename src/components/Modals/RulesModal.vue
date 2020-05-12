@@ -29,9 +29,9 @@
                     <p style="text-align: center; font-size: 24px;"><b>Playing Cards</b></p>
                     <li><h5>Instruction</h5>
                       <div>
-                        <img src="../../../static/cardImg/Instruction1.png" alt="Instruction 1 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Instruction2.png" alt="Instruction 2 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Instruction3.png" alt="Instruction 3 Card" class="cardImage">
+                        <img src="static/cardImg/Instruction1.png" alt="Instruction 1 Card" class="cardImage">
+                        <img src="static/cardImg/Instruction2.png" alt="Instruction 2 Card" class="cardImage">
+                        <img src="static/cardImg/Instruction3.png" alt="Instruction 3 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -47,9 +47,9 @@
 
                     <li><h5>Repetition</h5>
                      <div>
-                        <img src="../../../static/cardImg/Repetition2.png" alt="Repetition 2 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Repetition3.png" alt="Repetition 3 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Repetition4.png" alt="Repetition 4 Card" class="cardImage">
+                        <img src="static/cardImg/Repetition2.png" alt="Repetition 2 Card" class="cardImage">
+                        <img src="static/cardImg/Repetition3.png" alt="Repetition 3 Card" class="cardImage">
+                        <img src="static/cardImg/Repetition4.png" alt="Repetition 4 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -69,11 +69,11 @@
                     </li>
                     <li><h5>Group</h5>
                       <div>
-                        <img src="../../../static/cardImg/Group2.png" alt="Group 2 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Group3.png" alt="Group 2 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Group4.png" alt="Group 2 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Group5.png" alt="Group 2 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Group6.png" alt="Group 2 Card" class="cardImage">
+                        <img src="static/cardImg/Group2.png" alt="Group 2 Card" class="cardImage">
+                        <img src="static/cardImg/Group3.png" alt="Group 2 Card" class="cardImage">
+                        <img src="static/cardImg/Group4.png" alt="Group 2 Card" class="cardImage">
+                        <img src="static/cardImg/Group5.png" alt="Group 2 Card" class="cardImage">
+                        <img src="static/cardImg/Group6.png" alt="Group 2 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -95,11 +95,11 @@
                     </li>
                     <li><h5>Variables</h5>
                       <div>
-                        <img src="../../../static/cardImg/RepetitionX.png" alt="Variable Repetition Card" class="cardImage">
-                        <img src="../../../static/cardImg/Variable3.png" alt="Variable 3 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Variable4.png" alt="Variable 4 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Variable5.png" alt="Variable 5 Card" class="cardImage">
-                        <img src="../../../static/cardImg/Variable6.png" alt="Variable 6 Card" class="cardImage">
+                        <img src="static/cardImg/RepetitionX.png" alt="Variable Repetition Card" class="cardImage">
+                        <img src="static/cardImg/Variable3.png" alt="Variable 3 Card" class="cardImage">
+                        <img src="static/cardImg/Variable4.png" alt="Variable 4 Card" class="cardImage">
+                        <img src="static/cardImg/Variable5.png" alt="Variable 5 Card" class="cardImage">
+                        <img src="static/cardImg/Variable6.png" alt="Variable 6 Card" class="cardImage">
                       </div>
 
                       <div>
@@ -122,7 +122,7 @@
                     <p style="text-align: center; font-size: 24px;"><b>Attack Cards</b></p>
                     <li><h5>Hack</h5>
                       <div>
-                        <img src="../../../static/cardImg/Hacker.png" alt="Hacker Card" class="cardImage">
+                        <img src="static/cardImg/Hacker.png" alt="Hacker Card" class="cardImage">
                       </div>
 
                       <div>
@@ -141,7 +141,7 @@
                     </li>
                     <li><h5>Malware</h5>
                       <div>
-                        <img src="../../../static/cardImg/Malware.png" alt="Malware Card" class="cardImage">
+                        <img src="static/cardImg/Malware.png" alt="Malware Card" class="cardImage">
                       </div>
 
                       <div>
@@ -158,7 +158,7 @@
                     </li>
                     <li><h5>Power Outage</h5>
                       <div>
-                        <img src="../../../static/cardImg/PowerOutage.png" alt="Power Outage Card" class="cardImage">
+                        <img src="static/cardImg/PowerOutage.png" alt="Power Outage Card" class="cardImage">
                       </div>
                       <div>
                         <ol>
@@ -176,7 +176,7 @@
                     <p style="text-align: center; font-size: 24px;"><b>Backup Cards</b></p>
                     <li><h5>Battery Backup</h5>
                       <div>
-                        <img src="../../../static/cardImg/BatteryBackup.png" alt="Battery Backup Card" class="cardImage">
+                        <img src="static/cardImg/BatteryBackup.png" alt="Battery Backup Card" class="cardImage">
                       </div>
 
                       <div>
@@ -191,7 +191,7 @@
                     </li>
                     <li><h5>Overclocking</h5>
                       <div>
-                        <img src="../../../static/cardImg/OverClock.png" alt="OverClock Card" class="cardImage">
+                        <img src="static/cardImg/OverClock.png" alt="OverClock Card" class="cardImage">
                       </div>
 
                       <div>
@@ -206,7 +206,7 @@
                     <p style="text-align: center; font-size: 24px;"><b>Safety Cards</b></p>
                   <li><h5>Generator</h5>
                     <div>
-                      <img src="../../../static/cardImg/Generator.png" alt="Generator Card" class="cardImage">
+                      <img src="static/cardImg/Generator.png" alt="Generator Card" class="cardImage">
                     </div>
                     <div>
                       <ol>
@@ -219,7 +219,7 @@
 
                   <li><h5>AntiVirus</h5>
                     <div>
-                      <img src="../../../static/cardImg/AntiVirus.png" alt="AntiVirus Card" class="cardImage">
+                      <img src="static/cardImg/AntiVirus.png" alt="AntiVirus Card" class="cardImage">
                     </div>
                     <div>
                       <ol>
@@ -232,7 +232,7 @@
 
                   <li><h5>Firewall</h5>
                     <div>
-                      <img src="../../../static/cardImg/Firewall.png" alt="Firewall Card" class="cardImage">
+                      <img src="static/cardImg/Firewall.png" alt="Firewall Card" class="cardImage">
                     </div>
 
                     <div>

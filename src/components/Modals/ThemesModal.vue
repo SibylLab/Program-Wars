@@ -75,11 +75,11 @@
       },
       getSrc () {
         if (this.themeType === 'classic') {
-          return require('../../../static/Themes/classicTheme.jpg')
+          return 'static/Themes/classicTheme.jpg'
         } else if (this.themeType === 'dark') {
-          return require('../../../static/Themes/darkTheme.jpg')
+          return 'static/Themes/darkTheme.jpg'
         } else if (this.themeType === 'solarized') {
-          return require('../../../static/Themes/solarizedTheme.jpg')
+          return 'static/Themes/solarizedTheme.jpg'
         }
       }
     }

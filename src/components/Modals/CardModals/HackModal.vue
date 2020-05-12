@@ -35,7 +35,7 @@
   /* eslint-disable no-undef */
 
   import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
-  import { bus } from '../../SharedComponents/Bus.vue'
+  import { bus } from '../../SharedComponents/Bus.js'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
 
   /**

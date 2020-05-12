@@ -19,7 +19,7 @@
       </div>
 
       <!-- Use any element to open the sidenav -->
-      <img @click="openNav()" src="../../../static/miscIcons/burgerIcon.png" style="width: 36px; height: 36px; float: right">
+      <input type="image" @click="openNav()" src="static/miscIcons/burgerIcon.png" style="width: 36px; height: 36px; float: right">
     </div>
     <div class="container settingMenu">
       <div class="row">
@@ -348,7 +348,7 @@
   }
 
   #settingsPage {
-    background-image: url("../../../static/backgroundImg/helloWorld.png");
+    background-image: url("/static/backgroundImg/helloWorld.png");
     min-height: inherit;
     min-width: inherit;
   }
