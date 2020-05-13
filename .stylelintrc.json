@@ -1,3 +1,7 @@
 {
-  "extends": "stylelint-config-recommended"
+  "extends": "stylelint-config-recommended",
+  "ignoreFiles": [
+    "coverage/*",
+    "dist/*"
+  ]
 }
