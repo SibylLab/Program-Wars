@@ -14,6 +14,10 @@
 
 <script>
   import {mapGetters} from 'vuex'
+
+/**
+ * A popup to indicate a players turn.
+ */
 export default {
     methods: {
       ...mapGetters([
@@ -34,7 +38,7 @@ export default {
       },
     /**
      * Checks if the current player is an AI.
-     * @returns {default.computed.isAi|(function())|boolean|*} True if the play is AI.
+     * @returns {boolean} True if the play is AI.
      */
       isAi () {
         return this.getCurrentPlayer().isAi

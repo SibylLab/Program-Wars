@@ -2,6 +2,10 @@
   "extends": "stylelint-config-recommended",
   "ignoreFiles": [
     "coverage/*",
-    "dist/*"
+    "coverage/**",
+    "dist/*",
+    "dist/**",
+    "documents/*",
+    "documents/**"
   ]
 }
