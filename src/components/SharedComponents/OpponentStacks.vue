@@ -49,9 +49,8 @@ export default {
     ...mapGetters([
       'getStacks'
     ]),
+    // eslint-disable-next-line no-unused-vars
     hackStack (e) {
-      // empty function eslint requires the parameter to be used (steve may 2020)
-      e
     }
   }
 }

@@ -342,10 +342,8 @@ export default {
       },
       stackClicked () {
       },
+      // eslint-disable-next-line no-unused-vars
       cardClickedInStack (event, card) {
-        // empty but eslint wont allow it (steve may 2020)
-        event
-        card
       },
       /**
        * Used to add each standard card (Inst, Repeat, RepeatX, and Variable)
@@ -375,7 +373,7 @@ export default {
               }
               break
             case 'R':
-              // let repBonus = 3 // eslint wont allow let in cases (steve may 2020)
+              let repBonus = 3 // eslint-disable-line
               if (thisStack.cards.length === 0) {
                 $('button[stackId="' + this.stackId + '"]').attr('data-content', 'You cannot add a repetition card to a stack without an instruction card. Instead add the card to a stack with an instruction card.')
                 $('button[stackId="' + this.stackId + '"]').popover('toggle')
@@ -383,8 +381,8 @@ export default {
                 this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()})
                 this.playerTookTurn()
                 bus.$emit('cardDeselected')
-                this.updateBonus(3, 3)
-                this.getCurrentPlayer().repetitionBonus += 3
+                this.updateBonus(repBonus, repBonus)
+                this.getCurrentPlayer().repetitionBonus += repBonus  
               } else if (activeCard.value === 1 && thisStack.stackTopCard().type === 'R') {
                 this.popCardFromStack({stackId: this.stackId, card: this.getActiveCard()})
                 this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()})
@@ -400,7 +398,7 @@ export default {
               break
 
             case 'V':
-              // let varBonus = 2 // eslint wont allow let in cases (steve may 2020)
+              let varBonus = 2 // eslint-disable-line
               if (thisStack.cards.length === 0) {
                 $('button[stackId="' + this.stackId + '"]').attr('data-content', 'You can only add variable cards to a stack with an open variable (Rx) repetition card or an existing variable card.')
                 $('button[stackId="' + this.stackId + '"]').popover('toggle')
@@ -408,8 +406,8 @@ export default {
                 this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()})
                 this.playerTookTurn()
                 bus.$emit('cardDeselected')
-                this.getCurrentPlayer().variablesBonus += 2
-                this.updateBonus(2, 2)
+                this.getCurrentPlayer().variablesBonus += varBonus
+                this.updateBonus(varBonus, varBonus)
               } else if (thisStack.stackTopCard().type === 'V' && thisStack.stackTopCard().value < activeCard.value) {
                 this.stackDiscard({stackId: this.stackId})
                 this.addCardToStack({stackId: this.stackId, card: this.getActiveCard()})

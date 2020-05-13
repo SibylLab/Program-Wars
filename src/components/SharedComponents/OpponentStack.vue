@@ -157,12 +157,8 @@ export default {
       },
       stackClicked () {
       },
+      // eslint-disable-next-line no-unused-vars
       cardClickedInStack (event, card) {
-        // not sure what was supposed to happen here, but this function was
-        // empty and eslint will not allow the parameters to go unused so
-        // so I have "used" them as a "fix" for now. (steve may 2020)
-        event
-        card
       },
       addToStack () {
         if (this.getActiveCard() !== undefined) {

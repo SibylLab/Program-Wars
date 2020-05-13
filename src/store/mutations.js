@@ -89,8 +89,8 @@ export default {
     state.hands.push(hand)
     state.players.find(player => player.id === playerId).hand = hand.handId
   },
+  // eslint-disable-next-line no-unused-vars
   reDrawPlayerCards (state, playerId) {
-    playerId  // was not used, but I dont know if I can remove it (steve may 2020)
     let localState = state
     localState.deck.shuffle(localState.deck.cards)
     let cardsTemp = []
