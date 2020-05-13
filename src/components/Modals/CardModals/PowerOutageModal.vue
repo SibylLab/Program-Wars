@@ -10,7 +10,7 @@
         <div class="modal-body">
           <div class="container col-lg-12">
             <div class="row">
-              <div v-for="player in players" :id="player.id" class="col-lg-4" style="-webkit-align-items: center">
+              <div v-for="player in players" v-bind:key="player.id" :id="player.id" class="col-lg-4" style="-webkit-align-items: center">
                 <button class="btn btn-primary" @click="playerClicked(player.id)" v-if="!player.hasGenerator && !player.hasPowerOutage" style="font-size: 20px">Blackout <b>{{player.name}}</b></button>
               </div>
             </div>

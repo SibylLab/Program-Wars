@@ -5,7 +5,7 @@
     <div v-if="trueStacks.length !== 0" class="stacks">
         <div class="container" style="max-width: 50%">
           <div class="row" style="max-width: 50%">
-            <div class="col-md-3" v-for="stack in trueStacks" style="margin-bottom: 15px; max-width: 440px; min-width: 250px">
+            <div class="col-md-3" v-for="stack in trueStacks" v-bind:key="stack.stackId" style="margin-bottom: 15px; max-width: 440px; min-width: 250px">
               <opponent-stack :playfieldBoolean="stack.boolSide" :stackId="stack.stackId" @hackStack="hackStack" :playerId="player.id" class="opponentStacks"></opponent-stack>
             </div>
           </div>
@@ -50,6 +50,8 @@ export default {
       'getStacks'
     ]),
     hackStack (e) {
+      // empty function eslint requires the parameter to be used (steve may 2020)
+      e
     }
   }
 }

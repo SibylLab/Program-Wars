@@ -1,4 +1,4 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template xmlns="http://www.w3.org/1999/html"> <!-- eslint-disable-line -->
   <div id="player-info-panel" :style="pIPBackgroundColour()">
     <div id="flexcontainer">
       <div id="tipBox" class="container" :style="displayStyle" :cardClicked="tipsCardSelected">
@@ -16,7 +16,7 @@
 
             <ul id="example-1">
               <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
-              <li v-for="(card,index) in hand" :id="card.type + card.value + index + currentPlayerName()" style="margin-top: 5px">
+              <li v-for="(card,index) in hand" v-bind:key="card.id" :id="card.type + card.value + index + currentPlayerName()" style="margin-top: 5px">
                 <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
               </li>
             </ul>
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="row">
-        <div :class="colSize" v-for="player in players" style="text-align: left;">
+        <div :class="colSize" v-for="player in players" v-bind:key="player.id" style="text-align: left;">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px" :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
           <div :style="pIPTextColour()">
             True Path:&nbsp;
@@ -302,8 +302,7 @@ import Card from '../SharedComponents/Card'
             return 'BatteryBackup Card'
 
           default :
-            let fact = this.setTutorialFact()
-            this.tipsInfoText = fact
+            this.tipsInfoText = this.setTutorialFact()
             return 'Next Step!'
         }
       },

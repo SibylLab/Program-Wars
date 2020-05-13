@@ -26,6 +26,8 @@
       this.setTimerInterval(timer)
       timer.start()
       timer.addEventListener('secondsUpdated', function (e) {
+        // e never used but eslint requires it (steve may 2020)
+        e
         $('#basicUsage').html(timer.getTimeValues().toString())
       })
     }
