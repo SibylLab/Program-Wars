@@ -1,6 +1,8 @@
 {
-  "name": "pwars",
-  "version": "0.1.0",
+  "name": "programming-wars",
+  "version": "1.7.0",
+  "description": "An education game for teaching programming concepts.",
+  "author": "John Anvik <johnanvik@uleth.ca>",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -27,6 +29,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "sinon": "^9.0.2",
+    "stylelint": "^13.3.3",
+    "stylelint-config-recommended": "^3.0.0",
     "vue-template-compiler": "^2.6.11"
   }
 }
