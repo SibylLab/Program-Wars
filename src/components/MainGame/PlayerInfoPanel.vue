@@ -43,7 +43,7 @@
             <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card) in hand" v-bind:key="card.id" style="margin-top: 5px; position: relative;">
-                  <input type="image"
+                  <input type="image" title="Discard Card"
                      src="static/miscIcons/trash.png"
                      v-if="isActiveCard(card)"
                      v-on:click="discardSelected"
@@ -57,7 +57,7 @@
         <div class="row">
           <div id="controls" class="col-sm" style="height: 40px; justify-content: center; align-items: center">
             <div>
-              <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
+              <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;" title="Discard your hand and draw 5 new cards">REDRAW</button>
             </div>
           </div>
           <display-used-cards></display-used-cards>
