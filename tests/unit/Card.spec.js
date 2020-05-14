@@ -65,10 +65,23 @@ describe('Card.vue', () => {
   it('test to see if computed field exists', () => {
     expect(typeof Card.computed).toEqual('object')
   })
-  /* Problem with vue not finding getters
-     So these tests do not run. I will peobably need to find
-     another way of doing the same tests (steve may 2020)
-     
+  it('testing flipFace function', () => {
+    let testCard = new CardObj(0, 1, 'I')
+    testCard.flipCardFace()
+    expect(testCard.showFace).toEqual(true)
+  })
+
+/* These need to be re-written
+   The vuex state and store components are undefined without setting them
+   Explicitly like in some other tests. These need to be stubbed out as the
+   store state is not relevant to these tests.
+   To test the rest of the functions and methods of the Card component
+   Specific objects that they deal with will need to be mocked.
+
+   see https://vue-test-utils.vuejs.org/guides/using-with-vuex.html
+   for more information on testing with vuex
+
+
   // test if css string is set without selected property
   it('test computed property function cardCss()', () => {
     let testCard = new CardObj(0, 0, 'I')
@@ -111,16 +124,9 @@ describe('Card.vue', () => {
     let testCard = new CardObj(0, 1, 'I')
     expect(getCardValue(Card, { cardData: testCard })).toEqual(1)
   })
-
-  it('testing flipFace function', () => {
-    let testCard = new CardObj(0, 1, 'I')
-    testCard.flipCardFace()
-    expect(testCard.showFace).toEqual(true)
-  })
-
   it('testing cardGraphics', () => {
     let testCard = new CardObj(0, 1, 'I', '/static/cardImg/V6.png')
     expect(getCardGraphics(Card, {cardData: testCard})).toEqual('/static/cardImg/V6.png')
   })
-  */
+*/
 })
