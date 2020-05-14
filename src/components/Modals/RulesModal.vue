@@ -28,12 +28,11 @@
 
                     <p style="text-align: center; font-size: 24px;"><b>Playing Cards</b></p>
                     <li><h5>Instruction</h5>
-                      <div>
+                      <div >
                         <img src="../../../static/cardImg/Instruction1.png" alt="Instruction 1 Card" class="cardImage">
                         <img src="../../../static/cardImg/Instruction2.png" alt="Instruction 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Instruction3.png" alt="Instruction 3 Card" class="cardImage">
                       </div>
-
                       <div>
                         <ol>
                         <li>Instruction cards are the basic way by which you build your program.</li>
@@ -46,7 +45,7 @@
                     </li>
 
                     <li><h5>Repetition</h5>
-                     <div>
+                     <div >
                         <img src="../../../static/cardImg/Repetition2.png" alt="Repetition 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Repetition3.png" alt="Repetition 3 Card" class="cardImage">
                         <img src="../../../static/cardImg/Repetition4.png" alt="Repetition 4 Card" class="cardImage">
@@ -68,7 +67,7 @@
                       </div>
                     </li>
                     <li><h5>Group</h5>
-                      <div>
+                      <div > 
                         <img src="../../../static/cardImg/Group2.png" alt="Group 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Group3.png" alt="Group 2 Card" class="cardImage">
                         <img src="../../../static/cardImg/Group4.png" alt="Group 2 Card" class="cardImage">
@@ -93,8 +92,10 @@
                         here.</a>
                       </div>
                     </li>
+                    <!-- changes -->
+                    
                     <li><h5>Variables</h5>
-                      <div>
+                      <div >
                         <img src="../../../static/cardImg/RepetitionX.png" alt="Variable Repetition Card" class="cardImage">
                         <img src="../../../static/cardImg/Variable3.png" alt="Variable 3 Card" class="cardImage">
                         <img src="../../../static/cardImg/Variable4.png" alt="Variable 4 Card" class="cardImage">
@@ -251,24 +252,15 @@
                   <h4>Playing the Game</h4>
                   <p>On each of your turns:</p>
                   <ol id="gamePlay2">
-                    <li>Select a card to play.</li>
-
-                      <ul>
-                        <li>The Instruction, Repeat, Variable, and Group cards can be added to open stacks on the playing field.</li>
-                        <li>The Attack, Backup, and Saftey cards will give you options for how they can be played.</li>
-                        <li>If you don't like any of your choices, or a you have a card that cannot be played, you can discard the selected card instead.</li>
-                      </ul>
-
-                    <li>If you don't like any of the cards in your hand you can use your turn to draw a new hand.</li>
+                    <li>Select a card to put in the "True" or "False" playing field that was chosen at the beginning of the round, or to discard.</li>
+                    <li>At the beginning of all of the player's turns, the game will choose either the "True" or "False" playing field as the "Active" part of each program to run.</li>
                     <li>You get bonus points for good programming practice. For more information on this go to the 'Bonus Points' tab.</li>
-                    <li>The game ends when a player reaches the score limit:</li>
+                    <li>The game is over if a player reaches the score limit in either paths:</li>
                     <ul>
                       <li>Short: 35 instructions</li>
                       <li>Medium: 70 instructions</li>
                       <li>Long: 105 instructions</li>
-                    </ul>
-
-                    <li>After the game each player's final scores will be calculated to pick the winner. A player's final score is a combination of their instruction score and any card and gameplay bonuses. The player who reaches the instructions limit score first is not guaranteed to be the winner.</li>
+                      </ul>
                   </ol>
                 </div>
 
@@ -284,7 +276,7 @@
                     <p>Group cards don't change your score, but they will combine multiple stacks, making repeats more powerful.</p>
                     <h4>Card Bonuses</h4>
                     <p>Various cards, good coding practices, or game play types will give you bonus points to reward good programming practices!  </p>
-                    <p>These bonuses do not count toward your instruction score during the game. They will be added to your final score when the game is over.</p>
+                    <p>Although these bonuses are not directly added to your score, they are invisible bonuses that are added to your final score.</p>
                     <ol>
                       <li><b>Grouping Cards - 5</b>: Grouping instructions or other grouped instructions is a good and essential programming practice, so you'll get a bonus score of 5 for using a group card.</li>
                       <li><b>Repetition - 3</b>: Repetition in programs is an efficient way of having instructions run multiple times, so you'll be given a bonus score of 3 for using a repetition card. </li>
