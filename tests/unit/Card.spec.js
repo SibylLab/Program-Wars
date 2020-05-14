@@ -1,6 +1,14 @@
-import Vue from 'vue'
+//import Vue from 'vue'
 import Card from '@/components/SharedComponents/Card'
 import CardObj from '@/classes/Models/Card'
+
+/* The tests using these functions no longer work.
+   See the comments above the broken tests for more details.
+   It is likely that these functions can be moved into the tests
+   in a better way when mocking and stubbing out vuex related obects
+   and functions. If they are only used once they can be created in
+   a spcific test otherwise in a beforeEach block or appropriate testing
+   function.
 
 function getCssString (Component, propsData) {
   const Ctor = Vue.extend(Component)
@@ -29,39 +37,31 @@ function getCardGraphics (Component, propsData) {
   const vm = new Ctor({ propsData }).$mount()
   return vm.cardGraphics
 }
+*/
 
 describe('Card.vue', () => {
-    // test if name is there
   it('check if name property of component is present', () => {
     expect(Card.name).toEqual('Card')
   })
-    // test to see if props are there
   it('check if props are there', () => {
     expect(Card.props[0]).toEqual('cardData')
     expect(Card.props[1]).toEqual('inStack')
   })
-  // test to see if data is there
   it('test if data field is there', () => {
     expect(typeof Card.data).toBe('function')
   })
-  // tests to see if fields in data section are populating correctly on instantiation
-
-  // first test is for msg field
   it('test to see if data field msg field is populated correctly', () => {
     const defaultData = Card.data()
     expect(defaultData.msg).toEqual('Program Wars')
   })
-  // next test the valueCss
   it('test to see if data field valueCSS is set properly initially', () => {
     const defaultData = Card.data()
     expect(defaultData.valueCss).toEqual('value')
   })
-  // test typeCss field
   it('test to see if data field typeCss is set properly initially', () => {
     const defaultData = Card.data()
     expect(defaultData.typeCss).toEqual('type')
   })
-  // test if computed field exists
   it('test to see if computed field exists', () => {
     expect(typeof Card.computed).toEqual('object')
   })
