@@ -2,7 +2,7 @@
 <div class="container" style="max-width: 400px">
   <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
   <div class="row" style="position: relative">
-    <input type="image" src="/static/miscIcons/info.png"
+    <input type="image" src="static/miscIcons/info.png"
          style="position: absolute; top: 30px; right: 80px; width: 15px; height: 15px;"
          v-if="getTips().tutorial"
          v-bind:title="usedCardsTooltip"
@@ -10,7 +10,7 @@
     <div id="cards">
     <ul class="list-inline">
       <h4 class="modal-title" :style="pIPTextColour()"> Cybersecurity </h4>
-      <li v-for="(card) in usedBonusCards" style="max-width: 90px; margin-right: 5px">
+      <li v-for="(card) in usedBonusCards" v-bind:key="card.id" style="max-width: 90px; margin-right: 5px">
         <card :cardData="card"></card>
       </li>
     </ul>
@@ -20,7 +20,7 @@
     <div id="cards2">
       <ul id="example-1" class="list-inline" style="padding: 10px">
         <h4 class="modal-title" :style="pIPTextColour()"> Cyberattack </h4>
-        <li v-for="(card) in attackedCards" style="max-width: 90px; margin-right: 5px">
+        <li v-for="(card) in attackedCards" v-bind:key="card.id" style="max-width: 90px; margin-right: 5px">
           <card :cardData="card"></card>
         </li>
       </ul>
@@ -30,7 +30,7 @@
     <div id="effects">
       <ul class="list-inline">
         <h4 class="modal-title" :style="pIPTextColour()"> Active Effects </h4>
-        <li v-for="(effect) in cardEffect" style="max-width: 350px; margin-right: 5px">
+        <li v-for="(effect) in cardEffect" v-bind:key="effect.id" style="max-width: 350px; margin-right: 5px">
           <p> {{ effect }} </p>
         </li>
       </ul>

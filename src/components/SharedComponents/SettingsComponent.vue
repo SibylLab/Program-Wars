@@ -19,7 +19,7 @@
       </div>
 
       <!-- Use any element to open the sidenav -->
-      <img @click="openNav()" src="/static/miscIcons/burgerIcon.png" style="width: 36px; height: 36px; float: right">
+      <input type="image" @click="openNav()" src="static/miscIcons/burgerIcon.png" style="width: 36px; height: 36px; float: right">
     </div>
     <div class="container settingMenu">
       <div class="row">
@@ -61,7 +61,7 @@
         <div class="col-md-12" id="players">
           <p>Players So Far:</p>
           <ol class="playerList">
-            <li v-for="(localPlayer, index) in localPlayers">{{ localPlayer.name }}
+            <li v-for="(localPlayer, index) in localPlayers" v-bind:key="localPlayer.name">{{ localPlayer.name }}
               <a style="cursor:pointer; color:black" @click="removePlayer(index)"><u style="font-size: x-small; margin-left: 5px">Remove</u></a></li>
           </ol>
           <p v-if="maxPlayer" style="color: red">Maximum Players Reached</p>
@@ -323,10 +323,12 @@
       }
     },
     mounted () {
-      if (this.$store.state.showBackstory === true) {
-        $('#backstoryModal').modal('show')
-        this.$store.state.showBackstory = false
-      }
+      this.$nextTick( function () {
+        if (this.$store.state.showBackstory === true) {
+          $('#backstoryModal').modal('show')
+          this.$store.state.showBackstory = false
+        }
+      })
     }
   }
 </script>

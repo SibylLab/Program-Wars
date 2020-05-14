@@ -20,7 +20,7 @@ export class Turn {
     this.event = event
   }
   execute () {
-// eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console
     console.error('Execute not implemented')
   }
   getMove () {

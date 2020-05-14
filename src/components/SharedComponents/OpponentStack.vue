@@ -11,7 +11,7 @@
       </button>
       <br>
 
-      <li v-for="card in cards" style="zoom: 60%; margin: 4px; ">
+      <li v-for="card in cards" v-bind:key="card.id" style="zoom: 60%; margin: 4px; ">
             <card :cardData="card" v-on:cardClicked="cardClickedInStack(card, $event)" :inStack="true"></card>
       </li>
 
@@ -49,6 +49,7 @@ export default {
               return []
             }
           }
+          return []
         } else {
           let stack = this.getStacks().find(findStack => findStack.stackId === this.stackId)
           if (stack !== undefined) {
@@ -156,6 +157,7 @@ export default {
       },
       stackClicked () {
       },
+      // eslint-disable-next-line no-unused-vars
       cardClickedInStack (event, card) {
       },
       addToStack () {

@@ -1,7 +1,7 @@
 <template>
   <div id="condsField" style="position: relative">
     <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
-    <input type="image" src="/static/miscIcons/info.png"
+    <input type="image" src="static/miscIcons/info.png"
          style="position: absolute; right: 8px; top: 8px; width: 15px; height: 15px;"
          v-if="getTips().tutorial"
          v-bind:title="infoTooltip"
@@ -10,7 +10,7 @@
       <div class="row">
         <h3 style="text-align: left; margin-left: 20px; color: white"> Side Objectives: { </h3><br>
       </div>
-      <ul class="row" v-for="cond in condList">
+      <ul class="row" v-for="cond in condList" v-bind:key="cond.condId">
         <li>
           <h5> if ( {{cond.condIf}} ) { </h5>
           <h6 :class="sortConds(cond)"> reward: {{cond.condThen}} </h6>

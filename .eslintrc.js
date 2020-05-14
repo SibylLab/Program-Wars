@@ -1,22 +1,19 @@
-// http://eslint.org/docs/user-guide/configuring
-
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
-  parserOptions: {
-    sourceType: 'module'
-  },
   env: {
     browser: true,
+    jquery: true,
+    node: true
   },
-  // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
-  extends: 'standard',
-  // required to lint *.vue files
-  plugins: [
-    'html'
+  'extends': [
+    'plugin:vue/essential',
+    'eslint:recommended'
   ],
-  // add your custom rules here
-  'rules': {
+  parserOptions: {
+    parser: 'babel-eslint',
+    sourceType: 'module'
+  },
+  rules: {
     // don't allow to ship with console statements unless specified
     'no-console': 1,
     // don't allow shadowing variables
@@ -33,5 +30,16 @@ module.exports = {
     'dot-notation': 1,
     // make sure vars are placed on top of their scope
     'vars-on-top': 2
-  }
+  },
+  overrides: [
+    {
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)'
+      ],
+      env: {
+        jest: true
+      }
+    }
+  ]
 }

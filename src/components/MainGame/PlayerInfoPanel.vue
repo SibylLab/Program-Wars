@@ -11,12 +11,12 @@
         <div>
       <div id="flexcontainer">
         <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center; position: relative">
-        <input type="image" src="/static/miscIcons/info.png"
+        <input type="image" src="static/miscIcons/info.png"
              style="position: absolute; left: -5px; top: -5px; width: 15px; height: 15px;"
              v-if="getTips().tutorial"
              v-bind:title="scoreAreaTooltip"
              v-on:click="ShowInfoModal('scoreArea')">
-        <div v-for="player in players" style="text-align: left; display: inline">
+        <div v-for="player in players" v-bind:key="player.name" style="text-align: left; display: inline">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
             <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px" :style="pIPTextColour()">
               <div class="row"></div>
@@ -33,7 +33,7 @@
         </div>
         <div class="container" style="width: 700px; float: left; margin: auto">
         <div class="row" style="width: 700px; align-content: center; position: relative;">
-          <input type="image" src="/static/miscIcons/info.png"
+          <input type="image" src="static/miscIcons/info.png"
                style="position: absolute; top: -20px; width: 15px; height: 15px;"
                v-if="getTips().tutorial"
                v-bind:title="cardAreaTooltip"
@@ -42,9 +42,9 @@
           <ul id="example-1">
             <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
-              <li v-for="(card) in hand" style="margin-top: 5px; position: relative;">
-                  <input type="image"
-                     src="/static/miscIcons/trash.png"
+              <li v-for="(card) in hand" v-bind:key="card.id" style="margin-top: 5px; position: relative;">
+                  <input type="image" title="Discard Card"
+                     src="static/miscIcons/trash.png"
                      v-if="isActiveCard(card)"
                      v-on:click="discardSelected"
                      style="width: 25px; height: 25px; left: -8px; top: -8px; position: absolute">
@@ -57,7 +57,7 @@
         <div class="row">
           <div id="controls" class="col-sm" style="height: 40px; justify-content: center; align-items: center">
             <div>
-              <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;">REDRAW</button>
+              <button class="btn btn-sm btn-info col-6" v-on:click="reDraw" style="border-radius: 40px;" title="Discard your hand and draw 5 new cards">REDRAW</button>
             </div>
           </div>
           <display-used-cards></display-used-cards>
@@ -301,8 +301,7 @@ export default {
             return 'BatteryBackup Card'
 
           default :
-            let fact = ''
-            this.tipsInfoText = fact
+            this.tipsInfoText = ''
         }
       },
       /**

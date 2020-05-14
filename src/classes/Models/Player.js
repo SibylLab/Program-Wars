@@ -54,7 +54,7 @@ export default class Player {
     if (this.isAi) {
       this.type = new Personality()
     }
-  };
+  }
 
   updateBonus (score) {
     this.bonus += score

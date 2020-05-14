@@ -4,7 +4,7 @@ export default class {
 
   getBoolSide () {
     return store.getters.getCoinMsg
-  };
+  }
 
   organizeHand (event) {
     let bestICard
@@ -64,7 +64,7 @@ export default class {
       }
     }
     return {bestICard, bestRCard, rXCard, hackCard, bestVCard, bestGCard, virusCard, powerOutageCard, batteryBackupCard, overclockCard, firewallCard, generatorCard, antiVirusCard}
-  };
+  }
 
   /**
    * This allows us to find a stack to repeat. It checks if the top of each stack is a ReapeatX and if it is it won't try to repeat it,
@@ -147,7 +147,7 @@ export default class {
     } else {
       return card
     }
-  };
+  }
 
   compare (a, b) {
     if (a.score < b.score || a.value < b.value) { return 1 }

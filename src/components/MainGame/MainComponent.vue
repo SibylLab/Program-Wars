@@ -45,7 +45,7 @@
       </div>
 
       <!-- Use any element to open the sidenav -->
-      <img @click="openNav()" src="/static/miscIcons/burgerIcon.png" style="width: 36px; height: 36px">
+      <input type="image" @click="openNav()" src="static/miscIcons/burgerIcon.png" style="width: 36px; height: 36px">
 
     </div>
     <div id="playerinfopanel" :style="deactivateClick">
@@ -222,6 +222,7 @@ export default {
             return false
           }
         }
+        return false
       },
       players () {
         return this.getPlayers().filter(player => player.id !== this.getCurrentPlayerId())

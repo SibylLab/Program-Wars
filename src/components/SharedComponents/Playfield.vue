@@ -3,7 +3,7 @@
     <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
     <div class="row">
       <div class="col-md-12" style="position: relative;">
-        <input type="image" src="/static/miscIcons/info.png"
+        <input type="image" src="static/miscIcons/info.png"
              style="position: absolute; right: 15px; width: 15px; height: 15px;"
              v-if="getTips().tutorial"
              v-bind:title="infoTooltip"
@@ -14,7 +14,7 @@
     </div>
     <div class="row">
 
-        <div class="stacks col-lg-3 col-md-4 col-sm-6" v-for="stack in stacks" style="margin:0 60px">
+        <div class="stacks col-lg-3 col-md-4 col-sm-6" v-for="stack in stacks" v-bind:key="stack.stackId" style="margin:0 60px">
           <stack :playfieldBoolean="trueFalse" :stackId="stack.stackId" @cardAdded="cardAdded" :playerId="playerId"></stack>
       </div>
     </div>

@@ -25,6 +25,7 @@
       let timer = new Timer()
       this.setTimerInterval(timer)
       timer.start()
+      // eslint-disable-next-line no-unused-vars
       timer.addEventListener('secondsUpdated', function (e) {
         $('#basicUsage').html(timer.getTimeValues().toString())
       })
