@@ -27,5 +27,5 @@ jobs:
     - run: npm ci
     - run: npm run test
     - run: npm run lint
-    - run: npm run style:lint
+    - run: npm run lint:style
     - run: npm run build --if-present
