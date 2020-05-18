@@ -138,7 +138,7 @@ export default {
       let winList = []
       for (let player of this.playerList) {
         if (this.getActiveSide()) {
-          if (this.getScore(this.getCurrentPlayer().id).score >= this.getScoreLimit()) {
+          if (this.getScore(this.getCurrentPlayer().id).score > this.getScoreLimit()) {
             winList.push(player.name)
           }
         }
