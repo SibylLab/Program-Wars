@@ -28,7 +28,7 @@
 <script>
   /* eslint-disable no-undef */
 
-  import { bus } from '../../SharedComponents/Bus.vue'
+  import { bus } from '../../SharedComponents/Bus.js'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
 export default {
     props: ['players'],

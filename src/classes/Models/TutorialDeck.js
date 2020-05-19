@@ -85,7 +85,7 @@ export default class TutorialDeck {
   constructor () {
     this.cards = []
     this.discard_cards = []
-  };
+  }
 
   /**
    * initDeck function to initialize the deck with a pre determined number and type of cards
@@ -99,7 +99,7 @@ export default class TutorialDeck {
         cardId++
       }
     }
-  };// end Init game
+  }// end Init game
 
   /**
    * draw function returns the card at the front (top) of the deck and removes it from the deck
@@ -110,6 +110,6 @@ export default class TutorialDeck {
     let card = this.cards[0]// [0] is the top of the deck
     this.cards.shift()// unshift removes the first element.
     return card
-  };
+  }
 
 }

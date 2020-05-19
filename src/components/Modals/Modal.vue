@@ -19,7 +19,7 @@
           </div>
         </div>
         <div v-else class="modal-body">
-          <ul id="discardList" v-for="card in modalCards">
+          <ul id="discardList" v-for="card in modalCards" v-bind:key="card.id">
             <li>
               <card :cardData="card" :inStack="false"></card>
             </li>

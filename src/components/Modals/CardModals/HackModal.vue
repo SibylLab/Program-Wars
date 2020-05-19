@@ -10,10 +10,12 @@
         <div class="modal-body">
           <div class="container" style="width: 100%">
             <ul class="nav nav-tabs" style="font-size: 25px; width: 100%; align-content: center; border: none">
+              <!-- eslint-disable-next-line -->
               <li v-for="player in players" v-if="!player.hasFirewall" style="align-items: center; width: auto; border-bottom: 1px solid black; margin-right: 10px"><a data-toggle="tab" :href="'#' + player.id">{{ player.name }}</a></li>
             </ul>
 
             <div class="tab-content" style="text-align: left">
+              <!-- eslint-disable-next-line -->
               <div v-for="player in players" :id="player.id" class="tab-pane fade">
                 <opponent-stacks :player="player"></opponent-stacks>
               </div>
@@ -35,7 +37,7 @@
   /* eslint-disable no-undef */
 
   import OpponentStacks from '../../SharedComponents/OpponentStacks.vue'
-  import { bus } from '../../SharedComponents/Bus.vue'
+  import { bus } from '../../SharedComponents/Bus.js'
   import {mapGetters, mapMutations, mapActions} from 'vuex'
 
   /**

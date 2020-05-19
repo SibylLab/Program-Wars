@@ -1,32 +1,33 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import MainComponent from 'components/MainGame/MainComponent'
-import SettingsComponent from 'components/SharedComponents/SettingsComponent'
-import TutorialComponent from '../components/Tutorial/TutorialComponent.vue'
+import VueRouter from 'vue-router'
+import SettingsComponent from '../components/SharedComponents/SettingsComponent.vue'
+import MainComponent from '../components/MainGame/MainComponent.vue'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
-  routes: [
-    {
-      path: '/game',
-      canReuse: false,
-      name: 'main-component',
-      component: MainComponent
-    },
-    {
-      path: '/tutorial',
-      canReuse: false,
-      name: 'tutorial',
-      component: TutorialComponent
-    },
-    {
-      path: '/',
-      canReuse: false,
-      name: 'settings-component',
-      component: SettingsComponent
-    },
-    {path: '*', redirect: '/'}
-  ],
-  mode: 'history'
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    canReuse: false,
+    component: SettingsComponent
+  },
+  {
+    path: '/game',
+    name: 'Game',
+    canReuse: false,
+    component: MainComponent
+  },
+  {
+    path: '*',
+    redirect: '/'
+  }
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 })
+
+export default router

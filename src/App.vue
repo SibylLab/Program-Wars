@@ -24,18 +24,8 @@
   height: 100%;
 }
 
-body {
-  min-height: 100%;
-}
-
 html,body{
-  min-height:100%;
-}
-
-body {
   height: 100vh;
-}
-body {
   min-height: 100vh;
 }
 </style>

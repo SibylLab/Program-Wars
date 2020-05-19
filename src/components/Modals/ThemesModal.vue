@@ -40,7 +40,6 @@
     data () {
       return {
         themeType: 'classic',
-        themeSrc: '/static/Themes/classicTheme.jpg'
       }
     },
     methods: {
@@ -58,7 +57,6 @@
             mainTC: 'color: #000000; background-colour: #ffffff',
             playfieldTC: 'color: #000000; background-color: #cccccc'
           })
-          this.themeSrc = '/static/Themes/classicTheme.jpg'
         } else if (this.themeType === 'dark') {
           this.updateTheme({
             mainBC: 'background-color: #000000',
@@ -66,7 +64,6 @@
             mainTC: 'color: #ffffff; background-color: #000000',
             playfieldTC: 'color: #ffffff; background-color: #2b394f'
           })
-          this.themeSrc = '/static/Themes/darkTheme/jpg'
         } else if (this.themeType === 'solarized') {
           this.updateTheme({
             mainBC: 'background-color: #175b89',
@@ -74,16 +71,15 @@
             mainTC: 'color: #ffffff; background-color: #175b89',
             playfieldTC: 'color: #ffffff; background-color: #4183af'
           })
-          this.themeSrc = '/static/Themes/solarizedTheme.jpg'
         }
       },
       getSrc () {
         if (this.themeType === 'classic') {
-          return '/static/Themes/classicTheme.jpg'
+          return 'static/Themes/classicTheme.jpg'
         } else if (this.themeType === 'dark') {
-          return '/static/Themes/darkTheme.jpg'
+          return 'static/Themes/darkTheme.jpg'
         } else if (this.themeType === 'solarized') {
-          return '/static/Themes/solarizedTheme.jpg'
+          return 'static/Themes/solarizedTheme.jpg'
         }
       }
     }
