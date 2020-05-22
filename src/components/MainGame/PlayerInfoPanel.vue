@@ -220,11 +220,13 @@ export default {
       cardClicked (c) {
         this.tipsCardSelected = this.setTipBox(c)
         let prevActive = this.getActiveCard()
+        /*
         if (c.type === 'VIRUS') {
           $('.virus').modal('show')
         } else if (c.type === 'POWEROUTAGE') {
           $('.powerOutage').modal('show')
         }
+        */
 
         this.selectCard(c)
         if (prevActive !== undefined) {

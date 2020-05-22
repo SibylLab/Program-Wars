@@ -7,9 +7,19 @@
          src="static/miscIcons/trash.png"
          v-on:click="discardCard">
 
+      <div id="targets" class="popup" v-if="isAttack">
+        <h5>{{ targetsText }}</h5>
+        <div id="button-wrapper"> 
+          <button id="target-button" v-for="player in attackablePlayers"
+              v-bind:key="player.id" v-on:click="playCard(player)">
+            {{ player.name }}
+          </button>
+        </div>
+      </div>
+
       <div id="play" class="popup" v-if="isSafety">
         <div v-if="canPlaySafety">
-          <h5>Activate</h5>
+          <h5>Activate</h5> <!-- change this to dynamically set text like targets -->
           <div id="button-wrapper"> 
             <button id="safety-button" v-on:click="playSafety">
               OK
@@ -42,7 +52,8 @@ export default {
   props: ['card'],
   data () {
     return {
-      type: this.card.type
+      type: this.card.type,
+      targetsText: "Targets"
     }
   },
   components: {
@@ -53,7 +64,7 @@ export default {
       return this.card === this.getActiveCard()
     },
     isAttack () {
-      return this.type === 'H' || this.type === 'VIRUS' || this.type === 'POWEROUTAGE'
+      return this.type === 'VIRUS' || this.type === 'POWEROUTAGE'
     },
     /**
      * Returns a list of players that are not protected by the attack type
@@ -97,7 +108,9 @@ export default {
   methods: {
     ...mapGetters([
       'getActiveCard',
-      'getCurrentPlayer'
+      'getCurrentPlayer',
+      'getPlayers',
+      'getStacks'
     ]),
     cardClicked (c) {
       this.$emit('cardClicked', c)
