@@ -78,8 +78,11 @@ export default {
     discardCard () {
       this.$emit('discard-card')
     },
+    playCard (targetPlayer) {
+      this.$emit('played-card', this.card, targetPlayer)
+    },
     playSafety () {
-      this.$emit('played-card')
+      this.playCard(this.getCurrentPlayer())
     }
   }
 }

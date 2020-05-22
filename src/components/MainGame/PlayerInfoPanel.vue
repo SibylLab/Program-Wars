@@ -46,7 +46,8 @@
                 <card-with-overlays :card="card"
                     v-on:cardClicked="cardClicked"
                     v-on:setActiveCard="setActiveCard"
-                    v-on:discard-card="discardSelected">
+                    v-on:discard-card="discardSelected"
+                    v-on:played-card="cardPlayed">
                 </card-with-overlays>
               </li>
           </ul>
@@ -223,7 +224,9 @@ export default {
           $('.virus').modal('show')
         } else if (c.type === 'POWEROUTAGE') {
           $('.powerOutage').modal('show')
-        } else if (c.type === 'BATTERYBACKUP') {
+        }
+        /* Replace these with popups to play safety cards
+         else if (c.type === 'BATTERYBACKUP') {
           $('.batteryBackup').modal('show')
         } else if (c.type === 'OVERCLOCK') {
           $('.overclock').modal('show')
@@ -234,6 +237,7 @@ export default {
         } else if (c.type === 'ANTIVIRUS') {
           $('.antiVirus').modal('show')
         }
+        */
 
         this.selectCard(c)
         if (prevActive !== undefined) {
@@ -242,6 +246,10 @@ export default {
             this.setStackSelectedBoolean({payload: undefined})
           }
         }
+      },
+      cardPlayed (card, targetPlayer) {
+        console.log(card);
+        console.log(targetPlayer);
       },
       /**
        * This changes gathers which instruction to display in the text box
