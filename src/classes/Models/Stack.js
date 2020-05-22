@@ -103,4 +103,8 @@ export default class Stack {
     return rCount >= 2
   }
 
+  isHackable () {
+    return this.stackBottom().type !== 'G'
+  }
+
 }

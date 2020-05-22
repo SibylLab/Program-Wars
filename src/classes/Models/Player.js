@@ -72,4 +72,32 @@ export default class Player {
     }
     return this.usedBonusCards.find(c => c.type === cardType) !== undefined
   }
+
+  /**
+   * Check to see if a player is under the effects of a given attack type.
+   * @param {string} cardType the type of card to check for.
+   * @return true if the player is already affected by the cardType,
+   * otherwise false.
+   */
+  underAttackBy (cardType) {
+    return this.attackedCards.find(c => c.type === cardType) !== undefined
+  }
+
+  /**
+   * Check to see if a player is protected from a given attack type.
+   * @param {string} attackType the type of attack.
+   * @return true if the player is protected, otherwise false.
+   */
+  protectedFrom (attackType) {
+    // Some are not checked because they protect on a one time basis so it
+    // needs to be possible to play the attack to remove the protection
+    // Ie) BatteryBackup and PowerOutage
+    if (attackType === "VIRUS") {
+      return this.protectedBy("ANTIVIRUS")
+    } else if (attackType === "POWEROUTAGE") {
+      return this.protectedBy("GENERATOR")
+    } else if (attackType === "H") {  // HACK
+      return this.protectedBy("FIREWALL")
+    }
+  }
 }

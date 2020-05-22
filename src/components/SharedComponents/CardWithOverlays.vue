@@ -55,6 +55,36 @@ export default {
     isAttack () {
       return this.type === 'H' || this.type === 'VIRUS' || this.type === 'POWEROUTAGE'
     },
+    /**
+     * Returns a list of players that are not protected by the attack type
+     * of this card. If no players are available it will change the title
+     * of the target popup to "No Targets".
+     */
+    attackablePlayers () {
+      let players = []
+      for (let player of this.getPlayers()) {
+        // Make sure target can be attacked
+        if (player === this.getCurrentPlayer()
+            || player.underAttackBy(this.type)
+            || player.protectedFrom(this.type)) {
+          continue
+        }
+
+        // Make sure if this is a hack that the target has one hackable stack
+        if (this.type === 'H') {
+          let playerStacks = this.getStacks().filter(
+            s => s.playerId === player.id && s.isHackable())
+
+          if (playerStacks.length === 0) {
+            continue
+          }
+        }
+        players.push(player)
+      }
+
+      this.targetsText = players.length > 0 ? "Targets" : "No Targets"
+      return players
+    },
     isSafety () {
       return (this.type === 'OVERCLOCK' || this.type === 'BATTERYBACKUP'
           || this.type === 'GENERATOR' || this.type === 'ANTIVIRUS'
