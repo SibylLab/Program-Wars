@@ -1,18 +1,25 @@
 <template>
     <div id="player-info-panel" :style="pIPBackgroundColour()">
-    <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
+    <modal :modalId="infoModalId()" :modalTitle="modalTitle"
+        :modalBody="modalText" :modalCards="modalCards"
+        :modalCallback="() => {;}" data-backdrop="static"
+        data-keyboard="false">
+    </modal>
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1"
-        role="dialog" aria-labelledby="" aria-hidden="true" :player="hackPlayer"
-        data-backdrop="static" data-keyboard="false">
+        role="dialog" aria-labelledby="" aria-hidden="true"
+        data-backdrop="static" data-keyboard="false"
+        :player="hackPlayer">
     </hack-modal>
       
-      <div id="tipContainer" v-if="getTips().tutorial">
-        <div id="tipBox" class="container" :cardClicked="tipsCardSelected" style="font-size: 14px;" :style="pIPTextColour()">
-          {{ tipsInfoText }}
-        </div>
+    <div id="tipContainer" v-if="getTips().tutorial">
+      <div id="tipBox" class="container" :cardClicked="tipsCardSelected"
+          style="font-size: 14px;" :style="pIPTextColour()">
+        {{ tipsInfoText }}
       </div>
-      <div class="container" style="padding: 10px; width: 100%">
-        <div>
+    </div>
+
+    <div class="container" style="padding: 10px; width: 100%">
+      <div>
       <div id="flexcontainer">
         <div class="container" style="width: 300px; margin-right: 20px; margin-left: 10px; align-items: center; -webkit-align-items: center; position: relative">
         <input type="image" src="static/miscIcons/info.png"
