@@ -1,6 +1,10 @@
 <template>
     <div id="player-info-panel" :style="pIPBackgroundColour()">
     <modal :modalId="infoModalId()" :modalTitle="modalTitle" :modalBody="modalText" :modalCards="modalCards" :modalCallback="() => {;}" data-backdrop="static" data-keyboard="false"></modal>
+    <hack-modal id="hackModal" class="modal fade hack" tabindex="-1"
+        role="dialog" aria-labelledby="" aria-hidden="true" :player="hackPlayer"
+        data-backdrop="static" data-keyboard="false">
+    </hack-modal>
       
       <div id="tipContainer" v-if="getTips().tutorial">
         <div id="tipBox" class="container" :cardClicked="tipsCardSelected" style="font-size: 14px;" :style="pIPTextColour()">
@@ -17,7 +21,7 @@
              v-bind:title="scoreAreaTooltip"
              v-on:click="ShowInfoModal('scoreArea')">
         <div v-for="player in players" v-bind:key="player.name" style="text-align: left; display: inline">
-          <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
+          <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal(player)" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4></div>
             <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px" :style="pIPTextColour()">
               <div class="row"></div>
               Instructions:&nbsp;&thinsp;
@@ -74,6 +78,7 @@
 import { bus } from '../SharedComponents/Bus'
 import CardWithOverlays from '../SharedComponents/CardWithOverlays'
 import Modal from '../Modals/Modal'
+import HackModal from '../Modals/CardModals/HackModal'
 import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
 
 import {mapGetters, mapState, mapActions, mapMutations} from 'vuex'
@@ -92,7 +97,8 @@ export default {
         tipsInfoText: 'You can toggle on or off this information window by checking the "FUN FACTS" box in the top right corner. ' +
       'You can also turn off the tutorials but keep the fun facts by checking the "TUTORIAL" box.',
         scoreAreaTooltip: 'Instruction progress for each player. Click for more info.',
-        cardAreaTooltip: 'Current player\'s hand. Click for more info'
+        cardAreaTooltip: 'Current player\'s hand. Click for more info',
+        hackPlayer: this.getCurrentPlayer()
       }
     },
     computed: {
@@ -127,6 +133,7 @@ export default {
     components: {
       'card-with-overlays': CardWithOverlays,
       'display-used-cards': DisplayUsedCards,
+      'hack-modal': HackModal,
       'modal': Modal
     },
     methods: {
@@ -186,7 +193,8 @@ export default {
         }
         return {trueScore: trueSide}
       },
-      openModal () {
+      openModal (player) {
+        this.hackPlayer = player
         $('.hack').modal('show')
       },
       discardSelected () {
@@ -264,16 +272,21 @@ export default {
        * players turn.
        */
       cardPlayed (card, targetPlayer) {
-        this.applyCard(card, targetPlayer)
+        if (card.type === 'H') {
+          this.hackPlayer = targetPlayer
+          $('.hack').modal('show')
+        } else {
+          this.applyCard(card, targetPlayer)
 
-        if (this.getTutorialState()) {
-          bus.$emit('cardPlayed')
-          this.increaseFactIndex()
+          if (this.getTutorialState()) {
+            bus.$emit('cardPlayed')
+            this.increaseFactIndex()
+          }
+
+          this.playerTookTurn()
+          this.turn(true)
+          bus.$emit('alterTipBox')
         }
-
-        this.playerTookTurn()
-        this.turn(true)
-        bus.$emit('alterTipBox')
       },
       /**
        * This changes gathers which instruction to display in the text box

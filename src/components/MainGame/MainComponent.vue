@@ -3,22 +3,9 @@
     <rules-modal id="rulesModal" class="modal fade rules" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: yellowgreen"></rules-modal>
     <themes-modal id="themesModal" class="modal fade themes" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></themes-modal>
     <credits-modal id="creditsModal" class="modal fade credits" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="background-color: mediumpurple"></credits-modal>
-    <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby=""
-                aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"
-    ></hack-modal>
-    <virus-modal id="virusModal" class="modal fade virus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
-                 data-backdrop="static" data-keyboard="false"></virus-modal>
-    <power-outage-modal id="powerOutageModal" class="modal fade powerOutage" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
-                 data-backdrop="static" data-keyboard="false"></power-outage-modal>
-
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
     
-    <transition name="fade">
-      <hack-discard v-if="showMsg"></hack-discard>
-    </transition>
-
-
     <div id="header" :style="mainBackgroundColour()">
       <p :style="mainTextColour()">Program Wars</p>
       <div style="margin-left: auto; padding: 0 10px 0 0">
@@ -67,11 +54,7 @@ import Playfield from '../SharedComponents/Playfield'
 import Conditionals from '../SharedComponents/Conditionals'
 import RulesModal from '../Modals/RulesModal.vue'
 import CreditsModal from '../Modals/CreditsModal.vue'
-import HackModal from '../Modals/CardModals/HackModal.vue'
 import WinnerModal from '../Modals/WinnerModal.vue'
-import HackDiscard from '../Modals/CardModals/HackDiscardMsg.vue'
-import VirusModal from '../Modals/CardModals/VirusModal.vue'
-import PowerOutageModal from '../Modals/CardModals/PowerOutageModal'
 import Timer from '../SharedComponents/Timer'
 
 import Themes from '../Modals/ThemesModal'
@@ -105,17 +88,12 @@ export default {
       }
     },
     components: {
-      HackDiscard,
       'player-info-panel': PlayerInfoPanel,
       'playfield': Playfield,
       'rules-modal': RulesModal,
       'credits-modal': CreditsModal,
-      'hack-modal': HackModal,
       'cond-list': Conditionals,
       'winner-modal': WinnerModal,
-      'hack-discard': HackDiscard,
-      'virus-modal': VirusModal,
-      'power-outage-modal': PowerOutageModal,
       'timer': Timer,
       'themes-modal': Themes
 

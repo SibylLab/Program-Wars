@@ -61,7 +61,6 @@ export default {
       },
       activeCardIsHack () {
         if (this.getActiveCard() !== undefined && this.getActiveCard().type === 'H') {
-          $('.hack').modal('show')
           let stack = this.getStacks().find(findStack => findStack.stackId === this.stackId)
           return (stack !== undefined && stack.cards[0].type !== 'G')
         } else {

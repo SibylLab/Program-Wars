@@ -64,7 +64,7 @@ export default {
       return this.card === this.getActiveCard()
     },
     isAttack () {
-      return this.type === 'VIRUS' || this.type === 'POWEROUTAGE'
+      return this.type === 'H' || this.type === 'VIRUS' || this.type === 'POWEROUTAGE'
     },
     /**
      * Returns a list of players that are not protected by the attack type

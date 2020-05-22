@@ -104,7 +104,7 @@ export default class Stack {
   }
 
   isHackable () {
-    return this.stackBottom().type !== 'G'
+    return this.cards.length > 0 && this.stackBottomCard().type !== 'G'
   }
 
 }
