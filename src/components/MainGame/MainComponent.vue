@@ -10,16 +10,6 @@
                  data-backdrop="static" data-keyboard="false"></virus-modal>
     <power-outage-modal id="powerOutageModal" class="modal fade powerOutage" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
                  data-backdrop="static" data-keyboard="false"></power-outage-modal>
-    <battery-backup-modal id="batteryBackupModal" class="modal fade batteryBackup" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
-                        data-backdrop="static" data-keyboard="false"></battery-backup-modal>
-    <overclock-modal id="overclockModal" class="modal fade overclock" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
-                          data-backdrop="static" data-keyboard="false"></overclock-modal>
-    <firewall-modal id="firewallModal" class="modal fade firewall" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
-                     data-backdrop="static" data-keyboard="false"></firewall-modal>
-    <generator-modal id="generatorModal" class="modal fade generator" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
-                     data-backdrop="static" data-keyboard="false"></generator-modal>
-    <anti-virus-modal id="antiVirusModal" class="modal fade antiVirus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
-                     data-backdrop="static" data-keyboard="false"></anti-virus-modal>
 
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
@@ -82,11 +72,6 @@ import WinnerModal from '../Modals/WinnerModal.vue'
 import HackDiscard from '../Modals/CardModals/HackDiscardMsg.vue'
 import VirusModal from '../Modals/CardModals/VirusModal.vue'
 import PowerOutageModal from '../Modals/CardModals/PowerOutageModal'
-import BatteryBackup from '../Modals/CardModals/BatteryBackup'
-import Overclock from '../Modals/CardModals/OverclockModal'
-import AntiVirus from '../Modals/CardModals/AntiVirusModal'
-import Generator from '../Modals/CardModals/Generator'
-import Firewall from '../Modals/CardModals/Firewall'
 import Timer from '../SharedComponents/Timer'
 
 import Themes from '../Modals/ThemesModal'
@@ -131,11 +116,6 @@ export default {
       'hack-discard': HackDiscard,
       'virus-modal': VirusModal,
       'power-outage-modal': PowerOutageModal,
-      'battery-backup-modal': BatteryBackup,
-      'overclock-modal': Overclock,
-      'firewall-modal': Firewall,
-      'generator-modal': Generator,
-      'anti-virus-modal': AntiVirus,
       'timer': Timer,
       'themes-modal': Themes
 

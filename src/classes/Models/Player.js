@@ -67,6 +67,9 @@ export default class Player {
    * @return true if the player is protected by the card type, otherwise false
    */
   protectedBy (cardType) {
+    if (cardType === "BATTERYBACKUP" && this.hasGenerator) {
+      return true
+    }
     return this.usedBonusCards.find(c => c.type === cardType) !== undefined
   }
 }
