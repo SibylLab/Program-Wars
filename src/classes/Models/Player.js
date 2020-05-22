@@ -67,6 +67,6 @@ export default class Player {
    * @return true if the player is protected by the card type, otherwise false
    */
   protectedBy (cardType) {
-    return this.usedBonusCards.find(c => c.type === cardType) !== undefined)
+    return this.usedBonusCards.find(c => c.type === cardType) !== undefined
   }
 }
