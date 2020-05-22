@@ -36,6 +36,17 @@ export default {
   computed: {
     isSelected () {
       return this.card === this.getActiveCard()
+    },
+    isAttack () {
+      return this.type === 'H' || this.type === 'VIRUS' || this.type === 'POWEROUTAGE'
+    },
+    isSafety () {
+      return (this.type === 'OVERCLOCK' || this.type === 'BATTERYBACKUP'
+          || this.type === 'GENERATOR' || this.type === 'ANTIVIRUS'
+          || this.type === 'FIREWALL')
+    },
+    canPlaySafety () {
+      return !this.getCurrentPlayer().protectedBy(this.type)
     }
   },
   methods: {
