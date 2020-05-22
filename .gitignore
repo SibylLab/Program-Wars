@@ -11,3 +11,4 @@ coverage/
 documents/
 
 *.swp
+*.orig
