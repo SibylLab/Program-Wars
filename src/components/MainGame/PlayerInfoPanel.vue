@@ -225,19 +225,6 @@ export default {
         } else if (c.type === 'POWEROUTAGE') {
           $('.powerOutage').modal('show')
         }
-        /* Replace these with popups to play safety cards
-         else if (c.type === 'BATTERYBACKUP') {
-          $('.batteryBackup').modal('show')
-        } else if (c.type === 'OVERCLOCK') {
-          $('.overclock').modal('show')
-        } else if (c.type === 'FIREWALL') {
-          $('.firewall').modal('show')
-        } else if (c.type === 'GENERATOR') {
-          $('.generator').modal('show')
-        } else if (c.type === 'ANTIVIRUS') {
-          $('.antiVirus').modal('show')
-        }
-        */
 
         this.selectCard(c)
         if (prevActive !== undefined) {
@@ -247,9 +234,44 @@ export default {
           }
         }
       },
+      /**
+       * Apply the given bonus card the given player.
+       */
+      applyCard (card, player) {
+        let type = card.type
+        let id = player.id
+
+        if (type === 'BATTERYBACKUP') {
+          this.giveBatteryBackup(id)
+        } else if (type === 'OVERCLOCK') {
+          this.giveOverclock(id)
+        } else if (type === 'FIREWALL') {
+          this.giveFirewall(id)
+        } else if (type === 'ANTIVIRUS') {
+          this.giveAntiVirus(id)
+        } else if (type === 'GENERATOR') {
+          this.giveGenerator(id)
+        } else if (type === 'VIRUS') {
+          this.giveVirus(id)
+        } else if (type === 'POWEROUTAGE') {
+          this.givePowerOutage(id)
+        }
+      },
+      /**
+       * Plays the given bonus card on the target player and ends the current
+       * players turn.
+       */
       cardPlayed (card, targetPlayer) {
-        console.log(card);
-        console.log(targetPlayer);
+        this.applyCard(card, targetPlayer)
+
+        if (this.getTutorialState()) {
+          bus.$emit('cardPlayed')
+          this.increaseFactIndex()
+        }
+
+        this.playerTookTurn()
+        this.turn(true)
+        bus.$emit('alterTipBox')
       },
       /**
        * This changes gathers which instruction to display in the text box
