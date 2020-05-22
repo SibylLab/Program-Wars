@@ -43,11 +43,11 @@
             <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card) in hand" v-bind:key="card.id" style="margin-top: 5px; position: relative;">
-                <card-with-overlay :card="card"
+                <card-with-overlays :card="card"
                     v-on:cardClicked="cardClicked"
                     v-on:setActiveCard="setActiveCard"
                     v-on:discard-card="discardSelected">
-                </card-with-overlay>
+                </card-with-overlays>
               </li>
           </ul>
         </div>
@@ -124,7 +124,7 @@ export default {
 
     },
     components: {
-      'card-with-overlay': CardWithOverlays,
+      'card-with-overlays': CardWithOverlays,
       'display-used-cards': DisplayUsedCards,
       'modal': Modal
     },
