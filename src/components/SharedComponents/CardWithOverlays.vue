@@ -19,7 +19,7 @@
 
       <div id="play" class="popup" v-if="isSafety">
         <div v-if="canPlaySafety">
-          <h5>Activate</h5> <!-- change this to dynamically set text like targets -->
+          <h5>Activate</h5>
           <div id="button-wrapper"> 
             <button id="safety-button" v-on:click="playSafety">
               OK
