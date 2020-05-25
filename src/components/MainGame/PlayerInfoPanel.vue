@@ -105,7 +105,7 @@ export default {
       'You can also turn off the tutorials but keep the fun facts by checking the "TUTORIAL" box.',
         scoreAreaTooltip: 'Instruction progress for each player. Click for more info.',
         cardAreaTooltip: 'Current player\'s hand. Click for more info',
-        hackPlayer: this.getCurrentPlayer()
+        hackPlayer: undefined
       }
     },
     computed: {
