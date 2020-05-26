@@ -59,4 +59,17 @@ export default class Player {
   updateBonus (score) {
     this.bonus += score
   }
+
+  /**
+   * Checks to see if the player is under the effect of a given safety
+   * or remedy card.
+   * @param {string} cardType the type of card to check for.
+   * @return true if the player is protected by the card type, otherwise false
+   */
+  protectedBy (cardType) {
+    if (cardType === "BATTERYBACKUP" && this.hasGenerator) {
+      return true
+    }
+    return this.usedBonusCards.find(c => c.type === cardType) !== undefined
+  }
 }
