@@ -20,7 +20,6 @@
           <h5>In Use</h5>
         </div>
       </div>
-
     </div>
 
     <card v-bind:cardData="card"
