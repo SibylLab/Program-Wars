@@ -15,17 +15,27 @@
   <div>
   <h1>Landing Page</h1>
   <button v-on:click="game">Game Page</button>
+  <side-menu></side-menu>
   </div>
 
 </template>
 
 
 <script>
+import SideMenu from '@/components/shared/SideMenu'
+import {mapActions} from 'vuex'
+
 export default {
   name: 'landing-page',
+  components: {
+    'side-menu': SideMenu
+  },
   methods: {
+    ...mapActions([
+      'newGame'
+    ]),
     game () {
-      this.$router.push('game')
+      this.newGame({players: [{name: 'steven', ai: false}, {name: 'noob_bot', ai: true}]})
     }
   }
 }

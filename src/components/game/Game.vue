@@ -22,17 +22,27 @@
   <div>
   <h1>Game Page</h1>
   <button v-on:click="home">Home Page</button>
+  <side-menu></side-menu>
   </div>
 
 </template>
 
 
 <script>
+import SideMenu from '@/components/shared/SideMenu'
+import {mapActions} from 'vuex'
+
 export default {
   name: 'game-page',
+  components: {
+    'side-menu': SideMenu
+  },
   methods: {
+    ...mapActions([
+      'leaveGame'
+    ]),
     home () {
-      this.$router.push('home')
+      this.leaveGame()
     }
   }
 }
