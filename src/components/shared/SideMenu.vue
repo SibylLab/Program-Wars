@@ -5,7 +5,7 @@
 
 <script>
   export default {
-    name: 'game-settings',
+    name: 'side-menu',
 }
 </script>
 
