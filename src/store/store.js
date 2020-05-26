@@ -3,10 +3,10 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-import actions from './actions.js'
-import mutations from './mutations.js'
-import getters from './getters.js'
-import Deck from '../classes/Models/Deck'
+import actions from './actions'
+import mutations from './mutations'
+import getters from './getters'
+import Deck from '@/classes/Models/Deck'
 
 
 /**
