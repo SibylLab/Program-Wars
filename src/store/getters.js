@@ -39,6 +39,19 @@ export default {
     return state.players.filter((p) => {
       return p.id !== state.activePlayerId && !p.isProtectedFrom(payload.effect)
     })
+  },
+
+  /**
+   * Get a list of hackable opponents.
+   */
+  getHackableOpponents (state) {
+    return state.players.filter((p) => {
+      if (p.id === state.activePlayerId || p.isProtectedFrom('HACK')) {
+        return false
+      }
+      let stacks = state.stacks.filter(s => s.playerId === p.id && s.isHackable())
+      return stacks.length > 0
+    })
   }
 }
 
