@@ -24,9 +24,9 @@ export const store = new Vuex.Store({
     activePlayerId: 0,
     activeCard: undefined,
     scoreLimit: 5500,
-    tips: {tutorial: true, factIndex: 0},
+    tips: {showTips: true, factIndex: 0},
     colorScheme: {},
-    timerInterval: undefined,
+    timer: undefined,
   },
 
   getters,

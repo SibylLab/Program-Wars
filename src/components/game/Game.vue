@@ -19,23 +19,23 @@
     players objectives to be listed. The objectives should be adjusted to keep
     track of more than just these if statements
   -->
-  <div>
+  <div id="page">
+  <page-header></page-header>
   <h1>Game Page</h1>
   <button v-on:click="home">Home Page</button>
-  <side-menu></side-menu>
   </div>
 
 </template>
 
 
 <script>
-import SideMenu from '@/components/shared/SideMenu'
+import PageHeader from '@/components/shared/PageHeader'
 import {mapActions} from 'vuex'
 
 export default {
   name: 'game-page',
   components: {
-    'side-menu': SideMenu
+    'page-header': PageHeader
   },
   methods: {
     ...mapActions([
@@ -48,4 +48,10 @@ export default {
 }
 </script>
 
-
+<style scoped>
+#page {
+  width: 100%;
+  height: 100%;
+  background-color: grey;
+}
+</style>

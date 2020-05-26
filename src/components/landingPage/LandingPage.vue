@@ -12,23 +12,23 @@
     Can also use a settings component for the setup. That component may be
       able to hold all of the stuff it need or be broken up into smaller components.
   -->
-  <div>
+  <div id="page">
+  <page-header></page-header>
   <h1>Landing Page</h1>
   <button v-on:click="game">Game Page</button>
-  <side-menu></side-menu>
   </div>
 
 </template>
 
 
 <script>
-import SideMenu from '@/components/shared/SideMenu'
+import PageHeader from '@/components/shared/PageHeader'
 import {mapActions} from 'vuex'
 
 export default {
   name: 'landing-page',
   components: {
-    'side-menu': SideMenu
+    'page-header': PageHeader
   },
   methods: {
     ...mapActions([
@@ -41,3 +41,10 @@ export default {
 }
 </script>
 
+<style scoped>
+#page {
+  width: 100%;
+  height: 100%;
+  background-color: grey;
+}
+</style>

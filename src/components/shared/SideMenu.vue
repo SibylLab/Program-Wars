@@ -1,32 +1,32 @@
 <template>
-  <div>
-    <!-- Modals -->
-    <backstory-modal id="backstoryModal" class="modal fade backstory"
-        tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    </backstory-modal>
-    <rules-modal id="rulesModal" class="modal fade rules"
-        tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
-        style="background-color: yellowgreen">
-    </rules-modal>
-    <credits-modal id="creditsModal" class="modal fade credits"
-        tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
-        style="background-color: mediumpurple">
-    </credits-modal>
- 
-    <!-- Side menu using a sidenav -->
-    <input type='image'  src='static/miscIcons/burgerIcon.png'
-        v-on:click="openMenu" style="width: 36px; height: 36px;">
-    <div id="mySidenav" class="sidenav">
-        <!-- v-if can decide which elements are visible when in game vs home -->
-        <a href="javascript:void(0)" class="closebtn" @click="closeMenu">&times;</a>
-        <a href="#" data-toggle="modal" data-target=".backstory">Backstory</a>
-        <a href="#" data-toggle="modal" data-target=".rules">Rules</a>
-        <a href="#" data-toggle="modal" data-target=".credits">Credits</a>
-        <a href="https://gitreports.com/issue/johnanvik/program-wars"
-            target="_blank">Report Issue</a>
-    </div>
+<div>
+  <!-- Modals -->
+  <backstory-modal id="backstoryModal" class="modal fade backstory"
+      tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  </backstory-modal>
+  <rules-modal id="rulesModal" class="modal fade rules"
+      tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+      style="background-color: yellowgreen">
+  </rules-modal>
+  <credits-modal id="creditsModal" class="modal fade credits"
+      tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+      style="background-color: mediumpurple">
+  </credits-modal>
 
+  <!-- Side menu using a sidenav -->
+  <input type='image'  src='static/miscIcons/burgerIcon.png'
+      v-on:click="openMenu" style="width: 36px; height: 36px;">
+  <div id="mySidenav" class="sidenav">
+      <!-- v-if can decide which elements are visible when in game vs home -->
+      <a href="javascript:void(0)" class="closebtn" @click="closeMenu">&times;</a>
+      <a href="#" data-toggle="modal" data-target=".backstory">Backstory</a>
+      <a href="#" data-toggle="modal" data-target=".rules">Rules</a>
+      <a href="#" data-toggle="modal" data-target=".credits">Credits</a>
+      <a href="https://gitreports.com/issue/johnanvik/program-wars"
+          target="_blank">Report Issue</a>
   </div>
+
+</div>
 </template>
 
 <script>
@@ -93,6 +93,4 @@ export default {
   font-size: 36px;
   margin-left: 50px;
 }
-
-
 </style>

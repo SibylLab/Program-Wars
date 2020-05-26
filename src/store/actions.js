@@ -30,6 +30,7 @@ export default {
     // setup the state for the home page?
     // from the game before heading to the home page
     context.commit('changeGameState', {newState: 'home'})
+    context.commit('stopTimer')
     router.push('home')
     console.log(payload)
     console.log(context.state.gameState)
