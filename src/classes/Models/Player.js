@@ -35,4 +35,20 @@ export default class Player {
   hurtBy (effect) {
     return this.negativeEffects.has(effect)
   }
+
+  /**
+   * Find out if a player is protected from an effect.
+   * @param {string} effect The effect to check.
+   * @return true if the player is protected, false otherwise.
+   */
+  isProtectedFrom (effect) {
+    if (effect === "HACK") {
+      return this.helpedBy("FIREWALL")
+    } else if (effect === "POWEROUTAGE") {
+      return this.helpedBy("BATTERYBACKUP") || this.helpedBy("GENERATOR")
+    } else if (effect === "VIRUS") {
+      return this.helpedBy("ANTIVIRUS")
+    }
+    return false
+  }
 }

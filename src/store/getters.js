@@ -29,6 +29,16 @@ export default {
    */
   getCurrentAiHandler (state) {
     return state.aiHandlers.find(h => h.playerId === state.activePlayerId)
+  },
+
+  /**
+   * Get attackable opponents given a card type.
+   * Not for Hacking.
+   */
+  getAttackableOpponents (state, payload) {
+    return state.players.filter((p) => {
+      return p.id !== state.activePlayerId && !p.isProtectedFrom(payload.effect)
+    })
   }
 }
 

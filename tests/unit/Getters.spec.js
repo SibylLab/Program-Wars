@@ -1,9 +1,19 @@
 import getters from '@/store/getters.js'
 
+
 describe('vuex getters', () => {
+  // Mock functions for players
+  const isProtected = jest.fn(e => true)
+  const isNotProtected = jest.fn(e => false)
+
+  // Mock state
   const state = {
       activePlayerId: 1,
-      players: [{id: 0}, {id: 1}],
+      players: [
+        {id: 0, isProtectedFrom: isProtected},
+        {id: 1},
+        {id: 2, isProtectedFrom: isNotProtected}
+      ],
       stacks: [
         {stackId: 25, playerId: 1},
         {stackId: 26, playerId: 0},
@@ -14,6 +24,7 @@ describe('vuex getters', () => {
       hands: [{id: 300, playerId: 0}, {id: 301, playerId: 1}],
       aiHandlers: [{id: 1000, playerId: 1}]
     }
+
 
   test('get the current players hand', () => {
     let hand = getters.getCurrentPlayerHand(state)
@@ -44,5 +55,14 @@ describe('vuex getters', () => {
     localState.activePlayerId = 0
     let handler = getters.getCurrentAiHandler(localState)
     expect(handler).toBeUndefined()
+  })
+  test('get a list of players not that can be attacked with a card type', () => {
+    let opp = getters.getAttackableOpponents(state, {effect: "VIRUS"})
+    expect(opp.length).toEqual(1)
+    expect(opp[0].id).toEqual(2)
+    expect(isProtected.mock.calls.length).toEqual(1)
+    expect(isNotProtected.mock.calls.length).toEqual(1)
+    expect(isProtected.mock.calls[0][0]).toEqual('VIRUS')
+    expect(isNotProtected.mock.calls[0][0]).toEqual('VIRUS')
   })
 })
