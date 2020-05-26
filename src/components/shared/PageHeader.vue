@@ -12,7 +12,11 @@
       <input type="checkbox" value="true" v-on:click="toggleTips" checked>Game Tips
     </label>
 
-    <timer id="timer" v-if="isGame"></timer>
+    <!-- connects to an easytimer instance through id and class
+         actual timer is maintained in store -->
+    <div id="basicUsage" v-if="isGame" class="p-3 mb-2 bg-primary text-white">
+      00:00:00
+    </div>
 
     <side-menu id="menu"></side-menu>
 
@@ -23,7 +27,6 @@
 
 <script>
 import SideMenu from '@/components/shared/SideMenu'
-import Timer from '@/components/shared/Timer'
 import {mapState, mapMutations} from 'vuex'
 
 export default {
@@ -33,7 +36,6 @@ export default {
   },
   components: {
     'side-menu': SideMenu,
-    'timer': Timer
   },
   computed: {
     ...mapState([
@@ -84,11 +86,18 @@ export default {
   right: 140px;
 }
 
-#timer {
+#basicUsage {
   width: 70px;
   position: absolute;
   top: 5px;
   right: 60px;
+  font-size: 13px;
+  text-decoration: blue;
+  padding: 2px;
+  margin-top: 0px;
+  border: solid black 2px;
+  border-radius: 5px;
+  vertical-align: baseline;
 }
 
 #menu {

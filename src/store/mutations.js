@@ -1,4 +1,5 @@
 //import { bus } from '@/components/SharedComponents/Bus'
+import Timer from 'easytimer'
 
 
 export default {
@@ -15,14 +16,18 @@ export default {
    */
   toggleTips (state) {
     state.tips.showTips = !state.tips.showTips
-    console.log(state.tips.showTips)
   },
 
   /**
-   * Set a new timer.
+   * Setup a new timer.
    */
-  setTimer (state, payload) {
-    state.timer = payload.timer
+  newTimer (state) {
+    state.timer = new Timer()
+    state.timer.start()
+    // eslint-disable-next-line no-unused-vars
+    state.timer.addEventListener('secondsUpdated', function (e) {
+      $('#basicUsage').html(state.timer.getTimeValues().toString())
+    })
   },
 
   /**
@@ -32,6 +37,5 @@ export default {
     if (state.timer) {
       state.timer.stop()
     }
-    console.log("stopping timer")
   }
 }
