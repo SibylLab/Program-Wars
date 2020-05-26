@@ -52,6 +52,13 @@ export default {
       let stacks = state.stacks.filter(s => s.playerId === p.id && s.isHackable())
       return stacks.length > 0
     })
+  },
+
+  /**
+   * Get current players objectives.
+   */
+  getCurrentPlayerObjectives (state) {
+    return state.objectives[state.activePlayerId]
   }
 }
 

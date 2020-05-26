@@ -27,7 +27,8 @@ describe('vuex getters', () => {
         {stackId: 31, playerId: 3, isHackable: trueFn},
       ],
       hands: [{id: 300, playerId: 0}, {id: 301, playerId: 1}],
-      aiHandlers: [{id: 1000, playerId: 1}]
+      aiHandlers: [{id: 1000, playerId: 1}],
+      objectives: [{playerId: 0}, {playerId: 1}]
     }
 
 
@@ -76,5 +77,9 @@ describe('vuex getters', () => {
     let opp = getters.getHackableOpponents(state)
     expect(opp.length).toEqual(1)
     expect(opp[0].id).toEqual(3)
+  })
+  test('get an objectives obj associated with the current player', () => {
+    let objectives = getters.getCurrentPlayerObjectives(state)
+    expect(objectives.playerId).toEqual(1)
   })
 })
