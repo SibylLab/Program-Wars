@@ -13,7 +13,8 @@
       able to hold all of the stuff it need or be broken up into smaller components.
   -->
   <div>
-
+  <h1>Landing Page</h1>
+  <button v-on:click="game">Game Page</button>
   </div>
 
 </template>
@@ -21,7 +22,12 @@
 
 <script>
 export default {
-  name: 'landing-page'
+  name: 'landing-page',
+  methods: {
+    game () {
+      this.$router.push('game')
+    }
+  }
 }
 </script>
 

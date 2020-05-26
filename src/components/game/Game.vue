@@ -20,7 +20,8 @@
     track of more than just these if statements
   -->
   <div>
-
+  <h1>Game Page</h1>
+  <button v-on:click="home">Home Page</button>
   </div>
 
 </template>
@@ -28,7 +29,12 @@
 
 <script>
 export default {
-  name: 'game-page'
+  name: 'game-page',
+  methods: {
+    home () {
+      this.$router.push('home')
+    }
+  }
 }
 </script>
 
