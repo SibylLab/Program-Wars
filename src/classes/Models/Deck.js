@@ -1,6 +1,6 @@
 /**
  * @file Deck.js file
- * @author Lance on 2017-03-10.
+ * @author Lance on 2017-03-10, Steven modified 2020-05-25
  */
 import Card from './Card'
 
@@ -74,67 +74,72 @@ const cardDeck = [
 ]
 
 /**
- * This is the object representation of the games deck.
- * We use one deck that grows depending on the number of players instead of multiple decks.
+ * A deck for a program wars game.
+ * Only a single deck is used. Its size is determined by the number of players
+ * it is initialized with.
  */
 export default class Deck {
   /**
-   * The constructor for the Deck class
-   * @constructor Deck
+   * Constructor for the Deck class.
+   * @param {int} numPlayers The number of players using the deck.
    */
-  constructor () {
-    // this.initDeck();
+  constructor (numPlayers) {
     this.cards = []
-    this.discard_cards = []
+    this.discard = []
+    this.initDeck(numPlayers)
   }
 
   /**
-   * initDeck function to initialize the deck with a pre determined number and type of cards
-   * @memberOf Deck
+   * Initializes the deck with a pre determined number and type of cards.
+   * @param {int} numPlayers The number of players using the deck.
    */
-  initDeck (value) {
+  initDeck (numPlayers) {
     let cardId = 0
-    for (let k = 0; k < value; k++) {
+    for (let k = 0; k < numPlayers; k++) {
       for (let i = 0; i < cardDeck.length; i++) {
         for (let j = 0; j < cardDeck[i].howMany; j++) {
           if (cardDeck[i].type === 'FIREWALL' && (k === 1 || k === 3)) {
-            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
+            this.cards.push(new Card(cardId, cardDeck[i].cardValue,
+                                     cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++
           } else if (cardDeck[i].type === 'GENERATOR' && (k === 1 || k === 3)) {
-            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
+            this.cards.push(new Card(cardId, cardDeck[i].cardValue,
+                                     cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++
           } else if (cardDeck[i].type === 'ANTIVIRUS' && (k === 1 || k === 3)) {
-            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
+            this.cards.push(new Card(cardId, cardDeck[i].cardValue,
+                                     cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++
-          } else if (cardDeck[i].type !== 'ANTIVIRUS' && cardDeck[i].type !== 'FIREWALL' && cardDeck[i].type !== 'GENERATOR') {
-            this.cards.push(new Card(cardId, cardDeck[i].cardValue, cardDeck[i].type, cardDeck[i].imgSrc))
+          } else if (cardDeck[i].type !== 'ANTIVIRUS'
+                     && cardDeck[i].type !== 'FIREWALL'
+                     && cardDeck[i].type !== 'GENERATOR') {
+            this.cards.push(new Card(cardId, cardDeck[i].cardValue,
+                                     cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++
           }
         }
       }
     }
     this.shuffle(this.cards)
-  }// end Init game
+  }
 
   /**
-   * draw function returns the card at the front (top) of the deck and removes it from the deck
-   * @memberOf Deck
-   * @returns {Card}
+   * Removes and returns the top card of the deck.
+   * @returns {Card} the top card.
    */
   draw () {
-    let card = this.cards[0]// [0] is the top of the deck
-    this.cards.shift()// unshift removes the first element.
+    let card = this.cards[0]  // [0] is the top of the deck
+    this.cards.shift()
     return card
   }
 
   /**
-   * shuffle function that will psuedo shuffle the contents of the deck into a random order
-   * @memberOf Deck
+   * Shuffle the contents of the a deck into a psuedo random order.
    */
-  shuffle (event) {
-    for (let i = event.length; i; i--) {
+  shuffle (cards) {
+    for (let i = cards.length; i; i--) {
       let j = Math.floor(Math.random() * i);
-      [event[i - 1], event[j]] = [event[j], event[i - 1]]
+      [cards[i - 1], cards[j]] = [cards[j], cards[i - 1]]
     }
   }
 }

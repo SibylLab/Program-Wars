@@ -1,56 +1,62 @@
 import Stack from '@/classes/Models/Stack'
 import Card from '@/classes/Models/Card'
 
-let testStack = new Stack(1, true)
-let testCard = new Card(2, 3, 'I')
-let testGroup = new Card(3, 3, 'G')
-let testRep = new Card(4, 3, 'R')
-let testRep2 = new Card(4, 3, 'R')
-let testRep3 = new Card(4, 3, 'R')
+let stack
+let instruction = new Card(2, 75, 'INSTRUCTION')
+let group = new Card(3, 150, 'GROUP')
+let repeat = new Card(4, 3, 'REPEAT')
+
 
 describe('Stack.js', () => {
-  it('test player id in stack', () => {
-    expect(testStack.playerId).toEqual(1)
+  beforeEach(() => {
+    stack = new Stack(1)
   })
-
-  it('test bool side in stack', () => {
-    expect(testStack.boolSide).toEqual(true)
+  test('constructor functions properly', () => {
+    expect(stack.playerId).toEqual(1)
+    expect(stack.id).not.toBeDefined()  // uuid is random so just make sure it is set
   })
-
-  it('test addCardToStack', () => {
-    testStack.addCardToStack(testCard)
-    expect(testStack.cards.length).toEqual(1)
+  test('is empty true and false', () => {
+    expect(stack.isEmpty()).toBeTruthy()
+    stack.cards.push(instruction)
+    expect(stack.isEmpty()).toBeFalsy()
   })
-
-  it('test CalculateStackScore', () => {
-    testStack.calculateStackScore()
-    expect(testStack.score).toEqual(3)
-    testStack.addCardToStack(testGroup)
-    testStack.calculateStackScore()
-    expect(testStack.score).toEqual(6)
-    testStack.addCardToStack(testRep)
-    testStack.calculateStackScore()
-    expect(testStack.score).toEqual(18)
+  test('get base card', () => {
+    stack.cards.push(instruction)
+    expect(stack.getBase()).toEqual(instruction)
   })
-
-  it('test StackTopCard', () => {
-    expect(testStack.stackTopCard()).toEqual(testRep)
+  test('get top card', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(repeat)
+    expect(stack.getTop()).toEqual(repeat)
   })
-
-  it('test popTopCard', () => {
-    testStack.popTopCard()
-    expect(testStack.cards.length).toEqual(2)
+  test('calculate correct score no repeats', () => {
+    expect(stack.getScore()).toEqual(0)
+    stack.cards.push(instruction)
+    expect(stack.getScore()).toEqual(75)
   })
-
-  it('test stackBottomCard', () => {
-    expect(testStack.stackBottomCard()).toEqual(testCard)
+  test('calculate correct score with repeats', () => {
+    stack.cards.push(group)
+    stack.cards.push(repeat)
+    expect(stack.getScore()).toEqual(450)
+    stack.cards.push(repeat)
+    expect(stack.getScore()).toEqual(1350)
   })
-  it('test maxRepeats', () => {
-    testStack.calculateStackScore()
-    expect(testStack.maxRepeats()).toEqual(false)
-    testStack.addCardToStack(testRep)
-    testStack.addCardToStack(testRep2)
-    testStack.addCardToStack(testRep3)
-    expect(testStack.maxRepeats()).toEqual(true)
+  test('maximum number of repeats (2)', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(repeat)
+    expect(stack.hasMaxRepeats()).toBeFalsy()
+    stack.cards.push(repeat)
+    expect(stack.hasMaxRepeats()).toBeTruthy()
+    stack.cards.push(repeat)
+    expect(stack.hasMaxRepeats()).toBeTruthy()
+  })
+  test('stack is hackable true', () => {
+    stack.cards.push(instruction)
+    expect(stack.isHackable()).toBeTruthy()
+  })
+  test('stack is hackable false', () => {
+    expect(stack.isHackable()).toBeFalsy()
+    stack.cards.push(group)
+    expect(stack.isHackable()).toBeFalsy()
   })
 })
