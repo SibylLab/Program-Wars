@@ -40,9 +40,9 @@ const firewall = 1
 const generator = 1
 
 const cardDeck = [
-  {type: 'I', cardValue: 1, imgSrc: 'static/cardImg/Instruction1.png', howMany: instruction1},
-  {type: 'I', cardValue: 2, imgSrc: 'static/cardImg/Instruction2.png', howMany: instruction2},
-  {type: 'I', cardValue: 3, imgSrc: 'static/cardImg/Instruction3.png', howMany: instruction3},
+  {type: 'I', cardValue: 25, imgSrc: 'static/cardImg/Instruction1.png', howMany: instruction1},
+  {type: 'I', cardValue: 50, imgSrc: 'static/cardImg/Instruction2.png', howMany: instruction2},
+  {type: 'I', cardValue: 75, imgSrc: 'static/cardImg/Instruction3.png', howMany: instruction3},
 
   {type: 'R', cardValue: 2, imgSrc: 'static/cardImg/Repetition2.png', howMany: repetition2},
   {type: 'R', cardValue: 3, imgSrc: 'static/cardImg/Repetition3.png', howMany: repetition3},

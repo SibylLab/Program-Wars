@@ -111,7 +111,7 @@
         storedPlayers: [],
         newPlayer: '',
         gameStart: false,
-        selected: '75',
+        selected: '1000',
         noPlayers: true,
         inputDisable: false,
         maxPlayer: false,
