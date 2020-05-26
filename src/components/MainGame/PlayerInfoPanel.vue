@@ -43,12 +43,11 @@
             <h5 style="vertical-align: center; margin-left: auto; margin-right: auto" :style="pIPTextColour()">Score Limit: <b>{{getScoreLimit()}}</b></h5>
             <h4 class="modal-title" :style="pIPTextColour()"><b>{{ currentPlayerName() }}</b>, It's Your Turn</h4>
               <li v-for="(card) in hand" v-bind:key="card.id" style="margin-top: 5px; position: relative;">
-                  <input type="image" title="Discard Card"
-                     src="static/miscIcons/trash.png"
-                     v-if="isActiveCard(card)"
-                     v-on:click="discardSelected"
-                     style="width: 25px; height: 25px; left: -8px; top: -8px; position: absolute">
-                  <card :cardData="card" v-on:cardClicked="cardClicked" @setActiveCard="setActiveCard"></card>
+                <card-with-overlays :card="card"
+                    v-on:cardClicked="cardClicked"
+                    v-on:setActiveCard="setActiveCard"
+                    v-on:discard-card="discardSelected">
+                </card-with-overlays>
               </li>
           </ul>
         </div>
@@ -72,7 +71,7 @@
   /* eslint-disable no-undef */
 
 import { bus } from '../SharedComponents/Bus'
-import Card from '../SharedComponents/Card'
+import CardWithOverlays from '../SharedComponents/CardWithOverlays'
 import Modal from '../Modals/Modal'
 import DisplayUsedCards from '../SharedComponents/DisplayUsedCards'
 
@@ -125,7 +124,7 @@ export default {
 
     },
     components: {
-      'card': Card,
+      'card-with-overlays': CardWithOverlays,
       'display-used-cards': DisplayUsedCards,
       'modal': Modal
     },
