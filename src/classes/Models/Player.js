@@ -9,28 +9,30 @@ export default class Player {
    * @constructor Player
    * @param {int} id The ID of the Player
    * @param {string} name The name of the Player
+   * @param {bool} isAi if the player is a computer player
    */
-  constructor (id, name) {
+  constructor (id, name, isAi) {
     this.id = id
     this.name = name
-    this.positiveEffects = []
-    this.negativeEffects = []
+    this.positiveEffects = new Set()
+    this.negativeEffects = new Set()
     this.cardsPlayed = []
+    this.isAi = isAi
   }
 
   /**
    * Checks to see if the player has a positive effect.
    * @param {string} effect The effect to check for.
    */
-  hasPositive (effect) {
-    return this.positiveEffects.find(e => e === effect) !== undefined
+  helpedBy (effect) {
+    return this.positiveEffects.has(effect)
   }
 
   /**
    * Check to see if a player has a negative effect.
    * @param {string} effect The effect to check for.
    */
-  hasNegative (effect) {
-    return this.negativeEffects.find(e => e === effect) !== undefined
+  hurtBy (effect) {
+    return this.negativeEffects.has(effect)
   }
 }
