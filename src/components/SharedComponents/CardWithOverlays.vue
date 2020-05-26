@@ -9,7 +9,7 @@
 
       <div id="targets" class="popup" v-if="isAttack">
         <h5>{{ targetsText }}</h5>
-        <div id="button-wrapper"> 
+        <div id="button-wrapper">
           <button id="target-button" v-for="player in attackablePlayers"
               v-bind:key="player.id" v-on:click="playCard(player)">
             {{ player.name }}
@@ -20,7 +20,7 @@
       <div id="play" class="popup" v-if="isSafety">
         <div v-if="canPlaySafety">
           <h5>Activate</h5> <!-- change this to dynamically set text like targets -->
-          <div id="button-wrapper"> 
+          <div id="button-wrapper">
             <button id="safety-button" v-on:click="playSafety">
               OK
             </button>
@@ -30,14 +30,13 @@
           <h5>In Use</h5>
         </div>
       </div>
-
     </div>
 
     <card v-bind:cardData="card"
        v-on:cardClicked="cardClicked"
        v-on:setActiveCard="setActiveCard">
     </card>
-  </div> 
+  </div>
 </template>
 
 
@@ -138,7 +137,7 @@ export default {
   left: -8px;
   top: -8px;
   width: 25px;
-  height: 25px; 
+  height: 25px;
 }
 
 .popup {

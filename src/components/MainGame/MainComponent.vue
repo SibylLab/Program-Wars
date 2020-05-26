@@ -9,7 +9,7 @@
 
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
-    
+
     <transition name="fade">
       <hack-discard v-if="showMsg"></hack-discard>
     </transition>
