@@ -39,12 +39,26 @@
 
 <script>
 import PageHeader from '@/components/shared/PageHeader'
+import {mapState, mapActions} from 'vuex'
 
 export default {
   name: 'game-page',
   components: {
     'page-header': PageHeader
   },
+  computed: {
+    ...mapState(['gameState'])
+  },
+  methods: {
+    ...mapActions(['leaveGame'])
+  },
+  created () {
+    // If gameState is not game when we create this element (page refresh)
+    // Then we want to leave the game and return to home page.
+    if (this.gameState !== 'game') {
+      this.leaveGame()
+    }
+  }
 }
 </script>
 
