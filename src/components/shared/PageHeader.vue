@@ -27,7 +27,7 @@
 
 <script>
 import SideMenu from '@/components/shared/SideMenu'
-import {mapState, mapMutations} from 'vuex'
+import {mapState, mapMutations, mapGetters} from 'vuex'
 
 export default {
   name: 'landing-page',
@@ -40,11 +40,10 @@ export default {
   computed: {
     ...mapState([
       'scoreLimit',
-      'gameState',
     ]),
-    isGame () {
-      return this.gameState === 'game'
-    }
+    ...mapGetters([
+      'isGame',
+    ]),
   },
   methods: {
     ...mapMutations([

@@ -22,7 +22,6 @@
   <div id="page">
   <page-header></page-header>
   <h1>Game Page</h1>
-  <button v-on:click="home">Home Page</button>
   </div>
 
 </template>
@@ -30,21 +29,12 @@
 
 <script>
 import PageHeader from '@/components/shared/PageHeader'
-import {mapActions} from 'vuex'
 
 export default {
   name: 'game-page',
   components: {
     'page-header': PageHeader
   },
-  methods: {
-    ...mapActions([
-      'leaveGame'
-    ]),
-    home () {
-      this.leaveGame()
-    }
-  }
 }
 </script>
 

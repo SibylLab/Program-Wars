@@ -17,13 +17,13 @@
   <input type='image'  src='static/miscIcons/burgerIcon.png'
       v-on:click="openMenu" style="width: 36px; height: 36px;">
   <div id="mySidenav" class="sidenav">
-      <!-- v-if can decide which elements are visible when in game vs home -->
-      <a href="javascript:void(0)" class="closebtn" @click="closeMenu">&times;</a>
-      <a href="#" data-toggle="modal" data-target=".backstory">Backstory</a>
-      <a href="#" data-toggle="modal" data-target=".rules">Rules</a>
-      <a href="#" data-toggle="modal" data-target=".credits">Credits</a>
-      <a href="https://gitreports.com/issue/johnanvik/program-wars"
-          target="_blank">Report Issue</a>
+    <a href="javascript:void(0)" class="closebtn" v-on:click="closeMenu">&times;</a>
+    <a href="javascript:void(0)" v-if="isGame" v-on:click="leaveGame">New Game</a>
+    <a href="#" data-toggle="modal" data-target=".backstory">Backstory</a>
+    <a href="#" data-toggle="modal" data-target=".rules">Rules</a>
+    <a href="#" data-toggle="modal" data-target=".credits">Credits</a>
+    <a href="https://gitreports.com/issue/johnanvik/program-wars"
+        target="_blank">Report Issue</a>
   </div>
 
 </div>
@@ -33,6 +33,7 @@
 import BackstoryModal from '@/components/modals/BackstoryModal'
 import RulesModal from '@/components/modals/RulesModal'
 import CreditsModal from '@/components/modals/CreditsModal'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'side-menu',
@@ -46,7 +47,15 @@ export default {
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal
   },
+  computed: {
+    ...mapGetters([
+      'isGame'
+    ]),
+  },
   methods: {
+    ...mapActions([
+      'leaveGame'
+    ]),
     openMenu () {
       this.showMenu = true
       $('.sidenav').width('250px')

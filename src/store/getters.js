@@ -59,6 +59,13 @@ export default {
    */
   getCurrentPlayerObjectives (state) {
     return state.objectives[state.activePlayerId]
+  },
+
+  /**
+   * Tell if the program is in game state.
+   */
+  isGame (state) {
+    return state.gameState === 'game'
   }
 }
 
