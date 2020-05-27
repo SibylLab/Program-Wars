@@ -12,12 +12,14 @@
     Can also use a settings component for the setup. That component may be
       able to hold all of the stuff it need or be broken up into smaller components.
   -->
-  <div id="page">
+<div>
   <page-header></page-header>
-  <h1>Landing Page</h1>
-  <button v-on:click="game">Game Page</button>
+
+  <div id="page">
+    <button v-on:click="game">Game Page</button>
   </div>
 
+</div>
 </template>
 
 
@@ -43,8 +45,10 @@ export default {
 
 <style scoped>
 #page {
+  position: absolute;
+  top: 40px;
   width: 100%;
   height: 100%;
-  background-color: grey;
+  background-image: url('/static/backgroundImg/helloWorld.png');
 }
 </style>

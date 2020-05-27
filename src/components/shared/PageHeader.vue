@@ -1,26 +1,24 @@
 <template>
-<div>
-  <div id="header">
+<div id="header">
 
-    <h4 id="title" class="head-text">Program Wars</h4>
+  <h4 id="title" class="head-text">Program Wars</h4>
 
-    <h4 id="limit" class="head-text" v-if="isGame">
-      Score Limit: {{ scoreLimit }}
-    </h4>
+  <h4 id="limit" class="head-text" v-if="isGame">
+    Score Limit: {{ scoreLimit }}
+  </h4>
 
-    <label id="tips-check" v-if="isGame">
-      <input type="checkbox" value="true" v-on:click="toggleTips" checked>Game Tips
-    </label>
+  <label id="tips-check" v-if="isGame">
+    <input type="checkbox" value="true" v-on:click="toggleTips" checked>Game Tips
+  </label>
 
-    <!-- connects to an easytimer instance through id and class
-         actual timer is maintained in store -->
-    <div id="basicUsage" v-if="isGame" class="p-3 mb-2 bg-primary text-white">
-      00:00:00
-    </div>
-
-    <side-menu id="menu"></side-menu>
-
+  <!-- connects to an easytimer instance through id and class
+       actual timer is maintained in store -->
+  <div id="basicUsage" v-if="isGame" class="p-3 mb-2 bg-primary text-white">
+    00:00:00
   </div>
+
+  <side-menu id="menu"></side-menu>
+
 </div>
 </template>
 
@@ -56,10 +54,11 @@ export default {
 
 <style scoped>
 #header {
+  position: absolute;
+  top: 0px;
   width: 100%;
   height: 40px;
   background-color: white;
-  position: relative;
 }
 
 #title {
@@ -76,13 +75,14 @@ export default {
 
 .head-text {
   margin-top: 0;
-  margin-botrom: 0;
+  margin-bottom: 0;
 }
 
 #tips-check {
   position: absolute;
   top: 10px;
   right: 140px;
+  margin-bottom: 0;
 }
 
 #basicUsage {

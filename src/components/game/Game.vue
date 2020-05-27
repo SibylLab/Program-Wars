@@ -19,11 +19,21 @@
     players objectives to be listed. The objectives should be adjusted to keep
     track of more than just these if statements
   -->
+<div>
   <div id="page">
-  <page-header></page-header>
-  <h1>Game Page</h1>
-  </div>
 
+    <page-header></page-header>
+
+    <div id="play">
+     <p> This is the play area </p>
+    </div>
+
+    <div id="stacks">
+     <p> This is the stacks area </p>
+    </div>
+    
+  </div>
+</div>
 </template>
 
 
@@ -42,6 +52,22 @@ export default {
 #page {
   width: 100%;
   height: 100%;
+  background-color: grey;
+}
+
+#play {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  height: 45%;
+  background-color: #e8e8e8;
+}
+
+#stacks {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 50%;
   background-color: grey;
 }
 </style>
