@@ -25,7 +25,13 @@
     <page-header></page-header>
 
     <div id="play">
-     <p> This is the play area </p>
+     <div id="left-player">
+       <player-info :player="getPlayer(0)" side="left"></player-info>
+     </div>
+
+     <div id="right-player">
+       <player-info :player="getPlayer(1)" side="right"></player-info>
+     </div>
     </div>
 
     <div id="stacks">
@@ -39,18 +45,28 @@
 
 <script>
 import PageHeader from '@/components/shared/PageHeader'
+import PlayerInfo from '@/components/game/PlayerInfo'
 import {mapState, mapActions} from 'vuex'
 
 export default {
   name: 'game-page',
   components: {
-    'page-header': PageHeader
+    'page-header': PageHeader,
+    'player-info': PlayerInfo
   },
   computed: {
-    ...mapState(['gameState'])
+    ...mapState([
+      'gameState',
+      'players'
+    ])
   },
   methods: {
-    ...mapActions(['leaveGame'])
+    ...mapActions([
+      'leaveGame'
+    ]),
+    getPlayer (id) {
+      return this.players[id]
+    }
   },
   created () {
     // If gameState is not game when we create this element (page refresh)
@@ -75,6 +91,20 @@ export default {
   width: 100%;
   height: 45%;
   background-color: #e8e8e8;
+}
+
+#left-player {
+  position: absolute;
+  left: 0px;
+  width: 25%;
+  height: 100%;
+}
+
+#right-player {
+  position: absolute;
+  right: 0px;
+  width: 25%;
+  height: 100%;
 }
 
 #stacks {

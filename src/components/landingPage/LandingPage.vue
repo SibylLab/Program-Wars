@@ -37,7 +37,7 @@ export default {
       'newGame'
     ]),
     game () {
-      this.newGame({players: [{name: 'steven', ai: false}, {name: 'noob_bot', ai: true}]})
+      this.newGame({players: [{name: 'Steven', ai: false}, {name: 'n00b_bot mk1.', ai: true}]})
     }
   }
 }
