@@ -7,6 +7,8 @@ import Deck from '@/classes/Models/Deck'
 export default {
   /**
    * Resets all game related items in the state for a fresh game.
+   * Creates an empty Deck so createDeck Will need to be called with
+   * the number of players in the game.
    * Sets gameState to 'game'.
    * Should not affect non-game related settings.
    */
@@ -14,7 +16,7 @@ export default {
     state.players = []
     state.stacks = []
     state.hands = []
-    state.aiHanlders = []
+    state.aiHandlers = []
     state.objectives = []
     state.deck = new Deck()
     state.gameState = 'game'
@@ -30,6 +32,13 @@ export default {
    */
   changeGameState (state, payload) {
     state.gameState = payload.newState
+  },
+
+  /**
+   * Create a new deck for a game with a certain number of players.
+   */
+  createNewDeck (state, payload) {
+    state.deck = new Deck(payload.numPlayers)
   },
 
   /**
@@ -69,5 +78,40 @@ export default {
       let player = new Player(i, playerInfo[i].name, playerInfo[i].ai)
       state.players.push(player)
     }
+  },
+
+  /**
+   * Give a player a new hand.
+   * Can be used when they have no hand or to redraw a full hand.
+   */
+  giveNewHand (state, payload) {
+    let player = payload.player
+
+    let oldHand = state.hands.find(h => h.playerId === player.id)
+    if (oldHand !== undefined) {
+      for (let card of oldHand.cards) {
+        state.deck.discard.push(card)
+      }
+    }
+
+    let hand = {playerId: player.id, cards: []}
+    while (hand.cards.length < 5) {
+      let card = state.deck.draw()
+      hand.cards.push(card)
+    }
+    state.hands.push(hand) 
+  },
+
+
+  // Setup a mock game adding a few componets to players, hands, stacks, etc.
+  // This is only for testing purposes while rebuilding the UI and should
+  // be removed afterward.
+  setupMockGame (state) {
+    state.players[0].positiveEffects.add("GENERATOR")
+    state.players[0].positiveEffects.add("BATTERYBACKUP")
+    state.players[0].positiveEffects.add("OVERCLOCK")
+    state.players[0].negativeEffects.add("POWEROUTAGE")
+    state.players[0].negativeEffects.add("VIRUS")
+    console.log("Mock Game")
   }
 }

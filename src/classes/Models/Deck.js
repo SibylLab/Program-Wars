@@ -128,6 +128,9 @@ export default class Deck {
    * @returns {Card} the top card.
    */
   draw () {
+    if (this.cards.length === 0) {
+      this.refresh()
+    }
     let card = this.cards[0]  // [0] is the top of the deck
     this.cards.shift()
     return card
@@ -141,5 +144,13 @@ export default class Deck {
       let j = Math.floor(Math.random() * i);
       [cards[i - 1], cards[j]] = [cards[j], cards[i - 1]]
     }
+  }
+
+  /**
+   * Refreshes the deck by adding back the discard pile and shuffling.
+   */
+  refresh () {
+    // add discard back to cards
+    // cards = shuffle (cards)
   }
 }

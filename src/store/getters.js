@@ -7,14 +7,17 @@ export default {
    * Returns the Hand object for the current player.
    */
   getCurrentPlayerHand (state) {
-    return state.hands[state.activePlayerId]
+    // Some getters use find so we don't have to worry
+    // about maintaining positioning. The size of these arrays is so
+    // small it should not make much difference.
+    return state.hands.find(h => h.playerId === state.activePlayerId)
   },
 
   /**
    * Returns the current players object.
    */
   getCurrentPlayer (state) {
-    return state.players[state.activePlayerId]
+    return state.players.find(p => p.id === state.activePlayerId)
   },
 
   /**
@@ -58,7 +61,7 @@ export default {
    * Get current players objectives.
    */
   getCurrentPlayerObjectives (state) {
-    return state.objectives[state.activePlayerId]
+    return state.objectives.find(ob => ob.playerId === state.activePlayerId)
   },
 
   /**

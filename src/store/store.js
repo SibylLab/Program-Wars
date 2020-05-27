@@ -6,7 +6,6 @@ Vue.use(Vuex)
 import actions from './actions'
 import mutations from './mutations'
 import getters from './getters'
-import Deck from '@/classes/Models/Deck'
 
 
 /**
@@ -19,7 +18,7 @@ export const store = new Vuex.Store({
     hands: [],
     aiHanlders: [],
     objectives: [],
-    deck: new Deck(),
+    deck: undefined,
     gameState: 'home',
     activePlayerId: 0,
     activeCard: undefined,

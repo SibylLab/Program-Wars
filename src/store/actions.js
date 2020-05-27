@@ -13,6 +13,13 @@ export default {
     context.commit('resetStateForGame')
     context.commit('newTimer')
     context.commit('addPlayers', payload)
+    context.commit('createNewDeck', {numPlayers: context.state.players.length})
+
+    for (let p of context.state.players) {
+      context.commit('giveNewHand', {player: p})
+    }
+
+    context.commit('setupMockGame')
     router.push('game')
   },
 
