@@ -6,14 +6,10 @@
     <hack-modal id="hackModal" class="modal fade hack" tabindex="-1" role="dialog" aria-labelledby=""
                 aria-hidden="true" :players="players" data-backdrop="static" data-keyboard="false"
     ></hack-modal>
-    <virus-modal id="virusModal" class="modal fade virus" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
-                 data-backdrop="static" data-keyboard="false"></virus-modal>
-    <power-outage-modal id="powerOutageModal" class="modal fade powerOutage" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" :players="players"
-                 data-backdrop="static" data-keyboard="false"></power-outage-modal>
 
     <winner-modal id="winnerModal" class="modal fade winner" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-keyboard="false"
     :playerList="playerList"></winner-modal>
-    
+
     <transition name="fade">
       <hack-discard v-if="showMsg"></hack-discard>
     </transition>
@@ -70,8 +66,6 @@ import CreditsModal from '../Modals/CreditsModal.vue'
 import HackModal from '../Modals/CardModals/HackModal.vue'
 import WinnerModal from '../Modals/WinnerModal.vue'
 import HackDiscard from '../Modals/CardModals/HackDiscardMsg.vue'
-import VirusModal from '../Modals/CardModals/VirusModal.vue'
-import PowerOutageModal from '../Modals/CardModals/PowerOutageModal'
 import Timer from '../SharedComponents/Timer'
 
 import Themes from '../Modals/ThemesModal'
@@ -114,8 +108,6 @@ export default {
       'cond-list': Conditionals,
       'winner-modal': WinnerModal,
       'hack-discard': HackDiscard,
-      'virus-modal': VirusModal,
-      'power-outage-modal': PowerOutageModal,
       'timer': Timer,
       'themes-modal': Themes
 

@@ -7,10 +7,20 @@
          src="static/miscIcons/trash.png"
          v-on:click="discardCard">
 
+      <div id="targets" class="popup" v-if="isAttack">
+        <h5>{{ targetsText }}</h5>
+        <div id="button-wrapper">
+          <button id="target-button" v-for="player in attackablePlayers"
+              v-bind:key="player.id" v-on:click="playCard(player)">
+            {{ player.name }}
+          </button>
+        </div>
+      </div>
+
       <div id="play" class="popup" v-if="isSafety">
         <div v-if="canPlaySafety">
           <h5>Activate</h5>
-          <div id="button-wrapper"> 
+          <div id="button-wrapper">
             <button id="safety-button" v-on:click="playSafety">
               OK
             </button>
@@ -26,7 +36,7 @@
        v-on:cardClicked="cardClicked"
        v-on:setActiveCard="setActiveCard">
     </card>
-  </div> 
+  </div>
 </template>
 
 
@@ -41,7 +51,8 @@ export default {
   props: ['card'],
   data () {
     return {
-      type: this.card.type
+      type: this.card.type,
+      targetsText: "Targets"
     }
   },
   components: {
@@ -52,7 +63,37 @@ export default {
       return this.card === this.getActiveCard()
     },
     isAttack () {
-      return this.type === 'H' || this.type === 'VIRUS' || this.type === 'POWEROUTAGE'
+      return this.type === 'VIRUS' || this.type === 'POWEROUTAGE'
+    },
+    /**
+     * Returns a list of players that are not protected by the attack type
+     * of this card. If no players are available it will change the title
+     * of the target popup to "No Targets".
+     */
+    attackablePlayers () {
+      let players = []
+      for (let player of this.getPlayers()) {
+        // Make sure target can be attacked
+        if (player === this.getCurrentPlayer()
+            || player.underAttackBy(this.type)
+            || player.protectedFrom(this.type)) {
+          continue
+        }
+
+        // Make sure if this is a hack that the target has one hackable stack
+        if (this.type === 'H') {
+          let playerStacks = this.getStacks().filter(
+            s => s.playerId === player.id && s.isHackable())
+
+          if (playerStacks.length === 0) {
+            continue
+          }
+        }
+        players.push(player)
+      }
+
+      this.targetsText = players.length > 0 ? "Targets" : "No Targets"
+      return players
     },
     isSafety () {
       return (this.type === 'OVERCLOCK' || this.type === 'BATTERYBACKUP'
@@ -66,7 +107,9 @@ export default {
   methods: {
     ...mapGetters([
       'getActiveCard',
-      'getCurrentPlayer'
+      'getCurrentPlayer',
+      'getPlayers',
+      'getStacks'
     ]),
     cardClicked (c) {
       this.$emit('cardClicked', c)
@@ -94,7 +137,7 @@ export default {
   left: -8px;
   top: -8px;
   width: 25px;
-  height: 25px; 
+  height: 25px;
 }
 
 .popup {
