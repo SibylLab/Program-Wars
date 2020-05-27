@@ -24,11 +24,11 @@ export default {
   methods: {
     ...mapActions([
       'newGame',
-      'leaveGame'
+      'resetForHome'
     ]),
   },
   created () {
-    this.leaveGame()  // to ensure a stable reset from wherever we come from
+    this.resetForHome()  // to ensure a stable reset from wherever we come from
   }
 }
 </script>

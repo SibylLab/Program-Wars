@@ -22,8 +22,12 @@ export default {
    * Will reset any state information for starting a new game.
    */
   leaveGame (context) {
+    context.dispatch('resetForHome')
+    router.push('home')
+  },
+
+  resetForHome (context) {
     context.commit('changeGameState', {newState: 'home'})
     context.commit('stopTimer')
-    router.push('home')
   }
 }
