@@ -24,19 +24,15 @@
        should say what the effect is doing to you. -->
   <div id="good-effects" :class="side" style="position: absolute; top: 65%;">
     <ul>
-      <img class="effect" src="static/cardImg/effects/anti_virus_bonus.png">
-      <img class="effect" src="static/cardImg/effects/generator_bonus.png">
-      <img class="effect" src="static/cardImg/effects/battery_bonus.png">
-      <img class="effect" src="static/cardImg/effects/clock_bonus.png">
-      <img class="effect" src="static/cardImg/effects/firewall_bonus.png">
+      <img v-for="effect in playerPositives" v-bind:key="effect"  
+          class="effect-icon" :src="effectImagePath(effect)">
     </ul>
   </div>
 
   <div id="bad-effects" :class="side" style="position: absolute; top: 80%;">
     <ul>
-      <img class="effect" src="static/cardImg/effects/virus_attack.png">
-      <img class="effect" src="static/cardImg/effects/power_attack.png">
-      <img class="effect" src="static/cardImg/effects/hack_attack.png">
+      <img v-for="effect in playerNegatives" v-bind:key="effect"  
+          class="effect-icon" :src="effectImagePath(effect)">
     </ul>
   </div>
 </div>
@@ -67,9 +63,18 @@ export default {
     playerImagePath () {
       // later change to imageId to get the specific image they want 
       return "/static/playerImages/robo_" + this.player.id + ".jpg"
+    },
+    playerPositives () {
+      return this.player.positiveEffects.values()
+    },
+    playerNegatives () {
+      return this.player.negativeEffects.values()
     }
   },
   methods: {
+    effectImagePath (effect) {
+      return "/static/cardImages/effects/" + effect + ".png"
+    },
   },
 }
 </script>
@@ -119,7 +124,7 @@ ul {
   padding: 0;
 }
 
-.effect {
+.effect-icon {
   width: 30px;
   height: 30px;
   margin: 5px 5px; 
