@@ -9,13 +9,15 @@
 
 export default {
   name: 'card-area',
-  props: ['player'],  // how to set player each turn? with prop or data?
+  props: ['player'],
   components: {
   },
   computed: {
   },
   methods: {
-  },
+  }
+  // Add created and bus.on to check when players change if needed to refresh
+  // the hand being shown
 }
 </script>
 
