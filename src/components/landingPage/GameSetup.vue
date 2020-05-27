@@ -23,7 +23,7 @@
     <input id="enter-name" type="text" :placeholder="inputPlaceholder" maxlength="10"
         v-on:keyup.enter="addPlayer" :disabled="maxPlayersReached" autofocus>
     <button type="button" class="btn btn-primary" v-on:click="addPlayer"
-        :disabled="maxPlayersReached">
+        :disabled="maxPlayersReached" style="margin-left: 20px;">
       Add Player
     </button>
     <p v-if="sameName"><u style="color: red;">Someone is using that name already</u></p>
@@ -120,9 +120,9 @@ export default {
       this.sameName = false
     },
     /**
-     * Add a new human player to the game. The player is added to the list
-     * differently based on the game type so the human player is always first,
-     * but in hotseat we add second player last.
+     * Add a new human player to the game.
+     * Performs some small input validation for names and ensures the player
+     * order always has a human player first.
      */
     addPlayer () {
       let textInput = document.getElementById('enter-name')
@@ -194,6 +194,10 @@ h3 {
 ul {
   list-style: none;
   padding: 0 0 0 0;
+}
+
+input:focus {
+  outline-width: 0;
 }
 </style>
 

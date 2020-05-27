@@ -26,9 +26,6 @@ export default {
       'newGame',
       'leaveGame'
     ]),
-    game () {
-      this.newGame({players: [{name: 'Steven', ai: false}, {name: 'n00b_bot mk1.', ai: true}]})
-    }
   },
   created () {
     this.leaveGame()  // to ensure a stable reset from wherever we come from
