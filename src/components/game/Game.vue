@@ -1,37 +1,21 @@
 <template>
-  <!--
-  This will be split up into components as show in the picture.
-  The top will have the title bar component with menu and other stuff.
-    It may need to be a subclass of the other component or the other component
-    will have to be able to support adding a few things that may not be
-    visible if we are choosing a new game.
-
-  Then we will have a container for 3 areas
-  There will be a card area in the middle that will be for showing the current
-    player their hand and any relevant information or buttons.
-  Then on either side of this component there will be player info areas.
-    These areas will contain info about each player and show changes to their
-    status as the game progresses.
-  
-  Below this we will have a container for the players stacks/objectives.
-  There will be 2 in here for a normal game. One for each player.
-  Each component will have a tab for the players stacks and a tab for the
-    players objectives to be listed. The objectives should be adjusted to keep
-    track of more than just these if statements
-  -->
 <div>
   <div id="page">
 
     <page-header></page-header>
 
     <div id="play">
-     <div id="left-player">
-       <player-info :player="getPlayer(0)" side="left"></player-info>
-     </div>
+      <div id="left-player">
+        <player-info :player="getPlayer(0)" side="left"></player-info>
+      </div>
 
-     <div id="right-player">
-       <player-info :player="getPlayer(1)" side="right"></player-info>
-     </div>
+      <div id="cards">
+        <card-area></card-area>
+      </div>
+
+      <div id="right-player">
+        <player-info :player="getPlayer(1)" side="right"></player-info>
+      </div>
     </div>
 
     <div id="stacks">
@@ -46,12 +30,14 @@
 <script>
 import PageHeader from '@/components/shared/PageHeader'
 import PlayerInfo from '@/components/game/PlayerInfo'
+import CardArea from '@/components/game/CardArea'
 import {mapState, mapActions} from 'vuex'
 
 export default {
   name: 'game-page',
   components: {
     'page-header': PageHeader,
+    'card-area': CardArea,
     'player-info': PlayerInfo
   },
   computed: {
@@ -90,13 +76,19 @@ export default {
   top: 40px;
   width: 100%;
   height: 45%;
-  background-color: #e8e8e8;
 }
 
 #left-player {
   position: absolute;
   left: 0px;
   width: 25%;
+  height: 100%;
+}
+
+#cards {
+  position: absolute;
+  left: 25%;
+  width: 50%;
   height: 100%;
 }
 

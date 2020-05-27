@@ -1,8 +1,6 @@
 <template>
-  <!--
-  -->
 <div id="info">
-  <h3 id="name">{{ player.name }}</h3>
+  <h3 id="name">{{ playerName }}</h3>
 </div>
 </template>
 
@@ -15,6 +13,12 @@ export default {
   components: {
   },
   computed: {
+    /**
+     * Gives players name if the player has been set properly.
+     */
+    playerName () {
+      return this.player !== undefined ? this.player.name : "Undefined"
+    }
   },
   methods: {
   },
