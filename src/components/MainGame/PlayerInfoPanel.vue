@@ -20,7 +20,7 @@
         <div v-for="player in players" v-bind:key="player.name" style="text-align: left; display: inline">
           <div style="float: left; margin-right: 10px;"><h4><b><a @click="openModal" style="cursor: pointer; color: rgba(10,1,1,0.79); font-size: 17px; -webkit-align-items: center " :style="pIPTextColour()">{{ player.name }}:</a></b></h4> </div>   
           <div>       
-           <p  style="padding-left: 23px; margin: 0 0 1em; font-size: medium; padding-right: 67px;} "> {{getScore(player.id).trueScore}}</p></div>
+           <p style="padding-left: 23px; margin: 0 0 1em; font-size: medium; padding-right: 67px"> {{getScore(player.id).trueScore}}</p></div>
             <div class="row" style="width: 300px; height: auto; -webkit-align-items: center; margin-right: 0px; margin-left: 25px" :style="pIPTextColour()" >
         
             <div class="row" style=" margin-right:0px; margin-left: 0px"> </div>

@@ -8,7 +8,7 @@
              v-if="getTips().tutorial"
              v-bind:title="infoTooltip"
              v-on:click="showInfoModal">
-        <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() {</h3>
+        <h3 style="text-align: left; margin-left: 40px" :style="playfieldTextColour()">playerStacks() </h3>
       </div>
     </div>
     <div class="row">
