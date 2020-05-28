@@ -9,8 +9,8 @@
         <player-info :player="getPlayer(0)" side="left"></player-info>
       </div>
 
-      <div id="cards">
-        <card-area></card-area>
+      <div id="turn">
+        <turn-area></turn-area>
       </div>
 
       <div id="right-player">
@@ -30,14 +30,14 @@
 <script>
 import PageHeader from '@/components/shared/PageHeader'
 import PlayerInfo from '@/components/game/PlayerInfo'
-import CardArea from '@/components/game/CardArea'
+import TurnArea from '@/components/game/TurnArea'
 import {mapState, mapActions} from 'vuex'
 
 export default {
   name: 'game-page',
   components: {
     'page-header': PageHeader,
-    'card-area': CardArea,
+    'turn-area': TurnArea,
     'player-info': PlayerInfo
   },
   computed: {
@@ -84,7 +84,7 @@ export default {
   height: 100%;
 }
 
-#cards {
+#turn {
   position: absolute;
   left: 25%;
   width: 50%;

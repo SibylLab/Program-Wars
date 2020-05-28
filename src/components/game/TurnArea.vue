@@ -1,5 +1,5 @@
 <template>
-<div id="turn">
+<div id="turn-area">
   <button class="btn btn-sm btn-info col-6" v-on:click="redrawHand"
       style="border-radius: 40px; margin-top: 5px;"
       title="Discard your hand and draw 5 new cards">
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style scoped>
-#turn {
+#turn-area {
   position: relative;
   left: 0px;
   width: 100%;
