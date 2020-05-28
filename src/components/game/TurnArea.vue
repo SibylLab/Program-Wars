@@ -9,8 +9,7 @@
   <div id="cards">
     <ul>
       <li v-for="card in currentHand" v-bind:key="card.id">
-        <img v-if="isAiTurn" :src="card.image" class="turn-card">
-        <img v-else src="static/cardImages/backOfCard.png" class="turn-card">
+        <turn-area-card :card="card"></turn-area-card>
       </li>
     </ul>
   </div>
@@ -23,13 +22,15 @@
 
 
 <script>
+import TurnAreaCard from '@/components/game/TurnAreaCard'
 import MessageBox from '@/components/game/MessageBox'
 import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   name: 'card-area',
   components: {
-    'message-box': MessageBox
+    'message-box': MessageBox,
+    'turn-area-card': TurnAreaCard
   },
   computed: {
     isAiTurn () {
@@ -37,7 +38,6 @@ export default {
     },
     currentHand () {
       let hand = this.getCurrentPlayerHand().cards
-      console.log(hand)
       return hand
     }
   },
@@ -83,12 +83,6 @@ export default {
   border: solid black 5px;
 }
 
-.turn-card {
-  max-width: 90px;
-  max-height: 134px;
-  margin: 5px;
-}
-
 ul {
   list-style: none;
   margin: 0;
@@ -96,7 +90,9 @@ ul {
 }
 
 li {
+  position: relative;
   display: inline-block;
+  margin: 5px;
 }
 </style>
 
