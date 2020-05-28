@@ -129,17 +129,25 @@ export default {
     state.deck.discard.push(state.activeCard)
   },
 
+  /**
+   * Adds a given beneficial effect to the given player.
+   */
+  addPositiveEffect (state, payload) {
+    payload.player.positiveEffects.add(payload.effect)
+  },
+
+  /**
+   * Adds a given negative effect to the given player.
+   */
+  addNegativeEffect (state, payload) {
+    payload.player.negativeEffects.add(payload.effect)
+  },
+
   // Setup a mock game adding a few componets to players, hands, stacks, etc.
   // This is only for testing purposes while rebuilding the UI and should
   // be removed afterward.
   setupMockGame (state) {
-    state.players[0].positiveEffects.add("GENERATOR")
-    state.players[0].positiveEffects.add("BATTERYBACKUP")
-    state.players[0].positiveEffects.add("OVERCLOCK")
-    state.players[0].negativeEffects.add("POWEROUTAGE")
-    state.players[0].negativeEffects.add("VIRUS")
-    state.players[1].positiveEffects.add("ANTIVIRUS")
-    state.players[1].negativeEffects.add("POWEROUTAGE")
+    state
     console.log("Mock Game")
   }
 }

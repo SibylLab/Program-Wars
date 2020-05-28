@@ -12,8 +12,9 @@
     <div id="targets" class="popup" v-if="isAttack">
       <h5>{{ targetText }}</h5>
       <div id="button-wrapper"> 
-        <button id="target-button" v-for="player in attackablePlayers()"
-            v-bind:key="player.id" v-on:click="playAttack(player)">
+        <button id="target-button" class="btn btn-sm btn-primary"
+            v-for="player in attackablePlayers()" v-bind:key="player.id"
+            v-on:click="playAttack(player)">
           {{ player.name }}
         </button>
       </div>
@@ -22,7 +23,8 @@
     <div id="play" class="popup" v-if="isSafety">
       <h5>{{ safetyText }}</h5>
       <div id="button-wrapper"> 
-        <button v-if="canPlaySafety" id="safety-button" v-on:click="playSafety">
+        <button id="safety-button" class="btn btn-sm btn-primary"
+            v-if="canPlaySafety"  v-on:click="playSafety">
           OK
         </button>
       </div>
@@ -35,6 +37,7 @@
 
 
 <script>
+import {bus} from '@/components/shared/Bus'
 import {mapGetters, mapMutations, mapState} from 'vuex'
 
 export default {
@@ -84,7 +87,9 @@ export default {
     ]),
     ...mapMutations([
       'setActiveCard',
-      'discardActiveCard'
+      'discardActiveCard',
+      'addNegativeEffect',
+      'addPositiveEffect'
     ]),
     attackablePlayers () {
       let players = []
@@ -99,12 +104,15 @@ export default {
     select () {
       this.setActiveCard({newCard: this.card})
     },
-    // All these will have mutations or actions to call
     playAttack (player) {
-      console.log("Play attack on: " + player.name)
+      this.addNegativeEffect({player: player, effect: this.type})
+      this.discardActiveCard()
+      bus.$emit('played-effect', player.id)
     },
     playSafety () {
-      console.log("Play safety: " + this.card.type)
+      this.addPositiveEffect({player: this.getCurrentPlayer, effect: this.type})
+      this.discardActiveCard()
+      bus.$emit('played-effect', this.getCurrentPlayer.id)
     }
   }
 }
@@ -142,14 +150,6 @@ export default {
   margin-bottom: 3px;
 }
 
-#target-button {
-  display: block;
-}
-
-#play-button {
-  display: block;
-}
-
 .card {
   max-width: 90px;
   max-height: 134px;
@@ -169,6 +169,10 @@ export default {
   border: solid black 2px;
   width: 114px;
   height: auto;
+}
+
+button:focus {
+  outline-width: 0;
 }
 </style>
 

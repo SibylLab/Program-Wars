@@ -8,7 +8,7 @@
 
   <div id="cards">
     <ul>
-      <li v-for="card in currentHand" v-bind:key="card.id">
+      <li v-for="card in getCurrentPlayerHand.cards" v-bind:key="card.id">
         <turn-area-card :card="card"></turn-area-card>
       </li>
     </ul>
@@ -33,31 +33,19 @@ export default {
     'turn-area-card': TurnAreaCard
   },
   computed: {
-    isAiTurn () {
-      return !this.getCurrentPlayer().isAi
-    },
-    currentHand () {
-      let hand = this.getCurrentPlayerHand().cards
-      return hand
-    }
-  },
-  methods: {
     ...mapGetters([
       'getCurrentPlayerHand',
       'getCurrentPlayer'
     ]),
+  },
+  methods: {
     ...mapMutations([
       'giveNewHand'
     ]),
-    currentPlayerName () {
-      return this.getCurrentPlayer().name
-    },
     redrawHand () {
-      this.giveNewHand({player: this.getCurrentPlayer()})
+      this.giveNewHand({player: this.getCurrentPlayer})
     }
   }
-  // Add created and bus.on to check when players change if needed to refresh
-  // the hand being shown
 }
 </script>
 
@@ -92,7 +80,11 @@ ul {
 li {
   position: relative;
   display: inline-block;
-  margin: 5px;
+  margin: 7px;
+}
+
+button:focus {
+  outline-width: 0;
 }
 </style>
 

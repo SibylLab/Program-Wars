@@ -71,7 +71,7 @@ export default {
     return {
       gameType: 'ai',
       sameName: false,
-      noobBot: {name: 'n00b_bot mk1', ai: true},
+      noobBot: {name: 'n00b_bot', ai: true},
       players: []
     }
   },

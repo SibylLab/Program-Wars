@@ -1,7 +1,7 @@
 <template>
 <div id="info">
   <!-- Add some effect on the name or image to indicate current players turn -->
-  <h3 id="name" :class="side">{{ playerName }}</h3>
+  <h3 id="name" :class="side">{{ player.name }}</h3>
 
   <img id="avatar" :class="side" :src="playerImagePath">
 
@@ -23,15 +23,15 @@
        the image path. For now we can use cropped card images. Titles
        should say what the effect is doing to you. -->
   <div id="good-effects" :class="side" style="position: absolute; top: 65%;">
-    <ul>
-      <img v-for="effect in playerPositives" v-bind:key="effect"  
+    <ul :key="effectReact">
+      <img v-for="effect in player.positiveEffects" v-bind:key="effect"  
           class="effect-icon" :src="effectImagePath(effect)">
     </ul>
   </div>
 
   <div id="bad-effects" :class="side" style="position: absolute; top: 80%;">
-    <ul>
-      <img v-for="effect in playerNegatives" v-bind:key="effect"  
+    <ul :key="effectReact">
+      <img v-for="effect in player.negativeEffects" v-bind:key="effect"  
           class="effect-icon" :src="effectImagePath(effect)">
     </ul>
   </div>
@@ -40,11 +40,17 @@
 
 
 <script>
+import {bus} from '@/components/shared/Bus'
 import {mapState} from 'vuex'
 
 export default {
   name: 'player-info',
   props: ['player', 'side'],
+  data () {
+    return {
+      effectReact: 0
+    }
+  },
   components: {
   },
   computed: {
@@ -52,23 +58,11 @@ export default {
       'scoreLimit'
     ]),
     /**
-     * Gives players name if the player has been set properly.
-     */
-    playerName () {
-      return this.player !== undefined ? this.player.name : "Undefined"
-    },
-    /**
      * Create an path string for the players avatar image choice.
      */
     playerImagePath () {
       // later change to imageId to get the specific image they want 
       return "/static/playerImages/robo_" + this.player.id + ".jpg"
-    },
-    playerPositives () {
-      return this.player.positiveEffects.values()
-    },
-    playerNegatives () {
-      return this.player.negativeEffects.values()
     }
   },
   methods: {
@@ -76,6 +70,13 @@ export default {
       return "/static/cardImages/effects/" + effect + ".png"
     },
   },
+  created () {
+    bus.$on('played-effect', (playerId) => {
+      if (playerId === this.player.id) {
+        this.effectReact = !this.effectReact
+      }
+    })
+  }
 }
 </script>
 
