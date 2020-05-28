@@ -7,7 +7,7 @@
     <input type="image" id="discard-button"
        title="Discard Card"
        src="static/miscIcons/trash.png"
-       v-on:click="discard">
+       v-on:click="discardActiveCard">
 
     <div id="targets" class="popup" v-if="isAttack">
       <h5>{{ targetText }}</h5>
@@ -83,7 +83,8 @@ export default {
       'getHackableOpponents'
     ]),
     ...mapMutations([
-      'setActiveCard'
+      'setActiveCard',
+      'discardActiveCard'
     ]),
     attackablePlayers () {
       let players = []
@@ -99,9 +100,6 @@ export default {
       this.setActiveCard({newCard: this.card})
     },
     // All these will have mutations or actions to call
-    discard () {
-      console.log("discard: " + this.card.type)
-    },
     playAttack (player) {
       console.log("Play attack on: " + player.name)
     },

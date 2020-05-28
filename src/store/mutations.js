@@ -111,6 +111,23 @@ export default {
     state.activeCard = payload.newCard
   },
 
+  /**
+   * Remove a given card from a given players hand.
+   */
+  removeCardFromHand (state, payload) {
+    let hand = state.hands.find(h => h.playerId === payload.player.id)
+    hand.cards = hand.cards.filter(c => c !== payload.card)
+  },
+
+  /**
+   * Discard the active card from the current players hand.
+   */
+  discardActiveCard (state) {
+    let player = state.players.find(p => p.id === state.activePlayerId)
+    let hand = state.hands.find(h => h.playerId === player.id)
+    hand.cards = hand.cards.filter(c => c !== state.activeCard)
+    state.deck.discard.push(state.activeCard)
+  },
 
   // Setup a mock game adding a few componets to players, hands, stacks, etc.
   // This is only for testing purposes while rebuilding the UI and should

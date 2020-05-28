@@ -33,8 +33,11 @@ export default {
     router.push('home')
   },
 
+  /**
+   * Resets necessary elements before returning to landing page.
+   */
   resetForHome (context) {
     context.commit('changeGameState', {newState: 'home'})
     context.commit('stopTimer')
-  }
+  },
 }
