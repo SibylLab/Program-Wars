@@ -1,4 +1,4 @@
-import Card from '@/classes/Models/Card'
+import Card from '@/classes/game/Card'
 
 
 describe('Card data object', () => {

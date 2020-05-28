@@ -1,7 +1,7 @@
 //import { bus } from '@/components/SharedComponents/Bus'
 import Timer from 'easytimer'
-import Player from '@/classes/Models/Player'
-import Deck from '@/classes/Models/Deck'
+import Player from '@/classes/game/Player'
+import Deck from '@/classes/game/Deck'
 
 
 export default {

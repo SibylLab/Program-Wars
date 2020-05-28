@@ -1,4 +1,4 @@
-import Deck from '@/classes/Models/Deck'
+import Deck from '@/classes/game/Deck'
 
 let count = function (cards, type) {
   return cards.reduce((acc, card) => {

@@ -1,4 +1,4 @@
-import Player from '@/classes/Models/Player'
+import Player from '@/classes/game/Player'
 
 
 describe('Player.js', () => {

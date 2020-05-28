@@ -1,5 +1,5 @@
-import Stack from '@/classes/Models/Stack'
-import Card from '@/classes/Models/Card'
+import Stack from '@/classes/game/Stack'
+import Card from '@/classes/game/Card'
 
 let stack
 let instruction = new Card(2, 75, 'INSTRUCTION')
