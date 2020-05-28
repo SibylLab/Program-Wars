@@ -1,9 +1,9 @@
 <template>
-<div class="turn-area-card">
+<div id="turn-area-card" v-on:click="select">
   <img v-if="isAiTurn" src="static/cardImages/backOfCard.png" class="card">
   <img v-else :src="card.image" class="card">
 
-  <div v-if="isSelected">
+  <div v-if="isSelected" id="overlays" class="shadow">
     <input type="image" id="discard-button"
        title="Discard Card"
        src="static/miscIcons/trash.png"
@@ -35,7 +35,7 @@
 
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations, mapState} from 'vuex'
 
 export default {
   name: 'turn-area-card',
@@ -48,11 +48,14 @@ export default {
   components: {
   },
   computed: {
+    ...mapState([
+      'activeCard'
+    ]),
     isAiTurn () {
       return this.getCurrentPlayer().isAi
     },
     isSelected () {
-      return true
+      return this.activeCard === this.card
     },
     isAttack () {
       return false
@@ -66,7 +69,10 @@ export default {
   },
   methods: {
     ...mapGetters([
-      'getCurrentPlayer'
+      'getCurrentPlayer',
+    ]),
+    ...mapMutations([
+      'setActiveCard'
     ]),
     canPlaySafety () {
       return false
@@ -82,6 +88,9 @@ export default {
       */
       this.targetText = players.length === 1 ? "Targets" : "No Targets"
       return players
+    },
+    select () {
+      this.setActiveCard({newCard: this.card})
     },
     // All these will have mutations or actions to call
     discard () {
@@ -101,6 +110,15 @@ export default {
 <style scoped>
 #turn-area-card {
   position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#overlays {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #discard-button {
@@ -109,21 +127,6 @@ export default {
   top: -8px;
   width: 25px;
   height: 25px; 
-}
-
-.card {
-  max-width: 90px;
-  max-height: 134px;
-}
-
-.popup {
-  position: absolute;
-  left: -12px;
-  top: 30px;
-  background-color: white;
-  border: solid black 2px;
-  width: 114px;
-  height: auto;
 }
 
 #button-wrapper {
@@ -141,6 +144,27 @@ export default {
 
 #play-button {
   display: block;
+}
+
+.card {
+  max-width: 90px;
+  max-height: 134px;
+}
+
+.shadow {
+  -webkit-box-shadow: 0 0 24px 4px rgba(0,255,60,1);
+  -moz-box-shadow: 0 0 24px 4px rgba(0,255,60,1);
+  box-shadow: 0 0 24px 4px rgba(0,255,60,1);
+}
+
+.popup {
+  position: absolute;
+  left: -12px;
+  top: 30px;
+  background-color: white;
+  border: solid black 2px;
+  width: 114px;
+  height: auto;
 }
 </style>
 

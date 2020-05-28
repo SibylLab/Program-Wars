@@ -104,6 +104,13 @@ export default {
     state.hands.push(hand) 
   },
 
+  /**
+   * Set the current active card.
+   */
+  setActiveCard (state, payload) {
+    state.activeCard = payload.newCard
+  },
+
 
   // Setup a mock game adding a few componets to players, hands, stacks, etc.
   // This is only for testing purposes while rebuilding the UI and should
