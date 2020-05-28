@@ -99,7 +99,10 @@ export default {
       let card = state.deck.draw()
       hand.cards.push(card)
     }
+
+    state.hands = state.hands.filter(h => h.playerId !== player.id)
     state.hands.push(hand) 
+    console.log(hand)
   },
 
 
