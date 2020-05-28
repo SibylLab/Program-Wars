@@ -121,7 +121,7 @@ export default {
     state.players[0].positiveEffects.add("OVERCLOCK")
     state.players[0].negativeEffects.add("POWEROUTAGE")
     state.players[0].negativeEffects.add("VIRUS")
-    state.players[1].positiveEffects.add("FIREWALL")
+    state.players[1].positiveEffects.add("ANTIVIRUS")
     state.players[1].negativeEffects.add("POWEROUTAGE")
     console.log("Mock Game")
   }

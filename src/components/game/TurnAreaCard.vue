@@ -3,7 +3,7 @@
   <img v-if="isAiTurn" src="static/cardImages/backOfCard.png" class="card">
   <img v-else :src="card.image" class="card">
 
-  <div v-if="isSelected" id="overlays" class="shadow">
+  <div v-if="isShowing" id="overlays" class="shadow">
     <input type="image" id="discard-button"
        title="Discard Card"
        src="static/miscIcons/trash.png"
@@ -13,7 +13,7 @@
       <h5>{{ targetText }}</h5>
       <div id="button-wrapper"> 
         <button id="target-button" v-for="player in attackablePlayers()"
-            v-bind:key="player.id" v-on:click="playCard(player)">
+            v-bind:key="player.id" v-on:click="playAttack(player)">
           {{ player.name }}
         </button>
       </div>
@@ -22,7 +22,7 @@
     <div id="play" class="popup" v-if="isSafety">
       <h5>{{ safetyText }}</h5>
       <div id="button-wrapper"> 
-        <button v-if="canPlaySafety()" id="safety-button" v-on:click="playSafety">
+        <button v-if="canPlaySafety" id="safety-button" v-on:click="playSafety">
           OK
         </button>
       </div>
@@ -42,6 +42,7 @@ export default {
   props: ['card'],
   data () {
     return {
+      type: this.card.type,
       targetText: "Targets"
     }
   },
@@ -51,41 +52,46 @@ export default {
     ...mapState([
       'activeCard'
     ]),
+    ...mapGetters([
+      'getCurrentPlayer',
+    ]),
     isAiTurn () {
-      return this.getCurrentPlayer().isAi
+      return this.getCurrentPlayer.isAi
     },
-    isSelected () {
-      return this.activeCard === this.card
+    isShowing () {
+      return this.activeCard === this.card && !this.isAiTurn
     },
     isAttack () {
-      return false
+      return this.type === "HACK" || this.type === "VIRUS"
+             || this.type === "POWEROUTAGE"
     },
     isSafety () {
-      return false
+      return this.type === "BATTERYBACKUP" || this.type === "OVERCLOCK"
+             || this.type === "FIREWALL" || this.type === "ANTIVIRUS"
+             || this.type === "GENERATOR"
+    },
+    canPlaySafety () {
+      return !this.getCurrentPlayer.helpedBy(this.type)
     },
     safetyText () {
-      return this.canPlaySafety() ? "Activate" : "Protected"
+      return this.canPlaySafety ? "Activate" : "Protected"
     }
   },
   methods: {
     ...mapGetters([
-      'getCurrentPlayer',
+      'getAttackableOpponents',
+      'getHackableOpponents'
     ]),
     ...mapMutations([
       'setActiveCard'
     ]),
-    canPlaySafety () {
-      return false
-    },
     attackablePlayers () {
       let players = []
-      /* Add in when game is working
-      if (this.card.type === "HACK") {
+      if (this.type === "HACK") {
         players = this.getHackableOpponents()
       } else {
-        players = this.getAttackableOpponents()
+        players = this.getAttackableOpponents({effect: "OVERCLOCK"})
       }
-      */
       this.targetText = players.length === 1 ? "Targets" : "No Targets"
       return players
     },

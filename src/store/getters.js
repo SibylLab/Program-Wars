@@ -38,9 +38,11 @@ export default {
    * Get attackable opponents given a card type.
    * Not for Hacking.
    */
-  getAttackableOpponents (state, payload) {
+  getAttackableOpponents (state) {
+    const effect = state.activeCard.type
     return state.players.filter((p) => {
-      return p.id !== state.activePlayerId && !p.isProtectedFrom(payload.effect)
+      return p.id !== state.activePlayerId && !p.hurtBy(effect)
+             && !p.isProtectedFrom(effect)
     })
   },
 
@@ -49,7 +51,7 @@ export default {
    */
   getHackableOpponents (state) {
     return state.players.filter((p) => {
-      if (p.id === state.activePlayerId || p.isProtectedFrom('HACK')) {
+      if (p.id === state.activePlayerId || p.helpedBy('HACK')) {
         return false
       }
       let stacks = state.stacks.filter(s => s.playerId === p.id && s.isHackable())
