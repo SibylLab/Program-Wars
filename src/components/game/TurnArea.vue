@@ -1,7 +1,7 @@
 <template>
 <div id="turn-area">
   <button class="btn btn-sm btn-info col-6" v-on:click="redrawHand"
-      style="border-radius: 40px; margin-top: 5px;"
+      style="border-radius: 40px; margin-top: 1%;"
       title="Discard your hand and draw 5 new cards">
     REDRAW
   </button>
@@ -15,16 +15,21 @@
     </ul>
   </div>
 
+  <div id="messages">
+    <message-box></message-box>
+  </div>
 </div>
 </template>
 
 
 <script>
+import MessageBox from '@/components/game/MessageBox'
 import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   name: 'card-area',
   components: {
+    'message-box': MessageBox
   },
   computed: {
     isAiTurn () {
@@ -65,9 +70,17 @@ export default {
   background-color: #e8e8e8;
 }
 
-#name {
-  margin-top: 0;
-  margin-bottom: 0;
+#cards {
+  margin-top: 1%;
+}
+
+#messages {
+  position: absolute;
+  top: 60%;
+  left: 10%;
+  width: 80%;
+  height: 30%;
+  border: solid black 5px;
 }
 
 .turn-card {
