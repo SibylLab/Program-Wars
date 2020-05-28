@@ -27,22 +27,22 @@ describe('Deck.js', () => {
       deck1 = new Deck(1)
     })
     test('correct number of instructions', () => {
-      expect(count(deck1.cards, 'I')).toEqual(27)
+      expect(count(deck1.cards, 'INSTRUCTION')).toEqual(27)
     })
     test('correct number of repeats', () => {
-      expect(count(deck1.cards, 'R')).toEqual(14)
+      expect(count(deck1.cards, 'REPEAT')).toEqual(14)
     })
     test('correct number of Rx', () => {
       let num = deck1.cards.reduce((acc, card) => {
-        return card.type === 'R' && card.value === 1 ? acc + 1 : acc
+        return card.type === 'REPEAT' && card.value === 1 ? acc + 1 : acc
       }, 0)
       expect(num).toEqual(5)
     })
     test('correct number of variables', () => {
-      expect(count(deck1.cards, 'V')).toEqual(7)
+      expect(count(deck1.cards, 'VARIABLE')).toEqual(7)
     })
     it('correct number of hacks', () => {
-      expect(count(deck1.cards, 'H')).toEqual(3)
+      expect(count(deck1.cards, 'HACK')).toEqual(3)
     })
     it('correct number of viruses', () => {
       expect(count(deck1.cards, 'VIRUS')).toEqual(3)
@@ -91,22 +91,22 @@ describe('Deck.js', () => {
       deck3 = new Deck(3)
     })
     test('correct number instructions', () => {
-      expect(count(deck3.cards, 'I')).toEqual(81)
+      expect(count(deck3.cards, 'INSTRUCTION')).toEqual(81)
     })
     test('correct number of repeats', () => {
-      expect(count(deck3.cards, 'R')).toEqual(42)
+      expect(count(deck3.cards, 'REPEAT')).toEqual(42)
     })
     test('correct number of Rx', () => {
       let num = deck3.cards.reduce((acc, card) => {
-        return card.type === 'R' && card.value === 1 ? acc + 1 : acc
+        return card.type === 'REPEAT' && card.value === 1 ? acc + 1 : acc
       }, 0)
       expect(num).toEqual(15)
     })
     test('correct number of variables', () => {
-      expect(count(deck3.cards, 'V')).toEqual(21)
+      expect(count(deck3.cards, 'VARIABLE')).toEqual(21)
     })
     it('correct number of hacks', () => {
-      expect(count(deck3.cards, 'H')).toEqual(9)
+      expect(count(deck3.cards, 'HACK')).toEqual(9)
     })
     it('correct number of viruses', () => {
       expect(count(deck3.cards, 'VIRUS')).toEqual(9)

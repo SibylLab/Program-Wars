@@ -11,11 +11,12 @@ describe('vuex getters', () => {
   // Mock state
   const state = {
       activePlayerId: 1,
+      activeCard: {},
       players: [
-        {id: 0, isProtectedFrom: isProtected},
-        {id: 1},
-        {id: 2, isProtectedFrom: isNotProtected},
-        {id: 3, isProtectedFrom: isNotProtected}
+        {id: 0, isProtectedFrom: isProtected, helpedBy: trueFn, hurtBy: trueFn},
+        {id: 1, isProtectedFrom: isNotProtected, helpedBy: falseFn, hurtBy: trueFn},
+        {id: 2, isProtectedFrom: isNotProtected, helpedBy: falseFn, hurtBy: falseFn},
+        {id: 3, isProtectedFrom: isNotProtected, helpedBy: falseFn, hurtBy: trueFn}
       ],
       stacks: [
         {stackId: 25, playerId: 1, isHackable: trueFn},
@@ -63,15 +64,12 @@ describe('vuex getters', () => {
     expect(handler).toBeUndefined()
   })
   test('get a list of players that can be attacked with a card type', () => {
-    let opp = getters.getAttackableOpponents(state, {effect: "VIRUS"})
-    expect(opp.length).toEqual(2)
+    let opp = getters.getAttackableOpponents(state)
+    activeCard: {type: 'VIRUS'}
+    expect(opp.length).toEqual(1)
     expect(opp[0].id).toEqual(2)
-    expect(opp[1].id).toEqual(3)
     expect(isProtected.mock.calls.length).toEqual(1)
     expect(isNotProtected.mock.calls.length).toEqual(2)
-    expect(isProtected.mock.calls[0][0]).toEqual('VIRUS')
-    expect(isNotProtected.mock.calls[0][0]).toEqual('VIRUS')
-    expect(isNotProtected.mock.calls[1][0]).toEqual('VIRUS')
   })
   test('get a list of players that can be hacked', () => {
     let opp = getters.getHackableOpponents(state)

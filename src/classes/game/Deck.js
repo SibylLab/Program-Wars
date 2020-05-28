@@ -40,27 +40,27 @@ const firewall = 1
 const generator = 1
 
 const cardDeck = [
-  {type: 'I', cardValue: 1, imgSrc: 'static/cardImages/Instruction1.png', howMany: instruction1},
-  {type: 'I', cardValue: 2, imgSrc: 'static/cardImages/Instruction2.png', howMany: instruction2},
-  {type: 'I', cardValue: 3, imgSrc: 'static/cardImages/Instruction3.png', howMany: instruction3},
+  {type: 'INSTRUCTION', cardValue: 1, imgSrc: 'static/cardImages/Instruction1.png', howMany: instruction1},
+  {type: 'INSTRUCTION', cardValue: 2, imgSrc: 'static/cardImages/Instruction2.png', howMany: instruction2},
+  {type: 'INSTRUCTION', cardValue: 3, imgSrc: 'static/cardImages/Instruction3.png', howMany: instruction3},
 
-  {type: 'R', cardValue: 2, imgSrc: 'static/cardImages/Repetition2.png', howMany: repetition2},
-  {type: 'R', cardValue: 3, imgSrc: 'static/cardImages/Repetition3.png', howMany: repetition3},
-  {type: 'R', cardValue: 4, imgSrc: 'static/cardImages/Repetition4.png', howMany: repetition4},
-  {type: 'R', cardValue: 1, imgSrc: 'static/cardImages/RepetitionX.png', howMany: repetitionX},
+  {type: 'REPEAT', cardValue: 2, imgSrc: 'static/cardImages/Repetition2.png', howMany: repetition2},
+  {type: 'REPEAT', cardValue: 3, imgSrc: 'static/cardImages/Repetition3.png', howMany: repetition3},
+  {type: 'REPEAT', cardValue: 4, imgSrc: 'static/cardImages/Repetition4.png', howMany: repetition4},
+  {type: 'REPEAT', cardValue: 1, imgSrc: 'static/cardImages/RepetitionX.png', howMany: repetitionX},
 
-  {type: 'G', cardValue: 2, imgSrc: 'static/cardImages/Group2.png', howMany: group2},
-  {type: 'G', cardValue: 3, imgSrc: 'static/cardImages/Group3.png', howMany: group3},
-  {type: 'G', cardValue: 4, imgSrc: 'static/cardImages/Group4.png', howMany: group4},
-  {type: 'G', cardValue: 5, imgSrc: 'static/cardImages/Group5.png', howMany: group5},
-  {type: 'G', cardValue: 6, imgSrc: 'static/cardImages/Group6.png', howMany: group6},
+  {type: 'GROUP', cardValue: 2, imgSrc: 'static/cardImages/Group2.png', howMany: group2},
+  {type: 'GROUP', cardValue: 3, imgSrc: 'static/cardImages/Group3.png', howMany: group3},
+  {type: 'GROUP', cardValue: 4, imgSrc: 'static/cardImages/Group4.png', howMany: group4},
+  {type: 'GROUP', cardValue: 5, imgSrc: 'static/cardImages/Group5.png', howMany: group5},
+  {type: 'GROUP', cardValue: 6, imgSrc: 'static/cardImages/Group6.png', howMany: group6},
 
-  {type: 'V', cardValue: 3, imgSrc: 'static/cardImages/Variable3.png', howMany: variable3},
-  {type: 'V', cardValue: 4, imgSrc: 'static/cardImages/Variable4.png', howMany: variable4},
-  {type: 'V', cardValue: 5, imgSrc: 'static/cardImages/Variable5.png', howMany: variable5},
-  {type: 'V', cardValue: 6, imgSrc: 'static/cardImages/Variable6.png', howMany: variable6},
+  {type: 'VARIABLE', cardValue: 3, imgSrc: 'static/cardImages/Variable3.png', howMany: variable3},
+  {type: 'VARIABLE', cardValue: 4, imgSrc: 'static/cardImages/Variable4.png', howMany: variable4},
+  {type: 'VARIABLE', cardValue: 5, imgSrc: 'static/cardImages/Variable5.png', howMany: variable5},
+  {type: 'VARIABLE', cardValue: 6, imgSrc: 'static/cardImages/Variable6.png', howMany: variable6},
 
-  {type: 'H', cardValue: 0, imgSrc: 'static/cardImages/Hacker.png', howMany: hack},
+  {type: 'HACK', cardValue: 0, imgSrc: 'static/cardImages/Hacker.png', howMany: hack},
   {type: 'VIRUS', cardValue: 0, imgSrc: 'static/cardImages/Malware.png', howMany: malware},
   {type: 'POWEROUTAGE', cardValue: 0, imgSrc: 'static/cardImages/PowerOutage.png', howMany: powerOutage},
 
