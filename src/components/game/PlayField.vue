@@ -1,6 +1,6 @@
 <template>
 <div id="stacks-area">
-  <h3 style="margin: 0; margin-top: 2px; margin-left: 5px;">{{ player.name }}_main:</h3>
+  <h3 style="margin: 0; margin-top: 2px; margin-left: 5px; color: #fff;">{{ player.name }}_main:</h3>
   <ul id="stack-list">
       <card-stack class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id" :stack="stack"></card-stack>
   </ul>
@@ -36,9 +36,9 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 255, 0, 0.26);
-  border-radius: 10px;
+  background-color: #44b863;
   border: solid black 4px;
+  border-radius: 6px;
   overflow: auto;
   text-align: left;
 }

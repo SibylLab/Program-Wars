@@ -77,6 +77,7 @@ export default {
   min-width: 1200px;
   height: 100%;
   min-height: 750px;
+  background-color: #e8e8e8;
 }
 
 #play {
@@ -112,22 +113,21 @@ export default {
   top: 50%;
   width: 100%;
   height: 50%;
-  background-color: grey;
 }
 
 #right-field {
   position: absolute;
-  top: 2.5%;
+  top: 0;
   right: 1%;
   width: 48%;
-  height: 95%;
+  height: 98%;
 }
 
 #left-field {
   position: absolute;
-  top: 2.5%;
+  top: 0;
   left: 1%;
-  width: 48%;
-  height: 95%;
+  width: 49%;
+  height: 98%;
 }
 </style>

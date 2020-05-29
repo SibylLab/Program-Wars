@@ -98,7 +98,6 @@ export default {
   left: 0px;
   width: 100%;
   height: 100%;
-  background-color: #e8e8e8;
 }
 
 #cards {
