@@ -18,7 +18,13 @@
   </div>
 
   <div id="stacks">
-   <p> This is the stacks area </p>
+    <div id="left-field">
+      <play-field :player="getPlayer(0)"></play-field>
+    </div>
+
+    <div id="right-field">
+      <play-field :player="getPlayer(1)"></play-field>
+    </div>
   </div>
   
 </div>
@@ -29,6 +35,7 @@
 import PageHeader from '@/components/shared/PageHeader'
 import PlayerInfo from '@/components/game/PlayerInfo'
 import TurnArea from '@/components/game/TurnArea'
+import PlayField from '@/components/game/PlayField'
 import {mapState, mapActions} from 'vuex'
 
 export default {
@@ -36,7 +43,8 @@ export default {
   components: {
     'page-header': PageHeader,
     'turn-area': TurnArea,
-    'player-info': PlayerInfo
+    'player-info': PlayerInfo,
+    'play-field': PlayField
   },
   computed: {
     ...mapState([
@@ -49,7 +57,7 @@ export default {
       'leaveGame'
     ]),
     getPlayer (id) {
-      return this.players[id]
+      return this.players.find(p => p.id === id)
     }
   },
   created () {
@@ -105,5 +113,21 @@ export default {
   width: 100%;
   height: 50%;
   background-color: grey;
+}
+
+#right-field {
+  position: absolute;
+  top: 2.5%;
+  right: 1%;
+  width: 48%;
+  height: 95%;
+}
+
+#left-field {
+  position: absolute;
+  top: 2.5%;
+  left: 1%;
+  width: 48%;
+  height: 95%;
 }
 </style>

@@ -2,6 +2,7 @@
 import Timer from 'easytimer'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
+import Stack from '@/classes/game/Stack'
 
 
 export default {
@@ -158,7 +159,8 @@ export default {
   // This is only for testing purposes while rebuilding the UI and should
   // be removed afterward.
   setupMockGame (state) {
-    state
-    console.log("Mock Game")
+    state.stacks.push(new Stack(0))
+    state.stacks.push(new Stack(0))
+    state.stacks.push(new Stack(0))
   }
 }

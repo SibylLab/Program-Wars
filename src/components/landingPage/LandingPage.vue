@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     ...mapActions([
-      'newGame',
       'resetForHome'
     ]),
   },

@@ -143,6 +143,9 @@ export default {
       }
       textInput.value = ''
     },
+    /**
+     * Remove a player from the player list.
+     */
     removePlayer (name) {
       this.players = this.players.filter(p => p.name !== name)
     }
@@ -153,10 +156,13 @@ export default {
 }
 </script>
 
-
+<!-- The position of this component should probably be set in a div in its
+     parent rather than here. It makes sense to set its min and max size, but
+     the user should be responsible for where it goes. -->
 <style scoped>
 #setup {
   position: absolute;
+  top: 2%;
   left: 30%;
   width: 40%;
   min-width: 400px;
