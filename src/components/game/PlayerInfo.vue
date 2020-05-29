@@ -12,7 +12,7 @@
        everything needs to be positioned explicitly -->
   <meter id="score-meter" :class="side"
      :max="scoreLimit" min=0
-     :value="2000"
+     :value="50"
      :high="scoreLimit * 0.75"
      :low="scoreLimit / 2"
      :optimum="scoreLimit - 500">
@@ -95,6 +95,7 @@ export default {
   width: 45%;
   height: 35%;
   border: solid black 3px;
+  border-radius: 5px;
 }
 
 #score-meter {

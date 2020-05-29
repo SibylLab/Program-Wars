@@ -71,6 +71,7 @@ export default {
   width: 80%;
   height: 30%;
   border: solid black 5px;
+  border-radius: 5px;
 }
 
 ul {
@@ -85,7 +86,11 @@ li {
   margin: 7px;
 }
 
-button:focus {
+.btn:focus {
+  outline-width: 0;
+}
+
+.btn:active {
   outline-width: 0;
 }
 </style>

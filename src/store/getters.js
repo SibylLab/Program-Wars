@@ -31,7 +31,7 @@ export default {
   getAttackableOpponents (state) {
     const effect = state.activeCard.type
     return state.players.filter((p) => {
-      return p.id !== state.activePlayerId && !p.isProtectedFrom(effect)
+      return p.id !== state.activePlayer.id && !p.isProtectedFrom(effect)
              && !p.hurtBy(effect)
 
     })

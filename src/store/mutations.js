@@ -138,6 +138,7 @@ export default {
     let hand = state.hands.find(h => h.playerId === player.id)
     hand.cards = hand.cards.filter(c => c !== state.activeCard)
     state.deck.discard.push(state.activeCard)
+    state.activeCard = undefined
   },
 
   /**

@@ -166,6 +166,7 @@ export default {
   top: 30px;
   background-color: white;
   border: solid black 2px;
+  border-radius: 5px;
   width: 114px;
   height: auto;
 }
