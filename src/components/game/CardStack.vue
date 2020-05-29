@@ -11,7 +11,7 @@
 
 
 <script>
-//import {mapState, mapActions} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 
 export default {
   name: 'card-stack',
@@ -19,13 +19,22 @@ export default {
   components: {
   },
   computed: {
+    ...mapState([
+      'activePlayer'
+    ]),
+    ...mapGetters([
+      'getCurrentPlayerHand',
+    ])
   },
   methods: {
     onDrop (evt) {
-      let cardId = evt.dataTransfer.getData('cardId')
-      let playerId = evt.dataTransfer.getData('playerId')
-      let canDrop = evt.dataTransfer.getData('canDrop')
-      console.log(cardId + " " + playerId + " " + canDrop)
+      let cardId = parseInt(evt.dataTransfer.getData('cardId'))
+      let hand = this.getCurrentPlayerHand
+      let card = hand.cards.find(c => c.id === cardId)
+      if (this.stack.playerId === this.activePlayer.id
+          && this.stack.willAccept(card)) {
+        console.log("Will Accept: " + card.type)
+      }
     }
   },
 }

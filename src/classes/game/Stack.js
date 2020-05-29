@@ -82,4 +82,30 @@ export default class Stack {
   isHackable () {
     return !this.isEmpty() && this.getBase().type !== 'GROUP'
   }
+
+  /**
+   * Checks to see if a stack can have a given card placed on top of it.
+   * @param {Card} card the card to check.
+   * @return {bool} true if the card can be added to the top, false otherwise.
+   */
+  willAccept (card) {
+    let top = this.getTop()
+    // Variable cards can only go on Rx cards or replace other variables
+    if (card.type === "VARIABLE") {
+      if (top.type === "REPEAT") {
+        return top.value === 1
+      } else if (top.type === "VARIABLE") {
+        return top.value < card.value
+      }
+      return false
+    // Repeat cards can't be used if the top is Rx or there are alredy 2 repeats
+    } else if (card.type === "REPEAT" && !this.hasMaxRepeats()) {
+      if (top.type === "REPEAT") {
+        return top.value !== 1
+      }
+      return true
+    }
+    // Only variable and repeat cards can be put on a non-empty stack
+    return false
+  }
 }

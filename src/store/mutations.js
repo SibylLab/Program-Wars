@@ -183,5 +183,10 @@ export default {
     s5.cards.push(state.deck.draw())
     s5.cards.push(state.deck.draw())
     state.stacks.push(s5)
+    let s6 = new Stack(1)
+    s6.cards.push(state.deck.draw())
+    s6.cards.push(state.deck.draw())
+    s6.cards.push(state.deck.draw())
+    state.stacks.push(s6)
   }
 }

@@ -61,8 +61,6 @@ export default {
         evt.dataTransfer.dropEffect = 'move'
         evt.dataTransfer.effectAllowed = 'move'
         evt.dataTransfer.setData('cardId', card.id)
-        evt.dataTransfer.setData('playerId', this.activePlayer.id)
-        evt.dataTransfer.setData('canDrop', false)
         console.log("dragged: " + card.type)
       } else {
         this.setActiveCard({newCard: card})
