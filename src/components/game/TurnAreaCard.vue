@@ -37,7 +37,6 @@
 
 
 <script>
-import {bus} from '@/components/shared/Bus'
 import {mapGetters, mapMutations, mapState} from 'vuex'
 
 export default {
@@ -99,10 +98,14 @@ export default {
      * Only call when this card is a special card.
      */
     playSpecialCard (player) {
-      this.addCardEffect({playerId: player.id, effect: this.type,
-                          isPositive: this.isSafety})
-      this.discardActiveCard()
-      bus.$emit('played-effect', player.id)
+      if (this.type !== "HACK") {
+        this.addCardEffect({
+          playerId: player.id,
+          effect: this.type,
+          isPositive: this.isSafety
+        })
+        this.discardActiveCard()
+      }
     }
   },
 }

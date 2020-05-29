@@ -11,7 +11,7 @@
 
 
 <script>
-import {mapState, mapGetters} from 'vuex'
+import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
   name: 'card-stack',
@@ -27,16 +27,31 @@ export default {
     ])
   },
   methods: {
+    ...mapActions([
+      'addCardToStack'
+    ]),
+    ...mapMutations([
+      'discardActiveCard',
+      'setActiveCard'
+    ]),
     onDrop (evt) {
       let cardId = parseInt(evt.dataTransfer.getData('cardId'))
       let hand = this.getCurrentPlayerHand
       let card = hand.cards.find(c => c.id === cardId)
+
       if (this.stack.playerId === this.activePlayer.id
           && this.stack.willAccept(card)) {
-        console.log("Will Accept: " + card.type)
+        let top = this.stack.getTop()
+
+        this.addCardToStack({
+          card: card,
+          stackId: this.stack.stackId,
+          playerId: this.activePlayer.id,
+          replace: top.type === "VARIABLE" && card.type === "VARIABLE"
+        })
       }
     }
-  },
+  }
 }
 </script>
 

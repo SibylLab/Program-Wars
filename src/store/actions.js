@@ -1,4 +1,4 @@
-//import { bus } from '@/components/SharedComponents/Bus'
+import { bus } from '@/components/shared/Bus'
 import router from '@/router'
 
 
@@ -41,4 +41,11 @@ export default {
     context.commit('changeGameState', {newState: 'home'})
     context.commit('stopTimer')
   },
+
+  addCardToStack (context, payload) {
+    context.commit('removeFromHand', payload)
+    context.commit('addToStack', payload)
+    bus.$emit('card-played')
+    //endturn
+  }
 }

@@ -1,5 +1,5 @@
 <template>
-<div id="turn-area">
+<div id="turn-area" v-bind:key="update">
   <button class="btn btn-sm btn-info col-6" v-on:click="redrawHand"
       style="border-radius: 40px; margin-top: 1%;"
       title="Discard your hand and draw 5 new cards">
@@ -24,12 +24,18 @@
 
 
 <script>
+import {bus} from '@/components/shared/Bus'
 import TurnAreaCard from '@/components/game/TurnAreaCard'
 import MessageBox from '@/components/game/MessageBox'
 import {mapGetters, mapMutations, mapState} from 'vuex'
 
 export default {
   name: 'card-area',
+  data () {
+    return {
+      update: 1
+    }
+  },
   components: {
     'message-box': MessageBox,
     'turn-area-card': TurnAreaCard
@@ -54,21 +60,34 @@ export default {
       return !card.isSpecial()
     },
     ondragstart (card) {
+      // The ondragstart attribute requires a string "return bool;" so here
+      // we are building one to make sure special cards can't be dragged.
       return "return " + this.canDrag(card)
     },
+    /**
+     * Action to take when card starts being dragged.
+     * Sets up the dragging event with the necessary data.
+     */
     startDrag (evt, card) {
       if (this.canDrag(card)) {
         evt.dataTransfer.dropEffect = 'move'
         evt.dataTransfer.effectAllowed = 'move'
         evt.dataTransfer.setData('cardId', card.id)
-        console.log("dragged: " + card.type)
       } else {
         this.setActiveCard({newCard: card})
       }
     },
+    /**
+     * Action to take when a card stops being dragged.
+     */
     dragEnd (evt, card) {
       this.setActiveCard({newCard: card})
     }
+  },
+  created () {
+    bus.$on('card-played', () => {
+      this.update = !this.update
+    })
   }
 }
 </script>

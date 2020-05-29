@@ -1,4 +1,4 @@
-//import { bus } from '@/components/SharedComponents/Bus'
+import { bus } from '@/components/shared/Bus'
 import Timer from 'easytimer'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
@@ -140,6 +140,7 @@ export default {
     hand.cards = hand.cards.filter(c => c !== state.activeCard)
     state.deck.discard.push(state.activeCard)
     state.activeCard = undefined
+    bus.$emit('discard-active-card')
   },
 
   /**
@@ -153,6 +154,29 @@ export default {
     } else {
       player.negativeEffects.add(payload.effect)
     }
+    bus.$emit('played-effect', player.id)
+  },
+
+  /**
+   * Remove a given card from the hand with the given playerID.
+   */
+  removeFromHand (state, payload) {
+    let hand = state.hands.find(h => h.playerId === payload.playerId)
+    hand.cards = hand.cards.filter(c => c.id != payload.card.id)
+  },
+
+  /**
+   * Add a given card to a stack with the given stackId.
+   * If payload.replace is true we are removing the top card before adding
+   * the given card.
+   */
+  addToStack (state, payload) {
+    let stack = state.stacks.find(s => s.stackId === payload.stackId)
+    if (payload.replace) {
+      let top = stack.cards.pop()
+      state.deck.discard.push(top)
+    }
+    stack.cards.push(payload.card)
   },
 
   // Setup a mock game adding a few componets to players, hands, stacks, etc.
