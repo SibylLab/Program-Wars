@@ -9,7 +9,7 @@
        src="static/miscIcons/trash.png"
        v-on:click="discardActiveCard">
 
-    <div id="targets" class="popup" v-if="isAttack">
+    <div id="targets" class="popup" v-if="card.isAttack()">
       <h5>{{ targetText }}</h5>
       <div id="button-wrapper"> 
         <button id="target-button" class="btn btn-sm btn-primary"
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div id="play" class="popup" v-if="isSafety">
+    <div id="play" class="popup" v-if="card.isSafety()">
       <h5>{{ safetyText }}</h5>
       <div id="button-wrapper"> 
         <button id="safety-button" class="btn btn-sm btn-primary"
@@ -56,15 +56,6 @@ export default {
     ]),
     isShowing () {
       return this.activeCard === this.card && !this.activePlayer.isAi
-    },
-    isAttack () {
-      return this.type === "HACK" || this.type === "VIRUS"
-             || this.type === "POWEROUTAGE"
-    },
-    isSafety () {
-      return this.type === "BATTERYBACKUP" || this.type === "OVERCLOCK"
-             || this.type === "FIREWALL" || this.type === "ANTIVIRUS"
-             || this.type === "GENERATOR"
     },
     canPlaySafety () {
       return !this.activePlayer.helpedBy(this.type)

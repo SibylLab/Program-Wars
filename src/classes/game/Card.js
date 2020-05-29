@@ -21,4 +21,19 @@ export default class Card {
     this.type = type
     this.image = image
   }
+
+  isAttack () {
+    return this.type === "HACK" || this.type === "VIRUS"
+           || this.type === "POWEROUTAGE"
+  }
+
+  isSafety () {
+    return this.type === "BATTERYBACKUP" || this.type === "OVERCLOCK"
+           || this.type === "FIREWALL" || this.type === "ANTIVIRUS"
+           || this.type === "GENERATOR"
+  }
+
+  isSpecial () {
+    return this.isSafety() || this.isAttack()
+  }
 }

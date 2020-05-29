@@ -9,7 +9,8 @@
   <div id="cards">
     <ul>
       <li v-for="card in getCurrentPlayerHand.cards" v-bind:key="card.id"
-          draggable v-on:dragstart="startDrag($event, card)">
+          :ondragstart="ondragstart(card)" draggable v-on:dragstart="startDrag($event, card)"
+          v-on:dragend="dragEnd($event, card)">
         <turn-area-card :card="card"></turn-area-card>
       </li>
     </ul>
@@ -39,22 +40,36 @@ export default {
     ]),
     ...mapGetters([
       'getCurrentPlayerHand',
-    ]),
+    ])
   },
   methods: {
     ...mapMutations([
-      'giveNewHand'
+      'giveNewHand',
+      'setActiveCard'
     ]),
     redrawHand () {
       this.giveNewHand({player: this.activePlayer})
     },
-    startDrag(evt, card) {
-      evt.dataTransfer.dropEffect = 'move'
-      evt.dataTransfer.effectAllowed = 'move'
-      evt.dataTransfer.setData('cardId', card.id)
-      evt.dataTransfer.setData('playerId', this.activePlayer.id)
-      evt.dataTransfer.setData('canDrop', false)
-      console.log("dragged: " + card.type)
+    canDrag (card) {
+      return !card.isSpecial()
+    },
+    ondragstart (card) {
+      return "return " + this.canDrag(card)
+    },
+    startDrag (evt, card) {
+      if (this.canDrag(card)) {
+        evt.dataTransfer.dropEffect = 'move'
+        evt.dataTransfer.effectAllowed = 'move'
+        evt.dataTransfer.setData('cardId', card.id)
+        evt.dataTransfer.setData('playerId', this.activePlayer.id)
+        evt.dataTransfer.setData('canDrop', false)
+        console.log("dragged: " + card.type)
+      } else {
+        this.setActiveCard({newCard: card})
+      }
+    },
+    dragEnd (evt, card) {
+      this.setActiveCard({newCard: card})
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-<div id="stack">
+<div id="stack" ondragstart="return false;">
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;">Score: 50</h5>
   </div>
