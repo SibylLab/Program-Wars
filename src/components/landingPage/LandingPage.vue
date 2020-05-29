@@ -38,7 +38,10 @@ export default {
   position: absolute;
   top: 40px;
   width: 100%;
-  height: 100%;
+  min-width: 500px;
+  height: 94.5%;
+  min-height: 500px;
   background-image: url('/static/backgroundImg/helloWorld.png');
 }
+
 </style>

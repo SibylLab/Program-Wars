@@ -157,29 +157,36 @@ export default {
 <style scoped>
 #setup {
   position: absolute;
-  top: 10px;
-  left: 25%;
-  width: 50%;
-  height: 80%;
+  left: 30%;
+  width: 40%;
+  min-width: 400px;
+  height: 60%;
+  min-height: 480px;
   padding: 1%;
   background-color: white;
   border-radius: 30px;
 }
 
+@media all and (max-width: 600px) {
+  #setup{
+    left: 10%;
+  }
+}
+
 #game-types {
   width: 100%;
-  height: 20%;
+  height: 100px;
 }
 
 #add-players {
   width: 100%;
-  height: 20%;
+  height: 100px;
 }
 
 #current-players {
   margin-left: 25%;
   margin-right: 25%;
-  height: 20%;
+  height: 120px;
 }
 
 .sub-heading {

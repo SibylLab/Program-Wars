@@ -1,28 +1,26 @@
 <template>
-<div>
-  <div id="page">
+<div id="page">
 
-    <page-header></page-header>
+  <page-header></page-header>
 
-    <div id="play">
-      <div id="left-player">
-        <player-info :player="getPlayer(0)" side="left"></player-info>
-      </div>
-
-      <div id="turn">
-        <turn-area></turn-area>
-      </div>
-
-      <div id="right-player">
-        <player-info :player="getPlayer(1)" side="right"></player-info>
-      </div>
+  <div id="play">
+    <div id="left-player">
+      <player-info :player="getPlayer(0)" side="left"></player-info>
     </div>
 
-    <div id="stacks">
-     <p> This is the stacks area </p>
+    <div id="turn">
+      <turn-area></turn-area>
     </div>
-    
+
+    <div id="right-player">
+      <player-info :player="getPlayer(1)" side="right"></player-info>
+    </div>
   </div>
+
+  <div id="stacks">
+   <p> This is the stacks area </p>
+  </div>
+  
 </div>
 </template>
 
@@ -66,8 +64,11 @@ export default {
 
 <style scoped>
 #page {
+  position: absolute;
   width: 100%;
+  min-width: 1200px;
   height: 100%;
+  min-height: 750px;
 }
 
 #play {
