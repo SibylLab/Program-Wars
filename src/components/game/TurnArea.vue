@@ -8,7 +8,8 @@
 
   <div id="cards">
     <ul>
-      <li v-for="card in getCurrentPlayerHand.cards" v-bind:key="card.id">
+      <li v-for="card in getCurrentPlayerHand.cards" v-bind:key="card.id"
+          draggable v-on:dragstart="startDrag($event, card)">
         <turn-area-card :card="card"></turn-area-card>
       </li>
     </ul>
@@ -46,6 +47,14 @@ export default {
     ]),
     redrawHand () {
       this.giveNewHand({player: this.activePlayer})
+    },
+    startDrag(evt, card) {
+      evt.dataTransfer.dropEffect = 'move'
+      evt.dataTransfer.effectAllowed = 'move'
+      evt.dataTransfer.setData('cardId', card.id)
+      evt.dataTransfer.setData('playerId', this.activePlayer.id)
+      evt.dataTransfer.setData('canDrop', false)
+      console.log("dragged: " + card.type)
     }
   }
 }

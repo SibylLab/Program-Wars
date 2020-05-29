@@ -36,7 +36,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #DBD6D1;
+  background-color: rgba(0, 255, 0, 0.26);
   border-radius: 10px;
   border: solid black 4px;
   overflow: auto;

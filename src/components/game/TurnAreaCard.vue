@@ -1,6 +1,6 @@
 <template>
 <div id="turn-area-card" v-on:click="select">
-  <img v-if="activePlayer.isAi" src="static/cardImages/backOfCard.png" class="card">
+  <img v-if="activePlayer.isAi" src="static/cardImages/backOfCard.png" class="card"> 
   <img v-else :src="card.image" class="card">
 
   <div v-if="isShowing" id="overlays" class="shadow">
@@ -113,7 +113,7 @@ export default {
       this.discardActiveCard()
       bus.$emit('played-effect', player.id)
     }
-  }
+  },
 }
 </script>
 

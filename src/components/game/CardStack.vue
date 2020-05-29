@@ -3,7 +3,7 @@
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;">Score: 50</h5>
   </div>
-  <ul id="card-list">
+  <ul id="card-list" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
       <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image" class="card">
   </ul>
 </div>
@@ -21,6 +21,12 @@ export default {
   computed: {
   },
   methods: {
+    onDrop (evt) {
+      let cardId = evt.dataTransfer.getData('cardId')
+      let playerId = evt.dataTransfer.getData('playerId')
+      let canDrop = evt.dataTransfer.getData('canDrop')
+      console.log(cardId + " " + playerId + " " + canDrop)
+    }
   },
 }
 </script>
