@@ -159,8 +159,29 @@ export default {
   // This is only for testing purposes while rebuilding the UI and should
   // be removed afterward.
   setupMockGame (state) {
-    state.stacks.push(new Stack(0))
-    state.stacks.push(new Stack(0))
-    state.stacks.push(new Stack(0))
+    let s1 = new Stack(0)
+    s1.cards.push(state.deck.draw())
+    s1.cards.push(state.deck.draw())
+    s1.cards.push(state.deck.draw())
+    s1.cards.push(state.deck.draw())
+    state.stacks.push(s1)
+    let s2 = new Stack(0)
+    s2.cards.push(state.deck.draw())
+    state.stacks.push(s2)
+    let s3 = new Stack(0)
+    s3.cards.push(state.deck.draw())
+    s3.cards.push(state.deck.draw())
+    s3.cards.push(state.deck.draw())
+    state.stacks.push(s3)
+    let s4 = new Stack(0)
+    s4.cards.push(state.deck.draw())
+    s4.cards.push(state.deck.draw())
+    s4.cards.push(state.deck.draw())
+    state.stacks.push(s4)
+    let s5 = new Stack(0)
+    s5.cards.push(state.deck.draw())
+    s5.cards.push(state.deck.draw())
+    s5.cards.push(state.deck.draw())
+    state.stacks.push(s5)
   }
 }

@@ -1,9 +1,8 @@
 <template>
 <div id="stacks-area">
-  <ul>
-    <li v-for="stack in playerStacks" v-bind:key="stack.id">
-      <card-stack :stack="stack"></card-stack>
-    </li>
+  <h3 style="margin: 0; margin-top: 2px; margin-left: 5px;">{{ player.name }}_main:</h3>
+  <ul id="stack-list">
+      <card-stack class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id" :stack="stack"></card-stack>
   </ul>
 </div>
 </template>
@@ -37,19 +36,23 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: green;
+  background-color: #DBD6D1;
   border-radius: 10px;
   border: solid black 4px;
+  overflow: auto;
+  text-align: left;
+}
+
+.card-stack {
+  display: inline-block;
+  margin: 5px; 
 }
 
 ul {
   list-style: none;
-}
-
-li {
-  position: relative;
-  display: inline-block;
-  margin: 5px;
+  margin: 0;
+  padding: 0 0 0 0;
+  text-align: left;
 }
 </style>
 

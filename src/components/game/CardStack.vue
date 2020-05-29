@@ -1,6 +1,11 @@
 <template>
 <div id="stack">
-  This is a stack of cards
+  <div style="text-align: center">
+    <h5 style="margin:0; margin-top: 5px;">Score: 50</h5>
+  </div>
+  <ul id="card-list">
+      <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image" class="card">
+  </ul>
 </div>
 </template>
 
@@ -21,8 +26,20 @@ export default {
 </script>
 
 <style scoped>
-#card-stack {
-  background-color: yellow;
+#stack {
+  min-width: 235px;
+}
+
+.card {
+  margin-right: -27px;
+  max-width: 90px;
+  max-height: 100px;
+}
+
+ul {
+  list-style: none;
+  margin: 10px;
+  padding: 0 0 0 0;
 }
 </style>
 
