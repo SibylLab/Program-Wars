@@ -22,7 +22,7 @@ export default {
     state.gameState = 'game'
     state.activePlayer = undefined
     state.activeCard = undefined
-    state.scoreLimit = 5500
+    state.scoreLimit = 75
     state.tips = {showTips: true, factIndex: 0}
   },
 

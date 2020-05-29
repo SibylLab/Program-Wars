@@ -2,8 +2,8 @@ import Stack from '@/classes/game/Stack'
 import Card from '@/classes/game/Card'
 
 let stack
-let instruction = new Card(2, 75, 'INSTRUCTION')
-let group = new Card(3, 150, 'GROUP')
+let instruction = new Card(2, 1, 'INSTRUCTION')
+let group = new Card(3, 2, 'GROUP')
 let repeat = new Card(4, 3, 'REPEAT')
 
 
@@ -32,14 +32,14 @@ describe('Stack.js', () => {
   test('calculate correct score no repeats', () => {
     expect(stack.getScore()).toEqual(0)
     stack.cards.push(instruction)
-    expect(stack.getScore()).toEqual(75)
+    expect(stack.getScore()).toEqual(1)
   })
   test('calculate correct score with repeats', () => {
     stack.cards.push(group)
     stack.cards.push(repeat)
-    expect(stack.getScore()).toEqual(450)
+    expect(stack.getScore()).toEqual(6)
     stack.cards.push(repeat)
-    expect(stack.getScore()).toEqual(1350)
+    expect(stack.getScore()).toEqual(18)
   })
   test('maximum number of repeats (2)', () => {
     stack.cards.push(instruction)

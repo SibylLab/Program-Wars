@@ -22,7 +22,7 @@ export const store = new Vuex.Store({
     gameState: 'home',
     activePlayer: undefined,
     activeCard: undefined,
-    scoreLimit: 5500,
+    scoreLimit: 75,
     tips: {showTips: true, factIndex: 0},
     colorScheme: {},
     timer: undefined,
