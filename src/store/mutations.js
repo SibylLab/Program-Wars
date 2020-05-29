@@ -87,6 +87,7 @@ export default {
   giveNewHand (state, payload) {
     let player = payload.player
 
+    // discard old hand if applicable
     let oldHand = state.hands.find(h => h.playerId === player.id)
     if (oldHand !== undefined) {
       for (let card of oldHand.cards) {
@@ -94,6 +95,7 @@ export default {
       }
     }
 
+    // create and fill new hand
     let hand = {playerId: player.id, cards: []}
     while (hand.cards.length < 5) {
       let card = state.deck.draw()

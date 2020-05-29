@@ -49,8 +49,6 @@ export default {
       targetText: "Targets"
     }
   },
-  components: {
-  },
   computed: {
     ...mapState([
       'activeCard'
@@ -91,24 +89,37 @@ export default {
       'addNegativeEffect',
       'addPositiveEffect'
     ]),
+    /**
+     * Retrieves all the players that can be attacked by the card.
+     * Also, updates the text to use if there are targets or not.
+     */
     attackablePlayers () {
       let players = []
       if (this.type === "HACK") {
         players = this.getHackableOpponents()
       } else {
-        players = this.getAttackableOpponents({effect: "OVERCLOCK"})
+        players = this.getAttackableOpponents({effect: this.type})
       }
       this.targetText = players.length === 1 ? "Targets" : "No Targets"
       return players
     },
+    /**
+     * Selects this.card as the active card.
+     */
     select () {
       this.setActiveCard({newCard: this.card})
     },
+    /**
+     * Play an attack effect(this.type) on a given player.
+     */
     playAttack (player) {
       this.addNegativeEffect({player: player, effect: this.type})
       this.discardActiveCard()
       bus.$emit('played-effect', player.id)
     },
+    /**
+     * Play a safety effect(this.type) on the current player.
+     */
     playSafety () {
       this.addPositiveEffect({player: this.getCurrentPlayer, effect: this.type})
       this.discardActiveCard()
@@ -169,10 +180,6 @@ export default {
   border: solid black 2px;
   width: 114px;
   height: auto;
-}
-
-button:focus {
-  outline-width: 0;
 }
 </style>
 

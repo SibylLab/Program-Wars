@@ -18,10 +18,6 @@
      :optimum="scoreLimit - 500">
   </meter>
 
-  <!-- These list should obviously be tracking the good and bad effects
-       for a player. We need to use v-for and the effect name to get
-       the image path. For now we can use cropped card images. Titles
-       should say what the effect is doing to you. -->
   <div id="good-effects" :class="side" style="position: absolute; top: 65%;">
     <ul :key="effectReact">
       <img v-for="effect in player.positiveEffects" v-bind:key="effect"  
@@ -51,15 +47,10 @@ export default {
       effectReact: 0
     }
   },
-  components: {
-  },
   computed: {
     ...mapState([
       'scoreLimit'
     ]),
-    /**
-     * Create an path string for the players avatar image choice.
-     */
     playerImagePath () {
       // later change to imageId to get the specific image they want 
       return "/static/playerImages/robo_" + this.player.id + ".jpg"
@@ -72,6 +63,7 @@ export default {
   },
   created () {
     bus.$on('played-effect', (playerId) => {
+      // Allows the component to know to update the effect lists
       if (playerId === this.player.id) {
         this.effectReact = !this.effectReact
       }
@@ -79,6 +71,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 #info {
