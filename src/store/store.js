@@ -48,6 +48,7 @@ export const store = new Vuex.Store({
     falseSideColour: 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)',
     mainBackgroundColour: 'background-color: #ffffff',
     pIPBackgroundColour: 'background-color: #cccccc',
+    scoreBackgroundColour:'background-color: rgb(200, 221, 30)',
     pIPTextColour: 'color: #000000; background-color: #cccccc',
     mainTextColour: 'color: #000000; background-color: #ffffff',
     playfieldTextColour: 'color: #ffffff',
