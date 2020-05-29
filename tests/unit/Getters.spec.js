@@ -10,7 +10,6 @@ describe('vuex getters', () => {
 
   // Mock state
   const state = {
-      activePlayerId: 1,
       activeCard: {},
       players: [
         {id: 0, isProtectedFrom: isProtected, helpedBy: trueFn, hurtBy: trueFn},
@@ -32,15 +31,14 @@ describe('vuex getters', () => {
       objectives: [{playerId: 0}, {playerId: 1}]
     }
 
+  // Set the starting player
+  state.activePlayer = state.players[1]
+
 
   test('get the current players hand', () => {
     let hand = getters.getCurrentPlayerHand(state)
     expect(hand.id).toEqual(301)
     expect(hand.playerId).toEqual(1)
-  })
-  test('get the current player', () => {
-    let player = getters.getCurrentPlayer(state)
-    expect(player.id).toEqual(1)
   })
   test('get the current players stacks', () => {
     let stacks = getters.getCurrentPlayerStacks(state)
@@ -59,7 +57,7 @@ describe('vuex getters', () => {
   })
   test('get an ai handler when current player is not an AI', () => {
     let localState = Object.assign({}, state)
-    localState.activePlayerId = 0
+    localState.activePlayer = state.players[0]
     let handler = getters.getCurrentAiHandler(localState)
     expect(handler).toBeUndefined()
   })
@@ -69,7 +67,7 @@ describe('vuex getters', () => {
     expect(opp.length).toEqual(1)
     expect(opp[0].id).toEqual(2)
     expect(isProtected.mock.calls.length).toEqual(1)
-    expect(isNotProtected.mock.calls.length).toEqual(2)
+    expect(isNotProtected.mock.calls.length).toEqual(3)
   })
   test('get a list of players that can be hacked', () => {
     let opp = getters.getHackableOpponents(state)

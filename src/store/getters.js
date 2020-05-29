@@ -7,31 +7,21 @@ export default {
    * Returns the Hand object for the current player.
    */
   getCurrentPlayerHand (state) {
-    // Some getters use find so we don't have to worry
-    // about maintaining positioning. The size of these arrays is so
-    // small it should not make much difference.
-    return state.hands.find(h => h.playerId === state.activePlayerId)
-  },
-
-  /**
-   * Returns the current players object.
-   */
-  getCurrentPlayer (state) {
-    return state.players.find(p => p.id === state.activePlayerId)
+    return state.hands.find(h => h.playerId === state.activePlayer.id)
   },
 
   /**
    * Return a list of the current player's stacks.
    */
   getCurrentPlayerStacks (state) {
-    return state.stacks.filter(st => st.playerId === state.activePlayerId)
+    return state.stacks.filter(st => st.playerId === state.activePlayer.id)
   },
 
   /**
    * Get AI handler for the current player.
    */
   getCurrentAiHandler (state) {
-    return state.aiHandlers.find(h => h.playerId === state.activePlayerId)
+    return state.aiHandlers.find(h => h.playerId === state.activePlayer.id)
   },
 
   /**
@@ -42,7 +32,7 @@ export default {
     const effect = state.activeCard.type
     return state.players.filter((p) => {
       return p.id !== state.activePlayerId && !p.isProtectedFrom(effect)
-                  && !p.hurtBy(effect)
+             && !p.hurtBy(effect)
 
     })
   },
@@ -52,7 +42,7 @@ export default {
    */
   getHackableOpponents (state) {
     return state.players.filter((p) => {
-      if (p.id === state.activePlayerId || p.helpedBy('FIREWALL')) {
+      if (p.id === state.activePlayer.id || p.helpedBy('FIREWALL')) {
         return false
       }
       let stacks = state.stacks.filter(s => s.playerId === p.id && s.isHackable())
@@ -64,7 +54,7 @@ export default {
    * Get current players objectives.
    */
   getCurrentPlayerObjectives (state) {
-    return state.objectives.find(ob => ob.playerId === state.activePlayerId)
+    return state.objectives.find(ob => ob.playerId === state.activePlayer.id)
   },
 
   /**

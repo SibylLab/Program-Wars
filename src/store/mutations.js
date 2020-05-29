@@ -20,10 +20,19 @@ export default {
     state.objectives = []
     state.deck = new Deck()
     state.gameState = 'game'
-    state.activePlayerId = 0
+    state.activePlayer = undefined
     state.activeCard = undefined
     state.scoreLimit = 5500
     state.tips = {showTips: true, factIndex: 0}
+  },
+
+  /**
+   * Set the starting player for the game.
+   */
+  setStartingPlayer (state) {
+    // Original game always let the AI start first. Any desired behaviour can
+    // be set here to do that, but for now just pick the first player.
+    state.activePlayer = state.players[0]
   },
 
   /**
@@ -125,24 +134,23 @@ export default {
    * Discard the active card from the current players hand.
    */
   discardActiveCard (state) {
-    let player = state.players.find(p => p.id === state.activePlayerId)
+    let player = state.players.find(p => p.id === state.activePlayer.id)
     let hand = state.hands.find(h => h.playerId === player.id)
     hand.cards = hand.cards.filter(c => c !== state.activeCard)
     state.deck.discard.push(state.activeCard)
   },
 
   /**
-   * Adds a given beneficial effect to the given player.
+   * Adds a given card effect to a player with the given id.
+   * Must also be passed isPositive to know what kind of effect it is.
    */
-  addPositiveEffect (state, payload) {
-    payload.player.positiveEffects.add(payload.effect)
-  },
-
-  /**
-   * Adds a given negative effect to the given player.
-   */
-  addNegativeEffect (state, payload) {
-    payload.player.negativeEffects.add(payload.effect)
+  addCardEffect (state, payload) {
+    let player = state.players.find(p => p.id === payload.playerId)
+    if (payload.isPositive) {
+      player.positiveEffects.add(payload.effect)
+    } else {
+      player.negativeEffects.add(payload.effect)
+    }
   },
 
   // Setup a mock game adding a few componets to players, hands, stacks, etc.

@@ -20,7 +20,7 @@ export const store = new Vuex.Store({
     objectives: [],
     deck: undefined,
     gameState: 'home',
-    activePlayerId: 0,
+    activePlayer: undefined,
     activeCard: undefined,
     scoreLimit: 5500,
     tips: {showTips: true, factIndex: 0},

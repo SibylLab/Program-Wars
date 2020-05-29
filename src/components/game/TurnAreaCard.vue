@@ -1,6 +1,6 @@
 <template>
 <div id="turn-area-card" v-on:click="select">
-  <img v-if="isAiTurn" src="static/cardImages/backOfCard.png" class="card">
+  <img v-if="activePlayer.isAi" src="static/cardImages/backOfCard.png" class="card">
   <img v-else :src="card.image" class="card">
 
   <div v-if="isShowing" id="overlays" class="shadow">
@@ -14,7 +14,7 @@
       <div id="button-wrapper"> 
         <button id="target-button" class="btn btn-sm btn-primary"
             v-for="player in attackablePlayers()" v-bind:key="player.id"
-            v-on:click="playAttack(player)">
+            v-on:click="playSpecialCard(player)">
           {{ player.name }}
         </button>
       </div>
@@ -24,7 +24,7 @@
       <h5>{{ safetyText }}</h5>
       <div id="button-wrapper"> 
         <button id="safety-button" class="btn btn-sm btn-primary"
-            v-if="canPlaySafety"  v-on:click="playSafety">
+            v-if="canPlaySafety"  v-on:click="playSpecialCard(activePlayer)">
           OK
         </button>
       </div>
@@ -51,16 +51,11 @@ export default {
   },
   computed: {
     ...mapState([
-      'activeCard'
+      'activeCard',
+      'activePlayer'
     ]),
-    ...mapGetters([
-      'getCurrentPlayer',
-    ]),
-    isAiTurn () {
-      return this.getCurrentPlayer.isAi
-    },
     isShowing () {
-      return this.activeCard === this.card && !this.isAiTurn
+      return this.activeCard === this.card && !this.activePlayer.isAi
     },
     isAttack () {
       return this.type === "HACK" || this.type === "VIRUS"
@@ -72,7 +67,7 @@ export default {
              || this.type === "GENERATOR"
     },
     canPlaySafety () {
-      return !this.getCurrentPlayer.helpedBy(this.type)
+      return !this.activePlayer.helpedBy(this.type)
     },
     safetyText () {
       return this.canPlaySafety ? "Activate" : "Protected"
@@ -86,8 +81,7 @@ export default {
     ...mapMutations([
       'setActiveCard',
       'discardActiveCard',
-      'addNegativeEffect',
-      'addPositiveEffect'
+      'addCardEffect'
     ]),
     /**
      * Retrieves all the players that can be attacked by the card.
@@ -110,20 +104,14 @@ export default {
       this.setActiveCard({newCard: this.card})
     },
     /**
-     * Play an attack effect(this.type) on a given player.
+     * Apply this cards affect to a player.
+     * Only call when this card is a special card.
      */
-    playAttack (player) {
-      this.addNegativeEffect({player: player, effect: this.type})
+    playSpecialCard (player) {
+      this.addCardEffect({playerId: player.id, effect: this.type,
+                          isPositive: this.isSafety})
       this.discardActiveCard()
       bus.$emit('played-effect', player.id)
-    },
-    /**
-     * Play a safety effect(this.type) on the current player.
-     */
-    playSafety () {
-      this.addPositiveEffect({player: this.getCurrentPlayer, effect: this.type})
-      this.discardActiveCard()
-      bus.$emit('played-effect', this.getCurrentPlayer.id)
     }
   }
 }

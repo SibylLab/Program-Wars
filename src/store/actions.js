@@ -13,6 +13,7 @@ export default {
     context.commit('resetStateForGame')
     context.commit('newTimer')
     context.commit('addPlayers', payload)
+    context.commit('setStartingPlayer')
     context.commit('createNewDeck', {numPlayers: context.state.players.length})
 
     for (let p of context.state.players) {

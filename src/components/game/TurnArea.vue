@@ -24,7 +24,7 @@
 <script>
 import TurnAreaCard from '@/components/game/TurnAreaCard'
 import MessageBox from '@/components/game/MessageBox'
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapMutations, mapState} from 'vuex'
 
 export default {
   name: 'card-area',
@@ -33,9 +33,11 @@ export default {
     'turn-area-card': TurnAreaCard
   },
   computed: {
+    ...mapState([
+      'activePlayer',
+    ]),
     ...mapGetters([
       'getCurrentPlayerHand',
-      'getCurrentPlayer'
     ]),
   },
   methods: {
@@ -43,7 +45,7 @@ export default {
       'giveNewHand'
     ]),
     redrawHand () {
-      this.giveNewHand({player: this.getCurrentPlayer})
+      this.giveNewHand({player: this.activePlayer})
     }
   }
 }
