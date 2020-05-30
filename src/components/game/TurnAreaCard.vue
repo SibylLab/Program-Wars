@@ -102,7 +102,7 @@ export default {
         this.addCardEffect({
           playerId: player.id,
           effect: this.type,
-          isPositive: this.isSafety
+          isPositive: this.card.isSafety()
         })
         this.discardActiveCard()
       }

@@ -57,7 +57,7 @@ export default {
 
 <style scoped>
 #stack {
-  min-width: 235px;
+  min-width: 240px;
 }
 
 .card {
