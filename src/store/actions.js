@@ -19,8 +19,6 @@ export default {
     for (let p of context.state.players) {
       context.commit('giveNewHand', {player: p})
     }
-
-    context.commit('setupMockGame')
     router.push('game')
   },
 
@@ -69,6 +67,17 @@ export default {
   addNewStack (context, payload) {
     context.commit('removeFromHand', payload)
     context.commit('newStack', payload)
+    bus.$emit('card-played')
+    context.dispatch('endTurn', {draw: true})
+  },
+
+  /**
+   * Adds a given special card to the given player and ends the
+   * activePlayer's turn.
+   */
+  addSpecialCard (context, payload) {
+    context.commit('addCardEffect', payload)
+    context.commit('discardActiveCard')
     bus.$emit('card-played')
     context.dispatch('endTurn', {draw: true})
   }

@@ -31,7 +31,6 @@
     </div>
 
   </div>
-
 </div> 
 </template>
 
@@ -74,6 +73,7 @@ export default {
       'addCardEffect'
     ]),
     ...mapActions([
+      'addSpecialCard',
       'endTurn'
     ]),
     /**
@@ -102,13 +102,12 @@ export default {
      * The card will be removed from the players hand and the turn will end.
      */
     playSpecialCard (player) {
-      if (this.type !== "HACK") {
-        this.addCardEffect({
+      if (this.type !== "HACK") {  // Remove this if HACK is not "activated"
+        this.addSpecialCard({
           playerId: player.id,
           effect: this.type,
           isPositive: this.card.isSafety()
         })
-        this.discard()
       }
     },
     /**

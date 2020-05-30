@@ -1,4 +1,3 @@
-import { bus } from '@/components/shared/Bus'
 import Timer from 'easytimer'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
@@ -158,7 +157,6 @@ export default {
     hand.cards = hand.cards.filter(c => c !== state.activeCard)
     state.deck.discard.push(state.activeCard)
     state.activeCard = undefined
-    bus.$emit('discard-active-card')
   },
 
   /**
@@ -172,7 +170,6 @@ export default {
     } else {
       player.negativeEffects.add(payload.effect)
     }
-    bus.$emit('card-played')
   },
 
   /**
