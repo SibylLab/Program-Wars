@@ -47,5 +47,12 @@ export default {
     context.commit('addToStack', payload)
     bus.$emit('card-played')
     //endturn
+  },
+
+  addNewStack (context, payload) {
+    context.commit('removeFromHand', payload)
+    context.commit('newStack', payload)
+    bus.$emit('card-played')
+    //endturn
   }
 }

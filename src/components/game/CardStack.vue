@@ -39,7 +39,7 @@ export default {
       let hand = this.getCurrentPlayerHand
       let card = hand.cards.find(c => c.id === cardId)
 
-      if (this.stack.playerId === this.activePlayer.id
+      if (card && this.stack.playerId === this.activePlayer.id
           && this.stack.willAccept(card)) {
         let top = this.stack.getTop()
 

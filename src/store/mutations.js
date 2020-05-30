@@ -179,6 +179,15 @@ export default {
     stack.cards.push(payload.card)
   },
 
+  /**
+   * Create a new stack with a given card and a given player id.
+   */
+  newStack (state, payload) {
+    let stack = new Stack(payload.playerId)
+    stack.cards.push(payload.card)
+    state.stacks.push(stack)
+  },
+
   // Setup a mock game adding a few componets to players, hands, stacks, etc.
   // This is only for testing purposes while rebuilding the UI and should
   // be removed afterward.
