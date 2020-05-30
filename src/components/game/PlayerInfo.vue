@@ -12,7 +12,7 @@
        everything needs to be positioned explicitly -->
   <meter id="score-meter" :class="side"
      :max="scoreLimit" min=0
-     :value="50"
+     :value="getPlayerScore"
      :high="scoreLimit * 0.75"
      :low="scoreLimit / 2"
      :optimum="scoreLimit - 500">
@@ -49,11 +49,18 @@ export default {
   },
   computed: {
     ...mapState([
-      'scoreLimit'
+      'scoreLimit',
+      'stacks'
     ]),
     playerImagePath () {
       // later change to imageId to get the specific image they want 
       return "/static/playerImages/robo_" + this.player.id + ".jpg"
+    },
+    getPlayerScore () {
+      let stacks = this.stacks.filter(s => s.playerId === this.player.id)
+      return stacks.reduce((acc, stack) => {
+        return acc + stack.getScore()
+      }, 0)
     }
   },
   methods: {

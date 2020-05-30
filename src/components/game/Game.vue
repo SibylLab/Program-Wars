@@ -118,15 +118,15 @@ export default {
 #right-field {
   position: absolute;
   top: 0;
-  right: 1%;
-  width: 48%;
+  right: 0.5%;
+  width: 49%;
   height: 98%;
 }
 
 #left-field {
   position: absolute;
   top: 0;
-  left: 1%;
+  left: 0.5%;
   width: 49%;
   height: 98%;
 }

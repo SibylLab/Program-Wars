@@ -1,7 +1,7 @@
 <template>
 <div id="stack" ondragstart="return false;">
   <div style="text-align: center">
-    <h5 style="margin:0; margin-top: 5px; color: #fff;">Score: 50</h5>
+    <h5 style="margin:0; margin-top: 5px; color: #fff;">Score: {{ getScore }}</h5>
   </div>
   <ul id="card-list" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
       <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image" class="card">
@@ -24,7 +24,10 @@ export default {
     ]),
     ...mapGetters([
       'getCurrentPlayerHand',
-    ])
+    ]),
+    getScore () {
+      return this.stack.getScore()
+    }
   },
   methods: {
     ...mapActions([
