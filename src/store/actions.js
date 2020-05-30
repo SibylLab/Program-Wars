@@ -42,17 +42,34 @@ export default {
     context.commit('stopTimer')
   },
 
+  /**
+   * Clean up after a players turn and change to the next player.
+   */
+  endTurn (context, payload) {
+    if (payload.draw) {
+      context.commit('drawCard')
+    }
+    context.commit('nextPlayer')
+    bus.$emit('end-turn')
+  },
+
+  /**
+   * Add a card to a stack from the activePlayer's hand and end turn.
+   */
   addCardToStack (context, payload) {
     context.commit('removeFromHand', payload)
     context.commit('addToStack', payload)
     bus.$emit('card-played')
-    //endturn
+    context.dispatch('endTurn', {draw: true})
   },
 
+  /**
+   * Add a new stack for a player from the activePlayer's hand and end turn.
+   */
   addNewStack (context, payload) {
     context.commit('removeFromHand', payload)
     context.commit('newStack', payload)
     bus.$emit('card-played')
-    //endturn
+    context.dispatch('endTurn', {draw: true})
   }
 }

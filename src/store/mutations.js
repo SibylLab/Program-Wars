@@ -124,6 +124,24 @@ export default {
   },
 
   /**
+   * Move to the next player.
+   */
+  nextPlayer (state) {
+    let id = state.activePlayer.id
+    id = (id + 1) % state.players.length
+    state.activePlayer = state.players.find(p => p.id === id)
+  },
+
+  /**
+   * Draw a card from the deck and add it to the activePlayers hand.
+   */
+  drawCard (state) {
+    let card = state.deck.draw()
+    let hand = state.hands.find(h => h.playerId === state.activePlayer.id)
+    hand.cards.push(card)
+  },
+
+  /**
    * Remove a given card from a given players hand.
    */
   removeCardFromHand (state, payload) {
@@ -192,34 +210,6 @@ export default {
   // This is only for testing purposes while rebuilding the UI and should
   // be removed afterward.
   setupMockGame (state) {
-    let s1 = new Stack(0)
-    s1.cards.push(state.deck.draw())
-    s1.cards.push(state.deck.draw())
-    s1.cards.push(state.deck.draw())
-    s1.cards.push(state.deck.draw())
-    state.stacks.push(s1)
-    let s2 = new Stack(0)
-    s2.cards.push(state.deck.draw())
-    state.stacks.push(s2)
-    let s3 = new Stack(0)
-    s3.cards.push(state.deck.draw())
-    s3.cards.push(state.deck.draw())
-    s3.cards.push(state.deck.draw())
-    state.stacks.push(s3)
-    let s4 = new Stack(0)
-    s4.cards.push(state.deck.draw())
-    s4.cards.push(state.deck.draw())
-    s4.cards.push(state.deck.draw())
-    state.stacks.push(s4)
-    let s5 = new Stack(0)
-    s5.cards.push(state.deck.draw())
-    s5.cards.push(state.deck.draw())
-    s5.cards.push(state.deck.draw())
-    state.stacks.push(s5)
-    let s6 = new Stack(1)
-    s6.cards.push(state.deck.draw())
-    s6.cards.push(state.deck.draw())
-    s6.cards.push(state.deck.draw())
-    state.stacks.push(s6)
+    state
   }
 }

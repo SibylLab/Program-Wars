@@ -7,7 +7,7 @@
     <input type="image" id="discard-button"
        title="Discard Card"
        src="static/miscIcons/trash.png"
-       v-on:click="discardActiveCard">
+       v-on:click="discard">
 
     <div id="targets" class="popup" v-if="card.isAttack()">
       <h5>{{ targetText }}</h5>
@@ -37,7 +37,7 @@
 
 
 <script>
-import {mapGetters, mapMutations, mapState} from 'vuex'
+import {mapGetters, mapMutations, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'turn-area-card',
@@ -73,6 +73,9 @@ export default {
       'discardActiveCard',
       'addCardEffect'
     ]),
+    ...mapActions([
+      'endTurn'
+    ]),
     /**
      * Retrieves all the players that can be attacked by the card.
      * Also, updates the text to use if there are targets or not.
@@ -104,8 +107,15 @@ export default {
           effect: this.type,
           isPositive: this.card.isSafety()
         })
-        this.discardActiveCard()
+        this.discard()
       }
+    },
+    /**
+     * Discard the activeCard and end the activePlayers turn.
+     */
+    discard () {
+      this.discardActiveCard()
+      this.endTurn({draw: true})
     }
   },
 }

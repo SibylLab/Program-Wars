@@ -27,7 +27,7 @@
 import {bus} from '@/components/shared/Bus'
 import TurnAreaCard from '@/components/game/TurnAreaCard'
 import MessageBox from '@/components/game/MessageBox'
-import {mapGetters, mapMutations, mapState} from 'vuex'
+import {mapGetters, mapMutations, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'card-area',
@@ -53,8 +53,12 @@ export default {
       'giveNewHand',
       'setActiveCard'
     ]),
+    ...mapActions([
+      'endTurn'
+    ]),
     redrawHand () {
       this.giveNewHand({player: this.activePlayer})
+      this.endTurn({draw: false})
     },
     canDrag (card) {
       return !card.isSpecial()
