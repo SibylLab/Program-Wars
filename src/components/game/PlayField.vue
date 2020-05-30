@@ -1,5 +1,6 @@
 <template>
-<div id="stacks-area" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+<div id="stacks-area" :key="update"
+    @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
   <h3 style="margin: 0; margin-top: 2px; margin-left: 5px; color: #fff;">{{ player.name }}_main:</h3>
   <ul id="stack-list">
       <card-stack class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id" :stack="stack"></card-stack>
@@ -10,11 +11,17 @@
 
 <script>
 import CardStack from '@/components/game/CardStack'
+import {bus} from '@/components/shared/Bus'
 import {mapState, mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'play-field',
   props: ['player'],
+  data () {
+    return {
+      update: true
+    }
+  },
   components: {
    'card-stack': CardStack
   },
@@ -34,6 +41,11 @@ export default {
     ...mapActions([
       'addNewStack'
     ]),
+    /**
+     * Handles events when a card is dropped in the playing feild.
+     * If the card is an instruction it cannot be placed on any stacks,
+     * So instead we add a new stack containing the card.
+     */
     onDrop (evt) {
       let cardId = parseInt(evt.dataTransfer.getData('cardId'))
       let hand = this.getCurrentPlayerHand
@@ -44,6 +56,11 @@ export default {
         this.addNewStack({card: card, playerId: this.player.id})
       }
     }
+  },
+  created () {
+    bus.$on('card-played', () => {
+      this.update = !this.update
+    })
   }
 }
 </script>

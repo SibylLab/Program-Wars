@@ -172,7 +172,7 @@ export default {
     } else {
       player.negativeEffects.add(payload.effect)
     }
-    bus.$emit('played-effect', player.id)
+    bus.$emit('card-played')
   },
 
   /**
@@ -205,11 +205,4 @@ export default {
     stack.cards.push(payload.card)
     state.stacks.push(stack)
   },
-
-  // Setup a mock game adding a few componets to players, hands, stacks, etc.
-  // This is only for testing purposes while rebuilding the UI and should
-  // be removed afterward.
-  setupMockGame (state) {
-    state
-  }
 }

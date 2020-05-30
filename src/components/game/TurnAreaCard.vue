@@ -99,6 +99,7 @@ export default {
     /**
      * Apply this cards affect to a player.
      * Only call when this card is a special card.
+     * The card will be removed from the players hand and the turn will end.
      */
     playSpecialCard (player) {
       if (this.type !== "HACK") {

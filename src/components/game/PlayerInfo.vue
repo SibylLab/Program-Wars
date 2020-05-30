@@ -1,5 +1,5 @@
 <template>
-<div id="info">
+<div id="info" :key="update">
   <!-- Add some effect on the name or image to indicate current players turn -->
   <h3 id="name" :class="side">{{ player.name }}</h3>
 
@@ -12,21 +12,21 @@
        everything needs to be positioned explicitly -->
   <meter id="score-meter" :class="side"
      :max="scoreLimit" min=0
-     :value="getPlayerScore"
-     :high="scoreLimit * 0.75"
+     :value="getPlayerScore()"
+     :high="scoreLimit * 0.7"
      :low="scoreLimit / 2"
-     :optimum="scoreLimit - 500">
+     :optimum="scoreLimit * 0.9">
   </meter>
 
   <div id="good-effects" :class="side" style="position: absolute; top: 65%;">
-    <ul :key="effectReact">
+    <ul>
       <img v-for="effect in player.positiveEffects" v-bind:key="effect"  
           class="effect-icon" :src="effectImagePath(effect)">
     </ul>
   </div>
 
   <div id="bad-effects" :class="side" style="position: absolute; top: 80%;">
-    <ul :key="effectReact">
+    <ul>
       <img v-for="effect in player.negativeEffects" v-bind:key="effect"  
           class="effect-icon" :src="effectImagePath(effect)">
     </ul>
@@ -44,7 +44,7 @@ export default {
   props: ['player', 'side'],
   data () {
     return {
-      effectReact: 0
+      update: true
     }
   },
   computed: {
@@ -55,25 +55,40 @@ export default {
     playerImagePath () {
       // later change to imageId to get the specific image they want 
       return "/static/playerImages/robo_" + this.player.id + ".jpg"
-    },
-    getPlayerScore () {
-      let stacks = this.stacks.filter(s => s.playerId === this.player.id)
-      return stacks.reduce((acc, stack) => {
-        return acc + stack.getScore()
-      }, 0)
     }
   },
   methods: {
     effectImagePath (effect) {
       return "/static/cardImages/effects/" + effect + ".png"
     },
+    /**
+     * Get the players total score from their stacks.
+     * Apply any special effects and round down to the nearest integer.
+     */
+    getPlayerScore () {
+      // Tried making this a getter so it could be reused, but this method
+      // did not always allow visual updates when a special card was played.
+      let stacks = this.stacks.filter(s => s.playerId === this.player.id)
+      let total = stacks.reduce((acc, stack) => {
+        let score = stack.getScore()
+        let helped = this.player.positiveEffects.has("OVERCLOCK")
+        let hurt = this.player.negativeEffects.has("VIRUS")
+
+        if (helped && !hurt) {
+          score *= 1.25
+        } else if (!helped && hurt) {
+          score *= 0.75
+        }
+        return acc + score
+      }, 0)
+
+      return Math.floor(total)
+    }
   },
   created () {
-    bus.$on('played-effect', (playerId) => {
-      // Allows the component to know to update the effect lists
-      if (playerId === this.player.id) {
-        this.effectReact = !this.effectReact
-      }
+    bus.$on('card-played', () => {
+        // Scores and effect lists must be updated when a card is played
+        this.update = !this.update
     })
   }
 }
