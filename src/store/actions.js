@@ -85,5 +85,9 @@ export default {
     context.commit('discardActiveCard')
     bus.$emit('card-played')
     context.dispatch('endTurn', {draw: true})
+  },
+
+  groupStacks (context, payload) {
+    console.log(payload.stacks)
   }
 }

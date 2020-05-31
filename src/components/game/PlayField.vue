@@ -1,9 +1,18 @@
 <template>
 <div id="stacks-area" :key="update" :class="{ active: isActive }"
     @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
-  <h3 style="margin: 0; margin-top: 2px; margin-left: 5px; color: #fff;">{{ player.name }}_main:</h3>
+  <div style="display: flex;">
+    <h3 id="main-func">{{ player.name }}_main:</h3>
+    <h3 id="group-total" v-if="isGroup">
+      Grouped Points {{ groupedScore() }} / {{ groupCardSize }}
+    </h3>
+  </div>
   <ul id="stack-list">
-      <card-stack class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id" :stack="stack"></card-stack>
+    <li class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id">
+      <button id="group-button" class="btn btn-sm btn-primary"
+          v-if="canGroup(stack)" v-on:click="toggleGrouped(stack)">{{ groupText(stack) }}</button>
+      <card-stack :stack="stack"></card-stack>
+    </li>
   </ul>
 </div>
 </template>
@@ -19,7 +28,8 @@ export default {
   props: ['player'],
   data () {
     return {
-      update: true
+      update: true,
+      groupedStacks: new Set()
     }
   },
   components: {
@@ -28,7 +38,8 @@ export default {
   computed: {
     ...mapState([
       'stacks',
-      'activePlayer'
+      'activePlayer',
+      'activeCard'
     ]),
     ...mapGetters([
       'getCurrentPlayerHand'
@@ -38,11 +49,22 @@ export default {
     },
     isActive () {
       return this.player === this.activePlayer
+    },
+    isGroup () {
+      return this.activeCard && this.activePlayer.id === this.player.id
+             && this.activeCard.type === "GROUP"
+    },
+    groupCardSize () {
+      if (this.activeCard !== undefined) {
+        return this.activeCard.value
+      }
+      return 0
     }
   },
   methods: {
     ...mapActions([
-      'addNewStack'
+      'addNewStack',
+      'groupStacks'
     ]),
     /**
      * Handles events when a card is dropped in the playing feild.
@@ -58,11 +80,44 @@ export default {
           && card.type === "INSTRUCTION") {
         this.addNewStack({card: card, playerId: this.player.id})
       }
+    },
+    groupedScore () {
+      let grouped = Array.from(this.groupedStacks.values())
+      return grouped.reduce((acc, stack) => {
+        return acc + stack.getScore()
+      }, 0)
+    },
+    groupText (stack) {
+      if (this.groupedStacks.has(stack)) {
+        return "Un-Group"
+      }
+      return "Group"
+    },
+    canGroup (stack) {
+      if (!this.isGroup || this.activePlayer.id !== stack.playerId) {
+        return false
+      }
+      return this.groupedStacks.has(stack)
+             || this.groupedScore() + stack.getScore() <= this.groupCardSize
+    },
+    toggleGrouped (stack) {
+      if (this.groupedStacks.has(stack)) {
+        this.groupedStacks.delete(stack)
+      } else {
+        this.groupedStacks.add(stack)
+      }
+      if (this.groupedScore() === this.groupCardSize) {
+        this.groupStacks({stacks: this.groupedStacks})
+      }
+      this.react()
+    },
+    react () {
+      this.update = !this.update
     }
   },
   created () {
     bus.$on('card-played', () => {
-      this.update = !this.update
+      this.react()
     })
   }
 }
@@ -80,7 +135,27 @@ export default {
   text-align: left;
 }
 
+#main-func {
+  margin-top: 2px;
+  margin-left: 5px;
+  color: #fff;
+}
+
+#group-total {
+  margin-left: 60px;
+  margin-top: 2px;
+  color: #000;
+}
+
+
+#group-button {
+  position: absolute;
+  left: 15%;
+  top: 50%;
+}
+
 .card-stack {
+  position: relative;
   display: inline-block;
   margin: 5px; 
 }
@@ -89,6 +164,10 @@ export default {
   -webkit-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
   -moz-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
   box-shadow: 0 0 24px 4px rgba(0,0,255,1);
+}
+
+h3 {
+  margin: 0;
 }
 
 ul {

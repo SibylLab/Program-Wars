@@ -114,6 +114,7 @@ export default {
 
     state.hands = state.hands.filter(h => h.playerId !== player.id)
     state.hands.push(hand) 
+    state.activeCard = undefined
   },
 
   /**
@@ -212,7 +213,7 @@ export default {
     let scores = getters.getPlayerScores(state)()  // call returned function
     for (let scoreInfo of scores) {
       if (scoreInfo.score >= state.scoreLimit) {
-        state.gameState = "winner"
+        state.gameState = "home"  // later set to winner to show scores
       }
     }
   }

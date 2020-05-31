@@ -1,10 +1,11 @@
 <template>
-<div id="stack" ondragstart="return false;">
+<div id="stack">
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;" class="score-normal">Score: {{ getScore() }}</h5>
   </div>
   <ul id="card-list" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
-      <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image" class="card">
+    <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image"
+        draggable="false" :class="[{card: true}, {play: willAcceptActive(card)}]">
   </ul>
 </div>
 </template>
@@ -21,6 +22,7 @@ export default {
   computed: {
     ...mapState([
       'activePlayer',
+      'activeCard',
       'players'
     ]),
     ...mapGetters([
@@ -32,7 +34,6 @@ export default {
       'addCardToStack'
     ]),
     ...mapMutations([
-      'discardActiveCard',
       'setActiveCard'
     ]),
     /**
@@ -73,6 +74,16 @@ export default {
           replace: top.type === "VARIABLE" && card.type === "VARIABLE"
         })
       }
+    },
+    /**
+     * Used to set css class to higlight cards on top of the stack that
+     * can have the active card placed on them.
+     */
+    willAcceptActive (card) {
+      return this.activeCard !== undefined
+             && this.stack.willAccept(this.activeCard)
+             && this.stack.playerId === this.activePlayer.id
+             && this.stack.getTop() === card
     }
   }
 }
@@ -99,6 +110,12 @@ export default {
 
 .score-helped {
   color: #f5f242;
+}
+
+.play {
+  -webkit-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+  -moz-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+  box-shadow: 0 0 24px 4px rgba(255,230,0,1);
 }
 
 ul {
