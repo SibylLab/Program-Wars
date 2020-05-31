@@ -8,9 +8,7 @@
 
   <div id="cards">
     <ul>
-      <li v-for="card in getCurrentPlayerHand.cards" v-bind:key="card.id"
-          :ondragstart="ondragstart(card)" draggable v-on:dragstart="startDrag($event, card)"
-          v-on:dragend="dragEnd($event, card)">
+      <li v-for="card in getCurrentPlayerHand.cards" v-bind:key="card.id">
         <turn-area-card :card="card"></turn-area-card>
       </li>
     </ul>
@@ -51,7 +49,6 @@ export default {
   methods: {
     ...mapMutations([
       'giveNewHand',
-      'setActiveCard'
     ]),
     ...mapActions([
       'endTurn'
@@ -59,37 +56,6 @@ export default {
     redrawHand () {
       this.giveNewHand({player: this.activePlayer})
       this.endTurn({draw: false})
-    },
-    canDrag (card) {
-      if (card.type === "INSTRUCTION"
-          && this.activePlayer.hurtBy("POWEROUTAGE")) {
-        return false
-      }
-      return !card.isSpecial()
-    },
-    ondragstart (card) {
-      // The ondragstart attribute requires a string "return bool;" so here
-      // we are building one to make sure special cards can't be dragged.
-      return "return " + this.canDrag(card)
-    },
-    /**
-     * Action to take when card starts being dragged.
-     * Sets up the dragging event with the necessary data.
-     */
-    startDrag (evt, card) {
-      if (this.canDrag(card)) {
-        evt.dataTransfer.dropEffect = 'move'
-        evt.dataTransfer.effectAllowed = 'move'
-        evt.dataTransfer.setData('cardId', card.id)
-      } else {
-        this.setActiveCard({newCard: card})
-      }
-    },
-    /**
-     * Action to take when a card stops being dragged.
-     */
-    dragEnd (evt, card) {
-      this.setActiveCard({newCard: card})
     }
   },
   created () {

@@ -1,36 +1,17 @@
 <template>
 <div id="turn-area-card" v-on:mouseover="select"
-    :class="{ active: isActive, noplay: noPlayClass }">
+    draggable v-on:dragstart="startDrag($event)" :ondragstart="ondragstart">
 
-  <img v-if="activePlayer.isAi" src="static/cardImages/backOfCard.png" class="card"> 
+  <img v-if="activePlayer.isAi" src="static/cardImages/backOfCard.png" class="card">
   <img v-else :src="card.image" class="card">
 
-  <div v-if="isShowing" id="overlays">
+  <div v-if="isShowing" id="overlays" :class="shadow">
     <input type="image" id="discard-button"
        title="Discard Card"
        src="static/miscIcons/trash.png"
        v-on:click="discard">
 
-    <div id="targets" class="popup" v-if="card.isAttack()">
-      <h5>{{ targetText }}</h5>
-      <div id="button-wrapper"> 
-        <button id="target-button" class="btn btn-sm btn-primary"
-            v-for="player in attackablePlayers()" v-bind:key="player.id"
-            v-on:click="playSpecialCard(player)">
-          {{ player.name }}
-        </button>
-      </div>
-    </div>
-
-    <div id="play" class="popup" v-if="card.isSafety()">
-      <h5>{{ safetyText }}</h5>
-      <div id="button-wrapper"> 
-        <button id="safety-button" class="btn btn-sm btn-primary"
-            v-if="canPlaySafety"  v-on:click="playSpecialCard(activePlayer)">
-          OK
-        </button>
-      </div>
-    </div>
+    <effect-card-popup></effect-card-popup>
 
   </div>
 </div> 
@@ -38,7 +19,8 @@
 
 
 <script>
-import {mapGetters, mapMutations, mapState, mapActions} from 'vuex'
+import EffectCardPopup from '@/components/game/EffectCardPopup'
+import {mapMutations, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'turn-area-card',
@@ -49,6 +31,9 @@ export default {
       targetText: "Targets"
     }
   },
+  components: {
+    'effect-card-popup': EffectCardPopup
+  },
   computed: {
     ...mapState([
       'activeCard',
@@ -57,60 +42,37 @@ export default {
     isShowing () {
       return this.activeCard === this.card && !this.activePlayer.isAi
     },
-    canPlaySafety () {
-      return !this.activePlayer.helpedBy(this.type)
-    },
-    safetyText () {
-      return this.canPlaySafety ? "Activate" : "Protected"
-    },
-    isActive () {
-      return this.card === this.activeCard
-    },
     /**
-     * Used along with isActive to set css classes for the shadow around the
-     * card. If a card is active it will have the active class and will have
-     * a green shadow. If it also has no play class it will have a read shadow
-     * that should obscure the green one. currently only deals with instructions
-     * while under power outage, but could extend to also do special cards.
-     * either adding to, or removing, the no targets and protected boxes.
+     * Determines which css class to use for the shadow around the active card.
      */
-    noPlayClass () {
-      if (!this.isActive) {return false}
+    shadow () {
       if (this.card.type === "INSTRUCTION"
            && this.activePlayer.hurtBy("POWEROUTAGE")) {
-        return true
+        return 'noplay'
       }
-      return false
+      return 'play'
+    },
+    canDrag () {
+      if (this.card.type === "INSTRUCTION"
+          && this.activePlayer.hurtBy("POWEROUTAGE")) {
+        return false
+      }
+      return !this.card.isSpecial()
+    },
+    ondragstart () {
+      // The ondragstart attribute requires a string "return bool;" so here
+      // we are building one to make sure special cards can't be dragged.
+      return "return " + this.canDrag
     }
   },
   methods: {
-    ...mapGetters([
-      'getAttackableOpponents',
-      'getHackableOpponents'
-    ]),
     ...mapMutations([
       'setActiveCard',
       'discardActiveCard',
-      'addCardEffect'
     ]),
     ...mapActions([
-      'addSpecialCard',
       'endTurn'
     ]),
-    /**
-     * Retrieves all the players that can be attacked by the card.
-     * Also, updates the text to use if there are targets or not.
-     */
-    attackablePlayers () {
-      let players = []
-      if (this.type === "HACK") {
-        players = this.getHackableOpponents()
-      } else {
-        players = this.getAttackableOpponents({effect: this.type})
-      }
-      this.targetText = players.length === 1 ? "Targets" : "No Targets"
-      return players
-    },
     /**
      * Selects this.card as the active card.
      */
@@ -118,25 +80,22 @@ export default {
       this.setActiveCard({newCard: this.card})
     },
     /**
-     * Apply this cards affect to a player.
-     * Only call when this card is a special card.
-     * The card will be removed from the players hand and the turn will end.
-     */
-    playSpecialCard (player) {
-      if (this.type !== "HACK") {  // Remove this if HACK is not "activated"
-        this.addSpecialCard({
-          playerId: player.id,
-          effect: this.type,
-          isPositive: this.card.isSafety()
-        })
-      }
-    },
-    /**
      * Discard the activeCard and end the activePlayers turn.
      */
     discard () {
       this.discardActiveCard()
       this.endTurn({draw: true})
+    },
+    /**
+     * Action to take when card starts being dragged.
+     * Sets up the dragging event with the necessary data.
+     */
+    startDrag (evt) {
+      if (this.canDrag) {
+        evt.dataTransfer.dropEffect = 'move'
+        evt.dataTransfer.effectAllowed = 'move'
+        evt.dataTransfer.setData('cardId', this.card.id)
+      }
     }
   },
 }
@@ -165,21 +124,12 @@ export default {
   height: 25px; 
 }
 
-#button-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 3px;
-  margin-right: 3px;
-  margin-bottom: 3px;
-}
-
 .card {
   max-width: 90px;
   max-height: 134px;
 }
 
-.active {
+.play {
   -webkit-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
   -moz-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
   box-shadow: 0 0 24px 4px rgba(0,230,0,1);
@@ -189,17 +139,6 @@ export default {
   -webkit-box-shadow: 0 0 24px 3px rgba(230,0,0,0.8);
   -moz-box-shadow: 0 0 24px 3px rgba(230,0,0,0.8);
   box-shadow: 0 0 24px 3px rgba(230,0,0,0.8);
-}
-
-.popup {
-  position: absolute;
-  left: -12px;
-  top: 30px;
-  background-color: white;
-  border: solid black 2px;
-  border-radius: 5px;
-  width: 114px;
-  height: auto;
 }
 </style>
 

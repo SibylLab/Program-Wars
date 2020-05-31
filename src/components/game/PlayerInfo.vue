@@ -1,13 +1,13 @@
 <template>
 <div id="info" :key="update">
-  <h3 id="name" :class="{ left: isLeft, right: !isLeft }">
+  <h3 id="name" :class="side">
     {{ player.name }}
   </h3>
 
-  <img id="avatar" :class="{ left: isLeft, right: !isLeft, active: isActive }"
+  <img id="avatar" :class="[side, {active: isActive}]"
       :src="playerImagePath">
 
-  <meter id="score-meter" :class="{ left: isLeft, right: !isLeft }"
+  <meter id="score-meter" :class="side"
      :max="scoreLimit" min=0
      :value="getScore()"
      :high="scoreLimit * 0.7"
@@ -15,7 +15,7 @@
      :optimum="scoreLimit * 0.9">
   </meter>
 
-  <div id="good-effects" :class="{ left: isLeft, right: !isLeft }"
+  <div id="good-effects" :class="side"
       style="position: absolute; top: 65%;">
     <ul>
       <img v-for="effect in player.positiveEffects" v-bind:key="effect"  
@@ -23,7 +23,7 @@
     </ul>
   </div>
 
-  <div id="bad-effects" :class="{ left: isLeft, right: !isLeft }"
+  <div id="bad-effects" :class="side"
       style="position: absolute; top: 80%;">
     <ul>
       <img v-for="effect in player.negativeEffects" v-bind:key="effect"  
@@ -40,7 +40,7 @@ import {mapState} from 'vuex'
 
 export default {
   name: 'player-info',
-  props: ['player', 'isLeft'],
+  props: ['player', 'side'],
   data () {
     return {
       update: true

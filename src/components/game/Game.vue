@@ -5,7 +5,7 @@
 
   <div id="play">
     <div id="left-player">
-      <player-info :player="getPlayer(0)" :isLeft=true></player-info>
+      <player-info :player="getPlayer(0)" side="left"></player-info>
     </div>
 
     <div id="turn">
@@ -13,7 +13,7 @@
     </div>
 
     <div id="right-player">
-      <player-info :player="getPlayer(1)" :isLeft=false></player-info>
+      <player-info :player="getPlayer(1)" side="right"></player-info>
     </div>
   </div>
 
