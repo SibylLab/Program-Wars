@@ -45,10 +45,33 @@ export default class Player {
     if (effect === "HACK") {
       return this.helpedBy("FIREWALL")
     } else if (effect === "POWEROUTAGE") {
-      return this.helpedBy("BATTERYBACKUP") || this.helpedBy("GENERATOR")
+      return this.helpedBy("GENERATOR")
     } else if (effect === "VIRUS") {
       return this.helpedBy("ANTIVIRUS")
     }
     return false
+  }
+
+  /**
+   * Adds a positive effect and alters negative effects if necessary.
+   */
+  addPositive (effect) {
+    if (effect === "BATTERYBACKUP" || effect === "GENERATOR") {
+      this.negativeEffects.delete("POWEROUTAGE")
+    } else if (effect === "ANTIVIRUS") {
+      this.negativeEffects.delete("VIRUS")
+    }
+    this.positiveEffects.add(effect)
+  }
+
+  /**
+   * Adds a negative effect and alters positive effects if necessary.
+   */
+  addNegative (effect) {
+    if (effect === "POWEROUTAGE" && this.helpedBy("BATTERYBACKUP")) {
+        this.positiveEffects.delete("BATTERYBACKUP")
+        return
+    }
+    this.negativeEffects.add(effect)
   }
 }

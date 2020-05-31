@@ -61,6 +61,10 @@ export default {
       this.endTurn({draw: false})
     },
     canDrag (card) {
+      if (card.type === "INSTRUCTION"
+          && this.activePlayer.hurtBy("POWEROUTAGE")) {
+        return false
+      }
       return !card.isSpecial()
     },
     ondragstart (card) {

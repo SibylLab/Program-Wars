@@ -166,9 +166,9 @@ export default {
   addCardEffect (state, payload) {
     let player = state.players.find(p => p.id === payload.playerId)
     if (payload.isPositive) {
-      player.positiveEffects.add(payload.effect)
+      player.addPositive(payload.effect)
     } else {
-      player.negativeEffects.add(payload.effect)
+      player.addNegative(payload.effect)
     }
   },
 
