@@ -1,9 +1,11 @@
 <template>
-<div id="turn-area-card" v-on:click="select">
+<div id="turn-area-card" v-on:mouseover="select"
+    :class="{ active: isActive, noplay: noPlayClass }">
+
   <img v-if="activePlayer.isAi" src="static/cardImages/backOfCard.png" class="card"> 
   <img v-else :src="card.image" class="card">
 
-  <div v-if="isShowing" id="overlays" class="shadow">
+  <div v-if="isShowing" id="overlays">
     <input type="image" id="discard-button"
        title="Discard Card"
        src="static/miscIcons/trash.png"
@@ -60,6 +62,25 @@ export default {
     },
     safetyText () {
       return this.canPlaySafety ? "Activate" : "Protected"
+    },
+    isActive () {
+      return this.card === this.activeCard
+    },
+    /**
+     * Used along with isActive to set css classes for the shadow around the
+     * card. If a card is active it will have the active class and will have
+     * a green shadow. If it also has no play class it will have a read shadow
+     * that should obscure the green one. currently only deals with instructions
+     * while under power outage, but could extend to also do special cards.
+     * either adding to, or removing, the no targets and protected boxes.
+     */
+    noPlayClass () {
+      if (!this.isActive) {return false}
+      if (this.card.type === "INSTRUCTION"
+           && this.activePlayer.hurtBy("POWEROUTAGE")) {
+        return true
+      }
+      return false
     }
   },
   methods: {
@@ -158,10 +179,16 @@ export default {
   max-height: 134px;
 }
 
-.shadow {
-  -webkit-box-shadow: 0 0 24px 4px rgba(0,255,60,1);
-  -moz-box-shadow: 0 0 24px 4px rgba(0,255,60,1);
-  box-shadow: 0 0 24px 4px rgba(0,255,60,1);
+.active {
+  -webkit-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+  -moz-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+  box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+}
+
+.noplay {
+  -webkit-box-shadow: 0 0 24px 3px rgba(230,0,0,0.8);
+  -moz-box-shadow: 0 0 24px 3px rgba(230,0,0,0.8);
+  box-shadow: 0 0 24px 3px rgba(230,0,0,0.8);
 }
 
 .popup {
