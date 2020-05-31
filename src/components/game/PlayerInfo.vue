@@ -9,7 +9,7 @@
 
   <meter id="score-meter" :class="{ left: isLeft, right: !isLeft }"
      :max="scoreLimit" min=0
-     :value="getPlayerScore()"
+     :value="getScore()"
      :high="scoreLimit * 0.7"
      :low="scoreLimit / 2"
      :optimum="scoreLimit * 0.9">
@@ -68,24 +68,12 @@ export default {
      * Get the players total score from their stacks.
      * Apply any special effects and round down to the nearest integer.
      */
-    getPlayerScore () {
-      // Tried making this a getter so it could be reused, but this method
-      // did not always allow visual updates when a special card was played.
-      let stacks = this.stacks.filter(s => s.playerId === this.player.id)
-      let total = stacks.reduce((acc, stack) => {
-        let score = stack.getScore()
-        let helped = this.player.positiveEffects.has("OVERCLOCK")
-        let hurt = this.player.negativeEffects.has("VIRUS")
-
-        if (helped && !hurt) {
-          score *= 1.25
-        } else if (!helped && hurt) {
-          score *= 0.75
-        }
-        return acc + score
-      }, 0)
-
-      return Math.floor(total)
+    getScore () {
+      // Must access get player scores as a getters method instead of normal
+      // mapGetters to avoid caching and not returning an updated score
+      let scores = this.$store.getters.getPlayerScores()
+      let scoreInfo = scores.find(scr => scr.playerId === this.player.id)
+      return scoreInfo.score
     }
   },
   created () {

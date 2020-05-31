@@ -62,6 +62,36 @@ export default {
    */
   isGame (state) {
     return state.gameState === 'game'
+  },
+
+  /**
+   * Get the scores for all players and adjust them according to their
+   * special effects.
+   * Returns an array of objects like {playerId: player.id, score: playerScore}
+   * Creates a method on getters to avoid caching.
+   * see https://vuex.vuejs.org/guide/getters.html#method-style-access
+   */
+  getPlayerScores: (state) => () => {
+    let scores = []
+    for (let player of state.players) {
+      let stacks = state.stacks.filter(s => s.playerId === player.id)
+
+      let total = stacks.reduce((acc, stack) => {
+        let score = stack.getScore()
+        let helped = player.positiveEffects.has("OVERCLOCK")
+        let hurt = player.negativeEffects.has("VIRUS")
+
+        if (helped && !hurt) {
+          score *= 1.25
+        } else if (!helped && hurt) {
+          score *= 0.75
+        }
+        return acc + score
+      }, 0)
+
+      scores.push({playerId: player.id, score: Math.floor(total)})
+    }
+    return scores
   }
 }
 

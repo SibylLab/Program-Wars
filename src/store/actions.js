@@ -44,11 +44,16 @@ export default {
    * Clean up after a players turn and change to the next player.
    */
   endTurn (context, payload) {
-    if (payload.draw) {
-      context.commit('drawCard')
+    context.commit('scoreLimitReached')
+    if (context.state.gameState === 'winner') {
+      bus.$emit('game-over')
+    } else {
+      if (payload.draw) {
+        context.commit('drawCard')
+      }
+      context.commit('nextPlayer')
+      bus.$emit('end-turn')
     }
-    context.commit('nextPlayer')
-    bus.$emit('end-turn')
   },
 
   /**

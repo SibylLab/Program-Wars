@@ -2,6 +2,7 @@ import Timer from 'easytimer'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
 import Stack from '@/classes/game/Stack'
+import getters from '@/store/getters'
 
 
 export default {
@@ -202,4 +203,17 @@ export default {
     stack.cards.push(payload.card)
     state.stacks.push(stack)
   },
+
+  /**
+   * Check if players have reached scoreLimit and set gameStatus to winner
+   * if the limit is reached.
+   */
+  scoreLimitReached (state) {
+    let scores = getters.getPlayerScores(state)()  // call returned function
+    for (let scoreInfo of scores) {
+      if (scoreInfo.score >= state.scoreLimit) {
+        state.gameState = "winner"
+      }
+    }
+  }
 }
