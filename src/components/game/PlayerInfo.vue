@@ -1,16 +1,13 @@
 <template>
 <div id="info" :key="update">
-  <!-- Add some effect on the name or image to indicate current players turn -->
-  <h3 id="name" :class="side">{{ player.name }}</h3>
+  <h3 id="name" :class="{ left: isLeft, right: !isLeft }">
+    {{ player.name }}
+  </h3>
 
-  <img id="avatar" :class="side" :src="playerImagePath">
+  <img id="avatar" :class="{ left: isLeft, right: !isLeft, active: isActive }"
+      :src="playerImagePath">
 
-  <!-- Value needs to be tracking the players score
-       Maybe also add title to show value/total
-       Also should show a numerical value of score somewhere near by
-       This is only annoying because of the absolute positioning so
-       everything needs to be positioned explicitly -->
-  <meter id="score-meter" :class="side"
+  <meter id="score-meter" :class="{ left: isLeft, right: !isLeft }"
      :max="scoreLimit" min=0
      :value="getPlayerScore()"
      :high="scoreLimit * 0.7"
@@ -18,14 +15,16 @@
      :optimum="scoreLimit * 0.9">
   </meter>
 
-  <div id="good-effects" :class="side" style="position: absolute; top: 65%;">
+  <div id="good-effects" :class="{ left: isLeft, right: !isLeft }"
+      style="position: absolute; top: 65%;">
     <ul>
       <img v-for="effect in player.positiveEffects" v-bind:key="effect"  
           class="effect-icon" :src="effectImagePath(effect)">
     </ul>
   </div>
 
-  <div id="bad-effects" :class="side" style="position: absolute; top: 80%;">
+  <div id="bad-effects" :class="{ left: isLeft, right: !isLeft }"
+      style="position: absolute; top: 80%;">
     <ul>
       <img v-for="effect in player.negativeEffects" v-bind:key="effect"  
           class="effect-icon" :src="effectImagePath(effect)">
@@ -41,7 +40,7 @@ import {mapState} from 'vuex'
 
 export default {
   name: 'player-info',
-  props: ['player', 'side'],
+  props: ['player', 'isLeft'],
   data () {
     return {
       update: true
@@ -50,11 +49,15 @@ export default {
   computed: {
     ...mapState([
       'scoreLimit',
-      'stacks'
+      'stacks',
+      'activePlayer'
     ]),
     playerImagePath () {
       // later change to imageId to get the specific image they want 
       return "/static/playerImages/robo_" + this.player.id + ".jpg"
+    },
+    isActive () {
+      return this.player === this.activePlayer
     }
   },
   methods: {
@@ -134,10 +137,10 @@ export default {
   right: 5%;
 }
 
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.active {
+  -webkit-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+  -moz-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+  box-shadow: 0 0 24px 4px rgba(0,0,255,1);
 }
 
 .effect-icon {
@@ -145,6 +148,12 @@ ul {
   height: 30px;
   margin: 5px 5px; 
   border: solid black 2px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 li {

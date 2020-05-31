@@ -1,5 +1,5 @@
 <template>
-<div id="stacks-area" :key="update"
+<div id="stacks-area" :key="update" :class="{ active: isActive }"
     @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
   <h3 style="margin: 0; margin-top: 2px; margin-left: 5px; color: #fff;">{{ player.name }}_main:</h3>
   <ul id="stack-list">
@@ -35,6 +35,9 @@ export default {
     ]),
     playerStacks () {
       return this.stacks.filter(s => s.playerId === this.player.id)
+    },
+    isActive () {
+      return this.player === this.activePlayer
     }
   },
   methods: {
@@ -80,6 +83,12 @@ export default {
 .card-stack {
   display: inline-block;
   margin: 5px; 
+}
+
+.active {
+  -webkit-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+  -moz-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+  box-shadow: 0 0 24px 4px rgba(0,0,255,1);
 }
 
 ul {
