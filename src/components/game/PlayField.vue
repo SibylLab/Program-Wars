@@ -5,14 +5,14 @@
   <div style="display: flex;">
     <h3 id="main-func">{{ player.name }}_main:</h3>
     <h3 id="group-total" v-if="isGrouping">
-      Grouped Points {{ groupedScore() }} / {{ groupCardValue }}
+      Grouped Points {{ grouped.score }} / {{ groupCardValue }}
     </h3>
   </div>
 
   <ul id="stack-list">
     <li class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id">
       <button id="group-button" class="btn btn-sm btn-primary"
-          v-if="canGroup(stack)" v-on:click="toggleGrouped(stack)">
+          v-if="canGroup(stack)" v-on:click="toggleGroup(stack)">
         {{ groupText(stack) }}
       </button>
       <card-stack :stack="stack"></card-stack>
@@ -24,6 +24,7 @@
 
 
 <script>
+import GroupedStacks from '@/classes/game/GroupedStacks'
 import CardStack from '@/components/game/CardStack'
 import {bus} from '@/components/shared/Bus'
 import {mapState, mapGetters, mapActions} from 'vuex'
@@ -34,7 +35,7 @@ export default {
   data () {
     return {
       update: true,
-      groupedStacks: new Set()
+      grouped: new GroupedStacks()
     }
   },
   components: {
@@ -60,20 +61,16 @@ export default {
      * they have at least one stack that could be grouped.
      */
     isGrouping () {
-      let areGroupableStacks = this.playerStacks.reduce((acc, stack) => {
+      if (!this.activeCard || this.activePlayer.id !== this.player.id
+          || this.activeCard.type !== "GROUP") {
+        return false
+      }
+      return this.playerStacks.reduce((acc, stack) => {
         return acc || stack.getScore() <= this.groupCardValue
       }, false)
-      return this.activeCard && this.activePlayer.id === this.player.id
-             && this.activeCard.type === "GROUP" && areGroupableStacks
     },
-    /**
-     * The total number of points that can be grouped.
-     */
     groupCardValue () {
-      if (this.activeCard) {
-        return this.activeCard.value
-      }
-      return 0
+      return this.activeCard ? this.activeCard.value : 0
     }
   },
   methods: {
@@ -97,53 +94,33 @@ export default {
       }
     },
     /**
-     * Gives the total score of all the stacks in the current grouping.
-     */
-    groupedScore () {
-      let grouped = Array.from(this.groupedStacks.values())
-      return grouped.reduce((acc, stack) => {
-        return acc + stack.getScore()
-      }, 0)
-    },
-    /**
-     * Sets the text for a the group buttons over each stack based
-     * on whether the given stack has been grouped already or can be grouped.
+     * Create text for the grouping button.
      */
     groupText (stack) {
-      if (this.groupedStacks.has(stack)) {
-        return "Un-Group"
-      }
-      return "Group"
+      return this.grouped.hasStack(stack) ? "Un-Group" : "Group"
     },
     /**
-     * Decide if the given stack can be added to the current grouping.
-     * Also returns true for stacks that have been grouped so they
-     * will still have buttons to un-group.
+     * Checks if a given stack can be added to the current grouping or
+     * is already grouped.
      */
     canGroup (stack) {
-      if (!this.isGrouping || this.activePlayer.id !== stack.playerId) {
-        return false
-      }
-      return this.groupedStacks.has(stack)
-             || this.groupedScore() + stack.getScore() <= this.groupCardValue
+      return this.isGrouping && (this.grouped.hasStack(stack)
+             || this.grouped.score + stack.getScore() <= this.groupCardValue)
     },
     /**
-     * Group or un-group the given stack depending on whether it is already
-     * in the groupedStacks or not.
-     * If a stack is grouped and the groups total equals the group card's
-     * value the cards are grouped and the players turn ends.
+     * Adds or removes the stack from the grouped stacks.
+     * If the grouped stacks match the group card value does the grouping
+     * and ends the player's turn.
      */
-    toggleGrouped (stack) {
-      if (this.groupedStacks.has(stack)) {
-        this.groupedStacks.delete(stack)
-      } else {
-        this.groupedStacks.add(stack)
-      }
-      if (this.groupedScore() === this.groupCardValue) {
+    toggleGroup (stack) {
+      if (this.grouped.toggleStack(stack, this.groupCardValue)) {
+        let combined = this.grouped.combine(this.activeCard)
         this.groupStacks({
-          stacks: Array.from(this.groupedStacks.values()),
-          groupCard: this.activeCard
+          stack: combined.stack,
+          cards: combined.extraCards,
+          stacks: this.grouped.stacks
         })
+        this.grouped.reset()
       }
       this.react()
     },
@@ -158,7 +135,7 @@ export default {
     })
 
     bus.$on('card-selected', () => {
-      this.groupedStacks.clear()
+      this.grouped.reset()
     })
   }
 }

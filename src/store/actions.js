@@ -93,10 +93,13 @@ export default {
   },
 
   /**
-   * Group the given stacks into one single stack.
+   * Adds the given new group stack and removes all old stacks and
+   * discards any given extra cards.
    */
   groupStacks (context, payload) {
-    context.commit('combineStacks', payload)
+    context.commit('removeStacks', payload)
+    context.commit('discardCards', payload)
+    context.commit('addStack', payload)
     context.commit('discardActiveCard')
     bus.$emit('card-played')
     context.dispatch('endTurn', {draw: true})
@@ -106,7 +109,8 @@ export default {
    * Hack the given stack.
    */
   hackStack (context, payload) {
-    context.commit('discardStack', payload)
+    context.commit('discardCards', {cards: payload.stack.cards})
+    context.commit('removeStacks', {stacks: new Set([payload.stack])})
     context.commit('discardActiveCard')
     bus.$emit('card-played')
     context.dispatch('endTurn', {draw: true})

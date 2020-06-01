@@ -144,14 +144,6 @@ export default {
   },
 
   /**
-   * Remove a given card from a given players hand.
-   */
-  removeCardFromHand (state, payload) {
-    let hand = state.hands.find(h => h.playerId === payload.player.id)
-    hand.cards = hand.cards.filter(c => c !== payload.card)
-  },
-
-  /**
    * Discard the active card from the current players hand.
    */
   discardActiveCard (state) {
@@ -207,54 +199,25 @@ export default {
   },
 
   /**
-   * Combine stacks that have been grouped together.
-   * Needs to change to use willAccept and probably take the 
-   * 2 highest repeats or Rx variable pairs.
-   * Also, needs to discard all unused cards.
-   * Should also just ask how much work to put into this if we are going to
-   * remove group cards.
+   * Add a given stack to state.stacks
    */
-  combineStacks (state, payload) {
-    let stack = new Stack(payload.stacks[0].playerId)
-    stack.cards.push(payload.groupCard)
-    // Pool all repeats and vars (keep Rx and var pairs)
-    // Sort by value of repeats and pairs. Add the biggest 2 to the group.
-    // only add a max of 1 unpaired Rx.
-
-    let stacks = payload.stacks.filter((s) => {
-      let top = s.getTop()
-      return top.type !== "REPEAT" || top.value !== 1
-    })
-    for (let s of stacks) {
-      let stripped = s.cards.slice(1)
-      for (let c of stripped) {
-        stack.cards.push(c)
-      }
-    }
-
-    let unpairedRxStacks = payload.stacks.filter((s) => {
-      let top = s.getTop()
-      return top.type === "REPEAT" && top.value === 1
-    })
-
-    if (unpairedRxStacks.length > 0) {
-      for (let s of unpairedRxStacks) {
-        let stripped = s.cards.slice(1)
-        for (let c of stripped) {
-          stack.cards.push(c)
-        }
-      }
-    }
-
-    state.stacks = state.stacks.filter(s => !payload.stacks.find(st => st === s))
-    state.stacks.push(stack)
+  addStack (state, payload) {
+    state.stacks.push(payload.stack)
   },
 
-  discardStack (state, payload) {
-    for (let card of payload.stack.cards) {
+  /**
+   * Remove a Set of stacks from state.stacks
+   */
+  removeStacks (state, payload) {
+    state.stacks = state.stacks.filter(s => !payload.stacks.has(s))
+  },
+
+  /**
+   * Discard all cards in a given list of cards.
+   */
+  discardCards (state, payload) {
+    for (let card of payload.cards) {
       state.deck.discard.push(card)
     }
-    state.stacks = state.stacks.filter(s => s.stackId !== payload.stack.stackId)
   }
-
 }
