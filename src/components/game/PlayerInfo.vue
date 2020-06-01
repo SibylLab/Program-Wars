@@ -1,5 +1,5 @@
 <template>
-<div id="info" :key="update">
+<div id="info" :key="update" :class="[outside]">
   <h3 id="name" :class="side">
     {{ player.name }}
   </h3>
@@ -7,28 +7,38 @@
   <img id="avatar" :class="[side, {active: isActive}]"
       :src="playerImagePath">
 
-  <meter id="score-meter" :class="side"
-     :max="scoreLimit" min=0
-     :value="getScore()"
-     :high="scoreLimit * 0.7"
-     :low="scoreLimit / 2"
-     :optimum="scoreLimit * 0.9">
-  </meter>
-
-  <div id="good-effects" :class="side"
-      style="position: absolute; top: 65%;">
-    <ul>
-      <img v-for="effect in player.positiveEffects" v-bind:key="effect"  
-          class="effect-icon" :src="effectImagePath(effect)">
-    </ul>
+  <h5 id="score-title" :class="side" style="position: absolute; top: 44%;">
+    <b>Score</b>
+  </h5>
+  <div id="score-area" :class="side">
+    <h5 id="score-text"><b>{{ getScore() }}/{{ scoreLimit }}</b></h5>
+    <meter id="score-meter" style="z-index: 20;"
+       :max="scoreLimit" min=0
+       :value="getScore()"
+       :high="scoreLimit * 0.7"
+       :low="scoreLimit / 2"
+       :optimum="scoreLimit * 0.9">
+    </meter>
   </div>
 
-  <div id="bad-effects" :class="side"
-      style="position: absolute; top: 80%;">
-    <ul>
-      <img v-for="effect in player.negativeEffects" v-bind:key="effect"  
-          class="effect-icon" :src="effectImagePath(effect)">
-    </ul>
+  <div id="effects-area" :class="side">
+    <h5 id="good-effects-text" :class="side"><b>Threat Prevention</b></h5>
+    <div id="good-effects" :class="side"
+        style="position: absolute; top: 5%;">
+      <ul>
+        <img v-for="effect in player.positiveEffects" v-bind:key="effect"  
+            class="effect-icon" :src="effectImagePath(effect)">
+      </ul>
+    </div>
+
+    <h5 id="bad-effects-text" :class="side"><b>Active Threats</b></h5>
+    <div id="bad-effects" :class="side"
+        style="position: absolute; top: 55%;">
+      <ul>
+        <img v-for="effect in player.negativeEffects" v-bind:key="effect"  
+            class="effect-icon" :src="effectImagePath(effect)">
+      </ul>
+    </div>
   </div>
 </div>
 </template>
@@ -58,6 +68,9 @@ export default {
     },
     isActive () {
       return this.player === this.activePlayer
+    },
+    outside () {
+      return "out-" + this.side
     }
   },
   methods: {
@@ -88,8 +101,7 @@ export default {
 
 <style scoped>
 #info {
-  position: relative;
-  left: 0px;
+  position: absolute;
   width: 100%;
   height: 100%;
 }
@@ -99,29 +111,73 @@ export default {
   top: 2%;
   margin-top: 0;
   margin-bottom: 0;
+  color: #333333;
 }
 
 #avatar {
   position: absolute;
   top: 15%;
-  width: 45%;
-  height: 35%;
+  width: auto;
+  height: 25%;
   border: solid black 3px;
   border-radius: 5px;
 }
 
+#score-area {
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  height: 24px;
+}
+
+#score-text {
+  position: absolute;
+  margin: 0;
+  left: 40%;
+  top: 10%;
+  z-index: 40;
+  color: black;
+}
+
 #score-meter {
   position: absolute;
-  top: 55%;
-  width: 50%;
-  height: 15px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+}
+
+#effects-area {
+  position: absolute;
+  top: 60%;
+  width: 100%;
+  height: 35%;
+}
+
+#good-effects-text {
+  position:absolute;
+  top: 0;
+}
+
+#bad-effects-text {
+  position:absolute;
+  top: 50%;
 }
 
 .left {
-  left: 5%;
+  left: 0%;
 }
 
 .right {
+  right: 0%;
+}
+
+.out-left {
+  left: 5%;
+}
+
+.out-right {
   right: 5%;
 }
 
@@ -134,7 +190,7 @@ export default {
 .effect-icon {
   width: 30px;
   height: 30px;
-  margin: 5px 5px; 
+  margin: 20px 5px; 
   border: solid black 2px;
 }
 
@@ -144,11 +200,8 @@ ul {
   padding: 0;
 }
 
-li {
-  display: inline-block;
-  margin: 5px 5px;
-  width: 30px;
-  height: 30px;
+h5 {
+  margin: 0;
 }
 </style>
 
