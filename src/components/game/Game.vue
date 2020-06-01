@@ -1,5 +1,8 @@
 <template>
 <div id="page">
+  <winner-modal id="winner-modal" class="modal fade"
+      tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="false">
+  </winner-modal>
 
   <page-header></page-header>
 
@@ -32,6 +35,7 @@
 
 
 <script>
+import WinnerModal from '@/components/modals/WinnerModal'
 import PageHeader from '@/components/shared/PageHeader'
 import PlayerInfo from '@/components/game/PlayerInfo'
 import TurnArea from '@/components/game/TurnArea'
@@ -41,6 +45,7 @@ import {mapState, mapActions} from 'vuex'
 export default {
   name: 'game-page',
   components: {
+    'winner-modal': WinnerModal,
     'page-header': PageHeader,
     'turn-area': TurnArea,
     'player-info': PlayerInfo,

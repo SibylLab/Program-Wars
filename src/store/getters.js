@@ -75,6 +75,9 @@ export default {
     let scores = []
     for (let player of state.players) {
       let stacks = state.stacks.filter(s => s.playerId === player.id)
+      let base = stacks.reduce((acc, stack) => {
+        return acc + stack.getScore()
+      }, 0)
 
       let total = stacks.reduce((acc, stack) => {
         let score = stack.getScore()
@@ -89,7 +92,11 @@ export default {
         return acc + score
       }, 0)
 
-      scores.push({playerId: player.id, score: Math.floor(total)})
+      scores.push({
+        playerId: player.id,
+        score: Math.floor(total),
+        baseScore: base
+      })
     }
     return scores
   }

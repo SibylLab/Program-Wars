@@ -18,7 +18,7 @@
       v-on:click="openMenu" style="width: 36px; height: 36px;">
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" v-on:click="closeMenu">&times;</a>
-    <a href="javascript:void(0)" v-if="isGame" v-on:click="leaveGame">New Game</a>
+    <a href="javascript:void(0)" v-if="showNewGame" v-on:click="leaveGame">New Game</a>
     <a href="#" data-toggle="modal" data-target=".backstory">Backstory</a>
     <a href="#" data-toggle="modal" data-target=".rules">Rules</a>
     <a href="#" data-toggle="modal" data-target=".credits">Credits</a>
@@ -33,7 +33,7 @@
 import BackstoryModal from '@/components/modals/BackstoryModal'
 import RulesModal from '@/components/modals/RulesModal'
 import CreditsModal from '@/components/modals/CreditsModal'
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 
 export default {
   name: 'side-menu',
@@ -48,9 +48,12 @@ export default {
     'credits-modal': CreditsModal
   },
   computed: {
-    ...mapGetters([
-      'isGame'
+    ...mapState([
+      'gameState'
     ]),
+    showNewGame () {
+      return this.gameState !== "home"
+    }
   },
   methods: {
     ...mapActions([
@@ -80,6 +83,7 @@ export default {
   padding-top: 60px;
   transition: 0.5s;
   right: 0;
+  z-index: 1000;
 }
 
 .sidenav a {

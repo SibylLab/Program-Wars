@@ -42,5 +42,7 @@
 /**
  * Modal for displaying the games backstory.
  */
-export default {}
+export default {
+  name: 'backstory-modal'
+}
 </script>
