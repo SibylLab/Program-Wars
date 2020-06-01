@@ -1,8 +1,8 @@
 import Timer from 'easytimer'
+import { bus } from '@/components/shared/Bus'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
 import Stack from '@/classes/game/Stack'
-import getters from '@/store/getters'
 
 
 export default {
@@ -122,6 +122,7 @@ export default {
    */
   setActiveCard (state, payload) {
     state.activeCard = payload.newCard
+    bus.$emit('card-selected')
   },
 
   /**
@@ -206,15 +207,46 @@ export default {
   },
 
   /**
-   * Check if players have reached scoreLimit and set gameStatus to winner
-   * if the limit is reached.
+   * Combine stacks that have been grouped together.
+   * Needs to change to use willAccept and probably take the 
+   * 2 highest repeats or Rx variable pairs.
+   * Also, needs to discard all unused cards.
+   * Should also just ask how much work to put into this if we are going to
+   * remove group cards.
    */
-  scoreLimitReached (state) {
-    let scores = getters.getPlayerScores(state)()  // call returned function
-    for (let scoreInfo of scores) {
-      if (scoreInfo.score >= state.scoreLimit) {
-        state.gameState = "home"  // later set to winner to show scores
+  combineStacks (state, payload) {
+    let stack = new Stack(payload.stacks[0].playerId)
+    stack.cards.push(payload.groupCard)
+    // Pool all repeats and vars (keep Rx and var pairs)
+    // Sort by value of repeats and pairs. Add the biggest 2 to the group.
+    // only add a max of 1 unpaired Rx.
+
+    let stacks = payload.stacks.filter((s) => {
+      let top = s.getTop()
+      return top.type !== "REPEAT" || top.value !== 1
+    })
+    for (let s of stacks) {
+      let stripped = s.cards.slice(1)
+      for (let c of stripped) {
+        stack.cards.push(c)
       }
     }
+
+    let unpairedRxStacks = payload.stacks.filter((s) => {
+      let top = s.getTop()
+      return top.type === "REPEAT" && top.value === 1
+    })
+
+    if (unpairedRxStacks.length > 0) {
+      for (let s of unpairedRxStacks) {
+        let stripped = s.cards.slice(1)
+        for (let c of stripped) {
+          stack.cards.push(c)
+        }
+      }
+    }
+
+    state.stacks = state.stacks.filter(s => !payload.stacks.find(st => st === s))
+    state.stacks.push(stack)
   }
 }

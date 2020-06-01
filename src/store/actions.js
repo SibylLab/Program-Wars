@@ -1,5 +1,6 @@
 import { bus } from '@/components/shared/Bus'
 import router from '@/router'
+import getters from '@/store/getters'
 
 
 export default {
@@ -44,16 +45,20 @@ export default {
    * Clean up after a players turn and change to the next player.
    */
   endTurn (context, payload) {
-    context.commit('scoreLimitReached')
-    if (context.state.gameState === 'winner') {
-      bus.$emit('game-over')
-    } else {
-      if (payload.draw) {
-        context.commit('drawCard')
+    let scores = getters.getPlayerScores(context.state)()  // call returned function
+    for (let scoreInfo of scores) {
+      if (scoreInfo.score >= context.state.scoreLimit) {
+        bus.$emit('game-over')
+        context.dispatch('leaveGame')  // For now until a proper game over is made
+        return
       }
-      context.commit('nextPlayer')
-      bus.$emit('end-turn')
     }
+
+    if (payload.draw) {
+      context.commit('drawCard')
+    }
+    context.commit('nextPlayer')
+    bus.$emit('end-turn')
   },
 
   /**
@@ -87,7 +92,21 @@ export default {
     context.dispatch('endTurn', {draw: true})
   },
 
+  /**
+   * Group the given stacks into one single stack.
+   */
   groupStacks (context, payload) {
-    console.log(payload.stacks)
+    context.commit('combineStacks', payload)
+    context.commit('discardActiveCard')
+    bus.$emit('card-played')
+    context.dispatch('endTurn', {draw: true})
+  },
+
+  /**
+   * Hack the given stack.
+   */
+  hackStack (context, payload) {
+    context
+    console.log(payload.stack)
   }
 }

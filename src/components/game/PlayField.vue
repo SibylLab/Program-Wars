@@ -1,19 +1,24 @@
 <template>
 <div id="stacks-area" :key="update" :class="{ active: isActive }"
     @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+
   <div style="display: flex;">
     <h3 id="main-func">{{ player.name }}_main:</h3>
-    <h3 id="group-total" v-if="isGroup">
-      Grouped Points {{ groupedScore() }} / {{ groupCardSize }}
+    <h3 id="group-total" v-if="isGrouping">
+      Grouped Points {{ groupedScore() }} / {{ groupCardValue }}
     </h3>
   </div>
+
   <ul id="stack-list">
     <li class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id">
       <button id="group-button" class="btn btn-sm btn-primary"
-          v-if="canGroup(stack)" v-on:click="toggleGrouped(stack)">{{ groupText(stack) }}</button>
+          v-if="canGroup(stack)" v-on:click="toggleGrouped(stack)">
+        {{ groupText(stack) }}
+      </button>
       <card-stack :stack="stack"></card-stack>
     </li>
   </ul>
+
 </div>
 </template>
 
@@ -50,12 +55,22 @@ export default {
     isActive () {
       return this.player === this.activePlayer
     },
-    isGroup () {
+    /**
+     * Checks to see if the current player has selected a group card and
+     * they have at least one stack that could be grouped.
+     */
+    isGrouping () {
+      let areGroupableStacks = this.playerStacks.reduce((acc, stack) => {
+        return acc || stack.getScore() <= this.groupCardValue
+      }, false)
       return this.activeCard && this.activePlayer.id === this.player.id
-             && this.activeCard.type === "GROUP"
+             && this.activeCard.type === "GROUP" && areGroupableStacks
     },
-    groupCardSize () {
-      if (this.activeCard !== undefined) {
+    /**
+     * The total number of points that can be grouped.
+     */
+    groupCardValue () {
+      if (this.activeCard) {
         return this.activeCard.value
       }
       return 0
@@ -81,36 +96,58 @@ export default {
         this.addNewStack({card: card, playerId: this.player.id})
       }
     },
+    /**
+     * Gives the total score of all the stacks in the current grouping.
+     */
     groupedScore () {
       let grouped = Array.from(this.groupedStacks.values())
       return grouped.reduce((acc, stack) => {
         return acc + stack.getScore()
       }, 0)
     },
+    /**
+     * Sets the text for a the group buttons over each stack based
+     * on whether the given stack has been grouped already or can be grouped.
+     */
     groupText (stack) {
       if (this.groupedStacks.has(stack)) {
         return "Un-Group"
       }
       return "Group"
     },
+    /**
+     * Decide if the given stack can be added to the current grouping.
+     * Also returns true for stacks that have been grouped so they
+     * will still have buttons to un-group.
+     */
     canGroup (stack) {
-      if (!this.isGroup || this.activePlayer.id !== stack.playerId) {
+      if (!this.isGrouping || this.activePlayer.id !== stack.playerId) {
         return false
       }
       return this.groupedStacks.has(stack)
-             || this.groupedScore() + stack.getScore() <= this.groupCardSize
+             || this.groupedScore() + stack.getScore() <= this.groupCardValue
     },
+    /**
+     * Group or un-group the given stack depending on whether it is already
+     * in the groupedStacks or not.
+     * If a stack is grouped and the groups total equals the group card's
+     * value the cards are grouped and the players turn ends.
+     */
     toggleGrouped (stack) {
       if (this.groupedStacks.has(stack)) {
         this.groupedStacks.delete(stack)
       } else {
         this.groupedStacks.add(stack)
       }
-      if (this.groupedScore() === this.groupCardSize) {
-        this.groupStacks({stacks: this.groupedStacks})
+      if (this.groupedScore() === this.groupCardValue) {
+        this.groupStacks({
+          stacks: Array.from(this.groupedStacks.values()),
+          groupCard: this.activeCard
+        })
       }
       this.react()
     },
+    // Causes the component to react to a change and update itself
     react () {
       this.update = !this.update
     }
@@ -118,6 +155,10 @@ export default {
   created () {
     bus.$on('card-played', () => {
       this.react()
+    })
+
+    bus.$on('card-selected', () => {
+      this.groupedStacks.clear()
     })
   }
 }
