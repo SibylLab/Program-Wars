@@ -84,8 +84,6 @@ export default {
   left: 10%;
   width: 80%;
   height: 30%;
-  border: solid black 5px;
-  border-radius: 5px;
 }
 
 ul {
@@ -97,6 +95,7 @@ ul {
 li {
   position: relative;
   display: inline-block;
+  text-align: center;
   margin: 7px;
 }
 

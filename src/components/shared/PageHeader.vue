@@ -7,7 +7,7 @@
     Score Limit: {{ scoreLimit }}
   </h4>
 
-  <label id="tips-check" v-if="isGame">
+  <label id="tips-check" class="head-text" v-if="isGame">
     <input type="checkbox" value="true" v-on:click="toggleTips" checked>Game Tips
   </label>
 
@@ -58,7 +58,7 @@ export default {
   top: 0px;
   width: 100%;
   height: 40px;
-  background-color: white;
+  background-color: #333333;
 }
 
 #title {
@@ -76,6 +76,7 @@ export default {
 .head-text {
   margin-top: 0;
   margin-bottom: 0;
+  color: #fff;
 }
 
 #tips-check {
@@ -94,7 +95,7 @@ export default {
   text-decoration: blue;
   padding: 2px;
   margin-top: 0px;
-  border: solid black 2px;
+  border: solid #333333 2px;
   border-radius: 5px;
   vertical-align: baseline;
 }

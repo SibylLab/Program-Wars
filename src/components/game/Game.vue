@@ -77,7 +77,7 @@ export default {
   min-width: 1200px;
   height: 100%;
   min-height: 750px;
-  background-color: #e8e8e8;
+  background-color: white;
 }
 
 #play {

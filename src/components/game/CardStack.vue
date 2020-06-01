@@ -108,6 +108,7 @@ export default {
   margin-right: -36px;
   max-width: 90px;
   max-height: 100px;
+  border: solid grey 1px;
 }
 
 .score-normal {

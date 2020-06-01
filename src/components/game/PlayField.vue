@@ -146,8 +146,8 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #44b863;
-  border: solid black 4px;
+  background-color: #333333;
+  border: ridge #a0a0a0 8px;
   border-radius: 6px;
   overflow: auto;
   text-align: left;
@@ -162,7 +162,7 @@ export default {
 #group-total {
   margin-left: 60px;
   margin-top: 2px;
-  color: #000;
+  color: lightgreen;
 }
 
 

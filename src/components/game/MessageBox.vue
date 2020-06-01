@@ -8,12 +8,6 @@
 <script>
 export default {
   name: 'message-box',
-  components: {
-  },
-  computed: {
-  },
-  methods: {
-  }
 }
 </script>
 
@@ -23,7 +17,12 @@ export default {
   left: 0px;
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: #333333;
+  border: ridge grey 8px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 22px;
+  text-align: left;
 }
 </style>
 
