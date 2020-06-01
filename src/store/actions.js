@@ -106,7 +106,9 @@ export default {
    * Hack the given stack.
    */
   hackStack (context, payload) {
-    context
-    console.log(payload.stack)
+    context.commit('discardStack', payload)
+    context.commit('discardActiveCard')
+    bus.$emit('card-played')
+    context.dispatch('endTurn', {draw: true})
   }
 }

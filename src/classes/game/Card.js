@@ -23,8 +23,7 @@ export default class Card {
   }
 
   isAttack () {
-    return this.type === "HACK" || this.type === "VIRUS"
-           || this.type === "POWEROUTAGE"
+    return this.type === "VIRUS" || this.type === "POWEROUTAGE"
   }
 
   isSafety () {

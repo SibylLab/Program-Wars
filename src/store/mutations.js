@@ -248,5 +248,13 @@ export default {
 
     state.stacks = state.stacks.filter(s => !payload.stacks.find(st => st === s))
     state.stacks.push(stack)
+  },
+
+  discardStack (state, payload) {
+    for (let card of payload.stack.cards) {
+      state.deck.discard.push(card)
+    }
+    state.stacks = state.stacks.filter(s => s.stackId !== payload.stack.stackId)
   }
+
 }

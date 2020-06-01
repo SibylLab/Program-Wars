@@ -31,7 +31,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'addCardToStack'
+      'addCardToStack',
+      'hackStack'
     ]),
     ...mapMutations([
       'setActiveCard'
@@ -39,6 +40,7 @@ export default {
     /**
      * Get the stack score and apply any special effects the player is under.
      * Return the score rounded down to the nearest integer.
+     * TODO put this in a getter
      */
     getScore () {
       let player = this.players.find(p => p.id === this.stack.playerId)
@@ -63,7 +65,11 @@ export default {
       let hand = this.getCurrentPlayerHand
       let card = hand.cards.find(c => c.id === cardId)
 
-      if (card && this.stack.playerId === this.activePlayer.id
+      if (card && card.type === "HACK"
+          && this.stack.playerId !== this.activePlayer.id
+          && this.stack.isHackable()) {
+        this.hackStack({stack: this.stack})
+      } else if (card && this.stack.playerId === this.activePlayer.id
           && this.stack.willAccept(card)) {
         let top = this.stack.getTop()
 
@@ -80,10 +86,14 @@ export default {
      * can have the active card placed on them.
      */
     willAcceptActive (card) {
-      return this.activeCard !== undefined
-             && this.stack.willAccept(this.activeCard)
-             && this.stack.playerId === this.activePlayer.id
-             && this.stack.getTop() === card
+      if (this.activeCard && this.activeCard.type === "HACK") {
+        return this.stack.isHackable() && this.stack.playerId !== this.activePlayer.id
+      } else {
+        return this.activeCard !== undefined
+               && this.stack.willAccept(this.activeCard)
+               && this.stack.playerId === this.activePlayer.id
+               && this.stack.getTop() === card
+      }
     }
   }
 }
