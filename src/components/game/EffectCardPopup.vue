@@ -42,11 +42,10 @@ export default {
       'activePlayer'
     ]),
     ...mapGetters([
-      'getAttackableOpponents',
-      'getHackableOpponents'
+      'getAttackableOpponents'
     ]),
     canPlaySafety () {
-      return !this.activePlayer.helpedBy(this.type)
+      return !this.activePlayer.helpedBy(this.activeCard.type)
     },
     safetyText () {
       return this.canPlaySafety ? "Activate" : "Protected"
@@ -68,12 +67,7 @@ export default {
      * Also, updates the text to use if there are targets or not.
      */
     attackablePlayers () {
-      let players = []
-      if (this.activeCard === "HACK") {
-        players = this.getHackableOpponents
-      } else {
-        players = this.getAttackableOpponents
-      }
+      let players = this.getAttackableOpponents
       this.targetText = players.length === 1 ? "Targets" : "No Targets"
       return players
     },
@@ -83,13 +77,11 @@ export default {
      * The card will be removed from the players hand and the turn will end.
      */
     playSpecialCard (player) {
-      if (this.activeCard.type !== "HACK") {  // Remove this if HACK is not "activated"
-        this.addSpecialCard({
-          playerId: player.id,
-          effect: this.activeCard.type,
-          isPositive: this.activeCard.isSafety()
-        })
-      }
+      this.addSpecialCard({
+        playerId: player.id,
+        effect: this.activeCard.type,
+        isPositive: this.activeCard.isSafety()
+      })
     }
   }
 }
