@@ -199,28 +199,21 @@ export default {
   },
 
   /**
-   * Add a given stack to state.stacks
-   */
-  addStack (state, payload) {
-    state.stacks.push(payload.stack)
-  },
-
-  /**
-   * Remove a Set of stacks from state.stacks
+   * Remove a Set of stacks from state.stacks and discard it's cards
    */
   removeStacks (state, payload) {
     state.stacks = state.stacks.filter(s => !payload.stacks.has(s))
-  },
-
-  /**
-   * Discard all cards in a given list of cards.
-   */
-  discardCards (state, payload) {
-    for (let card of payload.cards) {
-      state.deck.discard.push(card)
+    for (let stack of payload.stacks.values()) {
+      for (let card of stack.cards) {
+        state.deck.discard.push(card)
+      }
     }
   },
 
+  /**
+   * Adds a given card to the active players objectives cards played.
+   *
+   */
   addPlayedCard (state, payload) {
     let player = state.players.find(p => p.id === state.activePlayer.id)
     player.objectives.cardsPlayed.push(payload.card)

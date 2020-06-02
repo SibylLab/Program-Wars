@@ -102,9 +102,8 @@ export default {
   groupStacks (context, payload) {
     context.commit('addPlayedCard', {card: context.state.activeCard})
     context.commit('removeStacks', payload)
-    context.commit('discardCards', payload)
-    context.commit('addStack', payload)
-    context.commit('discardActiveCard')
+    context.commit('newStack', payload)
+    context.commit('removeFromHand', payload)
     bus.$emit('card-played')
     context.dispatch('endTurn', {draw: true})
   },
@@ -114,7 +113,6 @@ export default {
    */
   hackStack (context, payload) {
     context.commit('addPlayedCard', {card: context.state.activeCard})
-    context.commit('discardCards', {cards: payload.stack.cards})
     context.commit('removeStacks', {stacks: new Set([payload.stack])})
     context.commit('discardActiveCard')
     bus.$emit('card-played')

@@ -3,8 +3,6 @@
  * @author Steven on 2020-06-01
  */
 
-import Stack from '@/classes/game/Stack'
-
 export default class GroupedStacks {
   /**
    * Constructor for the GroupedStacks class
@@ -57,47 +55,5 @@ export default class GroupedStacks {
       return true
     }
     return false
-  }
-
-  /**
-   * Combines all stacks into a single stack with the given groupCard as
-   * the base.
-   * Returns {stack: the new stack, extraCards: any cards not used for new stack}
-   */
-  combine (groupCard) {
-    let stacksArray = this.getStacks()
-    let stack = new Stack(stacksArray[0].playerId)
-    stack.cards.push(groupCard)
-
-    let stacks = stacksArray.filter((s) => {
-      let top = s.getTop()
-      return top.type !== "REPEAT" || top.value !== 1
-    })
-    for (let s of stacks) {
-      let stripped = s.cards.slice(1)
-      for (let c of stripped) {
-        stack.cards.push(c)
-      }
-    }
-
-    let unpairedRxStacks = stacksArray.filter((s) => {
-      let top = s.getTop()
-      return top.type === "REPEAT" && top.value === 1
-    })
-    if (unpairedRxStacks.length > 0) {
-      for (let s of unpairedRxStacks) {
-        let stripped = s.cards.slice(1)
-        for (let c of stripped) {
-          stack.cards.push(c)
-        }
-      }
-    }
-
-    let extra = []
-    for (let s of this.stacks) {
-      extra.push(s.cards[0])
-    }
-
-    return {stack: stack, extraCards: extra}
   }
 }

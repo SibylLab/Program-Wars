@@ -114,11 +114,10 @@ export default {
      */
     toggleGroup (stack) {
       if (this.grouped.toggleStack(stack, this.groupCardValue)) {
-        let combined = this.grouped.combine(this.activeCard)
         this.groupStacks({
-          stack: combined.stack,
-          cards: combined.extraCards,
-          stacks: this.grouped.stacks
+          card: this.activeCard,
+          stacks: this.grouped.stacks,
+          playerId: this.activePlayer.id
         })
         this.grouped.reset()
       }
