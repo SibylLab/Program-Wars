@@ -153,7 +153,7 @@ export default {
   created () {
     this.setup()
 
-    bus.$on('card-played', () => {  // Change to game over when you are finished
+    bus.$on('game-over', () => {
       this.setup()
     })
   }

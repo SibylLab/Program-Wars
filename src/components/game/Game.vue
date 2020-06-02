@@ -1,7 +1,8 @@
 <template>
 <div id="page">
   <winner-modal id="winner-modal" class="modal fade"
-      tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="false">
+      tabindex="-1" role="dialog"
+      data-backdrop='static' data-keyboard='false'>
   </winner-modal>
 
   <page-header></page-header>
@@ -40,6 +41,7 @@ import PageHeader from '@/components/shared/PageHeader'
 import PlayerInfo from '@/components/game/PlayerInfo'
 import TurnArea from '@/components/game/TurnArea'
 import PlayField from '@/components/game/PlayField'
+import {bus} from '@/components/shared/Bus'
 import {mapState, mapActions} from 'vuex'
 
 export default {
@@ -71,6 +73,10 @@ export default {
     if (this.gameState !== 'game') {
       this.leaveGame()
     }
+
+    bus.$on('game-over', () => {
+      $('#winner-modal').modal('show')
+    })
   }
 }
 </script>

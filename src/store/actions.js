@@ -49,7 +49,7 @@ export default {
     for (let scoreInfo of scores) {
       if (scoreInfo.score >= context.state.scoreLimit) {
         bus.$emit('game-over')
-        context.dispatch('leaveGame')  // For now until a proper game over is made
+        context.commit('changeGameState', {newState: 'winner'})
         return
       }
     }
