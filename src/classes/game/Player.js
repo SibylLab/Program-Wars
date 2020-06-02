@@ -27,6 +27,9 @@ export default class Player {
    * @param {string} effect The effect to check for.
    */
   helpedBy (effect) {
+    if (effect === "OVERCLOCK" && this.positiveEffects.has("ANTIVIRUS")) {
+      return true
+    }
     return this.positiveEffects.has(effect)
   }
 
@@ -46,8 +49,6 @@ export default class Player {
   isProtectedFrom (effect) {
     if (effect === "HACK") {
       return this.helpedBy("FIREWALL")
-    } else if (effect === "POWEROUTAGE") {
-      return this.helpedBy("GENERATOR")
     } else if (effect === "VIRUS") {
       return this.helpedBy("ANTIVIRUS")
     }
@@ -58,10 +59,12 @@ export default class Player {
    * Adds a positive effect and alters negative effects if necessary.
    */
   addPositive (effect) {
-    if (effect === "BATTERYBACKUP" || effect === "GENERATOR") {
-      this.negativeEffects.delete("POWEROUTAGE")
-    } else if (effect === "ANTIVIRUS") {
+    if (effect === "ANTIVIRUS") {
       this.negativeEffects.delete("VIRUS")
+      this.positiveEffects.delete("OVERCLOCK")
+    } else if (effect === "OVERCLOCK" && this.hurtBy("VIRUS")) {
+      this.negativeEffects.delete("VIRUS")
+      return
     }
     this.positiveEffects.add(effect)
   }
@@ -70,8 +73,8 @@ export default class Player {
    * Adds a negative effect and alters positive effects if necessary.
    */
   addNegative (effect) {
-    if (effect === "POWEROUTAGE" && this.helpedBy("BATTERYBACKUP")) {
-        this.positiveEffects.delete("BATTERYBACKUP")
+    if (effect === "VIRUS" && this.helpedBy("OVERCLOCK")) {
+        this.positiveEffects.delete("OVERCLOCK")
         return
     }
     this.negativeEffects.add(effect)

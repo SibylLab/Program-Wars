@@ -1,7 +1,7 @@
 <template>
 <div id="stack">
   <div style="text-align: center">
-    <h5 style="margin:0; margin-top: 5px;" class="score-normal">Score: {{ getScore() }}</h5>
+    <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">Score: {{ stack.getScore() }}</h5>
   </div>
   <ul id="card-list" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
     <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image"
@@ -27,7 +27,11 @@ export default {
     ]),
     ...mapGetters([
       'getCurrentPlayerHand',
-    ])
+    ]),
+    scoreColor () {
+      let player = this.players.find(p => p.id === this.stack.playerId)
+      return player.hurtBy("VIRUS") ? "score-red" : "score-normal"
+    }
   },
   methods: {
     ...mapActions([
@@ -37,23 +41,6 @@ export default {
     ...mapMutations([
       'setActiveCard'
     ]),
-    /**
-     * Get the stack score and apply any special effects the player is under.
-     * Return the score rounded down to the nearest integer.
-     * TODO put this in a getter
-     */
-    getScore () {
-      let player = this.players.find(p => p.id === this.stack.playerId)
-      let score = this.stack.getScore()
-      let helped = player.positiveEffects.has("OVERCLOCK")
-      let hurt = player.negativeEffects.has("VIRUS")
-      if (helped && !hurt) {
-        score *= 1.25
-      } else if (!helped && hurt) {
-        score *= 0.75
-      }
-      return Math.floor(score)
-    },
     /**
      * Handles the event where a card is dropped on the stack.
      * If the stack belongs to the current player and the card can be
@@ -120,12 +107,8 @@ export default {
   color: #fff;
 }
 
-.score-hurt {
+.score-red {
   color: red;
-}
-
-.score-helped {
-  color: #f5f242;
 }
 
 .play {

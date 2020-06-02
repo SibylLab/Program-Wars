@@ -30,14 +30,11 @@ const variable6 = 1
 
 const hack = 3
 const malware = 3
-const powerOutage = 3
 
 const overClock = 3
-const batteryBackup = 3
 
 const antiVirus = 1
 const firewall = 1
-const generator = 1
 
 const cardDeck = [
   {type: 'INSTRUCTION', cardValue: 1, imgSrc: 'static/cardImages/Instruction1.png', howMany: instruction1},
@@ -62,13 +59,10 @@ const cardDeck = [
 
   {type: 'HACK', cardValue: 0, imgSrc: 'static/cardImages/Hacker.png', howMany: hack},
   {type: 'VIRUS', cardValue: 0, imgSrc: 'static/cardImages/Malware.png', howMany: malware},
-  {type: 'POWEROUTAGE', cardValue: 0, imgSrc: 'static/cardImages/PowerOutage.png', howMany: powerOutage},
 
   {type: 'OVERCLOCK', cardValue: 0, imgSrc: 'static/cardImages/OverClock.png', howMany: overClock},
-  {type: 'BATTERYBACKUP', cardValue: 0, imgSrc: 'static/cardImages/BatteryBackup.png', howMany: batteryBackup},
 
   {type: 'FIREWALL', cardValue: 0, imgSrc: 'static/cardImages/Firewall.png', howMany: firewall},
-  {type: 'GENERATOR', cardValue: 0, imgSrc: 'static/cardImages/Generator.png', howMany: generator},
   {type: 'ANTIVIRUS', cardValue: 0, imgSrc: 'static/cardImages/AntiVirus.png', howMany: antiVirus}
 
 ]
@@ -102,17 +96,12 @@ export default class Deck {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue,
                                      cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++
-          } else if (cardDeck[i].type === 'GENERATOR' && (k === 1 || k === 3)) {
-            this.cards.push(new Card(cardId, cardDeck[i].cardValue,
-                                     cardDeck[i].type, cardDeck[i].imgSrc))
-            cardId++
           } else if (cardDeck[i].type === 'ANTIVIRUS' && (k === 1 || k === 3)) {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue,
                                      cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++
           } else if (cardDeck[i].type !== 'ANTIVIRUS'
-                     && cardDeck[i].type !== 'FIREWALL'
-                     && cardDeck[i].type !== 'GENERATOR') {
+                     && cardDeck[i].type !== 'FIREWALL') {
             this.cards.push(new Card(cardId, cardDeck[i].cardValue,
                                      cardDeck[i].type, cardDeck[i].imgSrc))
             cardId++

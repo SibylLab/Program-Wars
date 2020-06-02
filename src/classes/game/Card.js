@@ -22,14 +22,15 @@ export default class Card {
     this.image = image
   }
 
+  // Does not include HACK because it is used differently
   isAttack () {
-    return this.type === "VIRUS" || this.type === "POWEROUTAGE"
+    return this.type === "VIRUS"
   }
 
+  // May want to eventually separate remedies from safeties for clarity
   isSafety () {
-    return this.type === "BATTERYBACKUP" || this.type === "OVERCLOCK"
+    return this.type === "OVERCLOCK"
            || this.type === "FIREWALL" || this.type === "ANTIVIRUS"
-           || this.type === "GENERATOR"
   }
 
   isSpecial () {

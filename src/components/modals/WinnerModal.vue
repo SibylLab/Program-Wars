@@ -53,9 +53,6 @@
             <tr> <th>Clean System (No Virus)</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.clean }}</td>
             </tr>
-            <tr> <th>Cool System (No Overclock)</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.cool }}</td>
-            </tr>
             <tr> <th style="font-size: 20px;">Final Score</th>
               <td v-for="player in players" :key="player.id" style="font-size: 20px;">{{ finalScore(player) }}</td>
             </tr>
@@ -121,7 +118,6 @@ export default {
       bonuses['variable'] = player.objectives.getVariableBonus()
       bonuses['safety'] = player.objectives.getSafetyBonus()
       bonuses['clean'] = player.objectives.getCleanBonus()
-      bonuses['cool'] = player.objectives.getCoolBonus()
       bonuses['defensive'] = player.objectives.getDefensiveBonus()
       bonuses['complete'] = this.completeBonus(player)
 

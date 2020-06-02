@@ -46,23 +46,12 @@ export default {
      * Determines which css class to use for the shadow around the active card.
      */
     shadow () {
-      if (this.card.type === "INSTRUCTION"
-           && this.activePlayer.hurtBy("POWEROUTAGE")) {
-        return 'noplay'
-      }
       return 'play'
-    },
-    canDrag () {
-      if (this.card.type === "INSTRUCTION"
-          && this.activePlayer.hurtBy("POWEROUTAGE")) {
-        return false
-      }
-      return !this.card.isSpecial()
     },
     ondragstart () {
       // The ondragstart attribute requires a string "return bool;" so here
       // we are building one to make sure special cards can't be dragged.
-      return "return " + this.canDrag
+      return "return " + !this.card.isSpecial()
     }
   },
   methods: {
@@ -91,11 +80,9 @@ export default {
      * Sets up the dragging event with the necessary data.
      */
     startDrag (evt) {
-      if (this.canDrag) {
-        evt.dataTransfer.dropEffect = 'move'
-        evt.dataTransfer.effectAllowed = 'move'
-        evt.dataTransfer.setData('cardId', this.card.id)
-      }
+      evt.dataTransfer.dropEffect = 'move'
+      evt.dataTransfer.effectAllowed = 'move'
+      evt.dataTransfer.setData('cardId', this.card.id)
     }
   },
 }

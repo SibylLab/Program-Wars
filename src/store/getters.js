@@ -65,9 +65,9 @@ export default {
   },
 
   /**
-   * Get the scores for all players and adjust them according to their
-   * special effects.
-   * Returns an array of objects like {playerId: player.id, score: playerScore}
+   * Get the base and adjusted scores for all players.
+   * Returns {playerId, baseScore: the score without modifiers, score: the
+   * score with modifiers}.
    * Creates a method on getters to avoid caching.
    * see https://vuex.vuejs.org/guide/getters.html#method-style-access
    */
@@ -79,18 +79,7 @@ export default {
         return acc + stack.getScore()
       }, 0)
 
-      let total = stacks.reduce((acc, stack) => {
-        let score = stack.getScore()
-        let helped = player.positiveEffects.has("OVERCLOCK")
-        let hurt = player.negativeEffects.has("VIRUS")
-
-        if (helped && !hurt) {
-          score *= 1.25
-        } else if (!helped && hurt) {
-          score *= 0.75
-        }
-        return acc + score
-      }, 0)
+      let total = player.hurtBy("VIRUS") ? base * 0.75 : base
 
       scores.push({
         playerId: player.id,

@@ -12,7 +12,6 @@ const SAFETY_BONUS = 10
 // Objective Bonuses
 const DEFENSIVE_BONUS = 10
 const CLEAN_BONUS = 10
-const COOL_BONUS = 10
 const COMPLETE_BONUS = 10
 
 
@@ -41,14 +40,12 @@ export default class Objectives {
   getSafetyBonus () {
     let safetyCards = this.cardsPlayed.filter((c) => {
       return c.type === "ANTIVURUS" || c.type === "FIREWALL"
-             || c.type === "GENERATOR"
     })
     return SAFETY_BONUS * safetyCards.length
   }
 
   getDefensiveBonus () {
-    if (this.player.helpedBy("ANTIVIRUS") && this.player.helpedBy("FIREWALL")
-        && this.player.helpedBy("GENERATOR")) {
+    if (this.player.helpedBy("ANTIVIRUS") && this.player.helpedBy("FIREWALL")) {
       return DEFENSIVE_BONUS
     }
     return 0
@@ -56,10 +53,6 @@ export default class Objectives {
   
   getCleanBonus () {
     return this.player.hurtBy("VIRUS") ? 0 : CLEAN_BONUS
-  }
-
-  getCoolBonus () {
-    return this.player.helpedBy("OVERCLOCK") ? 0 : COOL_BONUS
   }
 
   getCompleteBonus (playerStacks) {
