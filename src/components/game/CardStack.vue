@@ -5,7 +5,7 @@
   </div>
   <ul id="card-list" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
     <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image"
-        draggable="false" :class="[{card: true}, {play: willAcceptActive(card)}]">
+        draggable="false" :class="[{card: true}, {play: canPlayOn(card)}, {hack: canHack(card)}]">
   </ul>
 </div>
 </template>
@@ -74,18 +74,37 @@ export default {
       }
     },
     /**
-     * Used to set css class to higlight cards on top of the stack that
-     * can have the active card placed on them.
+     * Check if this stack is a viable option for playing cards on.
      */
-    willAcceptActive (card) {
-      if (this.activeCard && this.activeCard.type === "HACK") {
-        return this.stack.isHackable() && this.stack.playerId !== this.activePlayer.id
-      } else {
-        return this.activeCard !== undefined
-               && this.stack.willAccept(this.activeCard)
-               && this.stack.playerId === this.activePlayer.id
-               && this.stack.getTop() === card
+    isViableStack (isHack) {
+      if (!this.activeCard) {
+        return false
       }
+      if (isHack) {
+        return this.stack.playerId !== this.activePlayer.id
+      } else {
+        return this.stack.playerId === this.activePlayer.id
+      }
+    },
+    /**
+     * Check if the card is the top of the stack and that the active card can
+     * be played on it.
+     */
+    canPlayOn (card) {
+      if (!this.isViableStack() || this.stack.getTop() !== card) {
+        return false
+      }
+      return this.stack.willAccept(this.activeCard)
+    },
+    /**
+     * Check if a card is the top of the stack and that the stack can be hacked.
+     */
+    canHack (card) {
+      if (!this.isViableStack(true) || this.activeCard.type !== "HACK"
+          || this.stack.getTop() !== card) {
+        return false
+      }
+      return this.stack.isHackable()
     }
   }
 }
@@ -112,9 +131,15 @@ export default {
 }
 
 .play {
-  -webkit-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
-  -moz-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
-  box-shadow: 0 0 24px 4px rgba(255,230,0,1);
+  -webkit-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
+  -moz-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
+  box-shadow: 0 0 24px 10px rgba(0,230,0,1);
+}
+
+.hack {
+  -webkit-box-shadow: 0 0 24px 10px rgba(255,0,0,1);
+  -moz-box-shadow: 0 0 24px 10px rgba(255,0,0,1);
+  box-shadow: 0 0 24px 10px rgba(255,0,0,1);
 }
 
 ul {

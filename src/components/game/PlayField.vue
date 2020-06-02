@@ -178,9 +178,9 @@ export default {
 }
 
 .active {
-  -webkit-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
-  -moz-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
-  box-shadow: 0 0 24px 4px rgba(0,0,255,1);
+  -webkit-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
+  -moz-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
+  box-shadow: 0 0 24px 10px rgba(0,230,0,1);
 }
 
 h3 {

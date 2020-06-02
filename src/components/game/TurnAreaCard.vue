@@ -117,9 +117,9 @@ export default {
 }
 
 .play {
-  -webkit-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
-  -moz-box-shadow: 0 0 24px 4px rgba(0,230,0,1);
-  box-shadow: 0 0 24px 4px rgba(0,230,0,1);
+  -webkit-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
+  -moz-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
+  box-shadow: 0 0 24px 8px rgba(0,230,0,1);
 }
 
 .noplay {
