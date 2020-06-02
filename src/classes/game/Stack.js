@@ -108,4 +108,23 @@ export default class Stack {
     // Only variable and repeat cards can be put on a non-empty stack
     return false
   }
+
+  /**
+   * Checks to see if the stack is a complete program.
+   * A complete program is one with the max number of repeat cards
+   * where if a repeat card is an Rx it must be matched to a variable.
+   */
+  isComplete () {
+    // Checks to make sure there are no unpaired Rx cards
+    for (let idx in this.cards) {
+      let card = this.cards[idx]
+      if (card.type === "REPEAT" && card.value === 1) {
+        if (this.getTop() === card) {
+          return false
+        } 
+      }
+    }
+    // if max repeats then it is complete
+    return this.hasMaxRepeats()
+  }
 }

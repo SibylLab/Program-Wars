@@ -3,6 +3,8 @@
  * @author Lance on 2017-03-10, Steven modified on 2020-05-25
  */
 
+import Objectives from '@/classes/game/Objectives'
+
 export default class Player {
   /**
    * Constructor for the Player class
@@ -16,7 +18,7 @@ export default class Player {
     this.name = name
     this.positiveEffects = new Set()
     this.negativeEffects = new Set()
-    this.cardsPlayed = []
+    this.objectives = new Objectives(this)
     this.isAi = isAi
   }
 

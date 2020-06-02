@@ -219,5 +219,10 @@ export default {
     for (let card of payload.cards) {
       state.deck.discard.push(card)
     }
+  },
+
+  addPlayedCard (state, payload) {
+    let player = state.players.find(p => p.id === state.activePlayer.id)
+    player.objectives.cardsPlayed.push(payload.card)
   }
 }

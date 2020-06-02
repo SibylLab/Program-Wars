@@ -27,37 +27,37 @@
           
           <tbody>
             <tr> <th>Instruction Score</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).baseScore }}</td>
+              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).score }}</td>
             </tr>
             <tr>
               <td colspan="3" style="text-align: left;"><h5><b>Side Objectives</b></h5></td>
             </tr>
             <tr> <th>Grouping Bonus</th>
-              <td v-for="player in players" :key="player.id">{{ playerObjectives(player.id).dummy }}</td>
+              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.group }}</td>
             </tr>
             <tr> <th>Repetition Bonus</th>
-              <td v-for="player in players" :key="player.id">{{ playerObjectives(player.id).dummy }}</td>
+              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.repeat }}</td>
             </tr>
             <tr> <th>Variable Bonus</th>
-              <td v-for="player in players" :key="player.id">{{ playerObjectives(player.id).dummy }}</td>
+              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.variable }}</td>
             </tr>
             <tr> <th>Safety Bonus</th>
-              <td v-for="player in players" :key="player.id">{{ playerObjectives(player.id).dummy }}</td>
+              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.safety }}</td>
             </tr>
             <tr> <th>Complete Program</th>
-              <td v-for="player in players" :key="player.id">{{ playerObjectives(player.id).dummy }}</td>
+              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.complete }}</td>
             </tr>
             <tr> <th>Defensive Programmer (All Safeties)</th>
-              <td v-for="player in players" :key="player.id">{{ playerObjectives(player.id).dummy }}</td>
+              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.defensive }}</td>
             </tr>
             <tr> <th>Clean System (No Virus)</th>
-              <td v-for="player in players" :key="player.id">{{ playerObjectives(player.id).dummy }}</td>
+              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.clean }}</td>
             </tr>
             <tr> <th>Cool System (No Overclock)</th>
-              <td v-for="player in players" :key="player.id">{{ playerObjectives(player.id).dummy }}</td>
+              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.cool }}</td>
             </tr>
             <tr> <th style="font-size: 20px;">Final Score</th>
-              <td v-for="player in players" :key="player.id" style="font-size: 20px;">{{ playerScore(player.id).score }}</td>
+              <td v-for="player in players" :key="player.id" style="font-size: 20px;">{{ finalScore(player) }}</td>
             </tr>
           </tbody>
         </table>
@@ -85,21 +85,23 @@ export default {
   data () {
     return {
       scores: undefined,
-      winningScore: undefined,
-      winner: undefined,
+      winner: undefined
     }
   },
   computed: {
     ...mapState([
-      'players'
+      'players',
+      'stacks'
     ]),
-    getWinningScore () {
-      return this.scores.reduce((win, score) => {
-        return win.score >= score.score ? win : score
-      }, {score: -1})
-    },
+    // does not deal with ties
     getWinner () {
-      return this.players.find(p => p.id === this.winningScore.playerId)
+      let winner = this.players[0]
+      for (let player of this.players) {
+        if (this.finalScore(player) > this.finalScore(winner)) {
+          winner = player
+        }
+      }
+      return winner
     }
   },
   methods: {
@@ -112,17 +114,39 @@ export default {
     playerScore (id) {
       return this.scores.find(scr => scr.playerId === id)
     },
-    playerObjectives (id) {
-      // Retrieve the objective object for the player
-      // this object should just have in it accessors or fields for
-      // all the things that could be tracked or computed for side objectives
-      id
-      return {dummy: 44}
+    addBonuses (player) {
+      let bonuses = {}
+      bonuses['group'] = player.objectives.getGroupBonus()
+      bonuses['repeat'] = player.objectives.getRepeatBonus()
+      bonuses['variable'] = player.objectives.getVariableBonus()
+      bonuses['safety'] = player.objectives.getSafetyBonus()
+      bonuses['clean'] = player.objectives.getCleanBonus()
+      bonuses['cool'] = player.objectives.getCoolBonus()
+      bonuses['defensive'] = player.objectives.getDefensiveBonus()
+      bonuses['complete'] = this.completeBonus(player)
+
+      let total = Array.from(Object.values(bonuses)).reduce((acc, bonus) => {
+        return acc + bonus
+      }, 0)
+      bonuses['total'] = total
+     
+      let scores = this.playerScore(player.id)
+      scores.bonuses = bonuses
+    },
+    completeBonus (player) {
+      let stacks = this.stacks.filter(s => s.playerId === player.id)
+      return player.objectives.getCompleteBonus(stacks)
+    },
+    finalScore (player) {
+      let score = this.playerScore(player.id)
+      return score.score + score.bonuses.total
     },
     setup () {
       // order matters
       this.scores = this.getPlayerScores()()
-      this.winningScore = this.getWinningScore
+      for (let player of this.players) {
+        this.addBonuses(player)
+      }
       this.winner = this.getWinner
     }
   },

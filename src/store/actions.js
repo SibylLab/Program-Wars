@@ -65,6 +65,7 @@ export default {
    * Add a card to a stack from the activePlayer's hand and end turn.
    */
   addCardToStack (context, payload) {
+    context.commit('addPlayedCard', payload)
     context.commit('removeFromHand', payload)
     context.commit('addToStack', payload)
     bus.$emit('card-played')
@@ -75,6 +76,7 @@ export default {
    * Add a new stack for a player from the activePlayer's hand and end turn.
    */
   addNewStack (context, payload) {
+    context.commit('addPlayedCard', payload)
     context.commit('removeFromHand', payload)
     context.commit('newStack', payload)
     bus.$emit('card-played')
@@ -86,6 +88,7 @@ export default {
    * activePlayer's turn.
    */
   addSpecialCard (context, payload) {
+    context.commit('addPlayedCard', {card: context.state.activeCard})
     context.commit('addCardEffect', payload)
     context.commit('discardActiveCard')
     bus.$emit('card-played')
@@ -97,6 +100,7 @@ export default {
    * discards any given extra cards.
    */
   groupStacks (context, payload) {
+    context.commit('addPlayedCard', {card: context.state.activeCard})
     context.commit('removeStacks', payload)
     context.commit('discardCards', payload)
     context.commit('addStack', payload)
@@ -109,6 +113,7 @@ export default {
    * Hack the given stack.
    */
   hackStack (context, payload) {
+    context.commit('addPlayedCard', {card: context.state.activeCard})
     context.commit('discardCards', {cards: payload.stack.cards})
     context.commit('removeStacks', {stacks: new Set([payload.stack])})
     context.commit('discardActiveCard')
