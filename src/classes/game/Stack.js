@@ -84,6 +84,43 @@ export default class Stack {
   }
 
   /**
+   * Returns true if the stack has at least one variable card.
+   */
+  hasVariable () {
+    return this.cards.filter(c => c.type === "VARIABLE").length
+  }
+
+  /**
+   * Replaces the lowest variable card in the stack with the given card.
+   * Returns the replaced card.
+   */
+  replaceLowestVar (card) {
+    // find the index and values of all variable cards
+    let vars = []
+    for (let idx in this.cards) {
+      if (this.cards[idx].type === "VARIABLE") {
+        vars.push({idx: idx, value: this.cards[idx].value})
+      }
+    }
+
+    // If there are no variable cards just return the given card
+    if (vars.length === 0 || card.type !== "VARIABLE") {
+      return card
+    }
+
+    // Find the min variable and replace it with the given card
+    let min = vars[0]
+    for (let v of vars) {
+      if (v.value < min.value) {
+        min = v
+      }
+    }
+    let replaced = this.cards[min.idx]
+    this.cards[min.idx] = card
+    return replaced 
+  }
+
+  /**
    * Checks to see if a stack can have a given card placed on top of it.
    * @param {Card} card the card to check.
    * @return {bool} true if the card can be added to the top, false otherwise.
@@ -92,12 +129,15 @@ export default class Stack {
     let top = this.getTop()
     // Variable cards can only go on Rx cards or replace other variables
     if (card.type === "VARIABLE") {
-      if (top.type === "REPEAT") {
-        return top.value === 1
-      } else if (top.type === "VARIABLE") {
-        return top.value < card.value
+      if (top.type === "REPEAT" && top.value === 1) {
+        return true
+      } else {
+        let vars = this.cards.filter(c => c.type === "VARIABLE")
+        let minVar = vars.reduce((acc, c) => {
+          return c.value < acc ? c.value : acc
+        }, 9999)
+        return minVar < card.value
       }
-      return false
     // Repeat cards can't be used if the top is Rx or there are alredy 2 repeats
     } else if (card.type === "REPEAT" && !this.hasMaxRepeats()) {
       if (top.type === "REPEAT") {

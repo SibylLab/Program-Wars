@@ -71,13 +71,18 @@ export default {
         this.hackStack({stack: this.stack})
       } else if (card && this.stack.playerId === this.activePlayer.id
           && this.stack.willAccept(card)) {
+        // if the card is a variable we want to know if we are adding it
+        // to the top or replacing an existing one
         let top = this.stack.getTop()
-
+        let replace = !(top.type === "REPEAT" && top.value === 1)
+                      && card.type === "VARIABLE"
+                      && this.stack.hasVariable()
+                      
         this.addCardToStack({
           card: card,
           stackId: this.stack.stackId,
           playerId: this.activePlayer.id,
-          replace: top.type === "VARIABLE" && card.type === "VARIABLE"
+          replace: replace
         })
       }
     },

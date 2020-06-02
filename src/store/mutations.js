@@ -177,16 +177,16 @@ export default {
 
   /**
    * Add a given card to a stack with the given stackId.
-   * If payload.replace is true we are removing the top card before adding
-   * the given card.
+   * If replace is true the we replace the lowest variable card in the stack.
    */
   addToStack (state, payload) {
     let stack = state.stacks.find(s => s.stackId === payload.stackId)
     if (payload.replace) {
-      let top = stack.cards.pop()
-      state.deck.discard.push(top)
+      let replaced = stack.replaceLowestVar(payload.card)
+      state.deck.discard.push(replaced)
+    } else {
+      stack.cards.push(payload.card)
     }
-    stack.cards.push(payload.card)
   },
 
   /**
