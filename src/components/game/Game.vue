@@ -23,11 +23,11 @@
 
   <div id="stacks">
     <div id="left-field">
-      <play-field :player="getPlayer(0)"></play-field>
+      <play-area :player="getPlayer(0)" side="left"></play-area>
     </div>
 
     <div id="right-field">
-      <play-field :player="getPlayer(1)"></play-field>
+      <play-area :player="getPlayer(1)" side="right"></play-area>
     </div>
   </div>
   
@@ -40,7 +40,7 @@ import WinnerModal from '@/components/modals/WinnerModal'
 import PageHeader from '@/components/shared/PageHeader'
 import PlayerInfo from '@/components/game/PlayerInfo'
 import TurnArea from '@/components/game/TurnArea'
-import PlayField from '@/components/game/PlayField'
+import PlayArea from '@/components/game/PlayArea'
 import {bus} from '@/components/shared/Bus'
 import {mapState, mapActions} from 'vuex'
 
@@ -51,7 +51,7 @@ export default {
     'page-header': PageHeader,
     'turn-area': TurnArea,
     'player-info': PlayerInfo,
-    'play-field': PlayField
+    'play-area': PlayArea
   },
   computed: {
     ...mapState([

@@ -1,5 +1,5 @@
 <template>
-<div id="stacks-area" :key="update" :class="{ active: isActive }"
+<div id="stacks-area" :key="update"
     @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
 
   <div style="display: flex;">
@@ -52,9 +52,6 @@ export default {
     ]),
     playerStacks () {
       return this.stacks.filter(s => s.playerId === this.player.id)
-    },
-    isActive () {
-      return this.player === this.activePlayer
     },
     /**
      * Checks to see if the current player has selected a group card and
@@ -182,12 +179,6 @@ export default {
   position: relative;
   display: inline-block;
   margin: 5px; 
-}
-
-.active {
-  -webkit-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
-  -moz-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
-  box-shadow: 0 0 24px 10px rgba(0,230,0,1);
 }
 
 h3 {

@@ -80,7 +80,7 @@ export default {
 
 #messages {
   position: absolute;
-  top: 60%;
+  top: 58%;
   left: 10%;
   width: 80%;
   height: 30%;

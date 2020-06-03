@@ -61,4 +61,26 @@ export default class Objectives {
     }
     return 0
   }
+
+  /**
+   * Wraps all the bonuses up into an object for convenience.
+   * Requires the stacks of the player for complete program bonus.
+   */
+  getBonuses (stacks) {
+    let bonuses = {}
+    bonuses.group = this.player.objectives.getGroupBonus()
+    bonuses.repeat = this.player.objectives.getRepeatBonus()
+    bonuses.variable = this.player.objectives.getVariableBonus()
+    bonuses.safety = this.player.objectives.getSafetyBonus()
+    bonuses.clean = this.player.objectives.getCleanBonus()
+    bonuses.defensive = this.player.objectives.getDefensiveBonus()
+    bonuses.complete = this.getCompleteBonus(stacks)
+
+    let total = Array.from(Object.values(bonuses)).reduce((acc, bonus) => {
+      return acc + bonus
+    }, 0)
+    bonuses.total = total
+
+    return bonuses
+  }
 }

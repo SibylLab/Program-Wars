@@ -109,26 +109,9 @@ export default {
       return this.scores.find(scr => scr.playerId === id)
     },
     addBonuses (player) {
-      let bonuses = {}
-      bonuses.group = player.objectives.getGroupBonus()
-      bonuses.repeat = player.objectives.getRepeatBonus()
-      bonuses.variable = player.objectives.getVariableBonus()
-      bonuses.safety = player.objectives.getSafetyBonus()
-      bonuses.clean = player.objectives.getCleanBonus()
-      bonuses.defensive = player.objectives.getDefensiveBonus()
-      bonuses.complete = this.completeBonus(player)
-
-      let total = Array.from(Object.values(bonuses)).reduce((acc, bonus) => {
-        return acc + bonus
-      }, 0)
-      bonuses.total = total
-     
       let scores = this.playerScore(player.id)
-      scores.bonuses = bonuses
-    },
-    completeBonus (player) {
       let stacks = this.stacks.filter(s => s.playerId === player.id)
-      return player.objectives.getCompleteBonus(stacks)
+      scores.bonuses = player.objectives.getBonuses(stacks)
     },
     finalScore (player) {
       let score = this.playerScore(player.id)
