@@ -110,18 +110,18 @@ export default {
     },
     addBonuses (player) {
       let bonuses = {}
-      bonuses['group'] = player.objectives.getGroupBonus()
-      bonuses['repeat'] = player.objectives.getRepeatBonus()
-      bonuses['variable'] = player.objectives.getVariableBonus()
-      bonuses['safety'] = player.objectives.getSafetyBonus()
-      bonuses['clean'] = player.objectives.getCleanBonus()
-      bonuses['defensive'] = player.objectives.getDefensiveBonus()
-      bonuses['complete'] = this.completeBonus(player)
+      bonuses.group = player.objectives.getGroupBonus()
+      bonuses.repeat = player.objectives.getRepeatBonus()
+      bonuses.variable = player.objectives.getVariableBonus()
+      bonuses.safety = player.objectives.getSafetyBonus()
+      bonuses.clean = player.objectives.getCleanBonus()
+      bonuses.defensive = player.objectives.getDefensiveBonus()
+      bonuses.complete = this.completeBonus(player)
 
       let total = Array.from(Object.values(bonuses)).reduce((acc, bonus) => {
         return acc + bonus
       }, 0)
-      bonuses['total'] = total
+      bonuses.total = total
      
       let scores = this.playerScore(player.id)
       scores.bonuses = bonuses

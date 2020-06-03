@@ -39,7 +39,7 @@ export default class Objectives {
 
   getSafetyBonus () {
     let safetyCards = this.cardsPlayed.filter((c) => {
-      return c.type === "ANTIVURUS" || c.type === "FIREWALL"
+      return c.type === "ANTIVIRUS" || c.type === "FIREWALL"
     })
     return SAFETY_BONUS * safetyCards.length
   }
