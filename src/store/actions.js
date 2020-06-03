@@ -56,6 +56,7 @@ export default {
     if (payload.draw) {
       context.commit('drawCard')
     }
+    context.state.activeCard = undefined
     context.commit('nextPlayer')
     bus.$emit('end-turn')
   },

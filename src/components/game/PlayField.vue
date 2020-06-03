@@ -107,6 +107,12 @@ export default {
      * is already grouped.
      */
     canGroup (stack) {
+      // prevent single group card stacks with the same value as group card
+      // from showing up as groupable.
+      if (stack.cards.length === 1 && stack.cards[0].type === "GROUP"
+          && stack.cards[0].value === this.groupCardValue) {
+        return false
+      }
       return this.isGrouping && (this.grouped.hasStack(stack)
              || this.grouped.score + stack.getScore() <= this.groupCardValue)
     },
