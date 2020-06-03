@@ -1,5 +1,5 @@
 <template>
-<div id="info-component">
+<div id="info-component" v-if="tips.showTips">
   <input v-if="!active" type='image' id='info-button' src='static/miscIcons/info.png'
       v-on:click="active = true">
 
@@ -16,12 +16,19 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   name: 'info-popup',
   data () {
     return {
-      active: true
+      active: false
     }
+  },
+  computed: {
+    ...mapState([
+      'tips'
+    ])
   },
   methods: {
     openRules () {
@@ -39,8 +46,9 @@ export default {
 }
 
 #info-popup {
-  min-width: 90px;
-  max-width: 500px;
+  min-width: 500px;
+  max-height: 600px;
+  overflow: auto;
   height: auto;
   border: ridge grey 5px;
   border-radius: 10px;
