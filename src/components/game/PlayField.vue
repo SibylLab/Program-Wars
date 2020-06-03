@@ -11,7 +11,7 @@
 
   <ul id="stack-list">
     <li class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id">
-      <button id="group-button" class="btn btn-sm btn-primary"
+      <button id="group-button" :class="['btn', 'btn-sm', groupStyle(stack)]"
           v-if="canGroup(stack)" v-on:click="toggleGroup(stack)">
         {{ groupText(stack) }}
       </button>
@@ -98,6 +98,9 @@ export default {
      */
     groupText (stack) {
       return this.grouped.hasStack(stack) ? "Un-Group" : "Group"
+    },
+    groupStyle (stack) {
+      return this.grouped.hasStack(stack) ? "btn-danger" : "btn-primary"
     },
     /**
      * Checks if a given stack can be added to the current grouping or
