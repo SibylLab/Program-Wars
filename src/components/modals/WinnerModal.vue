@@ -75,7 +75,7 @@
 
 <script>
 import {bus} from '@/components/shared/Bus'
-import {mapActions, mapState, mapGetters} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 
 export default {
   name: 'winner-modal',
@@ -102,9 +102,6 @@ export default {
     }
   },
   methods: {
-    ...mapGetters([
-      'getPlayerScores'
-    ]),
     ...mapActions([
       'leaveGame'
     ]),
@@ -139,7 +136,7 @@ export default {
     },
     setup () {
       // order matters
-      this.scores = this.getPlayerScores()()
+      this.scores = this.$store.getters.getPlayerScores()
       for (let player of this.players) {
         this.addBonuses(player)
       }

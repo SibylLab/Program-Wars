@@ -1,6 +1,5 @@
 import { bus } from '@/components/shared/Bus'
 import router from '@/router'
-import getters from '@/store/getters'
 
 
 export default {
@@ -45,7 +44,7 @@ export default {
    * Clean up after a players turn and change to the next player.
    */
   endTurn (context, payload) {
-    let scores = getters.getPlayerScores(context.state)()  // call returned function
+    let scores = context.getters.getPlayerScores()
     for (let scoreInfo of scores) {
       if (scoreInfo.score >= context.state.scoreLimit) {
         bus.$emit('game-over')

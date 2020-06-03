@@ -147,8 +147,7 @@ export default {
    * Discard the active card from the current players hand.
    */
   discardActiveCard (state) {
-    let player = state.players.find(p => p.id === state.activePlayer.id)
-    let hand = state.hands.find(h => h.playerId === player.id)
+    let hand = state.hands.find(h => h.playerId === state.activePlayer.id)
     hand.cards = hand.cards.filter(c => c !== state.activeCard)
     state.deck.discard.push(state.activeCard)
     state.activeCard = undefined
@@ -215,7 +214,6 @@ export default {
    *
    */
   addPlayedCard (state, payload) {
-    let player = state.players.find(p => p.id === state.activePlayer.id)
-    player.objectives.cardsPlayed.push(payload.card)
+    state.activePlayer.objectives.cardsPlayed.push(payload.card)
   }
 }
