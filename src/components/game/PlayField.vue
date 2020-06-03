@@ -93,9 +93,7 @@ export default {
         this.addNewStack({card: card, playerId: this.player.id})
       }
     },
-    /**
-     * Create text for the grouping button.
-     */
+    // Next two functions determine the look of the group button
     groupText (stack) {
       return this.grouped.hasStack(stack) ? "Un-Group" : "Group"
     },

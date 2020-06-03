@@ -186,6 +186,12 @@ export default {
     } else {
       stack.cards.push(payload.card)
     }
+
+    // If the stack is now complete move it to the end
+    if (stack.isComplete()) {
+      state.stacks = state.stacks.filter(s => s.stackId !== stack.stackId)
+      state.stacks.push(stack)
+    }
   },
 
   /**
@@ -194,7 +200,28 @@ export default {
   newStack (state, payload) {
     let stack = new Stack(payload.playerId)
     stack.cards.push(payload.card)
-    state.stacks.push(stack)
+
+    // if card is group place it in front of any single isntruction stacks
+    if (payload.card.type === "GROUP") {
+      let plain = state.stacks.find((s) => {
+        return s.cards.length === 1 && s.cards[0].type === "INSTRUCTION"
+      })
+      if (plain) {
+        let idx = state.stacks.indexOf(plain)
+        state.stacks.splice(idx, 0, stack)
+        return
+      }
+    }
+
+    // if card is a plain instruction or it is a group and there are no
+    // single instruction stacks place card before any complete stacks
+    let complete = state.stacks.find(s => s.isComplete())
+    if (complete) {
+      let idx = state.stacks.indexOf(complete)
+      state.stacks.splice(idx, 0, stack)
+    } else {
+      state.stacks.push(stack)
+    }
   },
 
   /**
