@@ -133,7 +133,7 @@ export default {
 .play {
   -webkit-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
   -moz-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
-  box-shadow: 0 0 24px 10px rgba(0,230,0,1);
+  box-shadow: 0 0 24px 10px rgba(255,255,0,1);
 }
 
 .hack {
