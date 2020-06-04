@@ -27,7 +27,8 @@
         style="position: absolute; top: 5%;">
       <ul>
         <img v-for="effect in player.positiveEffects" v-bind:key="effect"  
-            class="effect-icon" :src="effectImagePath(effect)">
+            class="effect-icon" :src="effectImagePath(effect)"
+            :title="effectTooltip(effect)">
       </ul>
     </div>
 
@@ -36,7 +37,8 @@
         style="position: absolute; top: 55%;">
       <ul>
         <img v-for="effect in player.negativeEffects" v-bind:key="effect"  
-            class="effect-icon" :src="effectImagePath(effect)">
+            class="effect-icon" :src="effectImagePath(effect)"
+            :title="effectTooltip(effect)">
       </ul>
     </div>
   </div>
@@ -57,6 +59,7 @@
 
 <script>
 import InfoPopup from '@/components/shared/InfoPopup'
+import tooltips from '@/data/tooltips'
 import {bus} from '@/components/shared/Bus'
 import {mapState} from 'vuex'
 
@@ -91,6 +94,9 @@ export default {
   methods: {
     effectImagePath (effect) {
       return "/static/cardImages/effects/" + effect + ".png"
+    },
+    effectTooltip (effect) {
+      return tooltips.effects[effect]
     },
     /**
      * Get the players total score from their stacks.
