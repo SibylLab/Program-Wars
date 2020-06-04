@@ -42,7 +42,7 @@ export default {
 <style scoped>
 #info-component {
   position: relative;
-  z-index: 1000;
+  z-index: 500;
 }
 
 #info-popup {

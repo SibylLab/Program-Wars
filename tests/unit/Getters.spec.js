@@ -3,8 +3,8 @@ import getters from '@/store/getters.js'
 
 describe('vuex getters', () => {
   // Mock functions
-  const isProtected = jest.fn(e => true)
-  const isNotProtected = jest.fn(e => false)
+  const isProtected = jest.fn(e => e || true)
+  const isNotProtected = jest.fn(e => e && false)
   const trueFn = jest.fn().mockReturnValue(true)
   const falseFn = jest.fn().mockReturnValue(false)
 
@@ -63,7 +63,7 @@ describe('vuex getters', () => {
   })
   test('get a list of players that can be attacked with a card type', () => {
     let opp = getters.getAttackableOpponents(state)
-    activeCard: {type: 'VIRUS'}
+    {'VIRUS'}
     expect(opp.length).toEqual(1)
     expect(opp[0].id).toEqual(2)
     expect(isProtected.mock.calls.length).toEqual(1)

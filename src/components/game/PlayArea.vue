@@ -54,7 +54,7 @@ export default {
 
 <style scoped>
 #play-area {
-  posiiton: absolute;
+  position: absolute;
   width: 100%;
   height: 100%;
 }

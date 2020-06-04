@@ -81,12 +81,12 @@ export default {
 }
 </script>
 
+
 <style scoped>
 .sidenav {
   height: 100%;
   width: 0px;
   position: fixed;
-  z-index: 1;
   top: 0;
   background-color: #111;
   overflow-x: hidden;

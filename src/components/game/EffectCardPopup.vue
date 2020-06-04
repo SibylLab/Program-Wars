@@ -89,9 +89,6 @@ export default {
 
 
 <style scoped>
-#effect-card-popup {
-}
-
 #button-wrapper {
   display: flex;
   flex-direction: column;
