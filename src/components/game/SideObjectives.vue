@@ -1,6 +1,6 @@
 <template>
 <div id="side-objectives">
-  <h3 id="title-text">Bonus Points = {{ bonuses.total }}</h3>
+  <h3 id="title-text">bonus_points = {{ bonuses.total }}</h3>
 
   <ul style="color: #fff">
     <li v-for="cond in conditions" v-bind:key="cond.if">
@@ -46,11 +46,11 @@ export default {
       let conds = []
       conds.push({if: "group_card_played", reward: "+5 pts/card",
                   val: this.bonuses.group})
-      conds.push({if: "repeat_card_played", reward: "+5 pts/card",
+      conds.push({if: "repeat_card_played", reward: "+2 pts/card",
                   val: this.bonuses.repeat})
-      conds.push({if: "variable_card_played", vareward: "+5 pts/card",
+      conds.push({if: "variable_card_played", reward: "+3 pts/card",
                   val: this.bonuses.variable})
-      conds.push({if: "safety_card_played",  reward: "+5 pts/card",
+      conds.push({if: "safety_card_played",  reward: "+10 pts/card",
                   val: this.bonuses.safety})
       conds.push({if: "all_safeties", reward: "+10 pts",
                   val: this.bonuses.defensive})

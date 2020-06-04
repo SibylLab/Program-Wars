@@ -12,7 +12,7 @@
         </div>
 
         <div class="modal-body">
-          <p style="font-size: 24px">
+          <p style="font-size: 20px">
             When artificial intelligence surpassed human intelligence,
             it didn’t take long before the robots rose up and enslaved humanity.
             We fought back but we were no match for their coding abilities.
@@ -29,7 +29,7 @@
         </div>
 
         <div class="modal-footer" style="border: none">
-          <button class="btn btn-default" data-dismiss="modal"
+          <button class="btn btn-primary" data-dismiss="modal"
               style="float: right; margin: 5px;"> Let's go! </button>
         </div>
 

@@ -59,6 +59,7 @@ export default {
   width: 100%;
   height: 40px;
   background-color: #333333;
+  font-family: monospace;
 }
 
 #title {

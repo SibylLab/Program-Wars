@@ -41,6 +41,7 @@ export default {
   height: 94.5%;
   min-height: 500px;
   background-image: url('/static/backgroundImg/helloWorld.png');
+  font-family: monospace;
 }
 
 </style>
