@@ -24,8 +24,8 @@ export const store = new Vuex.Store({
     activeCard: undefined,
     scoreLimit: 75,
     tips: {showTips: true, factIndex: 0},
-    colorScheme: {},
     timer: undefined,
+    showBackstory: true
   },
 
   getters,

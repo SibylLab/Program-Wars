@@ -28,6 +28,14 @@ export default {
   },
 
   /**
+   * Sets the backstory marker to be true so the program will not show it
+   * again on new game under normal circumstances.
+   */
+  seenBackstory (state) {
+    state.showBackstory = false
+  },
+
+  /**
    * Set the starting player for the game.
    */
   setStartingPlayer (state) {

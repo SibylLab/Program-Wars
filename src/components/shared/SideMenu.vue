@@ -33,7 +33,7 @@
 import BackstoryModal from '@/components/modals/BackstoryModal'
 import RulesModal from '@/components/modals/RulesModal'
 import CreditsModal from '@/components/modals/CreditsModal'
-import {mapActions, mapState} from 'vuex'
+import {mapActions, mapState, mapMutations} from 'vuex'
 
 export default {
   name: 'side-menu',
@@ -49,13 +49,17 @@ export default {
   },
   computed: {
     ...mapState([
-      'gameState'
+      'gameState',
+      'showBackstory'
     ]),
     showNewGame () {
       return this.gameState !== "home"
     }
   },
   methods: {
+    ...mapMutations([
+      'seenBackstory'
+    ]),
     ...mapActions([
       'leaveGame'
     ]),
@@ -66,6 +70,12 @@ export default {
     closeMenu () {
       this.showMenu = false
       $('.sidenav').width('0px')
+    }
+  },
+  mounted () {
+    if (this.showBackstory) {
+      $('#backstoryModal').modal('show')
+      this.seenBackstory()
     }
   }
 }
