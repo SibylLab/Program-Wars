@@ -29,6 +29,7 @@ export default {
    */
   leaveGame (context) {
     context.dispatch('resetForHome')
+    context.commit('seenBackstory')
     router.push('home')
   },
 
