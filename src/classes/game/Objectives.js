@@ -5,8 +5,8 @@
 
 // Bonuses for each card played
 const GROUP_BONUS = 5
-const REPEAT_BONUS = 3
-const VAR_BONUS = 2
+const REPEAT_BONUS = 2
+const VAR_BONUS = 3
 const SAFETY_BONUS = 10
 
 // Objective Bonuses
