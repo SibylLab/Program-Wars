@@ -165,9 +165,9 @@ export default {
   top: 2%;
   left: 30%;
   width: 40%;
-  min-width: 400px;
+  min-width: 450px;
   height: 60%;
-  min-height: 480px;
+  min-height: 520px;
   padding: 1%;
   background-color: white;
   border-radius: 30px;
@@ -181,18 +181,21 @@ export default {
 
 #game-types {
   width: 100%;
-  height: 100px;
+  height: 140px;
+  font-size: 15px;
 }
 
 #add-players {
   width: 100%;
   height: 100px;
+  font-size: 15px;
 }
 
 #current-players {
   margin-left: 25%;
   margin-right: 25%;
   height: 120px;
+  font-size: 15px;
 }
 
 .sub-heading {
