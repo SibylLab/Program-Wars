@@ -5,7 +5,7 @@
   <div style="display: flex;">
     <h3 id="main-func">{{ player.name }}_main:</h3>
     <h3 id="group-total" v-if="isGrouping">
-      Grouped Points {{ grouped.score }} / {{ groupCardValue }}
+      Grouped {{ grouped.score }}/{{ groupCardValue }}
     </h3>
   </div>
 
@@ -163,9 +163,10 @@ export default {
 }
 
 #group-total {
-  margin-left: 60px;
-  margin-top: 2px;
+  margin-left: 20px;
+  margin-top: 10px;
   color: lightgreen;
+  font-size: 25px;
 }
 
 

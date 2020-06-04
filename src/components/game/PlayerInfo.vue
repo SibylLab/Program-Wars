@@ -182,6 +182,7 @@ export default {
 #info-button {
   position: relative;
   margin-top: 1.5%;
+  margin-left: 35%;
 }
 
 .left {

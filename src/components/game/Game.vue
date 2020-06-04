@@ -85,10 +85,11 @@ export default {
 #page {
   position: absolute;
   width: 100%;
-  min-width: 1200px;
+  min-width: 1350px;
   height: 100%;
-  min-height: 750px;
+  min-height: 760px;
   background-color: white;
+  font-family: monospace;
 }
 
 #play {
