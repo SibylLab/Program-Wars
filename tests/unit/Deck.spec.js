@@ -9,16 +9,30 @@ let count = function (cards, type) {
 
 describe('Deck.js', () => {
   it('test if the initial discard array is empty', () => {
-    let testDeck = new Deck()
+    let testDeck = new Deck(1)
     expect(testDeck.discard.length).toEqual(0)
   })
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck(1)
-    expect(testDeck.cards.length).toEqual(72)
+    expect(testDeck.cards.length).toEqual(66)
   })
   it('test the initDeck function for number of cards', () => {
     let testDeck = new Deck(3)
-    expect(testDeck.cards.length).toEqual(219)
+    expect(testDeck.cards.length).toEqual(200)
+  })
+  it('test refreshing the deck when trying to draw a card from empty deck', () => {
+    let testDeck = new Deck(1)
+    let numCards = testDeck.cards.length
+    for (let i = 0; i < numCards ; i++) {
+      let card = testDeck.draw()
+      testDeck.discard.push(card)
+    }
+    expect(testDeck.discard.length).toEqual(66)
+    expect(testDeck.cards.length).toEqual(0)
+
+    testDeck.draw()
+    expect(testDeck.cards.length).toEqual(65)
+    expect(testDeck.discard.length).toEqual(0)
   })
 
   describe('correct setup for one player decks', () => {
@@ -47,14 +61,8 @@ describe('Deck.js', () => {
     it('correct number of viruses', () => {
       expect(count(deck1.cards, 'VIRUS')).toEqual(3)
     })
-    it('correct number of power outages', () => {
-      expect(count(deck1.cards, 'POWEROUTAGE')).toEqual(3)
-    })
     it('correct number of anti viruses', () => {
       expect(count(deck1.cards, 'ANTIVIRUS')).toEqual(0)
-    })
-    it('correct number of generator cards', () => {
-      expect(count(deck1.cards, 'GENERATOR')).toEqual(0)
     })
     it('correct number of firewall cards', () => {
       expect(count(deck1.cards, 'FIREWALL')).toEqual(0)
@@ -62,7 +70,7 @@ describe('Deck.js', () => {
     it('draw function works properly', () => {
       // The deck shuffles itself when created, no way of know what the top card is
       expect(deck1.draw()).not.toBeUndefined()
-      expect(deck1.cards.length).toEqual(71)
+      expect(deck1.cards.length).toEqual(65)
     })
     // deleted shuffle test as it didn't really test anything
     // could write a new one to check that shuffle changes order a bit, but this
@@ -76,9 +84,6 @@ describe('Deck.js', () => {
     })
     test('correct number of anti virus cards', () => {
       expect(count(deck2.cards, 'ANTIVIRUS')).toEqual(1)
-    })
-    test('correct number of generator cards', () => {
-      expect(count(deck2.cards, 'GENERATOR')).toEqual(1)
     })
     test('correct number of firewall cards', () => {
       expect(count(deck2.cards, 'FIREWALL')).toEqual(1)
@@ -111,14 +116,8 @@ describe('Deck.js', () => {
     it('correct number of viruses', () => {
       expect(count(deck3.cards, 'VIRUS')).toEqual(9)
     })
-    it('correct number of power outages', () => {
-      expect(count(deck3.cards, 'POWEROUTAGE')).toEqual(9)
-    })
     it('correct number of anti viruses', () => {
       expect(count(deck3.cards, 'ANTIVIRUS')).toEqual(1)
-    })
-    it('correct number of generator cards', () => {
-      expect(count(deck3.cards, 'GENERATOR')).toEqual(1)
     })
     it('correct number of firewall cards', () => {
       expect(count(deck3.cards, 'FIREWALL')).toEqual(1)
@@ -133,9 +132,6 @@ describe('Deck.js', () => {
     })
     test('correct number of anti virus cards', () => {
       expect(count(deck4.cards, 'ANTIVIRUS')).toEqual(2)
-    })
-    test('correct number of generator cards', () => {
-      expect(count(deck4.cards, 'GENERATOR')).toEqual(2)
     })
     test('correct number of firewall cards', () => {
       expect(count(deck4.cards, 'FIREWALL')).toEqual(2)

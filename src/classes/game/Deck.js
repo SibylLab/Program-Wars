@@ -140,6 +140,7 @@ export default class Deck {
    */
   refresh () {
     this.cards = this.cards.concat(this.discard)
+    this.discard = []
     this.shuffle(this.cards)
   }
 }

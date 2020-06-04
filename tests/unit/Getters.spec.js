@@ -67,7 +67,7 @@ describe('vuex getters', () => {
     expect(opp.length).toEqual(1)
     expect(opp[0].id).toEqual(2)
     expect(isProtected.mock.calls.length).toEqual(1)
-    expect(isNotProtected.mock.calls.length).toEqual(3)
+    expect(isNotProtected.mock.calls.length).toEqual(2)
   })
   test('get a list of players that can be hacked', () => {
     let opp = getters.getHackableOpponents(state)
