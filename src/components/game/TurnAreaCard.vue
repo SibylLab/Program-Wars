@@ -5,7 +5,7 @@
   <img v-if="activePlayer.isAi" src="static/cardImages/backOfCard.png" class="card">
   <img v-else :src="card.image" class="card">
 
-  <div v-if="isShowing" id="overlays" :class="shadow">
+  <div v-if="isShowing" id="overlays" class="play">
     <input type="image" id="discard-button"
        title="Discard Card"
        src="static/miscIcons/trash.png"
@@ -22,6 +22,13 @@
 import EffectCardPopup from '@/components/game/EffectCardPopup'
 import {mapMutations, mapState, mapActions} from 'vuex'
 
+/**
+ * Display for a card in the turn area.
+ * Shows a card image as well as necessary overlays like discard button and
+ * popups for targeting with special cards.
+ * Is also responsible for setting the active card and starting the dragging
+ * for a card that is being played.
+ */
 export default {
   name: 'turn-area-card',
   props: ['card'],
@@ -41,12 +48,6 @@ export default {
     ]),
     isShowing () {
       return this.activeCard === this.card && !this.activePlayer.isAi
-    },
-    /**
-     * Determines which css class to use for the shadow around the active card.
-     */
-    shadow () {
-      return 'play'
     },
     ondragstart () {
       // The ondragstart attribute requires a string "return bool;" so here
@@ -79,8 +80,7 @@ export default {
       })
     },
     /**
-     * Action to take when card starts being dragged.
-     * Sets up the dragging event with the necessary data.
+     * Setup drag event with necessary data when a card starts being dragged.
      */
     startDrag (evt) {
       evt.dataTransfer.dropEffect = 'move'
@@ -123,12 +123,6 @@ export default {
   -webkit-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
   -moz-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
   box-shadow: 0 0 24px 8px rgba(0,230,0,1);
-}
-
-.noplay {
-  -webkit-box-shadow: 0 0 24px 3px rgba(230,0,0,0.8);
-  -moz-box-shadow: 0 0 24px 3px rgba(230,0,0,0.8);
-  box-shadow: 0 0 24px 3px rgba(230,0,0,0.8);
 }
 </style>
 

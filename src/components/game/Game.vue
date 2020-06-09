@@ -44,6 +44,10 @@ import PlayArea from '@/components/game/PlayArea'
 import {bus} from '@/components/shared/Bus'
 import {mapState, mapActions} from 'vuex'
 
+/**
+ * The main page for the game.
+ * Organizes the different area components to display the game properly.
+ */
 export default {
   name: 'game-page',
   components: {
@@ -80,6 +84,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 #page {

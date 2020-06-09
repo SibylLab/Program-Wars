@@ -40,6 +40,12 @@ import MessageBox from '@/components/game/MessageBox'
 import {bus} from '@/components/shared/Bus'
 import {mapGetters, mapState, mapActions} from 'vuex'
 
+/**
+ * Displays the active components needed for players to take their turn.
+ * These components include the Redraw button, the active players hand,
+ * and a message area to display information about game actions and other
+ * game tips.
+ */
 export default {
   name: 'card-area',
   data () {
@@ -75,6 +81,7 @@ export default {
   },
   created () {
     bus.$on('card-played', () => {
+      // Required to redraw the screen when a card is played
       this.update = !this.update
     })
   }

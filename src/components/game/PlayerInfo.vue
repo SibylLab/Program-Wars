@@ -63,6 +63,11 @@ import tooltips from '@/data/tooltips'
 import {bus} from '@/components/shared/Bus'
 import {mapState} from 'vuex'
 
+/**
+ * Displays the information for a single player.
+ * Organizes the players name, avatar, score, and active effects together.
+ * Is highlighted when the player is the active player.
+ */
 export default {
   name: 'player-info',
   props: ['player', 'side'],
@@ -112,8 +117,8 @@ export default {
   },
   created () {
     bus.$on('card-played', () => {
-        // Scores and effect lists must be updated when a card is played
-        this.update = !this.update
+      // Scores and effect lists must be updated when a card is played
+      this.update = !this.update
     })
   }
 }
