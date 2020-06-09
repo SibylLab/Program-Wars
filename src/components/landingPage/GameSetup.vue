@@ -61,9 +61,8 @@
 import {mapActions} from 'vuex'
 
 /**
- * This component gives a player options for creating a new game. This like
- * Adding their name and playing against a bot or a friend.
- * Is responsible for passing player information to an action to start a game.
+ * Takes player information and uses it to launch a new game.
+ * Setup for the game such as game type and player names.
  */
 export default {
   name: 'game-setup',
@@ -92,6 +91,7 @@ export default {
     },
     /**
      * Removes all players except 1 human player from players and adds 1 ai player.
+     * Always keeps 1 human player if needed and adds the bot after it.
      */
     addBot () {
       this.removeBots()
@@ -101,13 +101,13 @@ export default {
       this.players.push(this.noobBot)
     },
     /**
-     * Filters all ai players from players.
+     * Filters all ai players from player list.
      */
     removeBots () {
       this.players = this.players.filter(p => !p.ai)
     },
     /**
-     * Toggle the game state and adjust the current players.
+     * Toggle the game state and adjust the current players in the player list.
      */
     changeGame () {
       if (this.gameType === 'hotseat') {
@@ -151,32 +151,20 @@ export default {
     }
   },
   created () {
-    this.players.push(this.noobBot)  // Always start with 1 Bot
+    // We always start in AI game mode with 1 bot
+    this.players.push(this.noobBot)
   }
 }
 </script>
 
-<!-- The position of this component should probably be set in a div in its
-     parent rather than here. It makes sense to set its min and max size, but
-     the user should be responsible for where it goes. -->
+
 <style scoped>
 #setup {
-  position: absolute;
-  top: 2%;
-  left: 30%;
-  width: 40%;
-  min-width: 450px;
-  height: 60%;
-  min-height: 520px;
+  width: 100%;
+  height: 100%;
   padding: 1%;
   background-color: white;
   border-radius: 30px;
-}
-
-@media all and (max-width: 600px) {
-  #setup{
-    left: 10%;
-  }
 }
 
 #game-types {

@@ -3,7 +3,9 @@
   <page-header></page-header>
 
   <div id="page">
-    <game-setup></game-setup>
+    <div id="game-setup">
+      <game-setup></game-setup>
+    </div>
   </div>
 
 </div>
@@ -15,6 +17,10 @@ import PageHeader from '@/components/shared/PageHeader'
 import GameSetup from '@/components/landingPage/GameSetup'
 import {mapActions} from 'vuex'
 
+/**
+ * The main landing page for the game.
+ * Uses a gameSetup component to get user info and start a new game.
+ */
 export default {
   name: 'landing-page',
   components: {
@@ -32,6 +38,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
 #page {
   position: absolute;
@@ -44,4 +51,19 @@ export default {
   font-family: monospace;
 }
 
+#game-setup {
+  position: absolute;
+  top: 2%;
+  left: 30%;
+  width: 40%;
+  min-width: 450px;
+  height: 60%;
+  min-height: 530px;
+}
+
+@media all and (max-width: 600px) {
+  #game-setup{
+    left: 10%;
+  }
+}
 </style>
