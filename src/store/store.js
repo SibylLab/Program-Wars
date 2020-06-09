@@ -26,7 +26,6 @@ export const store = new Vuex.Store({
     tips: {showTips: true, factIndex: 0},
     timer: undefined,
     showBackstory: true
-    scoreBackgroundColour:'background-color: rgb(200, 221, 30)',
   },
 
   getters,
