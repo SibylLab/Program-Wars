@@ -35,6 +35,10 @@ import RulesModal from '@/components/modals/RulesModal'
 import CreditsModal from '@/components/modals/CreditsModal'
 import {mapActions, mapState, mapMutations} from 'vuex'
 
+/**
+ * The main game menu.
+ * Contains any modals that has links to.
+ */
 export default {
   name: 'side-menu',
   data () {

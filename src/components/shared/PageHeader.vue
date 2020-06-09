@@ -27,6 +27,12 @@
 import SideMenu from '@/components/shared/SideMenu'
 import {mapState, mapMutations, mapGetters} from 'vuex'
 
+/**
+ * A component for placing a title bar for the game on top of a page.
+ *
+ * Displays the game title and a button for the menu at all times. In
+ * game it will also display the scoreLimit, game tips toggle, and a timer.
+ */
 export default {
   name: 'landing-page',
   data () {
