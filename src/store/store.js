@@ -10,6 +10,10 @@ import getters from './getters'
 
 /**
  * Holds all game objects and state.
+ * Should only be used for data that needs to be used by many components.
+ * If a component needs to keep track of something keep it in the component and
+ * pass it out if and when it is necessary.
+ * ie) groupedStacks in the PlayField or player information in GameSetup.
  */
 export const store = new Vuex.Store({
   state: {
@@ -17,7 +21,6 @@ export const store = new Vuex.Store({
     stacks: [],
     hands: [],
     aiHanlders: [],
-    objectives: [],
     deck: undefined,
     gameState: 'home',
     activePlayer: undefined,
