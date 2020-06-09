@@ -2,6 +2,7 @@
 <div id="side-objectives">
   <h3 id="title-text">bonus_points = {{ bonuses.total }}</h3>
 
+  <!-- The small divisions give simple syntax higlighting to objective text -->
   <ul style="color: #fff">
     <li v-for="cond in conditions" v-bind:key="cond.if">
       <div class="keyword">if</div>
@@ -28,6 +29,10 @@
 import InfoPopup from '@/components/shared/InfoPopup'
 import {mapState} from 'vuex'
 
+/**
+ * Displays available side objectives and a players progress by higlighting
+ * objectives that have been achieved.
+ */
 export default {
   name: 'side-objectives',
   props: ['player'],
@@ -79,6 +84,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 #side-objectives {

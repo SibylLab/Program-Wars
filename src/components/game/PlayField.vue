@@ -12,7 +12,7 @@
   <ul id="stack-list">
     <li class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id">
       <button id="group-button" :class="['btn', 'btn-sm', groupStyle(stack)]"
-          v-if="canGroup(stack)" v-on:click="toggleGroup(stack)">
+          v-if="canGroup(stack)" v-on:click="toggleGroup(stack)" :key="groupText(stack)">
         {{ groupText(stack) }}
       </button>
       <card-stack :stack="stack"></card-stack>
@@ -41,6 +41,13 @@ import CardStack from '@/components/game/CardStack'
 import {bus} from '@/components/shared/Bus'
 import {mapState, mapGetters, mapActions} from 'vuex'
 
+/**
+ * A component to hold all of the players card stacks during a game.
+ * Responsible for handling drop events for cards that can start new stacks
+ * and calling the appropriate actions to deal with them.
+ * It is also responsible for dealing with grouping cards and calling the
+ * grouping action when the grouped stacks score equals a the group cards value.
+ */
 export default {
   name: 'play-field',
   props: ['player'],
@@ -143,9 +150,10 @@ export default {
         })
         this.grouped.reset()
       }
-      this.react()
     },
-    // Causes the component to react to a change and update itself
+    /**
+     * Causes the component to react to a change and update itself.
+     */
     react () {
       this.update = !this.update
     }
@@ -161,6 +169,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 #stacks-area {

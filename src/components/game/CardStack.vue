@@ -1,24 +1,33 @@
 <template>
 <div id="stack">
   <div style="text-align: center">
-    <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">Score: {{ stack.getScore() }}</h5>
+    <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">
+      Score: {{ stack.getScore() }}
+    </h5>
   </div>
   <ul id="card-list" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
     <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image"
-        draggable="false" :class="[{card: true}, {play: canPlayOn(card)}, {hack: canHack(card)}]">
+        :class="[{card: true}, {play: canPlayOn(card)}, {hack: canHack(card)}]"
+        draggable="false">
   </ul>
 </div>
 </template>
 
 
 <script>
-import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+import {mapState, mapGetters, mapActions} from 'vuex'
 
+/**
+ * Displays a stack of cards and its total score.
+ * Lights up when the active card can be played on it. Score is displayed
+ * in red if the stack is not counting for its full amount because of
+ * an active effect on the player, but it will still show the full total.
+ * Responsible for handling events when cards are dropped on the stack by
+ * calling the appropriate actions.
+ */
 export default {
   name: 'card-stack',
   props: ['stack'],
-  components: {
-  },
   computed: {
     ...mapState([
       'activePlayer',
@@ -28,6 +37,11 @@ export default {
     ...mapGetters([
       'getCurrentPlayerHand',
     ]),
+    /**
+     * Determines the score color based on whether the stacks owner is under
+     * an effect that changes how much of the stack score is added to the
+     * players total score.
+     */
     scoreColor () {
       let player = this.players.find(p => p.id === this.stack.playerId)
       return player.hurtBy("VIRUS") ? "score-red" : "score-normal"
@@ -36,9 +50,6 @@ export default {
   methods: {
     ...mapActions([
       'executeTurn'
-    ]),
-    ...mapMutations([
-      'setActiveCard'
     ]),
     /**
      * Handles the event where a card is dropped on the stack.
@@ -51,6 +62,7 @@ export default {
       let hand = this.getCurrentPlayerHand
       let card = hand.cards.find(c => c.id === cardId)
 
+      // dropped card is a hack card and this stack can be hacked
       if (card && card.type === "HACK"
           && this.stack.playerId !== this.activePlayer.id
           && this.stack.isHackable()) {
@@ -60,9 +72,10 @@ export default {
           player: this.activePlayer,
           target: this.stack
         })
+
+      // dropped card is any other card and can be played on this stack
       } else if (card && this.stack.playerId === this.activePlayer.id
           && this.stack.willAccept(card)) {
-                      
         this.executeTurn({
           playType: "playCardOnStack",
           card: card,
@@ -85,7 +98,7 @@ export default {
       }
     },
     /**
-     * Check if the card is the top of the stack and that the active card can
+     * Check if the given card is the top of the stack and that the active card can
      * be played on it.
      */
     canPlayOn (card) {
@@ -95,7 +108,7 @@ export default {
       return this.stack.willAccept(this.activeCard)
     },
     /**
-     * Check if a card is the top of the stack and that the stack can be hacked.
+     * Check if the given card is the top of the stack and that the stack can be hacked.
      */
     canHack (card) {
       if (!this.isViableStack(true) || this.activeCard.type !== "HACK"
@@ -107,6 +120,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 #stack {

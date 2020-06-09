@@ -29,6 +29,13 @@
 <script>
 import {mapGetters, mapState, mapActions} from 'vuex'
 
+/**
+ * Displays buttons for targeting players or activating special cards, or
+ * text to indicate the card can't be played.
+ * Attached to a card and is visible when a special card is active.
+ * Responsible for getting possible targets for a card and calling the
+ * appropriate actions when a special card is played.
+ */
 export default {
   name: 'effect-card-popup',
   data () {

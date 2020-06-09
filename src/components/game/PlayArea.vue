@@ -20,6 +20,13 @@ import SideObjectives from '@/components/game/SideObjectives'
 import PlayField from '@/components/game/PlayField'
 import {mapState} from 'vuex'
 
+/**
+ * The area of the screen that holds a players play field and side objectives
+ * in tabs.
+ * Is higlighted when the components player is the active player.
+ * side property is to change some of the setup based on what side of the screen
+ * the component is on.
+ */
 export default {
   name: 'play-area',
   props: ['player', 'side'],
@@ -28,6 +35,10 @@ export default {
       activeTab: 1
     }
   },
+  components: {
+    'play-field': PlayField,
+    'side-objectives': SideObjectives
+  },
   computed: {
     ...mapState([
       'activePlayer'
@@ -35,10 +46,6 @@ export default {
     showShadow () {
       return this.player === this.activePlayer
     }
-  },
-  components: {
-    'play-field': PlayField,
-    'side-objectives': SideObjectives
   },
   methods: {
     isActiveTab (tabNum) {
