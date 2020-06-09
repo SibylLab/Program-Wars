@@ -57,10 +57,9 @@ export default {
   methods: {
     ...mapMutations([
       'setActiveCard',
-      'discardActiveCard',
     ]),
     ...mapActions([
-      'endTurn'
+      'executeTurn'
     ]),
     /**
      * Selects this.card as the active card.
@@ -72,8 +71,12 @@ export default {
      * Discard the activeCard and end the activePlayers turn.
      */
     discard () {
-      this.discardActiveCard()
-      this.endTurn({draw: true})
+      this.executeTurn({
+        playType: "DISCARD",
+        card: this.activeCard,
+        player: this.activePlayer,
+        target: this.activePlayer
+      })
     },
     /**
      * Action to take when card starts being dragged.

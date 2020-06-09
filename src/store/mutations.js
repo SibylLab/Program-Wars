@@ -176,11 +176,11 @@ export default {
    * Must also be passed isPositive to know what kind of effect it is.
    */
   addCardEffect (state, payload) {
-    let player = state.players.find(p => p.id === payload.playerId)
-    if (payload.isPositive) {
-      player.addPositive(payload.effect)
+    let effect = payload.card.type
+    if (payload.card.isSafety()) {
+      payload.target.addPositive(effect)
     } else {
-      player.addNegative(payload.effect)
+      payload.target.addNegative(effect)
     }
   },
 
@@ -266,6 +266,8 @@ export default {
    *
    */
   addPlayedCard (state, payload) {
-    state.activePlayer.objectives.cardsPlayed.push(payload.card)
+    if (payload.card) {
+      payload.player.objectives.cardsPlayed.push(payload.card)
+    }
   }
 }

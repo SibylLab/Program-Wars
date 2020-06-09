@@ -46,7 +46,10 @@ export default {
    * the player who's turn it is, and the target player/stack.
    */
   executeTurn(context, payload) {
-    if (payload.playType === "SAFETY" || payload.playType === "ATTACK") {
+    let draw = true
+    // This should ideally use polymorphism, but not sure how to integrate that
+    // nicely with vuex actions/mutations yet
+    if (payload.playType === "SPECIAL") {
       context.dispatch('addSpecialCard', payload)
     } else if (payload.playType === "HACK") {
       context.dispatch('hackStack', payload)
@@ -56,12 +59,16 @@ export default {
       context.dispatch('addNewStack', payload)
     } else if (payload.playType === "ONSTACK") {
       context.dispatch('addCardToStack', payload)
-    } else {
-      // discard the given card
+    } else if (payload.playType === "DISCARD") {
+      context.commit('discardCard', payload)
+    } else if (payload.playType === "REDRAW") {
+      context.commit('giveNewHand', payload)
+      draw = false
     }
 
+    context.commit('addPlayedCard', payload)
     bus.$emit('card-played')
-    context.dispatch('endTurn', {draw: true})
+    context.dispatch('endTurn', {draw: draw})
   },
 
   /**
@@ -89,7 +96,6 @@ export default {
    * Add a card to a stack from the activePlayer's hand and end turn.
    */
   addCardToStack (context, payload) {
-    context.commit('addPlayedCard', payload)
     context.commit('removeFromHand', payload)
     context.commit('addToStack', payload)
   },
@@ -98,7 +104,6 @@ export default {
    * Add a new stack for a player from the activePlayer's hand and end turn.
    */
   addNewStack (context, payload) {
-    context.commit('addPlayedCard', payload)
     context.commit('removeFromHand', payload)
     context.commit('newStack', payload)
   },
@@ -108,11 +113,8 @@ export default {
    * activePlayer's turn.
    */
   addSpecialCard (context, payload) {
-    context.commit('addPlayedCard', {card: context.state.activeCard})
     context.commit('addCardEffect', payload)
-    context.commit('discardActiveCard')
-    bus.$emit('card-played')
-    context.dispatch('endTurn', {draw: true})
+    context.commit('discardCard', payload)
   },
 
   /**
@@ -120,7 +122,6 @@ export default {
    * discards any given extra cards.
    */
   groupStacks (context, payload) {
-    context.commit('addPlayedCard', payload)
     context.commit('removeStacks', {stacks: payload.target})
     context.commit('newStack', payload)
     context.commit('removeFromHand', payload)
@@ -130,7 +131,6 @@ export default {
    * Hack the given stack.
    */
   hackStack (context, payload) {
-    context.commit('addPlayedCard', payload)
     context.commit('removeStacks', {stacks: new Set([payload.target])})
     context.commit('discardCard', payload)
   }

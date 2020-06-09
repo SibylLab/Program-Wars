@@ -55,10 +55,10 @@ export default {
   methods: {
     ...mapMutations([
       'setActiveCard',
-      'discardActiveCard',
       'addCardEffect'
     ]),
     ...mapActions([
+      'executeTurn',
       'addSpecialCard',
       'endTurn'
     ]),
@@ -72,15 +72,16 @@ export default {
       return players
     },
     /**
-     * Apply this cards affect to a player.
+     * Apply this cards affect to a given target player.
      * Only call when this card is a special card.
      * The card will be removed from the players hand and the turn will end.
      */
-    playSpecialCard (player) {
-      this.addSpecialCard({
-        playerId: player.id,
-        effect: this.activeCard.type,
-        isPositive: this.activeCard.isSafety()
+    playSpecialCard (target) {
+      this.executeTurn({
+        playType: "SPECIAL",
+        card: this.activeCard,
+        player: this.activePlayer,
+        target: target
       })
     }
   }

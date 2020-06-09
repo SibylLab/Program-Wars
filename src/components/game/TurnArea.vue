@@ -38,7 +38,7 @@ import InfoPopup from '@/components/shared/InfoPopup'
 import TurnAreaCard from '@/components/game/TurnAreaCard'
 import MessageBox from '@/components/game/MessageBox'
 import {bus} from '@/components/shared/Bus'
-import {mapGetters, mapMutations, mapState, mapActions} from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'card-area',
@@ -61,15 +61,16 @@ export default {
     ])
   },
   methods: {
-    ...mapMutations([
-      'giveNewHand',
-    ]),
     ...mapActions([
-      'endTurn'
+      'executeTurn',
     ]),
     redrawHand () {
-      this.giveNewHand({player: this.activePlayer})
-      this.endTurn({draw: false})
+      this.executeTurn({
+        playType: "REDRAW",
+        card: undefined,
+        player: this.activePlayer,
+        target: this.activePlayer
+      })
     }
   },
   created () {
