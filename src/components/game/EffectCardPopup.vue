@@ -27,7 +27,7 @@
 
 
 <script>
-import {mapGetters, mapMutations, mapState, mapActions} from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'effect-card-popup',
@@ -53,14 +53,8 @@ export default {
 
   },
   methods: {
-    ...mapMutations([
-      'setActiveCard',
-      'addCardEffect'
-    ]),
     ...mapActions([
-      'executeTurn',
-      'addSpecialCard',
-      'endTurn'
+      'executeTurn'
     ]),
     /**
      * Retrieves all the players that can be attacked by the card.
@@ -78,7 +72,7 @@ export default {
      */
     playSpecialCard (target) {
       this.executeTurn({
-        playType: "SPECIAL",
+        playType: "playSpecialCard",
         card: this.activeCard,
         player: this.activePlayer,
         target: target

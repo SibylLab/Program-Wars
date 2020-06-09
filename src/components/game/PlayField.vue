@@ -100,10 +100,10 @@ export default {
       if (card && this.player.id === this.activePlayer.id
           && card.type === "INSTRUCTION") {
         this.executeTurn({
-          playType: "NEWSTACK",
+          playType: "startNewStack",
           card: card,
           player: this.player,
-          target: "NEWSTACK",
+          target: undefined,
         })
       }
     },
@@ -136,7 +136,7 @@ export default {
     toggleGroup (stack) {
       if (this.grouped.toggleStack(stack, this.groupCardValue)) {
         this.executeTurn({
-          playType: "GROUP",
+          playType: "groupStacks",
           card: this.activeCard,
           player: this.activePlayer,
           target: this.grouped.stacks

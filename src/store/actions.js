@@ -49,21 +49,13 @@ export default {
     let draw = true
     // This should ideally use polymorphism, but not sure how to integrate that
     // nicely with vuex actions/mutations yet
-    if (payload.playType === "SPECIAL") {
-      context.dispatch('addSpecialCard', payload)
-    } else if (payload.playType === "HACK") {
-      context.dispatch('hackStack', payload)
-    } else if (payload.playType === "GROUP") {
-      context.dispatch('groupStacks', payload)
-    } else if (payload.playType === "NEWSTACK") {
-      context.dispatch('addNewStack', payload)
-    } else if (payload.playType === "ONSTACK") {
-      context.dispatch('addCardToStack', payload)
-    } else if (payload.playType === "DISCARD") {
+    if (payload.playType === "DISCARD") {
       context.commit('discardCard', payload)
     } else if (payload.playType === "REDRAW") {
       context.commit('giveNewHand', payload)
       draw = false
+    } else {
+      context.dispatch(payload.playType, payload)
     }
 
     context.commit('addPlayedCard', payload)
@@ -95,7 +87,7 @@ export default {
   /**
    * Add a card to a stack from the activePlayer's hand and end turn.
    */
-  addCardToStack (context, payload) {
+  playCardOnStack (context, payload) {
     context.commit('removeFromHand', payload)
     context.commit('addToStack', payload)
   },
@@ -103,7 +95,7 @@ export default {
   /**
    * Add a new stack for a player from the activePlayer's hand and end turn.
    */
-  addNewStack (context, payload) {
+  startNewStack (context, payload) {
     context.commit('removeFromHand', payload)
     context.commit('newStack', payload)
   },
@@ -112,7 +104,7 @@ export default {
    * Adds a given special card to the given player and ends the
    * activePlayer's turn.
    */
-  addSpecialCard (context, payload) {
+  playSpecialCard (context, payload) {
     context.commit('addCardEffect', payload)
     context.commit('discardCard', payload)
   },

@@ -55,7 +55,7 @@ export default {
           && this.stack.playerId !== this.activePlayer.id
           && this.stack.isHackable()) {
         this.executeTurn({
-          playType: "HACK",
+          playType: "hackStack",
           card: this.activeCard,
           player: this.activePlayer,
           target: this.stack
@@ -64,7 +64,7 @@ export default {
           && this.stack.willAccept(card)) {
                       
         this.executeTurn({
-          playType: "ONSTACK",
+          playType: "playCardOnStack",
           card: card,
           player: this.activePlayer,
           target: this.stack,
