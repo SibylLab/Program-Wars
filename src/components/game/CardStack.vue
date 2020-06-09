@@ -35,8 +35,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'executeTurn',
-      'hackStack'
+      'executeTurn'
     ]),
     ...mapMutations([
       'setActiveCard'
@@ -55,7 +54,12 @@ export default {
       if (card && card.type === "HACK"
           && this.stack.playerId !== this.activePlayer.id
           && this.stack.isHackable()) {
-        this.hackStack({stack: this.stack})
+        this.executeTurn({
+          playType: "HACK",
+          card: this.activeCard,
+          player: this.activePlayer,
+          target: this.stack
+        })
       } else if (card && this.stack.playerId === this.activePlayer.id
           && this.stack.willAccept(card)) {
                       

@@ -162,6 +162,16 @@ export default {
   },
 
   /**
+   * Discard the given card from the given players hand.
+   */
+  discardCard (state, payload) {
+    let hand = state.hands.find(h => h.playerId === payload.player.id)
+    hand.cards = hand.cards.filter(c => c !== payload.card)
+    state.deck.discard.push(payload.card)
+    state.activeCard = undefined
+  },
+
+  /**
    * Adds a given card effect to a player with the given id.
    * Must also be passed isPositive to know what kind of effect it is.
    */

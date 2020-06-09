@@ -85,8 +85,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'executeTurn',
-      'groupStacks'
+      'executeTurn'
     ]),
     /**
      * Handles events when a card is dropped in the playing feild.

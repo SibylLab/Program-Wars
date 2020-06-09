@@ -130,10 +130,8 @@ export default {
    * Hack the given stack.
    */
   hackStack (context, payload) {
-    context.commit('addPlayedCard', {card: context.state.activeCard})
-    context.commit('removeStacks', {stacks: new Set([payload.stack])})
-    context.commit('discardActiveCard')
-    bus.$emit('card-played')
-    context.dispatch('endTurn', {draw: true})
+    context.commit('addPlayedCard', payload)
+    context.commit('removeStacks', {stacks: new Set([payload.target])})
+    context.commit('discardCard', payload)
   }
 }
