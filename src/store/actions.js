@@ -1,13 +1,23 @@
 import { bus } from '@/components/shared/Bus'
 import router from '@/router'
 
-
+/**
+ * All actions that are taken involving the vuex state.
+ * These actions should be used when combining multiple mutations or
+ * getters to make complex changes. Most often this will be for responses to
+ * player turns or changes in game state.
+ * Actions call mutations with context.commit and other actions with
+ * context.dispatch. Pass the function name as the first argument as a string.
+ */
 export default {
   /**
    * Starts a new game.
    * Fully initializes a new state and navigates to the game page.
-   * Payload needs field players wich is a list of objects
-   * of the form {name: 'name', ai: bool}
+   *
+   * Payload
+   * {
+   *   players: list of player info {name, isAi}
+   * }
    */
   newGame (context, payload) {
     context.commit('resetStateForGame')
@@ -44,11 +54,18 @@ export default {
   /**
    * Execute a players turn given the type of play, the card being played,
    * the player who's turn it is, and the target player/stack.
+   * Emits a card-played event.
+   *
+   * Payload
+   * {
+   *   playType: a string for the action name to call,
+   *   card: the card being played,
+   *   player: the player taking the turn,
+   *   target: the player or stack the card is being played on
+   * }
    */
   executeTurn(context, payload) {
     let draw = true
-    // This should ideally use polymorphism, but not sure how to integrate that
-    // nicely with vuex actions/mutations yet
     if (payload.playType === "DISCARD") {
       context.commit('discardCard', payload)
     } else if (payload.playType === "REDRAW") {
@@ -65,6 +82,12 @@ export default {
 
   /**
    * Clean up after a players turn and change to the next player.
+   * Emits events for game-over and end-turn when necessary.
+   *
+   * Payload
+   * {
+   *   draw: whether the player needs to draw a new card or not
+   * }
    */
   endTurn (context, payload) {
     let scores = context.getters.getPlayerScores()
@@ -85,7 +108,8 @@ export default {
   },
 
   /**
-   * Add a card to a stack from the activePlayer's hand and end turn.
+   * Add a card to a stack from the given players hand.
+   * Payload same as executeTurn.
    */
   playCardOnStack (context, payload) {
     context.commit('removeFromHand', payload)
@@ -94,6 +118,7 @@ export default {
 
   /**
    * Add a new stack for a player from the activePlayer's hand and end turn.
+   * Payload same as executeTurn.
    */
   startNewStack (context, payload) {
     context.commit('removeFromHand', payload)
@@ -101,8 +126,8 @@ export default {
   },
 
   /**
-   * Adds a given special card to the given player and ends the
-   * activePlayer's turn.
+   * Adds a given special card effect to the target player and discards the card.
+   * Payload same as executeTurn.
    */
   playSpecialCard (context, payload) {
     context.commit('addCardEffect', payload)
@@ -110,8 +135,9 @@ export default {
   },
 
   /**
-   * Adds the given new group stack and removes all old stacks and
-   * discards any given extra cards.
+   * Adds the given group card as a new stack and removes all target stacks
+   * that were used to make the group.
+   * Payload same as executeTurn.
    */
   groupStacks (context, payload) {
     context.commit('removeStacks', {stacks: payload.target})
@@ -120,7 +146,9 @@ export default {
   },
 
   /**
-   * Hack the given stack.
+   * Hacks a target stack by removing it from the target players stacks and
+   * discards the hack card.
+   * Payload same as executeTurn.
    */
   hackStack (context, payload) {
     context.commit('removeStacks', {stacks: new Set([payload.target])})

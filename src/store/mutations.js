@@ -5,6 +5,12 @@ import Deck from '@/classes/game/Deck'
 import Stack from '@/classes/game/Stack'
 
 
+/**
+ * Exports functions to change the programs state.
+ * All operations that will change something in the vuex store should be kept
+ * in here and not in components. Do not change the state directly anywhere
+ * except in store/actions, and then only if the change is a trivial variable update.
+ */
 export default {
   /**
    * Resets all game related items in the state for a fresh game.
@@ -39,28 +45,25 @@ export default {
    * Set the starting player for the game.
    */
   setStartingPlayer (state) {
-    // Original game always let the AI start first. Any desired behaviour can
-    // be set here to do that, but for now just pick the first player.
     state.activePlayer = state.players[0]
   },
 
   /**
-   * Change the game state to a given new state.
-   * Payload needs field -> newState: 'state'
+   * Change the game state to a given payload.newState.
    */
   changeGameState (state, payload) {
     state.gameState = payload.newState
   },
 
   /**
-   * Create a new deck for a game with a certain number of players.
+   * Create a new deck for a game with a given payload.numPlayers.
    */
   createNewDeck (state, payload) {
     state.deck = new Deck(payload.numPlayers)
   },
 
   /**
-   * Toggle tips on and off.
+   * Toggle game tips on and off.
    */
   toggleTips (state) {
     state.tips.showTips = !state.tips.showTips
@@ -73,7 +76,7 @@ export default {
     state.timer = new Timer()
     state.timer.start()
     // eslint-disable-next-line no-unused-vars
-    state.timer.addEventListener('secondsUpdated', function (e) {
+    state.timer.addEventListener('secondsUpdated', (e) => {
       $('#basicUsage').html(state.timer.getTimeValues().toString())
     })
   },
@@ -89,6 +92,11 @@ export default {
 
   /**
    * Uses a list of player information to create and add new players.
+   *
+   * Payload
+   * {
+   *   players: list of player info {name, isAi}
+   * }
    */
   addPlayers(state, payload) {
     let playerInfo = payload.players
@@ -101,12 +109,15 @@ export default {
   /**
    * Give a player a new hand.
    * Can be used when they have no hand or to redraw a full hand.
+
+   * Payload
+   * {
+   *   player: the player being given a new hand.
+   * }
    */
   giveNewHand (state, payload) {
-    let player = payload.player
-
     // discard old hand if applicable
-    let oldHand = state.hands.find(h => h.playerId === player.id)
+    let oldHand = state.hands.find(h => h.playerId === payload.player.id)
     if (oldHand !== undefined) {
       for (let card of oldHand.cards) {
         state.deck.discard.push(card)
@@ -114,19 +125,20 @@ export default {
     }
 
     // create and fill new hand
-    let hand = {playerId: player.id, cards: []}
+    let hand = {playerId: payload.player.id, cards: []}
     while (hand.cards.length < 5) {
       let card = state.deck.draw()
       hand.cards.push(card)
     }
 
-    state.hands = state.hands.filter(h => h.playerId !== player.id)
+    state.hands = state.hands.filter(h => h.playerId !== payload.player.id)
     state.hands.push(hand) 
     state.activeCard = undefined
   },
 
   /**
-   * Set the current active card.
+   * Set the current active card to payload.newCard.
+   * Emits a card-selected event.
    */
   setActiveCard (state, payload) {
     state.activeCard = payload.newCard
@@ -134,7 +146,7 @@ export default {
   },
 
   /**
-   * Move to the next player.
+   * Move the active player to the next player.
    */
   nextPlayer (state) {
     let id = state.activePlayer.id
@@ -152,17 +164,13 @@ export default {
   },
 
   /**
-   * Discard the active card from the current players hand.
-   */
-  discardActiveCard (state) {
-    let hand = state.hands.find(h => h.playerId === state.activePlayer.id)
-    hand.cards = hand.cards.filter(c => c !== state.activeCard)
-    state.deck.discard.push(state.activeCard)
-    state.activeCard = undefined
-  },
-
-  /**
    * Discard the given card from the given players hand.
+   *
+   * Payload
+   * {
+   *   card: the card to discard,
+   *   player: the player discarding the card
+   * }
    */
   discardCard (state, payload) {
     let hand = state.hands.find(h => h.playerId === payload.player.id)
@@ -174,18 +182,29 @@ export default {
   /**
    * Adds a given card effect to a player with the given id.
    * Must also be passed isPositive to know what kind of effect it is.
+   *
+   * Payload
+   * {
+   *   card: the card with the effect to add,
+   *   target: the player to add the effect to
+   * }
    */
   addCardEffect (state, payload) {
-    let effect = payload.card.type
     if (payload.card.isSafety()) {
-      payload.target.addPositive(effect)
+      payload.target.addPositive(payload.card.type)
     } else {
-      payload.target.addNegative(effect)
+      payload.target.addNegative(payload.card.type)
     }
   },
 
   /**
    * Remove a given card from the hand with the given playerID.
+   *
+   * Payload
+   * {
+   *   card: the card to remove,
+   *   player: the player to remove the card from
+   * }
    */
   removeFromHand (state, payload) {
     let hand = state.hands.find(h => h.playerId === payload.player.id)
@@ -195,6 +214,12 @@ export default {
   /**
    * Add a given card to a stack with the given stackId.
    * If replace is true the we replace the lowest variable card in the stack.
+   *
+   * Payload
+   * {
+   *   card: the card being added,
+   *   target: the stack to add the card to
+   * }
    */
   addToStack (state, payload) {
     // If we are adding a variable are we replacing one
@@ -220,7 +245,14 @@ export default {
   },
 
   /**
-   * Create a new stack with a given card and a given player id.
+   * Create a new stack with a given card and player.
+   * Attempts to place the card in an intuitive place in the players stack list.
+   *
+   * Payload
+   * {
+   *   card: the card being added,
+   *   player: the player the stack is owned by
+   * }
    */
   newStack (state, payload) {
     let stack = new Stack(payload.player.id)
@@ -250,7 +282,7 @@ export default {
   },
 
   /**
-   * Remove a Set of stacks from state.stacks and discard it's cards
+   * Remove a given Set of payload.stacks and discard its cards.
    */
   removeStacks (state, payload) {
     state.stacks = state.stacks.filter(s => !payload.stacks.has(s))
@@ -264,8 +296,14 @@ export default {
   /**
    * Adds a given card to the active players objectives cards played.
    *
+   * Payload
+   * {
+   *   card: the card that was played,
+   *   player: the player that played the card
+   * }
    */
   addPlayedCard (state, payload) {
+    // Some actions do not play a card, so only add it if there is a card obj
     if (payload.card) {
       payload.player.objectives.cardsPlayed.push(payload.card)
     }

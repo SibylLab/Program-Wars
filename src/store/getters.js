@@ -1,6 +1,11 @@
 /**
  * Includes getters for handy and non-trivial access to state members.
- * For access to these members use mapState in components.
+ * Cannot take payloads like mutations and actions without being made into
+ * methods. See getPlayerScores for an example of this.
+ *
+ * A second param getters can be added after state. This can be used to access
+ * other getters to avoid code duplication when necessary.
+ * ie) someGetter (state, getter) {let hand = getters.getCurrentPlayerHand}
  */
 export default {
   /**
@@ -66,8 +71,14 @@ export default {
 
   /**
    * Get the base and adjusted scores for all players.
-   * Returns {playerId, baseScore: the score without modifiers, score: the
-   * score with modifiers}.
+   *
+   * Returns
+   * {
+   *   playerId: the player's id, 
+   *   baseScore: the score without modifiers,
+   *   score: the score with modifiers
+   * }
+   *
    * Creates a method on getters to avoid caching.
    * see https://vuex.vuejs.org/guide/getters.html#method-style-access
    */
