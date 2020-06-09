@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'addNewStack',
+      'executeTurn',
       'groupStacks'
     ]),
     /**
@@ -100,7 +100,12 @@ export default {
 
       if (card && this.player.id === this.activePlayer.id
           && card.type === "INSTRUCTION") {
-        this.addNewStack({card: card, playerId: this.player.id})
+        this.executeTurn({
+          playType: "NEWSTACK",
+          card: card,
+          player: this.player,
+          target: "NEWSTACK",
+        })
       }
     },
     // Next two functions determine the look of the group button
@@ -131,10 +136,11 @@ export default {
      */
     toggleGroup (stack) {
       if (this.grouped.toggleStack(stack, this.groupCardValue)) {
-        this.groupStacks({
+        this.executeTurn({
+          playType: "GROUP",
           card: this.activeCard,
-          stacks: this.grouped.stacks,
-          playerId: this.activePlayer.id
+          player: this.activePlayer,
+          target: this.grouped.stacks
         })
         this.grouped.reset()
       }

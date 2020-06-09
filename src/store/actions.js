@@ -42,6 +42,29 @@ export default {
   },
 
   /**
+   * Execute a players turn given the type of play, the card being played,
+   * the player who's turn it is, and the target player/stack.
+   */
+  executeTurn(context, payload) {
+    if (payload.playType === "SAFETY" || payload.playType === "ATTACK") {
+      context.dispatch('addSpecialCard', payload)
+    } else if (payload.playType === "HACK") {
+      context.dispatch('hackStack', payload)
+    } else if (payload.playType === "GROUP") {
+      context.dispatch('groupStacks', payload)
+    } else if (payload.playType === "NEWSTACK") {
+      context.dispatch('addNewStack', payload)
+    } else if (payload.playType === "ONSTACK") {
+      context.dispatch('addCardToStack', payload)
+    } else {
+      // discard the given card
+    }
+
+    bus.$emit('card-played')
+    context.dispatch('endTurn', {draw: true})
+  },
+
+  /**
    * Clean up after a players turn and change to the next player.
    */
   endTurn (context, payload) {
@@ -69,8 +92,6 @@ export default {
     context.commit('addPlayedCard', payload)
     context.commit('removeFromHand', payload)
     context.commit('addToStack', payload)
-    bus.$emit('card-played')
-    context.dispatch('endTurn', {draw: true})
   },
 
   /**
@@ -80,8 +101,6 @@ export default {
     context.commit('addPlayedCard', payload)
     context.commit('removeFromHand', payload)
     context.commit('newStack', payload)
-    bus.$emit('card-played')
-    context.dispatch('endTurn', {draw: true})
   },
 
   /**
@@ -101,12 +120,10 @@ export default {
    * discards any given extra cards.
    */
   groupStacks (context, payload) {
-    context.commit('addPlayedCard', {card: context.state.activeCard})
-    context.commit('removeStacks', payload)
+    context.commit('addPlayedCard', payload)
+    context.commit('removeStacks', {stacks: payload.target})
     context.commit('newStack', payload)
     context.commit('removeFromHand', payload)
-    bus.$emit('card-played')
-    context.dispatch('endTurn', {draw: true})
   },
 
   /**

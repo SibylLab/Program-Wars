@@ -178,7 +178,7 @@ export default {
    * Remove a given card from the hand with the given playerID.
    */
   removeFromHand (state, payload) {
-    let hand = state.hands.find(h => h.playerId === payload.playerId)
+    let hand = state.hands.find(h => h.playerId === payload.player.id)
     hand.cards = hand.cards.filter(c => c.id != payload.card.id)
   },
 
@@ -187,8 +187,15 @@ export default {
    * If replace is true the we replace the lowest variable card in the stack.
    */
   addToStack (state, payload) {
-    let stack = state.stacks.find(s => s.stackId === payload.stackId)
-    if (payload.replace) {
+    // If we are adding a variable are we replacing one
+    let top = payload.target.getTop()
+    let replace = !(top.type === "REPEAT" && top.value === 1)
+                  && payload.card.type === "VARIABLE"
+                  && payload.target.hasVariable()
+
+    // Add the card to the stack
+    let stack = payload.target
+    if (replace) {
       let replaced = stack.replaceLowestVar(payload.card)
       state.deck.discard.push(replaced)
     } else {
@@ -206,7 +213,7 @@ export default {
    * Create a new stack with a given card and a given player id.
    */
   newStack (state, payload) {
-    let stack = new Stack(payload.playerId)
+    let stack = new Stack(payload.player.id)
     stack.cards.push(payload.card)
 
     // if card is group place it in front of any single isntruction stacks
