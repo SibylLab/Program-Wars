@@ -23,10 +23,20 @@
     <info-popup>
       <h3 style="margin: 0">Play Field</h3>
       <p>This area is where the player plays cards to build programs.</p>
-      <p>Plain instruction cards can be dragged to this area to start a new stack. Repeat and Variable cards can be dragged onto stacks that are higlighted to add them to the top of the stack. Variable cards can also be used to replace cards of lower values.</p>
-      <p>Group cards can be used to group stacks with total points equal to the group card's value. The group card will replace all cards that are grouped in a single new stack.</p>
-      <p>Hack cards can be dragged onto any opponent stack that is highlighted red to remove that stack from the opponents Playfield.</p>
-      <p>The scores from each stack are added up to help the player reach the score total. If the player or the stack is affected by a negative effect the stack score will change to red. This means the stacks is not contributing it's full score. An example is the Malware card which reduces the players total score to 75% of it's actual value.</p>
+      <p>Plain instruction cards can be dragged to this area to start a new stack.
+         Repeat and Variable cards can be dragged onto stacks that are higlighted to
+         add them to the top of the stack. Variable cards can also be used to replace
+         cards of lower values.</p>
+      <p>Group cards can be used to group stacks with total points equal to the group
+         card's value. The group card will replace all cards that are grouped in a single
+         new stack.</p>
+      <p>Hack cards can be dragged onto any opponent stack that is highlighted red
+         to remove that stack from the opponents Playfield.</p>
+      <p>The scores from each stack are added up to help the player reach the score total.
+         If the player or the stack is affected by a negative effect the stack score
+         will change to red. This means the stacks is not contributing it's full score.
+         An example is the Malware card which reduces the players total score to 75% of
+         its actual value.</p>
     </info-popup>
   </div>
 
