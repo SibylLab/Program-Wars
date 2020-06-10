@@ -1,512 +1,311 @@
-/* eslint-disable no-undef */
-import TutorialDeck from '../classes/Models/TutorialDeck'
+import Timer from 'easytimer'
+import { bus } from '@/components/shared/Bus'
+import Player from '@/classes/game/Player'
+import Deck from '@/classes/game/Deck'
+import Stack from '@/classes/game/Stack'
 
-const uuidV1 = require('uuid/v1')
 
-import { bus } from '../components/SharedComponents/Bus'
-
-import Stack from '../classes/Models/Stack'
-import Player from '../classes/Models/Player'
-import Deck from '../classes/Models/Deck'
-
+/**
+ * Exports functions to change the programs state.
+ * All operations that will change something in the vuex store should be kept
+ * in here and not in components. Do not change the state directly anywhere
+ * except in store/actions, and then only if the change is a trivial variable update.
+ */
 export default {
-  resetState (state) {
+  /**
+   * Resets all game related items in the state for a fresh game.
+   * Creates an empty Deck so createDeck Will need to be called with
+   * the number of players in the game.
+   * Sets gameState to 'game'.
+   * Should not affect non-game related settings.
+   */
+  resetStateForGame (state) {
     state.players = []
     state.stacks = []
-    state.deck = new Deck()
-    state.tutorialDeck = new TutorialDeck()
     state.hands = []
-    state.currentGameState = 'newGame'
-    state.activeSide = true
-    state.activePlayer = 0
-    state.activeHasPlayed = false
-    state.currentId = 0
+    state.aiHandlers = []
+    state.objectives = []
+    state.deck = new Deck()
+    state.gameState = 'game'
+    state.activePlayer = undefined
     state.activeCard = undefined
-    state.selectedStacks = []
-    state.selectedStackBoolean = undefined
-    state.winner = false
-    state.winnerName = ''
-    state.winnerScore = 0
-    state.tips.tutorial = true
-    state.tips.fact = true
-    state.firstRound = true
-    state.aiTurn = false
-    state.playerTurn = false
-    state.isTutorial = false
-    state.factIndex = 0
-    state.tutorialStep = true
-    state.trueSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)'
-    state.falseSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgba(0,0,0,0.6)'
-  },
-  addPlayers (state, payload) {
-    let id = 0
-    for (let p of payload.list) {
-      let pp = new Player(id, p.name, undefined, 0, p.isAi)
-      state.players.push(pp)
-      id++
-    }
+    state.scoreLimit = 75
+    state.tips = {showTips: true, factIndex: 0}
   },
 
-  endTurn (state, maxplayers) {
-    state.activePlayer += 1
-    state.activePlayer = state.activePlayer % maxplayers
+  /**
+   * Sets the backstory marker to be true so the program will not show it
+   * again on new game under normal circumstances.
+   */
+  seenBackstory (state) {
+    state.showBackstory = false
   },
 
-  selectCard (state, c) {
-    let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
-    bus.$emit('cardHasBeenSelected')
-    for (let card in playerHand.cards) {
-      if (playerHand.cards[card] !== undefined) {
-        if (playerHand.cards[card].id === c.id) {
-          playerHand.cards[card].selected = !playerHand.cards[card].selected
-          if (!playerHand.cards[card].selected) {
-            bus.$emit('cardDeselected')
-          } else {
-            state.activeCard = c
-          }
-        } else {
-          playerHand.cards[card].selected = false
-        }
-      }
-    }
+  /**
+   * Set the starting player for the game.
+   */
+  setStartingPlayer (state) {
+    state.activePlayer = state.players[0]
   },
-  addHandToPlayer (state, playerId) {
-    let hand = {
-      handId: uuidV1(),
-      playerId: playerId,
-      cards: []
-    }
-    let localState = state
-    let cardsTemp = []
-    for (let i = 0; i < 5; i++) {
-      if (state.isTutorial) {
-        cardsTemp.push(localState.tutorialDeck.draw())
-      } else {
-        cardsTemp.push(localState.deck.draw())
-      }
-    }
-    hand.cards = cardsTemp
-    state.hands.push(hand)
-    state.players.find(player => player.id === playerId).hand = hand.handId
-  },
-  // eslint-disable-next-line no-unused-vars
-  reDrawPlayerCards (state, playerId) {
-    let localState = state
-    localState.deck.shuffle(localState.deck.cards)
-    let cardsTemp = []
-    for (let i = 0; i < 6; i++) {
-      if (state.isTutorial) {
-        cardsTemp.push(localState.tutorialDeck.draw())
-      } else {
-        cardsTemp.push(localState.deck.draw())
-      }
-    }
-    state.hands.find(hand => hand.playerId === state.activePlayer).cards = cardsTemp
-    state.activeCard = undefined
-  },
-  addCardToHand (state) {
-    if (state.isTutorial) {
-      if (state.tutorialDeck.cards.length <= 1 && state.tutorialDeck.discard_cards.length > 0) {
-        for (let i = 0; i < state.tutorialDeck.discard_cards.length; i++) {
-          state.tutorialDeck.cards.push(state.tutorialDeck.discard_cards[i])
-        }
-        state.tutorialDeck.discard_cards = []
-      }
-      if (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6) {
-        do {
-          state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.tutorialDeck.cards.pop())
-        } while (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6)
-      }
-    } else {
-      if (state.deck.cards.length <= 1 && state.deck.discard_cards.length > 0) {
-        state.deck.shuffle(state.deck.discard_cards)
-        for (let i = 0; i < state.deck.discard_cards.length; i++) {
-          state.deck.cards.push(state.deck.discard_cards[i])
-        }
-        state.deck.discard_cards = []
-      }
-      if (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6) {
-        do {
-          state.hands.find(hand => hand.playerId === state.activePlayer).cards.push(state.deck.cards.pop())
-        } while (state.hands.find(hand => hand.playerId === state.activePlayer).cards.length < 6)
-      }
-    }
-  },
-  initDeck (state) {
-    state.deck.initDeck(state.players.length)
-  },
-  initTutorialDeck (state) {
-    state.tutorialDeck.initDeck(state.players.length)
-  },
-  setTutorial (state, payload) {
-    state.isTutorial = payload.gameType
-  },
-  addStackToPlayer (state, payload) {
-    state.stacks.push(new Stack(payload.playerId, payload.boolSide))
-  },
-  addCardToStack (state, payload) {
-    let stackToAdd = state.stacks.find(st => st.stackId === payload.stackId)
-    payload.card.selected = false
-    stackToAdd.addCardToStack(payload.card)
-    stackToAdd.calculateStackScore()
-  },
-  popCardFromStack (state, payload) {
-    let stackToPop = state.stacks.find(st => st.stackId === payload.stackId)
-    payload.card.selected = false
-    stackToPop.popTopCard()
-    stackToPop.calculateStackScore()
-  },
-  groupStacks (state, payload) {
-    state.groupStacks = payload.yesOrNo
-  },
-  doGroupStacks (state, payload) {
-    state.groupStacks = payload.yesOrNo
-  },
-  setActiveCard (state, payload) {
-    if (payload !== undefined) {
-      state.activeCard = payload.cardId
-    } else {
-      state.activeCard = payload
-    }
-  },
-  setActiveCardUndefined (state) {
-    state.activeCard = undefined
-  },
-  removeActiveCardFromHand (state) {
-    if (state.activeCard !== undefined) {
-      let playerHand = state.hands.find(hand => hand.playerId === state.activePlayer)
-      let playerHandUpdated = playerHand.cards.filter(card => card.id !== state.activeCard.id)
-      playerHand.cards = playerHandUpdated
-      state.activeCard = undefined
-    }
-  },
-  stackDiscard (state, payload) {
-    let card = state.stacks.find(stack => stack.stackId === payload.stackId).popTopCard()
-    if (state.isTutorial) {
-      state.tutorialDeck.discard_cards.push(card)
-    } else {
-      state.deck.discard_cards.push(card)
-    }
-  },
-  discardSelectedCard (state) {
-    let tempActiveCard = state.activeCard
-    tempActiveCard.selected = false
-    if (state.isTutorial) {
-      state.tutorialDeck.discard_cards.push(tempActiveCard)
-    } else {
-      state.deck.discard_cards.push(tempActiveCard)
-    }
-  },
-  setHasPlayed (state, payload) {
-    state.activeHasPlayed = payload.hasPlayed
-  },
-  setGameState (state, payload) {
-    state.currentGameState = payload.gameState
-  },
-  addStackToSelected (state, payload) {
-    let stackIdExists = state.selectedStacks.find(stackId => stackId === payload.stackId)
-    if (stackIdExists === undefined) {
-      state.selectedStacks.push(payload.stackId)
-    } else {
-      state.selectedStacks = state.selectedStacks.filter(stackId => stackId !== payload.stackId)
-    }
-  },
-  removeAllSelectedStacks (state) {
-    state.selectedStacks = []
-  },
-  setStackSelectedBoolean (state, payload) {
-    state.selectedStackBoolean = payload.boolean
-  },
-  removeStack (state, payload) {
-    state.stacks = state.stacks.filter(s => s.stackId !== payload.stackId)
-  },
-  setActiveSide (state, payload) {
-    state.activeSide = payload.activeSide
-  },
-  setScoreLimit (state, payload) {
-    state.scoreLimit = payload.scoreLimit
-  },
-  setTrueFalseAnim (state, payload) {
-    state.trueFalseAnim = payload.startAnim
-  },
-  setPlayerScores (state) {
-    let players = state.players
-    let stacks = state.stacks
-    for (let player of players) {
-      player.instructions = 0
-      for (let stack of stacks) {
-        if (stack.playerId === player.id) {
-          player.instructions += stack.score
-        }
-      }
-    }
-  },
-  setTips (state, payload) {
-    state.tips.tutorial = payload.tutorial
-    state.tips.fact = payload.fact
-  },
-  checkWin (state) {
-    let playerList = state.players
-    let highScore = 0
-    for (let player of playerList) {
-      player.instructionBonus = 0
-      player.defensiveBonus = 0
-      player.virusBonus = 0
-      player.overClockBonus = 0
-      player.completionBonus = 0
-      player.overclockIncrease = 0
-      player.totalScore = 0
-      let instructions = 0
-      let completionBonus = 10
-      let overClockBonus = 10
-      let defensiveBonus = 15
-      let virusBonus = 10
-      instructions = player.instructions
-      if (player.hasVirus) {
-        instructions = instructions * 0.75
-      } else if (player.hasOverclock) {
-        instructions = instructions * 1.25
-      }
-      player.totalInstructions = instructions
-      player.totalScore = instructions
 
-      // Complete Program Bonus
-      if (instructions >= state.scoreLimit) {
-        player.completionBonus = completionBonus
-      }
+  /**
+   * Change the game state to a given payload.newState.
+   */
+  changeGameState (state, payload) {
+    state.gameState = payload.newState
+  },
 
-      // Defensive Programmer Bonus
-      if (player.isDefensive) {
-        player.defensiveBonus = defensiveBonus
-      }
+  /**
+   * Create a new deck for a game with a given payload.numPlayers.
+   */
+  createNewDeck (state, payload) {
+    state.deck = new Deck(payload.numPlayers)
+  },
 
-      // Cool System Bonus
-      if (!player.hasHadOverclock) {
-        player.overClockBonus = overClockBonus
-      }
+  /**
+   * Toggle game tips on and off.
+   */
+  toggleTips (state) {
+    state.tips.showTips = !state.tips.showTips
+  },
 
-      // Clean System bonus
-      if (!player.hasVirus) {
-        player.virusBonus = virusBonus
-      }
-
-      player.totalScore += player.virusBonus
-      player.totalScore += player.completionBonus
-      player.totalScore += player.defensiveBonus
-      player.totalScore += player.overClockBonus
-      player.totalScore += player.protectionCardsBonus
-      player.totalScore += player.groupingBonus
-      player.totalScore += player.repetitionBonus
-      player.totalScore += player.variablesBonus
-
-      // Check if game won
-      if (player.totalInstructions >= state.scoreLimit) {
-        state.winner = true
-        if ((player.totalScore > highScore)) {
-          highScore = player.totalScore
-          state.winnerName = player.name
-          state.winnerScore = highScore
-        }
-      }
-    }
-  },
-  getIsLast (state) {
-    if ((state.activePlayer + 1) % state.players.length === 0) {
-      state.isLast = true
-    } else {
-      state.isLast = false
-    }
-    return state.isLast
-  },
-  winnerModalTrigger () {
-    $('.winner').modal('show')
-    $('#playerTurn').modal('handleUpdate')
-  },
-  playerModalTrigger (state) {
-    state.playerTurn = true
-  },
-  playerModalHide (state) {
-    state.playerTurn = false
-  },
-  coinModalTrigger () {
-    $('.coin').modal('handleUpdate')
-    $('.coin').modal('show')
-  },
-  setCoinFlipAnim (state, payload) {
-    state.coinFlip = payload
-  },
-  setPlayfieldColour (state, payload) {
-    if (payload) {
-      if (state.activeSide) {
-        state.trueSideColour = 'background-color: rgba(14, 183, 99, 0.9); box-shadow: 0 0 15px 10px forestgreen'
-        state.falseSideColour = 'background-color: rgba(242, 0, 0, 0.4)'
-      } else {
-        state.falseSideColour = 'background-color: rgba(14, 183, 99, 0.9); box-shadow: 0 0 15px 10px forestgreen'
-        state.trueSideColour = 'background-color: rgba(242, 0, 0, 0.4)'
-      }
-    } else {
-      state.trueSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgb(0,0,0)'
-      state.falseSideColour = 'background-color: #80aef7; box-shadow: 0px 3px 15px rgb(0,0,0)'
-    }
-  },
-  aiTakeTurn (state, payload) {
-    state.aiTurn = true
-    let aiMove = state.players[state.activePlayer].type.turnLogic(payload)
-    let cardToPlay = aiMove.getCard()
-    let stackToPlay = aiMove.getStack()
-    let stackToHack = aiMove.getOpponent()
-    let moveType = aiMove.getMove()
-    let opponentPO = aiMove.getOpponentPO()
-    let opponentVirus = aiMove.getOpponentVirus()
-    state.activeCard = cardToPlay
-    if (moveType === 'play') {
-      bus.$emit('aiAddToStack', stackToPlay)
-    } else if (moveType === 'discard') {
-      bus.$emit('aiDiscard')
-    } else if (moveType === 'hack') {
-      bus.$emit('aiHack', stackToHack)
-    } else if (moveType === 'group') {
-      for (let id of stackToPlay) {
-        state.selectedStacks.push(id.stackId)
-      }
-      state.selectedStackBoolean = stackToPlay[0].boolSide
-      state.groupStacks = false
-      bus.$emit('aiGroup', stackToPlay[0].boolSide, state.players[state.activePlayer].id)
-    } else if (moveType === 'po') {
-      bus.$emit('aiAttack', opponentPO)
-    } else if (moveType === 'virus') {
-      bus.$emit('aiAttack', opponentVirus)
-    } else if (moveType === 'protection') {
-      bus.$emit('aiProtection')
-    } else if (moveType === 'enhance') {
-      bus.$emit('aiEnhance')
-    }
-  },
-  increaseFactIndex (state) {
-    state.factIndex++
-  },
-  giveVirus (state, payload) {
-    if (state.players[payload].hasOverclock) {
-      state.players[payload].hasOverclock = false
-      state.players[payload].usedBonusCards = state.players[payload].usedBonusCards.filter((obj) => {
-        return obj.type !== 'OVERCLOCK'
-      })
-    } else {
-      state.players[payload].hasVirus = true
-      state.activeCard.showFace = true
-      state.players[payload].attackedCards.push(state.activeCard)
-    }
-    state.players[payload].hadVirus = true
-  },
-  givePowerOutage (state, payload) {
-    if (state.players[payload].hasBatteryBackup) {
-      state.players[payload].hasBatteryBackup = false
-      state.players[payload].usedBonusCards = state.players[payload].usedBonusCards.filter((obj) => {
-        return obj.type !== 'BATTERYBACKUP'
-      })
-    } else {
-      state.players[payload].hasPowerOutage = true
-      state.activeCard.showFace = true
-      state.players[payload].attackedCards.push(state.activeCard)
-    }
-  },
-  giveBatteryBackup (state, payload) {
-    if (state.players[payload].hasPowerOutage) {
-      state.players[payload].hasPowerOutage = false
-      state.activeCard.showFace = true
-      state.players[payload].attackedCards = state.players[payload].attackedCards.filter((obj) => {
-        return obj.type !== 'POWEROUTAGE'
-      })
-    } else {
-      state.players[payload].hasBatteryBackup = true
-      state.activeCard.showFace = true
-      state.players[payload].usedBonusCards.push(state.activeCard)
-    }
-  },
-  giveOverclock (state, payload) {
-    if (state.players[payload].hasVirus) {
-      state.players[payload].hasVirus = false
-      state.activeCard.showFace = true
-      state.players[payload].attackedCards = state.players[payload].attackedCards.filter((obj) => {
-        return obj.type !== 'VIRUS'
-      })
-    } else {
-      state.players[payload].hasOverclock = true
-      state.activeCard.showFace = true
-      state.players[payload].usedBonusCards.push(state.activeCard)
-      state.players[payload].hasHadOverclock = true
-    }
-  },
-  giveFirewall (state, payload) {
-    let bonus = 5
-    state.players[payload].hasFirewall = true
-    state.players[payload].hasPowerOutage = false
-    state.activeCard.showFace = true
-    state.players[payload].usedBonusCards.push(state.activeCard)
-    state.players[payload].updateBonus(bonus, bonus)
-    state.players[payload].protectionCardsBonus += bonus
-    if (state.players[payload].hasFirewall && state.players[payload].hasAntiVirus && state.players[payload].hasGenerator) {
-      state.players[payload].isDefensive = true
-    }
-  },
-  giveGenerator (state, payload) {
-    let bonus = 5
-    state.players[payload].hasGenerator = true
-    state.players[payload].hasPowerOutage = false
-    state.players[payload].attackedCards = state.players[payload].attackedCards.filter((obj) => {
-      return obj.type !== 'POWEROUTAGE'
+  /**
+   * Setup a new timer.
+   */
+  newTimer (state) {
+    state.timer = new Timer()
+    state.timer.start()
+    // eslint-disable-next-line no-unused-vars
+    state.timer.addEventListener('secondsUpdated', (e) => {
+      $('#basicUsage').html(state.timer.getTimeValues().toString())
     })
-    state.players[payload].usedBonusCards = state.players[payload].usedBonusCards.filter((obj) => {
-      return obj.type !== 'BATTERYBACKUP'
-    })
-    state.activeCard.showFace = true
-    state.players[payload].usedBonusCards.push(state.activeCard)
-    state.players[payload].updateBonus(bonus, bonus)
-    state.players[payload].protectionCardsBonus += bonus
-    if (state.players[payload].hasFirewall && state.players[payload].hasAntiVirus && state.players[payload].hasGenerator) {
-      state.players[payload].isDefensive = true
-    }
   },
-  giveAntiVirus (state, payload) {
-    let bonus = 5
-    state.players[payload].hasAntiVirus = true
-    state.players[payload].hasVirus = false
-    state.players[payload].attackedCards = state.players[payload].attackedCards.filter((obj) => {
-      return obj.type !== 'VIRUS'
-    })
-    state.activeCard.showFace = true
-    state.players[payload].usedBonusCards.push(state.activeCard)
-    state.players[payload].updateBonus(bonus, bonus)
-    state.players[payload].protectionCardsBonus += bonus
-    if (state.players[payload].hasFirewall && state.players[payload].hasAntiVirus && state.players[payload].hasGenerator) {
-      state.players[payload].isDefensive = true
-    }
-  },
-  changeBonusScore (state, payload) {
-    state.players[payload.id].bonus += payload.score
-  },
-  flipTutorialStep (state) {
-    state.tutorialStep = !state.tutorialStep
-  },
-  setFirstRound (state, payload) {
-    state.firstRound = payload
-  },
-  setAiTurn (state, payload) {
-    state.aiTurn = payload
-  },
-  setActiveStack (state, payload) {
-    state.activeStack = payload
-  },
-  setTimerInterval (state, payload) {
-    state.timerInterval = payload
-  },
+
+  /**
+   * Stop the current timer.
+   */
   stopTimer (state) {
-    state.timerInterval.stop()
+    if (state.timer) {
+      state.timer.stop()
+    }
   },
-  updateTheme (state, payload) {
-    state.mainBackgroundColour = payload.mainBC
-    state.mainTextColour = payload.mainTC
-    state.pIPBackgroundColour = payload.playfieldBC
-    state.pIPTextColour = payload.playfieldTC
+
+  /**
+   * Uses a list of player information to create and add new players.
+   *
+   * Payload
+   * {
+   *   players: list of player info {name, isAi}
+   * }
+   */
+  addPlayers(state, payload) {
+    let playerInfo = payload.players
+    for (let i = 0; i < playerInfo.length; i++) {
+      let player = new Player(i, playerInfo[i].name, playerInfo[i].ai)
+      state.players.push(player)
+    }
+  },
+
+  /**
+   * Give a player a new hand.
+   * Can be used when they have no hand or to redraw a full hand.
+
+   * Payload
+   * {
+   *   player: the player being given a new hand.
+   * }
+   */
+  giveNewHand (state, payload) {
+    // discard old hand if applicable
+    let oldHand = state.hands.find(h => h.playerId === payload.player.id)
+    if (oldHand !== undefined) {
+      for (let card of oldHand.cards) {
+        state.deck.discard.push(card)
+      }
+    }
+
+    // create and fill new hand
+    let hand = {playerId: payload.player.id, cards: []}
+    while (hand.cards.length < 5) {
+      let card = state.deck.draw()
+      hand.cards.push(card)
+    }
+
+    state.hands = state.hands.filter(h => h.playerId !== payload.player.id)
+    state.hands.push(hand) 
+    state.activeCard = undefined
+  },
+
+  /**
+   * Set the current active card to payload.newCard.
+   * Emits a card-selected event.
+   */
+  setActiveCard (state, payload) {
+    state.activeCard = payload.newCard
+    bus.$emit('card-selected')
+  },
+
+  /**
+   * Move the active player to the next player.
+   */
+  nextPlayer (state) {
+    let id = state.activePlayer.id
+    id = (id + 1) % state.players.length
+    state.activePlayer = state.players.find(p => p.id === id)
+  },
+
+  /**
+   * Draw a card from the deck and add it to the activePlayers hand.
+   */
+  drawCard (state) {
+    let card = state.deck.draw()
+    let hand = state.hands.find(h => h.playerId === state.activePlayer.id)
+    hand.cards.push(card)
+  },
+
+  /**
+   * Discard the given card from the given players hand.
+   *
+   * Payload
+   * {
+   *   card: the card to discard,
+   *   player: the player discarding the card
+   * }
+   */
+  discardCard (state, payload) {
+    let hand = state.hands.find(h => h.playerId === payload.player.id)
+    hand.cards = hand.cards.filter(c => c !== payload.card)
+    state.deck.discard.push(payload.card)
+    state.activeCard = undefined
+  },
+
+  /**
+   * Adds a given card effect to a player with the given id.
+   * Must also be passed isPositive to know what kind of effect it is.
+   *
+   * Payload
+   * {
+   *   card: the card with the effect to add,
+   *   target: the player to add the effect to
+   * }
+   */
+  addCardEffect (state, payload) {
+    if (payload.card.isSafety()) {
+      payload.target.addPositive(payload.card.type)
+    } else {
+      payload.target.addNegative(payload.card.type)
+    }
+  },
+
+  /**
+   * Remove a given card from the hand with the given playerID.
+   *
+   * Payload
+   * {
+   *   card: the card to remove,
+   *   player: the player to remove the card from
+   * }
+   */
+  removeFromHand (state, payload) {
+    let hand = state.hands.find(h => h.playerId === payload.player.id)
+    hand.cards = hand.cards.filter(c => c.id != payload.card.id)
+  },
+
+  /**
+   * Add a given card to a stack with the given stackId.
+   * If replace is true the we replace the lowest variable card in the stack.
+   *
+   * Payload
+   * {
+   *   card: the card being added,
+   *   target: the stack to add the card to
+   * }
+   */
+  addToStack (state, payload) {
+    // If we are adding a variable are we replacing one
+    let top = payload.target.getTop()
+    let replace = !(top.type === "REPEAT" && top.value === 1)
+                  && payload.card.type === "VARIABLE"
+                  && payload.target.hasVariable()
+
+    // Add the card to the stack
+    let stack = payload.target
+    if (replace) {
+      let replaced = stack.replaceLowestVar(payload.card)
+      state.deck.discard.push(replaced)
+    } else {
+      stack.cards.push(payload.card)
+    }
+
+    // If the stack is now complete move it to the end
+    if (stack.isComplete()) {
+      state.stacks = state.stacks.filter(s => s.stackId !== stack.stackId)
+      state.stacks.push(stack)
+    }
+  },
+
+  /**
+   * Create a new stack with a given card and player.
+   * Attempts to place the card in an intuitive place in the players stack list.
+   *
+   * Payload
+   * {
+   *   card: the card being added,
+   *   player: the player the stack is owned by
+   * }
+   */
+  newStack (state, payload) {
+    let stack = new Stack(payload.player.id)
+    stack.cards.push(payload.card)
+
+    // if card is group place it in front of any single isntruction stacks
+    if (payload.card.type === "GROUP") {
+      let plain = state.stacks.find((s) => {
+        return s.cards.length === 1 && s.cards[0].type === "INSTRUCTION"
+      })
+      if (plain) {
+        let idx = state.stacks.indexOf(plain)
+        state.stacks.splice(idx, 0, stack)
+        return
+      }
+    }
+
+    // if card is a plain instruction or it is a group and there are no
+    // single instruction stacks place card before any complete stacks
+    let complete = state.stacks.find(s => s.isComplete())
+    if (complete) {
+      let idx = state.stacks.indexOf(complete)
+      state.stacks.splice(idx, 0, stack)
+    } else {
+      state.stacks.push(stack)
+    }
+  },
+
+  /**
+   * Remove a given Set of payload.stacks and discard its cards.
+   */
+  removeStacks (state, payload) {
+    state.stacks = state.stacks.filter(s => !payload.stacks.has(s))
+    for (let stack of payload.stacks.values()) {
+      for (let card of stack.cards) {
+        state.deck.discard.push(card)
+      }
+    }
+  },
+
+  /**
+   * Adds a given card to the active players objectives cards played.
+   *
+   * Payload
+   * {
+   *   card: the card that was played,
+   *   player: the player that played the card
+   * }
+   */
+  addPlayedCard (state, payload) {
+    // Some actions do not play a card, so only add it if there is a card obj
+    if (payload.card) {
+      payload.player.objectives.cardsPlayed.push(payload.card)
+    }
   }
 }

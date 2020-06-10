@@ -1,125 +1,81 @@
-/* eslint-disable no-trailing-spaces */
-import {store} from '@/store/store'
-import Card from '@/classes/Models/Card'
+import getters from '@/store/getters.js'
 
-let card = new Card(55, 3, 'I', 'f')
-let card2 = new Card(34, 2, 'R', 'v')
-describe('test store.js getters', () => {
-  it('test the store getCurrentPlayerId function', () => {
-    store.state.activePlayer = 0
-    expect(store.getters.getCurrentPlayerId).toEqual(0)
+
+describe('vuex getters', () => {
+  // Mock functions
+  const isProtected = jest.fn(e => e || true)
+  const isNotProtected = jest.fn(e => e && false)
+  const trueFn = jest.fn().mockReturnValue(true)
+  const falseFn = jest.fn().mockReturnValue(false)
+
+  // Mock state
+  const state = {
+      activeCard: {},
+      players: [
+        {id: 0, isProtectedFrom: isProtected, helpedBy: trueFn, hurtBy: trueFn},
+        {id: 1, isProtectedFrom: isNotProtected, helpedBy: falseFn, hurtBy: trueFn},
+        {id: 2, isProtectedFrom: isNotProtected, helpedBy: falseFn, hurtBy: falseFn},
+        {id: 3, isProtectedFrom: isNotProtected, helpedBy: falseFn, hurtBy: trueFn}
+      ],
+      stacks: [
+        {stackId: 25, playerId: 1, isHackable: trueFn},
+        {stackId: 26, playerId: 0, isHackable: trueFn},
+        {stackId: 27, playerId: 1, isHackable: falseFn},
+        {stackId: 28, playerId: 0, isHackable: falseFn},
+        {stackId: 29, playerId: 1, isHackable: falseFn},
+        {stackId: 30, playerId: 2, isHackable: falseFn},
+        {stackId: 31, playerId: 3, isHackable: trueFn},
+      ],
+      hands: [{id: 300, playerId: 0}, {id: 301, playerId: 1}],
+      aiHandlers: [{id: 1000, playerId: 1}],
+      objectives: [{playerId: 0}, {playerId: 1}]
+    }
+
+  // Set the starting player
+  state.activePlayer = state.players[1]
+
+
+  test('get the current players hand', () => {
+    let hand = getters.getCurrentPlayerHand(state)
+    expect(hand.id).toEqual(301)
+    expect(hand.playerId).toEqual(1)
   })
-  it('test the store maxPlayers function maxPlayers', () => {
-    store.state.players = []
-    expect(store.getters.maxplayers).toEqual(0)
+  test('get the current players stacks', () => {
+    let stacks = getters.getCurrentPlayerStacks(state)
+    expect(stacks.length).toEqual(3)
+    expect(stacks[0].stackId).toEqual(25)
+    expect(stacks[0].playerId).toEqual(1)
+    expect(stacks[1].stackId).toEqual(27)
+    expect(stacks[1].playerId).toEqual(1)
+    expect(stacks[2].stackId).toEqual(29)
+    expect(stacks[2].playerId).toEqual(1)
   })
-  it('test the store currentPlayerName function', () => {
-    expect(store.getters.currentPlayerName).toEqual('')
+  test('get an ai handler associated with the current player', () => {
+    let handler = getters.getCurrentAiHandler(state)
+    expect(handler.id).toEqual(1000)
+    expect(handler.playerId).toEqual(1)
   })
-  it('test the store getCurrentPlayerHand function', () => {
-    expect(JSON.stringify(store.getters.getCurrentPlayerHand) === JSON.stringify({})).toEqual(true)
+  test('get an ai handler when current player is not an AI', () => {
+    let localState = Object.assign({}, state)
+    localState.activePlayer = state.players[0]
+    let handler = getters.getCurrentAiHandler(localState)
+    expect(handler).toBeUndefined()
   })
-  it('test the store getCurrentPlayerStacks function', () => {
-    expect(store.getters.getCurrentPlayerStacks).toEqual(undefined)
+  test('get a list of players that can be attacked with a card type', () => {
+    let opp = getters.getAttackableOpponents(state)
+    {'VIRUS'}
+    expect(opp.length).toEqual(1)
+    expect(opp[0].id).toEqual(2)
+    expect(isProtected.mock.calls.length).toEqual(1)
+    expect(isNotProtected.mock.calls.length).toEqual(2)
   })
-  it('test the store getActivePlayer function', () => {
-    expect(store.getters.getActivePlayer).toEqual(0)
+  test('get a list of players that can be hacked', () => {
+    let opp = getters.getHackableOpponents(state)
+    expect(opp.length).toEqual(1)
+    expect(opp[0].id).toEqual(3)
   })
-  it('test the store getActiveCard function', () => {
-    expect(store.getters.getActiveCard).toEqual(undefined)
-  })
-  it('test the store getStacks function', () => {
-    expect(Array.isArray(store.getters.getStacks)).toEqual(true)
-  })
-  it('test the store getPlayers function', () => {
-    expect(Array.isArray(store.getters.getPlayers)).toEqual(true)
-  })
-  it('test the store getIsDiscard function', () => {
-    expect(store.getters.getIsDiscard).toEqual(false)
-  })
-  it('test the store getIsHack function', () => {
-    expect(store.getters.getIsHack).toEqual(false)
-  })
-  it('test the store getAiTurn function', () => {
-    expect(store.getters.getAiTurn).toEqual(false)
-  })
-  it('test the store getHackedPlayer function', () => {
-    expect(store.getters.getHackedPlayer).toEqual('')
-  })
-  it('test the store getCoinFlip function', () => {
-    expect(store.getters.getCoinFlip).toEqual(0)
-  })
-  it('test the store getHasPlayed function', () => {
-    expect(store.getters.getHasPlayed).toEqual(false)
-  })
-  it('test the store getgameState function', () => {
-    expect(store.getters.getgameState).toEqual('newGame')
-  })
-  it('test the store getSelectedStacks function', () => {
-    expect(Array.isArray(store.getters.getSelectedStacks)).toEqual(true)
-  })
-  it('test the store getSelectedStacksBoolean function', () => {
-    expect(store.getters.getSelectedStacksBoolean).toEqual(undefined)
-  })
-  it('test the store getActiveSide function', () => {
-    expect(store.getters.getActiveSide).toEqual(true)
-  })
-  it('test the store getScoreLimit function', () => {
-    expect(store.getters.getScoreLimit).toEqual(10)
-  })
-  it('test the store groupStacks function', () => {
-    expect(store.getters.groupStacks).toEqual(false)
-  })
-  it('test the store trueFalseAnim function', () => {
-    expect(store.getters.trueFalseAnim).toEqual(false)
-  })
-  it('test the store getWinner function', () => {
-    expect(store.getters.getWinner).toEqual(false)
-  })
-  it('test the store getWinnerName function', () => {
-    expect(store.getters.getWinnerName).toEqual('')
-  })
-  it('test the store getWinnerScore function', () => {
-    expect(store.getters.getWinnerScore).toEqual(0)
-  })
-  it('test the store getTips function', () => {
-    expect(store.getters.getTips.tutorial).toEqual(true)
-  })
-  it('test the store getPlayerTurn function', () => {
-    expect(store.getters.getPlayerTurn).toEqual(false)
-  })
-  it('test the store getCurrentPlayer function', () => {
-    expect(store.getters.getCurrentPlayer).toEqual(undefined)
-  })
-  it('test the store getFirstRound function', () => {
-    expect(store.getters.getFirstRound).toEqual(true)
-  })
-  it('test the store getCoinMsg function', () => {
-    expect(store.getters.getCoinMsg).toEqual(false)
-  })
-  it('test the store getTutorialState function', () => {
-    expect(store.getters.getTutorialState).toEqual(false)
-  })
-  it('test the store getFactIndex function', () => {
-    expect(store.getters.getFactIndex).toEqual(0)
-  })
-  it('test the store getTutorialStep function', () => {
-    expect(store.getters.getTutorialStep).toEqual(true)
-  })
-  it('test the store getDiscard function', () => {
-    expect(Array.isArray(store.getters.getDiscard)).toEqual(true)
-  })
-  it('test the store getAiDependent function', () => {
-    expect(store.getters.getAiDependent.scoreLimit).toEqual(10)
-    let pay = {list: [{name: 'joe', isAi: false}, {name: 'lucy', isAi: true}]}
-    store.commit('addPlayers', pay)
-    store.state.hands.push({cards: [card], playerId: 0})
-    store.state.hands.push({cards: [card2], playerId: 1})
-    store.state.activePlayer = 0
-    store.commit('addStackToPlayer', {playerId: 0, boolSide: true})
-    store.commit('addStackToPlayer', {playerId: 0, boolSide: false})
-    store.commit('addStackToPlayer', {playerId: 1, boolSide: true})
-    store.commit('addStackToPlayer', {playerId: 1, boolSide: false})
-    expect(store.getters.getAiDependent.hand.cards[0].type).toEqual('R')
+  test('get an objectives obj associated with the current player', () => {
+    let objectives = getters.getCurrentPlayerObjectives(state)
+    expect(objectives.playerId).toEqual(1)
   })
 })
