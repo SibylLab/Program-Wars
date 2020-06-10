@@ -25,12 +25,9 @@ export default {
   },
   created () {
     // Somehow message box is being destroyed and created so there are two
-    // listeners for this. Temporary fix is to use $once. But first turn
-    // there is no visible message because the component is new even though
-    // a component just caught a message????
-    bus.$once('ai-action', ({move}) => {
-      console.log("ai-turn")
-      this.message = "ai has played " + move.playType + ": " + Math.random()
+    // listeners for this.
+    bus.$on('ai-action', ({move}) => {
+      this.message = "ai: " + move.playType + " " + Math.random()
     })
   }
 }
