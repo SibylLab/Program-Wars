@@ -8,12 +8,10 @@ const uuidV1 = require('uuid/v1')
 // The maximum number of repeats allowed in a stack
 const MAX_REPEATS = 2
 
-
 /**
- * An object to represent a stack of instruction cards.
+ * A stack of cards played by a player.
  */
 export default class Stack {
-
   /**
    * Constructor for Stack
    * @param {int} playerId The ID of the player
@@ -115,6 +113,7 @@ export default class Stack {
         min = v
       }
     }
+
     let replaced = this.cards[min.idx]
     this.cards[min.idx] = card
     return replaced 

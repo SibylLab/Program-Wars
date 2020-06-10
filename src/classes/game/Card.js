@@ -4,7 +4,7 @@
  */
 
 /**
- * This is used to represent a card object.
+ * A Playing card.
  */
 export default class Card {
   /**
@@ -22,17 +22,24 @@ export default class Card {
     this.image = image
   }
 
-  // Does not include HACK because it is used differently
+  /**
+   * Checks if this card is an attack card.
+   */
   isAttack () {
     return this.type === "VIRUS"
   }
 
-  // May want to eventually separate remedies from safeties for clarity
+  /**
+   * Checks if this card is a safety or remedy card
+   */
   isSafety () {
     return this.type === "OVERCLOCK"
            || this.type === "FIREWALL" || this.type === "ANTIVIRUS"
   }
 
+  /**
+   * Checks if this card is an attack or safety card.
+   */
   isSpecial () {
     return this.isSafety() || this.isAttack()
   }

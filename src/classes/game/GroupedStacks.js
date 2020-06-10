@@ -3,6 +3,9 @@
  * @author Steven on 2020-06-01
  */
 
+/**
+ * Keeps track of a set of stacks that are being grouped together.
+ */
 export default class GroupedStacks {
   /**
    * Constructor for the GroupedStacks class

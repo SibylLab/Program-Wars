@@ -5,6 +5,9 @@
 
 import Objectives from '@/classes/game/Objectives'
 
+/**
+ * A player in the game.
+ */
 export default class Player {
   /**
    * Constructor for the Player class

@@ -2,27 +2,27 @@
  * @file Deck.js file
  * @author Lance on 2017-03-10, Steven modified 2020-05-25
  */
+
 import Card from './Card'
+
+
+// Constants to determine how many of a card type and value to add to the deck
 
 const instruction1 = 9
 const instruction2 = 9
 const instruction3 = 9
-// const instruction4 = 0;
 
 const group2 = 1
 const group3 = 2
 const group4 = 3
 const group5 = 2
 const group6 = 1
-// const group7 = 0;
-// const group8 = 0;
 
 const repetition2 = 3
 const repetition3 = 3
 const repetition4 = 3
 const repetitionX = 5
 
-// const variable2 = 2;
 const variable3 = 2
 const variable4 = 2
 const variable5 = 2
@@ -36,6 +36,7 @@ const overClock = 3
 const antiVirus = 1
 const firewall = 1
 
+// A list of object of card information used to setup the deck.
 const cardDeck = [
   {type: 'INSTRUCTION', cardValue: 1, imgSrc: 'static/cardImages/Instruction1.png', howMany: instruction1},
   {type: 'INSTRUCTION', cardValue: 2, imgSrc: 'static/cardImages/Instruction2.png', howMany: instruction2},
@@ -85,6 +86,7 @@ export default class Deck {
 
   /**
    * Initializes the deck with a pre determined number and type of cards.
+   * Shuffles the deck.
    * @param {int} numPlayers The number of players using the deck.
    */
   initDeck (numPlayers) {
@@ -126,7 +128,8 @@ export default class Deck {
   }
 
   /**
-   * Shuffle the contents of the a deck into a psuedo random order.
+   * Shuffle a list of cards into a psuedo random order.
+   * @param cards An array of Cards to shuffle.
    */
   shuffle (cards) {
     for (let i = cards.length; i; i--) {

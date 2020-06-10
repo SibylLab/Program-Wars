@@ -15,6 +15,10 @@ const CLEAN_BONUS = 10
 const COMPLETE_BONUS = 10
 
 
+/**
+ * Keeps track of a players played cards and has methods to calculate
+ * progress toward different side objectives and bonuses.
+ */
 export default class Objectives {
   /**
    * Constructor for the Objectives class
@@ -25,18 +29,30 @@ export default class Objectives {
     this.cardsPlayed = []
   }
 
+  /**
+   * Return the total bonus for group cards played.
+   */
   getGroupBonus () {
     return GROUP_BONUS * this.cardsPlayed.filter(c => c.type === "GROUP").length
   }
   
+  /**
+   * Return the total bonus for repeat cards played.
+   */
   getRepeatBonus () {
     return REPEAT_BONUS * this.cardsPlayed.filter(c => c.type === "REPEAT").length
   }
 
+  /**
+   * Return the total bonus for variable cards played.
+   */
   getVariableBonus () {
     return VAR_BONUS * this.cardsPlayed.filter(c => c.type === "VARIABLE").length
   }
 
+  /**
+   * Return the total bonus for safety (not remedy) cards played.
+   */
   getSafetyBonus () {
     let safetyCards = this.cardsPlayed.filter((c) => {
       return c.type === "ANTIVIRUS" || c.type === "FIREWALL"
@@ -44,6 +60,11 @@ export default class Objectives {
     return SAFETY_BONUS * safetyCards.length
   }
 
+  /**
+   * Return the the defensive bonus the player has.
+   * Defensive bonus is given if the player has all safety (not remedy) cards active.
+   * Is 0 if the player does not meet the requirements for the bonus.
+   */
   getDefensiveBonus () {
     if (this.player.helpedBy("ANTIVIRUS") && this.player.helpedBy("FIREWALL")) {
       return DEFENSIVE_BONUS
@@ -51,10 +72,20 @@ export default class Objectives {
     return 0
   }
   
+  /**
+   * Return the the clean bonus the player has.
+   * Clean bonus is given if the player has no Virus.
+   * Is 0 if the player does not meet the requirements for the bonus.
+   */
   getCleanBonus () {
     return this.player.hurtBy("VIRUS") ? 0 : CLEAN_BONUS
   }
 
+  /**
+   * Return the bonus given if a player has at least one complete stack.
+   * Is 0 if the player has no complete stacks.
+   * @param playerStacks An array of the player's stacks
+   */
   getCompleteBonus (playerStacks) {
     if (playerStacks.filter(s => s.isComplete()).length > 0) {
       return COMPLETE_BONUS
@@ -65,6 +96,7 @@ export default class Objectives {
   /**
    * Wraps all the bonuses up into an object for convenience.
    * Requires the stacks of the player for complete program bonus.
+   * @param stacks An array of the player's stacks
    */
   getBonuses (stacks) {
     let bonuses = {}
