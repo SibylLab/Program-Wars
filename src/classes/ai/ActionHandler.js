@@ -31,7 +31,7 @@ export default class ActionHandler {
    * @param scores A list of current player scores.
    * @return a turn object {playType, card, player, target} or undefined.
    */
-  handle(hand, players, stacks, scores) {
+  handle(hand, players, stacks, scores) {  // eslint-disable-line no-unused-vars
     return undefined
   }
 }

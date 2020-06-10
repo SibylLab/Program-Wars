@@ -26,7 +26,7 @@ export default {
    * Get AI handler for the current player.
    */
   getCurrentAiHandler (state) {
-    return state.aiHandlers.find(h => h.playerId === state.activePlayer.id)
+    return state.aiHandlers.find(h => h.player.id === state.activePlayer.id)
   },
 
   /**

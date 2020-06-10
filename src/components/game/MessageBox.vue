@@ -1,11 +1,13 @@
 <template>
-<div id="message-box">
-  This is the message box
+<div id="message-b" :key="message">
+  {{ message }}
 </div>
 </template>
 
 
 <script>
+import {bus} from '@/components/shared/Bus'
+
 /**
  * A message area to show messages related to the game.
  * Messages may include identifying the start of a players turn, or informing
@@ -16,13 +18,27 @@
  */
 export default {
   name: 'message-box',
-  // Nothing is setup for the message box yet
+  data () {
+    return  {
+      message: ""
+    }
+  },
+  created () {
+    // Somehow message box is being destroyed and created so there are two
+    // listeners for this. Temporary fix is to use $once. But first turn
+    // there is no visible message because the component is new even though
+    // a component just caught a message????
+    bus.$once('ai-action', ({move}) => {
+      console.log("ai-turn")
+      this.message = "ai has played " + move.playType + ": " + Math.random()
+    })
+  }
 }
 </script>
 
 
 <style scoped>
-#message-box {
+#message-b {
   position: relative;
   left: 0px;
   width: 100%;

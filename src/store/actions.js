@@ -103,8 +103,28 @@ export default {
       context.commit('drawCard')
     }
     context.state.activeCard = undefined
-    context.commit('nextPlayer')
     bus.$emit('end-turn')
+
+    // Change active player and take AI turn if needed
+    context.commit('nextPlayer')
+    if (context.state.activePlayer.isAi) {
+      context.dispatch('takeAiTurn') 
+    }
+  },
+
+  /**
+   * Take an Ai Players Turn.
+   */
+  takeAiTurn (context) {
+    let handler = context.getters.getCurrentAiHandler
+    let hand = context.getters.getCurrentPlayerHand
+    let players = context.state.players
+    let stacks = context.state.stacks
+    let scores = context.getters.getPlayerScores()
+
+    let move = handler.chooseAction(hand, players, stacks, scores)
+    bus.$emit('ai-action', {move: move})
+    context.dispatch('executeTurn', move)
   },
 
   /**
