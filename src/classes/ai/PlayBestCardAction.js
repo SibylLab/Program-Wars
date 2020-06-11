@@ -15,6 +15,7 @@ export default class PlayBestCardAction extends ActionHandler {
   constructor (player, playOrder) {
     super(player)
     this.playOrder = this.createOrder(playOrder)
+    console.log(this.playOrder)
   }
 
   /**
@@ -26,9 +27,11 @@ export default class PlayBestCardAction extends ActionHandler {
    */
   handle (hand, players, stacks, scores) {  // eslint-disable-line no-unused-vars
     let cards = this.sortHand(hand)
+    console.log(cards)
     for (let card of cards) {
-      if (card.type in this) {
-        let move = this[card.type]({card, hand, players, stacks, scores})
+      let type = card.type.toLowerCase()
+      if (type in this) {
+        let move = this[type]({card, hand, players, stacks, scores})
         if (move) {
           return move
         }
@@ -44,8 +47,10 @@ export default class PlayBestCardAction extends ActionHandler {
   sortHand (hand) {
     return hand.cards.sort((a, b) => {
       if (this.playOrder[a] === this.playOrder[b]) {
-        return a.value - b.value
+        // highest value first
+        return b.value - a.value
       }
+      // smallest order value first
       return this.playOrder[a] - this.playOrder[b]
     })
   }
@@ -69,7 +74,7 @@ export default class PlayBestCardAction extends ActionHandler {
    * @param {Card} card The instruction card to play.
    * @return a move object for starting a new stack with the given card.
    */
-  INSTRUCTION (state) {
+  instruction (state) {
     console.log("inst", state)
     return {
       playType: 'startNewStack',
@@ -87,13 +92,14 @@ export default class PlayBestCardAction extends ActionHandler {
    * @return a move object for adding a repeat to a stack, or undefined if
    * no stack can be played on.
    */
-  REPEAT (state) {
+  repeat (state) {
     console.log("repeat", state)
     // get the stack with the largest score
     let stack = state.stacks.filter((s) => {
       return s.playerId === this.player.id && !s.isComplete() && s.willAccept(state.card)
     }).sort((a, b) => {
-      return a.getScore() - b.getScore()
+      // Largest score first
+      return b.getScore() - a.getScore()
     }).shift()
 
     if (stack) {
