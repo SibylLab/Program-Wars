@@ -75,9 +75,16 @@ export default class PlayBestCardAction extends ActionHandler {
     for (let card of cards) {
       let type = card.type.toLowerCase()
 
-      // Finding a method that has the lowercase name of the card type
+      // Finding the correct method for this card type
       if (type in this) {
-        let move = this[type](card, {hand, players, stacks, scores})
+        let move
+        if (card.isSafety()) {
+          move = this.playSafety(card)
+        } else if (card.isAttack()) {
+          move = this.playAttack(card, players, scores)
+        } else {
+          move = this[type](card, {hand, players, stacks, scores})
+        }
         if (move) { return move }
       }
     }
@@ -168,6 +175,32 @@ export default class PlayBestCardAction extends ActionHandler {
         target: stack
       }
     }
+    return undefined
+  }
+
+  group (card, state) {
+    console.log("play group")
+    card
+    state
+    return undefined
+  }
+
+  hack (card, state) {
+    console.log("play hack")
+    card
+    state
+    return undefined
+  }
+
+  playSafety (card) {
+    console.log("play safety", card)
+    return undefined
+  }
+
+  playAttack (card, players, scores) {
+    console.log("play attack", card)
+    players
+    scores
     return undefined
   }
 }
