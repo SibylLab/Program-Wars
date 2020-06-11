@@ -9,7 +9,7 @@ import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
 
 // constant card order lists
 const BASIC_CARD_ORDER = [
-  "REPEAT", "INSTRUCTION"
+  "VARIABLE", "REPEAT", "INSTRUCTION"
 ]
 
 
