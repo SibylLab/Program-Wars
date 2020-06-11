@@ -6,11 +6,20 @@
 import AiHandler from '@/classes/ai/AiHandler'
 import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
 
-// constant card order lists
+
+// card orders for different AI personalities
 const CARD_ORDER = {
   basic: [
     "GROUP", "VARIABLE", "REPEAT", "INSTRUCTION", "ANTIVIRUS", "FIREWALL",
     "OVERCLOCK", "HACK", "VIRUS"
+  ],
+  aggressive: [
+    "HACK", "VIRUS", "VARIABLE", "REPEAT", "INSTRUCTION", "GROUP",
+    "FIREWALL", "ANTIVIRUS", "OVERCLOCK"
+  ],
+  defensive: [
+    "FIREWALL", "ANTIVIRUS", "OVERCLOCK", "GROUP", "VARIABLE", "REPEAT",
+    "INSTRUCTION", "VIRUS", "HACK"
   ]
 }
 
@@ -20,7 +29,7 @@ const CARD_ORDER = {
  */
 export default class AiHandlerFactory {
   /**
-   * @constructor RedrawAction
+   * @constructor AiHandlerFactory
    */
   constructor () {}
 

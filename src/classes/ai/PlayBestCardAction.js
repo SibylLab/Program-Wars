@@ -229,7 +229,7 @@ export default class PlayBestCardAction extends ActionHandler {
 
   /**
    * Find a possible grouping of stacks that will meet the group card value.
-   * This is a subset sum problem and NP-complete so a helper that uses a
+   * This is a subset sum problem and is NP-hard, so a helper that uses a
    * random selection heuristic is used to have a good chance of finding a
    * group quickly, but it may not always find a group even if one exists.
    * @param card The card to attempt to play.
