@@ -4,7 +4,14 @@
  */
 
 import AiHandler from '@/classes/ai/AiHandler'
+import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
 //import RedrawAction from '@/classes/ai/RedrawAction'
+
+// constant card order lists
+const BASIC_CARD_ORDER = [
+  "REPEAT", "INSTRUCTION"
+]
+
 
 /**
  * A factory to create different types of AiHandlers.
@@ -19,8 +26,11 @@ export default class AiHandlerFactory {
    * Create and return an AiHandler of the given type for the given player.
    */
   newHandler (type, player) {
-    type // is unused for now
-    return new AiHandler(player)
+    let actions = []
+    actions.push(new PlayBestCardAction(player, BASIC_CARD_ORDER))
+
+    let handler = new AiHandler(player, actions)
+    return handler
   }
 }
 

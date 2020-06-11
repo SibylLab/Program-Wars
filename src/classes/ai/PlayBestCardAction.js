@@ -24,36 +24,30 @@ export default class PlayBestCardAction extends ActionHandler {
    * A mini chain of responsibility for cards that uses internal functions for
    * each card type for now.
    */
-  handle(hand, players, stacks, scores) {  // eslint-disable-line no-unused-vars
+  handle (hand, players, stacks, scores) {  // eslint-disable-line no-unused-vars
     let cards = this.sortHand(hand)
-    // for each card in the hand call the function for that card.
-    // If it can be played return a turn object else undefined.
-    // should be kept as simple as possible for how we decide to play card.
-    // Ie) play repeats on biggest available stack, play attacks on weakest
-    // opponent, etc. If it can be played it will be played in the easiest
-    // way possible.
-    // Perhaps we could actually create handlers for these things and
-    // then it could be possible to use them in here. The importance of this
-    // object is to take care of keeping track of the card order without
-    // having to create a million objects like before if possible.
-    // but personalities might be useful in the future to alter who the card
-    // is played on, ie) attack weakest player, or play of smallest stack.
-    // but maybe these can be given their own objects that can be used to
-    // come before this behaviour. in fact this behaviour could be ignored
-    // if desired and just custom objects could be used.
-    return {
-      playType: "REDRAW",
-      card: undefined,
-      player: this.player,
-      target: this.player
+    for (let card of cards) {
+      if (card.type in this) {
+        let move = this[card.type]({card, hand, players, stacks, scores})
+        if (move) {
+          return move
+        }
+      }
     }
+    return undefined
   }
 
   /**
    * Returns a sorted list of the cards in a players hand.
+   * Sorts by the card type and value for cards of the same type.
    */
   sortHand (hand) {
-    return hand.cards
+    return hand.cards.sort((a, b) => {
+      if (this.playOrder[a] === this.playOrder[b]) {
+        return a.value - b.value
+      }
+      return this.playOrder[a] - this.playOrder[b]
+    })
   }
 
   /**
@@ -66,6 +60,51 @@ export default class PlayBestCardAction extends ActionHandler {
       cardOrder[playOrder[i]] = i
     }
     return cardOrder
+  }
+
+  /**
+   * Make a move for an instruction card.
+   * It is currently always possible to start a new instruction if a player
+   * has an instruction card.
+   * @param {Card} card The instruction card to play.
+   * @return a move object for starting a new stack with the given card.
+   */
+  INSTRUCTION (state) {
+    console.log("inst", state)
+    return {
+      playType: 'startNewStack',
+      card: state.card,
+      player: this.player,
+      target: this.player
+    }
+  }
+
+  /**
+   * Make a move for adding a repeat card to the largest stack that
+   * is available.
+   * @param {Card} card The repeat card to play.
+   * @param stacks An array of the ai players stacks.
+   * @return a move object for adding a repeat to a stack, or undefined if
+   * no stack can be played on.
+   */
+  REPEAT (state) {
+    console.log("repeat", state)
+    // get the stack with the largest score
+    let stack = state.stacks.filter((s) => {
+      return s.playerId === this.player.id && !s.isComplete() && s.willAccept(state.card)
+    }).sort((a, b) => {
+      return a.getScore() - b.getScore()
+    }).shift()
+
+    if (stack) {
+      return {
+        playType: 'playCardOnStack',
+        card: state.card,
+        player: this.player,
+        target: stack
+      }
+    }
+    return undefined
   }
 }
 

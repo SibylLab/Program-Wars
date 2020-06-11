@@ -21,9 +21,9 @@ export default class AiHandler {
    * @constructor AiHandler
    * @param {Player} player The Ai player this handler is for.
    */
-  constructor (player) {
+  constructor (player, handlers) {
     this.player = player
-    this.actionHandlers = []
+    this.actionHandlers = handlers
     this.defaultAction = new RedrawAction(this.player)
   }
 
@@ -43,6 +43,7 @@ export default class AiHandler {
         return result
       }
     }
+    console.log("default action")
     // If no handler can handle this action use the default action
     return this.defaultAction.handle(hand, players, stacks, scores)
   }
