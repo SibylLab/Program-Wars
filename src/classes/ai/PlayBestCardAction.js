@@ -4,47 +4,24 @@
  */
 
 import ActionHandler from '@/classes/ai/ActionHandler'
-
-//  Helper functions for complex comparisons
-//  should probably be in their own module
+import helpers from '@/classes/ai/aiHelpers'
 
 /**
- * Comparator for sorting stacks to play a variable card.
- * Expects that all stacks will accept a variable card already.
- */
-function varStackCompare (a, b) {
-  // sort by stacks with Rx and best score
-  if (a.getTop() === "REPEAT" && b.getTop() === "REPEAT") {
-    return b.getScore() - a.getScore()
-  } else if (a.getTop() === "REPEAT") {
-    return -1
-  } else if (b.getTop() === "REPEAT") {
-    return 1
-  }
-
-  // sort by stack with lowest variable card
-  return lowestVar(a) - lowestVar(b) 
-}
-
-/**
- * Helper to find the lowest variable in a stack.
- * Expects there to be at least one variable in the stack.
- * @return the value of the lowest variable card.
- */
-function lowestVar (stack) {
-  let cards = stack.cards.filter(s => s.type === "VARIABLE")
-  return cards.sort((a,b) => { return a.value - b.value }).shift().value
-}
-
-
-/**
- * Takes a Redraw action for the ai players turn.
+ * Attempts to play cards from an AI players hand based on a given
+ * piority. Each card has a reasonable but simple strategy for attempting
+ * to play it.
+ *
+ * If a card type is not included in the priority it will not be played
+ * even if it is in the hand. This make it possible to make more complicated
+ * ActionHandlers that can be added to the AiHandler if desired.
  */
 export default class PlayBestCardAction extends ActionHandler {
   /**
+   * Creates a new PlayBestCardAction class
    * @constructor PlayBestCardAction
-   * Play order will determine what cards are considered the "Best". If you
-   * exlude a card type from the order cards of that type will not be played.
+   * @param player The player that this handler is for.
+   * @param playOrder A list of cards type in the order that they should be
+   * considered for play. Types not in the order will never be played.
    */
   constructor (player, playOrder) {
     super(player)
@@ -165,7 +142,7 @@ export default class PlayBestCardAction extends ActionHandler {
     let stacks = state.stacks.filter((s) => {
       return s.playerId === this.player.id && s.willAccept(card)
     })
-    let stack = stacks.sort(varStackCompare).shift()
+    let stack = stacks.sort(helpers.varStackCompare).shift()
 
     if (stack) {
       return {
@@ -223,7 +200,6 @@ export default class PlayBestCardAction extends ActionHandler {
     }
     return undefined
   }
-
  
   /**
    * Play an attack card on the opponent with the highest score that
@@ -253,9 +229,9 @@ export default class PlayBestCardAction extends ActionHandler {
 
   /**
    * Find a possible grouping of stacks that will meet the group card value.
-   * This is a subset sum problem, which is NP-complete, so some heuristic must
-   * be used to keep worst case scenarios, when we have a lot of stacks and
-   * cannot make the sum with any subset, from taking too long.
+   * This is a subset sum problem and NP-complete so a helper that uses a
+   * random selection heuristic is used to have a good chance of finding a
+   * group quickly, but it may not always find a group even if one exists.
    * @param card The card to attempt to play.
    * @param state an object with all the state needed to make a decision
    * @return a move object for grouping some stacks, or undefined if
@@ -267,61 +243,13 @@ export default class PlayBestCardAction extends ActionHandler {
     })
     if (!groupable) { return undefined }
 
-    let stacks = this.findGroup(card.value, groupable)
+    let stacks = helpers.findGroup(card.value, groupable)
     if (stacks) {
       return {
         playType: 'groupStacks',
         card: card,
         player: this.player,
         target: stacks
-      }
-    }
-    return undefined
-  }
-
-
-  /**
-   * Attempts to find a subset of stacks with scores that sum to value.
-   * Uses a heuristic that picks random stacks and adding them to the subset
-   * until the goal is reached or exceeded.
-   * The number of picks attempts to be high enough to find a subset for
-   * most reasonable values in our case, but low enough to guarantee that
-   * it will still run in less that 0.1 sec.
-   * This does not guarantee that a group will be found if one exists. We can
-   * veiw this as the AI player not being perfect and sometimes missing the
-   * right choice. In short games where there are very few stacks it should
-   * almost always find a grouping.
-   * The stacks given should always have scores <= value to make it easier
-   * for the algorithm to find a good subset.
-   * @param value The size of the group we are making.
-   * @param stacks The stacks that are available to group.
-   * @return a Set of stacks that group to make the value, or undefined if
-   * no grouping is possible.
-   */
-  findGroup (value, stacks) {
-    console.log(value, stacks)
-    let MAX = 1000  // may be able to go as high as 10,000
-    let total = 0
-    let used = new Set()
-    let group = new Set()
-
-    for (let tried = 0; tried < MAX; tried++) {
-      // pick a random stack that hasn't been used already and add it to the group
-      let idx = Math.floor(Math.random() * stacks.length)
-      let s = stacks[idx]
-      if (!used.has(idx) && !group.has(s)) {
-        total += s.getScore()
-        group.add(s)
-      }
-
-      // If the addition gets us the goal value return the group
-      if (total == value) {
-        return group
-      // If we go over the goal then reset everything so we can try again
-      } else if (total > value) {
-        total = 0
-        used.clear()
-        group.clear()
       }
     }
     return undefined
