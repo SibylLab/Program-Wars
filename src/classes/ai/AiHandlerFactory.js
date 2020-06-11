@@ -7,10 +7,12 @@ import AiHandler from '@/classes/ai/AiHandler'
 import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
 
 // constant card order lists
-const BASIC_CARD_ORDER = [
-  "GROUP", "VARIABLE", "REPEAT", "INSTRUCTION", "ANTIVIRUS", "FIREWALL",
-  "OVERCLOCK", "HACK", "VIRUS"
-]
+const CARD_ORDER = {
+  basic: [
+    "GROUP", "VARIABLE", "REPEAT", "INSTRUCTION", "ANTIVIRUS", "FIREWALL",
+    "OVERCLOCK", "HACK", "VIRUS"
+  ]
+}
 
 
 /**
@@ -27,7 +29,10 @@ export default class AiHandlerFactory {
    */
   newHandler (type, player) {
     let actions = []
-    actions.push(new PlayBestCardAction(player, BASIC_CARD_ORDER))
+
+    if (type in CARD_ORDER) {
+      actions.push(new PlayBestCardAction(player, CARD_ORDER[type]))
+    }
 
     let handler = new AiHandler(player, actions)
     return handler
