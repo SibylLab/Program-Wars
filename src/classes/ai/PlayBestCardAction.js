@@ -76,13 +76,13 @@ export default class PlayBestCardAction extends ActionHandler {
       let type = card.type.toLowerCase()
 
       // Finding the correct method for this card type
-      if (type in this) {
+      if (card.type in this.playOrder) {
         let move
         if (card.isSafety()) {
           move = this.playSafety(card)
         } else if (card.isAttack()) {
           move = this.playAttack(card, players, scores)
-        } else {
+        } else if (type in this) {
           move = this[type](card, {hand, players, stacks, scores})
         }
         if (move) { return move }
@@ -179,7 +179,6 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   group (card, state) {
-    console.log("play group")
     card
     state
     return undefined
@@ -201,7 +200,6 @@ export default class PlayBestCardAction extends ActionHandler {
       return b.getScore() - a.getScore()
     }).shift()
 
-    console.log("play hack", stack)
     if (stack) {
       return {
         playType: 'hackStack',
@@ -213,15 +211,49 @@ export default class PlayBestCardAction extends ActionHandler {
     return undefined
   }
 
+  /**
+   * Play a safety card on oneself if not already protected.
+   * @param card The card to attempt to play.
+   * @param state an object with all the state needed to make a decision
+   * @return a move object for playing a safety, or undefined
+   * if the player is already protected.
+   */
   playSafety (card) {
-    console.log("play safety", card)
+    if (!this.player.helpedBy(card.type)) {
+      return {
+        playType: 'playSpecialCard',
+        card: card,
+        player: this.player,
+        target: this.player
+      }
+    }
     return undefined
   }
 
+ 
+  /**
+   * Play an attack card on the opponent with the highest score that
+   * is not already attacked by or protected from the card.
+   * @param card The card to attempt to play.
+   * @param state an object with all the state needed to make a decision
+   * @return a move object for playing an attack, or undefined
+   * no target can be found.
+   */
   playAttack (card, players, scores) {
-    console.log("play attack", card)
-    players
-    scores
+    let target = players.filter((p) => {
+      return !p.hurtBy(card.type) && !p.isProtectedFrom(card.type)
+    }).sort((a, b) => {
+      return scores[b.id].score - scores[a.id].score
+    }).shift()
+
+    if (target) {
+      return {
+        playType: 'playSpecialCard',
+        card: card,
+        player: this.player,
+        target: target
+      }
+    }
     return undefined
   }
 }
