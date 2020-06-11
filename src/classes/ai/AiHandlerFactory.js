@@ -5,7 +5,6 @@
 
 import AiHandler from '@/classes/ai/AiHandler'
 import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
-//import RedrawAction from '@/classes/ai/RedrawAction'
 
 // constant card order lists
 const BASIC_CARD_ORDER = [

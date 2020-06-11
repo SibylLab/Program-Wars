@@ -47,7 +47,7 @@ export default class PlayBestCardAction extends ActionHandler {
    * A mini chain of responsibility for cards that uses internal functions for
    * each card type for now.
    */
-  handle (hand, players, stacks, scores) {  // eslint-disable-line no-unused-vars
+  handle (hand, players, stacks, scores) {
     let cards = this.sortHand(hand)
     for (let card of cards) {
       let type = card.type.toLowerCase()
@@ -115,7 +115,7 @@ export default class PlayBestCardAction extends ActionHandler {
     // get the player owned stack with the largest score
     let stack = state.stacks.filter((s) => {
       return s.playerId === this.player.id && !s.isComplete() && s.willAccept(card)
-    }).sort((a, b) => {  // could use reduce instead
+    }).sort((a, b) => {
       return b.getScore() - a.getScore()
     }).shift()
 
@@ -241,7 +241,7 @@ export default class PlayBestCardAction extends ActionHandler {
     let groupable = state.stacks.filter((s) => {
       return s.playerId === this.player.id && s.getScore() <= card.value
     })
-    if (!groupable) { return undefined }
+    if (groupable.length == 0) { return undefined }
 
     let stacks = helpers.findGroup(card.value, groupable)
     if (stacks) {

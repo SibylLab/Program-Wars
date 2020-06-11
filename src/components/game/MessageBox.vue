@@ -27,7 +27,7 @@ export default {
     // Somehow message box is being destroyed and created so there are two
     // listeners for this.
     bus.$on('ai-action', ({move}) => {
-      this.message = "ai: " + move.playType + " " + Math.random()
+      this.message = move.player.name + " has taken a " + move.playType + " move"
     })
   }
 }
@@ -46,6 +46,7 @@ export default {
   color: #fff;
   font-size: 22px;
   text-align: left;
+  padding: 5px;
 }
 </style>
 
