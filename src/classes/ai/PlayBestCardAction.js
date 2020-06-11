@@ -178,12 +178,6 @@ export default class PlayBestCardAction extends ActionHandler {
     return undefined
   }
 
-  group (card, state) {
-    card
-    state
-    return undefined
-  }
-
   /**
    * Hack another players stack under specific conditions.
    * Will not hack single card stacks as this is a waste. Picks the biggest
@@ -252,6 +246,82 @@ export default class PlayBestCardAction extends ActionHandler {
         card: card,
         player: this.player,
         target: target
+      }
+    }
+    return undefined
+  }
+
+  /**
+   * Find a possible grouping of stacks that will meet the group card value.
+   * This is a subset sum problem, which is NP-complete, so some heuristic must
+   * be used to keep worst case scenarios, when we have a lot of stacks and
+   * cannot make the sum with any subset, from taking too long.
+   * @param card The card to attempt to play.
+   * @param state an object with all the state needed to make a decision
+   * @return a move object for grouping some stacks, or undefined if
+   * no group can be found.
+   */
+  group (card, state) {
+    let groupable = state.stacks.filter((s) => {
+      return s.playerId === this.player.id && s.getScore() <= card.value
+    })
+    if (!groupable) { return undefined }
+
+    let stacks = this.findGroup(card.value, groupable)
+    if (stacks) {
+      return {
+        playType: 'groupStacks',
+        card: card,
+        player: this.player,
+        target: stacks
+      }
+    }
+    return undefined
+  }
+
+
+  /**
+   * Attempts to find a subset of stacks with scores that sum to value.
+   * Uses a heuristic that picks random stacks and adding them to the subset
+   * until the goal is reached or exceeded.
+   * The number of picks attempts to be high enough to find a subset for
+   * most reasonable values in our case, but low enough to guarantee that
+   * it will still run in less that 0.1 sec.
+   * This does not guarantee that a group will be found if one exists. We can
+   * veiw this as the AI player not being perfect and sometimes missing the
+   * right choice. In short games where there are very few stacks it should
+   * almost always find a grouping.
+   * The stacks given should always have scores <= value to make it easier
+   * for the algorithm to find a good subset.
+   * @param value The size of the group we are making.
+   * @param stacks The stacks that are available to group.
+   * @return a Set of stacks that group to make the value, or undefined if
+   * no grouping is possible.
+   */
+  findGroup (value, stacks) {
+    console.log(value, stacks)
+    let MAX = 1000  // may be able to go as high as 10,000
+    let total = 0
+    let used = new Set()
+    let group = new Set()
+
+    for (let tried = 0; tried < MAX; tried++) {
+      // pick a random stack that hasn't been used already and add it to the group
+      let idx = Math.floor(Math.random() * stacks.length)
+      let s = stacks[idx]
+      if (!used.has(idx) && !group.has(s)) {
+        total += s.getScore()
+        group.add(s)
+      }
+
+      // If the addition gets us the goal value return the group
+      if (total == value) {
+        return group
+      // If we go over the goal then reset everything so we can try again
+      } else if (total > value) {
+        total = 0
+        used.clear()
+        group.clear()
       }
     }
     return undefined
