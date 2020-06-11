@@ -185,10 +185,31 @@ export default class PlayBestCardAction extends ActionHandler {
     return undefined
   }
 
+  /**
+   * Hack another players stack under specific conditions.
+   * Will not hack single card stacks as this is a waste. Picks the biggest
+   * stack available that meets the criteria.
+   * @param card The card to attempt to play.
+   * @param state an object with all the state needed to make a decision
+   * @return a move object for hacking a stack, or undefined if
+   * no stack can be hacked.
+   */
   hack (card, state) {
-    console.log("play hack")
-    card
-    state
+    let stack = state.stacks.filter((s) => {
+      return s.playerId !== this.player.id && s.cards.length > 1 && s.isHackable()
+    }).sort((a, b) => {
+      return b.getScore() - a.getScore()
+    }).shift()
+
+    console.log("play hack", stack)
+    if (stack) {
+      return {
+        playType: 'hackStack',
+        card: card,
+        player: this.player,
+        target: stack
+      }
+    }
     return undefined
   }
 
