@@ -2,8 +2,8 @@ import aiHelpers from '@/classes/ai/aiHelpers'
 
 
 describe('aiHelpers', () => {
-  const topRepeat = jest.fn(() => { return "REPEAT" })
-  const topVar = jest.fn(() => { return "VARIABLE" })
+  const topRepeat = jest.fn(() => { return {type: "REPEAT"} })
+  const topVar = jest.fn(() => { return {type: "VARIABLE"} })
   const getValue = (v) => { return jest.fn(() => { return v }) }
 
   const cards = [

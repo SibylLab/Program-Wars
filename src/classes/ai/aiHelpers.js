@@ -13,11 +13,11 @@
  */
 function varStackCompare (a, b) {
   // sort by stacks with Rx and best score
-  if (a.getTop() === "REPEAT" && b.getTop() === "REPEAT") {
+  if (a.getTop().type === "REPEAT" && b.getTop().type === "REPEAT") {
     return b.getScore() - a.getScore()
-  } else if (a.getTop() === "REPEAT") {
+  } else if (a.getTop().type === "REPEAT") {
     return -1
-  } else if (b.getTop() === "REPEAT") {
+  } else if (b.getTop().type === "REPEAT") {
     return 1
   }
 
@@ -31,7 +31,9 @@ function varStackCompare (a, b) {
  * @return the value of the lowest variable card.
  */
 function lowestVar (stack) {
-  let cards = stack.cards.filter(s => s.type === "VARIABLE")
+  let cards = stack.cards.filter(c => c.type === "VARIABLE")
+  console.log(stack.cards)
+  console.log(cards)
   return cards.sort((a,b) => { return a.value - b.value }).shift().value
 }
 

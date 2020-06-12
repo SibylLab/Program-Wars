@@ -9,8 +9,8 @@ import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
 
 // card orders for different AI personalities
 const CARD_ORDER = {
-  easy: ["VARIABLE", "REPEAT", "INSTRUCTION"],
-  basic: [
+  basic: ["VARIABLE", "REPEAT", "INSTRUCTION"],
+  standard: [
     "GROUP", "VARIABLE", "REPEAT", "INSTRUCTION", "ANTIVIRUS", "FIREWALL",
     "OVERCLOCK", "HACK", "VIRUS"
   ],
@@ -37,14 +37,8 @@ export default class AiHandlerFactory {
   /**
    * Create and return an AiHandler of the given type for the given player.
    */
-  newHandler (type, personality, player) {
+  newHandler (personality, player) {
     let actions = []
-    if (type === "standard") {
-      // Put standard action handlers in here for checking if the
-      // ai can make a play to win, or can prevent the other player
-      // from winning.
-      type
-    }
 
     let cards = CARD_ORDER.easy
     if (personality in CARD_ORDER) {
