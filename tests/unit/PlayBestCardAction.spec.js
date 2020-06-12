@@ -96,8 +96,6 @@ describe('PlayBestCardAction', () => {
     expect(sorted[0]).toBe(card_R2)
     expect(sorted[1]).toBe(card_I3)
     expect(sorted[2]).toBe(card_I2)
-    expect(sorted[3]).toBe(card_N1)
-    expect(sorted[4]).toBe(card_N2)
   })
 
   test('instruction', () => {
