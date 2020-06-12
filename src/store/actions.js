@@ -65,6 +65,8 @@ export default {
    * }
    */
   executeTurn(context, payload) {
+    bus.$emit('card-played')
+
     let draw = true
     if (payload.playType === "DISCARD") {
       context.commit('discardCard', payload)
@@ -76,7 +78,6 @@ export default {
     }
 
     context.commit('addPlayedCard', payload)
-    bus.$emit('card-played')
     context.dispatch('endTurn', {draw: draw})
   },
 
@@ -123,8 +124,8 @@ export default {
     let scores = context.getters.getPlayerScores()
 
     let move = handler.chooseAction(hand, players, stacks, scores)
-    bus.$emit('ai-action', {move: move})
     context.dispatch('executeTurn', move)
+    bus.$emit('ai-action', {move: move})
   },
 
   /**
