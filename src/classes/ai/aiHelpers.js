@@ -1,5 +1,5 @@
 /**
- * @file PlayBestCardAction.js file
+ * @file aiHelpers.js file
  * @author Steven on 2020-06-11
  *
  * A collection of helper functions for comparisons and other general tasks
