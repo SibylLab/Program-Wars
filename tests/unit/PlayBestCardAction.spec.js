@@ -230,9 +230,13 @@ describe('PlayBestCardAction', () => {
       expect(result.player).toEqual(player)
       expect(result.target).toEqual(canAttack_6)
     })    
-    test('cannot play safety', () => {
+    test('cannot play attack', () => {
       const isHurt = {id: 1, hurtBy: getValue(true)}
       let result = action.playAttack({type: "ANTIVIRUS"}, [isHurt], 'scores')
+      expect(result).toBeUndefined()
+    })    
+    test('cannot play attack on self', () => {
+      let result = action.playAttack({type: "ANTIVIRUS"}, [player], 'scores')
       expect(result).toBeUndefined()
     })    
   })

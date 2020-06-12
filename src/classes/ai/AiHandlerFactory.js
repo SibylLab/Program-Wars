@@ -40,7 +40,7 @@ export default class AiHandlerFactory {
   newHandler (personality, player) {
     let actions = []
 
-    let cards = CARD_ORDER.easy
+    let cards = CARD_ORDER.basic
     if (personality in CARD_ORDER) {
       cards = CARD_ORDER[personality]
     }

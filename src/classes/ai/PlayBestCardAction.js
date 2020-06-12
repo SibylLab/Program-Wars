@@ -211,7 +211,7 @@ export default class PlayBestCardAction extends ActionHandler {
    */
   playAttack (card, players, scores) {
     let target = players.filter((p) => {
-      return !p.hurtBy(card.type) && !p.isProtectedFrom(card.type)
+      return p.id !== this.player.id && !p.hurtBy(card.type) && !p.isProtectedFrom(card.type)
     }).sort((a, b) => {
       return scores[b.id].score - scores[a.id].score
     }).shift()

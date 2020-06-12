@@ -32,8 +32,6 @@ function varStackCompare (a, b) {
  */
 function lowestVar (stack) {
   let cards = stack.cards.filter(c => c.type === "VARIABLE")
-  console.log(stack.cards)
-  console.log(cards)
   return cards.sort((a,b) => { return a.value - b.value }).shift().value
 }
 
