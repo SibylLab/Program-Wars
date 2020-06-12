@@ -107,7 +107,7 @@ export default {
       state.players.push(player)
 
       if (player.isAi) {
-        let handler = factory.newHandler("basic", player)
+        let handler = factory.newHandler("standard", "basic", player)
         state.aiHandlers.push(handler)
       }
     }
