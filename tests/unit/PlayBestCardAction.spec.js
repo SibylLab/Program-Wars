@@ -105,6 +105,96 @@ describe('PlayBestCardAction', () => {
     expect(result.playType).toEqual('startNewStack')
     expect(result.card).toEqual('card')
     expect(result.player).toEqual(player)
-    expect(result.player).toEqual(player)
+    expect(result.target).toEqual(player)
   }) 
+
+  describe('card plays that filter and sort stacks', () => {
+    const hand = 'hand'
+    const players = 'players'
+    const scores = 'scores'
+
+    const stackScore_3 = {playerId: 0, willAccept: getValue(true), getScore: getValue(3)}
+    const stackScore_6 = {playerId: 0, willAccept: getValue(true), getScore: getValue(6)}
+    const stackNotPlayers = {playerId: 1, willAccept: getValue(true), getScore: getValue(4)}
+    const stackNoAccept = {playerId: 0, willAccept: getValue(false), getScore: getValue(5)} 
+
+    test('repeat can play', () => {
+      const stacks = [stackNotPlayers, stackNoAccept, stackScore_3, stackScore_6]
+      let result = action.repeat('card', {hand, players, stacks, scores})
+      expect(result.playType).toEqual('playCardOnStack')
+      expect(result.card).toEqual('card')
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(stackScore_6)
+    })
+    test('repeat no play', () => {
+      const stacks = [stackNotPlayers, stackNoAccept]
+      let result = action.repeat('card', {hand, players, stacks, scores})
+      expect(result).toBeUndefined()
+    })
+    test('variable can play', () => {
+      let varStack = Object.assign(stackScore_3)
+      varStack.getTop = getValue("REPEAT")
+      const stacks = [stackNoAccept, varStack]
+
+      let result = action.variable('card', {hand, players, stacks, scores})
+      expect(result.playType).toEqual('playCardOnStack')
+      expect(result.card).toEqual('card')
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(varStack)
+    })
+    test('variable no play', () => {
+      const stacks = [stackNotPlayers, stackNoAccept]
+      let result = action.variable('card', {hand, players, stacks, scores})
+      expect(result).toBeUndefined()
+    })
+    test('hack can play', () => {
+      let notEnoughCards = Object.assign({cards: ['c']}, stackScore_3)
+      notEnoughCards.playerId = 4
+
+      let hackStack_3 = Object.assign({
+        cards: ['c','c'], isHackable: getValue(true)
+      }, stackScore_3)
+      hackStack_3.playerId = 4
+
+      let hackStack_6 = Object.assign({
+        cards: ['c','c'], isHackable: getValue(true)
+      }, stackScore_6)
+      hackStack_6.playerId = 4
+
+      const stacks = [stackNoAccept, hackStack_3, notEnoughCards, hackStack_6]
+
+      let result = action.hack('card', {hand, players, stacks, scores})
+      expect(result.playType).toEqual('hackStack')
+      expect(result.card).toEqual('card')
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(hackStack_6)
+    })
+    test('hack no play', () => {
+      let noHack = Object.assign(stackScore_3)
+      noHack.cards = ['card', 'card']
+      noHack.isHackable = getValue(false)
+      const stacks = [stackNoAccept, noHack]
+
+      let result = action.hack('card', {hand, players, stacks, scores})
+      expect(result).toBeUndefined()
+    })
+    test('group can play', () => {
+      const stacks = [stackScore_3, stackNotPlayers]
+      let result = action.group({value: 3}, {hand, players, stacks, scores})
+      expect(result.playType).toEqual('groupStacks')
+      expect(result.card).toEqual({value: 3})
+      expect(result.player).toEqual(player)
+      expect(result.target.has(stackScore_3)).toBeTruthy()
+    })
+    test('group no stacks available to group', () => {
+      const stacks = [stackScore_6]
+      let result = action.group({value: 4}, {hand, players, stacks, scores})
+      expect(result).toBeUndefined()
+    })
+    test('group stacks do not meet value', () => {
+      const stacks = [stackScore_3]
+      let result = action.group({value: 4}, {hand, players, stacks, scores})
+      expect(result).toBeUndefined()
+    })
+  })
 })

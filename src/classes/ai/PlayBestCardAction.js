@@ -114,7 +114,7 @@ export default class PlayBestCardAction extends ActionHandler {
   repeat (card, state) {
     // get the player owned stack with the largest score
     let stack = state.stacks.filter((s) => {
-      return s.playerId === this.player.id && !s.isComplete() && s.willAccept(card)
+      return s.playerId === this.player.id && s.willAccept(card)
     }).sort((a, b) => {
       return b.getScore() - a.getScore()
     }).shift()
