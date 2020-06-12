@@ -15,9 +15,9 @@ describe('PlayBestCardAction', () => {
   }) 
 
   test('constructor and play order', () => {
-    expect(action.playOrder['GROUP']).toEqual(0)
-    expect(action.playOrder['INSTRUCTION']).toEqual(3)
-    expect(action.playOrder['VIRUS']).toEqual(8)
+    expect(action.playOrder.GROUP).toEqual(0)
+    expect(action.playOrder.INSTRUCTION).toEqual(3)
+    expect(action.playOrder.VIRUS).toEqual(8)
   })
 
   describe('handle', () => {
