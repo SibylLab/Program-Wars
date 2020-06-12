@@ -197,4 +197,43 @@ describe('PlayBestCardAction', () => {
       expect(result).toBeUndefined()
     })
   })
+
+  describe('play safety and attack cards', () => {
+    test('can play safety', () => {
+      player.helpedBy = getValue(false)
+      let result = action.playSafety({type: "ANTIVIRUS"})
+      expect(result.playType).toEqual('playSpecialCard')
+      expect(result.card).toEqual({type: "ANTIVIRUS"})
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(player)
+      expect(player.helpedBy.mock.calls[0]).toEqual(["ANTIVIRUS"])
+    })    
+    test('cannot play safety', () => {
+      player.helpedBy = getValue(true)
+      let result = action.playSafety({type: "ANTIVIRUS"})
+      expect(result).toBeUndefined()
+    })    
+    test('can play attack', () => {
+      const isHurt = {id: 1, hurtBy: getValue(true)}
+      const isProtected = {id: 2, hurtBy: getValue(false), isProtectedFrom: getValue(true)}
+      const canAttack_3 = {id: 3, hurtBy: getValue(false), isProtectedFrom: getValue(false)}
+      const canAttack_6 = {id: 4, hurtBy: getValue(false), isProtectedFrom: getValue(false)}
+      const players = [isHurt, isProtected, canAttack_3, canAttack_6]
+
+      let scores = {}
+      scores[canAttack_6.id] = {score: 6},
+      scores[canAttack_3.id] = {score: 3}
+
+      let result = action.playAttack({type: "VIRUS"}, players, scores)
+      expect(result.playType).toEqual('playSpecialCard')
+      expect(result.card).toEqual({type: "VIRUS"})
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(canAttack_6)
+    })    
+    test('cannot play safety', () => {
+      const isHurt = {id: 1, hurtBy: getValue(true)}
+      let result = action.playAttack({type: "ANTIVIRUS"}, [isHurt], 'scores')
+      expect(result).toBeUndefined()
+    })    
+  })
 })
