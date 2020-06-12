@@ -43,7 +43,6 @@ export default class AiHandler {
         return result
       }
     }
-    console.log("default action")
     // If no handler can handle this action use the default action
     return this.defaultAction.handle(hand, players, stacks, scores)
   }
