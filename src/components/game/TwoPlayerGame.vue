@@ -33,15 +33,14 @@
 import PlayerInfo from '@/components/game/PlayerInfo'
 import TurnArea from '@/components/game/TurnArea'
 import PlayArea from '@/components/game/PlayArea'
-import {bus} from '@/components/shared/Bus'
-import {mapState, mapActions} from 'vuex'
+import {mapState} from 'vuex'
 
 /**
  * The main page for the game.
  * Organizes the different area components to display the game properly.
  */
 export default {
-  name: 'game-page',
+  name: 'two-player-game',
   components: {
     'turn-area': TurnArea,
     'player-info': PlayerInfo,
@@ -49,28 +48,13 @@ export default {
   },
   computed: {
     ...mapState([
-      'gameState',
       'players'
     ])
   },
   methods: {
-    ...mapActions([
-      'leaveGame'
-    ]),
     getPlayer (id) {
       return this.players.find(p => p.id === id)
     }
-  },
-  created () {
-    // If gameState is not game when we create this element (page refresh)
-    // Then we want to leave the game and return to home page.
-    if (this.gameState !== 'game') {
-      this.leaveGame()
-    }
-
-    bus.$on('game-over', () => {
-      $('#winner-modal').modal('show')
-    })
   }
 }
 </script>

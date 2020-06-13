@@ -36,16 +36,12 @@ export default {
   computed: {
     ...mapState([
       'gameState',
-      'players'
     ])
   },
   methods: {
     ...mapActions([
       'leaveGame'
-    ]),
-    getPlayer (id) {
-      return this.players.find(p => p.id === id)
-    }
+    ])
   },
   created () {
     // If gameState is not game when we create this element (page refresh)
