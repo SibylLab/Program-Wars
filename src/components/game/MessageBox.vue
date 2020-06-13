@@ -41,7 +41,8 @@ export default {
 
       } else if (move.playType === 'playCardOnStack') {
         const newStack = this.stacks.find(s => s.stackId === move.target.stackId)
-        if (newStack.isComplete()) {
+        // Issue with newStack being undefined, probably related to the above issue
+        if (newStack && newStack.isComplete()) {
           this.message = name + " completed a stack worth " + newStack.getScore()
               + " points"  
         } else {
