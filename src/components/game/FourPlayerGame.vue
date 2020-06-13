@@ -11,11 +11,11 @@
   </div>
 
   <div id="active-turn">
-    <div class="top-element">
+    <div id="turn-cards">
       <turn-area></turn-area>
     </div>
 
-    <div id="stack-area" class="bottom-element">
+    <div id="stack-area">
       <ul id="player-tabs">
         <li v-for="player in players" v-bind:key="player.id" v-on:click="changeTab(player)"
             :class="['tab', { active: isActiveTab(player) }]">
@@ -116,6 +116,19 @@ export default {
   position: absolute;
   left: 10px;
   top: -35px;
+}
+
+#turn-cards {
+  position: absolute;
+  width: 100%;
+  height: 48%;
+}
+
+#stack-area {
+  position:absolute;
+  top: 48%;
+  width: 100%;
+  height: 52%;
 }
 
 .top-element {
