@@ -34,9 +34,6 @@ export default {
     // Somehow message box is being destroyed and created so there are two
     // listeners for this.
     bus.$on('ai-action', ({move}) => {
-      if (!move) {
-        console.log('no move')
-      }
       const name = move.player.name
       if (move.playType === 'startNewStack') {
         this.message = name + " started a new stack worth " + move.card.value
