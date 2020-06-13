@@ -158,6 +158,7 @@ export default {
     let id = state.activePlayer.id
     id = (id + 1) % state.players.length
     state.activePlayer = state.players.find(p => p.id === id)
+    if (id === 0) { state.turnNumber++ }
   },
 
   /**

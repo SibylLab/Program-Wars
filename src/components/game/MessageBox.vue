@@ -1,6 +1,8 @@
 <template>
-<div id="message-b" :key="message">
-  {{ message }}
+<div id="message-box" :key="messages.length">
+  <p v-for="message in messages" v-bind:key="message">
+    {{ message }}
+  </p>
 </div>
 </template>
 
@@ -21,13 +23,14 @@ export default {
   name: 'message-box',
   data () {
     return  {
-      message: ""
+      messages: ['']
     }
   },
   computed: {
     ...mapState([
       'stacks',
-      'players'
+      'players',
+      'turnNumber'
     ])
   },
   created () {
@@ -36,39 +39,40 @@ export default {
     bus.$on('ai-action', ({move}) => {
       const name = move.player.name
       if (move.playType === 'startNewStack') {
-        this.message = name + " started a new stack worth " + move.card.value
-            + " points"
+        this.messages.unshift(name + " started a new stack worth " + move.card.value
+            + " points")
 
       } else if (move.playType === 'playCardOnStack') {
         const newStack = this.stacks.find(s => s.stackId === move.target.stackId)
         // Issue with newStack being undefined, probably related to the above issue
         if (newStack && newStack.isComplete()) {
-          this.message = name + " completed a stack worth " + newStack.getScore()
-              + " points"  
+          this.messages.unshift(name + " completed a stack worth " + newStack.getScore()
+              + " points")
         } else {
-          this.message = name + " added a " + move.card.type.toLowerCase() +
-              " card to a stack for a new value of " + newStack.getScore() + " points"
+          this.messages.unshift(name + " added a " + move.card.type.toLowerCase() +
+              " card to a stack for a new value of " + newStack.getScore() + " points")
         }
 
       } else if (move.playType === 'hackStack') {
         const targetPlayer = this.players.find(p => p.id === move.target.playerId)
-        this.message = name + " hacked " + targetPlayer.name + " and removed a stack worth "
-            + move.target.getScore() + " points"
+        this.messages.unshift(name + " hacked " + targetPlayer.name + " and removed a stack worth "
+            + move.target.getScore() + " points")
 
       } else if (move.playType === 'playSpecialCard') {
         let targetName = move.target.name === move.player.name ? "itself" : move.target.name
-        this.message = name + " played " + move.card.type.toLowerCase() + " on " + targetName
+        this.messages.unshift(name + " played " + move.card.type.toLowerCase() + " on " + targetName)
 
       } else if (move.playType === 'groupStacks') {
-        this.message = name + " grouped " + move.target.size + " stacks worth a total of "
-            + move.card.value + " points"
+        this.messages.unshift(name + " grouped " + move.target.size + " stacks worth a total of "
+            + move.card.value + " points")
 
       } else if (move.playType === 'REDRAW') {
-        this.message = name + " drew a new hand"
+        this.messages.unshift(name + " drew a new hand")
 
       } else {
-        this.message = name + " did " + move.playType + " you should probably report an error!"
+        this.messages.unshift(name + " did " + move.playType + " you should probably report an error!")
       }
+      if (move.player.id === 1) { this.messages.unshift("=== Turn " + this.turnNumber +" ===") }
     })
   }
 }
@@ -76,7 +80,7 @@ export default {
 
 
 <style scoped>
-#message-b {
+#message-box {
   position: relative;
   left: 0px;
   width: 100%;
@@ -85,10 +89,11 @@ export default {
   border: ridge grey 8px;
   border-radius: 6px;
   color: #fff;
-  font-size: 22px;
+  font-size: 18px;
   text-align: left;
-  line-height: 28px;
+  line-height: 22px;
   padding: 5px;
+  overflow: auto;
 }
 </style>
 
