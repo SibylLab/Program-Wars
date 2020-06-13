@@ -14,8 +14,15 @@
     <div class="top-element">
       <turn-area></turn-area>
     </div>
-    <div class="bottom-element">
-      <play-area :player="activePlayer" side="left"></play-area>
+
+    <div id="stack-area" class="bottom-element">
+      <ul id="player-tabs">
+        <li v-for="player in players" v-bind:key="player.id" v-on:click="changeTab(player)"
+            :class="['tab', { active: isActiveTab(player) }]">
+          {{ player.name }}
+        </li>
+      </ul>
+      <play-area :player="tabPlayer" side="left"></play-area>
     </div>
   </div>
 
@@ -43,6 +50,11 @@ import {mapState} from 'vuex'
  */
 export default {
   name: 'four-player-game',
+  data () {
+    return {
+      tabPlayer: this.activePlayer
+    }
+  },
   components: {
     'turn-area': TurnArea,
     'player-info': PlayerInfo,
@@ -57,7 +69,16 @@ export default {
   methods: {
     getPlayer (id) {
       return this.players.find(p => p.id === id)
+    },
+    isActiveTab (player) {
+      return player === this.tabPlayer
+    },
+    changeTab (player) {
+      this.tabPlayer = player
     }
+  },
+  created () {
+    this.tabPlayer = this.activePlayer
   }
 }
 </script>
@@ -91,6 +112,12 @@ export default {
   height: 100%;
 }
 
+#player-tabs {
+  position: absolute;
+  left: 10px;
+  top: -35px;
+}
+
 .top-element {
   position: absolute;
   width: 100%;
@@ -102,6 +129,32 @@ export default {
   top: 50%;
   width: 100%;
   height: 50%;
+}
+
+.tab {
+  cursor: pointer;
+}
+
+.active {
+  background-color: #fff;
+  color: #333333;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  position: relative;
+  display: inline-block;
+  margin: 5px 1px;
+  padding: 2px 5px;
+  border: solid grey 2px;
+  background-color: #333333;
+  color: #fff;
+  z-index: 40;
 }
 </style>
 
