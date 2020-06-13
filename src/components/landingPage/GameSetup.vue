@@ -4,16 +4,22 @@
 
   <div id="game-types">
     <h5 class="sub-heading" >Select Game Type</h5>
-    <div class="col-md-6">
-      <input type="radio" id="pick-ai" name="game-type" v-on:click="changeGame" checked>
-      <label for="oneAI">
+    <div class="col-md-12">
+      <input type="radio" id="pick-ai" name="game-type" v-on:click="changeGame('ai')" checked>
+      <label for="pick-ai">
         <b>One Bot:</b> Play against a computer player
       </label>
     </div>
-    <div class="col-md-6">
-      <input type="radio" id="pick-hotseat" name="game-type" v-on:click="changeGame">
-      <label for="hotseat">
+    <div class="col-md-12">
+      <input type="radio" id="pick-hotseat" name="game-type" v-on:click="changeGame('hotseat')">
+      <label for="pick-hotseat">
         <b>Hotseat: </b>Play against a friend locally
+      </label>
+    </div>
+    <div class="col-md-12">
+      <input type="radio" id="pick-free-for-all" name="game-type" v-on:click="changeGame('free')">
+      <label for="pick-free-for-all">
+        <b>Free For All: </b>Play against 3 computer players
       </label>
     </div>
   </div>
@@ -70,12 +76,19 @@ export default {
     return {
       gameType: 'ai',
       sameName: false,
-      noobBot: {name: 'n00b_bot', ai: true},
+      bots: [
+        {name: 'n00b_bot', ai: true},
+        {name: 'l33t_gears', ai: true},
+        {name: 'vacuum', ai: true}
+      ],
       players: []
     }
   },
   computed: {
     maxPlayersReached () {
+      if (this.gameType === 'free') {
+        return this.players.length >= 4
+      }
       return this.players.length >= 2
     },
     inputPlaceholder () {
@@ -90,15 +103,17 @@ export default {
       this.newGame({players: this.players})
     },
     /**
-     * Removes all players except 1 human player from players and adds 1 ai player.
-     * Always keeps 1 human player if needed and adds the bot after it.
+     * Removes all players except 1 human player from players and adds numBots ai players.
+     * Always keeps 1 human player if needed and adds the bots after it.
      */
-    addBot () {
+    addBots (numBots) {
       this.removeBots()
       if (this.players.length > 0) {
         this.players = this.players.slice(0, 1)
       }
-      this.players.push(this.noobBot)
+      for (let i=0; i < numBots; i++) {
+        this.players.push(this.bots[i])
+      }
     },
     /**
      * Filters all ai players from player list.
@@ -109,13 +124,16 @@ export default {
     /**
      * Toggle the game state and adjust the current players in the player list.
      */
-    changeGame () {
-      if (this.gameType === 'hotseat') {
+    changeGame (type) {
+      if (type === 'ai') {
         this.gameType = 'ai'
-        this.addBot()
-      } else {
+        this.addBots(1)
+      } else if (type === 'hotseat') {
         this.gameType = 'hotseat'
         this.removeBots()
+      } else {
+        this.gameType = 'free'
+        this.addBots(3)
       }
       this.sameName = false
     },
@@ -152,7 +170,7 @@ export default {
   },
   created () {
     // We always start in AI game mode with 1 bot
-    this.players.push(this.noobBot)
+    this.players.push(this.bots[0])
   }
 }
 </script>
@@ -182,8 +200,12 @@ export default {
 #current-players {
   margin-left: 25%;
   margin-right: 25%;
-  height: 120px;
+  min-height: 120px;
   font-size: 15px;
+}
+
+#start-button {
+  margin: 15px;
 }
 
 .sub-heading {

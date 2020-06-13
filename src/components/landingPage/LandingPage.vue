@@ -56,9 +56,9 @@ export default {
   top: 2%;
   left: 30%;
   width: 40%;
-  min-width: 450px;
+  min-width: 480px;
   height: 60%;
-  min-height: 530px;
+  min-height: 570px;
 }
 
 @media all and (max-width: 600px) {

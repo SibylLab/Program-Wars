@@ -8,7 +8,8 @@
   <page-header></page-header>
 
   <div id="game">
-    <two-player-game></two-player-game>
+    <four-player-game v-if="numPlayers(4)"></four-player-game>
+    <two-player-game v-else></two-player-game>
   </div>
   
 </div>
@@ -19,6 +20,7 @@
 import WinnerModal from '@/components/modals/WinnerModal'
 import PageHeader from '@/components/shared/PageHeader'
 import TwoPlayerGame from '@/components/game/TwoPlayerGame'
+import FourPlayerGame from '@/components/game/FourPlayerGame'
 import {bus} from '@/components/shared/Bus'
 import {mapState, mapActions} from 'vuex'
 
@@ -31,17 +33,22 @@ export default {
   components: {
     'winner-modal': WinnerModal,
     'page-header': PageHeader,
-    'two-player-game': TwoPlayerGame
+    'two-player-game': TwoPlayerGame,
+    'four-player-game': FourPlayerGame
   },
   computed: {
     ...mapState([
       'gameState',
+      'players'
     ])
   },
   methods: {
     ...mapActions([
       'leaveGame'
-    ])
+    ]),
+    numPlayers (n) {
+      return this.players.length === n
+    }
   },
   created () {
     // If gameState is not game when we create this element (page refresh)
