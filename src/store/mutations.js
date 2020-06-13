@@ -32,6 +32,7 @@ export default {
     state.activeCard = undefined
     state.scoreLimit = 75
     state.tips = {showTips: true, factIndex: 0}
+    state.turnNumber = 0
   },
 
   /**

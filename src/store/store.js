@@ -29,7 +29,7 @@ export const store = new Vuex.Store({
     tips: {showTips: true, factIndex: 0},
     timer: undefined,
     showBackstory: true,
-    turnNumber: 1
+    turnNumber: 0
   },
 
   getters,
