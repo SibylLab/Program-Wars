@@ -36,8 +36,7 @@ import PlayArea from '@/components/game/PlayArea'
 import {mapState} from 'vuex'
 
 /**
- * The main page for the game.
- * Organizes the different area components to display the game properly.
+ * Organizes the layout for a 2 player game.
  */
 export default {
   name: 'two-player-game',

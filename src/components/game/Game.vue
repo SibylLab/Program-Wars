@@ -23,8 +23,8 @@ import {bus} from '@/components/shared/Bus'
 import {mapState, mapActions} from 'vuex'
 
 /**
- * The main page for the game.
- * Organizes the different area components to display the game properly.
+ * The main game page for the game.
+ * Decides which layout to show based on the game type.
  */
 export default {
   name: 'game-page',
