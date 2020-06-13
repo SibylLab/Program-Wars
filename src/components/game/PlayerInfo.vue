@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <div id="info-button" v-if="side === 'left'">
+  <div id="info-button" v-if="side === 'left' && player.id === 0">
     <info-popup>
       <h3 style="margin: 0">Player Info</h3>
       <p>This area shows information about a player. On the players turn their picture

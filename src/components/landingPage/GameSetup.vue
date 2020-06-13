@@ -78,8 +78,8 @@ export default {
       sameName: false,
       bots: [
         {name: 'n00b_bot', ai: true},
-        {name: 'l33t_gears', ai: true},
-        {name: 'vacuum', ai: true}
+        {name: 'l33t_g34rs', ai: true},
+        {name: 'R0B0_vac', ai: true}
       ],
       players: []
     }
