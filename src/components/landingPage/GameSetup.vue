@@ -4,24 +4,14 @@
 
   <div id="game-types">
     <h5 class="sub-heading" >Select Game Type</h5>
-    <div class="col-md-12">
-      <input type="radio" id="pick-ai" name="game-type" v-on:click="changeGame('ai')" checked>
-      <label for="pick-ai">
-        <b>One Bot:</b> Play against a computer player
-      </label>
-    </div>
-    <div class="col-md-12">
-      <input type="radio" id="pick-hotseat" name="game-type" v-on:click="changeGame('hotseat')">
-      <label for="pick-hotseat">
-        <b>Hotseat: </b>Play against a friend locally
-      </label>
-    </div>
-    <div class="col-md-12">
-      <input type="radio" id="pick-free-for-all" name="game-type" v-on:click="changeGame('free')">
-      <label for="pick-free-for-all">
-        <b>Free For All: </b>Play against 3 computer players
-      </label>
-    </div>
+    <input type="radio" id="pick-ai" name="game-type" v-on:click="changeGame('ai')" checked>
+    <label for="pick-ai"> <b>One Bot:</b> Play against a computer player </label>
+    <br>
+    <input type="radio" id="pick-hotseat" name="game-type" v-on:click="changeGame('hotseat')">
+    <label for="pick-hotseat"> <b>Hotseat: </b>Play against a friend locally </label>
+    <br>
+    <input type="radio" id="pick-free" name="game-type" v-on:click="changeGame('free')">
+    <label for="pick-free"> <b>Free For All: </b>Play against 3 computer players </label>
   </div>
 
   <div id="add-players">
@@ -77,9 +67,9 @@ export default {
       gameType: 'ai',
       sameName: false,
       bots: [
-        {name: 'n00b_bot', ai: true},
-        {name: 'l33t_g34rs', ai: true},
-        {name: 'R0B0_vac', ai: true}
+        {name: 'n00b_bot', ai: true, personality: 'standard'},
+        {name: 'l33t_g34rs', ai: true, personality: 'aggresive'},
+        {name: 'R0B0_vac', ai: true, personality: 'defensive'}
       ],
       players: []
     }
