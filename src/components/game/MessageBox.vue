@@ -34,6 +34,9 @@ export default {
     // Somehow message box is being destroyed and created so there are two
     // listeners for this.
     bus.$on('ai-action', ({move}) => {
+      if (!move) {
+        console.log('no move')
+      }
       const name = move.player.name
       if (move.playType === 'startNewStack') {
         this.message = name + " started a new stack worth " + move.card.value
@@ -41,7 +44,8 @@ export default {
 
       } else if (move.playType === 'playCardOnStack') {
         const newStack = this.stacks.find(s => s.stackId === move.target.stackId)
-        if (newStack.isComplete()) {
+        // Issue with newStack being undefined, probably related to the above issue
+        if (newStack && newStack.isComplete()) {
           this.message = name + " completed a stack worth " + newStack.getScore()
               + " points"  
         } else {
