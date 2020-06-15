@@ -65,6 +65,8 @@ export default {
    * }
    */
   executeTurn(context, payload) {
+    bus.$emit('card-played')
+
     let draw = true
     if (payload.playType === "DISCARD") {
       context.commit('discardCard', payload)
@@ -76,7 +78,6 @@ export default {
     }
 
     context.commit('addPlayedCard', payload)
-    bus.$emit('card-played')
     context.dispatch('endTurn', {draw: draw})
   },
 
@@ -103,8 +104,28 @@ export default {
       context.commit('drawCard')
     }
     context.state.activeCard = undefined
-    context.commit('nextPlayer')
     bus.$emit('end-turn')
+
+    // Change active player and take AI turn if needed
+    context.commit('nextPlayer')
+    if (context.state.activePlayer.isAi) {
+      context.dispatch('takeAiTurn') 
+    }
+  },
+
+  /**
+   * Take an Ai Players Turn.
+   */
+  takeAiTurn (context) {
+    let handler = context.getters.getCurrentAiHandler
+    let hand = context.getters.getCurrentPlayerHand
+    let players = context.state.players
+    let stacks = context.state.stacks
+    let scores = context.getters.getPlayerScores()
+
+    let move = handler.chooseAction(hand, players, stacks, scores)
+    context.dispatch('executeTurn', move)
+    bus.$emit('ai-action', {move: move})
   },
 
   /**

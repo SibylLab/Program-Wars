@@ -3,6 +3,7 @@ import { bus } from '@/components/shared/Bus'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
 import Stack from '@/classes/game/Stack'
+import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
 
 
 /**
@@ -93,16 +94,22 @@ export default {
   /**
    * Uses a list of player information to create and add new players.
    *
-   * Payload
-   * {
+   * Payload = {
    *   players: list of player info {name, isAi}
    * }
    */
   addPlayers(state, payload) {
+    let factory = new AiHandlerFactory()
     let playerInfo = payload.players
+
     for (let i = 0; i < playerInfo.length; i++) {
       let player = new Player(i, playerInfo[i].name, playerInfo[i].ai)
       state.players.push(player)
+
+      if (player.isAi) {
+        let handler = factory.newHandler("standard", player)
+        state.aiHandlers.push(handler)
+      }
     }
   },
 
@@ -110,8 +117,7 @@ export default {
    * Give a player a new hand.
    * Can be used when they have no hand or to redraw a full hand.
 
-   * Payload
-   * {
+   * Payload = {
    *   player: the player being given a new hand.
    * }
    */
