@@ -1,5 +1,5 @@
 <template>
-<div id="message-b" :key="message">
+<div id="message-box" :key="message">
   {{ message }}
 </div>
 </template>
@@ -31,8 +31,6 @@ export default {
     ])
   },
   created () {
-    // Somehow message box is being destroyed and created so there are two
-    // listeners for this.
     bus.$on('ai-action', ({move}) => {
       const name = move.player.name
       if (move.playType === 'startNewStack') {
@@ -41,7 +39,6 @@ export default {
 
       } else if (move.playType === 'playCardOnStack') {
         const newStack = this.stacks.find(s => s.stackId === move.target.stackId)
-        // Issue with newStack being undefined, probably related to the above issue
         if (newStack && newStack.isComplete()) {
           this.message = name + " completed a stack worth " + newStack.getScore()
               + " points"  
@@ -76,7 +73,7 @@ export default {
 
 
 <style scoped>
-#message-b {
+#message-box {
   position: relative;
   left: 0px;
   width: 100%;
