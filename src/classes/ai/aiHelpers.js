@@ -35,54 +35,95 @@ function lowestVar (stack) {
   return cards.sort((a,b) => { return a.value - b.value }).shift().value
 }
 
+
 /**
- * Attempts to find a subset of stacks with scores that sum to value.
- * Uses a heuristic that picks random stacks and adding them to the subset
- * until the goal is reached or exceeded.
- * The number of picks attempts to be high enough to find a subset for
- * most reasonable values in our case, but low enough to guarantee that
- * it will still run in less that 0.1 sec.
- * This does not guarantee that a group will be found if one exists. We can
- * veiw this as the AI player not being perfect and sometimes missing the
- * right choice. In short games where there are very few stacks it should
- * almost always find a grouping.
- * The stacks given should always have scores <= value to make it easier
- * for the algorithm to find a good subset.
+ * Finds the grouping that uses as many of the players stacks as possible
+ * and returns a Set of stacks to group.
  * @param value The size of the group we are making.
  * @param stacks The stacks that are available to group.
- * @return a Set of stacks that group to make the value, or undefined if
- * no grouping is possible.
+ * @return a Set of stacks that group to make the value, the set is empty
+ * if no grouping is possible.
  */
-function findGroup (value, stacks) {
-  let MAX = 1000  // may be able to go as high as 10,000
-  let total = 0
-  let used = new Set()
-  let group = new Set()
+function groupStacks (groupValue, stacks) {
+  /* Uses dynamic programming to find a subset of stacks with scores that sum
+     To the group value. This has complexity O(groupValue * stacks.length)
+     and if in the future changes are made to the number of groups or size of
+     group cards it could start to take too long. Though this is very unlikely
+     given the game, but should be noted.
+     A table is built bottom up. Each cell records the number of stacks from
+     the set of elements before it in the list of stacks, the previous
+     cell that is used in a possible solution, and wether or not the stack the
+     cell represents would be used in a possible solution. We are trying to
+     see for dp[groupValue][stacksIndex] could be part of a solution.
+     This is relatively standard DP algorithm for subset sum with positive
+     values, and the algorithm is also similar to minimum-edit distance.
+     The path containing the optimal solution always starts at
+     dp[groupValue][stacks.length] and following the coords in cell.prev until
+     an undefined prev can give you an optimal solution.
+  */
+  let nullCell = {size: -1, prev: undefined, used: false}
 
-  for (let tried = 0; tried < MAX; tried++) {
-    // pick a random stack that hasn't been used already and add it to the group
-    let idx = Math.floor(Math.random() * stacks.length)
-    let s = stacks[idx]
-    if (!used.has(idx) && !group.has(s)) {
-      total += s.getScore()
-      group.add(s)
+  // Set up a dynamic programming table
+  let dp = []
+  for (let i = 0; i <= groupValue; i++) {
+    let row = []
+    for (let j = 0; j <= stacks.length; j++) {
+      let cell = Object.assign({}, nullCell)
+      if (i === 0) {
+        cell.size = 0
+      }
+      row.push(cell)
     }
+    dp.push(row)
+  }
 
-    // If the addition gets us the goal value return the group
-    if (total == value) {
-      return group
-    // If we go over the goal then reset everything so we can try again
-    } else if (total > value) {
-      total = 0
-      used.clear()
-      group.clear()
+  // Find the best available grouping of stacks bottom up
+  for (let i = 1; i <= groupValue; i++) {
+    for (let j = 1; j <= stacks.length; j++) {
+      // get cells for possible paths
+      let notTaken = dp[i][j - 1]
+      let taken = Object.assign({}, nullCell)
+      let k = i - stacks[j - 1].getScore()
+      if (k >= 0) {
+        taken = dp[k][j - 1]
+      }
+
+      // Decide possiblity is the best
+      let best = Object.assign({}, nullCell)
+      if (taken.size !== -1 && taken.size + 1 >= notTaken.size) {
+        best = {size: taken.size + 1, prev: [k, j - 1], used: true}
+      } else if (notTaken.size !== -1) {
+        best = {size: notTaken.size, prev: [i, j - 1], used: false}
+      }
+
+      // Set this cell to the best cell
+      dp[i][j] = best
     }
   }
-  return undefined
+
+  // Trace and rebuild the optimal grouping
+  let group = new Set()
+  let i = groupValue
+  let j = stacks.length
+  while (true) {  // eslint-disable-line
+    let cell = dp[i][j]
+    // add used elements to the group
+    if (cell.used) {
+      group.add(stacks[j - 1])
+    }
+
+    // move to the next cell or return the finished group
+    if (cell.prev) {
+      i = cell.prev[0]
+      j = cell.prev[1]
+    } else {
+      return group
+    }
+  }
 }
 
 export default {
   varStackCompare,
   lowestVar,
-  findGroup
+  groupStacks
 }
