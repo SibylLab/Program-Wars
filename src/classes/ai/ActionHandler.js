@@ -4,7 +4,7 @@
  */
 
 /**
- * An abstract handler class to deal with possible ai player actions.
+ * An abstract handler class to deal with possible AI player actions.
  * These are the chain of responsibility objects that can handle a
  * turn or not. If they can they pass a turn object back to AiHandler
  * and it passes it back to the client to take the turn, if the action handler
@@ -13,10 +13,10 @@
  */
 export default class ActionHandler {
   /**
-   * Creates a new ActionHandler to be used when resolving ai turn choices.
+   * Creates a new ActionHandler to be used when resolving AI turn choices.
    * Should not create actual instances of this class (though it is not forbidden).
    * @constructor ActionHandler
-   * @param {Player} player The Ai player the action handler is for.
+   * @param {Player} player The AI player the action handler is for.
    */
   constructor (player) {
     this.player = player
@@ -25,7 +25,7 @@ export default class ActionHandler {
   /**
    * Handles the request to take the ActionHandlers specific action.
    * Must be implemented in the subclasses.
-   * @param hand The hand of the Ai player.
+   * @param hand The hand of the AI player.
    * @param players A list of all players in the game.
    * @param stacks A list of all stacks in play.
    * @param scores A list of current player scores.

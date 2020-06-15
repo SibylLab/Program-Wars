@@ -105,7 +105,7 @@ function groupStacks (groupValue, stacks) {
   let group = new Set()
   let i = groupValue
   let j = stacks.length
-  while (true) {  // eslint-disable-line  FIX this
+  while (true) {  // eslint-disable-line
     let cell = dp[i][j]
     // add used elements to the group
     if (cell.used) {
