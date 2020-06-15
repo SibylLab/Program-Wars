@@ -60,40 +60,43 @@ describe('aiHelpers', () => {
     })
   })
 
-  describe('findGroup', () => {
-    const stack1 = {getScore: getValue(1)}
-    const stack2 = {getScore: getValue(2)}
-    const stack3 = {getScore: getValue(3)}
-    const stack4 = {getScore: getValue(4)}
-    const stack5 = {getScore: getValue(5)}
+  describe('groupStacks', () => {
+    const stack_1a = {getScore: getValue(1)}
+    const stack_1b = {getScore: getValue(1)}
+    const stack_1c = {getScore: getValue(1)}
+    const stack_3 = {getScore: getValue(3)}
+    const stack_4 = {getScore: getValue(4)}
 
     test('simple one stack has goal', () => {
-      const stacks = [stack5]
-      let result = aiHelpers.findGroup(5, stacks)
-      expect(result.has(stack5)).toBeTruthy()
+      const stacks = [stack_3]
+      let result = aiHelpers.groupStacks(3, stacks)
+      expect(result.size).toEqual(1)
+      expect(result.has(stack_3)).toBeTruthy()
     })
     test('simple one stack does not have goal', () => {
-      const stacks = [stack5]
-      let result = aiHelpers.findGroup(6, stacks)
-      expect(result).toBeUndefined()
+      const stacks = [stack_3]
+      let result = aiHelpers.groupStacks(4, stacks)
+      expect(result.size).toEqual(0)
     })
     test('several stacks single stack meets goal', () => {
-      const stacks = [stack5, stack3, stack4, stack2, stack1]
-      let result = aiHelpers.findGroup(2, stacks)
-      expect(result.has(stack2)).toBeTruthy()
+      const stacks = [stack_4, stack_1a, stack_3, stack_1b]
+      let result = aiHelpers.groupStacks(3, stacks)
+      expect(result.size).toEqual(1)
+      expect(result.has(stack_3)).toBeTruthy()
     })
-    test('several stacks mutiple stacks meets goal', () => {
-      const stacks = [stack5, stack3, stack4, stack2, stack1]
-      let result = aiHelpers.findGroup(2, stacks)
-      // Because the selection is random we cannot be sure which
-      // stacks will be selected. However with this small number of them
-      // we can be confident that we will find one.
-      expect(result).toBeDefined()
+    test('several stacks multiple solutions want [3, 1, 1, 1]', () => {
+      const stacks = [stack_1a, stack_4, stack_3, stack_1b, stack_1c]
+      let result = aiHelpers.groupStacks(6, stacks)
+      expect(result.size).toEqual(4)
+      expect(result.has(stack_3)).toBeTruthy()
+      expect(result.has(stack_1a)).toBeTruthy()
+      expect(result.has(stack_1b)).toBeTruthy()
+      expect(result.has(stack_1c)).toBeTruthy()
     })
     test('several stacks does not have goal', () => {
-      const stacks = [stack1, stack1, stack1, stack1, stack1]
-      let result = aiHelpers.findGroup(6, stacks)
-      expect(result).toBeUndefined()
+      const stacks = [stack_1a, stack_3, stack_4]
+      let result = aiHelpers.groupStacks(6, stacks)
+      expect(result.size).toEqual(0)
     })
   })
 })
