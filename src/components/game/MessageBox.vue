@@ -1,7 +1,7 @@
 <template>
 <div id="message-box" :key="messages.length">
-  <p v-for="message in messages" v-bind:key="message">
-    {{ message }}
+  <p v-for="message in messages" v-bind:key="message.id">
+    {{ message.text }}
   </p>
 </div>
 </template>
@@ -33,46 +33,47 @@ export default {
       'turnNumber'
     ])
   },
+  methods: {
+    addMessage (message) {
+      this.messages.unshift({id: this.messages.length, text: message})
+    }
+  },
   created () {
-    // Somehow message box is being destroyed and created so there are two
-    // listeners for this.
     bus.$on('ai-action', ({move}) => {
       const name = move.player.name
       if (move.playType === 'startNewStack') {
-        this.messages.unshift(name + " started a new stack worth " + move.card.value
+        this.addMessage(name + " started a new stack worth " + move.card.value
             + " points")
 
       } else if (move.playType === 'playCardOnStack') {
         const newStack = this.stacks.find(s => s.stackId === move.target.stackId)
-        // Issue with newStack being undefined, probably related to the above issue
-        if (newStack && newStack.isComplete()) {
-          this.messages.unshift(name + " completed a stack worth " + newStack.getScore()
+        if (newStack.isComplete()) {
+          this.addMessage(name + " completed a stack worth " + newStack.getScore()
               + " points")
         } else {
-          this.messages.unshift(name + " added a " + move.card.type.toLowerCase() +
+          this.addMessage(name + " added a " + move.card.type.toLowerCase() +
               " card to a stack for a new value of " + newStack.getScore() + " points")
         }
 
       } else if (move.playType === 'hackStack') {
         const targetPlayer = this.players.find(p => p.id === move.target.playerId)
-        this.messages.unshift(name + " hacked " + targetPlayer.name + " and removed a stack worth "
+        this.addMessage(name + " hacked " + targetPlayer.name + " and removed a stack worth "
             + move.target.getScore() + " points")
 
       } else if (move.playType === 'playSpecialCard') {
         let targetName = move.target.name === move.player.name ? "itself" : move.target.name
-        this.messages.unshift(name + " played " + move.card.type.toLowerCase() + " on " + targetName)
+        this.addMessage(name + " played " + move.card.type.toLowerCase() + " on " + targetName)
 
       } else if (move.playType === 'groupStacks') {
-        this.messages.unshift(name + " grouped " + move.target.size + " stacks worth a total of "
+        this.addMessage(name + " grouped " + move.target.size + " stacks worth a total of "
             + move.card.value + " points")
 
       } else if (move.playType === 'REDRAW') {
-        this.messages.unshift(name + " drew a new hand")
+        this.addMessage(name + " drew a new hand")
 
       } else {
-        this.messages.unshift(name + " did " + move.playType + " you should probably report an error!")
+        this.addMessage(name + " did " + move.playType + " you should probably report an error!")
       }
-      if (move.player.id === 1) { this.messages.unshift("=== Turn " + this.turnNumber +" ===") }
     })
   }
 }
