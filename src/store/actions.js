@@ -78,7 +78,11 @@ export default {
     }
 
     context.commit('addPlayedCard', payload)
-    context.dispatch('endTurn', {draw: draw})
+    if (context.state.activePlayer.isAi) {
+      setTimeout(() => {context.dispatch('endTurn', {draw: draw})}, 800)
+    } else {
+      context.dispatch('endTurn', {draw: draw})
+    }
   },
 
   /**
@@ -109,7 +113,7 @@ export default {
     // Change active player and take AI turn if needed
     context.commit('nextPlayer')
     if (context.state.activePlayer.isAi) {
-      setTimeout(() => {context.dispatch('takeAiTurn')}, 1500)
+      setTimeout(() => {context.dispatch('takeAiTurn')}, 700)
     }
   },
 
