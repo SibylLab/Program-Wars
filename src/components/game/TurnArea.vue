@@ -75,12 +75,14 @@ export default {
       'executeTurn',
     ]),
     redrawHand () {
-      this.executeTurn({
-        playType: "REDRAW",
-        card: undefined,
-        player: this.activePlayer,
-        target: this.activePlayer
-      })
+      if (!this.activePlayer.isAi) {
+        this.executeTurn({
+          playType: "REDRAW",
+          card: undefined,
+          player: this.activePlayer,
+          target: this.activePlayer
+        })
+      }
     }
   },
   created () {

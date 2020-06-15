@@ -1,20 +1,26 @@
 <template>
-<div id="turn-area-card" v-on:mouseover="select"
-    draggable v-on:dragstart="startDrag($event)" :ondragstart="ondragstart">
+<div id="turn-area-card">
 
-  <img v-if="activePlayer.isAi" src="static/cardImages/backOfCard.png" class="card">
-  <img v-else :src="card.image" class="card">
+  <div id="player-card" v-if="!activePlayer.isAi" v-on:mouseover="select"
+      draggable v-on:dragstart="startDrag($event)" :ondragstart="ondragstart">
 
-  <div v-if="isShowing" id="overlays" class="play">
-    <input type="image" id="discard-button"
-       title="Discard Card"
-       src="static/miscIcons/trash.png"
-       v-on:click="discard">
+    <img :src="card.image" class="card">
 
-    <effect-card-popup></effect-card-popup>
+    <div v-if="isShowing" id="overlays" class="play">
+      <input type="image" id="discard-button"
+         title="Discard Card"
+         src="static/miscIcons/trash.png"
+         v-on:click="discard">
 
+      <effect-card-popup></effect-card-popup>
+
+    </div>
+  </div> 
+
+  <div v-else ondragstart="return false;">
+    <img src="static/cardImages/backOfCard.png" class="card">
   </div>
-</div> 
+</div>
 </template>
 
 
