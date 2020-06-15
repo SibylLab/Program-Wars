@@ -7,11 +7,11 @@
     <input type="radio" id="pick-ai" name="game-type" v-on:click="changeGame('ai')" checked>
     <label for="pick-ai"> <b>One Bot:</b> Play against a computer player </label>
     <br>
-    <input type="radio" id="pick-hotseat" name="game-type" v-on:click="changeGame('hotseat')">
-    <label for="pick-hotseat"> <b>Hotseat: </b>Play against a friend locally </label>
-    <br>
     <input type="radio" id="pick-free" name="game-type" v-on:click="changeGame('free')">
     <label for="pick-free"> <b>Free For All: </b>Play against 3 computer players </label>
+    <br>
+    <input type="radio" id="pick-hotseat" name="game-type" v-on:click="changeGame('hotseat')">
+    <label for="pick-hotseat"> <b>Hotseat: </b>Play against a friend locally </label>
   </div>
 
   <div id="add-players">
