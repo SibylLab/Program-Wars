@@ -66,6 +66,11 @@ export default {
       'activePlayer'
     ])
   },
+  watch: {
+    activePlayer: function (player) {
+      this.tabPlayer = player
+    }
+  },
   methods: {
     getPlayer (id) {
       return this.players.find(p => p.id === id)
