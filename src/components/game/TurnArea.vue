@@ -1,5 +1,5 @@
 <template>
-<div id="turn-area" v-bind:key="update">
+<div id="turn-area">
   <button class="btn btn-sm btn-info col-6" v-on:click="redrawHand"
       style="border-radius: 40px; margin-top: 1%;"
       title="Discard your hand and draw 5 new cards">
@@ -22,7 +22,7 @@
     </info-popup>
   </div>
 
-  <div id="cards">
+  <div id="cards" :key="update">
     <ul>
       <li v-for="card in getCurrentPlayerHand.cards" v-bind:key="card.id">
         <turn-area-card :card="card"></turn-area-card>

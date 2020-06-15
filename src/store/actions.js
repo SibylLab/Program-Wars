@@ -109,7 +109,7 @@ export default {
     // Change active player and take AI turn if needed
     context.commit('nextPlayer')
     if (context.state.activePlayer.isAi) {
-      context.dispatch('takeAiTurn') 
+      setTimeout(() => {context.dispatch('takeAiTurn')}, 1500)
     }
   },
 
