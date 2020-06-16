@@ -32,6 +32,7 @@ export default {
     state.activeCard = undefined
     state.scoreLimit = 75
     state.tips = {showTips: true, factIndex: 0}
+    state.turnNumber = 0
   },
 
   /**
@@ -107,7 +108,7 @@ export default {
       state.players.push(player)
 
       if (player.isAi) {
-        let handler = factory.newHandler("standard", player)
+        let handler = factory.newHandler(playerInfo[i].personality, player)
         state.aiHandlers.push(handler)
       }
     }
@@ -158,6 +159,7 @@ export default {
     let id = state.activePlayer.id
     id = (id + 1) % state.players.length
     state.activePlayer = state.players.find(p => p.id === id)
+    if (id === 0) { state.turnNumber++ }
   },
 
   /**

@@ -1,5 +1,5 @@
 <template>
-<div id="info" :key="update" :class="[outside]">
+<div id="info" :key="update" :class="opposite">
   <h3 id="name" :class="side">
     {{ player.name }}
   </h3>
@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <div id="info-button" v-if="side === 'left'">
+  <div id="info-button" v-if="side === 'left' && player.id === 0">
     <info-popup>
       <h3 style="margin: 0">Player Info</h3>
       <p>This area shows information about a player. On the players turn their picture
@@ -98,8 +98,8 @@ export default {
     isActive () {
       return this.player === this.activePlayer
     },
-    outside () {
-      return "out-" + this.side
+    opposite () {
+      return this.side === 'right' ? 'left' : 'right'
     }
   },
   methods: {
@@ -134,7 +134,7 @@ export default {
 <style scoped>
 #info {
   position: absolute;
-  width: 100%;
+  width: 95%;
   height: 100%;
 }
 
@@ -209,14 +209,6 @@ export default {
 
 .right {
   right: 0%;
-}
-
-.out-left {
-  left: 5%;
-}
-
-.out-right {
-  right: 5%;
 }
 
 .active {

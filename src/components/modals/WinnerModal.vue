@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content" style="border-radius: 30px">
 
       <div class="modal-header" style="padding-bottom: 0;">
@@ -30,7 +30,7 @@
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).score }}</td>
             </tr>
             <tr>
-              <td colspan="3" style="text-align: left;"><h5><b>Side Objectives</b></h5></td>
+              <td colspan="5" style="text-align: left;"><h5><b>Side Objectives</b></h5></td>
             </tr>
             <tr> <th>Grouping Bonus</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.group }}</td>

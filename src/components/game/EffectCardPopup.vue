@@ -4,7 +4,7 @@
   <div id="targets" class="popup" v-if="activeCard.isAttack()">
     <h5>{{ targetText }}</h5>
     <div id="button-wrapper"> 
-      <button id="target-button" class="btn btn-sm btn-primary"
+      <button id="target-button" class="btn btn-sm btn-primary my-btn"
           v-for="player in attackablePlayers()" v-bind:key="player.id"
           v-on:click="playSpecialCard(player)">
         {{ player.name }}
@@ -15,7 +15,7 @@
   <div id="play" class="popup" v-if="activeCard.isSafety()">
     <h5>{{ safetyText }}</h5>
     <div id="button-wrapper"> 
-      <button id="safety-button" class="btn btn-sm btn-primary"
+      <button id="safety-button" class="btn btn-sm btn-primary my-btn"
           v-if="canPlaySafety"  v-on:click="playSpecialCard(activePlayer)">
         OK
       </button>
@@ -109,5 +109,15 @@ export default {
   border-radius: 5px;
   width: 114px;
   height: auto;
+  z-index: 100;
 }
+
+.my-btn {
+  margin-top: 3px;
+}
+
+.my-btn:hover {
+  background-color: darkred;
+}
+
 </style>

@@ -28,7 +28,8 @@ export const store = new Vuex.Store({
     scoreLimit: 75,
     tips: {showTips: true, factIndex: 0},
     timer: undefined,
-    showBackstory: true
+    showBackstory: true,
+    turnNumber: 0
   },
 
   getters,
