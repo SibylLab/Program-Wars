@@ -1,5 +1,5 @@
 <template>
-<div id="info" :key="update" :class="[outside]">
+<div id="info" :key="update" :class="opposite">
   <h3 id="name" :class="side">
     {{ player.name }}
   </h3>
@@ -98,8 +98,8 @@ export default {
     isActive () {
       return this.player === this.activePlayer
     },
-    outside () {
-      return "out-" + this.side
+    opposite () {
+      return this.side === 'right' ? 'left' : 'right'
     }
   },
   methods: {
@@ -134,7 +134,7 @@ export default {
 <style scoped>
 #info {
   position: absolute;
-  width: 100%;
+  width: 95%;
   height: 100%;
 }
 
@@ -209,14 +209,6 @@ export default {
 
 .right {
   right: 0%;
-}
-
-.out-left {
-  left: 5%;
-}
-
-.out-right {
-  right: 5%;
 }
 
 .active {
