@@ -1,6 +1,8 @@
 {
   "projects": {
     "default": "program-wars",
-    "program-wars": "program-wars"
+    "program-wars": "program-wars",
+    "program-wars-dev": "program-wars-dev",
+    "programming-wars": "programming-wars"
   }
 }

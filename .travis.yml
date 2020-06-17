@@ -36,7 +36,7 @@ deploy:
   provider: firebase
   skip_cleanup: true
   token:
-    secure: 1/OylsAC4o83Rry0RcwPwn0YGzAokOzRd0j5vyxVnjUkM
+    secure: 1//06bbp29siu2UNCgYIARAAGAYSNwF-L9IrFaPW7vk4dfAJLOODlcBIGQ-vVgZXHllJ68iZgrgg8txJ3qdM-gEyC0PB3dD6sZw6xa8
   project: "program-wars"
   on:
     branch: master
