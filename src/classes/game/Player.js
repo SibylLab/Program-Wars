@@ -4,6 +4,7 @@
  */
 
 import Objectives from '@/classes/game/Objectives'
+import CyberEffect from '@/classes/game/CyberEffect'
 
 /**
  * A player in the game.
@@ -19,29 +20,31 @@ export default class Player {
   constructor (id, name, isAi) {
     this.id = id
     this.name = name
-    this.positiveEffects = new Set()
-    this.negativeEffects = new Set()
-    this.objectives = new Objectives(this)
     this.isAi = isAi
+    this.positiveEffects = []
+    this.negativeEffects = []
+    this.objectives = new Objectives(this)
   }
 
   /**
    * Checks to see if the player has a positive effect.
-   * @param {string} effect The effect to check for.
+   * @param {string} type The effect type to check for.
    */
-  helpedBy (effect) {
-    if (effect === "OVERCLOCK" && this.positiveEffects.has("ANTIVIRUS")) {
+  helpedBy (type) {
+    if (type === "SCAN" && this.helpedBy('ANTIVIRUS')) {
       return true
     }
-    return this.positiveEffects.has(effect)
+    let effect = this.positiveEffects.find(e => e.type === type)
+    return effect !== undefined
   }
 
   /**
    * Check to see if a player has a negative effect.
-   * @param {string} effect The effect to check for.
+   * @param {string} type The effect type to check for.
    */
-  hurtBy (effect) {
-    return this.negativeEffects.has(effect)
+  hurtBy (type) {
+    let effect = this.negativeEffects.find(e => e.type === type)
+    return effect !== undefined
   }
 
   /**
@@ -49,37 +52,57 @@ export default class Player {
    * @param {string} effect The effect to check.
    * @return true if the player is protected, false otherwise.
    */
-  isProtectedFrom (effect) {
-    if (effect === "HACK") {
+  isProtectedFrom (type) {
+    if (type === "TROJAN" || type === "RANSOM") {
       return this.helpedBy("FIREWALL")
-    } else if (effect === "VIRUS") {
-      return this.helpedBy("ANTIVIRUS")
     }
-    return false
+    return this.helpedBy('ANTIVIRUS')
   }
 
   /**
    * Adds a positive effect and alters negative effects if necessary.
    */
-  addPositive (effect) {
-    if (effect === "ANTIVIRUS") {
-      this.negativeEffects.delete("VIRUS")
-      this.positiveEffects.delete("OVERCLOCK")
-    } else if (effect === "OVERCLOCK" && this.hurtBy("VIRUS")) {
-      this.negativeEffects.delete("VIRUS")
-      return
-    }
-    this.positiveEffects.add(effect)
+  addPositive (type) {
+    if (type === "ANTIVIRUS") {
+      this.cleanAll()
+    } else if (type === "FIREWALL") {
+      this.removeNegative('RANSOM')
+    }  // if we have gotten to here with SCAN it should be added
+    this.positiveEffects.push(new CyberEffect(type, this.id))
   }
 
   /**
    * Adds a negative effect and alters positive effects if necessary.
    */
-  addNegative (effect) {
-    if (effect === "VIRUS" && this.helpedBy("OVERCLOCK")) {
-        this.positiveEffects.delete("OVERCLOCK")
-        return
+  addNegative (type, attacker) {
+    if (this.helpedBy('SCAN')) {
+      this.removePositive('SCAN')
+      return
     }
-    this.negativeEffects.add(effect)
+    this.negativeEffects.add(new CyberEffect(type, this.id, attacker.id))
+  }
+
+  /**
+   * Removes all positive effects of a given type.
+   */
+  removePositive (type) {
+    this.positiveEffects = this.positiveEffects.filter(e => e.type !== type)
+  }
+
+  /**
+   * Removes all negative effects of a given type.
+   */
+  removeNegative (type) {
+    this.negativeEffects = this.negativeEffects.filter(e => e.type !== type)
+  }
+
+  /**
+   * Removes all negative effects and weaker positive effects.
+   */
+  cleanAll () {
+    this.negativeEffects = []
+    this.removePositive('FIREWALL')
+    this.removePositive('SCAN')
   }
 }
+
