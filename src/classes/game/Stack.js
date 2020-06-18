@@ -41,7 +41,11 @@ export default class Stack {
 
     let score = this.getBase().value
     for (let i = 1; i < this.cards.length; i++) {
-      score *= this.cards[i].value
+      if (this.cards[i].type === "VIRUS") {
+        score *= this.getBase().type === "GROUP" ? 0.5 : 0
+      } else {
+        score *= this.cards[i].value
+      }
     }
     return score
   }
@@ -71,14 +75,6 @@ export default class Stack {
       return card.type === 'REPEAT' ? acc + 1 : acc
     }, 0)
     return numRepeats >= MAX_REPEATS
-  }
-
-  /**
-   * Checks to see if the stack is hackable or not.
-   * @return {bool} true if the stack can be hacked, false otherwise.
-   */
-  isHackable () {
-    return !this.isEmpty() && this.getBase().type !== 'GROUP'
   }
 
   /**
@@ -126,6 +122,11 @@ export default class Stack {
    */
   willAccept (card) {
     let top = this.getTop()
+    if (card.type === "VIRUS") {
+      return true
+    } else if (top.type === "VIRUS") {
+      return false
+    }
     // Variable cards can only go on Rx cards or replace other variables
     if (card.type === "VARIABLE") {
       if (top.type === "REPEAT" && top.value === 1) {
