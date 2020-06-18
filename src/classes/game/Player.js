@@ -31,7 +31,7 @@ export default class Player {
    * @param {string} type The effect type to check for.
    */
   helpedBy (type) {
-    if (type === "SCAN" && this.helpedBy('ANTIVIRUS')) {
+    if ((type === "SCAN" || type === "FIREWALL") && this.helpedBy('ANTIVIRUS')) {
       return true
     }
     let effect = this.positiveEffects.find(e => e.type === type)
