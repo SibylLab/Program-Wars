@@ -20,25 +20,31 @@ export default class Card {
     this.value = value
     this.type = type
     this.image = image
+    this.isExtra = false
+    this.isMimic = false
   }
 
   /**
-   * Checks if this card is an attack card.
+   * Checks if this card is an attack card that is played with a popup and
+   * not placed.
    */
   isAttack () {
-    return this.type === "VIRUS"
+    return this.type === "RANSOM" || this.type === "SPYWARE"
+           || this.type === "TROJAN"
   }
 
   /**
-   * Checks if this card is a safety or remedy card
+   * Checks if this card is a safety or remedy card that is played with a
+   * popup and not placed.
    */
   isSafety () {
-    return this.type === "OVERCLOCK"
-           || this.type === "FIREWALL" || this.type === "ANTIVIRUS"
+    return this.type === "SCAN" || this.type === "FIREWALL"
+           || this.type === "ANTIVIRUS"
   }
 
   /**
-   * Checks if this card is an attack or safety card.
+   * Checks if this card is an attack or safety card that is played with
+   * a popup and not placed.
    */
   isSpecial () {
     return this.isSafety() || this.isAttack()
