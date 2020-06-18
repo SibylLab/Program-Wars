@@ -74,12 +74,12 @@ export default class Player {
   /**
    * Adds a negative effect and alters positive effects if necessary.
    */
-  addNegative (type, attacker) {
+  addNegative (type, attackerId) {
     if (this.helpedBy('SCAN')) {
       this.removePositive('SCAN')
       return
     }
-    this.negativeEffects.add(new CyberEffect(type, this.id, attacker.id))
+    this.negativeEffects.push(new CyberEffect(type, this.id, attackerId))
   }
 
   /**
