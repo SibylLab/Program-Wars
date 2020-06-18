@@ -9,6 +9,7 @@ let r_x = new Card(5, 1, 'REPEAT')
 let variable = new Card(6, 4, 'VARIABLE')
 let variable_sm = new Card(7, 3, 'VARIABLE')
 let variable_lg = new Card(8, 6, 'VARIABLE')
+let virus = new Card(3, 0, 'VIRUS')
 
 
 describe('Stack.js', () => {
@@ -45,6 +46,16 @@ describe('Stack.js', () => {
     stack.cards.push(repeat)
     expect(stack.getScore()).toEqual(18)
   })
+  test('calculate correct score virus', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(virus)
+    expect(stack.getScore()).toEqual(0)
+  })
+  test('calculate correct score virus on group', () => {
+    stack.cards.push(group)
+    stack.cards.push(virus)
+    expect(stack.getScore()).toEqual(2)
+  })
   test('maximum number of repeats (2)', () => {
     stack.cards.push(instruction)
     stack.cards.push(repeat)
@@ -53,15 +64,6 @@ describe('Stack.js', () => {
     expect(stack.hasMaxRepeats()).toBeTruthy()
     stack.cards.push(repeat)
     expect(stack.hasMaxRepeats()).toBeTruthy()
-  })
-  test('stack is hackable true', () => {
-    stack.cards.push(instruction)
-    expect(stack.isHackable()).toBeTruthy()
-  })
-  test('stack is hackable false', () => {
-    expect(stack.isHackable()).toBeFalsy()
-    stack.cards.push(group)
-    expect(stack.isHackable()).toBeFalsy()
   })
   test('stack is complete true w/ no Rx', () => {
     stack.cards.push(instruction)
@@ -138,6 +140,25 @@ describe('Stack.js', () => {
     stack.cards.push(r_x)
     stack.cards.push(variable)
     expect(stack.willAccept(variable_sm)).toBeFalsy()
+  })
+  test('stack will accept virus', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(r_x)
+    stack.cards.push(variable)
+    expect(stack.willAccept(virus)).toBeTruthy()
+  })
+  test('stack will not accept repeat card on top of virus', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(virus)
+    expect(stack.willAccept(repeat)).toBeFalsy()
+  })
+  test('stack will not accept variable replacement with virus top', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(r_x)
+    stack.cards.push(variable_sm)
+    expect(stack.willAccept(variable_lg)).toBeTruthy()
+    stack.cards.push(virus)
+    expect(stack.willAccept(variable_lg)).toBeFalsy()
   })
   test('replace lowest variable in stack', () => {
     stack.cards.push(instruction)
