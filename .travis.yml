@@ -31,9 +31,10 @@ before_deploy:
 if: branch = master
 deploy:
   provider: firebase
+  project: program-wars
+  edge: true
   skip_cleanup: true
   token:
     secure: 1//06bbp29siu2UNCgYIARAAGAYSNwF-L9IrFaPW7vk4dfAJLOODlcBIGQ-vVgZXHllJ68iZgrgg8txJ3qdM-gEyC0PB3dD6sZw6xa8
-  project: program-wars
   on:
     branch: master
