@@ -64,7 +64,9 @@ export default {
 
       // ensure we can play this card on the stack
       if (card.type === 'VIRUS') {
-        if (this.stack.playerId === this.activePlayer.id) {
+        let targetPlayer = this.players.find(p => p.id === this.stack.playerId)
+        if (this.stack.playerId === this.activePlayer.id
+            || targetPlayer.isProtectedFrom('VIRUS')) {
           return
         }
       } else if (this.stack.playerId !== this.activePlayer.id) {
@@ -87,7 +89,9 @@ export default {
       if (!this.activeCard || this.stack.getTop() !== card) {
         return result
       } else if (this.activeCard.type === 'VIRUS') {
-          if (this.stack.playerId !== this.activePlayer.id) {
+          let targetPlayer = this.players.find(p => p.id === this.stack.playerId)
+          if (this.stack.playerId !== this.activePlayer.id
+              && !targetPlayer.isProtectedFrom('VIRUS')) {
             result = 'attack'
           }
       } else if (this.stack.playerId === this.activePlayer.id) {
