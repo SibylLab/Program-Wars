@@ -15,9 +15,10 @@ export default class Trojan extends Card {
    * @constructor Trojan
    * @param {Card} card The card the trojan is hiding behind.
    */
-  constructor (card) {
+  constructor (card, player) {
     super(card.type, card.value)
     this.card = card
+    this.player = player
     this.isMimic = true
   }
 

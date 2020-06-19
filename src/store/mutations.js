@@ -227,7 +227,7 @@ export default {
     } else if (payload.card.type === 'TROJAN') {
       let hand = state.hands.find(h => h.playerId === payload.target.id)
       let pos = Math.floor(Math.random() * hand.cards.length)
-      hand.cards[pos] = new Trojan(hand.cards[pos])
+      hand.cards[pos] = new Trojan(hand.cards[pos], payload.player)
     } else {
       payload.target.addNegative(payload.card.type, payload.player.id)
     }

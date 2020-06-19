@@ -188,6 +188,7 @@ export default {
    */
   playMimic (context, payload) {
     let card = payload.card.replace()
+    let player = payload.card.player
     context.commit('discardCard', payload)
     payload.card = card
 
@@ -195,6 +196,7 @@ export default {
       context.dispatch('playCardOnStack', payload)
     } else {
       payload.target = payload.player
+      payload.player = player
       context.dispatch('playSpecialCard', payload)
     }
   }
