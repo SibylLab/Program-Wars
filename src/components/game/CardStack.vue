@@ -7,7 +7,7 @@
   </div>
   <ul id="card-list" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
     <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image"
-        :class="[{card: true}, {play: canPlayOn(card)}, {hack: canHack(card)}]"
+        :class="[{card: true}, shadow(card)]"
         draggable="false">
   </ul>
 </div>
@@ -62,49 +62,35 @@ export default {
       let hand = this.getCurrentPlayerHand
       let card = hand.cards.find(c => c.id === cardId)
 
-      if (card && this.stack.playerId === this.activePlayer.id
-          && this.stack.willAccept(card)) {
-        this.executeTurn({
-          playType: "playCardOnStack",
-          card: card,
-          player: this.activePlayer,
-          target: this.stack,
-        })
+      // ensure we can play this card on the stack
+      if (card.type === 'VIRUS') {
+        if (this.stack.playerId === this.activePlayer.id) {
+          return
+        }
+      } else if (this.stack.playerId !== this.activePlayer.id) {
+          return
       }
+
+      this.executeTurn({
+        playType: "playCardOnStack",
+        card: card,
+        player: this.activePlayer,
+        target: this.stack,
+      })
     },
-    /**
-     * Check if this stack is a viable option for playing cards on.
-     */
-    isViableStack (isHack) {
-      if (!this.activeCard) {
-        return false
+    shadow (card) {
+      let result = ''
+      if (!this.activeCard || this.stack.getTop() !== card) {
+        return result
+      } else if (this.activeCard.type === 'VIRUS') {
+          if (this.stack.playerId !== this.activePlayer.id) {
+            result = 'attack'
+          }
+      } else if (this.stack.playerId === this.activePlayer.id) {
+        result = 'play'
       }
-      if (isHack) {
-        return this.stack.playerId !== this.activePlayer.id
-      } else {
-        return this.stack.playerId === this.activePlayer.id
-      }
+      return this.stack.willAccept(this.activeCard) ? result : ''
     },
-    /**
-     * Check if the given card is the top of the stack and that the active card can
-     * be played on it.
-     */
-    canPlayOn (card) {
-      if (!this.isViableStack() || this.stack.getTop() !== card) {
-        return false
-      }
-      return this.stack.willAccept(this.activeCard)
-    },
-    /**
-     * Check if the given card is the top of the stack and that the stack can be hacked.
-     */
-    canHack (card) {
-      if (!this.isViableStack(true) || this.activeCard.type !== "HACK"
-          || this.stack.getTop() !== card) {
-        return false
-      }
-      return this.stack.isHackable()
-    }
   }
 }
 </script>
@@ -136,7 +122,7 @@ export default {
   box-shadow: 0 0 24px 10px rgba(255,255,0,1);
 }
 
-.hack {
+.attack {
   -webkit-box-shadow: 0 0 24px 10px rgba(255,0,0,1);
   -moz-box-shadow: 0 0 24px 10px rgba(255,0,0,1);
   box-shadow: 0 0 24px 10px rgba(255,0,0,1);
