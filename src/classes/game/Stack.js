@@ -122,10 +122,11 @@ export default class Stack {
    */
   willAccept (card) {
     let top = this.getTop()
-    if (card.type === "VIRUS") {
-      return true
-    } else if (top.type === "VIRUS") {
+    // stacks with virus on top cannot be played on, but otherwise always accept virus
+    if (top.type === "VIRUS") {
       return false
+    } else if (card.type === "VIRUS") {
+      return true
     }
     // Variable cards can only go on Rx cards or replace other variables
     if (card.type === "VARIABLE") {

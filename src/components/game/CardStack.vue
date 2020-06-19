@@ -78,6 +78,10 @@ export default {
         target: this.stack,
       })
     },
+    /**
+     * Decide what shadow the given card should have around it based on its
+     * type and position in the stack as well as the active card type.
+     */
     shadow (card) {
       let result = ''
       if (!this.activeCard || this.stack.getTop() !== card) {
