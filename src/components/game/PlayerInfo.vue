@@ -239,14 +239,15 @@ export default {
 }
 
 #spy-button {
-  margin-top: 4%;
+  position: absolute;
+  top: 17%;
 }
 
 #hand-box {
   position: fixed;
   top: 50px;
   left: 27.5%;
-  background-color: white;
+  background-color: #DFDFDF;
   border: solid black 3px;
   border-radius: 5px;
   z-index: 200;
