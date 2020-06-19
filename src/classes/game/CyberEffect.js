@@ -15,11 +15,21 @@ export default class CyberEffect {
     this.type = type
     this.targetId = targetId
     this.attackerId = attackerId
-    this.turnsLeft = undefined
+    this.turnsLeft = 0
     if (type === "SPYWARE") {
       this.turnsLeft = 2
     }
     this.image = 'static/cardImages/effects/' + type + '.png'
+  }
+
+  /**
+   * Decrements turnsLeft and returns the result
+   */
+  takeTurn () {
+    if (this.turnsLeft === 0) {
+      return 0
+    }
+    return this.turnsLeft-- 
   }
 }
 

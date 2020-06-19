@@ -77,6 +77,7 @@ export default {
       context.dispatch(payload.playType, payload)
     }
 
+    context.commit('updatePlayerEffects', payload)
     context.commit('addPlayedCard', payload)
     if (context.state.activePlayer.isAi) {
       setTimeout(() => {context.dispatch('endTurn', {draw: draw})}, 1000)

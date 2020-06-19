@@ -163,6 +163,18 @@ export default {
   },
 
   /**
+   * Updates the cyber effects on the given player.
+   */
+  updatePlayerEffects (state, payload) {
+    let effects = payload.player.positiveEffects.concat(payload.player.negativeEffects)
+    for (let effect of effects) {
+      if (effect.takeTurn() === 0) {
+        payload.player.removeEffect(effect)
+      }
+    }
+  },
+
+  /**
    * Draw a card from the deck and add it to the activePlayers hand.
    */
   drawCard (state) {

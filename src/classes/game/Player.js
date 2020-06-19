@@ -80,7 +80,11 @@ export default class Player {
       this.removePositive('SCAN')
       return
     }
-    this.negativeEffects.push(new CyberEffect(type, this.id, attackerId))
+    let effect = new CyberEffect(type, this.id, attackerId)
+    if (type === 'SPYWARE') {
+      effect.turnsLeft = 2
+    }
+    this.negativeEffects.push(effect)
   }
 
   /**
@@ -95,6 +99,14 @@ export default class Player {
    */
   removeNegative (type) {
     this.negativeEffects = this.negativeEffects.filter(e => e.type !== type)
+  }
+
+  /**
+   * Removes a specific effect from the effect list it is in.
+   */
+  removeEffect (effect) {
+    this.positiveEffects = this.positiveEffects.filter(e => e !== effect)
+    this.negativeEffects = this.negativeEffects.filter(e => e !== effect)
   }
 
   /**
