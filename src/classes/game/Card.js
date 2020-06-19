@@ -3,6 +3,8 @@
  * @author Steve modified on 2020-05-25
  */
 
+const uuidV1 = require('uuid/v1')
+
 /**
  * A Playing card.
  */
@@ -10,16 +12,14 @@ export default class Card {
   /**
    * Constructor for the Card class
    * @constructor Card
-   * @param {int} id The ID of the card
    * @param {int} value The value of the card
    * @param {char} type The type of the card
-   * @param {char} image is a string pointing to the image of the card
    */
-  constructor (id, value, type, image) {
-    this.id = id
+  constructor (value, type) {
     this.value = value
     this.type = type
-    this.image = image
+    this.id = uuidV1()
+    this.image = 'static/cardImages/' + type.toLowerCase() + value + '.png'
     this.isExtra = false
     this.isMimic = false
   }
