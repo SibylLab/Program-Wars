@@ -94,7 +94,8 @@ export default {
       
       let score = scores.find(s => s.playerId === player.id)
       score.base = base
-      score.score = base + Math.floor(extra)
+      // += base because players may be recieving bonuses from their ransoms
+      score.score += base + Math.floor(extra)
     }
     return scores
   }

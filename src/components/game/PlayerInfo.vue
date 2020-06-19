@@ -249,6 +249,7 @@ export default {
   background-color: white;
   border: solid black 3px;
   border-radius: 5px;
+  z-index: 200;
 }
 
 .left {
