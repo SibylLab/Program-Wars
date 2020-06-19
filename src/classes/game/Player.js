@@ -64,6 +64,10 @@ export default class Player {
    * Adds a positive effect and alters negative effects if necessary.
    */
   addPositive (type) {
+    if (this.helpedBy(type)) {
+      return
+    }
+
     if (type === "ANTIVIRUS") {
       this.cleanAll()
     } else if (type === "FIREWALL") {
@@ -76,15 +80,30 @@ export default class Player {
    * Adds a negative effect and alters positive effects if necessary.
    */
   addNegative (type, attackerId) {
+    if (this.alreadyHaveAttack(type, attackerId)) {
+      return
+    }
+
     if (this.helpedBy('SCAN')) {
       this.removePositive('SCAN')
       return
     }
+
     let effect = new CyberEffect(type, this.id, attackerId)
     if (type === 'SPYWARE') {
       effect.turnsLeft = 2
     }
     this.negativeEffects.push(effect)
+  }
+
+  /**
+   * Check to see if this attack type has already been played by the attacker.
+   */
+  alreadyHaveAttack (type, attackerId) {
+    let effects = this.negativeEffects.filter((e) => {
+      e.type === type && e.attackerId === attackerId
+    })
+    return effects.length > 0
   }
 
   /**
