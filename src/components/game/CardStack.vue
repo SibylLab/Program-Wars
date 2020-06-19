@@ -58,23 +58,11 @@ export default {
      * hand and the player's turn will end.
      */
     onDrop (evt) {
-      let cardId = parseInt(evt.dataTransfer.getData('cardId'))
+      let cardId = evt.dataTransfer.getData('cardId')
       let hand = this.getCurrentPlayerHand
       let card = hand.cards.find(c => c.id === cardId)
 
-      // dropped card is a hack card and this stack can be hacked
-      if (card && card.type === "HACK"
-          && this.stack.playerId !== this.activePlayer.id
-          && this.stack.isHackable()) {
-        this.executeTurn({
-          playType: "hackStack",
-          card: this.activeCard,
-          player: this.activePlayer,
-          target: this.stack
-        })
-
-      // dropped card is any other card and can be played on this stack
-      } else if (card && this.stack.playerId === this.activePlayer.id
+      if (card && this.stack.playerId === this.activePlayer.id
           && this.stack.willAccept(card)) {
         this.executeTurn({
           playType: "playCardOnStack",
