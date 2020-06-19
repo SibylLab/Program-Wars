@@ -156,24 +156,24 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   /**
-   * Hack another players stack under specific conditions.
-   * Will not hack single card stacks as this is a waste. Picks the biggest
+   * play a virus on another players stack under specific conditions.
+   * Will not attack single card stacks as this is a waste. Picks the biggest
    * stack available that meets the criteria.
    * @param card The card to attempt to play.
    * @param state an object with all the state needed to make a decision
    * @return a move object for hacking a stack, or undefined if
-   * no stack can be hacked.
+   * no stack can be attacked.
    */
-  hack (card, state) {
+  virus (card, state) {
     let stack = state.stacks.filter((s) => {
-      return s.playerId !== this.player.id && s.cards.length > 1 && s.isHackable()
+      return s.playerId !== this.player.id && s.cards.length > 1
     }).sort((a, b) => {
       return b.getScore() - a.getScore()
     }).shift()
 
     if (stack) {
       return {
-        playType: 'hackStack',
+        playType: 'playCardOnStack',
         card: card,
         player: this.player,
         target: stack
@@ -238,6 +238,7 @@ export default class PlayBestCardAction extends ActionHandler {
     let groupable = state.stacks.filter((s) => {
       // don't group single group cards with the same value as card
       return s.playerId === this.player.id && s.getScore() <= card.value
+             && s.getTop().type !== 'VIRUS'
     })
     if (groupable.length == 0) { return undefined }
 
