@@ -73,12 +73,14 @@ export default {
           return
       }
 
-      this.executeTurn({
-        playType: "playCardOnStack",
-        card: card,
-        player: this.activePlayer,
-        target: this.stack,
-      })
+      if (this.stack.willAccept(card)) {
+        this.executeTurn({
+          playType: "playCardOnStack",
+          card: card,
+          player: this.activePlayer,
+          target: this.stack,
+        })
+      }
     },
     /**
      * Decide what shadow the given card should have around it based on its
