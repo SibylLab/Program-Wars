@@ -201,7 +201,7 @@ export default {
     if (payload.card.isSafety()) {
       payload.target.addPositive(payload.card.type)
     } else {
-      payload.target.addNegative(payload.card.type)
+      payload.target.addNegative(payload.card.type, payload.player.id)
     }
   },
 
