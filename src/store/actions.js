@@ -73,6 +73,8 @@ export default {
     } else if (payload.playType === "REDRAW") {
       context.commit('giveNewHand', payload)
       draw = false
+    } else if (payload.pard.isMimic) {
+      context.dispatch('playMimick', payload)
     } else {
       context.dispatch(payload.playType, payload)
     }
@@ -179,5 +181,21 @@ export default {
   hackStack (context, payload) {
     context.commit('removeStacks', {stacks: new Set([payload.target])})
     context.commit('discardCard', payload)
+  },
+
+  /**
+   * Play a card that is mimicking another card.
+   */
+  playMimic (context, payload) {
+    let card = payload.card.replace()
+    context.commit('discardCard', payload)
+    payload.card = card
+
+    if (card.type === "VIRUS") {
+      context.dispatch('playCardOnStack', payload)
+    } else {
+      payload.target = payload.player
+      context.dispatch('playSpecialCard', payload)
+    }
   }
 }

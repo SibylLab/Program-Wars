@@ -127,7 +127,11 @@ export default {
     let oldHand = state.hands.find(h => h.playerId === payload.player.id)
     if (oldHand !== undefined) {
       for (let card of oldHand.cards) {
-        state.deck.discard.push(card)
+        if (card.isMimic) {
+          state.deck.discard.push(card.card)
+        } else if (!card.isExtra) {
+          state.deck.discard.push(card)
+        }
       }
     }
 
@@ -195,7 +199,11 @@ export default {
   discardCard (state, payload) {
     let hand = state.hands.find(h => h.playerId === payload.player.id)
     hand.cards = hand.cards.filter(c => c !== payload.card)
-    state.deck.discard.push(payload.card)
+    if (payload.card.isMimic) {
+      state.deck.discard.push(payload.card.card)
+    } else if (payload.card.isExtra) {
+      state.deck.discard.push(payload.card)
+    }
     state.activeCard = undefined
   },
 
@@ -213,6 +221,10 @@ export default {
     if (payload.card.isSafety()) {
       payload.target.addPositive(payload.card.type)
       this.commit('cleanMalware', payload)
+    } else if (payload.card.type === 'TROJAN') {
+      let hand = state.hands.find(h => h.playerId === payload.target.id)
+      let pos = Math.floor(Math.random() * hand.cards.length)
+      hand.cards[pos] = new Trojan(hand.cards[pos])
     } else {
       payload.target.addNegative(payload.card.type, payload.player.id)
     }

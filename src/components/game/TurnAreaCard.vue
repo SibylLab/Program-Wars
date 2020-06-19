@@ -13,6 +13,7 @@
          v-on:click="discard">
 
       <effect-card-popup></effect-card-popup>
+      <img v-if="card.isMimic()" src="static/cardImages/effects/TROJAN.png" style="width: 30px; height: auto;">
 
     </div>
   </div> 

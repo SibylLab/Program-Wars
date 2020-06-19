@@ -20,7 +20,6 @@ export default class Trojan extends Card {
     super(card.id, card.value, card.type, card.image)
     this.card = card
     this.isMimic = true
-    this.isExtra = true
   }
 
   /**
