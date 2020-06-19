@@ -110,7 +110,7 @@ export default {
      * So instead we add a new stack containing the card.
      */
     onDrop (evt) {
-      let cardId = parseInt(evt.dataTransfer.getData('cardId'))
+      let cardId = evt.dataTransfer.getData('cardId')
       let hand = this.getCurrentPlayerHand
       let card = hand.cards.find(c => c.id === cardId)
 

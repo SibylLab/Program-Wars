@@ -6,11 +6,11 @@
 import Card from './Card'
 
 // card types along with {value: numCard} pairs for each
-const cards = [
+const cardTypes = {
   "INSTRUCTION": {1: 9, 2: 9, 3: 9},
   "GROUP": {2: 1, 3: 2, 4: 3, 5: 2, 6: 1},
-  "REPEAT" = {1: 5, 2: 3, 3: 3, 4: 3},
-  "VARIABLE" = {3: 2, 4: 2, 5: 2, 6: 1},
+  "REPEAT": {1: 5, 2: 3, 3: 3, 4: 3},
+  "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
   "VIRUS": {0: 3},
   "RANSOM": {0: 3},
   "SPYWARE": {0: 3},
@@ -18,7 +18,7 @@ const cards = [
   "ANTIVIRUS": {0: 1},
   "FIREWALL": {0: 3},
   "SCAN": {0: 9},
-]
+}
 
 /**
  * A deck for a program wars game.
@@ -40,10 +40,10 @@ export default class Deck {
    * Shuffles the deck.
    */
   initDeck () {
-    for (let [type, values] of cards) {
-      for (let [value, number] of values) {
+    for (let [type, values] of Object.entries(cardTypes)) {
+      for (let [value, number] of Object.entries(values)) {
         for (let i = 0; i < number; i++) {
-          this.cards.push(new Card(type, value))
+          this.cards.push(new Card(type, parseInt(value)))
         }
       }
     }

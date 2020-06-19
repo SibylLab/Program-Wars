@@ -15,7 +15,7 @@ export default class Card {
    * @param {int} value The value of the card
    * @param {char} type The type of the card
    */
-  constructor (value, type) {
+  constructor (type, value) {
     this.value = value
     this.type = type
     this.id = uuidV1()

@@ -24,7 +24,7 @@ export default {
     context.commit('newTimer')
     context.commit('addPlayers', payload)
     context.commit('setStartingPlayer')
-    context.commit('createNewDeck', {numPlayers: context.state.players.length})
+    context.commit('createNewDeck')
 
     for (let p of context.state.players) {
       context.commit('giveNewHand', {player: p})

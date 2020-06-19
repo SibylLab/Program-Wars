@@ -43,19 +43,6 @@ export default {
   },
 
   /**
-   * Get a list of hackable opponents.
-   */
-  getHackableOpponents (state) {
-    return state.players.filter((p) => {
-      if (p.id === state.activePlayer.id || p.helpedBy('FIREWALL')) {
-        return false
-      }
-      let stacks = state.stacks.filter(s => s.playerId === p.id && s.isHackable())
-      return stacks.length > 0
-    })
-  },
-
-  /**
    * Get current players objectives.
    */
   getCurrentPlayerObjectives (state) {

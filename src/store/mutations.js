@@ -60,8 +60,8 @@ export default {
   /**
    * Create a new deck for a game with a given payload.numPlayers.
    */
-  createNewDeck (state, payload) {
-    state.deck = new Deck(payload.numPlayers)
+  createNewDeck (state) {
+    state.deck = new Deck()
   },
 
   /**
