@@ -256,6 +256,15 @@ export default {
    * }
    */
   addToStack (state, payload) {
+    // Don't add virus if the player has active SCAN effect
+    if (payload.card.type === 'VIRUS') {
+      let targetPlayer = state.players.find(p => p.id === payload.target.playerId)
+      if (targetPlayer.helpedBy('SCAN')) {
+        targetPlayer.removePositive('SCAN')
+        return
+      }
+    }
+
     // If we are adding a variable are we replacing one
     let top = payload.target.getTop()
     let replace = !(top.type === "REPEAT" && top.value === 1)
