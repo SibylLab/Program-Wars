@@ -15,7 +15,7 @@ export default class CyberEffect {
     this.type = type
     this.targetId = targetId
     this.attackerId = attackerId
-    this.turnsLeft = 0
+    this.turnsLeft = undefined
     if (type === "SPYWARE") {
       this.turnsLeft = 2
     }
@@ -28,6 +28,8 @@ export default class CyberEffect {
   takeTurn () {
     if (this.turnsLeft === 0) {
       return 0
+    } else if (this.turnsLeft === undefined) {
+      return 9999
     }
     return this.turnsLeft-- 
   }

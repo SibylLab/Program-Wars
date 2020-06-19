@@ -156,6 +156,9 @@ export default class Stack {
    * where if a repeat card is an Rx it must be matched to a variable.
    */
   isComplete () {
+    if (this.getTop().type === 'VIRUS') {
+      return false
+    }
     // Checks to make sure there are no unpaired Rx cards
     for (let idx in this.cards) {
       let card = this.cards[idx]

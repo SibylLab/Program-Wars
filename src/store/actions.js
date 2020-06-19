@@ -73,8 +73,8 @@ export default {
     } else if (payload.playType === "REDRAW") {
       context.commit('giveNewHand', payload)
       draw = false
-    } else if (payload.pard.isMimic) {
-      context.dispatch('playMimick', payload)
+    } else if (payload.card.isMimic) {
+      context.dispatch('playMimic', payload)
     } else {
       context.dispatch(payload.playType, payload)
     }

@@ -93,7 +93,7 @@ export default {
         return false
       }
       return this.playerStacks.reduce((acc, stack) => {
-        return acc || stack.getScore() <= this.groupCardValue
+        return acc || (stack.getScore() <= this.groupCardValue && stack.getTop().type !== 'VIRUS')
       }, false)
     },
     groupCardValue () {

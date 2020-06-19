@@ -4,7 +4,6 @@
  */
 
 import Card from '@/classes/game/Card'
-const uuidV1 = require('uuid/v1')
 
 /**
  * A Card that will pretend to be another card but will change the cards effect
@@ -17,7 +16,7 @@ export default class Trojan extends Card {
    * @param {Card} card The card the trojan is hiding behind.
    */
   constructor (card) {
-    super(card.id, card.value, card.type, card.image)
+    super(card.type, card.value)
     this.card = card
     this.isMimic = true
   }
@@ -27,13 +26,12 @@ export default class Trojan extends Card {
    */
   replace () {
     let card
-    let id = uuidV1()
     if (this.isSafety() || this.type === "GROUP" || this.type === "INSTRUCTION") {
-      card = new Card(id, 0, "RANSOM", 'static/cardImages/Spyware.png')
+      card = new Card("RANSOM", 0)
     } else if (this.isAttack() || this.type === "VIRUS") {
-      card = new Card(id, 0, "SPYWARE", 'static/cardImages/Ransom.png')
+      card = new Card("SPYWARE", 0)
     } else {
-      card = new Card(id, 0, "VIRUS", 'static/cardImages/Virus.png')
+      card = new Card("VIRUS", 0)
     }
     card.isExtra = true
     return card

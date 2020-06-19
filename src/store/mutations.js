@@ -3,6 +3,7 @@ import { bus } from '@/components/shared/Bus'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
 import Stack from '@/classes/game/Stack'
+import Trojan from '@/classes/game/Trojan'
 import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
 
 
@@ -237,10 +238,10 @@ export default {
   cleanMalware (state, payload) {
     if (payload.card.type === 'ANTIVIRUS' || payload.card.type === 'FIREWALL') {
       // replace active trojans with the card they are mimicking
-      let hand = state.players.find(h => h.playerId === payload.player.id)
-      for (let idx in hand) {
-        if (hand[idx].isMimic) {
-          hand[idx] = hand[idx].card
+      let hand = state.hands.find(h => h.playerId === payload.player.id)
+      for (let idx in hand.cards) {
+        if (hand.cards[idx].isMimic) {
+          hand.cards[idx] = hand.cards[idx].card
         }
       }
     }
