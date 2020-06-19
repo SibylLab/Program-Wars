@@ -3,6 +3,8 @@
  * @author Steve on 2020-06-18
  */
 
+const uuidV1 = require('uuid/v1')
+
 /**
  * An effect for threat prevention or cyber attack on a player.
  */
@@ -12,6 +14,7 @@ export default class CyberEffect {
    * @constructor CyberEffect
    */
   constructor (type, targetId, attackerId = undefined) {
+    this.id = uuidV1
     this.type = type
     this.targetId = targetId
     this.attackerId = attackerId

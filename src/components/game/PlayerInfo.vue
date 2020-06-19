@@ -42,7 +42,7 @@
     <div id="good-effects" :class="side"
         style="position: absolute; top: 5%;">
       <ul>
-        <img v-for="effect in player.positiveEffects" v-bind:key="effect.type"
+        <img v-for="effect in player.positiveEffects" v-bind:key="effect.id"
             class="effect-icon" :src="effect.image"
             :title="effectTooltip(effect.type)">
       </ul>
@@ -52,7 +52,7 @@
     <div id="bad-effects" :class="side"
         style="position: absolute; top: 55%;">
       <ul>
-        <img v-for="effect in player.negativeEffects" v-bind:key="effect.type"  
+        <img v-for="effect in player.negativeEffects" v-bind:key="effect.id"  
             class="effect-icon" :src="effect.image"
             :title="effectTooltip(effect.type)">
       </ul>
