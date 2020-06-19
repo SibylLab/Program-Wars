@@ -200,8 +200,34 @@ export default {
   addCardEffect (state, payload) {
     if (payload.card.isSafety()) {
       payload.target.addPositive(payload.card.type)
+      this.commit('cleanMalware', payload)
     } else {
       payload.target.addNegative(payload.card.type, payload.player.id)
+    }
+  },
+
+  /**
+   * Cleans up all negative effects that are in play in a players hand or
+   * on their stacks when adding the appropriate positiveEffect.
+   */
+  cleanMalware (state, payload) {
+    if (payload.card.type === 'ANTIVIRUS' || payload.card.type === 'FIREWALL') {
+      // replace active trojans with the card they are mimicking
+      let hand = state.players.find(h => h.playerId === payload.player.id)
+      for (let idx in hand) {
+        if (hand[idx].isMimic) {
+          hand[idx] = hand[idx].card
+        }
+      }
+    }
+    // discard all virus cards on player's stacks when playing antivirus
+    if (payload.card.type === 'ANTIVIRUS') {
+      let stacks = state.stacks.filter(s => s.playerId === payload.player.id)
+      for (let stack of stacks) {
+        if (stack.getTop().type === 'VIRUS') {
+          state.deck.discard.push(stack.cards.pop())
+        }
+      }
     }
   },
 
