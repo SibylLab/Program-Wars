@@ -219,7 +219,9 @@ export default {
    * }
    */
   addCardEffect (state, payload) {
-    if (payload.card.isSafety()) {
+    if (payload.card.type === 'SCAN') {
+      this.commit('playScan', payload)
+    } else if (payload.card.isSafety()) {
       payload.target.addPositive(payload.card.type)
       this.commit('cleanMalware', payload)
     } else if (payload.card.type === 'TROJAN') {
@@ -253,6 +255,34 @@ export default {
           state.deck.discard.push(stack.cards.pop())
         }
       }
+    }
+  },
+
+  /**
+   * Removes one random malware that a player has attached to them.
+   * Trojan cards are discarded and new cards are drawn.
+   */
+  playScan (state, payload) {
+    let infectedStacks = state.stacks.filter((s) => {
+      return s.playerId === payload.player.id && s.getTop().type === 'VIRUS'
+    })
+    let hand = state.hands.find(h => h.playerId === payload.player.id)
+    let mimics = hand.cards.filter(c => c.isMimic)
+    let effects = payload.player.negativeEffects.concat(infectedStacks).concat(mimics)
+
+    if (effects.length > 0) {
+      let idx = Math.floor(Math.random() * effects.length)
+      let clean = effects[idx]
+      if ('cards' in clean) {
+        state.deck.discard.push(clean.cards.pop())
+      } else if ('isMimic' in clean) {
+        this.commit('discardCard', {player: payload.player, card: clean})
+        this.commit('drawCard')
+      } else {
+        payload.player.removeEffect(clean)
+      }
+    } else {
+      payload.target.addPositive(payload.card.type)
     }
   },
 

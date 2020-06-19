@@ -14,7 +14,7 @@ export default class CyberEffect {
    * @constructor CyberEffect
    */
   constructor (type, targetId, attackerId = undefined) {
-    this.id = uuidV1
+    this.id = uuidV1()
     this.type = type
     this.targetId = targetId
     this.attackerId = attackerId
