@@ -5,7 +5,7 @@
   </h3>
 
   <img id="avatar" :class="[side, {active: isActive}]"
-      :src="playerImagePath">
+      :src="player.image">
 
   <h5 id="score-title" :class="side" style="position: absolute; top: 44%;">
     <b>Score</b>

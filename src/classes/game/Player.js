@@ -24,6 +24,7 @@ export default class Player {
     this.positiveEffects = []
     this.negativeEffects = []
     this.objectives = new Objectives(this)
+    this.image = 'static/playerImages/player' + id + '.png'
   }
 
   /**
