@@ -1,4 +1,3 @@
-import Timer from 'easytimer'
 import { bus } from '@/components/shared/Bus'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
@@ -32,7 +31,6 @@ export default {
     state.activePlayer = undefined
     state.activeCard = undefined
     state.scoreLimit = 75
-    state.tips = {showTips: true, factIndex: 0}
     state.turnNumber = 0
   },
 
@@ -63,34 +61,6 @@ export default {
    */
   createNewDeck (state) {
     state.deck = new Deck()
-  },
-
-  /**
-   * Toggle game tips on and off.
-   */
-  toggleTips (state) {
-    state.tips.showTips = !state.tips.showTips
-  },
-
-  /**
-   * Setup a new timer.
-   */
-  newTimer (state) {
-    state.timer = new Timer()
-    state.timer.start()
-    // eslint-disable-next-line no-unused-vars
-    state.timer.addEventListener('secondsUpdated', (e) => {
-      $('#basicUsage').html(state.timer.getTimeValues().toString())
-    })
-  },
-
-  /**
-   * Stop the current timer.
-   */
-  stopTimer (state) {
-    if (state.timer) {
-      state.timer.stop()
-    }
   },
 
   /**

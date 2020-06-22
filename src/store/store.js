@@ -26,8 +26,6 @@ export const store = new Vuex.Store({
     activePlayer: undefined,
     activeCard: undefined,
     scoreLimit: 75,
-    tips: {showTips: true, factIndex: 0},
-    timer: undefined,
     showBackstory: true,
     turnNumber: 0
   },

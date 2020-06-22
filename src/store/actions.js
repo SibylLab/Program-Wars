@@ -21,7 +21,6 @@ export default {
    */
   newGame (context, payload) {
     context.commit('resetStateForGame')
-    context.commit('newTimer')
     context.commit('addPlayers', payload)
     context.commit('setStartingPlayer')
     context.commit('createNewDeck')
@@ -48,7 +47,6 @@ export default {
    */
   resetForHome (context) {
     context.commit('changeGameState', {newState: 'home'})
-    context.commit('stopTimer')
   },
 
   /**

@@ -45,9 +45,6 @@ describe('vuex getters', () => {
     let handler = getters.getCurrentAiHandler(state)
     expect(handler).toBeUndefined()
   })
-  test('get a list of players that can be attacked with a card type', () => {
-    const state = { activePlayer: m_players[0], aiHandlers: [{player: m_players[1]}] }
-  })
   test('list of attackable players', () => {
     const state = {
       activeCard: {type: 'RANSOM'},
