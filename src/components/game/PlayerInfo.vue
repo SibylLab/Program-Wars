@@ -15,7 +15,7 @@
     </h3>
     <ul>
       <li v-for="card in playerCards" v-bind:key="card.id">
-        <img :src="card.image" class="spy-card">
+        <img :src="card.image" class="spy-card" ondragstart="return false">
       </li>
     </ul>
   </div>
@@ -24,10 +24,9 @@
       :src="player.image">
 
   <h5 id="score-title" :class="side" style="position: absolute; top: 44%;">
-    <b>Score</b>
+    <b>Score:</b> <b>{{ getScore() }}/{{ scoreLimit }}</b>
   </h5>
   <div id="score-area" :class="side">
-    <h5 id="score-text"><b>{{ getScore() }}/{{ scoreLimit }}</b></h5>
     <meter id="score-meter"
        :max="scoreLimit" min=0
        :value="getScore()"
@@ -161,6 +160,9 @@ export default {
       // Scores and effect lists must be updated when a card is played
       this.update = !this.update
     })
+    bus.$on('end-turn', () => {
+      this.showHand = false
+    })
   }
 }
 </script>
@@ -195,15 +197,6 @@ export default {
   top: 50%;
   width: 50%;
   height: 24px;
-}
-
-#score-text {
-  position: absolute;
-  margin: 0;
-  left: 40%;
-  top: 10%;
-  z-index: 40;
-  color: black;
 }
 
 #score-meter {
