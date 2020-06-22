@@ -96,14 +96,8 @@ export default {
   giveNewHand (state, payload) {
     // discard old hand if applicable
     let oldHand = state.hands.find(h => h.playerId === payload.player.id)
-    if (oldHand !== undefined) {
-      for (let card of oldHand.cards) {
-        if (card.isMimic) {
-          state.deck.discard.push(card.card)
-        } else if (!card.isExtra) {
-          state.deck.discard.push(card)
-        }
-      }
+    if (oldHand) {
+      this.commit('discardHand', {hand: oldHand})
     }
 
     // create and fill new hand
@@ -116,6 +110,19 @@ export default {
     state.hands = state.hands.filter(h => h.playerId !== payload.player.id)
     state.hands.push(hand) 
     state.activeCard = undefined
+  },
+
+  /**
+   * Discards all the cards in a given hand.
+   */
+  discardHand (state, payload) {
+    for (let card of payload.hand.cards) {
+      if (card.isMimic) {
+        state.deck.discard.push(card.card)
+      } else if (!card.isExtra) {
+        state.deck.discard.push(card)
+      }
+    }
   },
 
   /**
