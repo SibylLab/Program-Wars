@@ -28,7 +28,7 @@
   </h5>
   <div id="score-area" :class="side">
     <h5 id="score-text"><b>{{ getScore() }}/{{ scoreLimit }}</b></h5>
-    <meter id="score-meter" style="z-index: 20;"
+    <meter id="score-meter"
        :max="scoreLimit" min=0
        :value="getScore()"
        :high="scoreLimit * 0.7"
