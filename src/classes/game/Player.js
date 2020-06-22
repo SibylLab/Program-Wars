@@ -28,25 +28,42 @@ export default class Player {
   }
 
   /**
-   * Checks to see if the player has a positive effect.
+   * Checks to see if the player has the given positive effect type specificaly.
+   */
+  hasPositive (type) {
+    return this.positiveEffects.find(e => e.type === type) !== undefined
+  }
+
+  /**
+   * Checks to see if the player is helped by a positive effect.
+   * Some effects offer similar protection and will return true from this when
+   * they would return false from hasPositive.
+   * eg) A player that has ANTIVIRUS is helped by FIREWALL as antivirus protects
+   * against the same effects as FIREWALL plus some.
    * @param {string} type The effect type to check for.
    */
   helpedBy (type) {
     if ((type === "SCAN" || type === "FIREWALL") && this.helpedBy('ANTIVIRUS')) {
       return true
     }
-    let effect = this.positiveEffects.find(e => e.type === type)
-    return effect !== undefined
+    return this.hasPositive(type)
   }
 
   /**
-   * Check to see if a player has a negative effect.
+   * Checks to see if the player has the given negative effect type specificaly.
+   */
+  hasNegative (type) {
+    return this.negativeEffects.find(e => e.type === type) !== undefined
+  }
+
+  /**
+   * Check to see if a player is hurt by a negative effect.
    * @param {string} type The effect type to check for.
    */
   hurtBy (type) {
-    let effect = this.negativeEffects.find(e => e.type === type)
-    return effect !== undefined
+    return this.hasNegative(type)
   }
+
 
   /**
    * Find out if a player is protected from an effect.
