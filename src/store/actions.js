@@ -65,6 +65,7 @@ export default {
    * }
    */
   executeTurn(context, payload) {
+    if (context.state.gameState === 'wait') { return }
     bus.$emit('card-played')
 
     let draw = true
@@ -81,23 +82,22 @@ export default {
 
     context.commit('updatePlayerEffects', payload)
     context.commit('addPlayedCard', payload)
-    if (context.state.activePlayer.isAi) {
-      setTimeout(() => {context.dispatch('endTurn', {draw: draw})}, 1000)
-    } else {
-      context.dispatch('endTurn', {draw: draw})
+    if (draw) {
+      context.commit('drawCard')
     }
+
+    context.commit('changeGameState', {newState: 'wait'})
+    setTimeout(() => {
+      context.commit('changeGameState', {newState: 'game'})
+      context.dispatch('endTurn')
+    }, 1000)
   },
 
   /**
    * Clean up after a players turn and change to the next player.
    * Emits events for game-over and end-turn when necessary.
-   *
-   * Payload
-   * {
-   *   draw: whether the player needs to draw a new card or not
-   * }
    */
-  endTurn (context, payload) {
+  endTurn (context) {
     let scores = context.getters.getPlayerScores()
     for (let scoreInfo of scores) {
       if (scoreInfo.score >= context.state.scoreLimit) {
@@ -107,9 +107,6 @@ export default {
       }
     }
 
-    if (payload.draw) {
-      context.commit('drawCard')
-    }
     context.state.activeCard = undefined
     bus.$emit('end-turn')
 
