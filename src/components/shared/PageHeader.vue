@@ -25,7 +25,7 @@
 
 <script>
 import SideMenu from '@/components/shared/SideMenu'
-import {mapState, mapMutations, mapGetters} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 
 /**
  * A component for placing a title bar for the game on top of a page.
@@ -44,10 +44,11 @@ export default {
   computed: {
     ...mapState([
       'scoreLimit',
+      'gameState'
     ]),
-    ...mapGetters([
-      'isGame',
-    ]),
+    isGame () {
+      return this.gameState === 'game'
+    }
   },
   methods: {
     ...mapMutations([

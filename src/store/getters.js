@@ -38,22 +38,7 @@ export default {
     return state.players.filter((p) => {
       return p.id !== state.activePlayer.id && !p.isProtectedFrom(effect)
              && !p.hurtBy(effect)
-
     })
-  },
-
-  /**
-   * Get current players objectives.
-   */
-  getCurrentPlayerObjectives (state) {
-    return state.objectives.find(ob => ob.playerId === state.activePlayer.id)
-  },
-
-  /**
-   * Tell if the program is in game state.
-   */
-  isGame (state) {
-    return state.gameState === 'game'
   },
 
   /**

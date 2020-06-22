@@ -3,69 +3,61 @@ import getters from '@/store/getters.js'
 
 describe('vuex getters', () => {
   // Mock functions
-  const isProtected = jest.fn(e => e || true)
-  const isNotProtected = jest.fn(e => e && false)
-  const trueFn = jest.fn().mockReturnValue(true)
-  const falseFn = jest.fn().mockReturnValue(false)
+  function mockValue (v) { return jest.fn(() => { return v }) }
 
-  // Mock state
-  const state = {
-      activeCard: {},
-      players: [
-        {id: 0, isProtectedFrom: isProtected, helpedBy: trueFn, hurtBy: trueFn},
-        {id: 1, isProtectedFrom: isNotProtected, helpedBy: falseFn, hurtBy: trueFn},
-        {id: 2, isProtectedFrom: isNotProtected, helpedBy: falseFn, hurtBy: falseFn},
-        {id: 3, isProtectedFrom: isNotProtected, helpedBy: falseFn, hurtBy: trueFn}
-      ],
-      stacks: [
-        {stackId: 25, playerId: 1, isHackable: trueFn},
-        {stackId: 26, playerId: 0, isHackable: trueFn},
-        {stackId: 27, playerId: 1, isHackable: falseFn},
-        {stackId: 28, playerId: 0, isHackable: falseFn},
-        {stackId: 29, playerId: 1, isHackable: falseFn},
-        {stackId: 30, playerId: 2, isHackable: falseFn},
-        {stackId: 31, playerId: 3, isHackable: trueFn},
-      ],
-      hands: [{id: 300, playerId: 0}, {id: 301, playerId: 1}],
-      aiHandlers: [],
-    }
+  // Mock players
+  const m_players = [
+    {id: 0, isProtectedFrom: mockValue(false), hurtBy: mockValue(false)},
+    {id: 1, isProtectedFrom: mockValue(true), hurtBy: mockValue(false)},
+    {id: 2, isProtectedFrom: mockValue(false), hurtBy: mockValue(true)},
+    {id: 3, isProtectedFrom: mockValue(false), hurtBy: mockValue(false)}
+  ]
 
-  // Set the starting player
-  state.activePlayer = state.players[1]
-
+  // Mock Stacks
+  const m_stacks = [
+    {stackId: 25, playerId: 1},
+    {stackId: 26, playerId: 0},
+    {stackId: 27, playerId: 1},
+    {stackId: 28, playerId: 0},
+    {stackId: 29, playerId: 1},
+  ]
 
   test('get the current players hand', () => {
+    const state = { activePlayer: m_players[1], hands: [{playerId: m_players[1].id}] }
     let hand = getters.getCurrentPlayerHand(state)
-    expect(hand.id).toEqual(301)
     expect(hand.playerId).toEqual(1)
   })
   test('get the current players stacks', () => {
+    const state = { activePlayer: m_players[1], stacks: m_stacks }
     let stacks = getters.getCurrentPlayerStacks(state)
     expect(stacks.length).toEqual(3)
     expect(stacks[0].stackId).toEqual(25)
-    expect(stacks[0].playerId).toEqual(1)
     expect(stacks[1].stackId).toEqual(27)
-    expect(stacks[1].playerId).toEqual(1)
     expect(stacks[2].stackId).toEqual(29)
-    expect(stacks[2].playerId).toEqual(1)
+  })
+  test('get an ai handler when current player is AI', () => {
+    const state = { activePlayer: m_players[1], aiHandlers: [{player: m_players[1]}] }
+    let handler = getters.getCurrentAiHandler(state)
+    expect(handler.player).toBe(m_players[1])
   })
   test('get an ai handler when current player is not an AI', () => {
-    let localState = Object.assign({}, state)
-    localState.activePlayer = state.players[0]
-    let handler = getters.getCurrentAiHandler(localState)
+    const state = { activePlayer: m_players[0], aiHandlers: [{player: m_players[1]}] }
+    let handler = getters.getCurrentAiHandler(state)
     expect(handler).toBeUndefined()
   })
   test('get a list of players that can be attacked with a card type', () => {
-    let opp = getters.getAttackableOpponents(state)
-    {'VIRUS'}
-    expect(opp.length).toEqual(1)
-    expect(opp[0].id).toEqual(2)
-    expect(isProtected.mock.calls.length).toEqual(1)
-    expect(isNotProtected.mock.calls.length).toEqual(2)
+    const state = { activePlayer: m_players[0], aiHandlers: [{player: m_players[1]}] }
   })
-  test('get a list of players that can be hacked', () => {
-    let opp = getters.getHackableOpponents(state)
-    expect(opp.length).toEqual(1)
-    expect(opp[0].id).toEqual(3)
+  test('list of attackable players', () => {
+    const state = {
+      activeCard: {type: 'RANSOM'},
+      activePlayer: m_players[0],
+      players: m_players,
+    }
+    let opps = getters.getAttackableOpponents(state)
+    expect(opps.length).toEqual(1)
+    expect(opps[0]).toBe(m_players[3])
+    expect(opps[0].isProtectedFrom.mock.calls).toEqual([ ["RANSOM"] ])
+    expect(opps[0].hurtBy.mock.calls).toEqual([ ["RANSOM"] ])
   })
 })
