@@ -48,13 +48,12 @@ describe('Player.js', () => {
     expect(player.helpedBy("ANTIVIRUS")).toBeTruthy()
     expect(player.hurtBy("RANSOM")).toBeFalsy()
     expect(player.hurtBy("SPYWARE")).toBeFalsy()
-    expect(player.positiveEffects.find(e =>  e.type === "SCAN")).toBeUndefined()
+    expect(player.hasPositive("SCAN")).toBeFalsy()
   })
   test('adding antivirus removes firewall', () => {
     player.addPositive("FIREWALL")
     player.addPositive("ANTIVIRUS")
     expect(player.helpedBy("ANTIVIRUS")).toBeTruthy()
-    expect(player.positiveEffects.find(e => e.type === "OVERCLOCK")).toBeUndefined()
   })
   test('adding firewall removes ransom', () => {
     player.addNegative("RANSOM")
@@ -67,5 +66,27 @@ describe('Player.js', () => {
     player.addNegative("RANSOM")
     expect(player.hurtBy("RANSOM")).toBeFalsy()
     expect(player.helpedBy("SCAN")).toBeFalsy()
+  })
+  test('adding the same type of malware does not work', () => {
+    player.addNegative("SPYWARE", 2)
+    player.addNegative("SPYWARE", 3)
+    expect(player.hurtBy("SPYWARE")).toBeTruthy()
+    expect(player.negativeEffects.length).toEqual(1)
+    expect(player.negativeEffects[0].targetId).toEqual(1)
+    expect(player.negativeEffects[0].attackerId).toEqual(2)
+  })
+  test('remove a specific positive effect', () => {
+    player.addPositive("SCAN")
+    expect(player.positiveEffects.length).toEqual(1)
+    let effect = player.positiveEffects[0]
+    player.removeEffect(effect)
+    expect(player.positiveEffects.length).toEqual(0)
+  })
+  test('remove a specific positive effect', () => {
+    player.addNegative("RANSOM")
+    expect(player.negativeEffects.length).toEqual(1)
+    let effect = player.negativeEffects[0]
+    player.removeEffect(effect)
+    expect(player.negativeEffects.length).toEqual(0)
   })
 })

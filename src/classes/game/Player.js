@@ -107,9 +107,6 @@ export default class Player {
     }
 
     let effect = new CyberEffect(type, this.id, attackerId)
-    if (type === 'SPYWARE') {
-      effect.turnsLeft = 2
-    }
     this.negativeEffects.push(effect)
   }
 

@@ -89,6 +89,13 @@ describe('Stack.js', () => {
     stack.cards.push(r_x)
     expect(stack.isComplete()).toBeFalsy()
   })
+  test('stack is complete false w/ virus', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(repeat)
+    stack.cards.push(repeat)
+    stack.cards.push(virus)
+    expect(stack.isComplete()).toBeFalsy()
+  })
   test('stack has variable true', () => {
     stack.cards.push(instruction)
     stack.cards.push(r_x)
@@ -184,5 +191,4 @@ describe('Stack.js', () => {
     expect(replaced === repeat).toBeTruthy()
     expect(stack.cards.find(c => c === repeat)).toBeFalsy()
   })
-  
 })

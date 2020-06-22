@@ -34,7 +34,8 @@ export default class CyberEffect {
     } else if (this.turnsLeft === undefined) {
       return 9999
     }
-    return this.turnsLeft-- 
+    this.turnsLeft -= 1
+    return this.turnsLeft
   }
 }
 

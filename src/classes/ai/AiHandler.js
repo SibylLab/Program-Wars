@@ -46,7 +46,7 @@ export default class AiHandler {
 
       // Ensure that a component error does not stop the AI turn
       } catch (err) {
-        console.log("AI handler error", err)  // eslint-disable-line
+        console.log("AI handler error:", err)  // eslint-disable-line
         continue
       }
     }
