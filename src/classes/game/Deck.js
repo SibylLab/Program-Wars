@@ -16,7 +16,7 @@ const cardTypes = {
   "SPYWARE": {0: 3},
   "TROJAN": {0: 3},
   "ANTIVIRUS": {0: 1},
-  "FIREWALL": {0: 3},
+  "FIREWALL": {0: 2},
   "SCAN": {0: 6},
 }
 

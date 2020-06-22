@@ -8,133 +8,71 @@ let count = function (cards, type) {
 
 
 describe('Deck.js', () => {
-  it('test if the initial discard array is empty', () => {
-    let testDeck = new Deck(1)
+  test('constructor functions as expected', () => {
+    let testDeck = new Deck()
     expect(testDeck.discard.length).toEqual(0)
+    expect(testDeck.cards.length).toEqual(78)
   })
-  it('test the initDeck function for number of cards', () => {
-    let testDeck = new Deck(1)
-    expect(testDeck.cards.length).toEqual(66)
-  })
-  it('test the initDeck function for number of cards', () => {
-    let testDeck = new Deck(3)
-    expect(testDeck.cards.length).toEqual(200)
-  })
-  it('test refreshing the deck when trying to draw a card from empty deck', () => {
+  test('deck refreshes when trying to draw a card from empty deck', () => {
     let testDeck = new Deck(1)
     let numCards = testDeck.cards.length
     for (let i = 0; i < numCards ; i++) {
       let card = testDeck.draw()
       testDeck.discard.push(card)
     }
-    expect(testDeck.discard.length).toEqual(66)
     expect(testDeck.cards.length).toEqual(0)
+    expect(testDeck.discard.length).toEqual(78)
 
     testDeck.draw()
-    expect(testDeck.cards.length).toEqual(65)
+    expect(testDeck.cards.length).toEqual(77)
     expect(testDeck.discard.length).toEqual(0)
   })
 
-  describe('correct setup for one player decks', () => {
-    let deck1
+  describe('correct setup for two player deck', () => {
+    let deck
     beforeEach(() => {
-      deck1 = new Deck(1)
+      deck = new Deck()
     })
     test('correct number of instructions', () => {
-      expect(count(deck1.cards, 'INSTRUCTION')).toEqual(27)
+      expect(count(deck.cards, 'INSTRUCTION')).toEqual(27)
     })
     test('correct number of repeats', () => {
-      expect(count(deck1.cards, 'REPEAT')).toEqual(14)
+      expect(count(deck.cards, 'REPEAT')).toEqual(14)
     })
     test('correct number of Rx', () => {
-      let num = deck1.cards.reduce((acc, card) => {
+      let num = deck.cards.reduce((acc, card) => {
         return card.type === 'REPEAT' && card.value === 1 ? acc + 1 : acc
       }, 0)
       expect(num).toEqual(5)
     })
     test('correct number of variables', () => {
-      expect(count(deck1.cards, 'VARIABLE')).toEqual(7)
+      expect(count(deck.cards, 'VARIABLE')).toEqual(7)
     })
-    it('correct number of hacks', () => {
-      expect(count(deck1.cards, 'HACK')).toEqual(3)
+    test('correct number of virus', () => {
+      expect(count(deck.cards, 'VIRUS')).toEqual(3)
     })
-    it('correct number of viruses', () => {
-      expect(count(deck1.cards, 'VIRUS')).toEqual(3)
+    test('correct number of ransom', () => {
+      expect(count(deck.cards, 'RANSOM')).toEqual(3)
     })
-    it('correct number of anti viruses', () => {
-      expect(count(deck1.cards, 'ANTIVIRUS')).toEqual(0)
+    test('correct number of spyware', () => {
+      expect(count(deck.cards, 'SPYWARE')).toEqual(3)
     })
-    it('correct number of firewall cards', () => {
-      expect(count(deck1.cards, 'FIREWALL')).toEqual(0)
+    test('correct number of trojan', () => {
+      expect(count(deck.cards, 'TROJAN')).toEqual(3)
     })
-    it('draw function works properly', () => {
+    test('correct number of anti viruses', () => {
+      expect(count(deck.cards, 'ANTIVIRUS')).toEqual(1)
+    })
+    test('correct number of firewall cards', () => {
+      expect(count(deck.cards, 'FIREWALL')).toEqual(2)
+    })
+    test('correct number of scan cards', () => {
+      expect(count(deck.cards, 'SCAN')).toEqual(6)
+    })
+    test('draw function works properly', () => {
       // The deck shuffles itself when created, no way of know what the top card is
-      expect(deck1.draw()).not.toBeUndefined()
-      expect(deck1.cards.length).toEqual(65)
-    })
-    // deleted shuffle test as it didn't really test anything
-    // could write a new one to check that shuffle changes order a bit, but this
-    // is inherently difficult to be sure of
-  })
-
-  describe('correct setup for two player decks', () => {
-    let deck2
-    beforeEach(() => {
-      deck2 = new Deck(2)
-    })
-    test('correct number of anti virus cards', () => {
-      expect(count(deck2.cards, 'ANTIVIRUS')).toEqual(1)
-    })
-    test('correct number of firewall cards', () => {
-      expect(count(deck2.cards, 'FIREWALL')).toEqual(1)
-    })
-  })
-
-  describe('correct setup for three player decks', () => {
-    let deck3
-    beforeEach(() => {
-      deck3 = new Deck(3)
-    })
-    test('correct number instructions', () => {
-      expect(count(deck3.cards, 'INSTRUCTION')).toEqual(81)
-    })
-    test('correct number of repeats', () => {
-      expect(count(deck3.cards, 'REPEAT')).toEqual(42)
-    })
-    test('correct number of Rx', () => {
-      let num = deck3.cards.reduce((acc, card) => {
-        return card.type === 'REPEAT' && card.value === 1 ? acc + 1 : acc
-      }, 0)
-      expect(num).toEqual(15)
-    })
-    test('correct number of variables', () => {
-      expect(count(deck3.cards, 'VARIABLE')).toEqual(21)
-    })
-    it('correct number of hacks', () => {
-      expect(count(deck3.cards, 'HACK')).toEqual(9)
-    })
-    it('correct number of viruses', () => {
-      expect(count(deck3.cards, 'VIRUS')).toEqual(9)
-    })
-    it('correct number of anti viruses', () => {
-      expect(count(deck3.cards, 'ANTIVIRUS')).toEqual(1)
-    })
-    it('correct number of firewall cards', () => {
-      expect(count(deck3.cards, 'FIREWALL')).toEqual(1)
-    })
-  })
-
-
-  describe('correct setup for four player decks', () => {
-    let deck4
-    beforeEach(() => {
-      deck4 = new Deck(4)
-    })
-    test('correct number of anti virus cards', () => {
-      expect(count(deck4.cards, 'ANTIVIRUS')).toEqual(2)
-    })
-    test('correct number of firewall cards', () => {
-      expect(count(deck4.cards, 'FIREWALL')).toEqual(2)
+      expect(deck.draw()).not.toBeUndefined()
+      expect(deck.cards.length).toEqual(77)
     })
   })
 })
