@@ -2,14 +2,14 @@ import Stack from '@/classes/game/Stack'
 import Card from '@/classes/game/Card'
 
 let stack
-let instruction = new Card(2, 1, 'INSTRUCTION')
-let group = new Card(3, 2, 'GROUP')
-let repeat = new Card(4, 3, 'REPEAT')
-let r_x = new Card(5, 1, 'REPEAT')
-let variable = new Card(6, 4, 'VARIABLE')
-let variable_sm = new Card(7, 3, 'VARIABLE')
-let variable_lg = new Card(8, 6, 'VARIABLE')
-let virus = new Card(3, 0, 'VIRUS')
+let instruction = new Card('INSTRUCTION', 1)
+let group = new Card('GROUP', 2)
+let repeat = new Card('REPEAT', 3)
+let r_x = new Card('REPEAT', 1)
+let variable = new Card('VARIABLE', 4)
+let variable_sm = new Card('VARIABLE', 3)
+let variable_lg = new Card('VARIABLE', 6)
+let virus = new Card('VIRUS', 0)
 
 
 describe('Stack.js', () => {
@@ -54,7 +54,7 @@ describe('Stack.js', () => {
   test('calculate correct score virus on group', () => {
     stack.cards.push(group)
     stack.cards.push(virus)
-    expect(stack.getScore()).toEqual(2)
+    expect(stack.getScore()).toEqual(1)
   })
   test('maximum number of repeats (2)', () => {
     stack.cards.push(instruction)
