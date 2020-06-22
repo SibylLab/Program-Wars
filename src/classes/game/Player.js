@@ -80,7 +80,7 @@ export default class Player {
    * Adds a negative effect and alters positive effects if necessary.
    */
   addNegative (type, attackerId) {
-    if (this.alreadyHaveAttack(type, attackerId)) {
+    if (this.hurtBy(type)) {
       return
     }
 
@@ -94,16 +94,6 @@ export default class Player {
       effect.turnsLeft = 2
     }
     this.negativeEffects.push(effect)
-  }
-
-  /**
-   * Check to see if this attack type has already been played by the attacker.
-   */
-  alreadyHaveAttack (type, attackerId) {
-    let effects = this.negativeEffects.filter((e) => {
-      e.type === type && e.attackerId === attackerId
-    })
-    return effects.length > 0
   }
 
   /**
