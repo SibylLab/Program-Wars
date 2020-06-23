@@ -243,7 +243,7 @@ describe('mutations', () => {
   })
 
   describe('cleanMalware', () => {
-    test('add antivirus and clean trojans and virus', () => {
+    test('use antivirus and clean trojans and virus', () => {
       let payload = {card: {type: 'ANTIVIRUS'}, player: {id: 1}}
       let m_cards = [{isMimic: true, card: 'card'}, {isMimic: false}]
       let m_stacks = [{playerId: 1, getTop: mockValue({type: 'VIRUS'}), cards: ['virus']},
@@ -260,7 +260,7 @@ describe('mutations', () => {
       expect(state.deck.discard.length).toEqual(1)
       expect(state.deck.discard[0]).toEqual('virus')
     })
-    test('add firewall and clean trojans', () => {
+    test('use firewall and clean trojans', () => {
       let m_cards = [{isMimic: true, card: 'card'}, {isMimic: false}]
       let state = {hands: [{playerId: 1, cards: m_cards}]}
       let payload = {card: {type: 'FIREWALL'}, player: {id: 1}}
@@ -268,6 +268,57 @@ describe('mutations', () => {
       mutations.cleanMalware(state, payload)
       expect(m_cards.length).toEqual(2)
       expect(m_cards[0]).toEqual('card')
+    })
+  })
+
+  describe('playScan', () => {
+
+  })
+
+  test('removeFromHand', () => {
+    let m_cards = [{id: 300}, {id: 301}]
+    let state = {hands: [{playerId: 1, cards: m_cards}]}
+    let payload = {card: {id: 300}, player: {id: 1}}
+    mutations.removeFromHand(state, payload)
+    expect(state.hands[0].cards.length).toEqual(1)
+    expect(state.hands[0].cards[0].id).toEqual(301)
+  })
+
+  describe('addToStack', () => {
+
+  })
+
+  test('removeStacks', () => {
+    let state = {
+      stacks: [{id: 200}, {id: 201, cards: ['card']}, {id: 202}],
+      deck: {discard: []}
+    }
+    let payload = {stacks: new Set([state.stacks[1]])}
+
+    mutations.removeStacks(state, payload)
+    expect(state.stacks.length).toEqual(2)
+    expect(state.stacks[0].id).toEqual(200)
+    expect(state.stacks[1].id).toEqual(202)
+    expect(state.deck.discard.length).toEqual(1)
+    expect(state.deck.discard[0]).toEqual('card')
+  })
+
+  describe('addPlayedCard', () => {
+    test('actual card is given', () => {
+      let payload = {
+        card: 'card',
+        player: {objectives: {cardsPlayed: []}}
+      }
+      mutations.addPlayedCard({}, payload)
+      expect(payload.player.objectives.cardsPlayed.length).toEqual(1)
+      expect(payload.player.objectives.cardsPlayed[0]).toEqual('card')
+    })
+    test('payload.card is undefined', () => {
+      let payload = {
+        player: {objectives: {cardsPlayed: []}}
+      }
+      mutations.addPlayedCard({}, payload)
+      expect(payload.player.objectives.cardsPlayed.length).toEqual(0)
     })
   })
 })
