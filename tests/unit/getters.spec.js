@@ -57,4 +57,50 @@ describe('vuex getters', () => {
     expect(opps[0].isProtectedFrom.mock.calls).toEqual([ ["RANSOM"] ])
     expect(opps[0].hurtBy.mock.calls).toEqual([ ["RANSOM"] ])
   })
+
+  describe('getPlayerScores', () => {
+    test('no special effects', () => {
+      let m_stacks = [
+        {playerId: 1, getScore: mockValue(6)},
+        {playerId: 0, getScore: mockValue(15)},
+        {playerId: 1, getScore: mockValue(3)},
+      ]
+      let state = {
+        players: [{id: 0, hurtBy: mockValue(false)}, {id: 1, hurtBy: mockValue(false)}],
+        stacks: m_stacks,
+      }
+      let scoreFunction = getters.getPlayerScores(state)  // returns a function
+      let scores = scoreFunction()
+      expect(scores.length).toEqual(2)
+      expect(scores[0].playerId).toEqual(0)
+      expect(scores[0].base).toEqual(15)
+      expect(scores[0].score).toEqual(15)
+      expect(scores[1].playerId).toEqual(1)
+      expect(scores[1].base).toEqual(9)
+      expect(scores[1].score).toEqual(9)
+    })
+    test('ransomware on 1 player', () => {
+      let m_stacks = [
+        {playerId: 1, getScore: mockValue(6)},
+        {playerId: 0, getScore: mockValue(15)},
+        {playerId: 1, getScore: mockValue(3)},
+      ]
+      let state = {
+        players: [
+          {id: 0, hurtBy: mockValue(true), negativeEffects: [{type: 'RANSOM', attackerId: 1}]},
+          {id: 1, hurtBy: mockValue(false)}],
+        stacks: m_stacks,
+      }
+      let scoreFunction = getters.getPlayerScores(state)  // returns a function
+      let scores = scoreFunction()
+      expect(scores.length).toEqual(2)
+      expect(scores[0].playerId).toEqual(0)
+      expect(scores[0].base).toEqual(15)
+      expect(scores[0].score).toEqual(5)
+      expect(scores[1].playerId).toEqual(1)
+      expect(scores[1].base).toEqual(9)
+      expect(scores[1].score).toEqual(19)
+    })
+  })
 })
+
