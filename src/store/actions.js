@@ -37,16 +37,9 @@ export default {
    * Will reset any state information for starting a new game.
    */
   leaveGame (context) {
-    context.dispatch('resetForHome')
+    context.commit('changeGameState', {newState: 'home'})
     context.commit('seenBackstory')
     router.push('home')
-  },
-
-  /**
-   * Resets necessary elements before returning to landing page.
-   */
-  resetForHome (context) {
-    context.commit('changeGameState', {newState: 'home'})
   },
 
   /**
@@ -167,16 +160,6 @@ export default {
     context.commit('removeStacks', {stacks: payload.target})
     context.commit('newStack', payload)
     context.commit('removeFromHand', payload)
-  },
-
-  /**
-   * Hacks a target stack by removing it from the target players stacks and
-   * discards the hack card.
-   * Payload same as executeTurn.
-   */
-  hackStack (context, payload) {
-    context.commit('removeStacks', {stacks: new Set([payload.target])})
-    context.commit('discardCard', payload)
   },
 
   /**

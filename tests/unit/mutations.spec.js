@@ -1,6 +1,6 @@
 import mutations from '@/store/mutations'
 
-let mockValue = function (value) { return jest.fn(() => {return value}) }
+function mockValue (value) { return jest.fn(() => {return value}) }
 
 
 describe('mutations', () => {
