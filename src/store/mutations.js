@@ -32,6 +32,7 @@ export default {
     state.activeCard = undefined
     state.scoreLimit = 75
     state.turnNumber = 0
+    state.turnPlays = []
   },
 
   /**

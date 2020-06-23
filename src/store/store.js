@@ -27,7 +27,8 @@ export const store = new Vuex.Store({
     activeCard: undefined,
     scoreLimit: 75,
     showBackstory: true,
-    turnNumber: 0
+    turnNumber: 0,
+    turnPlays: []
   },
 
   getters,

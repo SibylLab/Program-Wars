@@ -65,6 +65,7 @@ export default {
   executeTurn(context, payload) {
     if (context.state.gameState === 'wait') { return }
     bus.$emit('card-played')
+    context.state.turnPlays.push(payload)
 
     let draw = true
     if (payload.playType === "DISCARD") {
