@@ -109,15 +109,15 @@ export default {
 }
 
 #cards {
-  margin-top: 1%;
+  margin-top: 2%;
 }
 
 #turns {
   position: absolute;
-  top: 56%;
+  bottom: 17%;
   left: 10%;
   width: 80%;
-  height: 30%;
+  height: 80px;
 }
 
 ul {
