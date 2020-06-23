@@ -179,7 +179,7 @@ export default {
     hand.cards = hand.cards.filter(c => c !== payload.card)
     if (payload.card.isMimic) {
       state.deck.discard.push(payload.card.card)
-    } else if (payload.card.isExtra) {
+    } else if (!payload.card.isExtra) {
       state.deck.discard.push(payload.card)
     }
     state.activeCard = undefined
@@ -205,7 +205,7 @@ export default {
       let hand = state.hands.find(h => h.playerId === payload.target.id)
       let pos = Math.floor(Math.random() * hand.cards.length)
       hand.cards[pos] = new Trojan(hand.cards[pos], payload.player)
-    } else {
+    } else if (payload.card.isAttack()) {
       payload.target.addNegative(payload.card.type, payload.player.id)
     }
   },
