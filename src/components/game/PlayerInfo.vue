@@ -264,7 +264,6 @@ export default {
   width: 30px;
   height: 30px;
   margin: 20px 5px; 
-  border: solid black 2px;
 }
 
 .spy-card {
