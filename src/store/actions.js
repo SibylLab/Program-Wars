@@ -71,11 +71,6 @@ export default {
    
     bus.$emit('card-played')
     log.warn({name:payload.player.name, card_played:payload.card.type, value: payload.card.value})
-    
-    
-    
-    
-
     let draw = true
     if (payload.playType === "DISCARD") {
       context.commit('discardCard', payload)
@@ -176,28 +171,19 @@ export default {
    * Payload same as executeTurn.
    */
   groupStacks (context, payload) {
-   // let stacks = context.state.stacks
+    
     let stackValue= []
-    for (let stack of payload.target){
-      stackValue.push(stack.getScore)
-      
-      
+    for (let stack of payload.target.values()){
+      stackValue.push(stack.getScore())   
     }
+    
+   
     context.commit('removeStacks', {stacks: payload.target})
     context.commit('newStack', payload)
     context.commit('removeFromHand', payload)
     log.warn(payload.player.name, payload.card.type, payload.card.value,stackValue)
     
-   //if (payload.card.type === "GROUP") {
-    
-
-     // log.warn(  stackValue.push(stacks))
-     
-     //}
-   
-   
-
-  },
+      },
 
   /**
    * Hacks a target stack by removing it from the target players stacks and
