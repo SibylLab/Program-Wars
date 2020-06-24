@@ -70,7 +70,6 @@ export default {
   executeTurn(context, payload) {
    
     bus.$emit('card-played')
-    //log.warn({name:payload.player.name, card_played:payload.card.type, value: payload.card.value})
     let draw = true
     if (payload.playType === "DISCARD") {
       log.warn({DiscardBy:payload.player.name, card:payload.card.type, value: payload.card.value})
@@ -90,7 +89,6 @@ export default {
     } else {
       context.dispatch('endTurn', {draw: draw})
     }
-    //log.warn({name:payload.player.name, card_played:payload.card.type, value: payload.card.value})
   },
 
   /**
@@ -106,6 +104,10 @@ export default {
     let scores = context.getters.getPlayerScores()
     for (let scoreInfo of scores) {
       if (scoreInfo.score >= context.state.scoreLimit) {
+        //Winmer Info added on log
+        let winner = context.state.players.find (p => p.id === scoreInfo.playerId)
+        log.warn({Winner:winner.name, WinnerScores:scoreInfo.score})
+        
         bus.$emit('game-over')
         context.commit('changeGameState', {newState: 'winner'})
         return
