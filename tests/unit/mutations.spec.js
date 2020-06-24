@@ -272,7 +272,66 @@ describe('mutations', () => {
   })
 
   describe('playScan', () => {
-
+    test('no effects to clean', () => {
+      let payload = {
+        card: {type: 'SCAN'},
+        player: {id: 1, negativeEffects: []},
+        target: {addPositive: mockValue()}
+      }
+      let state = {
+        stacks: [], hands: [{playerId: 1, cards: []}]
+      }
+      mutations.playScan(state, payload)
+      expect(payload.target.addPositive.mock.calls.length).toEqual(1)
+      expect(payload.target.addPositive.mock.calls[0]).toEqual([ 'SCAN' ])
+    })
+    test('VIRUS effect to clean', () => {
+      let payload = {
+        card: {type: 'SCAN'},
+        player: {id: 1, negativeEffects: []},
+        target: {addPositive: mockValue()}
+      }
+      let card = {type: 'VIRUS'}
+      let state = {
+        stacks: [{playerId: 1, getTop: mockValue(card), cards: [card]}],
+        hands: [{playerId: 1, cards: []}],
+        deck: {discard: []}
+      }
+      mutations.playScan(state, payload)
+      expect(state.deck.discard.length).toEqual(1)
+      expect(state.deck.discard[0]).toEqual(card)
+      expect(payload.target.addPositive.mock.calls.length).toEqual(0)
+    })
+    test('mimic effect to clean', () => {
+      let payload = {
+        card: {type: 'SCAN'},
+        player: {id: 1, negativeEffects: []},
+      }
+      let card = {type: 'REPEAT', isMimic: true}
+      let state = {
+        stacks: [],
+        hands: [{playerId: 1, cards: [card]}]
+      }
+      mutations.playScan(state, payload)
+      expect(mutations.commit.mock.calls.length).toEqual(2)
+      expect(mutations.commit.mock.calls[0]).toEqual(
+        [ 'discardCard', {player: payload.player, card: card} ]
+      )
+      expect(mutations.commit.mock.calls[1]).toEqual([ 'drawCard' ])
+    })
+    test('other attack effect to clean', () => {
+      let payload = {
+        card: {type: 'SCAN'},
+        player: {id: 1, negativeEffects: [{type: 'BAD_EFFECT'}], removeEffect: mockValue()},
+      }
+      let state = {
+        stacks: [],
+        hands: [{playerId: 1, cards: []}]
+      }
+      mutations.playScan(state, payload)
+      expect(payload.player.removeEffect.mock.calls.length).toEqual(1)
+      expect(payload.player.removeEffect.mock.calls[0]).toEqual([ {type: 'BAD_EFFECT'} ])
+    })
   })
 
   test('removeFromHand', () => {
@@ -285,7 +344,138 @@ describe('mutations', () => {
   })
 
   describe('addToStack', () => {
+    test('card is virus and target is protected', () => {
+      let payload = {card: {type: 'VIRUS'}, target: {playerId: 1}}
+      let state = {
+        players: [{id: 1, helpedBy: mockValue(true), removePositive: mockValue()}]
+      }
+      mutations.addToStack(state, payload)
+      expect(state.players[0].helpedBy.mock.calls.length).toEqual(1)
+      expect(state.players[0].helpedBy.mock.calls[0]).toEqual([ 'SCAN' ])
+      expect(state.players[0].removePositive.mock.calls.length).toEqual(1)
+      expect(state.players[0].removePositive.mock.calls[0]).toEqual([ 'SCAN' ])
+    })
+    test('card is virus and target is not protected, stack top is normal repeat', () => {
+      let mockStack = {
+          playerId: 1,
+          cards: [],
+          getTop: mockValue({type: 'REPEAT', value: 3}),
+          isComplete: mockValue(false)
+      }
+      let payload = {card: {type: 'VIRUS'}, target: mockStack}
+      let state = {
+        players: [{id: 1, helpedBy: mockValue(false), removePositive: mockValue()}]
+      }
+      mutations.addToStack(state, payload)
+      expect(state.players[0].helpedBy.mock.calls.length).toEqual(1)
+      expect(state.players[0].helpedBy.mock.calls[0]).toEqual([ 'SCAN' ])
+      expect(state.players[0].removePositive.mock.calls.length).toEqual(0)
+      expect(mockStack.cards.length).toEqual(1)
+      expect(mockStack.cards[0]).toEqual(payload.card)
+    })
+    test('card is variable and we are completing the stack, not replacing', () => {
+      let mockStack = {
+          stackId: 3,
+          playerId: 1,
+          cards: [],
+          getTop: mockValue({type: 'REPEAT', value: 1}),
+          isComplete: mockValue(true)
+      }
+      let payload = {card: {type: 'VARIABLE'}, target: mockStack}
+      let state = {players: [{id: 1}], stacks: [mockStack, {stackId: 5}]}
 
+      mutations.addToStack(state, payload)
+      expect(mockStack.cards.length).toEqual(1)
+      expect(mockStack.cards[0]).toEqual(payload.card)
+      expect(state.stacks.length).toEqual(2)
+      expect(state.stacks[0].stackId).toEqual(5)
+      expect(state.stacks[1]).toEqual(mockStack)
+    })
+    test('card is variable and we are replacing another one', () => {
+      let mockStack = {
+          stackId: 3,
+          playerId: 1,
+          cards: [],
+          getTop: mockValue({type: 'REPEAT', value: 4}),
+          isComplete: mockValue(false),
+          hasVariable: mockValue(true),
+          replaceLowestVar: mockValue('LOW_VAR')
+      }
+      let payload = {card: {type: 'VARIABLE'}, target: mockStack}
+      let state = {
+        players: [{id: 1}],
+        stacks: [mockStack, {stackId: 5}],
+        deck: {discard: []}
+      }
+
+      mutations.addToStack(state, payload)
+      expect(mockStack.cards.length).toEqual(0)  // we are mocking out the replacement
+      expect(mockStack.replaceLowestVar.mock.calls.length).toEqual(1)
+      expect(mockStack.replaceLowestVar.mock.calls[0]).toEqual([ payload.card ])
+      expect(state.deck.discard.length).toEqual(1)
+      expect(state.deck.discard[0]).toEqual('LOW_VAR')
+      expect(state.stacks.length).toEqual(2)
+      expect(state.stacks[0]).toEqual(mockStack)
+      expect(state.stacks[1].stackId).toEqual(5)
+    })
+  })
+
+  describe('newStack', () => {
+    test('new instructions stack no other stacks', () => {
+      let payload = {
+        player: {id: 1},
+        card: {type: 'INSTRUCTION'}
+      }
+      let state = {stacks: []}
+
+      mutations.newStack(state, payload)
+      expect(state.stacks.length).toEqual(1)
+      expect(state.stacks[0].playerId).toEqual(1)
+      expect(state.stacks[0].cards[0]).toEqual(payload.card)
+    })
+    test('new instructions stack placed in front of complete stack', () => {
+      let payload = {
+        player: {id: 1},
+        card: {type: 'INSTRUCTION'}
+      }
+      let mockStack = {cards: [{type: 'GROUP'}], isComplete: mockValue(true)}
+      let state = {stacks: [mockStack]}
+
+      mutations.newStack(state, payload)
+      expect(state.stacks.length).toEqual(2)
+      expect(state.stacks[0].playerId).toEqual(1)
+      expect(state.stacks[0].cards[0]).toEqual(payload.card)
+      expect(state.stacks[1]).toBe(mockStack)
+    })
+    test('new group stack no stacks to be placed in front of', () => {
+      let payload = {
+        player: {id: 1},
+        card: {type: 'GROUP'}
+      }
+      let mockStack = {cards: [{type: 'GROUP'}], isComplete: mockValue(false)}
+      let state = {stacks: [mockStack]}
+
+      mutations.newStack(state, payload)
+      expect(state.stacks.length).toEqual(2)
+      expect(state.stacks[0]).toBe(mockStack)
+      expect(state.stacks[1].playerId).toEqual(1)
+      expect(state.stacks[1].cards[0]).toEqual(payload.card)
+    })
+    test('new group stack placed in front of single instruction stack', () => {
+      let payload = {
+        player: {id: 1},
+        card: {type: 'GROUP'}
+      }
+      let mockStack = {cards: [{type: 'INSTRUCTION'}], isComplete: mockValue(false)}
+      let state = {stacks: [mockStack]}
+
+      mutations.newStack(state, payload)
+      expect(state.stacks.length).toEqual(2)
+      expect(state.stacks[0].playerId).toEqual(1)
+      expect(state.stacks[0].cards[0]).toEqual(payload.card)
+      expect(state.stacks[1]).toBe(mockStack)
+      expect(mockStack.isComplete.mock.calls.length).toEqual(0)
+    })
   })
 
   test('removeStacks', () => {
