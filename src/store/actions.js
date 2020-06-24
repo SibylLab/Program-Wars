@@ -70,14 +70,17 @@ export default {
   executeTurn(context, payload) {
    
     bus.$emit('card-played')
-    log.warn({name:payload.player.name, card_played:payload.card.type, value: payload.card.value})
+    //log.warn({name:payload.player.name, card_played:payload.card.type, value: payload.card.value})
     let draw = true
     if (payload.playType === "DISCARD") {
+      log.warn({DiscardBy:payload.player.name, card:payload.card.type, value: payload.card.value})
       context.commit('discardCard', payload)
     } else if (payload.playType === "REDRAW") {
+      log.warn({RedrawBy:payload.player.name})
       context.commit('giveNewHand', payload)
       draw = false
     } else {
+      log.warn({name:payload.player.name, card_played:payload.card.type, value: payload.card.value})
       context.dispatch(payload.playType, payload)
     }
 
@@ -87,6 +90,7 @@ export default {
     } else {
       context.dispatch('endTurn', {draw: draw})
     }
+    //log.warn({name:payload.player.name, card_played:payload.card.type, value: payload.card.value})
   },
 
   /**
