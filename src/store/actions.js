@@ -1,6 +1,9 @@
 import { bus } from '@/components/shared/Bus'
 import router from '@/router'
 
+
+var log = require('loglevel');
+
 /**
  * All actions that are taken involving the vuex state.
  * These actions should be used when combining multiple mutations or
@@ -65,7 +68,13 @@ export default {
    * }
    */
   executeTurn(context, payload) {
+   
     bus.$emit('card-played')
+    log.warn({name:payload.player.name, card_played:payload.card.type, value: payload.card.value})
+    
+    
+    
+    
 
     let draw = true
     if (payload.playType === "DISCARD") {
@@ -137,6 +146,7 @@ export default {
    * Payload same as executeTurn.
    */
   playCardOnStack (context, payload) {
+    log.warn(payload.player.name, payload.card.type, payload.card.value, payload.target.getScore())
     context.commit('removeFromHand', payload)
     context.commit('addToStack', payload)
   },
@@ -155,6 +165,7 @@ export default {
    * Payload same as executeTurn.
    */
   playSpecialCard (context, payload) {
+    log.warn(payload.player.name, payload.card.type)
     context.commit('addCardEffect', payload)
     context.commit('discardCard', payload)
   },
@@ -165,9 +176,27 @@ export default {
    * Payload same as executeTurn.
    */
   groupStacks (context, payload) {
+   // let stacks = context.state.stacks
+    let stackValue= []
+    for (let stack of payload.target){
+      stackValue.push(stack.getScore)
+      
+      
+    }
     context.commit('removeStacks', {stacks: payload.target})
     context.commit('newStack', payload)
     context.commit('removeFromHand', payload)
+    log.warn(payload.player.name, payload.card.type, payload.card.value,stackValue)
+    
+   //if (payload.card.type === "GROUP") {
+    
+
+     // log.warn(  stackValue.push(stacks))
+     
+     //}
+   
+   
+
   },
 
   /**
