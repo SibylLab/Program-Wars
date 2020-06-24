@@ -24,21 +24,33 @@ export default {
   },
   created () {
     bus.$on('card-played', (play) => {
+      if (!play.card || play.playType === 'REDRAW' || play.playType === 'DISCARD') {
+        return
+      }
+
       if (play.card && play.card.isMimic) {
         this.showing = true
         this.text = "TROJAN!"
-        setTimeout(() => {this.showing = false}, 2000)
-      } else if (play.card && (play.card.isAttack || play.card.type === "VIRUS")) {
+        setTimeout(() => {this.showing = false}, 1000)
+
+      } else if (play.card && (play.card.isAttack() || play.card.type === "VIRUS")) {
         let target = play.target
         if (play.card.type === "VIRUS") {
           target = this.players.find(p => p.id === play.target.playerId)
         }
+
         if (target.helpedBy('SCAN')) {
           this.showing = true
           this.text = "BLOCKED!"
-          setTimeout(() => {this.showing = false}, 2000)
+          setTimeout(() => {this.showing = false}, 1000)
         }
       }
+    })
+
+    bus.$on('scan-effect', () => {
+      this.showing = true
+      this.text = "SCANNED!"
+      setTimeout(() => {this.showing = false}, 1000)
     })
   }
 }

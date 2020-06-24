@@ -203,9 +203,13 @@ export default {
       payload.target.addPositive(payload.card.type)
       this.commit('cleanMalware', payload)
     } else if (payload.card.type === 'TROJAN') {
-      let hand = state.hands.find(h => h.playerId === payload.target.id)
-      let pos = Math.floor(Math.random() * hand.cards.length)
-      hand.cards[pos] = new Trojan(hand.cards[pos], payload.player)
+      if (payload.target.helpedBy('SCAN')) {
+        payload.target.removePositive('SCAN')
+      } else {
+        let hand = state.hands.find(h => h.playerId === payload.target.id)
+        let pos = Math.floor(Math.random() * hand.cards.length)
+        hand.cards[pos] = new Trojan(hand.cards[pos], payload.player)
+      }
     } else if (payload.card.isAttack()) {
       payload.target.addNegative(payload.card.type, payload.player.id)
     }
@@ -249,6 +253,7 @@ export default {
     let effects = payload.player.negativeEffects.concat(infectedStacks).concat(mimics)
 
     if (effects.length > 0) {
+      bus.$emit('scan-effect')
       let idx = Math.floor(Math.random() * effects.length)
       let clean = effects[idx]
       if ('cards' in clean) {
