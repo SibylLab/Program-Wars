@@ -1,22 +1,43 @@
 <template>
 <div id="turn-history" :key="turnPlays.length">
   <ul>
-    <li v-for="play in history" v-bind:key="play.playType">
+    <li v-for="play in history" v-bind:key="play.playType + Math.random()">
       <img id="play-image" :src="image(play)">
       <img id="player-image" :src="playerImage(play)">
+      <img id="target-image" v-if="hasTargetPlayer(play)" :src="targetImage(play)">
     </li>
   </ul>
+
+  <div id="info">
+    <info-popup>
+      <h3 style="margin: 0">Turn History</h3>
+      <p>The last 8 actions taken by players will be displayed with images
+         in the Turn History Box.
+      </p>
+      <p>The main portion of the image shows the card that was played. The
+         value of the card is in the top right corner.</p>
+      <p>The image of the player who played the card will appear over the top
+         right corner of the card image. If the card targeted another player
+         the image for that player will appear over the bottom right corner.
+      </p>
+      <p>The leftmost image is always the last turn that was taken.</p>
+    </info-popup>
+  </div>
 </div>
 </template>
 
 
 <script>
+import InfoPopup from '@/components/shared/InfoPopup'
 import {mapState} from 'vuex'
 
 /**
  */
 export default {
   name: 'turn-history',
+  components: {
+    'info-popup': InfoPopup,
+  },
   computed: {
     ...mapState([
       'turnPlays'
@@ -44,6 +65,22 @@ export default {
     playerImage (play) {
       let path = 'static/playerImages/player'
       return path + play.player.id + '.png'
+    },
+    targetImage (play) {
+      let path = 'static/playerImages/player'
+      let id = '0'
+      if (play.card.type === 'VIRUS') {
+        id = play.target.playerId
+      } else {
+        id = play.target.id
+      }
+      return path + id + '.png'
+    },
+    hasTargetPlayer (play) {
+      if (play.card && (play.card.isAttack() || play.card.type === 'VIRUS')) {
+        return true
+      }
+      return false
     }
   }
 }
@@ -76,10 +113,25 @@ export default {
 #player-image {
   position: absolute;
   left: 35px;
-  top: 5px;
+  top: 1px;
   width: 27px;
   height: 27px;
   border: solid black 2px;
+}
+
+#target-image {
+  position: absolute;
+  left: 38px;
+  top: 29px;
+  width: 20px;
+  height: 20px;
+  border: solid black 2px;
+}
+
+#info {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 ul {
@@ -92,7 +144,7 @@ li {
   position: relative;
   display: inline-block;
   text-align: left;
-  margin: 2px 10px;
+  margin: 3px 10px;
 }
 </style>
 
