@@ -37,7 +37,7 @@ export default {
       'gameState'
     ]),
     isGame () {
-      return this.gameState === 'game'
+      return this.gameState === 'game' || this.gameState === 'wait'
     }
   }
 }

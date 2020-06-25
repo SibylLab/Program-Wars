@@ -53,10 +53,10 @@ describe('vuex actions', () => {
       expect(context.commit.mock.calls[0]).toEqual([ 'discardCard', payload ])
       expect(context.commit.mock.calls[1]).toEqual([ 'updatePlayerEffects', payload ])
       expect(context.commit.mock.calls[2]).toEqual([ 'addPlayedCard', payload ])
-      expect(context.commit.mock.calls[3]).toEqual([ 'drawCard' ])
-      expect(context.commit.mock.calls[4]).toEqual(
+      expect(context.commit.mock.calls[3]).toEqual(
         [ 'changeGameState', {newState: 'wait'} ]
       )
+      expect(context.commit.mock.calls[4]).toEqual([ 'drawCard' ])
 
       expect(setTimeout).toHaveBeenCalledTimes(1)
       expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000)
@@ -77,7 +77,6 @@ describe('vuex actions', () => {
       expect(context.state.turnPlays.length).toEqual(1)
       expect(context.state.turnPlays[0]).toEqual(payload)
       expect(context.commit.mock.calls[0]).toEqual([ 'giveNewHand', payload ])
-      // draw is false so changeGameState should happen in it's place
       expect(context.commit.mock.calls[3]).toEqual(
         [ 'changeGameState', {newState: 'wait'} ]
       )
@@ -94,8 +93,6 @@ describe('vuex actions', () => {
       expect(context.state.turnPlays.length).toEqual(1)
       expect(context.state.turnPlays[0]).toEqual(payload)
       expect(context.dispatch.mock.calls[0]).toEqual([ 'playMimic', payload ])
-      // moves up as playMimic uses dispatch
-      expect(context.commit.mock.calls[2]).toEqual([ 'drawCard' ])
     })
     test('all other turn types', () => {
       // will not test all the intermediate steps already tested above
@@ -109,8 +106,6 @@ describe('vuex actions', () => {
       expect(context.state.turnPlays.length).toEqual(1)
       expect(context.state.turnPlays[0]).toEqual(payload)
       expect(context.dispatch.mock.calls[0]).toEqual([ 'playCardOnStack', payload ])
-      // moves up as playCardOnStack uses dispatch
-      expect(context.commit.mock.calls[2]).toEqual([ 'drawCard' ])
     })
   })
 

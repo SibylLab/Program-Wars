@@ -7,9 +7,9 @@ import Card from './Card'
 
 // card types along with {value: numCard} pairs for each
 const cardTypes = {
-  "INSTRUCTION": {1: 9, 2: 9, 3: 9},
+  "INSTRUCTION": {1: 9, 2: 12, 3: 9},
   "GROUP": {2: 1, 3: 2, 4: 3, 5: 2, 6: 1},
-  "REPEAT": {1: 5, 2: 3, 3: 3, 4: 3},
+  "REPEAT": {1: 5, 2: 3, 3: 5, 4: 3},
   "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
   "VIRUS": {0: 3},
   "RANSOM": {0: 3},
@@ -17,7 +17,7 @@ const cardTypes = {
   "TROJAN": {0: 3},
   "ANTIVIRUS": {0: 1},
   "FIREWALL": {0: 2},
-  "SCAN": {0: 6},
+  "SCAN": {0: 5},
 }
 
 // cards to add in when the deck is refreshed
@@ -55,6 +55,9 @@ export default class Deck {
         }
       }
     }
+    // Shuffle a few times to try and get a good random order
+    this.shuffle(this.cards)
+    this.shuffle(this.cards)
     this.shuffle(this.cards)
   }
 

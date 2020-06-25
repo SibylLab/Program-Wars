@@ -16,7 +16,7 @@ describe('mutations', () => {
     expect(state.hands.length).toEqual(0)
     expect(state.stacks.length).toEqual(0)
     expect(state.aiHandlers.length).toEqual(0)
-    expect(state.deck.cards.length).toEqual(78)
+    expect(state.deck.cards.length).toEqual(82)
     expect(state.gameState).toEqual('game')
     expect(state.activePlayer).toBeUndefined()
     expect(state.activeCard).toBeUndefined()
@@ -43,7 +43,7 @@ describe('mutations', () => {
     let state = {deck: mockDeck}
     mutations.createNewDeck(state, {newState: 'newState'})
     expect(state.deck).not.toEqual(mockDeck)
-    expect(state.deck.cards.length).toEqual(78)
+    expect(state.deck.cards.length).toEqual(82)
   })
   test('add human and AI player', () => {
     let playerInfo = [{name:'steve', ai: false}, {name:'n00b_b0t', ai: true}]

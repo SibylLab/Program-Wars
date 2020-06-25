@@ -74,12 +74,12 @@ export default {
 
     context.commit('updatePlayerEffects', payload)
     context.commit('addPlayedCard', payload)
-    if (draw) {
-      context.commit('drawCard')
-    }
 
     context.commit('changeGameState', {newState: 'wait'})
     setTimeout(() => {
+      if (draw) {
+        context.commit('drawCard')
+      }
       context.commit('changeGameState', {newState: 'game'})
       context.dispatch('endTurn')
     }, 1000)
