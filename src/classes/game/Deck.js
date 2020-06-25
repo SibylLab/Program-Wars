@@ -92,6 +92,8 @@ export default class Deck {
   refresh () {
     this.cards = this.cards.concat(this.discard)
     this.discard = []
-    this.addCards(refreshCards)
+    if (this.cards.length < 80) {
+      this.addCards(refreshCards)
+    }
   }
 }
