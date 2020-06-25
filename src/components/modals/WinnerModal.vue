@@ -47,10 +47,10 @@
             <tr> <th>Complete Program</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.complete }}</td>
             </tr>
-            <tr> <th>Defensive Programmer (All Safeties)</th>
+            <tr> <th>Defensive Programmer (AntiVirus)</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.defensive }}</td>
             </tr>
-            <tr> <th>Clean System (No Virus)</th>
+            <tr> <th>Clean System (No Malware)</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.clean }}</td>
             </tr>
             <tr> <th style="font-size: 20px;">Final Score</th>
