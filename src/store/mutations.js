@@ -252,6 +252,7 @@ export default {
     if (infectedStacks.length > 0) {
       // find the largest stack and remove it's virus first eventually
       state.deck.discard.push(infectedStacks[0].cards.pop())
+      bus.$emit('scan-effect', 'VIRUS')
       return
     }
 
@@ -261,6 +262,7 @@ export default {
     if (mimics.length > 0) {
       this.commit('discardCard', {player: payload.player, card: mimics[0]})
       this.commit('drawCard')
+      bus.$emit('scan-effect', 'TROJAN')
       return
     }
 
@@ -268,6 +270,7 @@ export default {
     let ransoms = payload.player.negativeEffects.filter(e => e.type === 'RANSOM')
     if (ransoms.length > 0) {
       payload.player.removeEffect(ransoms[0])
+      bus.$emit('scan-effect', 'RANSOM')
       return
     }
 
@@ -275,6 +278,7 @@ export default {
     let spys = payload.player.negativeEffects.filter(e => e.type === 'SPYWARE')
     if (spys.length > 0) {
       payload.player.removeEffect(spys[0])
+      bus.$emit('scan-effect', 'SPYWARE')
       return
     }
 
