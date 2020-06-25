@@ -330,10 +330,10 @@ describe('mutations', () => {
       )
       expect(mutations.commit.mock.calls[1]).toEqual([ 'drawCard' ])
     })
-    test('other attack effect to clean', () => {
+    test('ransom effect to clean', () => {
       let payload = {
         card: {type: 'SCAN'},
-        player: {id: 1, negativeEffects: [{type: 'BAD_EFFECT'}], removeEffect: mockValue()},
+        player: {id: 1, negativeEffects: [{type: 'RANSOM'}], removeEffect: mockValue()},
       }
       let state = {
         stacks: [],
@@ -341,7 +341,20 @@ describe('mutations', () => {
       }
       mutations.playScan(state, payload)
       expect(payload.player.removeEffect.mock.calls.length).toEqual(1)
-      expect(payload.player.removeEffect.mock.calls[0]).toEqual([ {type: 'BAD_EFFECT'} ])
+      expect(payload.player.removeEffect.mock.calls[0]).toEqual([ {type: 'RANSOM'} ])
+    })
+    test('spyware effect to clean', () => {
+      let payload = {
+        card: {type: 'SCAN'},
+        player: {id: 1, negativeEffects: [{type: 'SPYWARE'}], removeEffect: mockValue()},
+      }
+      let state = {
+        stacks: [],
+        hands: [{playerId: 1, cards: []}]
+      }
+      mutations.playScan(state, payload)
+      expect(payload.player.removeEffect.mock.calls.length).toEqual(1)
+      expect(payload.player.removeEffect.mock.calls[0]).toEqual([ {type: 'SPYWARE'} ])
     })
   })
 

@@ -245,28 +245,41 @@ export default {
    * Trojan cards are discarded and new cards are drawn.
    */
   playScan (state, payload) {
+    // Remove a virus if there is one
     let infectedStacks = state.stacks.filter((s) => {
       return s.playerId === payload.player.id && s.getTop().type === 'VIRUS'
     })
+    if (infectedStacks.length > 0) {
+      // find the largest stack and remove it's virus first eventually
+      state.deck.discard.push(infectedStacks[0].cards.pop())
+      return
+    }
+
+    // Remove a mimicked card next if there is one
     let hand = state.hands.find(h => h.playerId === payload.player.id)
     let mimics = hand.cards.filter(c => c.isMimic)
-    let effects = payload.player.negativeEffects.concat(infectedStacks).concat(mimics)
-
-    if (effects.length > 0) {
-      bus.$emit('scan-effect')
-      let idx = Math.floor(Math.random() * effects.length)
-      let clean = effects[idx]
-      if ('cards' in clean) {
-        state.deck.discard.push(clean.cards.pop())
-      } else if ('isMimic' in clean) {
-        this.commit('discardCard', {player: payload.player, card: clean})
-        this.commit('drawCard')
-      } else {
-        payload.player.removeEffect(clean)
-      }
-    } else {
-      payload.target.addPositive(payload.card.type)
+    if (mimics.length > 0) {
+      this.commit('discardCard', {player: payload.player, card: mimics[0]})
+      this.commit('drawCard')
+      return
     }
+
+    // Remove a ransom next if there is one
+    let ransoms = payload.player.negativeEffects.filter(e => e.type === 'RANSOM')
+    if (ransoms.length > 0) {
+      payload.player.removeEffect(ransoms[0])
+      return
+    }
+
+    // Remove a spyware next if there is one
+    let spys = payload.player.negativeEffects.filter(e => e.type === 'SPYWARE')
+    if (spys.length > 0) {
+      payload.player.removeEffect(spys[0])
+      return
+    }
+
+    // just add the scan to the player
+    payload.target.addPositive(payload.card.type)
   },
 
   /**
