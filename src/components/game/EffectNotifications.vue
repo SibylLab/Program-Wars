@@ -23,12 +23,13 @@ export default {
   name: 'effect-notifications',
   data () {
     return {
-      showing: true,
+      showing: false,
       imagePath: 'static/cardImages/effects/',
       leftImage: 'static/cardImages/effects/SCAN.png',
       rightImage: 'static/cardImages/effects/VIRUS.png',
       block: false,
       clean: false,
+      timeout: 1250,
     }
   },
   computed: {
@@ -54,7 +55,7 @@ export default {
         }
         let replaced = play.card.replace()
         this.rightImage = this.imagePath + replaced.type + '.png'
-        setTimeout(() => {this.showing = false}, 4000)
+        setTimeout(() => {this.showing = false}, this.timeout)
 
       } else if (play.card && (play.card.isAttack() || play.card.type === "VIRUS")) {
         let target = play.target
@@ -68,7 +69,7 @@ export default {
           this.clean = false
           this.leftImage = this.imagePath + play.card.type + '.png'
           this.rightImage = this.imagePath + 'SCAN.png'
-          setTimeout(() => {this.showing = false}, 4000)
+          setTimeout(() => {this.showing = false}, this.timeout)
         }
       }
     })
@@ -80,7 +81,7 @@ export default {
       this.clean = true
       this.leftImage = this.imagePath + 'SCAN.png'
       this.rightImage = this.imagePath + type + '.png'
-      setTimeout(() => {this.showing = false}, 4000)
+      setTimeout(() => {this.showing = false}, this.timeout)
     })
   }
 }
