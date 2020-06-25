@@ -20,6 +20,14 @@ const cardTypes = {
   "SCAN": {0: 6},
 }
 
+// cards to add in when the deck is refreshed
+const refreshCards = {
+  "GROUP": {4: 1, 5: 1, 6: 1},
+  "REPEAT": {1: 2, 3: 2, 4: 2},
+  "VARIABLE": {4: 1, 5: 1, 6: 1},
+}
+
+
 /**
  * A deck for a program wars game.
  * Only a single deck is used. Its size is determined by the number of players
@@ -32,15 +40,15 @@ export default class Deck {
   constructor () {
     this.cards = []
     this.discard = []
-    this.initDeck()
+    this.addCards(cardTypes)
   }
 
   /**
    * Initializes the deck with a pre determined number and type of cards.
    * Shuffles the deck.
    */
-  initDeck () {
-    for (let [type, values] of Object.entries(cardTypes)) {
+  addCards (cardsToAdd) {
+    for (let [type, values] of Object.entries(cardsToAdd)) {
       for (let [value, number] of Object.entries(values)) {
         for (let i = 0; i < number; i++) {
           this.cards.push(new Card(type, parseInt(value)))
@@ -76,10 +84,14 @@ export default class Deck {
 
   /**
    * Refreshes the deck by adding back the discard pile and shuffling.
+   * Also, adds some more group, variable, and repeat cards to keep the game
+   * moving. Especially in 4 player games these cards are moslty used up by
+   * the time the deck runs out, so we add some more in to ensure players
+   * can still play.
    */
   refresh () {
     this.cards = this.cards.concat(this.discard)
     this.discard = []
-    this.shuffle(this.cards)
+    this.addCards(refreshCards)
   }
 }

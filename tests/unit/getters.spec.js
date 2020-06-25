@@ -60,14 +60,14 @@ describe('vuex getters', () => {
 
   describe('getPlayerScores', () => {
     test('no special effects', () => {
-      let m_stacks = [
+      let mockStacks = [
         {playerId: 1, getScore: mockValue(6)},
         {playerId: 0, getScore: mockValue(15)},
         {playerId: 1, getScore: mockValue(3)},
       ]
       let state = {
         players: [{id: 0, hurtBy: mockValue(false)}, {id: 1, hurtBy: mockValue(false)}],
-        stacks: m_stacks,
+        stacks: mockStacks,
       }
       let scoreFunction = getters.getPlayerScores(state)  // returns a function
       let scores = scoreFunction()
@@ -80,7 +80,7 @@ describe('vuex getters', () => {
       expect(scores[1].score).toEqual(9)
     })
     test('ransomware on 1 player', () => {
-      let m_stacks = [
+      let mockStacks = [
         {playerId: 1, getScore: mockValue(6)},
         {playerId: 0, getScore: mockValue(15)},
         {playerId: 1, getScore: mockValue(3)},
@@ -89,7 +89,7 @@ describe('vuex getters', () => {
         players: [
           {id: 0, hurtBy: mockValue(true), negativeEffects: [{type: 'RANSOM', attackerId: 1}]},
           {id: 1, hurtBy: mockValue(false)}],
-        stacks: m_stacks,
+        stacks: mockStacks,
       }
       let scoreFunction = getters.getPlayerScores(state)  // returns a function
       let scores = scoreFunction()

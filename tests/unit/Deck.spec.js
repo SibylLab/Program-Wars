@@ -24,11 +24,11 @@ describe('Deck.js', () => {
     expect(testDeck.discard.length).toEqual(78)
 
     testDeck.draw()
-    expect(testDeck.cards.length).toEqual(77)
+    expect(testDeck.cards.length).toEqual(77 + 12)
     expect(testDeck.discard.length).toEqual(0)
   })
 
-  describe('correct setup for two player deck', () => {
+  describe('correct setup for deck', () => {
     let deck
     beforeEach(() => {
       deck = new Deck()

@@ -206,19 +206,30 @@ describe('mutations', () => {
       expect(payload.target.addPositive.mock.calls.length).toEqual(1)
       expect(payload.target.addPositive.mock.calls[0]).toEqual([ payload.card.type ])
     })
-    test('card is TROJAN', () => {
+    test('card is TROJAN target is not protected', () => {
       let state = {
         hands: [{playerId: 1, cards: [{type: 'REPEAT', value: 3}]}],
       }
       let payload = {
         card: {type: 'TROJAN', isSafety: mockValue(false)},
         player: {id: 2},
-        target: {id: 1, addPositive: mockValue()}
+        target: {id: 1, helpedBy: mockValue(false)}
       }
       mutations.addCardEffect(state, payload)
       expect(state.hands[0].cards.length).toEqual(1)
       expect(state.hands[0].cards[0].type).toEqual('REPEAT')
       expect(state.hands[0].cards[0].isMimic).toBeTruthy()
+    })
+    test('card is TROJAN target is protected', () => {
+      let payload = {
+        card: {type: 'TROJAN', isSafety: mockValue(false)},
+        target: {id: 1, helpedBy: mockValue(true), removePositive: mockValue(true)}
+      }
+      mutations.addCardEffect({}, payload)
+      expect(payload.target.helpedBy.mock.calls.length).toEqual(1)
+      expect(payload.target.helpedBy.mock.calls[0]).toEqual([ 'SCAN' ])
+      expect(payload.target.removePositive.mock.calls.length).toEqual(1)
+      expect(payload.target.removePositive.mock.calls[0]).toEqual([ 'SCAN' ])
     })
     test('card is attack', () => {
       let payload = {
