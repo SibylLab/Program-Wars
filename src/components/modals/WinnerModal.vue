@@ -44,7 +44,7 @@
             <tr> <th>Safety Bonus</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.safety }}</td>
             </tr>
-            <tr> <th>Complete Program</th>
+            <tr> <th>Nested Loops</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.complete }}</td>
             </tr>
             <tr> <th>Defensive Programmer (AntiVirus)</th>
@@ -88,7 +88,8 @@ export default {
   computed: {
     ...mapState([
       'players',
-      'stacks'
+      'stacks',
+      'hands'
     ]),
     // does not deal with ties
     getWinner () {
@@ -111,7 +112,8 @@ export default {
     addBonuses (player) {
       let scores = this.playerScore(player.id)
       let stacks = this.stacks.filter(s => s.playerId === player.id)
-      scores.bonuses = player.objectives.getBonuses(stacks)
+      let hand = this.hands.find(h => h.playerId === player.id)
+      scores.bonuses = player.objectives.getBonuses(hand, stacks)
     },
     finalScore (player) {
       let score = this.playerScore(player.id)

@@ -7,12 +7,13 @@
 const GROUP_BONUS = 5
 const REPEAT_BONUS = 3
 const VAR_BONUS = 2
-const SAFETY_BONUS = 10
+const SAFETY_BONUS = 3
 
 // Objective Bonuses
-const DEFENSIVE_BONUS = 10
+const ANTIVIRUS_BONUS = 10
+const FIREWALL_BONUS = 5
 const CLEAN_BONUS = 10
-const COMPLETE_BONUS = 10
+const COMPLETE_BONUS = 5
 
 
 /**
@@ -55,7 +56,7 @@ export default class Objectives {
    */
   getSafetyBonus () {
     let safetyCards = this.cardsPlayed.filter((c) => {
-      return c.type === "ANTIVIRUS" || c.type === "FIREWALL"
+      return c.type === "ANTIVIRUS" || c.type === "FIREWALL" || c.type === "SCAN"
     })
     return SAFETY_BONUS * safetyCards.length
   }
@@ -67,11 +68,11 @@ export default class Objectives {
    */
   getDefensiveBonus () {
     if (this.player.helpedBy("ANTIVIRUS")) {
-      return DEFENSIVE_BONUS
+      return ANTIVIRUS_BONUS
+    } else if (this.player.hasPositive('FIREWALL')) {
+      return FIREWALL_BONUS
     }
     return 0
-    
-
   }
   
   /**
@@ -79,24 +80,34 @@ export default class Objectives {
    * Clean bonus is given if the player has no Virus.
    * Is 0 if the player does not meet the requirements for the bonus.
    */
-  getCleanBonus () {
-    //return this.player.hurtBy("VIRUS") ? 0 : CLEAN_BONUS
+  getCleanBonus (playerHand, playerStacks) {
     if(this.player.hurtBy('RANSOM')|| this.player.hurtBy('SPYWARE')){
       return 0
+    }
+    // check for viruses
+    for (let stack of playerStacks) {
+      if (stack.getTop().type === 'VIRUS') {
+        return 0
+      }
+    }
+    // check for trojans
+    for (let card of playerHand.cards) {
+      if (card.isMimic) {
+        return 0
+      }
     }
     return CLEAN_BONUS
   }
 
   /**
-   * Return the bonus given if a player has at least one complete stack.
+   * Return a bonus for each stack that a player has with 2 repeats (Rx has to
+   * have variable on it).
    * Is 0 if the player has no complete stacks.
    * @param playerStacks An array of the player's stacks
    */
   getCompleteBonus (playerStacks) {
-    if (playerStacks.filter(s => s.isComplete()).length > 0) {
-      return COMPLETE_BONUS
-    }
-    return 0
+    let complete = playerStacks.filter(s => s.isComplete())
+    return complete.length * COMPLETE_BONUS
   }
 
   /**
@@ -104,13 +115,13 @@ export default class Objectives {
    * Requires the stacks of the player for complete program bonus.
    * @param stacks An array of the player's stacks
    */
-  getBonuses (stacks) {
+  getBonuses (hand, stacks) {
     let bonuses = {}
     bonuses.group = this.player.objectives.getGroupBonus()
     bonuses.repeat = this.player.objectives.getRepeatBonus()
     bonuses.variable = this.player.objectives.getVariableBonus()
     bonuses.safety = this.player.objectives.getSafetyBonus()
-    bonuses.clean = this.player.objectives.getCleanBonus()
+    bonuses.clean = this.player.objectives.getCleanBonus(hand, stacks)
     bonuses.defensive = this.player.objectives.getDefensiveBonus()
     bonuses.complete = this.getCompleteBonus(stacks)
 
