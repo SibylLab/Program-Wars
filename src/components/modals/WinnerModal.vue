@@ -47,7 +47,7 @@
             <tr> <th>Nested Loops</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.complete }}</td>
             </tr>
-            <tr> <th>Defensive Programmer (AntiVirus)</th>
+            <tr> <th>Defensive Programmer</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.defensive }}</td>
             </tr>
             <tr> <th>Clean System (No Malware)</th>

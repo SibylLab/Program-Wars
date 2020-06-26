@@ -54,14 +54,16 @@ export default {
   },
   computed: {
     ...mapState([
-      'stacks'
+      'stacks',
+      'hands'
     ]),
     /**
      * Get an object with all the player's bonus scores.
      */
     getBonuses () {
       let stacks = this.stacks.filter(s => s.playerId === this.player.id)
-      return this.player.objectives.getBonuses(stacks)
+      let hand = this.hands.find(h => h.playerId === this.player.id)
+      return this.player.objectives.getBonuses(hand, stacks)
     },
     /**
      * Returns a list of all the condition data.
@@ -72,17 +74,17 @@ export default {
       let conds = []
       conds.push({if: "group_card_played", reward: "+5 pts/card",
                   val: this.bonuses.group})
-      conds.push({if: "repeat_card_played", reward: "+2 pts/card",
+      conds.push({if: "repeat_card_played", reward: "+3 pts/card",
                   val: this.bonuses.repeat})
-      conds.push({if: "variable_card_played", reward: "+3 pts/card",
+      conds.push({if: "variable_card_played", reward: "+2 pts/card",
                   val: this.bonuses.variable})
-      conds.push({if: "safety_card_played",  reward: "+10 pts/card",
+      conds.push({if: "safety_card_played",  reward: "+3 pts/card",
                   val: this.bonuses.safety})
-      conds.push({if: "all_safeties", reward: "+10 pts",
+      conds.push({if: "defensive_bonus", reward: "Antivirus +10 || Firewall +5",
                   val: this.bonuses.defensive})
       conds.push({if: "no_malware", reward: "+10 pts",
                   val: this.bonuses.clean})
-      conds.push({if: "complete_program", reward: "+10 pts",
+      conds.push({if: "nested_loops", reward: "+5 pts/per nested loop",
                   val: this.bonuses.complete})
       return conds
     }
