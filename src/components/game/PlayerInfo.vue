@@ -69,8 +69,8 @@
       <p>Threat prevention shows all the safety and remedy cards that are active on the
          player. You can mouse over them to be reminded of what their effect is.</p>
       <p>Active Threats shows all the cyber attack cards that are active on the player.
-         These effects can be removed or prevented by different remedy and safety cards.
-         eg) Malware can be removed or prevented by Overclock and Anti-Virus cards.</p>
+         These effects can be removed or prevented by safety cards.
+         eg) Antivirus removes all malware effects.</p>
     </info-popup>
   </div>
 

@@ -1,5 +1,5 @@
 <template>
-<div id="side-objectives">
+<div id="side-objectives" :key="bonuses.total">
   <h3 id="title-text">bonus_points = {{ bonuses.total }}</h3>
 
   <!-- The small divisions give simple syntax higlighting to objective text -->
@@ -35,6 +35,7 @@
 
 <script>
 import InfoPopup from '@/components/shared/InfoPopup'
+import {bus} from '@/components/shared/Bus'
 import {mapState} from 'vuex'
 
 /**
@@ -57,14 +58,6 @@ export default {
       'stacks',
       'hands'
     ]),
-    /**
-     * Get an object with all the player's bonus scores.
-     */
-    getBonuses () {
-      let stacks = this.stacks.filter(s => s.playerId === this.player.id)
-      let hand = this.hands.find(h => h.playerId === this.player.id)
-      return this.player.objectives.getBonuses(hand, stacks)
-    },
     /**
      * Returns a list of all the condition data.
      * Each item text for in the if statement, text for in the body,
@@ -89,8 +82,22 @@ export default {
       return conds
     }
   },
+  methods: {
+    /**
+     * Get an object with all the player's bonus scores.
+     */
+    getBonuses () {
+      let stacks = this.stacks.filter(s => s.playerId === this.player.id)
+      let hand = this.hands.find(h => h.playerId === this.player.id)
+      return this.player.objectives.getBonuses(hand, stacks)
+    }
+  },
   created () {
-    this.bonuses = this.getBonuses
+    this.bonuses = this.getBonuses()
+
+    bus.$on('end-turn', () => {
+      this.bonuses = this.getBonuses()
+    })
   }
 }
 </script>
