@@ -5,8 +5,8 @@
 
 // Bonuses for each card played
 const GROUP_BONUS = 5
-const REPEAT_BONUS = 2
-const VAR_BONUS = 3
+const REPEAT_BONUS = 3
+const VAR_BONUS = 2
 const SAFETY_BONUS = 10
 
 // Objective Bonuses
@@ -66,10 +66,12 @@ export default class Objectives {
    * Is 0 if the player does not meet the requirements for the bonus.
    */
   getDefensiveBonus () {
-    if (this.player.helpedBy("ANTIVIRUS") && this.player.helpedBy("FIREWALL")) {
+    if (this.player.helpedBy("ANTIVIRUS")) {
       return DEFENSIVE_BONUS
     }
     return 0
+    
+
   }
   
   /**
@@ -78,7 +80,11 @@ export default class Objectives {
    * Is 0 if the player does not meet the requirements for the bonus.
    */
   getCleanBonus () {
-    return this.player.hurtBy("VIRUS") ? 0 : CLEAN_BONUS
+    //return this.player.hurtBy("VIRUS") ? 0 : CLEAN_BONUS
+    if(this.player.hurtBy('RANSOM')|| this.player.hurtBy('SPYWARE')){
+      return 0
+    }
+    return CLEAN_BONUS
   }
 
   /**
