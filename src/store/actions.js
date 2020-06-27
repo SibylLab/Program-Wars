@@ -68,7 +68,6 @@ export default {
    * }
    */
   executeTurn(context, payload) {
-   
     bus.$emit('card-played')
     let draw = true
     if (payload.playType === "DISCARD") {
@@ -79,7 +78,7 @@ export default {
       context.commit('giveNewHand', payload)
       draw = false
     } else {
-      log.warn({name:payload.player.name, card_played:payload.card.type, value: payload.card.value})
+      log.warn({Player:payload.player.name, card_played:payload.card.type, value: payload.card.value})
       context.dispatch(payload.playType, payload)
     }
 
@@ -104,7 +103,7 @@ export default {
     let scores = context.getters.getPlayerScores()
     for (let scoreInfo of scores) {
       if (scoreInfo.score >= context.state.scoreLimit) {
-        //Winmer Info added on log
+        //Winner Info added on log
         let winner = context.state.players.find (p => p.id === scoreInfo.playerId)
         log.warn({Winner:winner.name, WinnerScores:scoreInfo.score})
         
