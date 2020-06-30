@@ -18,7 +18,7 @@ before_script:
 install:
 - npm install
 script:
-- npm run test
+- npm run ci-coverage
 before_deploy:
 - npm run build
 if: branch = master
