@@ -21,10 +21,9 @@ export default {
    */
   newGame (context, payload) {
     context.commit('resetStateForGame')
-    context.commit('newTimer')
     context.commit('addPlayers', payload)
     context.commit('setStartingPlayer')
-    context.commit('createNewDeck', {numPlayers: context.state.players.length})
+    context.commit('createNewDeck')
 
     for (let p of context.state.players) {
       context.commit('giveNewHand', {player: p})
@@ -38,17 +37,9 @@ export default {
    * Will reset any state information for starting a new game.
    */
   leaveGame (context) {
-    context.dispatch('resetForHome')
+    context.commit('changeGameState', {newState: 'home'})
     context.commit('seenBackstory')
     router.push('home')
-  },
-
-  /**
-   * Resets necessary elements before returning to landing page.
-   */
-  resetForHome (context) {
-    context.commit('changeGameState', {newState: 'home'})
-    context.commit('stopTimer')
   },
 
   /**
@@ -65,7 +56,9 @@ export default {
    * }
    */
   executeTurn(context, payload) {
-    bus.$emit('card-played')
+    if (context.state.gameState === 'wait') { return }
+    bus.$emit('card-played', payload)
+    context.state.turnPlays.push(payload)
 
     let draw = true
     if (payload.playType === "DISCARD") {
@@ -73,28 +66,30 @@ export default {
     } else if (payload.playType === "REDRAW") {
       context.commit('giveNewHand', payload)
       draw = false
+    } else if (payload.card.isMimic) {
+      context.dispatch('playMimic', payload)
     } else {
       context.dispatch(payload.playType, payload)
     }
 
+    context.commit('updatePlayerEffects', payload)
     context.commit('addPlayedCard', payload)
-    if (context.state.activePlayer.isAi) {
-      setTimeout(() => {context.dispatch('endTurn', {draw: draw})}, 1000)
-    } else {
-      context.dispatch('endTurn', {draw: draw})
-    }
+
+    context.commit('changeGameState', {newState: 'wait'})
+    setTimeout(() => {
+      if (draw) {
+        context.commit('drawCard')
+      }
+      context.commit('changeGameState', {newState: 'game'})
+      context.dispatch('endTurn')
+    }, 1000)
   },
 
   /**
    * Clean up after a players turn and change to the next player.
    * Emits events for game-over and end-turn when necessary.
-   *
-   * Payload
-   * {
-   *   draw: whether the player needs to draw a new card or not
-   * }
    */
-  endTurn (context, payload) {
+  endTurn (context) {
     let scores = context.getters.getPlayerScores()
     for (let scoreInfo of scores) {
       if (scoreInfo.score >= context.state.scoreLimit) {
@@ -104,9 +99,6 @@ export default {
       }
     }
 
-    if (payload.draw) {
-      context.commit('drawCard')
-    }
     context.state.activeCard = undefined
     bus.$emit('end-turn')
 
@@ -171,12 +163,20 @@ export default {
   },
 
   /**
-   * Hacks a target stack by removing it from the target players stacks and
-   * discards the hack card.
-   * Payload same as executeTurn.
+   * Play a card that is mimicking another card.
    */
-  hackStack (context, payload) {
-    context.commit('removeStacks', {stacks: new Set([payload.target])})
+  playMimic (context, payload) {
+    let card = payload.card.replace()
+    let player = payload.card.player
     context.commit('discardCard', payload)
+    payload.card = card
+
+    if (card.type === "VIRUS") {
+      context.dispatch('playCardOnStack', payload)
+    } else {
+      payload.target = payload.player
+      payload.player = player
+      context.dispatch('playSpecialCard', payload)
+    }
   }
 }

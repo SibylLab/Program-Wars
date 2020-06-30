@@ -15,7 +15,7 @@
 <script>
 import PageHeader from '@/components/shared/PageHeader'
 import GameSetup from '@/components/landingPage/GameSetup'
-import {mapActions} from 'vuex'
+import {mapMutations} from 'vuex'
 
 /**
  * The main landing page for the game.
@@ -28,12 +28,12 @@ export default {
     'game-setup': GameSetup
   },
   methods: {
-    ...mapActions([
-      'resetForHome'
+    ...mapMutations([
+      'changeGameState'
     ]),
   },
   created () {
-    this.resetForHome()  // to ensure a stable reset from wherever we come from
+    this.changeGameState({newState: 'home'})
   }
 }
 </script>

@@ -38,9 +38,16 @@ export default class AiHandler {
   chooseAction(hand, players, stacks, scores) {
     // Try all the action handlers until one returns a turn object
     for (let action of this.actionHandlers) {
-      let result = action.handle(hand, players, stacks, scores)
-      if (result) {
-        return result
+      try {
+        let result = action.handle(hand, players, stacks, scores)
+        if (result) {
+          return result
+        }
+
+      // Ensure that a component error does not stop the AI turn
+      } catch (err) {
+        console.log("AI handler error:", err)  // eslint-disable-line
+        continue
       }
     }
     // If no handler can handle this action use the default action

@@ -3,6 +3,7 @@
  * @author Josh on 2017-03-13, Steven modified on 2020-05-25
  */
 
+// Function to create a unique object id
 const uuidV1 = require('uuid/v1')
 
 // The maximum number of repeats allowed in a stack
@@ -41,9 +42,13 @@ export default class Stack {
 
     let score = this.getBase().value
     for (let i = 1; i < this.cards.length; i++) {
-      score *= this.cards[i].value
+      if (this.cards[i].type === "VIRUS") {
+        score *= this.getBase().type === "GROUP" ? 0.5 : 0
+      } else {
+        score *= this.cards[i].value
+      }
     }
-    return score
+    return Math.floor(score)
   }
 
   /**
@@ -71,14 +76,6 @@ export default class Stack {
       return card.type === 'REPEAT' ? acc + 1 : acc
     }, 0)
     return numRepeats >= MAX_REPEATS
-  }
-
-  /**
-   * Checks to see if the stack is hackable or not.
-   * @return {bool} true if the stack can be hacked, false otherwise.
-   */
-  isHackable () {
-    return !this.isEmpty() && this.getBase().type !== 'GROUP'
   }
 
   /**
@@ -126,6 +123,12 @@ export default class Stack {
    */
   willAccept (card) {
     let top = this.getTop()
+    // stacks with virus on top cannot be played on, but otherwise always accept virus
+    if (top.type === "VIRUS") {
+      return false
+    } else if (card.type === "VIRUS") {
+      return true
+    }
     // Variable cards can only go on Rx cards or replace other variables
     if (card.type === "VARIABLE") {
       if (top.type === "REPEAT" && top.value === 1) {
@@ -154,6 +157,9 @@ export default class Stack {
    * where if a repeat card is an Rx it must be matched to a variable.
    */
   isComplete () {
+    if (this.getTop().type === 'VIRUS') {
+      return false
+    }
     // Checks to make sure there are no unpaired Rx cards
     for (let idx in this.cards) {
       let card = this.cards[idx]

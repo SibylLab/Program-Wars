@@ -30,8 +30,8 @@
     </ul>
   </div>
 
-  <div id="messages">
-    <message-box></message-box>
+  <div id="turns">
+    <turn-history></turn-history>
   </div>
 </div>
 </template>
@@ -40,7 +40,7 @@
 <script>
 import InfoPopup from '@/components/shared/InfoPopup'
 import TurnAreaCard from '@/components/game/TurnAreaCard'
-import MessageBox from '@/components/game/MessageBox'
+import TurnHistory from '@/components/game/TurnHistory'
 import {bus} from '@/components/shared/Bus'
 import {mapGetters, mapState, mapActions} from 'vuex'
 
@@ -59,7 +59,7 @@ export default {
   },
   components: {
     'info-popup': InfoPopup,
-    'message-box': MessageBox,
+    'turn-history': TurnHistory,
     'turn-area-card': TurnAreaCard
   },
   computed: {
@@ -109,15 +109,15 @@ export default {
 }
 
 #cards {
-  margin-top: 1%;
+  margin-top: 2%;
 }
 
-#messages {
+#turns {
   position: absolute;
-  top: 56%;
+  bottom: 17%;
   left: 10%;
   width: 80%;
-  height: 30%;
+  height: 80px;
 }
 
 ul {

@@ -9,7 +9,7 @@ describe('PlayBestCardAction', () => {
     player = {id: 0}
     order = [
       'GROUP', 'VARIABLE', 'REPEAT', 'INSTRUCTION', 'ANTIVIRUS', 'FIREWALL',
-      'OVERCLOCK', 'HACK', 'VIRUS'
+      'OVERCLOCK', 'VIRUS', 'RANSOM'
     ]
     action = new PlayBestCardAction(player, order) 
   }) 
@@ -17,7 +17,7 @@ describe('PlayBestCardAction', () => {
   test('constructor and play order', () => {
     expect(action.playOrder.GROUP).toEqual(0)
     expect(action.playOrder.INSTRUCTION).toEqual(3)
-    expect(action.playOrder.VIRUS).toEqual(8)
+    expect(action.playOrder.VIRUS).toEqual(7)
   })
 
   describe('handle', () => {
@@ -145,7 +145,7 @@ describe('PlayBestCardAction', () => {
       let result = action.variable('card', {hand, players, stacks, scores})
       expect(result).toBeUndefined()
     })
-    test('hack can play', () => {
+    test('virus can play', () => {
       let notEnoughCards = Object.assign({cards: ['c']}, stackScore_3)
       notEnoughCards.playerId = 4
 
@@ -161,19 +161,19 @@ describe('PlayBestCardAction', () => {
 
       const stacks = [stackNoAccept, hackStack_3, notEnoughCards, hackStack_6]
 
-      let result = action.hack('card', {hand, players, stacks, scores})
-      expect(result.playType).toEqual('hackStack')
+      let result = action.virus('card', {hand, players, stacks, scores})
+      expect(result.playType).toEqual('playCardOnStack')
       expect(result.card).toEqual('card')
       expect(result.player).toEqual(player)
       expect(result.target).toEqual(hackStack_6)
     })
-    test('hack no play', () => {
+    test('virus no play', () => {
       let noHack = Object.assign(stackScore_3)
       noHack.cards = ['card', 'card']
       noHack.isHackable = getValue(false)
       const stacks = [stackNoAccept, noHack]
 
-      let result = action.hack('card', {hand, players, stacks, scores})
+      let result = action.virus('card', {hand, players, stacks, scores})
       expect(result).toBeUndefined()
     })
     test('group can play', () => {

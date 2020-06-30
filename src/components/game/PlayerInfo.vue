@@ -4,15 +4,30 @@
     {{ player.name }}
   </h3>
 
+  <button id="spy-button" v-if="canSpy" :class="['btn', 'btn-sm', spyStyle]"
+      v-on:click="spyHand()">
+    {{ spyText }}
+  </button>
+
+  <div id="hand-box" v-if="showHand">
+    <h3 style="margin: 0;">
+      {{ player.name }}'s hand
+    </h3>
+    <ul>
+      <li v-for="card in playerCards" v-bind:key="card.id">
+        <img :src="card.image" class="spy-card" ondragstart="return false">
+      </li>
+    </ul>
+  </div>
+
   <img id="avatar" :class="[side, {active: isActive}]"
-      :src="playerImagePath">
+      :src="player.image">
 
   <h5 id="score-title" :class="side" style="position: absolute; top: 44%;">
-    <b>Score</b>
+    <b>Score:</b> <b>{{ getScore() }}/{{ scoreLimit }}</b>
   </h5>
   <div id="score-area" :class="side">
-    <h5 id="score-text"><b>{{ getScore() }}/{{ scoreLimit }}</b></h5>
-    <meter id="score-meter" style="z-index: 20;"
+    <meter id="score-meter"
        :max="scoreLimit" min=0
        :value="getScore()"
        :high="scoreLimit * 0.7"
@@ -26,9 +41,9 @@
     <div id="good-effects" :class="side"
         style="position: absolute; top: 5%;">
       <ul>
-        <img v-for="effect in player.positiveEffects" v-bind:key="effect"  
-            class="effect-icon" :src="effectImagePath(effect)"
-            :title="effectTooltip(effect)">
+        <img v-for="effect in player.positiveEffects" v-bind:key="effect.id"
+            class="effect-icon" :src="effect.image"
+            :title="effectTooltip(effect.type)">
       </ul>
     </div>
 
@@ -36,9 +51,9 @@
     <div id="bad-effects" :class="side"
         style="position: absolute; top: 55%;">
       <ul>
-        <img v-for="effect in player.negativeEffects" v-bind:key="effect"  
-            class="effect-icon" :src="effectImagePath(effect)"
-            :title="effectTooltip(effect)">
+        <img v-for="effect in player.negativeEffects" v-bind:key="effect.id"  
+            class="effect-icon" :src="effect.image"
+            :title="effectTooltip(effect.type)">
       </ul>
     </div>
   </div>
@@ -54,8 +69,8 @@
       <p>Threat prevention shows all the safety and remedy cards that are active on the
          player. You can mouse over them to be reminded of what their effect is.</p>
       <p>Active Threats shows all the cyber attack cards that are active on the player.
-         These effects can be removed or prevented by different remedy and safety cards.
-         eg) Malware can be removed or prevented by Overclock and Anti-Virus cards.</p>
+         These effects can be removed or prevented by safety cards.
+         eg) Antivirus removes all malware effects.</p>
     </info-popup>
   </div>
 
@@ -79,7 +94,8 @@ export default {
   props: ['player', 'side'],
   data () {
     return {
-      update: true
+      update: true,
+      showHand: false
     }
   },
   components: {
@@ -89,7 +105,8 @@ export default {
     ...mapState([
       'scoreLimit',
       'stacks',
-      'activePlayer'
+      'activePlayer',
+      'hands'
     ]),
     playerImagePath () {
       // later change to imageId to get the specific image they want 
@@ -100,6 +117,20 @@ export default {
     },
     opposite () {
       return this.side === 'right' ? 'left' : 'right'
+    },
+    canSpy () {
+      let spies = this.player.negativeEffects.filter(e => e.type === 'SPYWARE')
+      return spies.find(s => s.attackerId === this.activePlayer.id) !== undefined
+    },
+    playerCards () {
+      let hand = this.hands.find(h => h.playerId === this.player.id)
+      return hand.cards
+    },
+    spyText () {
+      return this.showHand ? 'End Spy' : 'Spy'
+    },
+    spyStyle () {
+      return this.showHand ? 'btn-danger' : 'btn-primary'
     }
   },
   methods: {
@@ -119,12 +150,18 @@ export default {
       let scores = this.$store.getters.getPlayerScores()
       let scoreInfo = scores.find(scr => scr.playerId === this.player.id)
       return scoreInfo.score
+    },
+    spyHand () {
+      this.showHand = !this.showHand
     }
   },
   created () {
     bus.$on('card-played', () => {
       // Scores and effect lists must be updated when a card is played
       this.update = !this.update
+    })
+    bus.$on('end-turn', () => {
+      this.showHand = false
     })
   }
 }
@@ -162,15 +199,6 @@ export default {
   height: 24px;
 }
 
-#score-text {
-  position: absolute;
-  margin: 0;
-  left: 40%;
-  top: 10%;
-  z-index: 40;
-  color: black;
-}
-
 #score-meter {
   position: absolute;
   top: 0;
@@ -198,9 +226,24 @@ export default {
 }
 
 #info-button {
-  position: relative;
-  margin-top: 1.5%;
-  margin-left: 35%;
+  position: absolute;
+  top: 4%;
+  right: 20%;
+}
+
+#spy-button {
+  position: absolute;
+  top: 17%;
+}
+
+#hand-box {
+  position: fixed;
+  top: 50px;
+  left: 27.5%;
+  background-color: #DFDFDF;
+  border: solid black 3px;
+  border-radius: 5px;
+  z-index: 200;
 }
 
 .left {
@@ -221,13 +264,22 @@ export default {
   width: 30px;
   height: 30px;
   margin: 20px 5px; 
-  border: solid black 2px;
+}
+
+.spy-card {
+  margin: 10px;
+  width: 100px;
+  height: auto;
 }
 
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+li {
+  display: inline;
 }
 
 h5 {

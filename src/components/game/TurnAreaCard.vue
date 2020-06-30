@@ -13,7 +13,6 @@
          v-on:click="discard">
 
       <effect-card-popup></effect-card-popup>
-
     </div>
   </div> 
 

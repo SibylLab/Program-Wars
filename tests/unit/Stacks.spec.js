@@ -2,13 +2,14 @@ import Stack from '@/classes/game/Stack'
 import Card from '@/classes/game/Card'
 
 let stack
-let instruction = new Card(2, 1, 'INSTRUCTION')
-let group = new Card(3, 2, 'GROUP')
-let repeat = new Card(4, 3, 'REPEAT')
-let r_x = new Card(5, 1, 'REPEAT')
-let variable = new Card(6, 4, 'VARIABLE')
-let variable_sm = new Card(7, 3, 'VARIABLE')
-let variable_lg = new Card(8, 6, 'VARIABLE')
+let instruction = new Card('INSTRUCTION', 1)
+let group = new Card('GROUP', 2)
+let repeat = new Card('REPEAT', 3)
+let r_x = new Card('REPEAT', 1)
+let variable = new Card('VARIABLE', 4)
+let variable_sm = new Card('VARIABLE', 3)
+let variable_lg = new Card('VARIABLE', 6)
+let virus = new Card('VIRUS', 0)
 
 
 describe('Stack.js', () => {
@@ -45,6 +46,16 @@ describe('Stack.js', () => {
     stack.cards.push(repeat)
     expect(stack.getScore()).toEqual(18)
   })
+  test('calculate correct score virus', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(virus)
+    expect(stack.getScore()).toEqual(0)
+  })
+  test('calculate correct score virus on group', () => {
+    stack.cards.push(group)
+    stack.cards.push(virus)
+    expect(stack.getScore()).toEqual(1)
+  })
   test('maximum number of repeats (2)', () => {
     stack.cards.push(instruction)
     stack.cards.push(repeat)
@@ -53,15 +64,6 @@ describe('Stack.js', () => {
     expect(stack.hasMaxRepeats()).toBeTruthy()
     stack.cards.push(repeat)
     expect(stack.hasMaxRepeats()).toBeTruthy()
-  })
-  test('stack is hackable true', () => {
-    stack.cards.push(instruction)
-    expect(stack.isHackable()).toBeTruthy()
-  })
-  test('stack is hackable false', () => {
-    expect(stack.isHackable()).toBeFalsy()
-    stack.cards.push(group)
-    expect(stack.isHackable()).toBeFalsy()
   })
   test('stack is complete true w/ no Rx', () => {
     stack.cards.push(instruction)
@@ -85,6 +87,13 @@ describe('Stack.js', () => {
     stack.cards.push(instruction)
     stack.cards.push(repeat)
     stack.cards.push(r_x)
+    expect(stack.isComplete()).toBeFalsy()
+  })
+  test('stack is complete false w/ virus', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(repeat)
+    stack.cards.push(repeat)
+    stack.cards.push(virus)
     expect(stack.isComplete()).toBeFalsy()
   })
   test('stack has variable true', () => {
@@ -139,6 +148,25 @@ describe('Stack.js', () => {
     stack.cards.push(variable)
     expect(stack.willAccept(variable_sm)).toBeFalsy()
   })
+  test('stack will accept virus', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(r_x)
+    stack.cards.push(variable)
+    expect(stack.willAccept(virus)).toBeTruthy()
+  })
+  test('stack will not accept repeat card on top of virus', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(virus)
+    expect(stack.willAccept(repeat)).toBeFalsy()
+  })
+  test('stack will not accept variable replacement with virus top', () => {
+    stack.cards.push(instruction)
+    stack.cards.push(r_x)
+    stack.cards.push(variable_sm)
+    expect(stack.willAccept(variable_lg)).toBeTruthy()
+    stack.cards.push(virus)
+    expect(stack.willAccept(variable_lg)).toBeFalsy()
+  })
   test('replace lowest variable in stack', () => {
     stack.cards.push(instruction)
     stack.cards.push(r_x)
@@ -163,5 +191,4 @@ describe('Stack.js', () => {
     expect(replaced === repeat).toBeTruthy()
     expect(stack.cards.find(c => c === repeat)).toBeFalsy()
   })
-  
 })

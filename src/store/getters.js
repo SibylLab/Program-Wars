@@ -38,35 +38,7 @@ export default {
     return state.players.filter((p) => {
       return p.id !== state.activePlayer.id && !p.isProtectedFrom(effect)
              && !p.hurtBy(effect)
-
     })
-  },
-
-  /**
-   * Get a list of hackable opponents.
-   */
-  getHackableOpponents (state) {
-    return state.players.filter((p) => {
-      if (p.id === state.activePlayer.id || p.helpedBy('FIREWALL')) {
-        return false
-      }
-      let stacks = state.stacks.filter(s => s.playerId === p.id && s.isHackable())
-      return stacks.length > 0
-    })
-  },
-
-  /**
-   * Get current players objectives.
-   */
-  getCurrentPlayerObjectives (state) {
-    return state.objectives.find(ob => ob.playerId === state.activePlayer.id)
-  },
-
-  /**
-   * Tell if the program is in game state.
-   */
-  isGame (state) {
-    return state.gameState === 'game'
   },
 
   /**
@@ -83,20 +55,32 @@ export default {
    * see https://vuex.vuejs.org/guide/getters.html#method-style-access
    */
   getPlayerScores: (state) => () => {
-    let scores = []
+    let scores = state.players.map((p) => {
+      return {playerId: p.id, score: 0, baseScore: 0}
+    })
+
     for (let player of state.players) {
       let stacks = state.stacks.filter(s => s.playerId === player.id)
       let base = stacks.reduce((acc, stack) => {
         return acc + stack.getScore()
       }, 0)
 
-      let total = player.hurtBy("VIRUS") ? base * 0.75 : base
-
-      scores.push({
-        playerId: player.id,
-        score: Math.floor(total),
-        baseScore: base
-      })
+      // Add or subtract bonus points from the players score
+      let extra = 0
+      if (player.hurtBy('RANSOM')) {
+        let penalty = 10
+        let ransomEffects = player.negativeEffects.filter(e => e.type === 'RANSOM')
+        for (let effect of ransomEffects) {
+          extra -= penalty
+          let attackerScore = scores.find(s => s.playerId === effect.attackerId)
+          attackerScore.score += penalty
+        }
+      }
+      
+      let score = scores.find(s => s.playerId === player.id)
+      score.base = base
+      // += base because players may be recieving bonuses from their ransoms
+      score.score += base + Math.floor(extra)
     }
     return scores
   }

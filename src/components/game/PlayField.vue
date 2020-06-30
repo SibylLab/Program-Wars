@@ -30,13 +30,12 @@
       <p>Group cards can be used to group stacks with total points equal to the group
          card's value. The group card will replace all cards that are grouped in a single
          new stack.</p>
-      <p>Hack cards can be dragged onto any opponent stack that is highlighted red
-         to remove that stack from the opponents Playfield.</p>
-      <p>The scores from each stack are added up to help the player reach the score total.
-         If the player or the stack is affected by a negative effect the stack score
-         will change to red. This means the stacks is not contributing it's full score.
-         An example is the Malware card which reduces the players total score to 75% of
-         its actual value.</p>
+      <p>Virus cards can be dragged onto any opponent stack that is highlighted red.
+         Stacks with a Virus card on top will not be able to be added to. Those
+         started with instructions cards will be worth 0 points and those started with
+         Group cards will be worth 50%. Virus cards can be removed with Antivirus and
+         Scan cards to restore your stacks full value</p>
+      <p>The scores from each stack are added up to help the player reach the score total.</p>
     </info-popup>
   </div>
 
@@ -93,7 +92,7 @@ export default {
         return false
       }
       return this.playerStacks.reduce((acc, stack) => {
-        return acc || stack.getScore() <= this.groupCardValue
+        return acc || (stack.getScore() <= this.groupCardValue && stack.getTop().type !== 'VIRUS')
       }, false)
     },
     groupCardValue () {
@@ -110,7 +109,7 @@ export default {
      * So instead we add a new stack containing the card.
      */
     onDrop (evt) {
-      let cardId = parseInt(evt.dataTransfer.getData('cardId'))
+      let cardId = evt.dataTransfer.getData('cardId')
       let hand = this.getCurrentPlayerHand
       let card = hand.cards.find(c => c.id === cardId)
 
@@ -142,8 +141,9 @@ export default {
           && stack.cards[0].value === this.groupCardValue) {
         return false
       }
-      return this.isGrouping && (this.grouped.hasStack(stack)
-             || this.grouped.score + stack.getScore() <= this.groupCardValue)
+      return this.isGrouping && stack.getTop().type !== 'VIRUS'
+             && (this.grouped.hasStack(stack)
+                 || this.grouped.score + stack.getScore() <= this.groupCardValue)
     },
     /**
      * Adds or removes the stack from the grouped stacks.
