@@ -6,7 +6,7 @@ function mockValue (value) { return jest.fn(() => {return value}) }
 
 
 describe('vuex actions', () => {
-  let context, player
+  let context
   beforeEach(() => {
     jest.useFakeTimers()
     context = {commit: mockValue(), dispatch: mockValue()}
