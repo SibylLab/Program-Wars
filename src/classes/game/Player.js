@@ -23,7 +23,7 @@ export default class Player {
     this.isAi = isAi
     this.positiveEffects = []
     this.negativeEffects = []
-    this.objectives = new Objectives(this)
+    this.objectives = new Objectives(this.id)
     this.image = 'static/playerImages/player' + id + '.png'
   }
 

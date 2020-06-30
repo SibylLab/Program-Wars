@@ -113,7 +113,7 @@ export default {
       let scores = this.playerScore(player.id)
       let stacks = this.stacks.filter(s => s.playerId === player.id)
       let hand = this.hands.find(h => h.playerId === player.id)
-      scores.bonuses = player.objectives.getBonuses(hand, stacks)
+      scores.bonuses = player.objectives.getBonuses(player, hand, stacks)
     },
     finalScore (player) {
       let score = this.playerScore(player.id)
