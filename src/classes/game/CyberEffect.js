@@ -3,6 +3,7 @@
  * @author Steve on 2020-06-18
  */
 
+// Function to create a unique object id
 const uuidV1 = require('uuid/v1')
 
 /**

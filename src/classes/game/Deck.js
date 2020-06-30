@@ -40,14 +40,14 @@ export default class Deck {
   constructor () {
     this.cards = []
     this.discard = []
-    this.addCards(cardTypes)
+    this.addCards(cardTypes, 4)
   }
 
   /**
    * Initializes the deck with a pre determined number and type of cards.
    * Shuffles the deck.
    */
-  addCards (cardsToAdd) {
+  addCards (cardsToAdd, shuffles) {
     for (let [type, values] of Object.entries(cardsToAdd)) {
       for (let [value, number] of Object.entries(values)) {
         for (let i = 0; i < number; i++) {
@@ -56,9 +56,9 @@ export default class Deck {
       }
     }
     // Shuffle a few times to try and get a good random order
-    this.shuffle(this.cards)
-    this.shuffle(this.cards)
-    this.shuffle(this.cards)
+    for (let i = 0; i < shuffles; i++) {
+      this.shuffle(this.cards)
+    }
   }
 
   /**

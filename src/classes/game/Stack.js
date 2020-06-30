@@ -3,6 +3,7 @@
  * @author Josh on 2017-03-13, Steven modified on 2020-05-25
  */
 
+// Function to create a unique object id
 const uuidV1 = require('uuid/v1')
 
 // The maximum number of repeats allowed in a stack

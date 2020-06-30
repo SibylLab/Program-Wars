@@ -33,7 +33,7 @@
       <p>Virus cards can be dragged onto any opponent stack that is highlighted red.
          Stacks with a Virus card on top will not be able to be added to. Those
          started with instructions cards will be worth 0 points and those started with
-         Group cards will be woth 50%. Virus cards can be removed with Antivirus and
+         Group cards will be worth 50%. Virus cards can be removed with Antivirus and
          Scan cards to restore your stacks full value</p>
       <p>The scores from each stack are added up to help the player reach the score total.</p>
     </info-popup>
