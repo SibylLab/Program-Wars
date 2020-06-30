@@ -11,12 +11,15 @@
     <four-player-game v-if="numPlayers(4)"></four-player-game>
     <two-player-game v-else></two-player-game>
   </div>
+
+  <effect-notifications></effect-notifications>
   
 </div>
 </template>
 
 
 <script>
+import EffectNotifications from '@/components/game/EffectNotifications'
 import WinnerModal from '@/components/modals/WinnerModal'
 import PageHeader from '@/components/shared/PageHeader'
 import TwoPlayerGame from '@/components/game/TwoPlayerGame'
@@ -34,7 +37,8 @@ export default {
     'winner-modal': WinnerModal,
     'page-header': PageHeader,
     'two-player-game': TwoPlayerGame,
-    'four-player-game': FourPlayerGame
+    'four-player-game': FourPlayerGame,
+    'effect-notifications': EffectNotifications
   },
   computed: {
     ...mapState([

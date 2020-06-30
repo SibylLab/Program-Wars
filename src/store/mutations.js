@@ -1,8 +1,8 @@
-import Timer from 'easytimer'
 import { bus } from '@/components/shared/Bus'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
 import Stack from '@/classes/game/Stack'
+import Trojan from '@/classes/game/Trojan'
 import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
 
 
@@ -31,8 +31,8 @@ export default {
     state.activePlayer = undefined
     state.activeCard = undefined
     state.scoreLimit = 75
-    state.tips = {showTips: true, factIndex: 0}
     state.turnNumber = 0
+    state.turnPlays = []
   },
 
   /**
@@ -60,36 +60,8 @@ export default {
   /**
    * Create a new deck for a game with a given payload.numPlayers.
    */
-  createNewDeck (state, payload) {
-    state.deck = new Deck(payload.numPlayers)
-  },
-
-  /**
-   * Toggle game tips on and off.
-   */
-  toggleTips (state) {
-    state.tips.showTips = !state.tips.showTips
-  },
-
-  /**
-   * Setup a new timer.
-   */
-  newTimer (state) {
-    state.timer = new Timer()
-    state.timer.start()
-    // eslint-disable-next-line no-unused-vars
-    state.timer.addEventListener('secondsUpdated', (e) => {
-      $('#basicUsage').html(state.timer.getTimeValues().toString())
-    })
-  },
-
-  /**
-   * Stop the current timer.
-   */
-  stopTimer (state) {
-    if (state.timer) {
-      state.timer.stop()
-    }
+  createNewDeck (state) {
+    state.deck = new Deck()
   },
 
   /**
@@ -125,10 +97,8 @@ export default {
   giveNewHand (state, payload) {
     // discard old hand if applicable
     let oldHand = state.hands.find(h => h.playerId === payload.player.id)
-    if (oldHand !== undefined) {
-      for (let card of oldHand.cards) {
-        state.deck.discard.push(card)
-      }
+    if (oldHand) {
+      this.commit('discardHand', {hand: oldHand})
     }
 
     // create and fill new hand
@@ -141,6 +111,19 @@ export default {
     state.hands = state.hands.filter(h => h.playerId !== payload.player.id)
     state.hands.push(hand) 
     state.activeCard = undefined
+  },
+
+  /**
+   * Discards all the cards in a given hand.
+   */
+  discardHand (state, payload) {
+    for (let card of payload.hand.cards) {
+      if (card.isMimic) {
+        state.deck.discard.push(card.card)
+      } else if (!card.isExtra) {
+        state.deck.discard.push(card)
+      }
+    }
   },
 
   /**
@@ -160,6 +143,18 @@ export default {
     id = (id + 1) % state.players.length
     state.activePlayer = state.players.find(p => p.id === id)
     if (id === 0) { state.turnNumber++ }
+  },
+
+  /**
+   * Updates the cyber effects on the given player.
+   */
+  updatePlayerEffects (state, payload) {
+    let effects = payload.player.positiveEffects.concat(payload.player.negativeEffects)
+    for (let effect of effects) {
+      if (effect.takeTurn() === 0) {
+        payload.player.removeEffect(effect)
+      }
+    }
   },
 
   /**
@@ -183,7 +178,11 @@ export default {
   discardCard (state, payload) {
     let hand = state.hands.find(h => h.playerId === payload.player.id)
     hand.cards = hand.cards.filter(c => c !== payload.card)
-    state.deck.discard.push(payload.card)
+    if (payload.card.isMimic) {
+      state.deck.discard.push(payload.card.card)
+    } else if (!payload.card.isExtra) {
+      state.deck.discard.push(payload.card)
+    }
     state.activeCard = undefined
   },
 
@@ -198,11 +197,93 @@ export default {
    * }
    */
   addCardEffect (state, payload) {
-    if (payload.card.isSafety()) {
+    if (payload.card.type === 'SCAN') {
+      this.commit('playScan', payload)
+    } else if (payload.card.isSafety()) {
       payload.target.addPositive(payload.card.type)
-    } else {
-      payload.target.addNegative(payload.card.type)
+      this.commit('cleanMalware', payload)
+    } else if (payload.card.type === 'TROJAN') {
+      if (payload.target.helpedBy('SCAN')) {
+        payload.target.removePositive('SCAN')
+      } else {
+        let hand = state.hands.find(h => h.playerId === payload.target.id)
+        let pos = Math.floor(Math.random() * hand.cards.length)
+        hand.cards[pos] = new Trojan(hand.cards[pos], payload.player)
+      }
+    } else if (payload.card.isAttack()) {
+      payload.target.addNegative(payload.card.type, payload.player.id)
     }
+  },
+
+  /**
+   * Cleans up all negative effects that are in play in a players hand or
+   * on their stacks when adding the appropriate positiveEffect.
+   */
+  cleanMalware (state, payload) {
+    if (payload.card.type === 'ANTIVIRUS' || payload.card.type === 'FIREWALL') {
+      // replace active trojans with the card they are mimicking
+      let hand = state.hands.find(h => h.playerId === payload.player.id)
+      for (let idx in hand.cards) {
+        if (hand.cards[idx].isMimic) {
+          hand.cards[idx] = hand.cards[idx].card
+        }
+      }
+    }
+    // discard all virus cards on player's stacks when playing antivirus
+    if (payload.card.type === 'ANTIVIRUS') {
+      let stacks = state.stacks.filter(s => s.playerId === payload.player.id)
+      for (let stack of stacks) {
+        if (stack.getTop().type === 'VIRUS') {
+          state.deck.discard.push(stack.cards.pop())
+        }
+      }
+    }
+  },
+
+  /**
+   * Removes one random malware that a player has attached to them.
+   * Trojan cards are discarded and new cards are drawn.
+   */
+  playScan (state, payload) {
+    // Remove a virus if there is one
+    let infectedStacks = state.stacks.filter((s) => {
+      return s.playerId === payload.player.id && s.getTop().type === 'VIRUS'
+    })
+    if (infectedStacks.length > 0) {
+      // find the largest stack and remove it's virus first eventually
+      state.deck.discard.push(infectedStacks[0].cards.pop())
+      bus.$emit('scan-effect', 'VIRUS')
+      return
+    }
+
+    // Remove a mimicked card next if there is one
+    let hand = state.hands.find(h => h.playerId === payload.player.id)
+    let mimics = hand.cards.filter(c => c.isMimic)
+    if (mimics.length > 0) {
+      this.commit('discardCard', {player: payload.player, card: mimics[0]})
+      this.commit('drawCard')
+      bus.$emit('scan-effect', 'TROJAN')
+      return
+    }
+
+    // Remove a ransom next if there is one
+    let ransoms = payload.player.negativeEffects.filter(e => e.type === 'RANSOM')
+    if (ransoms.length > 0) {
+      payload.player.removeEffect(ransoms[0])
+      bus.$emit('scan-effect', 'RANSOM')
+      return
+    }
+
+    // Remove a spyware next if there is one
+    let spys = payload.player.negativeEffects.filter(e => e.type === 'SPYWARE')
+    if (spys.length > 0) {
+      payload.player.removeEffect(spys[0])
+      bus.$emit('scan-effect', 'SPYWARE')
+      return
+    }
+
+    // just add the scan to the player
+    payload.target.addPositive(payload.card.type)
   },
 
   /**
@@ -230,6 +311,15 @@ export default {
    * }
    */
   addToStack (state, payload) {
+    // Don't add virus if the player has active SCAN effect
+    if (payload.card.type === 'VIRUS') {
+      let targetPlayer = state.players.find(p => p.id === payload.target.playerId)
+      if (targetPlayer.helpedBy('SCAN')) {
+        targetPlayer.removePositive('SCAN')
+        return
+      }
+    }
+
     // If we are adding a variable are we replacing one
     let top = payload.target.getTop()
     let replace = !(top.type === "REPEAT" && top.value === 1)

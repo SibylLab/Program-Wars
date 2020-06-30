@@ -18,6 +18,6 @@ describe('AiHandlerFactory', () => {
     expect(handler.player).toBe(player)
     expect(handler.actionHandlers.length).toEqual(1)
     expect(handler.actionHandlers[0].player).toBe(player)
-    expect(handler.actionHandlers[0].playOrder.HACK).toEqual(0)
+    expect(handler.actionHandlers[0].playOrder.VIRUS).toEqual(0)
   })
 })
