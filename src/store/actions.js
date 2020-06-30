@@ -59,14 +59,11 @@ export default {
    * }
    */
   executeTurn(context, payload) {
-<<<<<<< HEAD
-    bus.$emit('card-played')
-=======
     if (context.state.gameState === 'wait') { return }
     bus.$emit('card-played', payload)
     context.state.turnPlays.push(payload)
 
->>>>>>> addMalwareCards-#534
+
     let draw = true
     if (payload.playType === "DISCARD") {
       log.warn({DiscardBy:payload.player.name, card:payload.card.type, value: payload.card.value})
