@@ -19,6 +19,14 @@
 import {bus} from '@/components/shared/Bus'
 import {mapState} from 'vuex'
 
+/**
+ * A notification that will flash on the screen to show when a triggered effect
+ * happens.
+ * Ie) a player playes a mimicked card and it is replaced. This will show the
+ * the card played pointing to the card that it was replaced by.
+ * The goal is to give the player visual notification that something other than
+ * what they expected has happened.
+ */
 export default {
   name: 'effect-notifications',
   data () {

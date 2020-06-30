@@ -32,6 +32,9 @@ import InfoPopup from '@/components/shared/InfoPopup'
 import {mapState} from 'vuex'
 
 /**
+ * Shows the last 8 plays that have been made with the card, player, and target
+ * icons.
+ * This is to help the players better keep track of what other players are doing.
  */
 export default {
   name: 'turn-history',
@@ -42,6 +45,9 @@ export default {
     ...mapState([
       'turnPlays'
     ]),
+    /**
+     * Returns the last 8 plays that were made.
+     */
     history () {
       let end = this.turnPlays.length
       let start = end < 8 ? 0 : Math.abs(end - 8)
@@ -49,6 +55,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * Given a play it will return the image path that is needed for the card
+     * or effect.
+     */
     image (play) {
       let path = 'static/cardImages/effects/'
       if (play.playType === "REDRAW") {
@@ -62,10 +72,16 @@ export default {
       }
       return path + '.png'
     },
+    /**
+     * Return the path for the player's image.
+     */
     playerImage (play) {
       let path = 'static/playerImages/player'
       return path + play.player.id + '.png'
     },
+    /**
+     * Return the path for the target player's image.
+     */
     targetImage (play) {
       let path = 'static/playerImages/player'
       let id = '0'
@@ -76,6 +92,9 @@ export default {
       }
       return path + id + '.png'
     },
+    /**
+     * Checks to see if a play should have a target player.
+     */
     hasTargetPlayer (play) {
       if (play.card && (play.card.isAttack() || play.card.type === 'VIRUS')) {
         return true
