@@ -169,10 +169,15 @@ export default {
    * Payload same as executeTurn.
    */
   groupStacks (context, payload) {
+    let stackValue= []
+    for (let stack of payload.target.values()) {
+      stackValue.push(stack.getScore())   
+    }
+
     context.commit('removeStacks', {stacks: payload.target})
     context.commit('newStack', payload)
     context.commit('removeFromHand', payload)
-    log.warn(payload.player.name, payload.card.type, payload.card.value,stackValue)
+    log.warn(payload.player.name, payload.card.type, payload.card.value, stackValue)
   },
 
   /**
