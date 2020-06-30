@@ -1,6 +1,9 @@
 import { bus } from '@/components/shared/Bus'
 import router from '@/router'
 
+// loging framework
+const log = require('loglevel');
+
 /**
  * All actions that are taken involving the vuex state.
  * These actions should be used when combining multiple mutations or
