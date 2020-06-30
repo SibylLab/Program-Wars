@@ -6,7 +6,7 @@ notifications:
   slack:
     rooms:
     - programwarscardgame:u1VhNgRjj1X8gxpEWhfLw6MP#builds
-    on_success: change
+    on_success: always
     on_failure: always
 cache:
   directories:
