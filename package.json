@@ -15,7 +15,6 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "easytimer.js": "^2.2.3",
-    "loglevel": "^1.6.8",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"

@@ -1,9 +1,6 @@
 import { bus } from '@/components/shared/Bus'
 import router from '@/router'
 
-
-var log = require('loglevel');
-
 /**
  * All actions that are taken involving the vuex state.
  * These actions should be used when combining multiple mutations or
@@ -59,26 +56,19 @@ export default {
    * }
    */
   executeTurn(context, payload) {
-<<<<<<< HEAD
-    bus.$emit('card-played')
-=======
     if (context.state.gameState === 'wait') { return }
     bus.$emit('card-played', payload)
     context.state.turnPlays.push(payload)
 
->>>>>>> addMalwareCards-#534
     let draw = true
     if (payload.playType === "DISCARD") {
-      log.warn({DiscardBy:payload.player.name, card:payload.card.type, value: payload.card.value})
       context.commit('discardCard', payload)
     } else if (payload.playType === "REDRAW") {
-      log.warn({RedrawBy:payload.player.name})
       context.commit('giveNewHand', payload)
       draw = false
     } else if (payload.card.isMimic) {
       context.dispatch('playMimic', payload)
     } else {
-      log.warn({Player:payload.player.name, card_played:payload.card.type, value: payload.card.value})
       context.dispatch(payload.playType, payload)
     }
 
@@ -103,10 +93,6 @@ export default {
     let scores = context.getters.getPlayerScores()
     for (let scoreInfo of scores) {
       if (scoreInfo.score >= context.state.scoreLimit) {
-        //Winner Info added on log
-        let winner = context.state.players.find (p => p.id === scoreInfo.playerId)
-        log.warn({Winner:winner.name, WinnerScores:scoreInfo.score})
-        
         bus.$emit('game-over')
         context.commit('changeGameState', {newState: 'winner'})
         return
@@ -143,7 +129,6 @@ export default {
    * Payload same as executeTurn.
    */
   playCardOnStack (context, payload) {
-    log.warn(payload.player.name, payload.card.type, payload.card.value, payload.target.getScore())
     context.commit('removeFromHand', payload)
     context.commit('addToStack', payload)
   },
@@ -162,7 +147,6 @@ export default {
    * Payload same as executeTurn.
    */
   playSpecialCard (context, payload) {
-    log.warn(payload.player.name, payload.card.type)
     context.commit('addCardEffect', payload)
     context.commit('discardCard', payload)
   },
@@ -173,19 +157,10 @@ export default {
    * Payload same as executeTurn.
    */
   groupStacks (context, payload) {
-    
-    let stackValue= []
-    for (let stack of payload.target.values()){
-      stackValue.push(stack.getScore())   
-    }
-    
-   
     context.commit('removeStacks', {stacks: payload.target})
     context.commit('newStack', payload)
     context.commit('removeFromHand', payload)
-    log.warn(payload.player.name, payload.card.type, payload.card.value,stackValue)
-    
-      },
+  },
 
   /**
    * Play a card that is mimicking another card.
