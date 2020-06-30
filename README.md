@@ -1,5 +1,5 @@
 # Program Wars
-[![Build Status](https://travis-ci.org/johnanvik/program-wars.svg?branch=master)](https://travis-ci.org/johnanvik/program-wars)
+[![Build Status](https://travis-ci.org/SibylLab/Program-Wars.svg?branch=master)](https://travis-ci.org/SibylLab/Program-Wars)
 [![GitHub open issues](https://img.shields.io/github/issues-raw/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/issues)
 
