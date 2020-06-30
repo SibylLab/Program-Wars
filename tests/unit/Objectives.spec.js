@@ -17,7 +17,7 @@ describe('Objectives.js', () => {
   test('all objectives when there are no cards played', () => {
     // Might be better to mock out the player in the future
     let player = new Player(0, 'steve', false)
-    let bonuses = player.objectives.getBonuses({cards: []},[])
+    let bonuses = player.objectives.getBonuses(player, {cards: []},[])
     expect(bonuses.group).toEqual(0)
     expect(bonuses.repeat).toEqual(0)
     expect(bonuses.variable).toEqual(0)
@@ -60,17 +60,17 @@ describe('Objectives.js', () => {
     test('player has antivirus', () => {
       let player = new Player(1, 'steve', false)
       player.addPositive("ANTIVIRUS")
-      expect(player.objectives.getDefensiveBonus()).toEqual(10)
+      expect(player.objectives.getDefensiveBonus(player)).toEqual(10)
     })
     test('player has firewall', () => {
       let player = new Player(1, 'steve', false)
       player.addPositive("FIREWALL")
-      expect(player.objectives.getDefensiveBonus()).toEqual(5)
+      expect(player.objectives.getDefensiveBonus(player)).toEqual(5)
     })
     test('player has scan', () => {
       let player = new Player(1, 'steve', false)
       player.addPositive("SCAN")
-      expect(player.objectives.getDefensiveBonus()).toEqual(0)
+      expect(player.objectives.getDefensiveBonus(player)).toEqual(0)
     })
   })
 
@@ -78,21 +78,21 @@ describe('Objectives.js', () => {
     test('player has no malware', () => {
       let player = new Player(1, 'steve', false)
       let stack = {getTop: mockValue(repeat)}
-      expect(player.objectives.getCleanBonus({cards: [{isMimic: false}]}, [stack])).toEqual(10)
+      expect(player.objectives.getCleanBonus(player, {cards: [{isMimic: false}]}, [stack])).toEqual(10)
     })
     test('player has virus', () => {
       let player = new Player(1, 'steve', false)
       let stack = {getTop: mockValue(virus)}
-      expect(player.objectives.getCleanBonus({cards: []}, [stack])).toEqual(0)
+      expect(player.objectives.getCleanBonus(player, {cards: []}, [stack])).toEqual(0)
     })
     test('player has trojan', () => {
       let player = new Player(1, 'steve', false)
-      expect(player.objectives.getCleanBonus({cards: [{isMimic: true}]}, [])).toEqual(0)
+      expect(player.objectives.getCleanBonus(player, {cards: [{isMimic: true}]}, [])).toEqual(0)
     })
     test('player has negative effect', () => {
       let player = new Player(1, 'steve', false)
       player.addNegative('RANSOM', 0)
-      expect(player.objectives.getCleanBonus({cards: []}, [])).toEqual(0)
+      expect(player.objectives.getCleanBonus(player, {cards: []}, [])).toEqual(0)
     })
 
   })
