@@ -1,5 +1,7 @@
 import actions from '@/store/actions.js'
 
+jest.mock('loglevel')
+
 function mockValue (value) { return jest.fn(() => {return value}) }
 
 
@@ -41,6 +43,8 @@ describe('vuex actions', () => {
     test('play type is DISCARD', () => {
       let payload = {
         playType: 'DISCARD',
+        player: {name: 'jeff'},
+        card: {type: 'GROUP', value: 4}
       }
       context.state = {gameState: 'game', turnPlays: []}
 
@@ -70,6 +74,8 @@ describe('vuex actions', () => {
       // will not test all the intermediate steps already tested above
       let payload = {
         playType: 'REDRAW',
+        player: {name: 'jeff'},
+        card: {type: 'GROUP', value: 4}
       }
       context.state = {gameState: 'game', turnPlays: []}
 
@@ -98,7 +104,8 @@ describe('vuex actions', () => {
       // will not test all the intermediate steps already tested above
       let payload = {
         playType: 'playCardOnStack',
-        card: {isMimic: false}
+        player: {name: 'jeff'},
+        card: {type: 'GROUP', value: 4, isMimic: false}
       }
       context.state = {gameState: 'game', turnPlays: []}
 
@@ -148,12 +155,13 @@ describe('vuex actions', () => {
     })
     test('game is over', () => {
       context.getters = {
-        getPlayerScores: mockValue([ {score: 60}, {score: 80} ])
+        getPlayerScores: mockValue([ {playerId: 0, score: 60}, {playerId: 1, score: 80} ])
       }
       context.state = {
         scoreLimit: 75, 
         activeCard: 'card',
-        activePlayer: {isAi: true}
+        activePlayer: {isAi: true},
+        players: [{id: 0}, {id: 1, name: 'jeff'}]
       }
       actions.endTurn(context)
       expect(context.getters.getPlayerScores.mock.calls.length).toEqual(1)
@@ -184,10 +192,15 @@ describe('vuex actions', () => {
     // does not check bus.$emit
   })
   test('playCardOnStack', () => {
-    actions.playCardOnStack(context, 'payload')
+    let payload = {
+      player: {name: 'jeff'},
+      card: {type: 'REPEAT', value: 3},
+      target: {getScore: mockValue(10)}
+    }
+    actions.playCardOnStack(context, payload)
     expect(context.commit.mock.calls.length).toEqual(2)
-    expect(context.commit.mock.calls[0]).toEqual([ 'removeFromHand', 'payload' ])
-    expect(context.commit.mock.calls[1]).toEqual([ 'addToStack', 'payload' ])
+    expect(context.commit.mock.calls[0]).toEqual([ 'removeFromHand', payload ])
+    expect(context.commit.mock.calls[1]).toEqual([ 'addToStack', payload ])
   })
   test('startNewStack', () => {
     actions.startNewStack(context, 'payload')
@@ -196,13 +209,24 @@ describe('vuex actions', () => {
     expect(context.commit.mock.calls[1]).toEqual([ 'newStack', 'payload' ])
   })
   test('playSpecialCard', () => {
-    actions.playSpecialCard(context, 'payload')
+    let payload = {
+      player: {name: 'jeff'},
+      card: {type: 'RANSOM'},
+      target: {name: 'phil'}
+    }
+    actions.playSpecialCard(context, payload)
     expect(context.commit.mock.calls.length).toEqual(2)
-    expect(context.commit.mock.calls[0]).toEqual([ 'addCardEffect', 'payload' ])
-    expect(context.commit.mock.calls[1]).toEqual([ 'discardCard', 'payload' ])
+    expect(context.commit.mock.calls[0]).toEqual([ 'addCardEffect', payload ])
+    expect(context.commit.mock.calls[1]).toEqual([ 'discardCard', payload ])
   })
   test('groupStacks', () => {
-    let payload = {target: 'stacks'}
+    let payload = {
+      target: new Set([
+        {getScore: mockValue(2)}, {getScore: mockValue(2)}
+      ]),
+      card: {type: 'GROUP', value: 4},
+      player: {name: 'jeff'},
+    }
     actions.groupStacks(context, payload)
     expect(context.commit.mock.calls.length).toEqual(3)
     expect(context.commit.mock.calls[0]).toEqual([ 'removeStacks', {stacks: payload.target} ])
