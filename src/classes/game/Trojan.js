@@ -5,6 +5,7 @@
 
 import Card from '@/classes/game/Card'
 
+
 /**
  * A Card that will pretend to be another card but will change the cards effect
  * when played.
@@ -14,6 +15,7 @@ export default class Trojan extends Card {
    * Constructor for the Trojan class
    * @constructor Trojan
    * @param {Card} card The card the trojan is hiding behind.
+   * @param {Player} player The player that played the trojan.
    */
   constructor (card, player) {
     super(card.type, card.value)

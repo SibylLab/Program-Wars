@@ -9,6 +9,7 @@ const uuidV1 = require('uuid/v1')
 // The maximum number of repeats allowed in a stack
 const MAX_REPEATS = 2
 
+
 /**
  * A stack of cards played by a player.
  */
@@ -88,6 +89,7 @@ export default class Stack {
   /**
    * Replaces the lowest variable card in the stack with the given card.
    * Returns the replaced card.
+   * @param card The variable card to replace with.
    */
   replaceLowestVar (card) {
     // find the index and values of all variable cards
@@ -152,7 +154,7 @@ export default class Stack {
   }
 
   /**
-   * Checks to see if the stack is a complete program.
+   * Checks to see if the stack is a complete program (nested loops).
    * A complete program is one with the max number of repeat cards
    * where if a repeat card is an Rx it must be matched to a variable.
    */

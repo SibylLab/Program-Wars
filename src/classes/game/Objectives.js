@@ -66,6 +66,7 @@ export default class Objectives {
    * Return the the defensive bonus the player has.
    * Defensive bonus is given if the player has all safety (not remedy) cards active.
    * Is 0 if the player does not meet the requirements for the bonus.
+   * @param player The player to calculate bonus for.
    */
   getDefensiveBonus (player) {
     if (player.helpedBy("ANTIVIRUS")) {
@@ -80,6 +81,9 @@ export default class Objectives {
    * Return the the clean bonus the player has.
    * Clean bonus is given if the player has no Virus.
    * Is 0 if the player does not meet the requirements for the bonus.
+   * @param player The player to calculate bonus for.
+   * @param playerHand The player's hand.
+   * @param playerStacks An array of the player's stacks
    */
   getCleanBonus (player, playerHand, playerStacks) {
     if(player.hurtBy('RANSOM')|| player.hurtBy('SPYWARE')){
@@ -114,7 +118,9 @@ export default class Objectives {
   /**
    * Wraps all the bonuses up into an object for convenience.
    * Requires the stacks of the player for complete program bonus.
-   * @param stacks An array of the player's stacks
+   * @param player The player to calculate bonus for.
+   * @param hand The player's hand.
+   * @param stacks The player's stacks.
    */
   getBonuses (player, hand, stacks) {
     let bonuses = {}
