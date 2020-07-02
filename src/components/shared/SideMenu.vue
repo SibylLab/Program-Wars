@@ -14,7 +14,7 @@
     <a class="menu-item" data-toggle="modal" data-target=".backstory">Backstory</a>
     <a class="menu-item" data-toggle="modal" data-target=".rules">Rules</a>
     <a class="menu-item" data-toggle="modal" data-target=".credits">Credits</a>
-    <a class="menu-item" href="https://gitreports.com/issue/johnanvik/program-wars"
+    <a class="menu-item" href="https://gitreports.com/issue/SibylLab/Program-Wars"
         target="_blank">Report Issue</a>
   </div>
 
