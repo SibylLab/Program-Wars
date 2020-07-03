@@ -31,7 +31,8 @@ export default class MethodStackFirst extends ActionHandler {
     })
 
     if (instructions.length > 0) {
-      let card = instructions.sort((a,b) => { a.value - b.value }).shift()
+      instructions.sort((a,b) => { return b.value - a.value })
+      let card = instructions.shift()
       return {
         playType: 'playCardOnStack',
         card: card,

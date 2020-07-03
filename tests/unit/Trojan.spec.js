@@ -4,7 +4,7 @@ import Card from '@/classes/game/Card'
 const scan = new Card('SCAN', 0)
 const ransom = new Card('RANSOM', 0)
 const virus = new Card('VIRUS', 0)
-const group = new Card('GROUP', 3)
+const method = new Card('METHOD', 3)
 const instruction = new Card('INSTRUCTION', 2)
 const repeat = new Card('REPEAT', 4)
 
@@ -27,8 +27,8 @@ describe('Trojan', () => {
     expect(replaced.type).toEqual("RANSOM")
     expect(replaced.isExtra).toBeTruthy()
   })
-  test('replace group is ransom card', () => {
-    let trojan = new Trojan(group, player)
+  test('replace method is ransom card', () => {
+    let trojan = new Trojan(method, player)
     let replaced = trojan.replace()
     expect(replaced.type).toEqual("RANSOM")
   })

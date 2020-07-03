@@ -11,7 +11,7 @@ describe('Deck.js', () => {
   test('constructor functions as expected', () => {
     let testDeck = new Deck()
     expect(testDeck.discard.length).toEqual(0)
-    expect(testDeck.cards.length).toEqual(82)
+    expect(testDeck.cards.length).toEqual(83)
   })
   test('deck refreshes when trying to draw a card from empty deck', () => {
     let testDeck = new Deck(1)
@@ -21,10 +21,10 @@ describe('Deck.js', () => {
       testDeck.discard.push(card)
     }
     expect(testDeck.cards.length).toEqual(0)
-    expect(testDeck.discard.length).toEqual(82)
+    expect(testDeck.discard.length).toEqual(83)
 
     testDeck.draw()
-    expect(testDeck.cards.length).toEqual(81)
+    expect(testDeck.cards.length).toEqual(82)
     expect(testDeck.discard.length).toEqual(0)
   })
 
@@ -34,7 +34,10 @@ describe('Deck.js', () => {
       deck = new Deck()
     })
     test('correct number of instructions', () => {
-      expect(count(deck.cards, 'INSTRUCTION')).toEqual(30)
+      expect(count(deck.cards, 'INSTRUCTION')).toEqual(28)
+    })
+    test('correct number of methods', () => {
+      expect(count(deck.cards, 'METHOD')).toEqual(12)
     })
     test('correct number of repeats', () => {
       expect(count(deck.cards, 'REPEAT')).toEqual(16)
@@ -72,7 +75,15 @@ describe('Deck.js', () => {
     test('draw function works properly', () => {
       // The deck shuffles itself when created, no way of know what the top card is
       expect(deck.draw()).not.toBeUndefined()
-      expect(deck.cards.length).toEqual(81)
+      expect(deck.cards.length).toEqual(82)
     })
+  })
+
+  test('refresh deck when it needs cards added', () => {
+    let testDeck = new Deck()
+    for (let i = 0; i < 5; i++) { testDeck.draw() }
+    expect(testDeck.cards.length).toEqual(78)
+    testDeck.refresh()
+    expect(testDeck.cards.length).toEqual(92)
   })
 })

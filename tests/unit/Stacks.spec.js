@@ -2,8 +2,8 @@ import Stack from '@/classes/game/Stack'
 import Card from '@/classes/game/Card'
 
 let stack
-let instruction = new Card('INSTRUCTION', 1)
-let group = new Card('GROUP', 2)
+let instruction = new Card('INSTRUCTION', 2)
+let method = new Card('METHOD', 2)
 let repeat = new Card('REPEAT', 3)
 let r_x = new Card('REPEAT', 1)
 let variable = new Card('VARIABLE', 4)
@@ -37,10 +37,10 @@ describe('Stack.js', () => {
   test('calculate correct score no repeats', () => {
     expect(stack.getScore()).toEqual(0)
     stack.cards.push(instruction)
-    expect(stack.getScore()).toEqual(1)
+    expect(stack.getScore()).toEqual(2)
   })
   test('calculate correct score with repeats', () => {
-    stack.cards.push(group)
+    stack.cards.push(instruction)
     stack.cards.push(repeat)
     expect(stack.getScore()).toEqual(6)
     stack.cards.push(repeat)
@@ -51,8 +51,8 @@ describe('Stack.js', () => {
     stack.cards.push(virus)
     expect(stack.getScore()).toEqual(0)
   })
-  test('calculate correct score virus on group', () => {
-    stack.cards.push(group)
+  test('calculate correct score virus on method', () => {
+    stack.cards.push(method)
     stack.cards.push(virus)
     expect(stack.getScore()).toEqual(1)
   })

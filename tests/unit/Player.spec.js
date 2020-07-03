@@ -61,6 +61,13 @@ describe('Player.js', () => {
     expect(player.helpedBy("FIREWALL")).toBeTruthy()
     expect(player.hurtBy("RANSOM")).toBeFalsy()
   })
+  test('can only add 1 of the same type of positive', () => {
+    player.addPositive("FIREWALL")
+    player.addPositive("FIREWALL")
+    player.addPositive("FIREWALL")
+    expect(player.helpedBy("FIREWALL")).toBeTruthy()
+    expect(player.positiveEffects.length).toEqual(1)
+  })
   test('adding malware removes scan and does not add malware', () => {
     player.addPositive("SCAN")
     player.addNegative("RANSOM")
