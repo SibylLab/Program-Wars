@@ -16,11 +16,11 @@ describe('mutations', () => {
     expect(state.hands.length).toEqual(0)
     expect(state.stacks.length).toEqual(0)
     expect(state.aiHandlers.length).toEqual(0)
-    expect(state.deck.cards.length).toEqual(82)
+    expect(state.deck.cards.length).toEqual(83)
     expect(state.gameState).toEqual('game')
     expect(state.activePlayer).toBeUndefined()
     expect(state.activeCard).toBeUndefined()
-    expect(state.scoreLimit).toEqual(75)
+    expect(state.scoreLimit).toEqual(150)
   })
   test('seenBackstory', () => {
     let state = {showBackstory: true}
@@ -42,17 +42,18 @@ describe('mutations', () => {
     let state = {deck: mockDeck}
     mutations.createNewDeck(state, {newState: 'newState'})
     expect(state.deck).not.toEqual(mockDeck)
-    expect(state.deck.cards.length).toEqual(82)
+    expect(state.deck.cards.length).toEqual(83)
   })
   test('add human and AI player', () => {
     let playerInfo = [{name:'steve', ai: false}, {name:'n00b_b0t', ai: true}]
-    let state = {players: [], aiHandlers: []}
+    let state = {players: [], aiHandlers: [], methods: []}
     mutations.addPlayers(state, {players: playerInfo})
     expect(state.players.length).toEqual(2)
     expect(state.players[0].name).toEqual('steve')
     expect(state.players[1].name).toEqual('n00b_b0t')
     expect(state.aiHandlers.length).toEqual(1)
     expect(state.aiHandlers[0].player.name).toEqual('n00b_b0t')
+    expect(state.methods.length).toEqual(2)
   })
 
   describe('giveNewHand', () => {
@@ -381,7 +382,8 @@ describe('mutations', () => {
           playerId: 1,
           cards: [],
           getTop: mockValue({type: 'REPEAT', value: 3}),
-          isComplete: mockValue(false)
+          isComplete: mockValue(false),
+          isEmpty: mockValue(false)
       }
       let payload = {card: {type: 'VIRUS'}, target: mockStack}
       let state = {
@@ -400,7 +402,8 @@ describe('mutations', () => {
           playerId: 1,
           cards: [],
           getTop: mockValue({type: 'REPEAT', value: 1}),
-          isComplete: mockValue(true)
+          isComplete: mockValue(true),
+          isEmpty: mockValue(false)
       }
       let payload = {card: {type: 'VARIABLE'}, target: mockStack}
       let state = {players: [{id: 1}], stacks: [mockStack, {stackId: 5}]}
@@ -419,6 +422,7 @@ describe('mutations', () => {
           cards: [],
           getTop: mockValue({type: 'REPEAT', value: 4}),
           isComplete: mockValue(false),
+          isEmpty: mockValue(false),
           hasVariable: mockValue(true),
           replaceLowestVar: mockValue('LOW_VAR')
       }
@@ -438,6 +442,28 @@ describe('mutations', () => {
       expect(state.stacks.length).toEqual(2)
       expect(state.stacks[0]).toEqual(mockStack)
       expect(state.stacks[1].stackId).toEqual(5)
+    })
+    test('card is instructions and we add it to empty method stack', () => {
+      let mockStack = {
+          stackId: 3,
+          playerId: 1,
+          cards: [],
+          isComplete: mockValue(false),
+          isEmpty: mockValue(true),
+          isMethod: true
+      }
+      let payload = {card: {type: 'INTRUCTION'}, target: mockStack, player: 'player'}
+      let state = {
+        players: [{id: 1}],
+        stacks: [mockStack],
+        deck: {discard: []}
+      }
+
+      mutations.addToStack(state, payload)
+      expect(mockStack.cards.length).toEqual(1)
+      expect(mutations.commit.mock.calls.length).toEqual(1)      
+      expect(mutations.commit.mock.calls[0]).toEqual(
+        [ 'updateMethodCardValues', {player: 'player'} ])
     })
   })
 
@@ -468,12 +494,12 @@ describe('mutations', () => {
       expect(state.stacks[0].cards[0]).toEqual(payload.card)
       expect(state.stacks[1]).toBe(mockStack)
     })
-    test('new group stack no stacks to be placed in front of', () => {
+    test('new method stack no stacks to be placed in front of', () => {
       let payload = {
         player: {id: 1},
-        card: {type: 'GROUP'}
+        card: {type: 'METHOD'}
       }
-      let mockStack = {cards: [{type: 'GROUP'}], isComplete: mockValue(false)}
+      let mockStack = {cards: [{type: 'METHOD'}], isComplete: mockValue(false)}
       let state = {stacks: [mockStack]}
 
       mutations.newStack(state, payload)
@@ -482,10 +508,10 @@ describe('mutations', () => {
       expect(state.stacks[1].playerId).toEqual(1)
       expect(state.stacks[1].cards[0]).toEqual(payload.card)
     })
-    test('new group stack placed in front of single instruction stack', () => {
+    test('new method stack placed in front of single instruction stack', () => {
       let payload = {
         player: {id: 1},
-        card: {type: 'GROUP'}
+        card: {type: 'METHOD'}
       }
       let mockStack = {cards: [{type: 'INSTRUCTION'}], isComplete: mockValue(false)}
       let state = {stacks: [mockStack]}
@@ -495,7 +521,7 @@ describe('mutations', () => {
       expect(state.stacks[0].playerId).toEqual(1)
       expect(state.stacks[0].cards[0]).toEqual(payload.card)
       expect(state.stacks[1]).toBe(mockStack)
-      expect(mockStack.isComplete.mock.calls.length).toEqual(0)
+      expect(mockStack.isComplete.mock.calls.length).toEqual(1)
     })
   })
 
@@ -530,6 +556,33 @@ describe('mutations', () => {
       }
       mutations.addPlayedCard({}, payload)
       expect(payload.player.objectives.cardsPlayed.length).toEqual(0)
+    })
+  })
+
+  describe('updateMethodCardValues', () => {
+    test('stack starting with method is present', () => {
+      let card = {type: 'METHOD', value: 0}
+      let stack = {playerId: 3, getBase: mockValue(card)} 
+      let state = {
+        methods: [ {playerId: 3, getScore: mockValue(5)} ],
+        stacks: [ stack ]
+      }
+
+      mutations.updateMethodCardValues(state, {player: {id: 3}})
+      expect(stack.getBase.mock.calls.length).toEqual(2)
+      expect(card.value).toEqual(5)
+    })
+    test('there are no stacks starting with methods', () => {
+      let card = {type: 'INSTRUCTION', value: 2}
+      let stack = {playerId: 3, getBase: mockValue(card)} 
+      let state = {
+        methods: [ {playerId: 3, getScore: mockValue(5)} ],
+        stacks: [ stack ]
+      }
+
+      mutations.updateMethodCardValues(state, {player: {id: 3}})
+      expect(stack.getBase.mock.calls.length).toEqual(1)
+      expect(card.value).toEqual(2)
     })
   })
 })

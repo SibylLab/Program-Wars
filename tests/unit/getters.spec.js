@@ -27,6 +27,11 @@ describe('vuex getters', () => {
     let hand = getters.getCurrentPlayerHand(state)
     expect(hand.playerId).toEqual(1)
   })
+  test('get the current players method', () => {
+    const state = { activePlayer: m_players[1], methods: [{playerId: m_players[1].id}] }
+    let method = getters.getCurrentMethod(state)
+    expect(method.playerId).toEqual(1)
+  })
   test('get the current players stacks', () => {
     const state = { activePlayer: m_players[1], stacks: m_stacks }
     let stacks = getters.getCurrentPlayerStacks(state)
