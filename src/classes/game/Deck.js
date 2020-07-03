@@ -10,7 +10,7 @@ const cardTypes = {
   "INSTRUCTION": {1: 9, 2: 12, 3: 9},
   "REPEAT": {1: 5, 2: 3, 3: 5, 4: 3},
   "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
-  "METHOD": {1: 10},
+  "METHOD": {0: 10},
   "VIRUS": {0: 3},
   "RANSOM": {0: 3},
   "SPYWARE": {0: 3},

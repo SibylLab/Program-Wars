@@ -2,7 +2,7 @@ import Stack from '@/classes/game/Stack'
 
 
 // The maximum score allowed for a method
-const METHOD_LIMIT = 12
+const METHOD_LIMIT = 9
 
 
 /**
@@ -11,6 +11,7 @@ const METHOD_LIMIT = 12
 export default class MethodStack extends Stack {
   constructor (playerId) {
     super(playerId)
+    this.isMethod = true
   }
 
   getScore () {
