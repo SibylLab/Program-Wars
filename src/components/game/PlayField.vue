@@ -10,6 +10,10 @@
   </div>
 
   <ul id="stack-list">
+    <div id="method">
+      <card-stack :stack="playerMethod"></card-stack>
+    </div>
+
     <li class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id">
       <button id="group-button" :class="['btn', 'btn-sm', groupStyle(stack)]"
           v-if="canGroup(stack)" v-on:click="toggleGroup(stack)" :key="groupText(stack)">
@@ -74,13 +78,17 @@ export default {
     ...mapState([
       'stacks',
       'activePlayer',
-      'activeCard'
+      'activeCard',
+      'methods'
     ]),
     ...mapGetters([
       'getCurrentPlayerHand'
     ]),
     playerStacks () {
       return this.stacks.filter(s => s.playerId === this.player.id)
+    },
+    playerMethod () {
+      return this.methods.find(m => m.playerId === this.player.id)
     },
     /**
      * Checks to see if the current player has selected a group card and
@@ -114,7 +122,7 @@ export default {
       let card = hand.cards.find(c => c.id === cardId)
 
       if (card && this.player.id === this.activePlayer.id
-          && card.type === "INSTRUCTION") {
+          && (card.type === "INSTRUCTION" || card.type === "METHOD")) {
         this.executeTurn({
           playType: "startNewStack",
           card: card,
@@ -216,6 +224,15 @@ export default {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+#method {
+  background-color: #444444;
+  border: solid white 3px;
+  color: white;
+  width: 250px;
+  height: 150px;
+  display: inline-block;
 }
 
 .card-stack {

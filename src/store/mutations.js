@@ -2,6 +2,7 @@ import { bus } from '@/components/shared/Bus'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
 import Stack from '@/classes/game/Stack'
+import MethodStack from '@/classes/game/MethodStack'
 import Trojan from '@/classes/game/Trojan'
 import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
 
@@ -24,6 +25,7 @@ export default {
     state.players = []
     state.stacks = []
     state.hands = []
+    state.methods = []
     state.aiHandlers = []
     state.objectives = []
     state.deck = new Deck()
@@ -77,6 +79,7 @@ export default {
     for (let i = 0; i < playerInfo.length; i++) {
       let player = new Player(i, playerInfo[i].name, playerInfo[i].ai)
       state.players.push(player)
+      state.methods.push(new MethodStack(player.id))
 
       if (player.isAi) {
         let handler = factory.newHandler(playerInfo[i].personality, player)

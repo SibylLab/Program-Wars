@@ -14,7 +14,7 @@ export default class MethodStack extends Stack {
   }
 
   getScore () {
-    return this.cards.reduce((acc, card) => { return acc + card.value })
+    return this.cards.reduce((acc, card) => { return acc + card.value }, 0)
   }
 
   hasMaxRepeats () {

@@ -20,6 +20,7 @@ export const store = new Vuex.Store({
     players: [],
     stacks: [],
     hands: [],
+    methods: [],
     aiHanlders: [],
     deck: undefined,
     gameState: 'home',

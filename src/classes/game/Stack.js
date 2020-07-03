@@ -22,6 +22,7 @@ export default class Stack {
     this.stackId = uuidV1()
     this.playerId = playerId
     this.cards = []
+    this.isMethod = false
   }
 
   /**
