@@ -32,14 +32,15 @@ export default class AiHandler {
    * @param hand The hand of the Ai player.
    * @param players A list of all players in the game.
    * @param stacks A list of all stacks in play.
+   * @param method The players method stack.
    * @param scores A list of current player scores.
    * @return a turn object {playType, card, player, target}
    */
-  chooseAction(hand, players, stacks, scores) {
+  chooseAction(hand, players, stacks, method, scores) {
     // Try all the action handlers until one returns a turn object
     for (let action of this.actionHandlers) {
       try {
-        let result = action.handle(hand, players, stacks, scores)
+        let result = action.handle(hand, players, stacks, method, scores)
         if (result) {
           return result
         }
@@ -51,6 +52,6 @@ export default class AiHandler {
       }
     }
     // If no handler can handle this action use the default action
-    return this.defaultAction.handle(hand, players, stacks, scores)
+    return this.defaultAction.handle(hand, players, stacks, method, scores)
   }
 }

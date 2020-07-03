@@ -28,10 +28,11 @@ export default class ActionHandler {
    * @param hand The hand of the AI player.
    * @param players A list of all players in the game.
    * @param stacks A list of all stacks in play.
+   * @param method The players method stack.
    * @param scores A list of current player scores.
    * @return a turn object {playType, card, player, target} or undefined.
    */
-  handle(hand, players, stacks, scores) {  // eslint-disable-line no-unused-vars
+  handle(hand, players, stacks, method, scores) {  // eslint-disable-line no-unused-vars
     return undefined
   }
 }

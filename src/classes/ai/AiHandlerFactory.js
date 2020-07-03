@@ -5,6 +5,7 @@
 
 import AiHandler from '@/classes/ai/AiHandler'
 import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
+import MethodStackFirst from '@/classes/ai/MethodStackFirst'
 
 
 // card orders for different AI personalities
@@ -38,7 +39,7 @@ export default class AiHandlerFactory {
    * Create and return an AiHandler of the given type for the given player.
    */
   newHandler (personality, player) {
-    let actions = []
+    let actions = [new MethodStackFirst(player)]
 
     let cards = CARD_ORDER.basic
     if (personality in CARD_ORDER) {
