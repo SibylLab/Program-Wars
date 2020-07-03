@@ -356,7 +356,6 @@ export default {
     }
 
     if (stack.isMethod) {
-      console.log("add to method")
       this.commit('updateMethodCardValues', {player: payload.player})
     } else if (stack.isComplete()) {
       // If the stack is now complete move it to the end
@@ -434,7 +433,6 @@ export default {
    * Payload { player: the player that played the card }
    */
   updateMethodCardValues (state, payload) {
-    console.log("update method values")
     let value = state.methods.find(m => m.playerId === payload.player.id).getScore()
     let stacks = state.stacks.filter(s => s.playerId === payload.player.id)
     for (let stack of stacks) {
