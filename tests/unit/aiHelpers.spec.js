@@ -59,44 +59,4 @@ describe('aiHelpers', () => {
       expect(result).toEqual(4)
     })
   })
-
-  describe('groupStacks', () => {
-    const stack_1a = {getScore: getValue(1)}
-    const stack_1b = {getScore: getValue(1)}
-    const stack_1c = {getScore: getValue(1)}
-    const stack_3 = {getScore: getValue(3)}
-    const stack_4 = {getScore: getValue(4)}
-
-    test('simple one stack has goal', () => {
-      const stacks = [stack_3]
-      let result = aiHelpers.groupStacks(3, stacks)
-      expect(result.size).toEqual(1)
-      expect(result.has(stack_3)).toBeTruthy()
-    })
-    test('simple one stack does not have goal', () => {
-      const stacks = [stack_3]
-      let result = aiHelpers.groupStacks(4, stacks)
-      expect(result.size).toEqual(0)
-    })
-    test('several stacks single stack meets goal', () => {
-      const stacks = [stack_4, stack_1a, stack_3, stack_1b]
-      let result = aiHelpers.groupStacks(3, stacks)
-      expect(result.size).toEqual(1)
-      expect(result.has(stack_3)).toBeTruthy()
-    })
-    test('several stacks multiple solutions want [3, 1, 1, 1]', () => {
-      const stacks = [stack_1a, stack_4, stack_3, stack_1b, stack_1c]
-      let result = aiHelpers.groupStacks(6, stacks)
-      expect(result.size).toEqual(4)
-      expect(result.has(stack_3)).toBeTruthy()
-      expect(result.has(stack_1a)).toBeTruthy()
-      expect(result.has(stack_1b)).toBeTruthy()
-      expect(result.has(stack_1c)).toBeTruthy()
-    })
-    test('several stacks does not have goal', () => {
-      const stacks = [stack_1a, stack_3, stack_4]
-      let result = aiHelpers.groupStacks(6, stacks)
-      expect(result.size).toEqual(0)
-    })
-  })
 })
