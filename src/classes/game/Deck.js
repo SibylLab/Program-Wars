@@ -7,10 +7,10 @@ import Card from './Card'
 
 // card types along with {value: numCard} pairs for each
 const cardTypes = {
-  "INSTRUCTION": {1: 9, 2: 12, 3: 9},
-  "REPEAT": {1: 5, 2: 3, 3: 5, 4: 3},
+  "INSTRUCTION": {1: 10, 2: 12, 3: 6},
+  "REPEAT": {1: 5, 2: 5, 3: 4, 4: 2},
   "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
-  "METHOD": {0: 10},
+  "METHOD": {0: 12},
   "VIRUS": {0: 3},
   "RANSOM": {0: 3},
   "SPYWARE": {0: 3},
@@ -24,7 +24,7 @@ const cardTypes = {
 const refreshCards = {
   "METHOD": {0: 3},
   "REPEAT": {1: 2, 3: 3, 4: 2},
-  "VARIABLE": {4: 1, 5: 1, 6: 1},
+  "VARIABLE": {4: 1, 5: 2, 6: 1},
 }
 
 
