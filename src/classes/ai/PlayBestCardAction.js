@@ -99,7 +99,7 @@ export default class PlayBestCardAction extends ActionHandler {
       player: this.player,
     }
 
-    if (!state.method.isComplete()) {
+    if (!state.method.isComplete() && card.value <= state.method.toLimit()) {
       move.playType = 'playCardOnStack',
       move.target = state.method
     } else {

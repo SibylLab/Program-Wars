@@ -33,7 +33,7 @@ export default class MethodStack extends Stack {
 
   // is the method up to the limit yet
   isComplete () {
-    return this.getScore() === METHOD_LIMIT
+    return this.getScore() >= METHOD_LIMIT
   }
 
   toLimit () {
