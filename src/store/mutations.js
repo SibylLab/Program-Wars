@@ -385,7 +385,7 @@ export default {
     let complete = state.stacks.find(s => s.isComplete())
 
     // Add the new stack in the right place
-    if (plain && card.type === "METHOD") {
+    if (plain && payload.card.type === "METHOD") {
       let idx = state.stacks.indexOf(plain)
       state.stacks.splice(idx, 0, stack)
     } else if (complete) {

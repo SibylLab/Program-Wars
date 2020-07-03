@@ -109,6 +109,16 @@ export default class PlayBestCardAction extends ActionHandler {
     return move
   }
 
+
+  method (card, state) { // eslint-disable-line no-unused-vars
+    return {
+      playType: 'startNewStack',
+      card: card,
+      player: this.player,
+      target: this.player
+    }
+  }
+
   /**
    * Make a move for adding a repeat card to the largest stack that
    * is available.

@@ -9,17 +9,17 @@ import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
 
 // card orders for different AI personalities
 const CARD_ORDER = {
-  basic: ["VARIABLE", "REPEAT", "INSTRUCTION"],
+  basic: ["VARIABLE", "REPEAT", "METHOD", "INSTRUCTION"],
   standard: [
-    "GROUP", "VARIABLE", "REPEAT", "INSTRUCTION", "ANTIVIRUS", "FIREWALL",
+    "METHOD", "VARIABLE", "REPEAT", "INSTRUCTION", "ANTIVIRUS", "FIREWALL",
     "OVERCLOCK", "RANSOM", "TROJAN", "VIRUS"
   ],
   aggressive: [
-    "VIRUS", "RANSOM", "TROJAN", "VARIABLE", "REPEAT", "INSTRUCTION", "GROUP",
+    "VIRUS", "RANSOM", "TROJAN", "VARIABLE", "REPEAT", "INSTRUCTION", "METHOD",
     "FIREWALL", "ANTIVIRUS", "OVERCLOCK"
   ],
   defensive: [
-    "FIREWALL", "ANTIVIRUS", "OVERCLOCK", "GROUP", "VARIABLE", "REPEAT",
+    "FIREWALL", "ANTIVIRUS", "OVERCLOCK", "METHOD", "VARIABLE", "REPEAT",
     "INSTRUCTION", "TROJAN", "VIRUS", "RANSOM"
   ]
 }
