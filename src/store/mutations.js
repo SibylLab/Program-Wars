@@ -32,7 +32,7 @@ export default {
     state.gameState = 'game'
     state.activePlayer = undefined
     state.activeCard = undefined
-    state.scoreLimit = 75
+    state.scoreLimit = 150
     state.turnPlays = []
   },
 
