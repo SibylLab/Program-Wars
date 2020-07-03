@@ -147,9 +147,10 @@ export default {
     let hand = context.getters.getCurrentPlayerHand
     let players = context.state.players
     let stacks = context.state.stacks
+    let method = context.getters.getCurrentMethod
     let scores = context.getters.getPlayerScores()
 
-    let move = handler.chooseAction(hand, players, stacks, scores)
+    let move = handler.chooseAction(hand, players, stacks, method, scores)
     context.dispatch('executeTurn', move)
     bus.$emit('ai-action', {move: move})
   },

@@ -23,6 +23,13 @@ export default {
   },
 
   /**
+   * Get method for the current player.
+   */
+  getCurrentMethod (state) {
+    return state.methods.find(m => m.playerId === state.activePlayer.id)
+  },
+
+  /**
    * Get AI handler for the current player.
    */
   getCurrentAiHandler (state) {

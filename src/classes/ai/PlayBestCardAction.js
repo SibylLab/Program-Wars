@@ -47,7 +47,7 @@ export default class PlayBestCardAction extends ActionHandler {
    * A mini chain of responsibility for cards that uses internal functions for
    * each card type for now.
    */
-  handle (hand, players, stacks, scores) {
+  handle (hand, players, stacks, method, scores) {
     let cards = this.sortHand(hand)
     for (let card of cards) {
       let type = card.type.toLowerCase()
@@ -60,7 +60,7 @@ export default class PlayBestCardAction extends ActionHandler {
         } else if (card.isAttack()) {
           move = this.playAttack(card, players, scores)
         } else if (type in this) {
-          move = this[type](card, {hand, players, stacks, scores})
+          move = this[type](card, {hand, players, stacks, method, scores})
         }
         if (move) { return move }
       }
@@ -93,13 +93,20 @@ export default class PlayBestCardAction extends ActionHandler {
    * @param state an object with all the state needed to make a decision
    * @return a move object for starting a new stack with the given card.
    */
-  instruction (card, state) {  // eslint-disable-line no-unused-vars
-    return {
-      playType: 'startNewStack',
+  instruction (card, state) {
+    let move = {
       card: card,
       player: this.player,
-      target: this.player
     }
+
+    if (!state.method.isComplete()) {
+      move.playType = 'playCardOnStack',
+      move.target = state.method
+    } else {
+      move.playType = 'startNewStack',
+      move.target = this.player
+    }
+    return move
   }
 
   /**
