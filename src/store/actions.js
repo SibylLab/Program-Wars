@@ -108,7 +108,7 @@ export default {
       }
       context.commit('changeGameState', {newState: 'game'})
       context.dispatch('endTurn')
-    }, 1000)
+    }, 1250)
   },
 
   /**
