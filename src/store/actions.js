@@ -185,24 +185,6 @@ export default {
   },
 
   /**
-   * Adds the given group card as a new stack and removes all target stacks
-   * that were used to make the group.
-   * Payload same as executeTurn.
-   */
-  groupStacks (context, payload) {
-    // get scores of all stacks we will group
-    let stackValue= []
-    for (let stack of payload.target.values()) {
-      stackValue.push(stack.getScore())   
-    }
-
-    context.commit('removeStacks', {stacks: payload.target})
-    context.commit('newStack', payload)
-    context.commit('removeFromHand', payload)
-    log.warn(payload.player.name, payload.card.type, payload.card.value, stackValue)
-  },
-
-  /**
    * Play a card that is mimicking another card.
    * Payload is same as execute turn, but will have mimic card discarded and
    * payload.card will be replaced with the card being mimicked.

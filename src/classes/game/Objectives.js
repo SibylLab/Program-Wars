@@ -4,7 +4,6 @@
  */
 
 // Bonuses for each card played
-const GROUP_BONUS = 5
 const REPEAT_BONUS = 3
 const VAR_BONUS = 2
 const SAFETY_BONUS = 3
@@ -31,13 +30,6 @@ export default class Objectives {
     this.cardsPlayed = []
   }
 
-  /**
-   * Return the total bonus for group cards played.
-   */
-  getGroupBonus () {
-    return GROUP_BONUS * this.cardsPlayed.filter(c => c.type === "GROUP").length
-  }
-  
   /**
    * Return the total bonus for repeat cards played.
    */
@@ -124,7 +116,6 @@ export default class Objectives {
    */
   getBonuses (player, hand, stacks) {
     let bonuses = {}
-    bonuses.group = this.getGroupBonus()
     bonuses.repeat = this.getRepeatBonus()
     bonuses.variable = this.getVariableBonus()
     bonuses.safety = this.getSafetyBonus()

@@ -30,10 +30,8 @@ export default class MethodStackFirst extends ActionHandler {
       return c.type === "INSTRUCTION" && c.value <= method.toLimit()
     })
 
-    console.log(instructions.length)
     if (instructions.length > 0) {
       let card = instructions.sort((a,b) => { a.value - b.value }).shift()
-      console.log(card.value, card.type)
       return {
         playType: 'playCardOnStack',
         card: card,

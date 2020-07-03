@@ -122,7 +122,6 @@ export default class PlayBestCardAction extends ActionHandler {
   /**
    * Make a move for adding a repeat card to the largest stack that
    * is available.
-   * Should prioritize group stacks over normal stacks (even if lower in value?)
    * @param card The card to attempt to play.
    * @param state an object with all the state needed to make a decision
    * @return a move object for adding a repeat to a stack, or undefined if
@@ -239,33 +238,6 @@ export default class PlayBestCardAction extends ActionHandler {
         card: card,
         player: this.player,
         target: target
-      }
-    }
-    return undefined
-  }
-
-  /**
-   * Find the grouping of stacks that uses the most stacks if one exists.
-   * @param card The card to attempt to play.
-   * @param state an object with all the state needed to make a decision
-   * @return a move object for grouping some stacks, or undefined if
-   * no group can be found.
-   */
-  group (card, state) {
-    let groupable = state.stacks.filter((s) => {
-      // don't group single group cards with the same value as card
-      return s.playerId === this.player.id && s.getScore() <= card.value
-             && s.getTop().type !== 'VIRUS'
-    })
-    if (groupable.length == 0) { return undefined }
-
-    let stacks = helpers.groupStacks(card.value, groupable)
-    if (stacks.size > 0) {
-      return {
-        playType: 'groupStacks',
-        card: card,
-        player: this.player,
-        target: stacks
       }
     }
     return undefined

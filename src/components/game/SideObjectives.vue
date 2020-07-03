@@ -65,8 +65,6 @@ export default {
      */
     conditions () {
       let conds = []
-      conds.push({if: "group_card_played", reward: "+5 pts/card",
-                  val: this.bonuses.group})
       conds.push({if: "repeat_card_played", reward: "+3 pts/card",
                   val: this.bonuses.repeat})
       conds.push({if: "variable_card_played", reward: "+2 pts/card",

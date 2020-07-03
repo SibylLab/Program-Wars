@@ -45,7 +45,7 @@ export default class Stack {
     let score = this.getBase().value
     for (let i = 1; i < this.cards.length; i++) {
       if (this.cards[i].type === "VIRUS") {
-        score *= this.getBase().type === "GROUP" ? 0.5 : 0
+        score *= this.getBase().type === "METHOD" ? 0.5 : 0
       } else {
         score *= this.cards[i].value
       }
@@ -54,7 +54,7 @@ export default class Stack {
   }
 
   /**
-   * Returns the base card of the stack, which is an instruction or group card.
+   * Returns the base card of the stack, which is an instruction or method card.
    * @returns {card} the base of the stack.
    */
   getBase () {

@@ -29,7 +29,7 @@ export default class Trojan extends Card {
    */
   replace () {
     let card
-    if (this.isSafety() || this.type === "GROUP" || this.type === "INSTRUCTION") {
+    if (this.isSafety() || this.type === "METHOD" || this.type === "INSTRUCTION") {
       card = new Card("RANSOM", 0)
     } else if (this.isAttack() || this.type === "VIRUS") {
       card = new Card("SPYWARE", 0)
