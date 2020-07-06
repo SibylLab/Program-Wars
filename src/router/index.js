@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LandingPage from '@/components/landingPage/LandingPage'
-import Game from '@/components/game/Game'
 
 Vue.use(VueRouter)
 
@@ -16,7 +15,13 @@ const routes = [
     path: '/game',
     name: 'Game',
     canReuse: false,
-    component: Game
+    component: () => import('@/components/game/Game.vue')
+  },
+  {
+    path: '/agile_setup',
+    name: 'Agile Setup',
+    canReuse: false,
+    component: () => import('@/components/game/AgileSetup.vue')
   },
   {
     path: '*',

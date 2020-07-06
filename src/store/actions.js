@@ -23,6 +23,10 @@ export default {
    * }
    */
   newGame (context, payload) {
+    this.dispatch(payload.type, payload)
+  },
+
+  basicGame (context, payload) {
     context.commit('resetStateForGame')
     context.commit('addPlayers', payload)
     context.commit('setStartingPlayer')
@@ -32,6 +36,12 @@ export default {
       context.commit('giveNewHand', {player: p})
     }
     router.push('game')
+  },
+
+  agileGame (context, payload) {
+    context
+    payload
+    router.push('agile_setup')
   },
 
   /**
