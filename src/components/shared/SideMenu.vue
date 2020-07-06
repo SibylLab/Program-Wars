@@ -74,6 +74,9 @@ export default {
     if (this.showBackstory) {
       $('#backstoryModal').modal('show')
       this.seenBackstory()
+    } else {
+      // prevent fade from blocking everything when backstory is not supposed to show
+      $('.modal-backdrop').remove()
     }
   }
 }

@@ -39,7 +39,7 @@ export default {
   },
 
   agileGame (context, payload) {
-    context
+    context.state.gameState = 'requirements'
     payload
     router.push('agile_setup')
   },

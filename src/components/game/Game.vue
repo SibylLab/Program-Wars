@@ -54,7 +54,7 @@ export default {
       return this.players.length === n
     }
   },
-  created () {
+  mounted () {
     // If gameState is not game when we create this element (page refresh)
     // Then we want to leave the game and return to home page.
     if (this.gameState !== 'game') {

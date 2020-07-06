@@ -32,7 +32,7 @@ export default {
       'changeGameState'
     ]),
   },
-  created () {
+  mounted () {
     this.changeGameState({newState: 'home'})
   }
 }
