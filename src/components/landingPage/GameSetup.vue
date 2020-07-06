@@ -4,13 +4,23 @@
 
   <div id="game-types">
     <h5 class="sub-heading" >Select Game Type</h5>
-    <input type="radio" id="pick-ai" name="game-type" v-on:click="changeGame('ai')" checked>
+    <input type="radio" id="pick-basic" name="game-type" v-on:click="changeGame('ai')" checked>
+    <label for="pick-basic"> <b>Basic:</b> Play a simpler game to reach a score limit </label>
+    <br>
+    <input type="radio" id="pick-agile" name="game-type" v-on:click="changeGame('free')">
+    <label for="pick-agile"> <b>Agile: </b>Play to complete requirements during 3 sprints </label>
+  </div>
+
+
+  <div id="player-types">
+    <h5 class="sub-heading" >Select Player Types</h5>
+    <input type="radio" id="pick-ai" name="player-type" v-on:click="changePlayers('ai')" checked>
     <label for="pick-ai"> <b>One Bot:</b> Play against a computer player </label>
     <br>
-    <input type="radio" id="pick-free" name="game-type" v-on:click="changeGame('free')">
+    <input type="radio" id="pick-free" name="player-type" v-on:click="changePlayers('free')">
     <label for="pick-free"> <b>Free For All: </b>Play against 3 computer players </label>
     <br>
-    <input type="radio" id="pick-hotseat" name="game-type" v-on:click="changeGame('hotseat')">
+    <input type="radio" id="pick-hotseat" name="player-type" v-on:click="changePlayers('hotseat')">
     <label for="pick-hotseat"> <b>Hotseat: </b>Play against a friend locally </label>
   </div>
 
@@ -64,7 +74,8 @@ export default {
   name: 'game-setup',
   data () {
     return {
-      gameType: 'ai',
+      gameType: 'basic',
+      playerType: 'ai',
       sameName: false,
       bots: [
         {name: 'n00b_bot', ai: true, personality: 'standard'},
@@ -76,7 +87,7 @@ export default {
   },
   computed: {
     maxPlayersReached () {
-      if (this.gameType === 'free') {
+      if (this.playerType === 'free') {
         return this.players.length >= 4
       }
       return this.players.length >= 2
@@ -90,7 +101,10 @@ export default {
       'newGame'
     ]),
     startGame () {
-      this.newGame({players: this.players})
+      this.newGame({type: this.type, players: this.players})
+    },
+    changeGame (type) {
+      this.gameType = type
     },
     /**
      * Removes all players except 1 human player from players and adds numBots ai players.
@@ -114,17 +128,15 @@ export default {
     /**
      * Toggle the game state and adjust the current players in the player list.
      */
-    changeGame (type) {
+    changePlayers (type) {
       if (type === 'ai') {
-        this.gameType = 'ai'
         this.addBots(1)
       } else if (type === 'hotseat') {
-        this.gameType = 'hotseat'
         this.removeBots()
       } else {
-        this.gameType = 'free'
         this.addBots(3)
       }
+      this.playerType = type
       this.sameName = false
     },
     /**
@@ -175,27 +187,30 @@ export default {
   border-radius: 30px;
 }
 
-#game-types {
-  width: 100%;
-  height: 140px;
+#player-types {
   font-size: 15px;
 }
 
 #add-players {
-  width: 100%;
-  height: 100px;
   font-size: 15px;
 }
 
 #current-players {
   margin-left: 25%;
   margin-right: 25%;
-  min-height: 120px;
   font-size: 15px;
 }
 
+#go-div {
+  position: relative;
+}
+
 #start-button {
-  margin: 15px;
+  position: absolute;
+  width: 150px;
+  left: 50%;
+  bottom: 25px;
+  margin: -75px;
 }
 
 .sub-heading {
