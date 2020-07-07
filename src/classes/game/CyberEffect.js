@@ -13,6 +13,10 @@ export default class CyberEffect {
   /**
    * Constructor for the CyberEffect class.
    * @constructor CyberEffect
+   * @param type String name for the type of effect.
+   * @param targetId A unique id for the player being targeted with the effect.
+   * @param attackerId A unique id for the player that the effect comes from. Defaults
+   * to undefined as it is not needed for positive effects and some negatives.
    */
   constructor (type, targetId, attackerId = undefined) {
     this.id = uuidV1()

@@ -9,9 +9,6 @@
 export default class GroupedStacks {
   /**
    * Constructor for the GroupedStacks class
-   * @param {int} id The ID of the Player
-   * @param {string} name The name of the Player
-   * @param {bool} isAi if the player is a computer player
    */
   constructor () {
     this.stacks = new Set()
@@ -26,7 +23,7 @@ export default class GroupedStacks {
   }
 
   /**
-   * Checks to see if the stack is in the group.
+   * Checks to see if the given stack is in the group.
    */
   hasStack (stack) {
     return this.stacks.has(stack)
@@ -42,7 +39,9 @@ export default class GroupedStacks {
 
   /**
    * Adds or removes a given stack from the group.
-   * Returns true if the new stack score matches the given group value,
+   * @param stack The stack to toggle.
+   * @param groupValue The value of the group card that is being considered.
+   * @return true if the new stack score matches the given group value,
    * false otherwise.
    */
   toggleStack (stack, groupValue) {

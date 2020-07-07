@@ -23,12 +23,13 @@ export default class Player {
     this.isAi = isAi
     this.positiveEffects = []
     this.negativeEffects = []
-    this.objectives = new Objectives(this)
+    this.objectives = new Objectives(this.id)
     this.image = 'static/playerImages/player' + id + '.png'
   }
 
   /**
    * Checks to see if the player has the given positive effect type specificaly.
+   * @param {string} type The effect type to check for.
    */
   hasPositive (type) {
     return this.positiveEffects.find(e => e.type === type) !== undefined
@@ -51,6 +52,7 @@ export default class Player {
 
   /**
    * Checks to see if the player has the given negative effect type specificaly.
+   * @param {string} type The effect type to check for.
    */
   hasNegative (type) {
     return this.negativeEffects.find(e => e.type === type) !== undefined
@@ -79,6 +81,7 @@ export default class Player {
 
   /**
    * Adds a positive effect and alters negative effects if necessary.
+   * @param {string} type The effect type to check for.
    */
   addPositive (type) {
     if (this.helpedBy(type)) {
@@ -95,6 +98,7 @@ export default class Player {
 
   /**
    * Adds a negative effect and alters positive effects if necessary.
+   * @param {string} type The effect type to check for.
    */
   addNegative (type, attackerId) {
     if (this.hurtBy(type)) {
@@ -112,6 +116,7 @@ export default class Player {
 
   /**
    * Removes all positive effects of a given type.
+   * @param {string} type The effect type to check for.
    */
   removePositive (type) {
     this.positiveEffects = this.positiveEffects.filter(e => e.type !== type)
@@ -119,6 +124,7 @@ export default class Player {
 
   /**
    * Removes all negative effects of a given type.
+   * @param {string} type The effect type to check for.
    */
   removeNegative (type) {
     this.negativeEffects = this.negativeEffects.filter(e => e.type !== type)
@@ -126,6 +132,7 @@ export default class Player {
 
   /**
    * Removes a specific effect from the effect list it is in.
+   * @param effect The CyberEffect to remove.
    */
   removeEffect (effect) {
     this.positiveEffects = this.positiveEffects.filter(e => e !== effect)

@@ -238,8 +238,13 @@ export default {
 
 #hand-box {
   position: fixed;
+  min-width: 650px;
+  width: 45%;
   top: 50px;
-  left: 27.5%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
   background-color: #DFDFDF;
   border: solid black 3px;
   border-radius: 5px;

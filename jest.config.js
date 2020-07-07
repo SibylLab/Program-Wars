@@ -9,5 +9,5 @@ module.exports = {
     '!**/router/**',
     '!**/*.config.*',
     '!**/main.js'],
-  coverageReporters: ['html', 'text-summary']
+  coverageReporters: ['html', 'text-summary', 'lcov']
 }

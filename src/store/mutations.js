@@ -31,7 +31,6 @@ export default {
     state.activePlayer = undefined
     state.activeCard = undefined
     state.scoreLimit = 75
-    state.turnNumber = 0
     state.turnPlays = []
   },
 
@@ -68,7 +67,7 @@ export default {
    * Uses a list of player information to create and add new players.
    *
    * Payload = {
-   *   players: list of player info {name, isAi}
+   *   players: list of player info {name, ai, personality}
    * }
    */
   addPlayers(state, payload) {
@@ -146,7 +145,7 @@ export default {
   },
 
   /**
-   * Updates the cyber effects on the given player.
+   * Updates the cyber effects on the given payload.player.
    */
   updatePlayerEffects (state, payload) {
     let effects = payload.player.positiveEffects.concat(payload.player.negativeEffects)
@@ -199,9 +198,11 @@ export default {
   addCardEffect (state, payload) {
     if (payload.card.type === 'SCAN') {
       this.commit('playScan', payload)
+
     } else if (payload.card.isSafety()) {
       payload.target.addPositive(payload.card.type)
       this.commit('cleanMalware', payload)
+
     } else if (payload.card.type === 'TROJAN') {
       if (payload.target.helpedBy('SCAN')) {
         payload.target.removePositive('SCAN')
@@ -210,6 +211,7 @@ export default {
         let pos = Math.floor(Math.random() * hand.cards.length)
         hand.cards[pos] = new Trojan(hand.cards[pos], payload.player)
       }
+
     } else if (payload.card.isAttack()) {
       payload.target.addNegative(payload.card.type, payload.player.id)
     }
@@ -218,6 +220,12 @@ export default {
   /**
    * Cleans up all negative effects that are in play in a players hand or
    * on their stacks when adding the appropriate positiveEffect.
+   *
+   * Payload
+   * {
+   *   card: the card with the effect to add,
+   *   player: the player clean malware from
+   * }
    */
   cleanMalware (state, payload) {
     if (payload.card.type === 'ANTIVIRUS' || payload.card.type === 'FIREWALL') {
@@ -243,11 +251,17 @@ export default {
   /**
    * Removes one random malware that a player has attached to them.
    * Trojan cards are discarded and new cards are drawn.
+   *
+   * Payload
+   * {
+   *   card: the scan card,
+   *   target: the player to add the scan to
+   * }
    */
   playScan (state, payload) {
     // Remove a virus if there is one
     let infectedStacks = state.stacks.filter((s) => {
-      return s.playerId === payload.player.id && s.getTop().type === 'VIRUS'
+      return s.playerId === payload.target.id && s.getTop().type === 'VIRUS'
     })
     if (infectedStacks.length > 0) {
       // find the largest stack and remove it's virus first eventually
@@ -257,27 +271,27 @@ export default {
     }
 
     // Remove a mimicked card next if there is one
-    let hand = state.hands.find(h => h.playerId === payload.player.id)
+    let hand = state.hands.find(h => h.playerId === payload.target.id)
     let mimics = hand.cards.filter(c => c.isMimic)
     if (mimics.length > 0) {
-      this.commit('discardCard', {player: payload.player, card: mimics[0]})
+      this.commit('discardCard', {player: payload.target, card: mimics[0]})
       this.commit('drawCard')
       bus.$emit('scan-effect', 'TROJAN')
       return
     }
 
     // Remove a ransom next if there is one
-    let ransoms = payload.player.negativeEffects.filter(e => e.type === 'RANSOM')
+    let ransoms = payload.target.negativeEffects.filter(e => e.type === 'RANSOM')
     if (ransoms.length > 0) {
-      payload.player.removeEffect(ransoms[0])
+      payload.target.removeEffect(ransoms[0])
       bus.$emit('scan-effect', 'RANSOM')
       return
     }
 
     // Remove a spyware next if there is one
-    let spys = payload.player.negativeEffects.filter(e => e.type === 'SPYWARE')
+    let spys = payload.target.negativeEffects.filter(e => e.type === 'SPYWARE')
     if (spys.length > 0) {
-      payload.player.removeEffect(spys[0])
+      payload.target.removeEffect(spys[0])
       bus.$emit('scan-effect', 'SPYWARE')
       return
     }

@@ -89,7 +89,7 @@ export default {
     getBonuses () {
       let stacks = this.stacks.filter(s => s.playerId === this.player.id)
       let hand = this.hands.find(h => h.playerId === this.player.id)
-      return this.player.objectives.getBonuses(hand, stacks)
+      return this.player.objectives.getBonuses(this.player, hand, stacks)
     }
   },
   created () {

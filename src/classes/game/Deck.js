@@ -46,6 +46,9 @@ export default class Deck {
   /**
    * Initializes the deck with a pre determined number and type of cards.
    * Shuffles the deck.
+   * @param cardsToAdd An object with card types as keys, each card type maps to
+   * an object of card values mapped to the number of cards to put in the deck.
+   * @param shuffles The number of times to shuffle the deck.
    */
   addCards (cardsToAdd, shuffles) {
     for (let [type, values] of Object.entries(cardsToAdd)) {

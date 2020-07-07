@@ -63,14 +63,14 @@ export default {
     bus.$emit('card-played', payload)
     context.state.turnPlays.push(payload)
 
-    let draw = true
+    payload.draw = true
     if (payload.playType === "DISCARD") {
       log.warn({DiscardBy:payload.player.name, card:payload.card.type, value: payload.card.value})
       context.commit('discardCard', payload)
     } else if (payload.playType === "REDRAW") {
       log.warn({RedrawBy:payload.player.name})
       context.commit('giveNewHand', payload)
-      draw = false
+      payload.draw = false
     } else if (payload.card.isMimic) {
       context.dispatch('playMimic', payload)
     } else {
@@ -78,12 +78,32 @@ export default {
       context.dispatch(payload.playType, payload)
     }
 
+    context.dispatch('cleanUpTurn', payload)
+  },
+
+
+  /**
+   * After the turns play has been executed deal with updates and card draws
+   * as well as dispatching endTurn.
+   *
+   * Payload
+   * {
+   *   playType: a string for the action name to call,
+   *   card: the card being played,
+   *   player: the player taking the turn,
+   *   target: the player or stack the card is being played on
+   *   draw: whether or not to draw a card
+   * }
+   */
+  cleanUpTurn (context, payload) {
     context.commit('updatePlayerEffects', payload)
     context.commit('addPlayedCard', payload)
 
+    // Delay end turn so that it will allow players to see results of their play
+    // before moving on.
     context.commit('changeGameState', {newState: 'wait'})
     setTimeout(() => {
-      if (draw) {
+      if (payload.draw) {
         context.commit('drawCard')
       }
       context.commit('changeGameState', {newState: 'game'})
@@ -96,10 +116,10 @@ export default {
    * Emits events for game-over and end-turn when necessary.
    */
   endTurn (context) {
+    // Update scores and end game if someone has reached the limit
     let scores = context.getters.getPlayerScores()
     for (let scoreInfo of scores) {
       if (scoreInfo.score >= context.state.scoreLimit) {
-        //Winner Info added on log
         let winner = context.state.players.find (p => p.id === scoreInfo.playerId)
         log.warn({Winner:winner.name, WinnerScores:scoreInfo.score})
 
@@ -169,6 +189,7 @@ export default {
    * Payload same as executeTurn.
    */
   groupStacks (context, payload) {
+    // get scores of all stacks we will group
     let stackValue= []
     for (let stack of payload.target.values()) {
       stackValue.push(stack.getScore())   
@@ -182,6 +203,8 @@ export default {
 
   /**
    * Play a card that is mimicking another card.
+   * Payload is same as execute turn, but will have mimic card discarded and
+   * payload.card will be replaced with the card being mimicked.
    */
   playMimic (context, payload) {
     let card = payload.card.replace()

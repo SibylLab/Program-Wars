@@ -1,7 +1,10 @@
 import actions from '@/store/actions.js'
 
+// Mock out dependencies we don't want to call
 jest.mock('loglevel')
+jest.mock('@/router')
 
+// Returns a jest mock function that returns a given value
 function mockValue (value) { return jest.fn(() => {return value}) }
 
 
@@ -44,31 +47,19 @@ describe('vuex actions', () => {
       let payload = {
         playType: 'DISCARD',
         player: {name: 'jeff'},
-        card: {type: 'GROUP', value: 4}
+        card: {type: 'GROUP', value: 4},
+        draw: true,
       }
       context.state = {gameState: 'game', turnPlays: []}
 
       actions.executeTurn(context, payload)
-      jest.runAllTimers()
 
       expect(context.state.turnPlays.length).toEqual(1)
       expect(context.state.turnPlays[0]).toEqual(payload)
-      expect(context.commit.mock.calls.length).toEqual(6)
+      expect(context.commit.mock.calls.length).toEqual(1)
       expect(context.commit.mock.calls[0]).toEqual([ 'discardCard', payload ])
-      expect(context.commit.mock.calls[1]).toEqual([ 'updatePlayerEffects', payload ])
-      expect(context.commit.mock.calls[2]).toEqual([ 'addPlayedCard', payload ])
-      expect(context.commit.mock.calls[3]).toEqual(
-        [ 'changeGameState', {newState: 'wait'} ]
-      )
-      expect(context.commit.mock.calls[4]).toEqual([ 'drawCard' ])
-
-      expect(setTimeout).toHaveBeenCalledTimes(1)
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000)
-      expect(context.commit.mock.calls[5]).toEqual(
-        [ 'changeGameState', {newState: 'game'} ]
-      )
       expect(context.dispatch.mock.calls.length).toEqual(1)
-      expect(context.dispatch.mock.calls[0]).toEqual([ 'endTurn' ])
+      expect(context.dispatch.mock.calls[0]).toEqual([ 'cleanUpTurn', payload ])
     })
     test('play type is REDRAW', () => {
       // will not test all the intermediate steps already tested above
@@ -82,10 +73,10 @@ describe('vuex actions', () => {
       actions.executeTurn(context, payload)
       expect(context.state.turnPlays.length).toEqual(1)
       expect(context.state.turnPlays[0]).toEqual(payload)
+      expect(context.commit.mock.calls.length).toEqual(1)
       expect(context.commit.mock.calls[0]).toEqual([ 'giveNewHand', payload ])
-      expect(context.commit.mock.calls[3]).toEqual(
-        [ 'changeGameState', {newState: 'wait'} ]
-      )
+      expect(context.dispatch.mock.calls.length).toEqual(1)
+      expect(context.dispatch.mock.calls[0]).toEqual([ 'cleanUpTurn', payload ])
     })
     test('card is a mimic card', () => {
       // will not test all the intermediate steps already tested above
@@ -98,7 +89,9 @@ describe('vuex actions', () => {
       actions.executeTurn(context, payload)
       expect(context.state.turnPlays.length).toEqual(1)
       expect(context.state.turnPlays[0]).toEqual(payload)
+      expect(context.dispatch.mock.calls.length).toEqual(2)
       expect(context.dispatch.mock.calls[0]).toEqual([ 'playMimic', payload ])
+      expect(context.dispatch.mock.calls[1]).toEqual([ 'cleanUpTurn', payload ])
     })
     test('all other turn types', () => {
       // will not test all the intermediate steps already tested above
@@ -112,8 +105,33 @@ describe('vuex actions', () => {
       actions.executeTurn(context, payload)
       expect(context.state.turnPlays.length).toEqual(1)
       expect(context.state.turnPlays[0]).toEqual(payload)
+      expect(context.dispatch.mock.calls.length).toEqual(2)
       expect(context.dispatch.mock.calls[0]).toEqual([ 'playCardOnStack', payload ])
+      expect(context.dispatch.mock.calls[1]).toEqual([ 'cleanUpTurn', payload ])
     })
+  })
+
+  test('cleanUpTurn', () => {
+    let payload = {draw: true}
+
+    actions.cleanUpTurn(context, payload)
+    jest.runAllTimers()
+
+    expect(context.commit.mock.calls.length).toEqual(5)
+    expect(context.commit.mock.calls[0]).toEqual([ 'updatePlayerEffects', payload ])
+    expect(context.commit.mock.calls[1]).toEqual([ 'addPlayedCard', payload ])
+    expect(context.commit.mock.calls[2]).toEqual(
+      [ 'changeGameState', {newState: 'wait'} ]
+    )
+    expect(context.commit.mock.calls[3]).toEqual([ 'drawCard' ])
+
+    expect(setTimeout).toHaveBeenCalledTimes(1)
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000)
+    expect(context.commit.mock.calls[4]).toEqual(
+      [ 'changeGameState', {newState: 'game'} ]
+    )
+    expect(context.dispatch.mock.calls.length).toEqual(1)
+    expect(context.dispatch.mock.calls[0]).toEqual([ 'endTurn' ])
   })
 
   describe('endTurn', () => {

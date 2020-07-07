@@ -24,9 +24,10 @@ export default class Objectives {
   /**
    * Constructor for the Objectives class
    * @constructor Objectives
+   * @param playerId The id of the player who owns the objectives.
    */
-  constructor (player) {
-    this.player = player
+  constructor (playerId) {
+    this.playerId = playerId
     this.cardsPlayed = []
   }
 
@@ -65,11 +66,12 @@ export default class Objectives {
    * Return the the defensive bonus the player has.
    * Defensive bonus is given if the player has all safety (not remedy) cards active.
    * Is 0 if the player does not meet the requirements for the bonus.
+   * @param player The player to calculate bonus for.
    */
-  getDefensiveBonus () {
-    if (this.player.helpedBy("ANTIVIRUS")) {
+  getDefensiveBonus (player) {
+    if (player.helpedBy("ANTIVIRUS")) {
       return ANTIVIRUS_BONUS
-    } else if (this.player.hasPositive('FIREWALL')) {
+    } else if (player.hasPositive('FIREWALL')) {
       return FIREWALL_BONUS
     }
     return 0
@@ -79,9 +81,12 @@ export default class Objectives {
    * Return the the clean bonus the player has.
    * Clean bonus is given if the player has no Virus.
    * Is 0 if the player does not meet the requirements for the bonus.
+   * @param player The player to calculate bonus for.
+   * @param playerHand The player's hand.
+   * @param playerStacks An array of the player's stacks
    */
-  getCleanBonus (playerHand, playerStacks) {
-    if(this.player.hurtBy('RANSOM')|| this.player.hurtBy('SPYWARE')){
+  getCleanBonus (player, playerHand, playerStacks) {
+    if(player.hurtBy('RANSOM')|| player.hurtBy('SPYWARE')){
       return 0
     }
     // check for viruses
@@ -113,16 +118,18 @@ export default class Objectives {
   /**
    * Wraps all the bonuses up into an object for convenience.
    * Requires the stacks of the player for complete program bonus.
-   * @param stacks An array of the player's stacks
+   * @param player The player to calculate bonus for.
+   * @param hand The player's hand.
+   * @param stacks The player's stacks.
    */
-  getBonuses (hand, stacks) {
+  getBonuses (player, hand, stacks) {
     let bonuses = {}
-    bonuses.group = this.player.objectives.getGroupBonus()
-    bonuses.repeat = this.player.objectives.getRepeatBonus()
-    bonuses.variable = this.player.objectives.getVariableBonus()
-    bonuses.safety = this.player.objectives.getSafetyBonus()
-    bonuses.clean = this.player.objectives.getCleanBonus(hand, stacks)
-    bonuses.defensive = this.player.objectives.getDefensiveBonus()
+    bonuses.group = this.getGroupBonus()
+    bonuses.repeat = this.getRepeatBonus()
+    bonuses.variable = this.getVariableBonus()
+    bonuses.safety = this.getSafetyBonus()
+    bonuses.clean = this.getCleanBonus(player, hand, stacks)
+    bonuses.defensive = this.getDefensiveBonus(player)
     bonuses.complete = this.getCompleteBonus(stacks)
 
     let total = Array.from(Object.values(bonuses)).reduce((acc, bonus) => {
