@@ -1,13 +1,13 @@
 <template>
-<div id="stack">
+<div id="stack" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">
-      Score: {{ stack.getScore() }}
+      {{ scoreText }}: {{ stack.getScore() }}
     </h5>
   </div>
-  <ul id="card-list" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+  <ul id="card-list">
     <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image"
-        :class="[{card: true}, shadow(card)]"
+        :class="[{card: true}, shadow(card)]" :style="{'margin-right': overlap}"
         draggable="false">
   </ul>
 </div>
@@ -43,8 +43,24 @@ export default {
      * players total score.
      */
     scoreColor () {
-      let player = this.players.find(p => p.id === this.stack.playerId)
-      return player.hurtBy("VIRUS") ? "score-red" : "score-normal"
+      let top = this.stack.getTop()
+      if (top && top.type  === 'VIRUS') {
+        return 'score-red'
+      } else if (this.stack.isComplete()) {
+        return 'score-green'
+      } else {
+        return 'score-normal'
+      }
+    },
+    overlap () {
+      return this.stack.isMethod ? '-44px' : '-36px'
+    },
+    scoreText () {
+      if (this.stack.isMethod ) {
+        return 'methodStack'
+      } else {
+        return 'Score'
+      }
     }
   },
   methods: {
@@ -108,7 +124,8 @@ export default {
 
 <style scoped>
 #stack {
-  min-width: 240px;
+  width: 240px;
+  height: 150px;
 }
 
 .card {
@@ -124,6 +141,10 @@ export default {
 
 .score-red {
   color: red;
+}
+
+.score-green {
+  color: lightgreen;
 }
 
 .play {

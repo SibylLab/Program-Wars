@@ -1,7 +1,6 @@
 import Objectives from '@/classes/game/Objectives'
 import Player from '@/classes/game/Player'
 
-let group = {type: 'GROUP'}
 let repeat = {type: 'REPEAT'}
 let variable = {type: 'VARIABLE'}
 let virus = {type: 'VIRUS'}
@@ -18,20 +17,12 @@ describe('Objectives.js', () => {
     // Might be better to mock out the player in the future
     let player = new Player(0, 'steve', false)
     let bonuses = player.objectives.getBonuses(player, {cards: []},[])
-    expect(bonuses.group).toEqual(0)
     expect(bonuses.repeat).toEqual(0)
     expect(bonuses.variable).toEqual(0)
     expect(bonuses.safety).toEqual(0)
     expect(bonuses.defensive).toEqual(0)
     expect(bonuses.clean).toEqual(10)
     expect(bonuses.complete).toEqual(0)
-  })
-  test('played group cards', () => {
-    let objectives = new Objectives({})
-    objectives.cardsPlayed.push(group)
-    objectives.cardsPlayed.push(group)
-    objectives.cardsPlayed.push(repeat)
-    expect(objectives.getGroupBonus()).toEqual(10)
   })
   test('played repeat cards', () => {
     let objectives = new Objectives({})

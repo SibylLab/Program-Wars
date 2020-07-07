@@ -126,7 +126,30 @@ describe('vuex actions', () => {
     expect(context.commit.mock.calls[3]).toEqual([ 'drawCard' ])
 
     expect(setTimeout).toHaveBeenCalledTimes(1)
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000)
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1250)
+    expect(context.commit.mock.calls[4]).toEqual(
+      [ 'changeGameState', {newState: 'game'} ]
+    )
+    expect(context.dispatch.mock.calls.length).toEqual(1)
+    expect(context.dispatch.mock.calls[0]).toEqual([ 'endTurn' ])
+  })
+
+  test('cleanUpTurn', () => {
+    let payload = {draw: true}
+
+    actions.cleanUpTurn(context, payload)
+    jest.runAllTimers()
+
+    expect(context.commit.mock.calls.length).toEqual(5)
+    expect(context.commit.mock.calls[0]).toEqual([ 'updatePlayerEffects', payload ])
+    expect(context.commit.mock.calls[1]).toEqual([ 'addPlayedCard', payload ])
+    expect(context.commit.mock.calls[2]).toEqual(
+      [ 'changeGameState', {newState: 'wait'} ]
+    )
+    expect(context.commit.mock.calls[3]).toEqual([ 'drawCard' ])
+
+    expect(setTimeout).toHaveBeenCalledTimes(1)
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1250)
     expect(context.commit.mock.calls[4]).toEqual(
       [ 'changeGameState', {newState: 'game'} ]
     )
@@ -189,7 +212,6 @@ describe('vuex actions', () => {
       )
       expect(context.state.activeCard).toEqual('card')
     })
-
   })
 
   test('takeAiTurn', () => {
@@ -197,13 +219,14 @@ describe('vuex actions', () => {
     context.getters = {
       getCurrentAiHandler: handler,
       getCurrentPlayerHand: 'hand',
+      getCurrentMethod: 'method',
       getPlayerScores: mockValue('scores')
     }
     context.state = {players: 'players', stacks: 'stacks'}
     actions.takeAiTurn(context)
     expect(handler.chooseAction.mock.calls.length).toEqual(1)
     expect(handler.chooseAction.mock.calls[0]).toEqual(
-      ['hand', 'players', 'stacks', 'scores']
+      ['hand', 'players', 'stacks', 'method', 'scores']
     )
     expect(context.dispatch.mock.calls.length).toEqual(1)
     expect(context.dispatch.mock.calls[0]).toEqual([ 'executeTurn', 'move' ])
@@ -237,20 +260,6 @@ describe('vuex actions', () => {
     expect(context.commit.mock.calls[0]).toEqual([ 'addCardEffect', payload ])
     expect(context.commit.mock.calls[1]).toEqual([ 'discardCard', payload ])
   })
-  test('groupStacks', () => {
-    let payload = {
-      target: new Set([
-        {getScore: mockValue(2)}, {getScore: mockValue(2)}
-      ]),
-      card: {type: 'GROUP', value: 4},
-      player: {name: 'jeff'},
-    }
-    actions.groupStacks(context, payload)
-    expect(context.commit.mock.calls.length).toEqual(3)
-    expect(context.commit.mock.calls[0]).toEqual([ 'removeStacks', {stacks: payload.target} ])
-    expect(context.commit.mock.calls[1]).toEqual([ 'newStack', payload ])
-    expect(context.commit.mock.calls[2]).toEqual([ 'removeFromHand', payload ])
-  })
 
   describe('playMimic', () => {
     test('mimicked card is a virus', () => {
@@ -281,5 +290,4 @@ describe('vuex actions', () => {
       expect(context.dispatch.mock.calls[0]).toEqual([ 'playSpecialCard', payload ])
     })
   })
-
 })

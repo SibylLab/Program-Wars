@@ -8,14 +8,14 @@ describe('PlayBestCardAction', () => {
   beforeEach(() => {
     player = {id: 0}
     order = [
-      'GROUP', 'VARIABLE', 'REPEAT', 'INSTRUCTION', 'ANTIVIRUS', 'FIREWALL',
+      'METHOD', 'VARIABLE', 'REPEAT', 'INSTRUCTION', 'ANTIVIRUS', 'FIREWALL',
       'OVERCLOCK', 'VIRUS', 'RANSOM'
     ]
     action = new PlayBestCardAction(player, order) 
   }) 
 
   test('constructor and play order', () => {
-    expect(action.playOrder.GROUP).toEqual(0)
+    expect(action.playOrder.METHOD).toEqual(0)
     expect(action.playOrder.INSTRUCTION).toEqual(3)
     expect(action.playOrder.VIRUS).toEqual(7)
   })
@@ -23,6 +23,7 @@ describe('PlayBestCardAction', () => {
   describe('handle', () => {
     const players = 'players'
     const stacks = 'stacks'
+    const method = 'method'
     const scores = 'scores'
 
     test('with saftey card in hand', () => {
@@ -30,7 +31,7 @@ describe('PlayBestCardAction', () => {
       const hand = {cards: [card]}
       action.playSafety = getValue('play safety')
 
-      let result = action.handle(hand, players, stacks, scores)
+      let result = action.handle(hand, players, stacks, method, scores)
       expect(result).toEqual('play safety')
       expect(action.playSafety.mock.calls.length).toEqual(1)
       expect(action.playSafety.mock.calls[0]).toEqual([card])
@@ -45,7 +46,7 @@ describe('PlayBestCardAction', () => {
       const hand = {cards: [card]}
       action.playAttack = getValue('play attack')
 
-      let result = action.handle(hand, players, stacks, scores)
+      let result = action.handle(hand, players, stacks, method, scores)
       expect(result).toEqual('play attack')
       expect(action.playAttack.mock.calls.length).toEqual(1)
       expect(action.playAttack.mock.calls[0]).toEqual([card, players, scores])
@@ -60,10 +61,10 @@ describe('PlayBestCardAction', () => {
       const hand = {cards: [card]}
       action.instruction = getValue('play instruction')
 
-      let result = action.handle(hand, players, stacks, scores)
+      let result = action.handle(hand, players, stacks, method, scores)
       expect(result).toEqual('play instruction')
       expect(action.instruction.mock.calls.length).toEqual(1)
-      expect(action.instruction.mock.calls[0]).toEqual([card, {hand, players, stacks, scores}])
+      expect(action.instruction.mock.calls[0]).toEqual([card, {hand, players, stacks, method, scores}])
     })
     test('card type does not have implementation', () => {
       action.playOrder.INVALID = 1000
@@ -74,12 +75,12 @@ describe('PlayBestCardAction', () => {
         isAttack: getValue(false)
       }
       const hand = {cards: [card]}
-      let result = action.handle(hand, players, stacks, scores)
+      let result = action.handle(hand, players, stacks, method, scores)
       expect(result).toBeUndefined()
     })
     test('type not in play order', () => {
       const hand = {cards: [{type: 'INVALID', value: 0}]}
-      let result = action.handle(hand, players, stacks, scores)
+      let result = action.handle(hand, players, stacks, method, scores)
       expect(result).toBeUndefined()
     })
   })
@@ -98,17 +99,52 @@ describe('PlayBestCardAction', () => {
     expect(sorted[2]).toBe(card_I2)
   })
 
-  test('instruction', () => {
-    let result = action.instruction('card', 'state')
+  describe('instruction', () => {
+    test('method is already complete', () => {
+      let mockMethodStack = {isComplete: getValue(true)}
+      let result = action.instruction('card', {method: mockMethodStack})
+      expect(result.playType).toEqual('startNewStack')
+      expect(result.card).toEqual('card')
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(player)
+      expect(mockMethodStack.isComplete.mock.calls.length).toEqual(1)
+    })
+    test('method is not complete but card value is to large', () => {
+      let mockCard = {value: 10}
+      let mockMethodStack = {isComplete: getValue(false), toLimit: getValue(5)}
+      let result = action.instruction(mockCard, {method: mockMethodStack})
+      expect(result.playType).toEqual('startNewStack')
+      expect(result.card).toEqual(mockCard)
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(player)
+      expect(mockMethodStack.isComplete.mock.calls.length).toEqual(1)
+      expect(mockMethodStack.toLimit.mock.calls.length).toEqual(1)
+    })
+    test('method is not complete and card will fit', () => {
+      let mockCard = {value: 2}
+      let mockMethodStack = {isComplete: getValue(false), toLimit: getValue(5)}
+      let result = action.instruction(mockCard, {method: mockMethodStack})
+      expect(result.playType).toEqual('playCardOnStack')
+      expect(result.card).toEqual(mockCard)
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(mockMethodStack)
+      expect(mockMethodStack.isComplete.mock.calls.length).toEqual(1)
+      expect(mockMethodStack.toLimit.mock.calls.length).toEqual(1)
+    })
+  }) 
+
+  test('method', () => {
+    let result = action.method('card', 'state')
     expect(result.playType).toEqual('startNewStack')
     expect(result.card).toEqual('card')
     expect(result.player).toEqual(player)
     expect(result.target).toEqual(player)
-  }) 
+  })
 
   describe('card plays that filter and sort stacks', () => {
     const hand = 'hand'
     const players = 'players'
+    const method = 'method'
     const scores = 'scores'
 
     const stackScore_3 = {playerId: 0, willAccept: getValue(true), getScore: getValue(3)}
@@ -118,7 +154,7 @@ describe('PlayBestCardAction', () => {
 
     test('repeat can play', () => {
       const stacks = [stackNotPlayers, stackNoAccept, stackScore_3, stackScore_6]
-      let result = action.repeat('card', {hand, players, stacks, scores})
+      let result = action.repeat('card', {hand, players, stacks, method, scores})
       expect(result.playType).toEqual('playCardOnStack')
       expect(result.card).toEqual('card')
       expect(result.player).toEqual(player)
@@ -126,7 +162,7 @@ describe('PlayBestCardAction', () => {
     })
     test('repeat no play', () => {
       const stacks = [stackNotPlayers, stackNoAccept]
-      let result = action.repeat('card', {hand, players, stacks, scores})
+      let result = action.repeat('card', {hand, players, stacks, method, scores})
       expect(result).toBeUndefined()
     })
     test('variable can play', () => {
@@ -134,7 +170,7 @@ describe('PlayBestCardAction', () => {
       varStack.getTop = getValue("REPEAT")
       const stacks = [stackNoAccept, varStack]
 
-      let result = action.variable('card', {hand, players, stacks, scores})
+      let result = action.variable('card', {hand, players, stacks, method, scores})
       expect(result.playType).toEqual('playCardOnStack')
       expect(result.card).toEqual('card')
       expect(result.player).toEqual(player)
@@ -142,7 +178,7 @@ describe('PlayBestCardAction', () => {
     })
     test('variable no play', () => {
       const stacks = [stackNotPlayers, stackNoAccept]
-      let result = action.variable('card', {hand, players, stacks, scores})
+      let result = action.variable('card', {hand, players, stacks, method, scores})
       expect(result).toBeUndefined()
     })
     test('virus can play', () => {
@@ -161,7 +197,7 @@ describe('PlayBestCardAction', () => {
 
       const stacks = [stackNoAccept, hackStack_3, notEnoughCards, hackStack_6]
 
-      let result = action.virus('card', {hand, players, stacks, scores})
+      let result = action.virus('card', {hand, players, stacks, method, scores})
       expect(result.playType).toEqual('playCardOnStack')
       expect(result.card).toEqual('card')
       expect(result.player).toEqual(player)
@@ -173,25 +209,7 @@ describe('PlayBestCardAction', () => {
       noHack.isHackable = getValue(false)
       const stacks = [stackNoAccept, noHack]
 
-      let result = action.virus('card', {hand, players, stacks, scores})
-      expect(result).toBeUndefined()
-    })
-    test('group can play', () => {
-      const stacks = [stackScore_3, stackNotPlayers]
-      let result = action.group({value: 3}, {hand, players, stacks, scores})
-      expect(result.playType).toEqual('groupStacks')
-      expect(result.card).toEqual({value: 3})
-      expect(result.player).toEqual(player)
-      expect(result.target.has(stackScore_3)).toBeTruthy()
-    })
-    test('group no stacks available to group', () => {
-      const stacks = [stackScore_6]
-      let result = action.group({value: 4}, {hand, players, stacks, scores})
-      expect(result).toBeUndefined()
-    })
-    test('group stacks do not meet value', () => {
-      const stacks = [stackScore_3]
-      let result = action.group({value: 4}, {hand, players, stacks, scores})
+      let result = action.virus('card', {hand, players, stacks, method, scores})
       expect(result).toBeUndefined()
     })
   })

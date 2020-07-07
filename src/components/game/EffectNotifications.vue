@@ -37,7 +37,7 @@ export default {
       rightImage: 'static/cardImages/effects/VIRUS.png',
       block: false,
       clean: false,
-      timeout: 1250,
+      timeout: 1500,
     }
   },
   computed: {

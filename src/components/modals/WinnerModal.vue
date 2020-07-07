@@ -32,9 +32,6 @@
             <tr>
               <td colspan="5" style="text-align: left;"><h5><b>Side Objectives</b></h5></td>
             </tr>
-            <tr> <th>Grouping Bonus</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.group }}</td>
-            </tr>
             <tr> <th>Repetition Bonus</th>
               <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.repeat }}</td>
             </tr>

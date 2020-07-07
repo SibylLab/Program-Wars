@@ -4,7 +4,7 @@ import AiHandler from '@/classes/ai/AiHandler'
 describe('AiHandler data object', () => {
   const player = {name: 'ted'}
   const handlers = []
-  const testParams = ["hand", "players", "stacks", "scores"]
+  const testParams = ["hand", "players", "stacks", "method", "scores"]
 
   test('constructor functions properly', () => {
     let aiHandler = new AiHandler(player, handlers)

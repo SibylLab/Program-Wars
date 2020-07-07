@@ -7,10 +7,10 @@ import Card from './Card'
 
 // card types along with {value: numCard} pairs for each
 const cardTypes = {
-  "INSTRUCTION": {1: 9, 2: 12, 3: 9},
-  "GROUP": {2: 1, 3: 2, 4: 3, 5: 2, 6: 1},
-  "REPEAT": {1: 5, 2: 3, 3: 5, 4: 3},
+  "INSTRUCTION": {1: 10, 2: 12, 3: 6},
+  "REPEAT": {1: 5, 2: 5, 3: 4, 4: 2},
   "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
+  "METHOD": {0: 12},
   "VIRUS": {0: 3},
   "RANSOM": {0: 3},
   "SPYWARE": {0: 3},
@@ -22,9 +22,9 @@ const cardTypes = {
 
 // cards to add in when the deck is refreshed
 const refreshCards = {
-  "GROUP": {4: 1, 5: 1, 6: 1},
-  "REPEAT": {1: 2, 3: 2, 4: 2},
-  "VARIABLE": {4: 1, 5: 1, 6: 1},
+  "METHOD": {0: 3},
+  "REPEAT": {1: 2, 3: 3, 4: 2},
+  "VARIABLE": {4: 1, 5: 2, 6: 1},
 }
 
 
@@ -90,7 +90,7 @@ export default class Deck {
 
   /**
    * Refreshes the deck by adding back the discard pile and shuffling.
-   * Also, adds some more group, variable, and repeat cards to keep the game
+   * Also, adds some more method, variable, and repeat cards to keep the game
    * moving. Especially in 4 player games these cards are moslty used up by
    * the time the deck runs out, so we add some more in to ensure players
    * can still play.

@@ -2,6 +2,7 @@ import { bus } from '@/components/shared/Bus'
 import Player from '@/classes/game/Player'
 import Deck from '@/classes/game/Deck'
 import Stack from '@/classes/game/Stack'
+import MethodStack from '@/classes/game/MethodStack'
 import Trojan from '@/classes/game/Trojan'
 import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
 
@@ -24,13 +25,14 @@ export default {
     state.players = []
     state.stacks = []
     state.hands = []
+    state.methods = []
     state.aiHandlers = []
     state.objectives = []
     state.deck = new Deck()
     state.gameState = 'game'
     state.activePlayer = undefined
     state.activeCard = undefined
-    state.scoreLimit = 75
+    state.scoreLimit = 150
     state.turnPlays = []
   },
 
@@ -77,6 +79,7 @@ export default {
     for (let i = 0; i < playerInfo.length; i++) {
       let player = new Player(i, playerInfo[i].name, playerInfo[i].ai)
       state.players.push(player)
+      state.methods.push(new MethodStack(player.id))
 
       if (player.isAi) {
         let handler = factory.newHandler(playerInfo[i].personality, player)
@@ -334,11 +337,14 @@ export default {
       }
     }
 
-    // If we are adding a variable are we replacing one
-    let top = payload.target.getTop()
-    let replace = !(top.type === "REPEAT" && top.value === 1)
-                  && payload.card.type === "VARIABLE"
-                  && payload.target.hasVariable()
+    let replace = false
+    if (!payload.target.isEmpty()) {
+      // If we are adding a variable are we replacing one
+      let top = payload.target.getTop()
+      replace = !(top.type === "REPEAT" && top.value === 1)
+                    && payload.card.type === "VARIABLE"
+                    && payload.target.hasVariable()
+    }
 
     // Add the card to the stack
     let stack = payload.target
@@ -349,8 +355,10 @@ export default {
       stack.cards.push(payload.card)
     }
 
-    // If the stack is now complete move it to the end
-    if (stack.isComplete()) {
+    if (stack.isMethod) {
+      this.commit('updateMethodCardValues', {player: payload.player})
+    } else if (stack.isComplete()) {
+      // If the stack is now complete move it to the end
       state.stacks = state.stacks.filter(s => s.stackId !== stack.stackId)
       state.stacks.push(stack)
     }
@@ -370,27 +378,24 @@ export default {
     let stack = new Stack(payload.player.id)
     stack.cards.push(payload.card)
 
-    // if card is group place it in front of any single isntruction stacks
-    if (payload.card.type === "GROUP") {
-      let plain = state.stacks.find((s) => {
-        return s.cards.length === 1 && s.cards[0].type === "INSTRUCTION"
-      })
-      if (plain) {
-        let idx = state.stacks.indexOf(plain)
-        state.stacks.splice(idx, 0, stack)
-        return
-      }
-    }
-
-    // if card is a plain instruction or it is a group and there are no
-    // single instruction stacks place card before any complete stacks
+    // Find index of first plain stack and first complete stack if there are any
+    let plain = state.stacks.find((s) => {
+      return s.cards.length === 1 && s.cards[0].type === "INSTRUCTION"
+    })
     let complete = state.stacks.find(s => s.isComplete())
-    if (complete) {
+
+    // Add the new stack in the right place
+    if (plain && payload.card.type === "METHOD") {
+      let idx = state.stacks.indexOf(plain)
+      state.stacks.splice(idx, 0, stack)
+    } else if (complete) {
       let idx = state.stacks.indexOf(complete)
       state.stacks.splice(idx, 0, stack)
     } else {
       state.stacks.push(stack)
     }
+
+    this.commit('updateMethodCardValues', {player: payload.player})
   },
 
   /**
@@ -418,6 +423,22 @@ export default {
     // Some actions do not play a card, so only add it if there is a card obj
     if (payload.card) {
       payload.player.objectives.cardsPlayed.push(payload.card)
+    }
+  },
+
+  /**
+   * Updates values of all method cards that may have changed when adding
+   * a method to the play field or an instruction to the method stack.
+
+   * Payload { player: the player that played the card }
+   */
+  updateMethodCardValues (state, payload) {
+    let value = state.methods.find(m => m.playerId === payload.player.id).getScore()
+    let stacks = state.stacks.filter(s => s.playerId === payload.player.id)
+    for (let stack of stacks) {
+      if (stack.getBase().type === 'METHOD') {
+        stack.getBase().value = value
+      }
     }
   }
 }
