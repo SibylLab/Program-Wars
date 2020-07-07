@@ -126,7 +126,7 @@ describe('vuex actions', () => {
     expect(context.commit.mock.calls[3]).toEqual([ 'drawCard' ])
 
     expect(setTimeout).toHaveBeenCalledTimes(1)
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000)
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1250)
     expect(context.commit.mock.calls[4]).toEqual(
       [ 'changeGameState', {newState: 'game'} ]
     )
