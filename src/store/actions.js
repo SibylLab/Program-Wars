@@ -185,6 +185,7 @@ export default {
   },
 
   /**
+    // get scores of all stacks we will group
    * Play a card that is mimicking another card.
    * Payload is same as execute turn, but will have mimic card discarded and
    * payload.card will be replaced with the card being mimicked.

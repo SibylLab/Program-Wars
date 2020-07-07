@@ -126,6 +126,29 @@ describe('vuex actions', () => {
     expect(context.commit.mock.calls[3]).toEqual([ 'drawCard' ])
 
     expect(setTimeout).toHaveBeenCalledTimes(1)
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000)
+    expect(context.commit.mock.calls[4]).toEqual(
+      [ 'changeGameState', {newState: 'game'} ]
+    )
+    expect(context.dispatch.mock.calls.length).toEqual(1)
+    expect(context.dispatch.mock.calls[0]).toEqual([ 'endTurn' ])
+  })
+
+  test('cleanUpTurn', () => {
+    let payload = {draw: true}
+
+    actions.cleanUpTurn(context, payload)
+    jest.runAllTimers()
+
+    expect(context.commit.mock.calls.length).toEqual(5)
+    expect(context.commit.mock.calls[0]).toEqual([ 'updatePlayerEffects', payload ])
+    expect(context.commit.mock.calls[1]).toEqual([ 'addPlayedCard', payload ])
+    expect(context.commit.mock.calls[2]).toEqual(
+      [ 'changeGameState', {newState: 'wait'} ]
+    )
+    expect(context.commit.mock.calls[3]).toEqual([ 'drawCard' ])
+
+    expect(setTimeout).toHaveBeenCalledTimes(1)
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1250)
     expect(context.commit.mock.calls[4]).toEqual(
       [ 'changeGameState', {newState: 'game'} ]
