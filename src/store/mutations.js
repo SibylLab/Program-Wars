@@ -262,6 +262,23 @@ export default {
    * }
    */
   playScan (state, payload) {
+
+    // Remove a STACKOVERFLOW next if there is one
+    let stackoverflow = payload.target.negativeEffects.filter(e => e.type === 'STACKOVERFLOW')
+    if (stackoverflow.length > 0) {
+      payload.target.removeEffect(stackoverflow[0])
+      bus.$emit('scan-effect', 'STACKOVERFLOW')
+      return
+    }
+   
+    // Remove a SQLINJECTION next if there is one
+    let sqlinjection = payload.target.negativeEffects.filter(e => e.type === 'SQLINJECTION')
+    if (sqlinjection.length > 0) {
+      payload.target.removeEffect(sqlinjection[0])
+      bus.$emit('scan-effect', 'SQLINJECTION')
+      return
+    }
+  
     // Remove a virus if there is one
     let infectedStacks = state.stacks.filter((s) => {
       return s.playerId === payload.target.id && s.getTop().type === 'VIRUS'

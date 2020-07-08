@@ -37,12 +37,15 @@ export default class Stack {
    * Calculates the stack's score.
    * @return {int} the stack's total score.
    */
-  getScore () {
-    if (this.isEmpty()) {
-      return 0
-    }
-
-    let score = this.getBase().value
+  getScore (hasSQL = 0) {                                                      
+    if (this.isEmpty()) {                                                      
+      return 0                                                                 
+    }                                                                          
+                                                                               
+    let score = this.getBase().value                                           
+    if (this.getBase().type === 'METHOD') {                                    
+        score += hasSQL                                                          
+    }                                                                          
     for (let i = 1; i < this.cards.length; i++) {
       if (this.cards[i].type === "VIRUS") {
         score *= this.getBase().type === "METHOD" ? 0.5 : 0

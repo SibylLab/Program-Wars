@@ -73,7 +73,7 @@ export default class Player {
    * @return true if the player is protected, false otherwise.
    */
   isProtectedFrom (type) {
-    if (type === "TROJAN" || type === "RANSOM") {
+    if (type === "TROJAN" || type === "RANSOM" || type === "STACKOVERFLOW" || type === "SQLINJECTION") {
       return this.helpedBy("FIREWALL")
     }
     return this.helpedBy('ANTIVIRUS')
@@ -90,9 +90,26 @@ export default class Player {
 
     if (type === "ANTIVIRUS") {
       this.cleanAll()
-    } else if (type === "FIREWALL") {
+    } 
+    /*
+    else if (type === "STACKOVERFLOW") {
+      this.cleanAll()
+    } 
+
+    else if (type === "SQLINJECTION") {
+      this.cleanAll()
+    } 
+    */
+    else if (type === "FIREWALL") {
       this.removeNegative('RANSOM')
+
+      this.removeNegative('SQLINJECTION')
+      this.removeNegative('STACKOVERFLOW')
+
     }  // if we have gotten to here with SCAN it should be added
+
+
+
     this.positiveEffects.push(new CyberEffect(type, this.id))
   }
 
