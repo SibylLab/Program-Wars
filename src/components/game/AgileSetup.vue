@@ -15,15 +15,15 @@
     <p>{{ activeDetails.description }}</p>
     <h5><b>Backlog</b></h5>
     <ol>
-      <li>{{ activeDetails.objectives[0].goal }},
-          Final Bonus: {{ activeDetails.objectives[0].points }},
-          Sprint Bonus: {{ activeDetails.objectives[0].bonus }}</li>
-      <li>{{ activeDetails.objectives[1].goal }},
-          Final Bonus: {{ activeDetails.objectives[1].points }},
-          Sprint Bonus: {{ activeDetails.objectives[1].bonus }}</li>
-      <li>{{ activeDetails.objectives[2].goal }},
-          Final Bonus: {{ activeDetails.objectives[2].points }},
-          Sprint Bonus: {{ activeDetails.objectives[2].bonus }}</li>
+      <li>{{ activeDetails.goals[0].goal }},
+          Sprint Bonus: {{ activeDetails.goals[0].sprint }},
+          End Game Bonus: {{ activeDetails.goals[0].game }}</li>
+      <li>{{ activeDetails.goals[1].goal }},
+          Sprint Bonus: {{ activeDetails.goals[1].sprint }},
+          End Game Bonus: {{ activeDetails.goals[1].game }}</li>
+      <li>{{ activeDetails.goals[2].goal }},
+          Sprint Bonus: {{ activeDetails.goals[2].sprint }},
+          End Game Bonus: {{ activeDetails.goals[2].game }}</li>
     </ol>
   </div>
 
@@ -41,8 +41,8 @@ export default {
   name: 'agile-setup-page',
   data () {
     return {
-      testCards: ['group', 'repeat', 'instruction','group', 'repeat', 'instruction', 'variable', 'group', 'repeat', 'instruction','group', 'repeat', 'instruction', 'variable'],
-      activeReq: 'group',
+      testCards: ['DRY', 'infoSec', 'whiteHat'],
+      activeReq: 'DRY',
       activeDetails: 'empty'
     }
   },
@@ -60,18 +60,18 @@ export default {
     ]),
     cardImage (card) {
       // only temporary
-      return 'static/cardImages/' + card + '3.png'
+      return 'static/cardImages/requirements/' + card + '.png'
     },
     isSelected (card) {
       return this.activeReq === card
     },
     selectReq (card) {
       this.activeReq = card
-      this.activeDetails = requirements.details[this.activeReq]
+      this.activeDetails = requirements[this.activeReq]
     }
   },
   created () {
-    this.selectReq('group')
+    this.selectReq(this.testCards[0])
   },
   mounted () {
     if (this.gameState !== 'requirements') {
@@ -106,7 +106,7 @@ export default {
   width: 100%;
   height: 40%;
   background-color: grey;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
 }
@@ -122,7 +122,7 @@ export default {
   position: absolute;
   top: 45%;
   width: 100%;
-  height: 40%;
+  height: 55%;
   background-color: lightgrey;
   padding: 5px 20px;
 }

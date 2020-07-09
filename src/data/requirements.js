@@ -1,41 +1,32 @@
 export default {
-
-  details: {
-    group: {
-      name: "Group requirement",
-      description: "Your goal is to utilize your instruction cards as efficiently as possible by grouping then together before adding repeats and variables. Effectivley grouping together similar code is an important part of software development.",
-      objectives: [
-        {goal: "Group 4 points", bonus: "20pts", points: "20pts"},
-        {goal: "Group 8 points", bonus: "20pts", points: "40pts"},
-        {goal: "Group 12 points", bonus: "20pts", points: "60pts"}
-      ]
-    },
-    repeat: {
-      name: "Repeat requirement",
-      description: "Your goal is to utilize your instruction cards as efficiently as possible by grouping then together before adding repeats and variables. Effectivley grouping together similar code is an important part of software development.",
-      objectives: [
-        {goal: "Play 2 repeats", bonus: "10pts", points: "10pts"},
-        {goal: "Play 4 repeats", bonus: "10pts", points: "20pts"},
-        {goal: "Play 6 repeats", bonus: "10pts", points: "30pts"}
-      ]
-    },
-    instruction: {
-      name: "Intruction requirement",
-      description: "Your goal is to utilize your instruction cards as efficiently as possible by grouping then together before adding repeats and variables. Effectivley grouping together similar code is an important part of software development.",
-      objectives: [
-        {goal: "Group 4 points", bonus: "20pts", points: "20pts"},
-        {goal: "Group 8 points", bonus: "20pts", points: "40pts"},
-        {goal: "Group 12 points", bonus: "20pts", points: "60pts"}
-      ]
-    },
-    variable: {
-      name: "Variable requirement",
-      description: "Your goal is to utilize your instruction cards as efficiently as possible by grouping then together before adding repeats and variables. Effectivley grouping together similar code is an important part of software development.",
-      objectives: [
-        {goal: "Group 4 points", bonus: "20pts", points: "20pts"},
-        {goal: "Group 8 points", bonus: "20pts", points: "40pts"},
-        {goal: "Group 12 points", bonus: "20pts", points: "60pts"}
-      ]
-    }
+  DRY: {
+    type: "DRY",
+    name: "DRY: Don't repeat yourself",
+    description: "You don't want to write the same code in too many different places. You will try to put as many instructions as possible into your method. Then use that method as much as possible to build your stacks.",
+    goals: [
+      {goal: "Max out method stack", sprint: "Increase hand size to 6", game: "10pts"},
+      {goal: "Have 1 Method stack with 2 repeats", sprint: "Search Card", game: "10pts"},
+      {goal: "Have 2 Method stacks with 2 repeats", sprint: "+1 pts to Method", game: "None"}
+    ]
+  },
+  infoSec: {
+    type: "infoSec",
+    name: "Information Security",
+    description: "It is important to secure your system from hackers and malware. You will try to ensure that you protect yourself and ensure that your system is clean",
+    goals: [
+      {goal: "Played 2 safety cards total", sprint: "Variable6 Card", game: "10pts"},
+      {goal: "Played 4 safety cards total", sprint: "Redraw2 Card", game: "10pts"},
+      {goal: "No Malware or Hack effects at end of game", sprint: "None", game: "30pts"}
+    ]
+  },
+  whiteHat: {
+    type: "whiteHat",
+    name: "White Hat Hacker",
+    description: "Your job is to deploy cyber attacks against organizations systems in order to expose sercurity vulnerabilities so they can be secured. You will try to play as many attack cards as possible on other players.",
+    goals: [
+      {goal: "Played 2 attack cards total", sprint: "Search Card", game: "10pts"},
+      {goal: "Played 4 attack cards total", sprint: "Redraw2 Card", game: "10pts"},
+      {goal: "Played 6 attack cards total", sprint: "20pts", game: "20pts"}
+    ]
   }
 }

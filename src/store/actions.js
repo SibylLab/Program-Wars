@@ -38,11 +38,6 @@ export default {
     router.push('game')
   },
 
-  agileGame (context, payload) {
-    context.state.gameState = 'requirements'
-    payload
-    router.push('agile_setup')
-  },
 
   /**
    * Leaves the current game and navigates back to home.
@@ -213,5 +208,15 @@ export default {
       payload.player = player
       context.dispatch('playSpecialCard', payload)
     }
-  }
+  },
+
+
+  // Agile game mode specific actions ////////////////////////////////////////
+
+  agileGame (context, payload) {
+    context.commit('resetStateForGame')
+    context.state.gameState = 'requirements'
+    context.commit('addPlayers', payload)
+    router.push('agile_setup')
+  },
 }
