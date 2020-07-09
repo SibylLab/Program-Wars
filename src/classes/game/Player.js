@@ -26,6 +26,7 @@ export default class Player {
     this.objectives = new Objectives(this.id)
     this.image = 'static/playerImages/player' + id + '.png'
     this.handSize = 5
+    this.deck = undefined  // for game types with individual decks
   }
 
   /**
