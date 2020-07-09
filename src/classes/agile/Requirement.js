@@ -2,7 +2,8 @@
  * Base class for requirements.
  */
 export default class Requirement {
-  constructor () {
+  constructor (playerId) {
+    this.playerId = playerId
     this.bonusPoints = 0
     this.bonusWasAwarded = {1: false, 2: false, 3: false, 'END': false}
   }
@@ -15,7 +16,7 @@ export default class Requirement {
    * @return true if the player has completed the sprint requirements for the round,
    * otherwise false.
    */
-  hasCompletedSprint (round, playerDetails) { return false }
+  hasCompletedSprint (round, playerDetails) { return false }  // eslint-disable-line no-unused-vars
 
   /**
    * Give the player thier bonuses for completing sprint objectives.
@@ -24,5 +25,5 @@ export default class Requirement {
    * before the end of the given sprint
    * @param playerDetails Same as hasCompletedSprint
    */
-  awardBonus (round, completedOnTime, playerDetails) {}
+  awardBonus (round, completedOnTime, playerDetails) {}  // eslint-disable-line no-unused-vars
 }

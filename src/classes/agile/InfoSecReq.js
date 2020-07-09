@@ -4,8 +4,8 @@ import Requirement from '@/classes/agile/Requirement'
  * Keeps track of progress toward the InfoSec requirement.
  */
 export default class InfoSecReq extends Requirement {
-  constructor () {
-    super()
+  constructor (playerId) {
+    super(playerId)
   }
 
   hasCompletedSprint (round, playerDetails) {
@@ -27,13 +27,13 @@ export default class InfoSecReq extends Requirement {
 
     if (round === 1) {
       if (completedOnTime) {
-        player.deck.cards.unshift(new Card("VARIABLE", 6))
+        playerDetails.player.deck.cards.unshift(new Card("VARIABLE", 6))
       }
       this.bonusPoints += 10
 
     } else if (round === 2) {
       if (completedOnTime) {
-        player.deck.cards.unshift(new Card("SCAN", 0))  // until redraw card exists
+        playerDetails.player.deck.cards.unshift(new Card("SCAN", 0))  // until redraw card exists
       }
       this.bonusPoints += 10
 

@@ -5,6 +5,7 @@ import Stack from '@/classes/game/Stack'
 import MethodStack from '@/classes/game/MethodStack'
 import Trojan from '@/classes/game/Trojan'
 import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
+import ReqFactory from '@/classes/agile/ReqFactory'
 
 
 /**
@@ -446,5 +447,7 @@ export default {
 
   addRequirement (state, payload) {
     console.log(state.gameState, payload)
+    let factory = new ReqFactory()
+    state.requirements.push(factory.newRequirement(payload.type, payload.player.id))
   }
 }

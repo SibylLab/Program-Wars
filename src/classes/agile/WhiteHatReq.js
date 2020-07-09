@@ -4,8 +4,8 @@ import Requirement from '@/classes/agile/Requirement'
  * Keeps track of progress toward the WhiteHat requirement.
  */
 export default class WhiteHatReq extends Requirement {
-  constructor () {
-    super()
+  constructor (playerId) {
+    super(playerId)
   }
 
   hasCompletedSprint (round, playerDetails) {
@@ -26,13 +26,13 @@ export default class WhiteHatReq extends Requirement {
 
     if (round === 1) {
       if (completedOnTime) {
-        player.deck.cards.unshift(new Card("SCAN", 0))  // until search card exists
+        playerDetails.player.deck.cards.unshift(new Card("SCAN", 0))  // until search card exists
       }
       this.bonusPoints += 10
 
     } else if (round === 2) {
       if (completedOnTime) {
-        player.deck.cards.unshift(new Card("SCAN", 0))  // until redraw card exists
+        playerDetails.player.deck.cards.unshift(new Card("SCAN", 0))  // until redraw card exists
       }
       this.bonusPoints += 10
 

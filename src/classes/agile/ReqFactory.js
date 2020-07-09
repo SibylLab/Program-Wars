@@ -1,6 +1,6 @@
-import DryReq from '@/classes/game/DryReq'
-import InfoSecReq from '@/classes/game/InfoSecReq'
-import WhiteHatReq from '@/classes/game/WhiteHatReq'
+import DryReq from '@/classes/agile/DryReq'
+import InfoSecReq from '@/classes/agile/InfoSecReq'
+import WhiteHatReq from '@/classes/agile/WhiteHatReq'
 
 /**
  * A factory to return Requirement objects.
@@ -13,13 +13,13 @@ export default class ReqFactory {
    * @return A Requirement object of the given type
    * @throws if the type is not valid
    */
-  newRequirement (type) {
-    if (type === 'dry') {
-      return new DryReq()
+  newRequirement (type, playerId) {
+    if (type === 'DRY') {
+      return new DryReq(playerId)
     } else if (type === 'infoSec') {
-      return new InfoSecReq()
+      return new InfoSecReq(playerId)
     } else if (type === 'whiteHat') {
-      return new WhiteHatReq()
+      return new WhiteHatReq(playerId)
     } else {
       throw type + ' is not a valid requirement type'
     }
