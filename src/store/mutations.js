@@ -446,7 +446,6 @@ export default {
   // Agile specific mutations ////////////////////////////////////////////////
 
   addRequirement (state, payload) {
-    console.log(state.gameState, payload)
     let factory = new ReqFactory()
     state.requirements.push(factory.newRequirement(payload.type, payload.player.id))
   }

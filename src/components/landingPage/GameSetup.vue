@@ -154,7 +154,7 @@ export default {
       // Make sure the string isn't empty
       } else if (name.length > 0) {
         // Add in different position based on game type
-        if (this.gameType === 'hotseat') {
+        if (this.playerType === 'hotseat') {
           this.players.push({name: name, ai: false})
         } else {
           this.players.unshift({name: name, ai: false})
