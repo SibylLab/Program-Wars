@@ -219,4 +219,9 @@ export default {
     context.commit('addPlayers', payload)
     router.push('agile_setup')
   },
+
+  finishRequirements (context) {
+    context.state.gameState = 'deck'
+    router.push('deck_setup')
+  }
 }

@@ -440,5 +440,11 @@ export default {
         stack.getBase().value = value
       }
     }
+  },
+
+  // Agile specific mutations ////////////////////////////////////////////////
+
+  addRequirement (state, payload) {
+    console.log(state.gameState, payload)
   }
 }

@@ -3,6 +3,7 @@
   <page-header/>
 
   <h4 id="heading">Phase 1: Select Agile Requirements</h4>
+  <h4 id="player-name">{{ players[playerNum].name.toUpperCase() }}</h4>
 
   <div id="req-cards">
     <img v-for="card in testCards" v-bind:key="card + Math.random()"
@@ -27,7 +28,7 @@
     </ol>
   </div>
 
-  <button id="next-phase" class="btn btn-primary">Next Phase</button>
+  <button id="choose" class="btn btn-primary" v-on:click="chooseReq()">Choose</button>
 
 </div>
 </template>
@@ -35,7 +36,7 @@
 <script>
 import PageHeader from '@/components/shared/PageHeader'
 import requirements from '@/data/requirements'
-import { mapActions, mapState } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 
 export default {
   name: 'agile-setup-page',
@@ -43,7 +44,8 @@ export default {
     return {
       testCards: ['DRY', 'infoSec', 'whiteHat'],
       activeReq: 'DRY',
-      activeDetails: 'empty'
+      activeDetails: 'empty',
+      playerNum: 0
     }
   },
   components: {
@@ -52,11 +54,16 @@ export default {
   computed: {
     ...mapState([
       'gameState',
+      'players'
     ])
   },
   methods: {
+    ...mapMutations([
+      'addRequirement'
+    ]),
     ...mapActions([
       'leaveGame',
+      'finishRequirements'
     ]),
     cardImage (card) {
       // only temporary
@@ -68,6 +75,20 @@ export default {
     selectReq (card) {
       this.activeReq = card
       this.activeDetails = requirements[this.activeReq]
+    },
+    chooseReq () {
+      this.addRequirement({type: this.activeReq, player: this.players[this.playerNum]})
+
+      if (this.playerNum === this.players.length - 1) {
+        this.finishRequirements()
+      } else {
+        this.playerNum += 1
+
+        if (this.players[this.playerNum].isAi) {
+          this.activeReq = 'DRY'  // Make this random
+          this.chooseReq()
+        }
+      }
     }
   },
   created () {
@@ -100,9 +121,15 @@ export default {
   color: white;
 }
 
+#player-name {
+  position: relative;
+  z-index: 20;
+  color: black;
+}
+
 #req-cards {
   position: absolute;
-  top: 40px;
+  top: 80px;
   width: 100%;
   height: 40%;
   background-color: grey;
@@ -120,11 +147,17 @@ export default {
 
 #req-details {
   position: absolute;
-  top: 45%;
+  top: 50.5%;
   width: 100%;
   height: 55%;
   background-color: lightgrey;
   padding: 5px 20px;
+}
+
+#choose {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
 
 .active {
