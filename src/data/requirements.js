@@ -4,9 +4,9 @@ export default {
     name: "DRY: Don't repeat yourself",
     description: "You don't want to write the same code in too many different places. You will try to put as many instructions as possible into your method. Then use that method as much as possible to build your stacks.",
     goals: [
-      {goal: "Max out method stack", sprint: "Increase hand size to 6", game: "10pts"},
-      {goal: "Have 1 Method stack with 2 repeats", sprint: "Search Card", game: "10pts"},
-      {goal: "Have 2 Method stacks with 2 repeats", sprint: "+1 pts to Method", game: "None"}
+      {goal: "Max out method stack", sprint: "+1 to hand size", game: "None"},
+      {goal: "Have 1 Method stack with 2 repeats", sprint: "Scan Card", game: "None"},
+      {goal: "Have 3 Method stacks with 2 repeats", sprint: "Scan Card", game: "None"}
     ]
   },
   infoSec: {

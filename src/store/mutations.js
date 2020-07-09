@@ -27,7 +27,7 @@ export default {
     state.hands = []
     state.methods = []
     state.aiHandlers = []
-    state.objectives = []
+    state.requirements = []
     state.deck = new Deck()
     state.gameState = 'game'
     state.activePlayer = undefined
