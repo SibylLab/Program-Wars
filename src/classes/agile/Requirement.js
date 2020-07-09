@@ -6,6 +6,7 @@ export default class Requirement {
     this.playerId = playerId
     this.bonusPoints = 0
     this.bonusWasAwarded = {1: false, 2: false, 3: false, 'END': false}
+    this.type = "NULL_REQ"
   }
 
   /**

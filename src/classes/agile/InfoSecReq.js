@@ -6,6 +6,7 @@ import Requirement from '@/classes/agile/Requirement'
 export default class InfoSecReq extends Requirement {
   constructor (playerId) {
     super(playerId)
+    this.type = 'infoSec'
   }
 
   hasCompletedSprint (round, playerDetails) {

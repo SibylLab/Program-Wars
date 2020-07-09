@@ -448,5 +448,10 @@ export default {
   addRequirement (state, payload) {
     let factory = new ReqFactory()
     state.requirements.push(factory.newRequirement(payload.type, payload.player.id))
+  },
+
+  addDeck (state, payload) {
+    console.log(state.gameState, payload.cards)
   }
+
 }

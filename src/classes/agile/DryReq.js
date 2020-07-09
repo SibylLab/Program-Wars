@@ -6,6 +6,7 @@ import Requirement from '@/classes/agile/Requirement'
 export default class DryReq extends Requirement {
   constructor (playerId) {
     super(playerId)
+    this.type = 'DRY'
   }
 
   hasCompletedSprint (round, playerDetails) {

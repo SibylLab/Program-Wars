@@ -223,5 +223,17 @@ export default {
   finishRequirements (context) {
     context.state.gameState = 'deck'
     router.push('deck_setup')
+  },
+
+  finishDecks (context) {
+    // This just starts a normal game for now to get us to the next phase
+    context.state.gameState = 'game'
+    context.commit('setStartingPlayer')
+    context.commit('createNewDeck')
+
+    for (let p of context.state.players) {
+      context.commit('giveNewHand', {player: p})
+    }
+    router.push('game')
   }
 }

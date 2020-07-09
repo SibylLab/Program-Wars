@@ -6,6 +6,7 @@ import Requirement from '@/classes/agile/Requirement'
 export default class WhiteHatReq extends Requirement {
   constructor (playerId) {
     super(playerId)
+    this.type = 'whiteHat'
   }
 
   hasCompletedSprint (round, playerDetails) {
