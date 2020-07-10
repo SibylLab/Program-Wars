@@ -30,6 +30,12 @@ const routes = [
     component: () => import('@/components/game/DeckSetup.vue')
   },
   {
+    path: '/agile_game',
+    name: 'Agile Game',
+    canReuse: false,
+    component: () => import('@/components/agile/AgileGame.vue')
+  },
+  {
     path: '*',
     redirect: '/'
   }
