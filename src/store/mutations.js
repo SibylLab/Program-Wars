@@ -6,6 +6,7 @@ import MethodStack from '@/classes/game/MethodStack'
 import Trojan from '@/classes/game/Trojan'
 import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
 import ReqFactory from '@/classes/agile/ReqFactory'
+import PlayerDeck from '@/classes/game/PlayerDeck'
 
 
 /**
@@ -447,11 +448,14 @@ export default {
 
   addRequirement (state, payload) {
     let factory = new ReqFactory()
-    state.requirements.push(factory.newRequirement(payload.type, payload.player.id))
+    state.requirements.push( factory.newRequirement(payload.type, payload.player.id) )
   },
 
-  addDeck (state, payload) {
-    console.log(state.gameState, payload.cards)
+  addDeck (_, payload) {
+    let deck = new PlayerDeck(payload.player.id)
+    deck.addCards(payload.cards)
+    deck.shuffle(5) 
+    payload.player.deck = deck
   }
 
 }

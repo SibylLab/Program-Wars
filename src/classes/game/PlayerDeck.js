@@ -1,16 +1,15 @@
+import Card from '@/classes/game/Card'
+
 export default class PlayerDeck {
-  constructor (type) {
+  constructor (playerId) {
+    this.playerId = playerId
     this.cards = [],
     this.discard = []
   }
 
   addCards (cardsToAdd) {
-    for (let [type, values] of Object.entries(cardsToAdd)) {
-      for (let [value, number] of Object.entries(values)) {
-        for (let i = 0; i < number; i++) {
-          this.cards.push(new Card(type, parseInt(value)))
-        }
-      }
+    for (let {type, value} of cardsToAdd) {
+      this.cards.push(new Card(type, value))
     }
   }
 
@@ -21,7 +20,7 @@ export default class PlayerDeck {
   shuffle (numShuffles) {
     for (let times = 0; times < numShuffles; times++) {
       for (let i = this.cards.length; i; i--) {
-        let j = Math.floor(Math.random() * i)
+        let j = Math.floor(Math.random() * i);
         [this.cards[i - 1], this.cards[j]] = [this.cards[j], this.cards[i - 1]]
       }
     }
