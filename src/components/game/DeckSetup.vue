@@ -8,18 +8,20 @@
   <div id="deck-contents">
     <div class="deck-card-type" v-for="type in basicCardTypes" v-bind:key="type.type  + Math.random()">
       <img v-for="card in typeCards(type)" v-bind:key="card + Math.random()"
-          :src="cardImage(card)" class='deck-card'>
+          :src="cardImage(card)" class='deck-card' ondragstart="return false;">
     </div>
   </div>
 
-  <div id="optional-cards">
-    <img v-for="card in optionalCards" v-bind:key="card.type + Math.random()"
-        :src="cardImage(card)" class='card-img'>
+  <div id="optional-cards" :key="updateOpt">
+    <img v-for="[idx, card] in listOptional()" v-bind:key="idx"
+        :src="cardImage(card)" class='card-img' ondragstart="return false;"
+        v-on:drop='replaceCard($event, idx)' @dragover.prevent @dragenter.prevent>
   </div>
 
-  <div id="replacement-cards">
-    <img v-for="card in replacementCards" v-bind:key="card.type + Math.random()"
-        :src="cardImage(card)" class='card-img'>
+  <div id="replacement-cards" :key="updateRep">
+    <img v-for="[idx, card] in listReplacement()" v-bind:key="idx"
+        :src="cardImage(card)" class='card-img' draggable
+        v-on:dragstart='dragReplacement($event, idx)'>
   </div>
 
   <button id="choose" class="btn btn-primary" v-on:click="chooseDeck()">Choose</button>
@@ -39,7 +41,9 @@ export default {
     return {
       playerNum: 0,
       optionalCards: [],
-      replacementCards: []
+      replacementCards: [],
+      updateOpt: 0,
+      updateRep: 1
     }
   },
   components: {
@@ -74,6 +78,20 @@ export default {
       }
       return cards
     },
+    listOptional () {
+      let cards = []
+      for (let idx in this.optionalCards) {
+        cards.push([idx, this.optionalCards[idx]])
+      }
+      return cards
+    },
+    listReplacement () {
+      let cards = []
+      for (let idx in this.replacementCards) {
+        cards.push([idx, this.replacementCards[idx]])
+      }
+      return cards
+    },
     chooseDeck () {
       let cards = []
       for (let type of this.basicCardTypes) {
@@ -91,8 +109,49 @@ export default {
           this.chooseDeck()
         }
       }
+    },
+    dragReplacement (event, idx) {
+      event.dataTransfer.dropEffect = 'move'
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('idx', idx)
+
+    },
+    replaceCard (event, optIdx) {
+      let replaceIdx = event.dataTransfer.getData('idx')
+      let temp = this.optionalCards[optIdx]
+      this.optionalCards[optIdx] = this.replacementCards[replaceIdx]
+      this.replacementCards[replaceIdx] = temp
+      this.updateCardLists()
+    },
+    updateCardLists () {
+      // sort cards by type and value
+      this.optionalCards.sort(this.compareCards)
+      this.replacementCards.sort(this.compareCards)
+
+      // get scroll positions and change keys to update lists visually
+      let optLeft = $('#optional-cards').scrollLeft()
+      let repLeft = $('#replacement-cards').scrollLeft()
+      this.updateOpt = !this.updateOpt
+      this.updateRep = !this.updateRep
+
+      // After the update scroll back to the position we were at
+      this.$nextTick(() => {
+        document.getElementById('optional-cards').scrollLeft = optLeft
+        document.getElementById('replacement-cards').scrollLeft = repLeft
+      })
+    },
+    /**
+     * Comparator to sort cards by type and value.
+     */
+    compareCards (a, b) {
+      if (a.type < b.type) {
+        return -1
+      } else if (a.type > b.type) {
+        return 1
+      } else {
+        return a.value - b.value
+      }
     }
-    // Still need the drag and drop replacements for cards between the two lists
   },
   mounted () {
     if (this.gameState !== 'deck') {
@@ -118,6 +177,8 @@ export default {
       }
     }
     // need to filter out optional cards from replacements
+
+    this.updateCardLists()
   }
 }
 </script>
