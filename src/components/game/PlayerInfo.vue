@@ -23,17 +23,19 @@
   <img id="avatar" :class="[side, {active: isActive}]"
       :src="player.image">
 
-  <h5 id="score-title" :class="side" style="position: absolute; top: 44%;">
-    <b>Score:</b> <b>{{ getScore() }}/{{ scoreLimit }}</b>
-  </h5>
   <div id="score-area" :class="side">
-    <meter id="score-meter"
-       :max="scoreLimit" min=0
-       :value="getScore()"
-       :high="scoreLimit * 0.7"
-       :low="scoreLimit / 2"
-       :optimum="scoreLimit * 0.9">
-    </meter>
+    <slot>
+      <h5 id="score-title" :class="side" style="position: absolute;">
+        <b>Score:</b> <b>{{ getScore() }}/{{ scoreLimit }}</b>
+      </h5>
+      <meter id="score-meter" :class="side"
+         :max="scoreLimit" min=0
+         :value="getScore()"
+         :high="scoreLimit * 0.7"
+         :low="scoreLimit / 2"
+         :optimum="scoreLimit * 0.9">
+      </meter>
+    </slot>
   </div>
 
   <div id="effects-area" :class="side">
@@ -194,18 +196,16 @@ export default {
 
 #score-area {
   position: absolute;
-  top: 50%;
-  width: 50%;
-  height: 24px;
+  top: 45%;
+  width: 60%;
+  height: 50px;
 }
 
 #score-meter {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 45%;
   width: 100%;
-  height: 100%;
-  z-index: 20;
+  height: 30px;
 }
 
 #effects-area {
