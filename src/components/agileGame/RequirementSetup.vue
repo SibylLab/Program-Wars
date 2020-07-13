@@ -1,5 +1,5 @@
 <template>
-<div id="agile-setup">
+<div id="requirement-setup">
   <page-header/>
 
   <h4 id="heading">Phase 1: Select Agile Requirements</h4>
@@ -39,7 +39,7 @@ import requirements from '@/data/requirements'
 import { mapMutations, mapActions, mapState } from 'vuex'
 
 export default {
-  name: 'agile-setup-page',
+  name: 'requirement-setup',
   data () {
     return {
       testCards: ['DRY', 'infoSec', 'whiteHat'],
@@ -103,7 +103,7 @@ export default {
 </script>
 
 <style scoped>
-#agile-setup {
+#requirement-setup {
   position: absolute;
   top: 0px;
   width: 100%;

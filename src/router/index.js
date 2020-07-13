@@ -21,13 +21,13 @@ const routes = [
     path: '/agile_setup',
     name: 'Agile Setup',
     canReuse: false,
-    component: () => import('@/components/game/AgileSetup.vue')
+    component: () => import('@/components/agileGame/RequirementSetup.vue')
   },
   {
     path: '/deck_setup',
     name: 'Deck Setup',
     canReuse: false,
-    component: () => import('@/components/game/DeckSetup.vue')
+    component: () => import('@/components/agileGame/DeckSetup.vue')
   },
   {
     path: '*',
