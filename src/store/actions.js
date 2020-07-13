@@ -234,6 +234,6 @@ export default {
     for (let p of context.state.players) {
       context.commit('giveNewHand', {player: p})
     }
-    router.push('agile_game')
+    router.push('game')
   }
 }
