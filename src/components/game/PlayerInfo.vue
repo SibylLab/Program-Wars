@@ -25,7 +25,7 @@
 
   <div id="score-area" :class="side">
     <slot>
-      <h5 :class="side" style="position: absolute;">
+      <h5 id="score-title" :class="side" style="position: absolute;">
         <b>Score:</b> <b>{{ getScore() }}/{{ scoreLimit }}</b>
       </h5>
       <meter id="score-meter" :class="side"

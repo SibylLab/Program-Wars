@@ -3,9 +3,7 @@
 
   <div id="play">
     <div id="left-player">
-      <slot name="left-player" v-bind:player="getPlayer(0)" v-bind:side="'left'">
-        <player-info :player="getPlayer(0)" side="left"></player-info>
-      </slot>
+      <player-info :player="getPlayer(0)" side="left"></player-info>
     </div>
 
     <div id="turn">
@@ -13,23 +11,17 @@
     </div>
 
     <div id="right-player">
-      <slot name="right-player" v-bind:player="getPlayer(1)" v-bind:side="'right'">
-        <player-info :player="getPlayer(1)" side="right"></player-info>
-      </slot>
+      <player-info :player="getPlayer(1)" side="right"></player-info>
     </div>
   </div>
 
   <div id="stacks">
     <div id="left-field">
-      <slot name="left-play-area" v-bind:player="getPlayer(0)" v-bind:side="'left'">
-        <play-area :player="getPlayer(0)" side="left"></play-area>
-      </slot>
+      <play-area :player="getPlayer(0)" side="left"></play-area>
     </div>
 
     <div id="right-field">
-      <slot name="right-play-area" v-bind:player="getPlayer(1)" v-bind:side="'right'">
-        <play-area :player="getPlayer(1)" side="right"></play-area>
-      </slot>
+      <play-area :player="getPlayer(1)" side="right"></play-area>
     </div>
   </div>
   

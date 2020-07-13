@@ -3,14 +3,10 @@
 
   <div id="left-players">
     <div class="top-element">
-      <slot name="top-left-player" v-bind:player="getPlayer(0)" v-bind:side="'left'">
-        <player-info :player="getPlayer(0)" side="left"></player-info>
-      </slot>
+      <player-info :player="getPlayer(0)" side="left"></player-info>
     </div>
     <div class="bottom-element">
-      <slot name="bottom-left-player" v-bind:player="getPlayer(1)" v-bind:side="'left'">
-        <player-info :player="getPlayer(1)" side="left"></player-info>
-      </slot>
+      <player-info :player="getPlayer(1)" side="left"></player-info>
     </div>
   </div>
 
@@ -26,22 +22,16 @@
           {{ player.name }}
         </li>
       </ul>
-      <slot name="play-area" v-bind:player="tabPlayer" v-bind:side="'left'">
-        <play-area :player="tabPlayer" side="left"></play-area>
-      </slot>
+      <play-area :player="tabPlayer" side="left"></play-area>
     </div>
   </div>
 
   <div id="right-players">
     <div class="top-element">
-      <slot name="top-right-player" v-bind:player="getPlayer(2)" v-bind:side="'right'">
-        <player-info :player="getPlayer(2)" side="right"></player-info>
-      </slot>
+      <player-info :player="getPlayer(2)" side="right"></player-info>
     </div>
     <div class="bottom-element">
-      <slot name="bottom-right-player" v-bind:player="getPlayer(3)" v-bind:side="'right'">
-        <player-info :player="getPlayer(3)" side="right"></player-info>
-      </slot>
+      <player-info :player="getPlayer(3)" side="right"></player-info>
     </div>
   </div>
   
