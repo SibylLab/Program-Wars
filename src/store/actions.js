@@ -51,6 +51,10 @@ export default {
       context.commit('giveNewHand', {player: p})
     }
     router.push('game')
+
+    if (context.state.activePlayer.isAi) {
+      setTimeout(() => {context.dispatch('takeAiTurn')}, 500)
+    }
   },
 
 
@@ -250,5 +254,9 @@ export default {
       context.commit('giveNewHand', {player: p})
     }
     router.push('agile_game')
+
+    if (context.state.activePlayer.isAi) {
+      setTimeout(() => {context.dispatch('takeAiTurn')}, 500)
+    }
   }
 }
