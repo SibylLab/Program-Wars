@@ -250,6 +250,8 @@ export default {
         }
       }
     }
+
+    this.commit('updateMethodCardValues', payload)
   },
 
   /**
@@ -269,6 +271,7 @@ export default {
     if (stackoverflow.length > 0) {
       payload.target.removeEffect(stackoverflow[0])
       bus.$emit('scan-effect', 'STACKOVERFLOW')
+      this.commit('updateMethodCardValues', payload)
       return
     }
    
@@ -277,6 +280,7 @@ export default {
     if (sqlinjection.length > 0) {
       payload.target.removeEffect(sqlinjection[0])
       bus.$emit('scan-effect', 'SQLINJECTION')
+      this.commit('updateMethodCardValues', payload)
       return
     }
   
@@ -319,7 +323,6 @@ export default {
 
     // just add the scan to the player
     payload.target.addPositive(payload.card.type)
-    this.commit('updateMethodCardValues', payload)
   },
 
   /**
@@ -453,17 +456,14 @@ export default {
    */
   updateMethodCardValues (state, payload) {
     let attack = 'none'
-    if (payload.player.hurtBy('STACKOVERFLOW')) {
-      attack = 'STACKOVERFLOW'
-    } else if (payload.player.hurtBy('SQLINJECTION')) {
-      attack = 'SQLINJECTION'
+    if (payload.player.hurtBy('SQLINJECTION')) {
+      attack = 'SQL'
     }
 
     let value = state.methods.find(m => m.playerId === payload.player.id).getScore(attack)
     let stacks = state.stacks.filter(s => s.playerId === payload.player.id)
     for (let stack of stacks) {
       if (stack.getBase().type === 'METHOD') {
-        console.log(value)
         stack.getBase().value = value
       }
     }

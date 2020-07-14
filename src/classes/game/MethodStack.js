@@ -3,6 +3,7 @@ import Stack from '@/classes/game/Stack'
 
 // The maximum score allowed for a method
 const METHOD_LIMIT = 9
+const SQL_PENALTY = 2
 
 
 /**
@@ -14,13 +15,15 @@ export default class MethodStack extends Stack {
     this.isMethod = true
   }
 
-  getScore (attackedBy = 'none') {
-    if (attackedBy === 'STACKOVERFLOW') {
-      return 0
+  getScore (attack = 'none') {
+    let penalty = 0
+    if (attack === 'SQL') {
+      penalty = SQL_PENALTY
     }
 
     let score = this.cards.reduce((acc, card) => { return acc + card.value }, 0)
-    return attackedBy === 'SQLINJECTION' ? Math.floor(score * 0.5) : score
+    score = score - penalty < 0 ? 0 : score - penalty
+    return score
   }
 
   hasMaxRepeats () {
