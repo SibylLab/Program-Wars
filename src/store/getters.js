@@ -72,9 +72,8 @@ export default {
         return acc + stack.getScore()
       }, 0)
 
-      // Add or subtract bonus points from the players score                   
+      // Add or subtract bonus points from the players score
       let extra = 0
-
       if (player.hurtBy('RANSOM')) {
         let penalty = 10
         let ransomEffects = player.negativeEffects.filter(e => e.type === 'RANSOM')
