@@ -265,7 +265,6 @@ export default {
    * }
    */
   playScan (state, payload) {
-
     // Remove a SQLINJECTION next if there is one
     let sqlinjection = payload.target.negativeEffects.filter(e => e.type === 'SQLINJECTION')
     if (sqlinjection.length > 0) {
@@ -274,7 +273,7 @@ export default {
       this.commit('updateMethodCardValues', payload)
       return
     }
-  
+
     // Remove a virus if there is one
     let infectedStacks = state.stacks.filter((s) => {
       return s.playerId === payload.target.id && s.getTop().type === 'VIRUS'
@@ -303,7 +302,6 @@ export default {
       bus.$emit('scan-effect', 'STACKOVERFLOW')
       return
     }
-   
 
     // Remove a ransom next if there is one
     let ransoms = payload.target.negativeEffects.filter(e => e.type === 'RANSOM')

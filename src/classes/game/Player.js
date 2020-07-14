@@ -90,25 +90,11 @@ export default class Player {
 
     if (type === "ANTIVIRUS") {
       this.cleanAll()
-    } 
-    /*
-    else if (type === "STACKOVERFLOW") {
-      this.cleanAll()
-    } 
-
-    else if (type === "SQLINJECTION") {
-      this.cleanAll()
-    } 
-    */
-    else if (type === "FIREWALL") {
+    } else if (type === "FIREWALL") {
       this.removeNegative('RANSOM')
-
       this.removeNegative('SQLINJECTION')
       this.removeNegative('STACKOVERFLOW')
-
-    }  // if we have gotten to here with SCAN it should be added
-
-
+    }
 
     this.positiveEffects.push(new CyberEffect(type, this.id))
   }

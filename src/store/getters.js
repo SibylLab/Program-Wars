@@ -62,19 +62,19 @@ export default {
    * see https://vuex.vuejs.org/guide/getters.html#method-style-access
    */
   getPlayerScores: (state) => () => {
-    let scores = state.players.map((p) => {                                    
-        return {playerId: p.id, score: 0, baseScore: 0}                        
-      })
+    let scores = state.players.map((p) => {
+      return {playerId: p.id, score: 0, baseScore: 0}
+    })
 
-    for (let player of state.players) {                                        
+    for (let player of state.players) {
       let stacks = state.stacks.filter(s => s.playerId === player.id)
       let base = stacks.reduce((acc, stack) => {
         return acc + stack.getScore()
       }, 0)
 
       // Add or subtract bonus points from the players score                   
-      let extra = 0  
-      
+      let extra = 0
+
       if (player.hurtBy('RANSOM')) {
         let penalty = 10
         let ransomEffects = player.negativeEffects.filter(e => e.type === 'RANSOM')
