@@ -61,7 +61,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url('/static/backgroundImg/helloWorld.png');
+  background-image: linear-gradient(to bottom right, purple, darkblue);
   font-family: monospace;
   font-size: 15px;
 }
