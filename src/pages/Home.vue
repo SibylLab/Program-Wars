@@ -70,7 +70,7 @@ export default {
   position: fixed;
   top: 80px;
   width: 650px;
-  height: 600px;
+  height: 575px;
   background-color: white;
   border-radius: 30px;
 }
