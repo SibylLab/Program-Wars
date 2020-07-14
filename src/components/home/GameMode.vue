@@ -23,22 +23,18 @@ export default {
   name: 'game-mode',
   data () {
     return {
-      state: this.$store.state
+      pageState: this.$store.state.pageState
     }
   },
   methods: {
-    changeGame (newMode) {
-      state.mode = newMode
+    changeMode (newMode) {
+      this.pageState.mode = newMode
     }
   }
 }
 </script>
 
 <style scoped>
-#game-mode {
-  font-size: 15px;
-}
-
 .sub-heading {
   text-decoration: underline;
   text-decoration-skip-ink: none;

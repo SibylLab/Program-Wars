@@ -17,12 +17,16 @@ export default {
 
   // Page setup //
   setupHomePage (context) {
-    context.state = new HomeState()
+    context.state.pageState = new HomeState()
   },
 
-
-
-
+  startGame (context, payload) {
+    if (payload.mode === 'agile') {
+      this.dispatch('agileGame', payload)      
+    } else {
+      this.dispatch('basicGame', payload)      
+    }
+  },
 
   /**
    * Starts a new game.

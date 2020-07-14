@@ -79,7 +79,7 @@ export default {
     let playerInfo = payload.players
 
     for (let i = 0; i < playerInfo.length; i++) {
-      let player = new Player(i, playerInfo[i].name, playerInfo[i].ai)
+      let player = new Player(i, playerInfo[i].name, playerInfo[i].isAI)
       state.players.push(player)
       state.methods.push(new MethodStack(player.id))
 
