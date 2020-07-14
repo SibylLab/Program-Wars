@@ -11,7 +11,7 @@ describe('Deck.js', () => {
   test('constructor functions as expected', () => {
     let testDeck = new Deck()
     expect(testDeck.discard.length).toEqual(0)
-    expect(testDeck.cards.length).toEqual(83)
+    expect(testDeck.cards.length).toEqual(89)
   })
   test('deck refreshes when trying to draw a card from empty deck', () => {
     let testDeck = new Deck(1)
@@ -21,10 +21,10 @@ describe('Deck.js', () => {
       testDeck.discard.push(card)
     }
     expect(testDeck.cards.length).toEqual(0)
-    expect(testDeck.discard.length).toEqual(83)
+    expect(testDeck.discard.length).toEqual(89)
 
     testDeck.draw()
-    expect(testDeck.cards.length).toEqual(82)
+    expect(testDeck.cards.length).toEqual(88)
     expect(testDeck.discard.length).toEqual(0)
   })
 
@@ -75,15 +75,15 @@ describe('Deck.js', () => {
     test('draw function works properly', () => {
       // The deck shuffles itself when created, no way of know what the top card is
       expect(deck.draw()).not.toBeUndefined()
-      expect(deck.cards.length).toEqual(82)
+      expect(deck.cards.length).toEqual(88)
     })
   })
 
   test('refresh deck when it needs cards added', () => {
     let testDeck = new Deck()
-    for (let i = 0; i < 5; i++) { testDeck.draw() }
-    expect(testDeck.cards.length).toEqual(78)
+    for (let i = 0; i < 20; i++) { testDeck.draw() }
+    expect(testDeck.cards.length).toEqual(69)
     testDeck.refresh()
-    expect(testDeck.cards.length).toEqual(92)
+    expect(testDeck.cards.length).toEqual(83)
   })
 })
