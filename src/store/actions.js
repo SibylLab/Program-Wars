@@ -1,3 +1,4 @@
+import HomeState from '@/classes/states/HomeState'
 import { bus } from '@/components/shared/Bus'
 import router from '@/router'
 
@@ -13,6 +14,16 @@ const log = require('loglevel');
  * context.dispatch. Pass the function name as the first argument as a string.
  */
 export default {
+
+  // Page setup //
+  setupHomePage (context) {
+    context.state = new HomeState()
+  },
+
+
+
+
+
   /**
    * Starts a new game.
    * Fully initializes a new state and navigates to the game page.
