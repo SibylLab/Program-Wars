@@ -41,7 +41,7 @@ export default class AiHandler {
     for (let action of this.actionHandlers) {
       try {
         let result = action.handle(hand, players, stacks, method, scores)
-        if (result) {
+        if (result && this.canPlay(result.card)) {
           return result
         }
 
@@ -53,5 +53,20 @@ export default class AiHandler {
     }
     // If no handler can handle this action use the default action
     return this.defaultAction.handle(hand, players, stacks, method, scores)
+  }
+
+  /**
+   * Check to see if a card can be played.
+   * Right now this is to ensure that players under the effects of stack
+   * overflow can't play cards on stacks. It is in here instead of in each
+   * action handler so that each action handler can handle the normal
+   * cases and new attack effects can just be added here rather than having
+   * to add every new thing to each handler.
+   */
+  canPlay (card) {
+    if (!card.isSpecial() && this.player.hurtBy('STACKOVERFLOW')) {
+      return false
+    }
+    return true
   }
 }
