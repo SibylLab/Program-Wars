@@ -266,15 +266,6 @@ export default {
    */
   playScan (state, payload) {
 
-    // Remove a STACKOVERFLOW next if there is one
-    let stackoverflow = payload.target.negativeEffects.filter(e => e.type === 'STACKOVERFLOW')
-    if (stackoverflow.length > 0) {
-      payload.target.removeEffect(stackoverflow[0])
-      bus.$emit('scan-effect', 'STACKOVERFLOW')
-      this.commit('updateMethodCardValues', payload)
-      return
-    }
-   
     // Remove a SQLINJECTION next if there is one
     let sqlinjection = payload.target.negativeEffects.filter(e => e.type === 'SQLINJECTION')
     if (sqlinjection.length > 0) {
@@ -304,6 +295,15 @@ export default {
       bus.$emit('scan-effect', 'TROJAN')
       return
     }
+
+    // Remove a STACKOVERFLOW next if there is one
+    let stackoverflow = payload.target.negativeEffects.filter(e => e.type === 'STACKOVERFLOW')
+    if (stackoverflow.length > 0) {
+      payload.target.removeEffect(stackoverflow[0])
+      bus.$emit('scan-effect', 'STACKOVERFLOW')
+      return
+    }
+   
 
     // Remove a ransom next if there is one
     let ransoms = payload.target.negativeEffects.filter(e => e.type === 'RANSOM')

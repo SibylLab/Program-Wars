@@ -24,7 +24,7 @@ export default class CyberEffect {
     this.targetId = targetId
     this.attackerId = attackerId
     this.turnsLeft = undefined
-    if (type === "SPYWARE") {
+    if (type === "SPYWARE" || type === "STACKOVERFLOW") {
       this.turnsLeft = 2
     }
     this.image = 'static/cardImages/effects/' + type + '.png'
