@@ -14,8 +14,13 @@ export default class MethodStack extends Stack {
     this.isMethod = true
   }
 
-  getScore () {
-    return this.cards.reduce((acc, card) => { return acc + card.value }, 0)
+  getScore (attackedBy = 'none') {
+    if (attackedBy === 'STACKOVERFLOW') {
+      return 0
+    }
+
+    let score = this.cards.reduce((acc, card) => { return acc + card.value }, 0)
+    return attackedBy === 'SQLINJECTION' ? Math.floor(score * 0.5) : score
   }
 
   hasMaxRepeats () {

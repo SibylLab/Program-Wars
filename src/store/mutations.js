@@ -217,6 +217,7 @@ export default {
 
     } else if (payload.card.isAttack()) {
       payload.target.addNegative(payload.card.type, payload.player.id)
+      this.commit('updateMethodCardValues', {player: payload.target})
     }
   },
 
@@ -318,6 +319,7 @@ export default {
 
     // just add the scan to the player
     payload.target.addPositive(payload.card.type)
+    this.commit('updateMethodCardValues', payload)
   },
 
   /**
@@ -450,10 +452,18 @@ export default {
    * Payload { player: the player that played the card }
    */
   updateMethodCardValues (state, payload) {
-    let value = state.methods.find(m => m.playerId === payload.player.id).getScore()
+    let attack = 'none'
+    if (payload.player.hurtBy('STACKOVERFLOW')) {
+      attack = 'STACKOVERFLOW'
+    } else if (payload.player.hurtBy('SQLINJECTION')) {
+      attack = 'SQLINJECTION'
+    }
+
+    let value = state.methods.find(m => m.playerId === payload.player.id).getScore(attack)
     let stacks = state.stacks.filter(s => s.playerId === payload.player.id)
     for (let stack of stacks) {
       if (stack.getBase().type === 'METHOD') {
+        console.log(value)
         stack.getBase().value = value
       }
     }

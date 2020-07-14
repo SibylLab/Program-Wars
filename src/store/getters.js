@@ -62,26 +62,17 @@ export default {
    * see https://vuex.vuejs.org/guide/getters.html#method-style-access
    */
   getPlayerScores: (state) => () => {
-                                   
-      let scores = state.players.map((p) => {                                    
-          return {playerId: p.id, score: 0, baseScore: 0}                        
-        })
+    let scores = state.players.map((p) => {                                    
+        return {playerId: p.id, score: 0, baseScore: 0}                        
+      })
 
-      for (let player of state.players) {                                        
-        let stacks = state.stacks.filter(s => s.playerId === player.id)          
-        
-        if (player.hurtBy('STACKOVERFLOW')) {                                    
-        stacks = stacks.filter(s => s.getBase().type !== 'METHOD')             
-        }                                                                        
-                                                                                        
-        let method = state.methods.find(m => m.playerId === player.id)           
-        let base = stacks.reduce((acc, stack) => {                               
-        let penalty = player.hurtBy('SQLINJECTION') ? -Math.ceil(0.5 * method.getScore()) : 0
-        return acc + stack.getScore(penalty)                                   
-        }, 0)                                                                    
-                                                                                   
-    // Add or subtract bonus points from the players score                   
-      
+    for (let player of state.players) {                                        
+      let stacks = state.stacks.filter(s => s.playerId === player.id)
+      let base = stacks.reduce((acc, stack) => {
+        return acc + stack.getScore()
+      }, 0)
+
+      // Add or subtract bonus points from the players score                   
       let extra = 0  
       
       if (player.hurtBy('RANSOM')) {
