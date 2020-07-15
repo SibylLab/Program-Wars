@@ -18,10 +18,10 @@ const routes = [
     component: () => import('@/components/game/Game.vue')
   },
   {
-    path: '/agile_setup',
-    name: 'Agile Setup',
+    path: '/requirements',
+    name: 'Choose Requirement',
     canReuse: false,
-    component: () => import('@/components/agileGame/RequirementSetup.vue')
+    component: () => import('@/pages/Requirements.vue')
   },
   {
     path: '/deck_setup',

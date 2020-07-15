@@ -1,4 +1,5 @@
 import HomeState from '@/classes/states/HomeState'
+import RequirementsState from '@/classes/states/RequirementsState'
 import { bus } from '@/components/shared/Bus'
 import router from '@/router'
 
@@ -16,17 +17,28 @@ const log = require('loglevel');
 export default {
 
   // Page setup //
-  setupHomePage (context) {
+  startHomePage (context) {
+    context.state.gameState = 'home'  // temporary for side nav
     context.state.pageState = new HomeState()
+    router.push('/')
   },
 
-  startGame (context, payload) {
-    if (payload.mode === 'agile') {
-      this.dispatch('agileGame', payload)      
-    } else {
-      this.dispatch('basicGame', payload)      
-    }
+  startBasicGame (context, payload) {
+    context.dispatch('basicGame', payload)  // temporarily start old game
   },
+
+  startRequirements (context, payload) {
+    context.state.gameState = 'requirements'
+    context.state.pageState = new RequirementsState(payload.players)
+    router.push('requirements')
+  },
+
+
+
+
+
+
+
 
   /**
    * Starts a new game.
@@ -66,7 +78,7 @@ export default {
   leaveGame (context) {
     context.commit('changeGameState', {newState: 'home'})
     context.commit('seenBackstory')
-    router.push('home')
+    this.dispatch('startHomePage')
   },
 
   /**

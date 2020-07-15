@@ -32,7 +32,7 @@ export default {
   name: 'home-page',
   data () {
     return {
-      pageState: undefined
+      pageState: this.$store.state.pageState
     }
   },
   components: {
@@ -42,18 +42,19 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setupHomePage',
-      'startGame'
+      'startRequirements',
+      'startBasicGame'
     ]),
     playGame () {
-      if (this.pageState.canStart()) {
-        this.startGame({mode: this.pageState.mode, players: this.pageState.players})
+      if (!this.pageState.canStart()) { return }
+
+      const payload = {players: this.pageState.players}
+      if (this.pageState.mode === 'agile') {
+        this.startRequirements(payload)
+      } else {
+        this.startBasicGame(payload)
       }
     }
-  },
-  created () {
-    this.setupHomePage()
-    this.pageState = this.$store.state.pageState
   }
 }
 </script>

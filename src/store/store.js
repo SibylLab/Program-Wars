@@ -1,3 +1,4 @@
+import HomeState from '@/classes/states/HomeState'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -29,7 +30,8 @@ export const store = new Vuex.Store({
     activeCard: undefined,
     scoreLimit: 150,
     showBackstory: true,
-    turnPlays: []
+    turnPlays: [],
+    pageState: new HomeState()
   },
 
   getters,
