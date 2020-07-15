@@ -4,17 +4,27 @@
 
   <h4 class="title centered">Phase 1: Requirements</h4>
 
-  <div id="phase-info" class="centered">
-    <h4>
+  <div id="req-content" class="centered">
+    <h4 id="phase-info" class="centered">
       <div class="name">{{ pageState.currentPlayer().name.toUpperCase() }}</div>
       Select Your Requirement
     </h4>
-  </div>
 
-  <div id="req-cards">
-    <card-list title="Requirements" :cards="pageState.requirementNames()"/>
+    <div id="req-cards" class="centered">
+      <card-list title="Requirements" :cards="pageState.reqNames()"/>
+    </div>
+
+    <div id="req-info" class="centered">
+      <req-details/>
+    </div>
+
+    <div id="buttons" class="centered">
+      <button class="btn btn-success my-btn" v-on:click="premade()">
+        Use Pre-built Deck </button>
+      <button class="btn btn-primary my-btn" v-on:click="custom()">
+        Customize Deck </button>
+    </div>
   </div>
-  <!-- list requriement details -->
 
 </div>
 </template>
@@ -22,6 +32,7 @@
 <script>
 import PageHeader from '@/components/shared/PageHeader'
 import CardList from '@/components/shared/CardList'
+import ReqDetails from '@/components/requirements/ReqDetails.vue'
 
 export default {
   name: 'requirements',
@@ -32,34 +43,72 @@ export default {
   },
   components: {
     'page-header': PageHeader,
-    'card-list': CardList
+    'card-list': CardList,
+    'req-details': ReqDetails
+  },
+  methods: {
+    premade () {
+      console.log('premade')
+    },
+    custom () {
+      console.log('custom')
+    }
   }
 }
 </script>
 
 <style scoped>
 #requirements {
+  position: absolute;
+  top: 0;
   width: 100%;
   height: 100%;
+  min-width: 1350px;
+  min-height: 760px;
+  background-image: linear-gradient(to bottom right, purple, darkblue);
+}
+
+#req-content {
+  position: absolute;
+  top: 60px;
+  width: 90%;
+  height: 89%;
+  border-radius: 20px;
+  background-color: white;
 }
 
 #phase-info {
   position: absolute;
-  top: 40px;
+  top: 0px;
+  color: black;
 }
 
 #req-cards {
   position: absolute;
-  top: 80px;
+  top: 40px;
   width: 100%;
   height: 40%;
+}
+
+#req-info {
+  position: absolute;
+  top: 47%;
+  width: 100%;
+  height: 45%;
+  color: black;
+  font-size: 20px;
+}
+
+#buttons {
+  position: absolute;
+  bottom: 0px;
 }
 
 .name {
   display: inline;
   color: red;
+  margin-right: 15px;
 }
-
 
 .title {
   position: absolute;
@@ -73,6 +122,11 @@ export default {
   right: 0;
   margin-left: auto;
   margin-right: auto;
+}
+
+.my-btn {
+  display: inline;
+  margin: 10px;
 }
 
 h4 {

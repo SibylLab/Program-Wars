@@ -1,10 +1,9 @@
 <template>
 <div id="card-list">
 
-  <h3>{{ title }}</h3>
-
   <img v-for="[idx, card] in cards.entries()" v-bind:key="idx"
-    :src="cardImage(card)" class="card">
+    :src="cardImage(card)" v-on:click="select(idx)"
+    :class="['card', {active: activeCard(idx)}]">
 
 </div>
 </template>
@@ -21,6 +20,12 @@ export default {
   methods: {
     cardImage (card) {
       return 'static/cardImages/requirements/' + card + '.png'
+    },
+    activeCard (idx) {
+      return this.pageState.reqNum === idx
+    },
+    select (idx) {
+      this.pageState.reqNum = idx
     }
   }
 }
@@ -31,21 +36,19 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  border: 10px ridge darkgrey;
-  border-radius: 20px;
-  background-color: #333333;
 }
 
 .card {
   display: inline;
-  margin: 20px;
-  height: 70%;
+  top: 10%;
+  height: 80%;
   width: auto;
+  margin: 0 10px;
 }
 
-h3 {
-  margin: 0;
-  margin-top: 10px;
-  color: #3385ff;
+.active {
+  -webkit-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
+  -moz-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
+  box-shadow: 0 0 24px 15px rgba(0,255,0,1);
 }
 </style>

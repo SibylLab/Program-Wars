@@ -6,6 +6,7 @@ export default class RequirementsState {
   constructor (playerList) {
     this.players = this.addPlayers(playerList)
     this.playerNum = 0
+    this.reqNum = 0
     this.reqFactory = new ReqFactory()
   }
 
@@ -30,12 +31,12 @@ export default class RequirementsState {
     return this.currentPlayer()
   }
 
-  requirementNames () {
-    console.log(requirements)
-    return Object.keys(requirements)
+  currentReq () {
+    const name = this.reqNames()[this.reqNum]
+    return requirements[name]
   }
 
-  requirementDetails (name) {
-    return requirements[name]
+  reqNames () {
+    return Object.keys(requirements)
   }
 }
