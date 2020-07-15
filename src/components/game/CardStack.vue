@@ -129,6 +129,7 @@ export default {
 }
 
 .card {
+  display: inline;
   margin-right: -36px;
   max-width: 90px;
   max-height: 100px;

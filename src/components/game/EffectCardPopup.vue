@@ -117,7 +117,8 @@ export default {
 }
 
 .my-btn:hover {
-  background-color: darkred;
+  background-color: red;
+  border-color: red;
 }
 
 </style>

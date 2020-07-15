@@ -1,6 +1,6 @@
 <template>
 <div id="turn-area">
-  <button class="btn btn-sm btn-info col-6" v-on:click="redrawHand"
+  <button class="btn btn-sm btn-danger" v-on:click="redrawHand"
       style="border-radius: 40px; margin-top: 1%;"
       title="Discard your hand and draw 5 new cards">
     REDRAW
