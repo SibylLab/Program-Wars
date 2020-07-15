@@ -9,8 +9,9 @@
     <add-players/>
 
     <div id="message" class="centered"> {{ pageState.message }} </div>
-    <button id="go" class="centered btn btn-success" :disabled="!pageState.canStart()"
-      v-on:click="playGame()"> Play </button>
+    <button id="go" class="centered btn btn-success" v-on:click="playGame()">
+      Play
+    </button>
   </div>
 
 </div>
@@ -45,7 +46,9 @@ export default {
       'startGame'
     ]),
     playGame () {
-      this.startGame({mode: this.pageState.mode, players: this.pageState.players})
+      if (this.pageState.canStart()) {
+        this.startGame({mode: this.pageState.mode, players: this.pageState.players})
+      }
     }
   },
   created () {

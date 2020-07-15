@@ -21,8 +21,12 @@ export default class HomeState {
   }
 
   addPlayer (name, isAI = false) {
-    this.players.push({name, isAI})
-    this.sortPlayers()
+    if (!this.nameInUse(name)) {
+      this.players.push({name, isAI})
+      this.sortPlayers()
+    } else {
+      this.message = "A player is already using that name"
+    }
   }
 
   addBot () {
@@ -47,10 +51,21 @@ export default class HomeState {
   }
 
   canStart () {
-    return this.players.length >= 2 && this.players.length <= 4
+    if (this.players.length < 2) {
+      this.message = "You must add at least 2 players"
+      return false
+    } else if (!this.hasHuman()) {
+      this.message = "You must add at least 1 human player"
+      return false
+    }
+    return true
   }
 
   playerLimit () {
     return this.players.length >= 4
+  }
+
+  hasHuman () {
+    return this.players.find(p => !p.isAI) !== undefined
   }
 }

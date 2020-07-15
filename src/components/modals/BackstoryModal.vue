@@ -5,10 +5,10 @@
       <div class="modal-content" style="border-radius: 30px">
 
         <div class="modal-header" style="border: none"> 
+          <h3 class="modal-title"> In the not too distant future... </h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h3 class="modal-title"> In the not too distant future... </h3>
         </div>
 
         <div class="modal-body">

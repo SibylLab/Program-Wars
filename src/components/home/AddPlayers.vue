@@ -46,11 +46,7 @@ export default {
       this.refresh()
       if (!name) { return }
 
-      if (this.pageState.nameInUse(name)) {
-        this.pageState.message = "That name is already taken"
-      } else {
-        this.pageState.addPlayer(name)
-      }
+      this.pageState.addPlayer(name)
     },
     addBot () {
       this.pageState.addBot()
