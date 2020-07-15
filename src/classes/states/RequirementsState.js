@@ -1,6 +1,6 @@
 import Player2 from '@/classes/game/Player2'
 import ReqFactory from '@/classes/agile/ReqFactory'
-import {requirements} from '@/data/requirements'
+import requirements from '@/data/requirements'
 
 export default class RequirementsState {
   constructor (playerList) {
@@ -31,6 +31,7 @@ export default class RequirementsState {
   }
 
   requirementNames () {
+    console.log(requirements)
     return Object.keys(requirements)
   }
 

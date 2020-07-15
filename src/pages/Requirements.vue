@@ -11,7 +11,9 @@
     </h4>
   </div>
 
-  <!-- Component for listing a bunch of cards, title and cards prop? -->
+  <div id="req-cards">
+    <card-list title="Requirements" :cards="pageState.requirementNames()"/>
+  </div>
   <!-- list requriement details -->
 
 </div>
@@ -19,6 +21,7 @@
 
 <script>
 import PageHeader from '@/components/shared/PageHeader'
+import CardList from '@/components/shared/CardList'
 
 export default {
   name: 'requirements',
@@ -28,7 +31,8 @@ export default {
     }
   },
   components: {
-    'page-header': PageHeader
+    'page-header': PageHeader,
+    'card-list': CardList
   }
 }
 </script>
@@ -42,6 +46,13 @@ export default {
 #phase-info {
   position: absolute;
   top: 40px;
+}
+
+#req-cards {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  height: 40%;
 }
 
 .name {
