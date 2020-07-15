@@ -61,13 +61,15 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
+  min-width: 700px;
+  min-height: 700px;
   background-image: linear-gradient(to bottom right, purple, darkblue);
   font-family: monospace;
   font-size: 15px;
 }
 
 #game-setup {
-  position: fixed;
+  position: absolute;
   top: 80px;
   width: 650px;
   height: 575px;
