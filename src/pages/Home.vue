@@ -3,7 +3,7 @@
   <page-header/>
 
   <div id="game-setup" class="centered">
-    <h3>Welcome to Program Wars!</h3>
+    <h3 id="title">Welcome to Program Wars!</h3>
 
     <game-mode/>
     <add-players/>
@@ -62,7 +62,7 @@ export default {
   width: 100%;
   height: 100%;
   min-width: 700px;
-  min-height: 700px;
+  min-height: 650px;
   background-image: linear-gradient(to bottom right, purple, darkblue);
   font-family: monospace;
   font-size: 15px;
@@ -72,9 +72,13 @@ export default {
   position: absolute;
   top: 80px;
   width: 650px;
-  height: 575px;
+  height: 530px;
   background-color: white;
   border-radius: 30px;
+}
+
+#title {
+  margin-top: 20px;
 }
 
 #message {

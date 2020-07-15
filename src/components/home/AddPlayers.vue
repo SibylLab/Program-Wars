@@ -6,21 +6,23 @@
 
   <input id="enter-name" type="text" :placeholder="inputPlaceholder" maxlength="10"
     v-on:keyup.enter="addPlayer" :disabled="pageState.playerLimit()" autofocus>
-  <button type="button" class="btn btn-primary btn-sm" v-on:click="addPlayer"
+  <button type="button" class="btn btn-primary btn-sm" v-on:click="addPlayer()"
     :disabled="pageState.playerLimit()"> Add Human </button>
   <button type="button" class="btn btn-danger btn-sm" v-on:click="addBot()"
     :disabled="pageState.playerLimit()"> Add Bot </button>
 
-  <h5 class="sub-heading">Current Players</h5>
-  <ol id="player-list">
-    <li v-for="player in pageState.players" v-bind:key="player.name">
-      {{ player.name }}
-      <div class="tag" v-if="player.isAI">(BOT)</div>
-      <a class="remove" v-on:click="removePlayer(player.name)">
-        <u>Remove</u>
-      </a>
-    </li>
-  </ol>
+  <div class='section'>
+    <h5 class="sub-heading">Current Players</h5>
+    <ol id="player-list">
+      <li v-for="player in pageState.players" v-bind:key="player.name">
+        {{ player.name }}
+        <div class="tag" v-if="player.isAI">(BOT)</div>
+        <a class="remove" v-on:click="removePlayer(player.name)">
+          <u>Remove</u>
+        </a>
+      </li>
+    </ol>
+  </div>
 
 </div>
 </template>
@@ -40,26 +42,28 @@ export default {
   },
   methods: {
     addPlayer () {
-      let input = document.getElementById('enter-name')
-      let name = input.value
+      let name = $('#enter-name').val()
+      this.refresh()
       if (!name) { return }
 
       if (this.pageState.nameInUse(name)) {
         this.pageState.message = "That name is already taken"
       } else {
         this.pageState.addPlayer(name)
-        this.pageState.message = ""
       }
-
-      input.value = ''
     },
     addBot () {
-      this.pageState.message = ""
       this.pageState.addBot()
+      this.refresh()
     },
     removePlayer (name) {
-      this.pageState.message = ""
       this.pageState.removePlayer(name)
+      this.refresh()
+    },
+    refresh () {
+      this.pageState.message = ""
+      $('#enter-name').val('')
+      $('#enter-name').focus()
     }
   }
 }
@@ -70,9 +74,19 @@ export default {
   margin: 0 25%;
 }
 
+#enter-name{
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+}
+
 .sub-heading {
   text-decoration: underline;
   text-decoration-skip-ink: none;
+}
+
+.section {
+  margin: 15px;
 }
 
 .tag {
@@ -81,7 +95,12 @@ export default {
 }
 
 .remove {
+  color: blue;
   cursor: pointer;
   float: right;
+}
+
+.btn {
+  margin-left: 10px;
 }
 </style>
