@@ -1,4 +1,9 @@
-const botNames = ['n00b_b0t', 'L33T_g3Ars', 'RoboVaC', 'BlueScr33n']
+const botInfo = [
+  {name: 'n00b_b0t', personality: 'standard'},
+  {name: 'L33T_g3Ars', personality: 'aggresive'},
+  {name: 'RoboVaC', personality: 'defensive'},
+  {name: 'BlueScr33n', personality: 'basic'}
+]
 
 
 export default class HomeState {
@@ -20,9 +25,9 @@ export default class HomeState {
     })
   }
 
-  addPlayer (name, isAI = false) {
+  addPlayer (name, isAI = false, personality = 'none') {
     if (!this.nameInUse(name)) {
-      this.players.push({name, isAI})
+      this.players.push({name, isAI, personality})
       this.sortPlayers()
     } else {
       this.message = "A player is already using that name"
@@ -30,16 +35,16 @@ export default class HomeState {
   }
 
   addBot () {
-    for (let name of botNames) {
-      if (!this.nameInUse(name)) {
-        this.addPlayer(name, true)
+    for (let bot of botInfo) {
+      if (!this.nameInUse(bot.name)) {
+        this.addPlayer(bot.name, true, bot.personality)
         return
       }
     }
 
     // If somehow there are no AI names available
     let botName = 'b0t_' + Math.floor(Math.random() * 10000)
-    this.addPlayer(botName, true)
+    this.addPlayer(botName, true, 'standard')
   }
 
   removePlayer (name) {

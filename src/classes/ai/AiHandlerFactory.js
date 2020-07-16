@@ -15,7 +15,7 @@ const CARD_ORDER = {
     "METHOD", "VARIABLE", "REPEAT", "INSTRUCTION", "ANTIVIRUS", "FIREWALL",
     "OVERCLOCK", "RANSOM", "TROJAN", "VIRUS"
   ],
-  aggressive: [
+  aggresive: [
     "VIRUS", "RANSOM", "TROJAN", "VARIABLE", "REPEAT", "INSTRUCTION", "METHOD",
     "FIREWALL", "ANTIVIRUS", "OVERCLOCK"
   ],

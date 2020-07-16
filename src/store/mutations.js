@@ -71,7 +71,7 @@ export default {
    * Uses a list of player information to create and add new players.
    *
    * Payload = {
-   *   players: list of player info {name, ai, personality}
+   *   players: list of player info {name, isAI, personality}
    * }
    */
   addPlayers(state, payload) {
