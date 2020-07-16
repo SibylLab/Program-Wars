@@ -30,13 +30,12 @@
 
     <div id="card-pool" class="card-list my-border">
       <h4 style="color: black">Available Cards</h4>
-      <img v-for="[idx, card] in pageState.cardPool" v-bind:key="idx"
+      <img v-for="[idx, card] in Object.entries(pageState.cardPool)" v-bind:key="idx"
           :src="cardImage(card.type, card.val)" class='card-lg'>
     </div>
 
-    <!--
-    <button id="choose" class="btn btn-primary" v-on:click="chooseDeck()">Choose</button>
-    -->
+    <button id="finalize" class="btn btn-success centered" v-on:click="next()">
+      Finalize Deck </button>
   </div>
 
 </div>
@@ -65,6 +64,12 @@ export default {
   methods: {
     cardImage (type, val) {
       return 'static/cardImages/' + type.toLowerCase() + val + '.png'
+    },
+    next () {
+      this.pageState.finalizeDeck()
+      if (this.pageState.nextPlayer() === undefined) {
+        console.log('done all players')
+      }
     }
   }
 }
@@ -101,20 +106,25 @@ export default {
   direction: rtl;
   position: absolute;
   left: 1%;
-  top: 6%;
+  top: 8%;
   width: 23%;
-  height: 88%;
+  height: 80%;
   overflow: auto;
 }
 
 #optional-cards {
   position: absolute;
-  top: 6%;
+  top: 8%;
 }
 
 #card-pool {
   position: absolute;
-  bottom: 6%;
+  bottom: 12%;
+}
+
+#finalize {
+  position: absolute;
+  bottom: 2%;
 }
 
 .card-type {
@@ -132,9 +142,9 @@ export default {
 
 .card-lg {
   display: inline-block;
-  width: 130px;
+  width: 120px;
   height: auto;
-  margin: 55px 20px;
+  margin: 15px;
 }
 
 .name {
@@ -170,7 +180,7 @@ export default {
 .card-list {
   left: 25%;
   width: 74%;
-  height: 43%;
+  height: 39%;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
@@ -179,62 +189,6 @@ export default {
 h4 {
   margin: 0;
   margin-top: 10px;
-}
-
-
-
-
-
-
-#heading {
-  position: relative;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0px;
-  z-index: 20;
-  color: white;
-}
-
-#player-name {
-  position: relative;
-  z-index: 20;
-  color: black;
-}
-
-
-.deck-card-type {
-  display: block;
-  text-align: left;
-  margin: 20px;
-}
-
-.deck-card {
-  display: inline-block;
-  width: 80px;
-  height: auto;
-  margin-right: -50px;
-}
-
-
-
-.card-img {
-  display: inline-block;
-  width: 130px;
-  height: auto;
-  margin: 55px 20px;
-}
-
-#choose {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-}
-
-.active {
-  -webkit-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
-  -moz-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
-  box-shadow: 0 0 24px 15px rgba(0,255,0,1);
 }
 </style>
 

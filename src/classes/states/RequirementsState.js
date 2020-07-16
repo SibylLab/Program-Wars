@@ -54,7 +54,7 @@ export default class RequirementsState {
     return this.players.map((p) => {
       const player = new Player2(id++, p.name, p.isAI)
       player.requirement = player.AI ? fact.newAIReq(p.personality) : fact.newReq(p.req)
-      return { player: p, premade: p.premade }
+      return { player: player, premade: p.premade }
     })
   }
 }

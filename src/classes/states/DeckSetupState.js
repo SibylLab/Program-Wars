@@ -1,13 +1,15 @@
 import Deck from '@/classes/game/Deck'
-import { baseCards, premadeCards } from '@/data/decks'
+import { baseCards, premadeCards, optionalCards } from '@/data/decks'
 
 
 export default class DeckSetupState {
   constructor (playerList) {
+    console.log(playerList)
     this.players = this.addPlayers(playerList)
     this.playerNum = 0
     this.optionalCards = []
-    this.cardPool = []
+    console.log(this.currentPlayer())
+    this.cardPool = this.poolCards(this.currentPlayer())
   }
 
   addPlayers (playerList) {
@@ -38,5 +40,37 @@ export default class DeckSetupState {
       }
     }
     return types
+  }
+
+  poolCards (player) {
+    const type = player.requirement.type
+    let pool = this.cardList(premadeCards[type])
+    pool = pool.concat(this.cardList(optionalCards[type]))
+    this.sortCards(pool)
+    return pool
+  }
+
+  cardList (cardTypes) {
+    const cards = []
+    for (let [type, values] of Object.entries(cardTypes)) {
+      for (let [val, amt] of Object.entries(values)) {
+        for (let i = 0; i < amt; i++) {
+          cards.push({type, val})
+        }
+      }
+    }
+    return cards
+  }
+
+  sortCards (cardList) {
+    cardList.sort((a, b) => {
+      if (a.type < b.type) {
+        return -1
+      } else if (a.type > b.type) {
+        return 1
+      } else {
+        return a.val - b.val
+      }
+    })
   }
 }
