@@ -2,7 +2,7 @@
 <div id="stack" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">
-      {{ scoreText }}: {{ stack.getScore() }}
+      {{ scoreText }}: {{ getScore }}
     </h5>
   </div>
   <ul id="card-list">
@@ -37,6 +37,15 @@ export default {
     ...mapGetters([
       'getCurrentPlayerHand',
     ]),
+    getScore () {
+      if (this.stack.isMethod) {
+        let player = this.players.find(p => p.id === this.stack.playerId)
+        if (player.hurtBy('SQLINJECTION')) {
+          return this.stack.getScore('SQL')
+        }
+      }
+      return this.stack.getScore()
+    },
     /**
      * Determines the score color based on whether the stacks owner is under
      * an effect that changes how much of the stack score is added to the
@@ -44,7 +53,7 @@ export default {
      */
     scoreColor () {
       let top = this.stack.getTop()
-      if (top && top.type  === 'VIRUS') {
+      if (top && top.type  === 'VIRUS' || this.stacksAttacked()) {
         return 'score-red'
       } else if (this.stack.isComplete()) {
         return 'score-green'
@@ -117,6 +126,10 @@ export default {
       }
       return this.stack.willAccept(this.activeCard) ? result : ''
     },
+    stacksAttacked () {
+      let player = this.players.find(p => p.id === this.stack.playerId)
+      return player.hurtBy('SQLINJECTION')
+    }
   }
 }
 </script>

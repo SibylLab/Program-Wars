@@ -6,7 +6,7 @@
 
     <img :src="card.image" class="card">
 
-    <div v-if="isShowing" id="overlays" class="play">
+    <div v-if="isShowing" id="overlays" :class="shadow">
       <input type="image" id="discard-button"
          title="Discard Card"
          src="static/miscIcons/trash.png"
@@ -57,7 +57,17 @@ export default {
     ondragstart () {
       // The ondragstart attribute requires a string "return bool;" so here
       // we are building one to make sure special cards can't be dragged.
-      return "return " + !this.card.isSpecial()
+      let canDrag = !this.card.isSpecial() && this.canPlay
+      return "return " + canDrag
+    },
+    canPlay () {
+      if (this.activePlayer.hurtBy('STACKOVERFLOW') && !this.card.isSpecial()) {
+        return false
+      }
+      return true
+    },
+    shadow () {
+      return this.canPlay ? 'play' : 'no-play'
     }
   },
   methods: {
@@ -128,6 +138,12 @@ export default {
   -webkit-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
   -moz-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
   box-shadow: 0 0 24px 8px rgba(0,230,0,1);
+}
+
+.no-play {
+  -webkit-box-shadow: 0 0 24px 8px rgba(230,0,0,1);
+  -moz-box-shadow: 0 0 24px 8px rgba(230,0,0,1);
+  box-shadow: 0 0 24px 8px rgba(230,0,0,1);
 }
 </style>
 

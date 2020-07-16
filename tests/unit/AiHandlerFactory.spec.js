@@ -19,6 +19,6 @@ describe('AiHandlerFactory', () => {
     expect(handler.actionHandlers.length).toEqual(2)
     expect(handler.actionHandlers[0].player).toBe(player)
     expect(handler.actionHandlers[1].player).toBe(player)
-    expect(handler.actionHandlers[1].playOrder.VIRUS).toEqual(0)
+    expect(handler.actionHandlers[1].playOrder.VIRUS).toEqual(2)
   })
 })

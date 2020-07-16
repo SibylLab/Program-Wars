@@ -217,6 +217,7 @@ export default {
 
     } else if (payload.card.isAttack()) {
       payload.target.addNegative(payload.card.type, payload.player.id)
+      this.commit('updateMethodCardValues', {player: payload.target})
     }
   },
 
@@ -249,6 +250,8 @@ export default {
         }
       }
     }
+
+    this.commit('updateMethodCardValues', payload)
   },
 
   /**
@@ -262,6 +265,15 @@ export default {
    * }
    */
   playScan (state, payload) {
+    // Remove a SQLINJECTION next if there is one
+    let sqlinjection = payload.target.negativeEffects.filter(e => e.type === 'SQLINJECTION')
+    if (sqlinjection.length > 0) {
+      payload.target.removeEffect(sqlinjection[0])
+      bus.$emit('scan-effect', 'SQLINJECTION')
+      this.commit('updateMethodCardValues', payload)
+      return
+    }
+
     // Remove a virus if there is one
     let infectedStacks = state.stacks.filter((s) => {
       return s.playerId === payload.target.id && s.getTop().type === 'VIRUS'
@@ -280,6 +292,14 @@ export default {
       this.commit('discardCard', {player: payload.target, card: mimics[0]})
       this.commit('drawCard')
       bus.$emit('scan-effect', 'TROJAN')
+      return
+    }
+
+    // Remove a STACKOVERFLOW next if there is one
+    let stackoverflow = payload.target.negativeEffects.filter(e => e.type === 'STACKOVERFLOW')
+    if (stackoverflow.length > 0) {
+      payload.target.removeEffect(stackoverflow[0])
+      bus.$emit('scan-effect', 'STACKOVERFLOW')
       return
     }
 
@@ -433,7 +453,12 @@ export default {
    * Payload { player: the player that played the card }
    */
   updateMethodCardValues (state, payload) {
-    let value = state.methods.find(m => m.playerId === payload.player.id).getScore()
+    let attack = 'none'
+    if (payload.player.hurtBy('SQLINJECTION')) {
+      attack = 'SQL'
+    }
+
+    let value = state.methods.find(m => m.playerId === payload.player.id).getScore(attack)
     let stacks = state.stacks.filter(s => s.playerId === payload.player.id)
     for (let stack of stacks) {
       if (stack.getBase().type === 'METHOD') {

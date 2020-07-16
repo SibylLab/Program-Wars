@@ -18,6 +18,9 @@ const cardTypes = {
   "ANTIVIRUS": {0: 1},
   "FIREWALL": {0: 2},
   "SCAN": {0: 5},
+  "STACKOVERFLOW": {0: 3},
+  "SQLINJECTION": {0: 3},
+
 }
 
 // cards to add in when the deck is refreshed

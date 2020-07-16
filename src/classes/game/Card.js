@@ -31,7 +31,7 @@ export default class Card {
    */
   isAttack () {
     return this.type === "RANSOM" || this.type === "SPYWARE"
-           || this.type === "TROJAN"
+           || this.type === "TROJAN"  || this.type === "SQLINJECTION" || this.type === "STACKOVERFLOW"
   }
 
   /**
