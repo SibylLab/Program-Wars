@@ -1,8 +1,9 @@
 import RedrawAction from '@/classes/ai/RedrawAction'
 
+function mockValue (v) { return jest.fn(() => { return v }) }
 
 describe('RedrawAction ai action handler', () => {
-  const player = {id: 0}
+  const player = {id: 0, hurtBy: mockValue(false)}
   const redraw = new RedrawAction(player)
   const testParams = ["hand", "players", "stacks", "scores"]
 

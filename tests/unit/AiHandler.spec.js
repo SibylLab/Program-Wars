@@ -1,5 +1,7 @@
 import AiHandler from '@/classes/ai/AiHandler'
 
+function mockValue (v) { return jest.fn(() => { return v }) }
+
 
 describe('AiHandler data object', () => {
   const player = {name: 'ted'}
@@ -34,8 +36,9 @@ describe('AiHandler data object', () => {
     expect(mockAction.mock.calls[0]).toEqual(testParams)
   })
   test('chooseAction second action handles the request', () => {
-    let first = { handle: jest.fn(() => { return undefined }) }
-    let second = { handle: jest.fn(() => { return "second action" }) }
+    let first = { handle: mockValue(undefined) }
+    let result = {card: {isSpecial: mockValue(true)}}
+    let second = { handle: mockValue(result) }
     let actions = [first, second]
 
     let aiHandler = new AiHandler(player, actions)
@@ -43,7 +46,7 @@ describe('AiHandler data object', () => {
     aiHandler.defaultAction.handle = mockAction
 
     let move = aiHandler.chooseAction(...testParams)
-    expect(move).toEqual("second action")
+    expect(move).toEqual(result)
     expect(first.handle.mock.calls.length).toEqual(1)
     expect(first.handle.mock.calls[0]).toEqual(testParams)
     expect(second.handle.mock.calls.length).toEqual(1)
