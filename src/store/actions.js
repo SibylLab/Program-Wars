@@ -40,6 +40,11 @@ export default {
     router.push('decks')
   },
 
+  startAgileGame (context, payload) {
+    context.state.gameState = 'agile'
+    console.log(payload.players)
+  },
+
 
 
 

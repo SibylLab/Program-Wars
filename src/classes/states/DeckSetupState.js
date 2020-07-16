@@ -1,14 +1,12 @@
-import Deck from '@/classes/game/Deck'
+import PlayerDeck from '@/classes/game/PlayerDeck'
 import { baseCards, premadeCards, optionalCards } from '@/data/decks'
 
 
 export default class DeckSetupState {
   constructor (playerList) {
-    console.log(playerList)
+    this.playerNum = 0  // must go before addPlayers
     this.players = this.addPlayers(playerList)
-    this.playerNum = 0
     this.optionalCards = []
-    console.log(this.currentPlayer())
     this.cardPool = this.poolCards(this.currentPlayer())
   }
 
@@ -16,6 +14,7 @@ export default class DeckSetupState {
     return playerList.map((p) => {
       if (p.premade) {
         p.player.deck = this.premadeDeck(p.premade)
+        this.playerNum++
       }
       return p.player
     })
@@ -25,11 +24,36 @@ export default class DeckSetupState {
     return this.players[this.playerNum]
   }
 
+  nextPlayer () {
+    this.finalizeDeck()
+    this.playerNum++
+
+
+    if (this.playerNum === this.players.length) {
+      this.playerNum = 0
+      return undefined
+    } else if (this.currentPlayer().deck !== undefined) {
+      this.nextPlayer()
+    } else {
+      this.optionalCards = []
+      this.cardPool = this.poolCards(this.currentPlayer())
+      return this.currentPlayer()
+    }
+  }
+
   premadeDeck (type) {
-    const deck = new Deck()
-    deck.addCards(baseCards)
-    deck.addCards(premadeCards[type])
+    const deck = new PlayerDeck()
+    deck.addCards(this.cardList(baseCards))
+    deck.addCards(this.cardList(premadeCards[type]))
     return deck
+  }
+
+  finalizeDeck () {
+    if (this.currentPlayer().deck !== undefined) { return }
+    const deck = new PlayerDeck()
+    deck.addCards(this.cardList(baseCards))
+    deck.addCards(this.optionalCards)
+    this.currentPlayer().deck = deck
   }
 
   baseCardTypes () {

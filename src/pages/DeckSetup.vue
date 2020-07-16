@@ -43,8 +43,8 @@
 
 
 <script>
-// import deckData from '@/data/decks'
 import PageHeader from '@/components/shared/PageHeader'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'deck-setup-page',
@@ -62,13 +62,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'startAgileGame'
+    ]),
     cardImage (type, val) {
       return 'static/cardImages/' + type.toLowerCase() + val + '.png'
     },
     next () {
-      this.pageState.finalizeDeck()
       if (this.pageState.nextPlayer() === undefined) {
-        console.log('done all players')
+        this.startAgileGame({players: this.pageState.players})
       }
     }
   }
