@@ -12,7 +12,7 @@ export default class RequirementsState {
   addPlayers (playerList) {
     return playerList.map((p) => {
       p.req = 'DRY'
-      p.prebuilt = false
+      p.premade = false
       return p
     })
   }
@@ -44,7 +44,7 @@ export default class RequirementsState {
   }
 
   choosePrebuilt () {
-    this.currentPlayer().prebuilt = true
+    this.currentPlayer().premade = this.req
   }
 
   playerListForDeckBuilding () {
@@ -54,7 +54,7 @@ export default class RequirementsState {
     return this.players.map((p) => {
       const player = new Player2(id++, p.name, p.isAI)
       player.requirement = player.AI ? fact.newAIReq(p.personality) : fact.newReq(p.req)
-      return { player: p, prebuilt: p.prebuilt }
+      return { player: p, premade: p.premade }
     })
   }
 }

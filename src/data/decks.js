@@ -8,8 +8,8 @@ const baseCards = {
   "VIRUS": {0: 1}                     // 1
 }
 
-// 10 cards to add to prebuilt decks for each type
-const prebuiltCards = {
+// 10 cards to add to premade decks for each type
+const premadeCards = {
   DRY: {
     "INSTRUCTION": {2: 1, 3: 1},
     "METHOD": {0: 2},
@@ -34,7 +34,7 @@ const prebuiltCards = {
   }
 }
 
-// 10 extra cards to combine with prebuilt cards to create the 20 card pool for
+// 10 extra cards to combine with premade cards to create the 20 card pool for
 // building custom decks
 const optionalCards = {
   DRY: {
@@ -78,7 +78,7 @@ const emptyCards = {
 
 export {
   baseCards,
-  prebuiltCards,
+  premadeCards,
   optionalCards,
   emptyCards
 }
