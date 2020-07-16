@@ -26,6 +26,7 @@ export default class RequirementsState {
     this.playerNum++
 
     if (this.playerNum === this.players.length) {
+      this.playerNum = 0
       return undefined
     } else if (this.currentPlayer().isAI) {
       this.nextPlayer()
@@ -49,6 +50,7 @@ export default class RequirementsState {
   playerListForDeckBuilding () {
     let fact = new ReqFactory()
     let id = 0
+
     return this.players.map((p) => {
       const player = new Player2(id++, p.name, p.isAI)
       player.requirement = player.AI ? fact.newAIReq(p.personality) : fact.newReq(p.req)

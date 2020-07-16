@@ -1,5 +1,6 @@
 import HomeState from '@/classes/states/HomeState'
 import RequirementsState from '@/classes/states/RequirementsState'
+import DeckSetupState from '@/classes/states/DeckSetupState'
 import { bus } from '@/components/shared/Bus'
 import router from '@/router'
 
@@ -35,7 +36,8 @@ export default {
 
   startDeckSetup (context, payload) {
     context.state.gameState = 'decks'
-    console.log('deck setup', payload.players)
+    context.state.pageState = new DeckSetupState(payload.players)
+    router.push('decks')
   },
 
 

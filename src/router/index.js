@@ -24,10 +24,10 @@ const routes = [
     component: () => import('@/pages/Requirements.vue')
   },
   {
-    path: '/deck_setup',
+    path: '/decks',
     name: 'Deck Setup',
     canReuse: false,
-    component: () => import('@/components/agileGame/DeckSetup.vue')
+    component: () => import('@/pages/DeckSetup.vue')
   },
   {
     path: '/agile_game',
