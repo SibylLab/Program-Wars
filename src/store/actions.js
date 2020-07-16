@@ -33,6 +33,11 @@ export default {
     router.push('requirements')
   },
 
+  startDeckSetup (context, payload) {
+    context.state.gameState = 'decks'
+    console.log('deck setup', payload.players)
+  },
+
 
 
 

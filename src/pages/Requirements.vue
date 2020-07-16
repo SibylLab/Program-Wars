@@ -11,7 +11,7 @@
     </h4>
 
     <div id="req-cards" class="centered">
-      <card-list title="Requirements" :cards="pageState.reqNames()"/>
+      <req-list :reqs="pageState.reqNames()"/>
     </div>
 
     <div id="req-info" class="centered">
@@ -21,7 +21,7 @@
     <div id="buttons" class="centered">
       <button class="btn btn-success my-btn" v-on:click="premade()">
         Use Pre-built Deck </button>
-      <button class="btn btn-primary my-btn" v-on:click="custom()">
+      <button class="btn btn-primary my-btn" v-on:click="next()">
         Customize Deck </button>
     </div>
   </div>
@@ -31,8 +31,9 @@
 
 <script>
 import PageHeader from '@/components/shared/PageHeader'
-import CardList from '@/components/shared/CardList'
+import ReqList from '@/components/requirements/ReqList'
 import ReqDetails from '@/components/requirements/ReqDetails.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'requirements',
@@ -43,15 +44,21 @@ export default {
   },
   components: {
     'page-header': PageHeader,
-    'card-list': CardList,
+    'req-list': ReqList,
     'req-details': ReqDetails
   },
   methods: {
+    ...mapActions([
+      'startDeckSetup'
+    ]),
     premade () {
-      console.log('premade')
+      this.pageState.choosePrebuilt()
+      this.next()
     },
-    custom () {
-      console.log('custom')
+    next () {
+      if (this.pageState.nextPlayer() === undefined) {
+        this.startDeckSetup({players: this.pageState.playerListForDeckBuilding()})
+      }
     }
   }
 }

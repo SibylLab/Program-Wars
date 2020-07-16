@@ -6,13 +6,15 @@ export default class RequirementsState {
   constructor (playerList) {
     this.players = this.addPlayers(playerList)
     this.playerNum = 0
-    this.reqNum = 0
-    this.reqFactory = new ReqFactory()
+    this.req = 'DRY'
   }
 
   addPlayers (playerList) {
-    let id = 0
-    return playerList.map(p => new Player2(id++, p.name, p.isAI))
+    return playerList.map((p) => {
+      p.req = 'DRY'
+      p.prebuilt = false
+      return p
+    })
   }
 
   currentPlayer () {
@@ -20,23 +22,37 @@ export default class RequirementsState {
   }
 
   nextPlayer () {
+    this.currentPlayer().req = this.req
     this.playerNum++
 
     if (this.playerNum === this.players.length) {
       return undefined
-    } else if (this.currentPlayer.isAI()) {
-      this.currentPlayer.requirement = this.reqFactory('DRY')
+    } else if (this.currentPlayer().isAI) {
       this.nextPlayer()
+    } else {
+      return this.currentPlayer()
     }
-    return this.currentPlayer()
   }
 
   currentReq () {
-    const name = this.reqNames()[this.reqNum]
-    return requirements[name]
+    return requirements[this.req]
   }
 
   reqNames () {
     return Object.keys(requirements)
+  }
+
+  choosePrebuilt () {
+    this.currentPlayer().prebuilt = true
+  }
+
+  playerListForDeckBuilding () {
+    let fact = new ReqFactory()
+    let id = 0
+    return this.players.map((p) => {
+      const player = new Player2(id++, p.name, p.isAI)
+      player.requirement = player.AI ? fact.newAIReq(p.personality) : fact.newReq(p.req)
+      return { player: p, prebuilt: p.prebuilt }
+    })
   }
 }

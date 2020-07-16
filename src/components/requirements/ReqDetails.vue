@@ -6,9 +6,9 @@
   <h5><b>Backlog</b></h5>
   <ol>
     <li v-for="idx in numGoals" v-bind:key="idx">
-      {{ pageState.currentReq().goals[idx].goal }},
-      Sprint Bonus: {{ pageState.currentReq().goals[idx].sprint }},
-      End Game Bonus: {{ pageState.currentReq().goals[idx].game }}
+      {{ reqGoals[idx].goal }},
+      Sprint Bonus: {{ reqGoals[idx].sprint }},
+      End Game Bonus: {{ reqGoals[idx].game }}
     </li>
   </ol>
 
@@ -24,8 +24,11 @@ export default {
     }
   },
   computed: {
+    reqGoals () {
+      return this.pageState.currentReq().goals
+    },
     numGoals () {
-      return Array(this.pageState.currentReq().goals.length).keys()
+      return Array(this.reqGoals.length).keys()
     }
   }
 }
