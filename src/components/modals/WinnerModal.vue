@@ -18,7 +18,7 @@
       </div>
 
       <div>
-        <table class="table table-condensed" style="width: 70%; margin: auto">
+        <table class="table table-condensed" style="width: 90%; margin: auto">
           <thead>
             <tr style="font-size: 20px"> <th>Players</th>
               <th v-for="player in players" :key="player.id">{{ player.name }}</th>
