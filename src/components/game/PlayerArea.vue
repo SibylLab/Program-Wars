@@ -7,20 +7,11 @@
     </slot>
   </div>
 
-  <slot name="score">
-    <h5 id="score-title" :class="side" style="position: absolute; top: 44%;">
-      <b>Score:</b> <b>{{ getScore() }}/{{ scoreLimit }}</b>
-    </h5>
-    <div id="score-area" :class="side">
-      <meter id="score-meter"
-         :max="scoreLimit" min=0
-         :value="getScore()"
-         :high="scoreLimit * 0.7"
-         :low="scoreLimit / 2"
-         :optimum="scoreLimit * 0.9">
-      </meter>
-    </div>
-  </slot>
+  <div id="score">
+    <slot name="score">
+      <player-score :player="player" :side="side"/>
+    </slot>
+  </div>
 
   <slot name="player-effects">
     <div id="effects-area" :class="side">
@@ -71,6 +62,7 @@
 <script>
 import InfoPopup from '@/components/shared/InfoPopup'
 import PlayerDetails from '@/components/game/PlayerDetails'
+import PlayerScore from '@/components/game/PlayerScore'
 import tooltips from '@/data/tooltips'
 import {bus} from '@/components/shared/Bus'
 import {mapState} from 'vuex'
@@ -92,6 +84,7 @@ export default {
   components: {
     'info-popup': InfoPopup,
     'player-details': PlayerDetails,
+    'player-score': PlayerScore
   },
   computed: {
     ...mapState([
@@ -171,11 +164,11 @@ export default {
   height: 40%;
 }
 
-#score-area {
+#score {
   position: absolute;
-  top: 50%;
-  width: 50%;
-  height: 24px;
+  top: 40%;
+  width: 100%;
+  height: 20%;
 }
 
 #score-meter {
