@@ -1,31 +1,11 @@
 <template>
-<div id="info" :key="update" :class="opposite">
-  <slot name="player-details">
-    <h3 id="name" :class="side">
-      {{ player.name }}
-    </h3>
-    <img id="avatar" :class="[side, {active: isActive}]"
-        :src="player.image">
-  </slot>
+<div id="player-area" :key="update" :class="opposite">
 
-  <slot name="access-buttons">
-    <button id="spy-button" v-if="canSpy" :class="['btn', 'btn-sm', spyStyle]"
-        v-on:click="spyHand()">
-      {{ spyText }}
-    </button>
-
-    <div id="hand-box" v-if="showHand">
-      <h3 style="margin: 0;">
-        {{ player.name }}'s hand
-      </h3>
-      <ul>
-        <li v-for="card in playerCards" v-bind:key="card.id">
-          <img :src="card.image" class="spy-card" ondragstart="return false">
-        </li>
-      </ul>
-    </div>
-  </slot>
-
+  <div id="details">
+    <slot name="details">
+      <player-details :player="player" :side="side"/>
+    </slot>
+  </div>
 
   <slot name="score">
     <h5 id="score-title" :class="side" style="position: absolute; top: 44%;">
@@ -90,6 +70,7 @@
 
 <script>
 import InfoPopup from '@/components/shared/InfoPopup'
+import PlayerDetails from '@/components/game/PlayerDetails'
 import tooltips from '@/data/tooltips'
 import {bus} from '@/components/shared/Bus'
 import {mapState} from 'vuex'
@@ -100,7 +81,7 @@ import {mapState} from 'vuex'
  * Is highlighted when the player is the active player.
  */
 export default {
-  name: 'player-info',
+  name: 'player-area',
   props: ['player', 'side'],
   data () {
     return {
@@ -110,6 +91,7 @@ export default {
   },
   components: {
     'info-popup': InfoPopup,
+    'player-details': PlayerDetails,
   },
   computed: {
     ...mapState([
@@ -175,27 +157,18 @@ export default {
 
 
 <style scoped>
-#info {
+#player-area {
   position: absolute;
   width: 95%;
   height: 100%;
+  font-family: monospace;
 }
 
-#name {
+#details {
   position: absolute;
-  top: 2%;
-  margin-top: 0;
-  margin-bottom: 0;
-  color: #333333;
-}
-
-#avatar {
-  position: absolute;
-  top: 15%;
-  width: auto;
-  height: 25%;
-  border: solid black 3px;
-  border-radius: 5px;
+  top: 0px;
+  width: 100%;
+  height: 40%;
 }
 
 #score-area {
@@ -233,8 +206,8 @@ export default {
 
 #info-button {
   position: absolute;
-  top: 4%;
-  right: 20%;
+  top: 10%;
+  left: 35%;
 }
 
 #spy-button {

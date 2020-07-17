@@ -3,7 +3,7 @@
   <page-header/>
 
   <div class="begin-player" style="left: 0;">
-    <player-info :player="pageState.players[0]" side="left"/>
+    <player-area :player="pageState.players[0]" side="left"/>
   </div>
 
   <div class="begin-play-field" style="left: 1%">
@@ -15,7 +15,7 @@
   </div>
 
   <div class="begin-player" style="right: 0;">
-    <player-info :player="pageState.players[1]" side="right"/>
+    <player-area :player="pageState.players[1]" side="right"/>
   </div>
 
   <div class="begin-play-field" style="right: 1%;">
@@ -27,7 +27,7 @@
 
 <script>
 import PageHeader from '@/components/shared/PageHeader'
-import PlayerInfo from '@/components/game/NewPlayerInfo'
+import PlayerArea from '@/components/game/PlayerArea'
 import TurnArea from '@/components/game/NewTurnArea'
 import PlayField from '@/components/game/PlayField'
 
@@ -40,7 +40,7 @@ export default {
   },
   components: {
     'page-header': PageHeader,
-    'player-info': PlayerInfo,
+    'player-area': PlayerArea,
     'turn-area': TurnArea,
     'play-field': PlayField
   }
