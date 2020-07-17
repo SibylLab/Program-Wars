@@ -9,8 +9,15 @@ const botInfo = [
 export default class HomeState {
   constructor () {
     this.players = []
-    this.mode = 'basic'
+    this.mode = 'standard'
     this.message = ''
+  }
+
+  changeMode (newMode) {
+    if (newMode === 'begginer' && this.players.length > 2) {
+      this.players.splice(2)
+    }
+    this.mode = newMode
   }
 
   sortPlayers () {
@@ -59,6 +66,9 @@ export default class HomeState {
     if (this.players.length < 2) {
       this.message = "You must add at least 2 players"
       return false
+    } else if (this.players.length === 3) {
+      this.message = "You can only play with 2 or 4 players"
+      return false
     } else if (!this.hasHuman()) {
       this.message = "You must add at least 1 human player"
       return false
@@ -67,7 +77,11 @@ export default class HomeState {
   }
 
   playerLimit () {
-    return this.players.length >= 4
+    if (this.mode === "begginer") {
+      return this.players.length >= 2
+    } else {
+      return this.players.length >= 4
+    }
   }
 
   hasHuman () {

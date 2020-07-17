@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'startBegginerGame',
       'startRequirements',
       'startBasicGame'
     ]),
@@ -51,6 +52,8 @@ export default {
       const payload = {players: this.pageState.players}
       if (this.pageState.mode === 'agile') {
         this.startRequirements(payload)
+      } else if (this.pageState.mode === 'begginer') {
+        this.startBegginerGame(payload)
       } else {
         this.startBasicGame(payload)
       }
