@@ -97,4 +97,18 @@ export default class DeckSetupState {
       }
     })
   }
+
+  poolToOptional (idx) {
+    const card = this.cardPool[idx]
+    this.cardPool = this.cardPool.filter(c => c !== card)
+    this.optionalCards.push(card)
+    this.sortCards(this.optionalCards)
+  }
+
+  optionalToPool (idx) {
+    const card = this.optionalCards[idx]
+    this.optionalCards = this.optionalCards.filter(c => c !== card)
+    this.cardPool.push(card)
+    this.sortCards(this.cardPool)
+  }
 }

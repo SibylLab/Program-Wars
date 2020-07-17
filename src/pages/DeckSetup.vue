@@ -12,26 +12,37 @@
 
     <div id="base-cards" class="my-border">
       <h4 style="color: black">Base Cards</h4>
-      <div v-for="{type, val, amt} in pageState.baseCardTypes()" v-bind:key="type + val"
-          class="card-type">
-        <img v-for="i in Array(amt).keys()" v-bind:key="i"
-            :src="cardImage(type, val)" class="card-sm" ondragstart="return false;">
+      <div class="deck-list">
+        <div v-for="{type, val, amt} in pageState.baseCardTypes()" v-bind:key="type + val"
+            class="card-type">
+          <img v-for="i in Array(amt).keys()" v-bind:key="i"
+              :src="cardImage(type, val)" class="card-sm" ondragstart="return false;">
+        </div>
       </div>
     </div>
 
-    <div id="optional-cards" class="card-list my-border">
+    <div id="optional-cards" class="my-border"
+        v-on:drop="dropInOptional($event)" @dragover.prevent @dragenter.prevent>
       <h4 style="color: black">Additional Cards
         <div :style="{color: pickedColor, display: 'inline'}">
-          {{ pageState.optionalCards.length }} / 10 </div>
+          <b>{{ pageState.optionalCards.length }} / 10</b> </div>
       </h4>
-      <img v-for="[idx, card] in Object.entries(pageState.optionalCards)" v-bind:key="idx"
-          :src="cardImage(card.type, card.val)" class='card-lg'>
+
+      <div class="card-list">
+        <img v-for="[idx, card] in Object.entries(pageState.optionalCards)" v-bind:key="idx"
+            :src="cardImage(card.type, card.val)" class="card-lg" draggable
+            v-on:dragstart="dragStart($event, idx, 'option')">
+      </div>
     </div>
 
-    <div id="card-pool" class="card-list my-border">
+    <div id="card-pool" class="my-border"
+        v-on:drop="dropInPool($event)" @dragover.prevent @dragenter.prevent>
       <h4 style="color: black">Available Cards</h4>
-      <img v-for="[idx, card] in Object.entries(pageState.cardPool)" v-bind:key="idx"
-          :src="cardImage(card.type, card.val)" class='card-lg'>
+      <div class="card-list">
+        <img v-for="[idx, card] in Object.entries(pageState.cardPool)" v-bind:key="idx"
+            :src="cardImage(card.type, card.val)" class="card-lg" draggable
+            v-on:dragstart="dragStart($event, idx, 'pool')">
+      </div>
     </div>
 
     <button id="finalize" class="btn btn-success centered" v-on:click="next()">
@@ -69,9 +80,29 @@ export default {
       return 'static/cardImages/' + type.toLowerCase() + val + '.png'
     },
     next () {
+      if (this.pageState.optionalCards.length < 10) { return }
+
       if (this.pageState.nextPlayer() === undefined) {
         this.startAgileGame({players: this.pageState.players})
       }
+    },
+    dragStart (event, idx, from) {
+      event.dataTransfer.dropEffect = 'move'
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('idx', idx)
+      event.dataTransfer.setData('from', from)
+    },
+    dropInOptional (event) {
+      const from = event.dataTransfer.getData('from')
+      const fromIdx = event.dataTransfer.getData('idx')
+      if (from === 'option' || this.pageState.optionalCards.length >= 10) { return }
+      this.pageState.poolToOptional(fromIdx)  
+    },
+    dropInPool (event) {
+      const from = event.dataTransfer.getData('from')
+      const fromIdx = event.dataTransfer.getData('idx')
+      if (from === 'pool') { return }
+      this.pageState.optionalToPool(fromIdx)  
     }
   }
 }
@@ -105,23 +136,27 @@ export default {
 }
 
 #base-cards {
-  direction: rtl;
   position: absolute;
   left: 1%;
   top: 8%;
   width: 23%;
   height: 80%;
-  overflow: auto;
 }
 
 #optional-cards {
   position: absolute;
   top: 8%;
+  left: 25%;
+  width: 74%;
+  height: 39%;
 }
 
 #card-pool {
   position: absolute;
   bottom: 12%;
+  left: 25%;
+  width: 74%;
+  height: 39%;
 }
 
 #finalize {
@@ -144,9 +179,10 @@ export default {
 
 .card-lg {
   display: inline-block;
-  width: 120px;
+  width: 90px;
   height: auto;
-  margin: 15px;
+  margin: 5px;
+  margin-top: 30px;
 }
 
 .name {
@@ -179,10 +215,21 @@ export default {
   border-radius: 10px;
 }
 
+.deck-list {
+  direction: rtl;
+  position: absolute;
+  top: 8%;
+  width: 100%;
+  height: 92%;
+  overflow: auto;
+}
+
 .card-list {
-  left: 25%;
-  width: 74%;
-  height: 39%;
+  position: absolute;
+  top: 18%;
+  left: 0%;
+  width: 100%;
+  height: 82%;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
