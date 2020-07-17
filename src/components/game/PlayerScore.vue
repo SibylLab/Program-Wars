@@ -6,11 +6,11 @@
     </h5>
 
     <meter class="score-meter"
-       :max="scoreLimit" min=0
+       :max="limit" min=0
        :value="getScore"
-       :high="scoreLimit * 0.7"
-       :low="scoreLimit / 2"
-       :optimum="scoreLimit * 0.9">
+       :high="limit * 0.7"
+       :low="limit / 2"
+       :optimum="limit * 0.9">
     </meter>
 
 </div>
@@ -26,6 +26,9 @@ export default {
     }
   },
   computed: {
+    limit () {
+      return this.pageState.scoreLimit
+    },
     getScore () {
       // return this.player.score()
       return 35
