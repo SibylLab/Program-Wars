@@ -24,6 +24,12 @@ export default {
     router.push('/')
   },
 
+  startBegginerGame (context, payload) {
+    context.state.gameState = 'begginer'
+    context.state.pageState = new BegginerState(payload)
+    router.push('begginer')
+  },
+
   startBasicGame (context, payload) {
     context.dispatch('basicGame', payload)  // temporarily start old game
   },
