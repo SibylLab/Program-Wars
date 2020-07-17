@@ -21,29 +21,10 @@
       </div>
     </div>
 
-    <div id="optional-cards" class="my-border"
-        v-on:drop="dropInOptional($event)" @dragover.prevent @dragenter.prevent>
-      <h4 style="color: black">Additional Cards
-        <div :style="{color: pickedColor, display: 'inline'}">
-          <b>{{ pageState.optionalCards.length }} / 10</b> </div>
-      </h4>
-
-      <div class="card-list">
-        <img v-for="[idx, card] in Object.entries(pageState.optionalCards)" v-bind:key="idx"
-            :src="cardImage(card.type, card.val)" class="card-lg" draggable
-            v-on:dragstart="dragStart($event, idx, 'option')">
-      </div>
+    <div id="card-selection">
+      <optional-card-selection/>
     </div>
 
-    <div id="card-pool" class="my-border"
-        v-on:drop="dropInPool($event)" @dragover.prevent @dragenter.prevent>
-      <h4 style="color: black">Available Cards</h4>
-      <div class="card-list">
-        <img v-for="[idx, card] in Object.entries(pageState.cardPool)" v-bind:key="idx"
-            :src="cardImage(card.type, card.val)" class="card-lg" draggable
-            v-on:dragstart="dragStart($event, idx, 'pool')">
-      </div>
-    </div>
 
     <button id="finalize" class="btn btn-success centered" v-on:click="next()">
       Finalize Deck </button>
@@ -55,6 +36,7 @@
 
 <script>
 import PageHeader from '@/components/shared/PageHeader'
+import OptionalCardSelection from '@/components/setup/OptionalCardSelection'
 import { mapActions } from 'vuex'
 
 export default {
@@ -65,7 +47,8 @@ export default {
     }
   },
   components: {
-    'page-header': PageHeader
+    'page-header': PageHeader,
+    'optional-card-selection': OptionalCardSelection
   },
   computed: {
     pickedColor () {
@@ -85,24 +68,6 @@ export default {
       if (this.pageState.nextPlayer() === undefined) {
         this.startAgileGame({players: this.pageState.players})
       }
-    },
-    dragStart (event, idx, from) {
-      event.dataTransfer.dropEffect = 'move'
-      event.dataTransfer.effectAllowed = 'move'
-      event.dataTransfer.setData('idx', idx)
-      event.dataTransfer.setData('from', from)
-    },
-    dropInOptional (event) {
-      const from = event.dataTransfer.getData('from')
-      const fromIdx = event.dataTransfer.getData('idx')
-      if (from === 'option' || this.pageState.optionalCards.length >= 10) { return }
-      this.pageState.poolToOptional(fromIdx)  
-    },
-    dropInPool (event) {
-      const from = event.dataTransfer.getData('from')
-      const fromIdx = event.dataTransfer.getData('idx')
-      if (from === 'pool') { return }
-      this.pageState.optionalToPool(fromIdx)  
     }
   }
 }
@@ -143,20 +108,12 @@ export default {
   height: 80%;
 }
 
-#optional-cards {
+#card-selection {
   position: absolute;
   top: 8%;
   left: 25%;
   width: 74%;
-  height: 39%;
-}
-
-#card-pool {
-  position: absolute;
-  bottom: 12%;
-  left: 25%;
-  width: 74%;
-  height: 39%;
+  height: 80%;
 }
 
 #finalize {
@@ -175,14 +132,6 @@ export default {
   width: 80px;
   height: auto;
   margin-right: -50px;
-}
-
-.card-lg {
-  display: inline-block;
-  width: 90px;
-  height: auto;
-  margin: 5px;
-  margin-top: 30px;
 }
 
 .name {
@@ -205,11 +154,6 @@ export default {
   margin-right: auto;
 }
 
-.my-btn {
-  display: inline;
-  margin: 10px;
-}
-
 .my-border {
   border: 8px ridge grey;
   border-radius: 10px;
@@ -222,17 +166,6 @@ export default {
   width: 100%;
   height: 92%;
   overflow: auto;
-}
-
-.card-list {
-  position: absolute;
-  top: 18%;
-  left: 0%;
-  width: 100%;
-  height: 82%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
 }
 
 h4 {
