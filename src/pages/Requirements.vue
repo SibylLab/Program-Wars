@@ -31,8 +31,8 @@
 
 <script>
 import PageHeader from '@/components/shared/PageHeader'
-import ReqList from '@/components/requirements/ReqList'
-import ReqDetails from '@/components/requirements/ReqDetails.vue'
+import ReqList from '@/components/setup/ReqList'
+import ReqDetails from '@/components/setup/ReqDetails.vue'
 import { mapActions } from 'vuex'
 
 export default {

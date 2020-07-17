@@ -20,8 +20,8 @@
 
 <script>
 import PageHeader from '@/components/shared/PageHeader'
-import GameMode from '@/components/home/GameMode'
-import AddPlayers from '@/components/home/AddPlayers'
+import GameMode from '@/components/setup/GameMode'
+import AddPlayers from '@/components/setup/AddPlayers'
 import { mapActions } from 'vuex'
 
 /**
