@@ -59,7 +59,7 @@ export default {
   position: absolute;
   top: 40px;
   width: 25%;
-  height: 47%;
+  height: 45%;
 }
 
 .begin-turn-area {
@@ -67,7 +67,7 @@ export default {
   top: 40px;
   left: 25%;
   width: 50%;
-  height: 47%;
+  height: 45%;
 }
 
 .begin-play-field {

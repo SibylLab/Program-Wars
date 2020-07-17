@@ -1,5 +1,5 @@
 <template>
-<div id="player-area" :key="update" :class="opposite">
+<div id="player-area" :class="side">
 
   <div id="details">
     <slot name="details">
@@ -13,59 +13,27 @@
     </slot>
   </div>
 
-  <slot name="player-effects">
-    <div id="effects-area" :class="side">
-      <h5 id="good-effects-text" :class="side"><b>Threat Prevention</b></h5>
-      <div id="good-effects" :class="side"
-          style="position: absolute; top: 5%;">
-        <ul>
-          <img v-for="effect in player.positiveEffects" v-bind:key="effect.id"
-              class="effect-icon" :src="effect.image"
-              :title="effectTooltip(effect.type)">
-        </ul>
-      </div>
+  <div id="effects">
+    <slot name="player-effects">
+      <player-effects :player="player" :side="side"/>
+    </slot>
+  </div>
 
-      <h5 id="bad-effects-text" :class="side"><b>Active Threats</b></h5>
-      <div id="bad-effects" :class="side"
-          style="position: absolute; top: 55%;">
-        <ul>
-          <img v-for="effect in player.negativeEffects" v-bind:key="effect.id"  
-              class="effect-icon" :src="effect.image"
-              :title="effectTooltip(effect.type)">
-        </ul>
-      </div>
-    </div>
-  </slot>
-
-  <slot name="info">
-    <div id="info-button" v-if="side === 'left' && player.id === 0">
-      <info-popup>
-        <h3 style="margin: 0">Player Info</h3>
-        <p>This area shows information about a player. On the players turn their picture
-           is highlighted green.</p>
-        <p>Score shows the players current progress toward the score limit. This score
-           will be adjusted to reflect any modifiers the player has that affect score,
-           like the Malware card.</p>
-        <p>Threat prevention shows all the safety and remedy cards that are active on the
-           player. You can mouse over them to be reminded of what their effect is.</p>
-        <p>Active Threats shows all the cyber attack cards that are active on the player.
-           These effects can be removed or prevented by safety cards.
-           eg) Antivirus removes all malware effects.</p>
-      </info-popup>
-    </div>
-  </slot>
+  <div id="info" v-if="showInfoButton">
+    <slot name="info">
+     <player-area-info/>
+    </slot>
+  </div>
 
 </div>
 </template>
 
 
 <script>
-import InfoPopup from '@/components/shared/InfoPopup'
 import PlayerDetails from '@/components/game/PlayerDetails'
 import PlayerScore from '@/components/game/PlayerScore'
-import tooltips from '@/data/tooltips'
-import {bus} from '@/components/shared/Bus'
-import {mapState} from 'vuex'
+import PlayerEffects from '@/components/game/PlayerEffects'
+import PlayerAreaInfo from '@/components/info/PlayerAreaInfo'
 
 /**
  * Displays the information for a single player.
@@ -77,73 +45,19 @@ export default {
   props: ['player', 'side'],
   data () {
     return {
-      update: true,
-      showHand: false
+      pageState: this.$store.state.pageState
     }
   },
   components: {
-    'info-popup': InfoPopup,
     'player-details': PlayerDetails,
-    'player-score': PlayerScore
+    'player-score': PlayerScore,
+    'player-effects': PlayerEffects,
+    'player-area-info': PlayerAreaInfo
   },
   computed: {
-    ...mapState([
-      'scoreLimit',
-      'stacks',
-      'activePlayer',
-      'hands'
-    ]),
-    playerImagePath () {
-      // later change to imageId to get the specific image they want 
-      return "/static/playerImages/robo_" + this.player.id + ".jpg"
-    },
-    isActive () {
-      return this.player === this.activePlayer
-    },
-    opposite () {
-      return this.side === 'right' ? 'left' : 'right'
-    },
-    canSpy () {
-      let spies = this.player.negativeEffects.filter(e => e.type === 'SPYWARE')
-      return spies.find(s => s.attackerId === this.activePlayer.id) !== undefined
-    },
-    playerCards () {
-      let hand = this.hands.find(h => h.playerId === this.player.id)
-      return hand.cards
-    },
-    spyText () {
-      return this.showHand ? 'End Spy' : 'Spy'
-    },
-    spyStyle () {
-      return this.showHand ? 'btn-danger' : 'btn-primary'
+    showInfoButton () {
+      return this.player.id === 0
     }
-  },
-  methods: {
-    effectImagePath (effect) {
-      return "/static/cardImages/effects/" + effect + ".png"
-    },
-    effectTooltip (effect) {
-      return tooltips.effects[effect]
-    },
-    /**
-     * Get the players total score from their stacks.
-     * Apply any special effects and round down to the nearest integer.
-     */
-    getScore () {
-      return 20
-    },
-    spyHand () {
-      this.showHand = !this.showHand
-    }
-  },
-  created () {
-    bus.$on('card-played', () => {
-      // Scores and effect lists must be updated when a card is played
-      this.update = !this.update
-    })
-    bus.$on('end-turn', () => {
-      this.showHand = false
-    })
   }
 }
 </script>
@@ -171,96 +85,25 @@ export default {
   height: 20%;
 }
 
-#score-meter {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 20;
-}
-
-#effects-area {
+#effects {
   position: absolute;
   top: 60%;
   width: 100%;
   height: 35%;
 }
 
-#good-effects-text {
-  position:absolute;
-  top: 0;
-}
-
-#bad-effects-text {
-  position:absolute;
-  top: 50%;
-}
-
-#info-button {
+#info {
   position: absolute;
   top: 10%;
   left: 35%;
 }
 
-#spy-button {
-  position: absolute;
-  top: 17%;
-}
-
-#hand-box {
-  position: fixed;
-  min-width: 650px;
-  width: 45%;
-  top: 50px;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #DFDFDF;
-  border: solid black 3px;
-  border-radius: 5px;
-  z-index: 200;
-}
-
 .left {
-  left: 0%;
+  left: 5%;
 }
 
 .right {
-  right: 0%;
-}
-
-.active {
-  -webkit-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
-  -moz-box-shadow: 0 0 24px 10px rgba(0,230,0,1);
-  box-shadow: 0 0 24px 10px rgba(0,230,0,1);
-}
-
-.effect-icon {
-  width: 30px;
-  height: 30px;
-  margin: 20px 5px; 
-}
-
-.spy-card {
-  margin: 10px;
-  width: 100px;
-  height: auto;
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  display: inline;
-}
-
-h5 {
-  margin: 0;
+  right: 5%;
 }
 </style>
 
