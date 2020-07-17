@@ -1,3 +1,7 @@
+import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
+import Player from '@/classes/game/Player'
+import MethodStack from '@/classes/game/MethodStack'
+
 const botInfo = [
   {name: 'n00b_b0t', personality: 'standard'},
   {name: 'L33T_g3Ars', personality: 'aggresive'},
@@ -86,5 +90,22 @@ export default class HomeState {
 
   hasHuman () {
     return this.players.find(p => !p.isAI) !== undefined
+  }
+
+  createPlayers () {
+    const factory = new AiHandlerFactory()
+
+    let id = 0
+    return this.players.map((p) => {
+      const player = new Player(id, p.name, p.isAI)
+      player.method = new MethodStack(id)
+
+      if (player.isAI) {
+        player.handler = factory.newHandler(p.personality, player)
+      }
+
+      id++
+      return player
+    })
   }
 }

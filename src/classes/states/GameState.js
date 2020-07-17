@@ -1,5 +1,5 @@
 export default class GameState {
-  constructor () {
-    this.players = []
+  constructor (players) {
+    this.players = players
   }
 }

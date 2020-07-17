@@ -1,8 +1,8 @@
 import GameState from '@/classes/states/GameState'
 
 export default class BegginerGame extends GameState {
-  constructor () {
-    super()
+  constructor (players) {
+    super(players)
     this.temp = 'begginer'
   }
 }

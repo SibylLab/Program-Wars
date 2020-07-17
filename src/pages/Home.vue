@@ -49,13 +49,12 @@ export default {
     playGame () {
       if (!this.pageState.canStart()) { return }
 
-      const payload = {players: this.pageState.players}
       if (this.pageState.mode === 'agile') {
-        this.startRequirements(payload)
+        this.startRequirements({players: this.pageState.players})
       } else if (this.pageState.mode === 'begginer') {
-        this.startBegginerGame(payload)
+        this.startBegginerGame({players: this.pageState.createPlayers()})
       } else {
-        this.startBasicGame(payload)
+        this.startBasicGame({players: this.pageState.players}) // eventually create them?
       }
     }
   }

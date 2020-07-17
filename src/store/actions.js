@@ -27,7 +27,8 @@ export default {
 
   startBegginerGame (context, payload) {
     context.state.gameState = 'begginer'
-    context.state.pageState = new BegginerGame(payload)
+    context.commit('createNewDeck') // temporary
+    context.state.pageState = new BegginerGame(payload.players)
     router.push('begginer')
   },
 

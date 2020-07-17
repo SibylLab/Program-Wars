@@ -155,11 +155,7 @@ export default {
      * Apply any special effects and round down to the nearest integer.
      */
     getScore () {
-      // Must access get player scores as a getters method instead of normal
-      // mapGetters to avoid caching and not returning an updated score
-      let scores = this.$store.getters.getPlayerScores()
-      let scoreInfo = scores.find(scr => scr.playerId === this.player.id)
-      return scoreInfo.score
+      return 20
     },
     spyHand () {
       this.showHand = !this.showHand
@@ -301,4 +297,5 @@ h5 {
   margin: 0;
 }
 </style>
+
 
