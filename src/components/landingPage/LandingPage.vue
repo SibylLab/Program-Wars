@@ -47,7 +47,7 @@ export default {
   min-width: 500px;
   height: 94.5%;
   min-height: 500px;
-  background-image: url('/static/backgroundImg/helloWorld.png');
+  background-image: linear-gradient(to bottom right, purple, darkblue);
   font-family: monospace;
 }
 
