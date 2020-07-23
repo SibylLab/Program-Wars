@@ -1,5 +1,5 @@
 <template>
-<div id="turn-history" :key="turnPlays.length">
+<div id="turn-history">
   <ul>
     <li v-for="play in history" v-bind:key="play.playType + Math.random()">
       <img id="play-image" :src="image(play)">
@@ -9,27 +9,14 @@
   </ul>
 
   <div id="info">
-    <info-popup>
-      <h3 style="margin: 0">Turn History</h3>
-      <p>The last 8 actions taken by players will be displayed with images
-         in the Turn History Box.
-      </p>
-      <p>The main portion of the image shows the card that was played. The
-         value of the card is in the top right corner.</p>
-      <p>The image of the player who played the card will appear over the top
-         right corner of the card image. If the card targeted another player
-         the image for that player will appear over the bottom right corner.
-      </p>
-      <p>The leftmost image is always the last turn that was taken.</p>
-    </info-popup>
+    <turn-history-info/>
   </div>
 </div>
 </template>
 
 
 <script>
-import InfoPopup from '@/components/shared/InfoPopup'
-import {mapState} from 'vuex'
+import TurnHistoryInfo from '@/components/info/TurnHistoryInfo'
 
 /**
  * Shows the last 8 plays that have been made with the card, player, and target
@@ -38,20 +25,22 @@ import {mapState} from 'vuex'
  */
 export default {
   name: 'turn-history',
+  data () {
+    return {
+      pageState: this.$store.state.pageState
+    }
+  },
   components: {
-    'info-popup': InfoPopup,
+    'turn-history-info': TurnHistoryInfo,
   },
   computed: {
-    ...mapState([
-      'turnPlays'
-    ]),
     /**
-     * Returns the last 8 plays that were made.
+     * Returns the last 10 plays that were made.
      */
     history () {
-      let end = this.turnPlays.length
-      let start = end < 8 ? 0 : Math.abs(end - 8)
-      return this.turnPlays.slice(start, end).reverse()
+      const end = this.pageState.turnHistory.length
+      const start = end < 10 ? 0 : Math.abs(end - 10)
+      return this.pageState.turnHistory.slice(start, end).reverse()
     }
   },
   methods: {

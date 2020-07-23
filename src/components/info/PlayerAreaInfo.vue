@@ -20,9 +20,9 @@
 
 <script>
 import InfoPopup from '@/components/shared/InfoPopup'
+
 export default {
   name: 'player-area-info',
-  props: ['player', 'side'],
   data () {
     return {
       pageState: this.$store.state.pageState

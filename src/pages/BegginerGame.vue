@@ -29,7 +29,7 @@
 import PageHeader from '@/components/shared/PageHeader'
 import PlayerArea from '@/components/game/PlayerArea'
 import TurnArea from '@/components/game/NewTurnArea'
-import PlayField from '@/components/game/PlayField'
+import PlayField from '@/components/game/NewPlayField'
 
 export default {
   name: 'begginer-game',

@@ -1,48 +1,38 @@
 <template>
 <div id="turn-area">
-  <button class="btn btn-sm btn-danger" v-on:click="redrawHand"
-      style="border-radius: 40px; margin-top: 1%;"
-      title="Discard your hand and draw 5 new cards">
-    REDRAW
-  </button>
+  <slot name="buttons">
+    <button class="btn btn-sm btn-danger" v-on:click="redrawHand"
+        style="border-radius: 40px; margin-top: 1%;"
+        title="Discard your hand and draw 5 new cards">
+      REDRAW
+    </button>
+  </slot>
 
-  <div id="info">
-    <info-popup>
-      <h3 style="margin: 0">Turn Area</h3>
-      <p>Play instruction cards by dragging them to your play area.</p>
-      <p>Other cards can be played on stacks with the top card higlighted.</p>
-      <p>Special cards will tell you where you can play them. You can activate or
-         play a special card by clicking the button that appears over it when it is
-         useable.</p>
-      <p>Any card can be discarded by clicking the trash icon in the left corner when
-         the card is selected</p>
-      <p>You can discard your entire hand if you don't like your options. You will draw a
-         fresh new hand to replace it.</p>
-      <p>Any of the above actions will end your turn.</p>
-    </info-popup>
-  </div>
+  <slot id="info">
+    <div id="info">
+      <turn-area-info/>
+    </div>
+  </slot>
 
-  <div id="cards" :key="update">
-    <ul>
-      <li v-for="card in getCards" v-bind:key="card.id">
-        <turn-area-card :card="card"></turn-area-card>
-      </li>
-    </ul>
-  </div>
+  <slot name="hand">
+    <div id="hand">
+      <player-hand :player="pageState.currentPlayer()"/>
+    </div>
+  </slot>
 
-  <div id="turns">
-    <turn-history></turn-history>
-  </div>
+  <slot name="history">
+    <div id="turns">
+      <turn-history></turn-history>
+    </div>
+  </slot>
 </div>
 </template>
 
 
 <script>
-import InfoPopup from '@/components/shared/InfoPopup'
-import TurnAreaCard from '@/components/game/TurnAreaCard'
+import TurnAreaInfo from '@/components/info/TurnAreaInfo'
+import playerHand from '@/components/game/PlayerHand'
 import TurnHistory from '@/components/game/TurnHistory'
-import {bus} from '@/components/shared/Bus'
-import {mapGetters, mapState, mapActions} from 'vuex'
 
 /**
  * Displays the active components needed for players to take their turn.
@@ -59,43 +49,22 @@ export default {
     }
   },
   components: {
-    'info-popup': InfoPopup,
+    'turn-area-info': TurnAreaInfo,
     'turn-history': TurnHistory,
-    'turn-area-card': TurnAreaCard
-  },
-  computed: {
-    ...mapState([
-      'activePlayer',
-      'deck'
-    ]),
-    ...mapGetters([
-      'getCurrentPlayerHand',
-    ]),
-    getCards () {
-      return this.deck.cards.slice(0,6)
-    }
+    'player-hand': playerHand
   },
   methods: {
-    ...mapActions([
-      'executeTurn',
-    ]),
     redrawHand () {
       if (!this.activePlayer.isAi) {
-        this.executeTurn({
+        this.pageState.executeTurn({
           playType: "REDRAW",
           card: undefined,
-          player: this.activePlayer,
-          target: this.activePlayer
+          player: this.pageState.currentPlayer(),
+          target: this.pageState.currentPlayer()
         })
       }
     }
   },
-  created () {
-    bus.$on('card-played', () => {
-      // Required to redraw the screen when a card is played
-      this.update = !this.update
-    })
-  }
 }
 </script>
 
@@ -113,7 +82,7 @@ export default {
   top: 1.5%;
 }
 
-#cards {
+#hand {
   margin-top: 2%;
 }
 
@@ -123,27 +92,6 @@ export default {
   left: 10%;
   width: 80%;
   height: 80px;
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  position: relative;
-  display: inline-block;
-  text-align: center;
-  margin: 7px;
-}
-
-.btn:focus {
-  outline-width: 0;
-}
-
-.btn:active {
-  outline-width: 0;
 }
 </style>
 
