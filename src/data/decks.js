@@ -1,3 +1,28 @@
+const standardDeck = {
+  "INSTRUCTION": {1: 10, 2: 12, 3: 6},
+  "REPEAT": {1: 5, 2: 5, 3: 4, 4: 2},
+  "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
+  "METHOD": {0: 12},
+  "VIRUS": {0: 3},
+  "RANSOM": {0: 3},
+  "TROJAN": {0: 3},
+  "SPYWARE": {0: 3},
+  "ANTIVIRUS": {0: 1},
+  "SCAN": {0: 5},
+}
+
+const begginerDeck = {
+  "INSTRUCTION": {1: 10, 2: 12, 3: 6},
+  "REPEAT": {1: 5, 2: 5, 3: 4, 4: 2},
+  "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
+  "METHOD": {0: 12},
+  "VIRUS": {0: 3},
+  "RANSOM": {0: 3},
+  "ANTIVIRUS": {0: 1},
+  "SCAN": {0: 5},
+}
+
+
 // 30 cards that should be in all decks (for now)
 const baseCards = {
   "INSTRUCTION": {1: 5, 2: 3, 3: 2},  // 10
@@ -77,6 +102,8 @@ const emptyCards = {
 }
 
 export {
+  standardDeck,
+  begginerDeck,
   baseCards,
   premadeCards,
   optionalCards,

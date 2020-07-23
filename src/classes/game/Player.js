@@ -27,6 +27,7 @@ export default class Player {
     this.image = 'static/playerImages/player' + id + '.png'
     this.handSize = 5
     this.deck = undefined  // for game types with individual decks
+    this.hand = []
   }
 
   /**

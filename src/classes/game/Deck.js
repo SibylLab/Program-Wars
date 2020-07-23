@@ -5,21 +5,6 @@
 
 import Card from './Card'
 
-// card types along with {value: numCard} pairs for each
-const cardTypes = {
-  "INSTRUCTION": {1: 10, 2: 12, 3: 6},
-  "REPEAT": {1: 5, 2: 5, 3: 4, 4: 2},
-  "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
-  "METHOD": {0: 12},
-  "VIRUS": {0: 3},
-  "RANSOM": {0: 3},
-  "SPYWARE": {0: 3},
-  "TROJAN": {0: 3},
-  "ANTIVIRUS": {0: 1},
-  "FIREWALL": {0: 2},
-  "SCAN": {0: 5},
-}
-
 // cards to add in when the deck is refreshed
 const refreshCards = {
   "METHOD": {0: 3},
@@ -37,10 +22,10 @@ export default class Deck {
   /**
    * Constructor for the Deck class.
    */
-  constructor () {
+  constructor (cardsToAdd) {
     this.cards = []
     this.discard = []
-    this.addCards(cardTypes, 4)
+    this.addCards(cardsToAdd, 4)
   }
 
   /**
