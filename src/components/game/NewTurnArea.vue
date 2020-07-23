@@ -57,7 +57,7 @@ export default {
     redrawHand () {
       if (!this.activePlayer.isAi) {
         this.pageState.executeTurn({
-          playType: "REDRAW",
+          playType: "redrawHand",
           card: undefined,
           player: this.pageState.currentPlayer(),
           target: this.pageState.currentPlayer()

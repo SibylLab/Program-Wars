@@ -6,11 +6,11 @@
       :draggable="canDrag" v-on:dragstart="startDrag($event, card)"
       v-on:mouseover="select(card)">
 
-    <div v-if="isShowing(card)" class="overlay">
-      <input type="image" id="discard-button" title="Discard Card"
-         src="static/miscIcons/trash.png" v-on:click="discard(card)">
+    <input type="image" id="discard-button" title="Discard Card" v-if="isActiveCard(card)"
+       src="static/miscIcons/trash.png" v-on:click="discard(card)">
 
-      <effect-card-popup/>
+    <div v-if="isActiveCard(card)">
+      <target-overlay/>
     </div>
   </div>
 
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import EffectCardPopup from '@/components/game/EffectCardPopup'
+import TargetOverlay from '@/components/game/TargetOverlay'
 
 export default {
   name: 'player-hand',
@@ -30,11 +30,11 @@ export default {
     }
   },
   components: {
-    'effect-card-popup': EffectCardPopup
+    'target-overlay': TargetOverlay
   },
   computed: {
     canDrag () {
-      return false
+      return true
     }
   },
   methods: {
@@ -46,19 +46,25 @@ export default {
       return this.pageState.currentCard === card
     },
     cardImage (card) {
+      if (this.pageState.currentPlayer().isAi) {
+        return 'static/cardImages/backOfCard.png'
+      }
       return card.image
     },
-    isShowing (card) {
-      card
-      return false
-    },
     discard (card) {
-      console.log(card)
+      if (!this.activePlayer.isAi) {
+        this.pageState.executeTurn({
+          playType: "discardCard",
+          card: card,
+          player: this.pageState.currentPlayer(),
+          target: this.pageState.currentPlayer()
+        })
+      }
     },
     startDrag (event, card) {
-      event
-      card
-      console.log('drag')
+      event.dataTransfer.dropEffect = 'move'
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('card', card)
     }
   }
 }
@@ -74,6 +80,7 @@ export default {
 }
 
 .player-card {
+  position: relative;
   display: inline-block;
   margin: 0.5em;
   max-width: 90px;
@@ -92,10 +99,9 @@ export default {
   height: 100%;
 }
 
-
 .play {
-  -webkit-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
-  -moz-box-shadow: 0 0 24px 8px rgba(0,230,0,1);
-  box-shadow: 0 0 24px 8px rgba(0,230,0,1);
+  -webkit-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
+  -moz-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
+  box-shadow: 0 0 24px 10px rgba(0,255,0,1);
 }
 </style>
