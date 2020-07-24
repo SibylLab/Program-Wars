@@ -7,10 +7,10 @@
 
   <ul id="stack-list">
     <div id="method">
-      <card-stack :stack="playerMethod"></card-stack>
+      <card-stack :stack="player.method"></card-stack>
     </div>
 
-    <li class="card-stack" v-for="stack in playerStacks" v-bind:key="stack.id">
+    <li class="card-stack" v-for="stack in player.stacks" v-bind:key="stack.id">
       <card-stack :stack="stack"></card-stack>
     </li>
   </ul>
@@ -26,8 +26,6 @@
 <script>
 import PlayFieldInfo from '@/components/info/PlayFieldInfo'
 import CardStack from '@/components/game/CardStack'
-import {bus} from '@/components/shared/Bus'
-import {mapState, mapGetters, mapActions} from 'vuex'
 
 /**
  * A component to hold all of the players card stacks during a game.
@@ -39,66 +37,29 @@ export default {
   props: ['player'],
   data () {
     return {
-      pageState: this.$store.state.pageState,
-      update: true
+      pageState: this.$store.state.pageState
     }
   },
   components: {
    'card-stack': CardStack,
    'play-field-info': PlayFieldInfo
   },
-  computed: {
-    ...mapState([
-      'stacks',
-      'activePlayer',
-      'activeCard',
-      'methods'
-    ]),
-    ...mapGetters([
-      'getCurrentPlayerHand'
-    ]),
-    playerStacks () {
-      return this.stacks.filter(s => s.playerId === this.player.id)
-    },
-    playerMethod () {
-      return this.pageState.currentPlayer().method
-    }
-  },
   methods: {
-    ...mapActions([
-      'executeTurn'
-    ]),
     /**
      * Handles events when a card is dropped in the playing feild.
      * If the card is an instruction it cannot be placed on any stacks,
      * So instead we add a new stack containing the card.
      */
-    onDrop (evt) {
-      let cardId = evt.dataTransfer.getData('cardId')
-      let hand = this.getCurrentPlayerHand
-      let card = hand.cards.find(c => c.id === cardId)
+    onDrop (event) {
+      const id = event.dataTransfer.getData('playerId')
+      const player = this.pageState.players[id]
+      const cardId = event.dataTransfer.getData('cardId')
+      const card = player.hand.find(c => c.id === cardId)
 
-      if (card && this.player.id === this.activePlayer.id
-          && (card.type === "INSTRUCTION" || card.type === "METHOD")) {
-        this.executeTurn({
-          playType: "startNewStack",
-          card: card,
-          player: this.player,
-          target: undefined,
-        })
+      if (this.pageState.currentPlayer() === this.player && card.isBase()) {
+        this.pageState.takeTurn("newStack", card, player, this.player)
       }
-    },
-    /**
-     * Causes the component to react to a change and update itself.
-     */
-    react () {
-      this.update = !this.update
     }
-  },
-  created () {
-    bus.$on('card-played', () => {
-      this.react()
-    })
   }
 }
 </script>

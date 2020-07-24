@@ -3,6 +3,7 @@
  * @author Lance on 2017-03-10, Steven modified on 2020-05-25
  */
 
+import MethodStack from '@/classes/game/MethodStack'
 import Objectives from '@/classes/game/Objectives'
 import CyberEffect from '@/classes/game/CyberEffect'
 
@@ -28,6 +29,8 @@ export default class Player {
     this.handSize = 5
     this.deck = undefined  // for game types with individual decks
     this.hand = []
+    this.stacks = []
+    this.method = new MethodStack(this.id)
   }
 
   /**

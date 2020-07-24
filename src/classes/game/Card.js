@@ -50,4 +50,8 @@ export default class Card {
   isSpecial () {
     return this.isSafety() || this.isAttack()
   }
+
+  isBase () {
+    return this.type === 'INSTRUCTION' || this.type === 'METHOD'
+  }
 }

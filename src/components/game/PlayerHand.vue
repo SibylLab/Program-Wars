@@ -52,19 +52,15 @@ export default {
       return card.image
     },
     discard (card) {
-      if (!this.activePlayer.isAi) {
-        this.pageState.executeTurn({
-          playType: "discardCard",
-          card: card,
-          player: this.pageState.currentPlayer(),
-          target: this.pageState.currentPlayer()
-        })
+      if (!this.player.isAi) {
+        this.pageState.takeTurn("discardCard", card, this.player, this.player)
       }
     },
     startDrag (event, card) {
       event.dataTransfer.dropEffect = 'move'
       event.dataTransfer.effectAllowed = 'move'
-      event.dataTransfer.setData('card', card)
+      event.dataTransfer.setData('cardId', card.id)
+      event.dataTransfer.setData('playerId', this.player.id)
     }
   }
 }

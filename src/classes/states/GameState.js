@@ -19,11 +19,40 @@ export default class GameState {
     return this.players[this.playerNum]
   }
 
-  executeTurn (turnInfo) {
+  takeTurn (playType, card, player, target) {
+    console.log(playType, card, player, target)
+    this.play(playType, card, player, target)
+    this.addHistory({playType, card, player, target})
+    this.updateScores()
+    this.updatePlayers()
+    this.cleanUp()
+    this.endTurn()
+  }
+
+  play (type, card, player, target) {
+    return {type,
+    player,
+    card,
+    target}
+  }
+
+  addHistory (turnInfo) {
     turnInfo
-    // Should be similar to the action of the same name. Probably it should
-    // use the template pattern, or be composed of small functions so that
-    // it can be overridden by other game states and allow them to re-use as
-    // much functionality as possible (or both)
+  }
+
+  updateScores () {
+
+  }
+
+  updatePlayers () {
+
+  }
+
+  cleanUp () {
+
+  }
+
+  endTurn () {
+
   }
 }

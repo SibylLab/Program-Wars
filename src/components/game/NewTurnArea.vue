@@ -1,7 +1,7 @@
 <template>
 <div id="turn-area">
   <slot name="buttons">
-    <button class="btn btn-sm btn-danger" v-on:click="redrawHand"
+    <button class="btn btn-sm btn-danger" v-on:click="redraw"
         style="border-radius: 40px; margin-top: 1%;"
         title="Discard your hand and draw 5 new cards">
       REDRAW
@@ -54,14 +54,10 @@ export default {
     'player-hand': playerHand
   },
   methods: {
-    redrawHand () {
-      if (!this.activePlayer.isAi) {
-        this.pageState.executeTurn({
-          playType: "redrawHand",
-          card: undefined,
-          player: this.pageState.currentPlayer(),
-          target: this.pageState.currentPlayer()
-        })
+    redraw () {
+      if (!this.pageState.currentPlayer().isAi) {
+        const player = this.pageState.currentPlayer()
+        this.pageState.takeTurn("discardHand", null, player, player)
       }
     }
   },
