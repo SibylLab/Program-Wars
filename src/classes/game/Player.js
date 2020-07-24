@@ -22,7 +22,7 @@ export default class Player {
     this.id = id
     this.name = name
     this.isAi = isAi
-    this.positiveEffects = []
+    this.positiveEffects = []  // make these an object with it's own methods
     this.negativeEffects = []
     this.objectives = new Objectives(this.id)
     this.image = 'static/playerImages/player' + id + '.png'
@@ -31,6 +31,16 @@ export default class Player {
     this.hand = []
     this.stacks = []
     this.method = new MethodStack(this.id)
+  }
+
+  addEffect(card, attacker) {
+    if (card.isSafety()) {
+      this.addPositive(card.type)
+      // add positive should clean malware since all player owned structures are in
+      // the player now
+    } else {
+      this.addNegative(card.type, attacker)
+    }
   }
 
   /**

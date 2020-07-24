@@ -9,8 +9,8 @@
     <input type="image" id="discard-button" title="Discard Card" v-if="isActiveCard(card)"
        src="static/miscIcons/trash.png" v-on:click="discard(card)">
 
-    <div v-if="isActiveCard(card)">
-      <target-overlay/>
+    <div class="overlay" v-if="showOverlay(card)">
+      <target-overlay :card="card" :player="player"/>
     </div>
   </div>
 
@@ -44,6 +44,9 @@ export default {
     },
     isActiveCard (card) {
       return this.pageState.currentCard === card
+    },
+    showOverlay (card) {
+      return this.isActiveCard(card) && card.isSpecial()
     },
     cardImage (card) {
       if (this.pageState.currentPlayer().isAi) {
@@ -93,9 +96,9 @@ export default {
 
 .overlay {
   position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  top: 25%;
+  left: -15%;
+  width: 130%;
 }
 
 .play {
