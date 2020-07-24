@@ -1,3 +1,5 @@
+import Stack from '@/classes/game/Stack'
+
 export default class GameState {
   constructor (players) {
     this.players = players
@@ -15,6 +17,10 @@ export default class GameState {
   nextPlayer () {
     this.playerNum++
     this.playerNum = this.playerNum % this.players.length
+  }
+
+  removeCard (card, player) {
+    player.hand = player.hand.filter(c => c !== card)
   }
 
   discardCards (cards) {
@@ -40,8 +46,10 @@ export default class GameState {
 
   play (playInfo) {
     if (playInfo.type in this) {
-      return this[playInfo.type](playInfo)
+      this[playInfo.type](playInfo)
+      return true
     }
+    // log an error?
     return false
   }
 
@@ -72,23 +80,28 @@ export default class GameState {
     playInfo.player.hand = []
     this.discardCards(cards)
     this.drawCards(playInfo.player)
-    return true
   }
 
   discardCard (playInfo) {
-    playInfo.cardOwner.hand = playInfo.cardOwner.hand.filter(c => c !== playInfo.card)
-    this.discardCards([playInfo.card])
+    this.removeCard(playInfo.card, playInfo.cardOwner)
+    this.discardCards([playInfo.card], playInfo.cardOwner.hand)
     this.drawCards(playInfo.cardOwner)
-    return true
   }
 
   newStack (playInfo) {
-    console.log(playInfo.type)
-    return false
+    const stack = new Stack(playInfo.target.id)
+    stack.cards.push(playInfo.card)
+    // put it in front of finished stacks?
+    playInfo.target.stacks.push(stack)
+    this.removeCard(playInfo.card, playInfo.cardOwner)
+    this.drawCards(playInfo.cardOwner)
   }
 
   playOnStack (playInfo) {
     console.log(playInfo.type)
-    return false
+    playInfo.target.cards.push(playInfo.card)
+    // move complete stacks to the back?
+    this.removeCard(playInfo.card, playInfo.cardOwner)
+    this.drawCards(playInfo.cardOwner)
   }
 }

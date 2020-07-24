@@ -59,7 +59,8 @@ export default {
       if (this.pageState.currentPlayer() === this.player && card.isBase()) {
         event.stopPropagation();
         this.pageState.takeTurn({
-          type: "newStack", player: this.player, card: card, cardOwner: player
+          type: "newStack", player: this.player, target: this.player,
+          card: card, cardOwner: player
         })
       }
     }
