@@ -2,8 +2,8 @@
 <div id="player-hand" :key="update">
 
   <div class="player-card" v-for="card in this.player.hand" :key="card.id">
-    <img :src="cardImage(card)" :class="['card', { play: isActiveCard(card) }]"
-      :draggable="canDrag" v-on:dragstart="startDrag($event, card)"
+    <img :src="cardImage(card)" :class="['card', cardShadow(card)]"
+      :draggable="canDrag(card)" v-on:dragstart="startDrag($event, card)"
       v-on:mouseover="select(card)">
 
     <input type="image" id="discard-button" title="Discard Card" v-if="isActiveCard(card)"
@@ -32,12 +32,10 @@ export default {
   components: {
     'target-overlay': TargetOverlay
   },
-  computed: {
-    canDrag () {
-      return true
-    }
-  },
   methods: {
+    canDrag (card) {
+      return !card.isSpecial() && this.pageState.canPlayCard(card)
+    },
     select (card) {
       this.pageState.currentCard = card
       this.update = !this.update
@@ -53,6 +51,12 @@ export default {
         return 'static/cardImages/backOfCard.png'
       }
       return card.image
+    },
+    cardShadow (card) {
+      if (!this.isActiveCard(card)) {
+        return ''
+      }
+      return this.pageState.canPlayCard(card) ? 'play' : 'no-play'
     },
     discard (card) {
       if (!this.player.isAi) {
@@ -105,5 +109,11 @@ export default {
   -webkit-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
   -moz-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
   box-shadow: 0 0 24px 10px rgba(0,255,0,1);
+}
+
+.no-play {
+  -webkit-box-shadow: 0 0 24px 10px rgba(255,0,0,1);
+  -moz-box-shadow: 0 0 24px 10px rgba(255,0,0,1);
+  box-shadow: 0 0 24px 10px rgba(255,0,0,1);
 }
 </style>

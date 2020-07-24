@@ -175,4 +175,11 @@ export default class Stack {
     // if max repeats then it is complete
     return this.hasMaxRepeats()
   }
+
+  willReplace (card) {
+    if (this.getTop() && this.getTop().type === "REPEAT" && this.getTop().value === 1) {
+      return false
+    }
+    return card.type === "VARIABLE" && this.hasVariable()
+  }
 }

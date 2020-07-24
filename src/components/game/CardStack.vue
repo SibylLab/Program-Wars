@@ -76,10 +76,13 @@ export default {
 
       if (this.stack.playerId !== this.pageState.currentPlayer().id) {
         const targetPlayer = this.pageState.players[this.stack.playerId]
+        console.log(card.type, targetPlayer.isProtectedFrom('VIRUS'))
         if (card.type !== 'VIRUS' || targetPlayer.isProtectedFrom('VIRUS')) {
           return
         }
-      } else if (this.stack.willAccept(card)) {
+      }
+
+      if (this.stack.willAccept(card)) {
         event.stopPropagation();
         this.pageState.takeTurn({
           type: "playOnStack", player: this.pageState.currentPlayer(),

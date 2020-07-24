@@ -41,6 +41,14 @@ export default class GameState {
     })
   }
 
+  canPlayCard (card) {
+    if (card.isSpecial()) {
+      return true
+    } else {
+      return !this.currentPlayer().hurtBy('STACK_OVERFLOW')
+    }
+  }
+
   // Turn Logic //////////////////////////////////////////////////////////////
 
   takeTurn (playInfo) {
@@ -92,7 +100,7 @@ export default class GameState {
 
   discardCard (playInfo) {
     this.removeCard(playInfo.card, playInfo.cardOwner)
-    this.discardCards([playInfo.card], playInfo.cardOwner.hand)
+    this.discardCards([playInfo.card])
     this.drawCards(playInfo.cardOwner)
   }
 
@@ -106,7 +114,17 @@ export default class GameState {
   }
 
   playOnStack (playInfo) {
-    playInfo.target.cards.push(playInfo.card)
+    const targetPlayer = this.players[playInfo.target.playerId]
+    if (playInfo.card.type === 'VIRUS' && targetPlayer.helpedBy('SCAN')) {
+      targetPlayer.removeEffect('SCAN')   
+      this.discardCards([playInfo.card])
+    } else if (playInfo.target.willReplace(playInfo.card)) {
+      const card = playInfo.target.replaceLowestVar(playInfo.card)
+      this.discardCards([card])
+    } else {
+      playInfo.target.cards.push(playInfo.card)
+    }
+
     // move complete stacks to the back?
     this.removeCard(playInfo.card, playInfo.cardOwner)
     this.drawCards(playInfo.cardOwner)
