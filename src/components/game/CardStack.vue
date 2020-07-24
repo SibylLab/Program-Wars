@@ -82,7 +82,7 @@ export default {
       } else if (this.stack.willAccept(card)) {
         event.stopPropagation();
         this.pageState.takeTurn({
-          type: "playCardOnStack", player: this.pageState.currentPlayer(),
+          type: "playOnStack", player: this.pageState.currentPlayer(),
           target: this.stack, card: card, cardOwner: player
         })
       }
