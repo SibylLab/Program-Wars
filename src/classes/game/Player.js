@@ -39,7 +39,7 @@ export default class Player {
       // add positive should clean malware since all player owned structures are in
       // the player now
     } else {
-      this.addNegative(card.type, attacker)
+      this.addNegative(card.type, attacker.id)
     }
   }
 

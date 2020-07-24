@@ -28,6 +28,7 @@ export default class CyberEffect {
       this.turnsLeft = 2
     }
     this.image = 'static/cardImages/effects/' + type + '.png'
+    this.penalty = 10
   }
 
   /**

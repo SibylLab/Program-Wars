@@ -11,10 +11,7 @@
   </div>
 
   <div :class="[oppSide, 'player-access']">
-    <spy-accessor :player="player"/>
-    <spy-accessor :player="player"/>
-    <spy-accessor :player="player"/>
-    <spy-accessor :player="player"/>
+    <spy-accessor v-if="showSpy" :player="player"/>
   </div>
 </div>
 </template>
@@ -39,6 +36,13 @@ export default {
     },
     oppSide () {
       return this.side === 'right' ? 'left' : 'right'
+    },
+    showSpy () {
+      if (this.player.hurtBy('SPYWARE')) {
+        const spies = this.player.negativeEffects.filter(e => e.type === 'SPYWARE')
+        return spies.find(s => s.attackerId === this.currentPlayer().id) !== undefined
+      }
+      return false
     }
   }
 }

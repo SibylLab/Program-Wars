@@ -30,8 +30,7 @@ export default {
       return this.pageState.scoreLimit
     },
     getScore () {
-      // return this.player.score()
-      return 35
+      return this.pageState.scores[this.player.id].full
     }
   }
 }

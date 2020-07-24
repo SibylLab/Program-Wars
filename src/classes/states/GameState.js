@@ -7,6 +7,7 @@ export default class GameState {
     this.players = players
     this.playerNum = 0
     this.turnHistory = []
+    this.scores = this.getScores()
     this.initGame()
   }
 
@@ -74,10 +75,6 @@ export default class GameState {
     this.turnHistory.push(playInfo)
   }
 
-  updateScores () {
-
-  }
-
   updatePlayers () {
 
   }
@@ -87,6 +84,7 @@ export default class GameState {
   }
 
   endTurn () {
+    this.scores = this.getScores()
     this.nextPlayer()
   }
 
@@ -155,18 +153,54 @@ export default class GameState {
   }
 
   playTrojan (playInfo) {
-    console.log(playInfo.card.type)
     if (playInfo.target.helpedBy('SCAN')) {
       playInfo.target.removeEffect('SCAN')
     } else {
       const hand = playInfo.target.hand
       const idx = Math.floor(Math.random() * hand.cards.length)
       hand.cards[idx] = new Trojan(hand.cards[idx], playInfo.player)
-      console.log(hand.cards[idx])
     }
   }
 
   addCardEffect (playInfo) {
     playInfo.target.addEffect(playInfo.card, playInfo.player)
+  }
+
+  // Scoreing ////////////////////////////////////////////////////////////////
+
+  getScores () {
+    const scores = this.players.map(() => {
+      return {full: 0, base: 0}
+    })
+    
+    for (const player of this.players) {
+      const score = scores[player.id]
+      score.base = this.baseScore(player)
+      score.full = score.base
+
+      const effectScores = this.getEffectScores(player)
+      for (const idx in scores) {
+        scores[idx].full += effectScores[idx]
+      }
+    }
+    return scores
+  }
+
+  baseScore (player) {
+    return player.stacks.reduce((acc, stack) => {
+      return acc + stack.getScore()
+    }, 0)
+  }
+
+  getEffectScores (player) {
+    const scores = this.players.map(() => { return 0 })
+
+    const ransoms = player.negativeEffects.filter(e => e.type === 'RANSOM')
+    for (const ransom of ransoms) {
+      scores[player.id] -= ransom.penalty 
+      scores[ransom.attackerId] += ransom.penalty
+    }
+
+    return scores
   }
 }
