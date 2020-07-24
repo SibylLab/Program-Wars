@@ -1,4 +1,5 @@
 import Stack from '@/classes/game/Stack'
+import StackWithMethodBase from '@/classes/game/StackWithMethodBase'
 import Trojan from '@/classes/game/Trojan'
 
 export default class GameState {
@@ -105,7 +106,12 @@ export default class GameState {
   }
 
   newStack (playInfo) {
-    const stack = new Stack(playInfo.target.id)
+    let stack
+    if (playInfo.card.type === 'METHOD') {
+      stack = new StackWithMethodBase(playInfo.target.id, playInfo.target.method)
+    } else {
+      stack = new Stack(playInfo.target.id)
+    }
     stack.cards.push(playInfo.card)
     // put it in front of finished stacks?
     playInfo.target.stacks.push(stack)

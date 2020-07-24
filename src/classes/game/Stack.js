@@ -42,7 +42,7 @@ export default class Stack {
       return 0
     }
 
-    let score = this.getBase().value
+    let score = this.getBaseValue()
     for (let i = 1; i < this.cards.length; i++) {
       if (this.cards[i].type === "VIRUS") {
         score *= this.getBase().type === "METHOD" ? 0.5 : 0
@@ -59,6 +59,10 @@ export default class Stack {
    */
   getBase () {
     return this.cards[0]
+  }
+
+  getBaseValue () {
+    return this.getBase().value
   }
 
   /**
