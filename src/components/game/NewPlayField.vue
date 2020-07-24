@@ -57,6 +57,7 @@ export default {
       const card = player.hand.find(c => c.id === cardId)
 
       if (this.pageState.currentPlayer() === this.player && card.isBase()) {
+        event.stopPropagation();
         this.pageState.takeTurn({
           type: "newStack", player: this.player, card: card, cardOwner: player
         })

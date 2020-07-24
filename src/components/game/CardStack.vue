@@ -1,22 +1,23 @@
 <template>
 <div id="stack" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">
       {{ scoreText }}: {{ stack.getScore() }}
     </h5>
   </div>
+
   <ul id="card-list">
     <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image"
         :class="[{card: true}, shadow(card)]" :style="{'margin-right': overlap}"
         draggable="false">
   </ul>
+
 </div>
 </template>
 
 
 <script>
-import {mapState, mapGetters, mapActions} from 'vuex'
-
 /**
  * Displays a stack of cards and its total score.
  * Lights up when the active card can be played on it. Score is displayed
@@ -34,14 +35,6 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'activePlayer',
-      'activeCard',
-      'players'
-    ]),
-    ...mapGetters([
-      'getCurrentPlayerHand',
-    ]),
     /**
      * Determines the score color based on whether the stacks owner is under
      * an effect that changes how much of the stack score is added to the
@@ -69,9 +62,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'executeTurn'
-    ]),
     /**
      * Handles the event where a card is dropped on the stack.
      * If the stack belongs to the current player and the card can be
@@ -89,9 +79,8 @@ export default {
         if (card.type !== 'VIRUS' || targetPlayer.isProtectedFrom('VIRUS')) {
           return
         }
-      }
-
-      if (this.stack.willAccept(card)) {
+      } else if (this.stack.willAccept(card)) {
+        event.stopPropagation();
         this.pageState.takeTurn({
           type: "playCardOnStack", player: this.pageState.currentPlayer(),
           target: this.stack, card: card, cardOwner: player
@@ -104,18 +93,18 @@ export default {
      */
     shadow (card) {
       let result = ''
-      if (!this.activeCard || this.stack.getTop() !== card) {
+      if (!this.pageState.currentCard || this.stack.getTop() !== card) {
         return result
-      } else if (this.activeCard.type === 'VIRUS') {
-          let targetPlayer = this.players.find(p => p.id === this.stack.playerId)
-          if (this.stack.playerId !== this.activePlayer.id
+      } else if (this.pageState.currentCard.type === 'VIRUS') {
+          let targetPlayer = this.pageState.players[this.stack.playerId]
+          if (this.stack.playerId !== this.pageState.currentPlayer().id
               && !targetPlayer.isProtectedFrom('VIRUS')) {
             result = 'attack'
           }
-      } else if (this.stack.playerId === this.activePlayer.id) {
+      } else if (this.stack.playerId === this.pageState.currentPlayer().id) {
         result = 'play'
       }
-      return this.stack.willAccept(this.activeCard) ? result : ''
+      return this.stack.willAccept(this.pageState.currentCard) ? result : ''
     },
   }
 }

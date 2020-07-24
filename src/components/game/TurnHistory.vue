@@ -1,7 +1,7 @@
 <template>
 <div id="turn-history">
   <ul>
-    <li v-for="play in history" v-bind:key="play.playType + Math.random()">
+    <li v-for="play in history" v-bind:key="play.type + Math.random()">
       <img id="play-image" :src="image(play)">
       <img id="player-image" :src="playerImage(play)">
       <img id="target-image" v-if="hasTargetPlayer(play)" :src="targetImage(play)">
@@ -50,9 +50,9 @@ export default {
      */
     image (play) {
       let path = 'static/cardImages/effects/'
-      if (play.playType === "REDRAW") {
+      if (play.type === "discardHand") {
         path += 'REDRAW'
-      } else if (play.playType === "DISCARD") {
+      } else if (play.type === "discardCard") {
         path += 'DISCARD'
       } else if (play.card.isSpecial() || play.card.type === 'VIRUS'
                  || play.card.type === 'METHOD'){

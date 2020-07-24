@@ -1,6 +1,5 @@
 <template>
-<div id="stacks-area" :key="update"
-    @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+<div id="stacks-area" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
 
   <div style="display: flex;">
     <h3 id="main-func">{{ player.name }}_main:</h3>
