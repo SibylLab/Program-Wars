@@ -19,20 +19,5 @@ export default class StandardGameState extends GameState {
       this.drawCards(player)
     }
   }
-
-  drawCards (player) {
-    // May need to adjust based on effects?
-    for (let i = 0; i < player.handSize; i++) {
-      player.hand.push(this.deck.draw())
-    }
-  }
-
-  redraw (player) {
-    player
-    // take the given player discard their hand and draw a new one from the
-    // shared deck
-    // override in agile game to draw from the players deck
-  }
-
 }
 

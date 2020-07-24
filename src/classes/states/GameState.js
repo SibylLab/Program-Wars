@@ -7,16 +7,14 @@ export default class GameState {
   }
 
   initGame () {}
-  /* Functions every game state should have
-  drawCards
-  executeTurn
-  nextPlayer
-  endTurn
-  aiTurn
-  */
 
   currentPlayer () {
     return this.players[this.playerNum]
+  }
+
+  nextPlayer () {
+    this.playerNum++
+    this.playerNum = this.playerNum % this.players.length
   }
 
   discardCards (cards) {
@@ -32,18 +30,19 @@ export default class GameState {
   // Turn Logic //////////////////////////////////////////////////////////////
 
   takeTurn (playInfo) {
-    this.play(playInfo)
+    if (!this.play(playInfo)) {
+      return
+    }
+
     this.addHistory(playInfo)
-    this.updateScores()
-    this.updatePlayers()
-    this.cleanUp()
     this.endTurn()
   }
 
   play (playInfo) {
     if (playInfo.type in this) {
-      this[playInfo.type](playInfo)
+      return this[playInfo.type](playInfo)
     }
+    return false
   }
 
   addHistory (playInfo) {
@@ -63,28 +62,33 @@ export default class GameState {
   }
 
   endTurn () {
-
+    this.nextPlayer()
   }
 
   // Play types //////////////////////////////////////////////////////////////
 
   discardHand (playInfo) {
-    console.log(playInfo.type)
     const cards = playInfo.player.hand
     playInfo.player.hand = []
     this.discardCards(cards)
     this.drawCards(playInfo.player)
+    return true
   }
 
   discardCard (playInfo) {
-    console.log(playInfo.type)
+    playInfo.cardOwner.hand = playInfo.cardOwner.hand.filter(c => c !== playInfo.card)
+    this.discardCards([playInfo.card])
+    this.drawCards(playInfo.cardOwner)
+    return true
   }
 
   newStack (playInfo) {
     console.log(playInfo.type)
+    return false
   }
 
   playOnStack (playInfo) {
     console.log(playInfo.type)
+    return false
   }
 }
