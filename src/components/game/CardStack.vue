@@ -28,6 +28,11 @@ import {mapState, mapGetters, mapActions} from 'vuex'
 export default {
   name: 'card-stack',
   props: ['stack'],
+  data () {
+    return {
+      pageState: this.$store.state.pageState
+    }
+  },
   computed: {
     ...mapState([
       'activePlayer',
@@ -57,7 +62,7 @@ export default {
     },
     scoreText () {
       if (this.stack.isMethod ) {
-        return 'methodStack'
+        return 'MethodStack'
       } else {
         return 'Score'
       }
@@ -73,28 +78,23 @@ export default {
      * added to the stack it is. The card will be removed from the players
      * hand and the player's turn will end.
      */
-    onDrop (evt) {
-      let cardId = evt.dataTransfer.getData('cardId')
-      let hand = this.getCurrentPlayerHand
-      let card = hand.cards.find(c => c.id === cardId)
+    onDrop (event) {
+      const id = event.dataTransfer.getData('playerId')
+      const player = this.pageState.players[id]
+      const cardId = event.dataTransfer.getData('cardId')
+      const card = player.hand.find(c => c.id === cardId)
 
-      // ensure we can play this card on the stack
-      if (card.type === 'VIRUS') {
-        let targetPlayer = this.players.find(p => p.id === this.stack.playerId)
-        if (this.stack.playerId === this.activePlayer.id
-            || targetPlayer.isProtectedFrom('VIRUS')) {
+      if (this.stack.playerId !== this.pageState.currentPlayer().id) {
+        const targetPlayer = this.pageState.players[this.stack.playerId]
+        if (card.type !== 'VIRUS' || targetPlayer.isProtectedFrom('VIRUS')) {
           return
         }
-      } else if (this.stack.playerId !== this.activePlayer.id) {
-          return
       }
 
       if (this.stack.willAccept(card)) {
-        this.executeTurn({
-          playType: "playCardOnStack",
-          card: card,
-          player: this.activePlayer,
-          target: this.stack,
+        this.pageState.takeTurn({
+          type: "playCardOnStack", player: this.pageState.currentPlayer(),
+          target: this.stack, card: card, cardOwner: player
         })
       }
     },

@@ -19,25 +19,22 @@ export default class GameState {
     return this.players[this.playerNum]
   }
 
-  takeTurn (playType, card, player, target) {
-    console.log(playType, card, player, target)
-    this.play(playType, card, player, target)
-    this.addHistory({playType, card, player, target})
+  takeTurn (playInfo) {
+    console.log(playInfo)
+    this.play(playInfo)
+    this.addHistory(playInfo)
     this.updateScores()
     this.updatePlayers()
     this.cleanUp()
     this.endTurn()
   }
 
-  play (type, card, player, target) {
-    return {type,
-    player,
-    card,
-    target}
+  play (playInfo) {
+    return playInfo
   }
 
-  addHistory (turnInfo) {
-    turnInfo
+  addHistory (playInfo) {
+    this.turnHistory.push(playInfo)
   }
 
   updateScores () {

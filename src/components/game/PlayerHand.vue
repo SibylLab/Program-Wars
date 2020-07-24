@@ -53,7 +53,10 @@ export default {
     },
     discard (card) {
       if (!this.player.isAi) {
-        this.pageState.takeTurn("discardCard", card, this.player, this.player)
+        this.pageState.takeTurn({
+          type: "discardCard", player: this.player, card: card,
+          cardOwner: this.player
+        })
       }
     },
     startDrag (event, card) {

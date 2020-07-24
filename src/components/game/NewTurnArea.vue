@@ -57,7 +57,7 @@ export default {
     redraw () {
       if (!this.pageState.currentPlayer().isAi) {
         const player = this.pageState.currentPlayer()
-        this.pageState.takeTurn("discardHand", null, player, player)
+        this.pageState.takeTurn({type: "discardHand", player: player})
       }
     }
   },
