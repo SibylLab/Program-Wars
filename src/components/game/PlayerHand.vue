@@ -43,7 +43,7 @@ export default {
       bus.$emit('select-card')
     },
     isActiveCard (card) {
-      return this.pageState.currentCard === card
+      return this.pageState.currentCard === card && !this.player.isAi
     },
     showOverlay (card) {
       return this.isActiveCard(card) && card.isSpecial()

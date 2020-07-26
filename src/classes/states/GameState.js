@@ -77,15 +77,17 @@ export default class GameState {
     this.turnHistory.push(playInfo)
   }
 
-  updatePlayers () {
-
-  }
-
   endTurn () {
+    // this.currentPlayer().update() // needed for other effect types
     this.scores = this.getScores()
     this.checkGameStatus()
+
     if (!this.isOver) {
       this.nextPlayer()
+
+      if (this.currentPlayer().isAi) {
+        this.aiTurn()
+      }
     } else {
       this.endGame()
     }
@@ -98,8 +100,12 @@ export default class GameState {
   }
 
   endGame () {
-    console.log('end game')
     bus.$emit('game-over')
+  }
+
+  aiTurn () {
+    const player = this.currentPlayer()
+    this.takeTurn({type: 'discardHand', player})
   }
 
   // Play types //////////////////////////////////////////////////////////////
