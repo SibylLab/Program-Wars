@@ -1,5 +1,10 @@
 <template>
 <div id="begginer-game">
+  <winner-modal id="winner-modal" class="modal fade"
+      tabindex="-1" role="dialog"
+      data-backdrop='static' data-keyboard='false'>
+  </winner-modal>
+
   <page-header/>
 
   <div class="begin-player" style="left: 0;">
@@ -26,10 +31,12 @@
 </template>
 
 <script>
+import WinnerModalBeginner from '@/components/modals/WinnerModalBeginner'
 import PageHeader from '@/components/shared/PageHeader'
 import PlayerArea from '@/components/game/PlayerArea'
 import TurnArea from '@/components/game/NewTurnArea'
 import PlayField from '@/components/game/NewPlayField'
+import { bus } from '@/components/shared/Bus'
 
 export default {
   name: 'begginer-game',
@@ -39,10 +46,23 @@ export default {
     }
   },
   components: {
+    'winner-modal': WinnerModalBeginner,
     'page-header': PageHeader,
     'player-area': PlayerArea,
     'turn-area': TurnArea,
     'play-field': PlayField
+  },
+  methods: {
+    showWinner () {
+      console.log('game is over')
+      $('#winner-modal').modal('show')
+    }
+  },
+  mounted () {
+    bus.$on('game-over', this.showWinner)
+  },
+  beforeDestroy () {
+    bus.$off('game-over', this.showWinner)
   }
 }
 </script>

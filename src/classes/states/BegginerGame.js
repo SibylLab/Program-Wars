@@ -8,7 +8,7 @@ export default class BegginerGame extends StandardGameState {
   }
 
   initGame () {
-    this.scoreLimit = 100
+    this.scoreLimit = 10
     this.deck = new Deck(begginerDeck)
     this.givePlayerHands()
   }

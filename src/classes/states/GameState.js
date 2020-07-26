@@ -1,6 +1,7 @@
 import Stack from '@/classes/game/Stack'
 import StackWithMethodBase from '@/classes/game/StackWithMethodBase'
 import Trojan from '@/classes/game/Trojan'
+import { bus } from '@/components/shared/Bus'
 
 export default class GameState {
   constructor (players) {
@@ -8,6 +9,7 @@ export default class GameState {
     this.playerNum = 0
     this.turnHistory = []
     this.scores = this.getScores()
+    this.isOver = false
     this.initGame()
   }
 
@@ -79,13 +81,25 @@ export default class GameState {
 
   }
 
-  cleanUp () {
-
-  }
-
   endTurn () {
     this.scores = this.getScores()
-    this.nextPlayer()
+    this.checkGameStatus()
+    if (!this.isOver) {
+      this.nextPlayer()
+    } else {
+      this.endGame()
+    }
+  }
+
+  checkGameStatus () {
+    this.isOver = this.scores.reduce((acc, score) => {
+      return acc || score.full >= this.scoreLimit
+    }, false)
+  }
+
+  endGame () {
+    console.log('end game')
+    bus.$emit('game-over')
   }
 
   // Play types //////////////////////////////////////////////////////////////
