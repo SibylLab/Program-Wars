@@ -19,6 +19,7 @@
 
 <script>
 import TargetOverlay from '@/components/game/TargetOverlay'
+import { bus } from '@/components/shared/Bus'
 
 export default {
   name: 'player-hand',
@@ -39,6 +40,7 @@ export default {
     select (card) {
       this.pageState.currentCard = card
       this.update = !this.update
+      bus.$emit('select-card')
     },
     isActiveCard (card) {
       return this.pageState.currentCard === card

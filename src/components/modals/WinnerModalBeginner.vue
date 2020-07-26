@@ -52,6 +52,7 @@
 
 <script>
 import {mapActions} from 'vuex'
+import { bus } from '@/components/shared/Bus'
 
 export default {
   name: 'winner-modal-begginer',
@@ -61,24 +62,27 @@ export default {
       winner: undefined
     }
   },
-  computed: {
-    getWinner () {
-      let winner = this.pageState.players[0]
-      for (const player in this.pageState.players) {
-        if (player.full > winner.full) {
-          winner = player
-        }
-      }
-      return winner
-    }
-  },
   methods: {
     ...mapActions([
       'leaveGame'
-    ])
+    ]),
+    setWinner () {
+      this.winner = this.pageState.players[0]
+      for (const player of this.pageState.players) {
+        const scorePlayer = this.pageState.scores[player.id].full
+        const scoreWinner = this.pageState.scores[this.winner.id].full
+        if (scorePlayer > scoreWinner) {
+          this.winner = player
+        }
+      }
+    }
   },
   created () {
-    this.winner = this.pageState.players[0]
+    this.setWinner()
+    bus.$on('game-over', this.setWinner)
+  },
+  beforeDestroy () {
+    bus.$off('game-over', this.setWinner)
   }
 }
 </script>

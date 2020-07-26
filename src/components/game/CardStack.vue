@@ -1,5 +1,5 @@
 <template>
-<div id="stack" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+<div id="stack" :key="update" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
 
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">
@@ -18,6 +18,8 @@
 
 
 <script>
+import { bus } from '@/components/shared/Bus'
+
 /**
  * Displays a stack of cards and its total score.
  * Lights up when the active card can be played on it. Score is displayed
@@ -31,7 +33,8 @@ export default {
   props: ['stack'],
   data () {
     return {
-      pageState: this.$store.state.pageState
+      pageState: this.$store.state.pageState,
+      update: true
     }
   },
   computed: {
@@ -76,7 +79,6 @@ export default {
 
       if (this.stack.playerId !== this.pageState.currentPlayer().id) {
         const targetPlayer = this.pageState.players[this.stack.playerId]
-        console.log(card.type, targetPlayer.isProtectedFrom('VIRUS'))
         if (card.type !== 'VIRUS' || targetPlayer.isProtectedFrom('VIRUS')) {
           return
         }
@@ -109,6 +111,15 @@ export default {
       }
       return this.stack.willAccept(this.pageState.currentCard) ? result : ''
     },
+    refresh () {
+      this.update = !this.update
+    }
+  },
+  created () {
+    bus.$on('select-card', this.refresh)
+  },
+  beforeDestroy () {
+    bus.$off('select-card', this.refresh)
   }
 }
 </script>

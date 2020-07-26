@@ -54,11 +54,10 @@ export default {
   },
   methods: {
     showWinner () {
-      console.log('game is over')
       $('#winner-modal').modal('show')
     }
   },
-  mounted () {
+  created () {
     bus.$on('game-over', this.showWinner)
   },
   beforeDestroy () {
