@@ -190,7 +190,7 @@ export default class GameState {
     for (const player of this.players) {
       const score = scores[player.id]
       score.base = this.baseScore(player)
-      score.full = score.base
+      score.full += score.base
 
       const effectScores = this.getEffectScores(player)
       for (const idx in scores) {
