@@ -6,8 +6,8 @@ export default class AttackWithBonus extends CyberAttack {
     this.addBonus(bonus)
   }
 
-  addBonus () {
-    this.attacker.effects.addBonus(this.type, this.id, this.bonus)
+  addBonus (bonus) {
+    this.attacker.effects.addBonus(this.type, this.id, bonus)
   }
 
   destroy () {

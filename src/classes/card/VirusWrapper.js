@@ -5,5 +5,6 @@ export default class VirusWrapper extends Card {
     super(card.type, card.value)
     this.playerId = playerId
     this.card = card
+    this.isWrapper = true
   } 
 }

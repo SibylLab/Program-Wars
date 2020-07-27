@@ -1,4 +1,5 @@
 import EffectFactory from '@/classes/statusEffects/EffectFactory'
+import BonusEffect from '@/classes/statusEffects/BonusEffect'
 
 export default class StatusEffects {
   constructor (playerId) {
@@ -30,7 +31,7 @@ export default class StatusEffects {
         this.cleanHacks()
       }
 
-      const effect = this.fact.newStatusEffect(effectType, this.playerId)
+      const effect = this.fact.newSafetyEffect(effectType, this.playerId)
       this.positive.push(effect)
     }
   }
@@ -60,8 +61,8 @@ export default class StatusEffects {
     return this.negative.find(e => e.type === effectType)
   }
 
-  addBonus (bonus) {
-    this.bonus.push(bonus)
+  addBonus (type, effectId, amount) {
+    this.bonus.push(new BonusEffect(type, effectId, amount))
   }
 
   removeBonus (effectId) {
@@ -91,12 +92,16 @@ export default class StatusEffects {
 
   removePositive (effectType) {
     const effect = this.positive.find(e => e.type === effectType)
-    this.removeEffect(effect)
+    if (effect) {
+      this.removeEffect(effect)
+    }
   }
 
   removeNegative (effectType) {
     const effect = this.negative.find(e => e.type === effectType)
-    this.removeEffect(effect)
+    if (effect) {
+      this.removeEffect(effect)
+    }
   }
 
   isHack (effectType) {

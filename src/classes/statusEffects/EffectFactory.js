@@ -31,7 +31,7 @@ export default class EffectFactory {
     return type in penalties ? penalties[type] : 0
   }
 
-  getBonuses (type) {
+  getBonus (type) {
     return type in bonuses ? bonuses[type] : 0
   }
 }

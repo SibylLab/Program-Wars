@@ -28,7 +28,13 @@ export default class GameState {
 
   discardCards (cards) {
     // need to consider virus and trojan wrappers
-    cards.map(c => this.deck.discard.push(c))
+    for (const card of cards) {
+      if (card.isWrapper && card.card) {
+        this.deck.discard.push(card.card)
+      } else {
+        this.deck.discard.push(card)
+      }
+    }
   }
 
   drawCards (player) {
@@ -97,7 +103,7 @@ export default class GameState {
 
   checkGameStatus () {
     this.isOver = this.scores.reduce((acc, score) => {
-      return acc || score.full >= this.scoreLimit
+      return acc || score >= this.scoreLimit
     }, false)
   }
 
@@ -175,20 +181,26 @@ export default class GameState {
       playInfo.target.removeEffect('SCAN')
     } else {
       const hand = playInfo.target.hand
-      const idx = Math.floor(Math.random() * hand.cards.length)
-      hand.cards[idx] = new TrojanWrapper(hand.cards[idx], playInfo.player)
+      const TRIES = 10  // Number of times to try finding a card we can replace
+
+      for (let i = 0; i < TRIES; i++) {
+        const idx = Math.floor(Math.random() * hand.cards.length)
+
+        if (!hand.cards[idx].isMimic) {
+          hand.cards[idx] = new TrojanWrapper(hand.cards[idx], playInfo.player)
+          return
+        }
+      }
     }
   }
 
   addCardEffect (playInfo) {
-    // needs to do more work to clean and discard everything if needed and decide
-    // where to add the effect. Perhaps in agile game this can be how it is done
-    // as the player own it's deck and can discard its own cards
     if (playInfo.card.isSafety()) {
       playInfo.target.effects.addPositive(playInfo.card.type)
       if (playInfo.card.type === 'ANTIVIRUS') {
         playInfo.target.hand.cleanTrojans()
-        playInfo.target.stacks.cleanViruses()
+        const cards = playInfo.target.stacks.cleanViruses()
+        this.discardCards(cards)
       }
     } else {
       playInfo.target.effects.addNegative(playInfo.card.type, playInfo.player)

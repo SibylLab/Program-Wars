@@ -33,7 +33,7 @@
 <script>
 import WinnerModalBeginner from '@/components/modals/WinnerModalBeginner'
 import PageHeader from '@/components/shared/PageHeader'
-import PlayerArea from '@/components/game/PlayerArea'
+import PlayerArea from '@/components/player/PlayerArea'
 import TurnArea from '@/components/game/NewTurnArea'
 import PlayField from '@/components/game/NewPlayField'
 import { bus } from '@/components/shared/Bus'

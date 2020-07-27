@@ -16,6 +16,7 @@ export default class TrojanWrapper extends Card {
     this.card = card
     this.player = player
     this.isMimic = true
+    this.isWrapper = true
   }
 
   /**

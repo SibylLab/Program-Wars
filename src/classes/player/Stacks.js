@@ -1,6 +1,7 @@
 import Stack from '@/classes/card/Stack'
 import MethodStack from '@/classes/card/MethodStack'
 import StackWithMethodBase from '@/classes/card/StackWithMethodBase'
+import VirusWrapper from '@/classes/card/VirusWrapper'
 
 export default class Stacks {
   constructor (playerId) {
@@ -40,9 +41,9 @@ export default class Stacks {
   cleanViruses () {
     // The virus card contained in the Virus needs to be returned for discard
     const viruses = []
-    for (const stack of stacks) {
+    for (const stack of this.stacks) {
       if (stack.getTop().type === 'VIRUS') {
-        viruses.push(stack.pop())
+        viruses.push(stack.cards.pop())
       }
     }
     return viruses

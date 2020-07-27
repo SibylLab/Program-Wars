@@ -20,7 +20,7 @@ export default class Stack {
    * Calculates the stack's score.
    * @return {int} the stack's total score.
    */
-  getScore (penalties) {
+  getScore (penalties = {method: 0, stack: 0, base: 0}) {
     if (this.isEmpty()) {
       return 0
     }
