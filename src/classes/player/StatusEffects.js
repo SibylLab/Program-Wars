@@ -6,11 +6,11 @@ export default class StatusEffects {
   }
 
   hasPositive (effectType) {
-    return positive.find(e => e.type === effectType)
+    return this.positive.find(e => e.type === effectType)
   }
 
   hasNegative (effectType) {
-    return negative.find(e => e.type === effectType)
+    return this.negative.find(e => e.type === effectType)
   }
 
   hasProtectionFrom (effectType) {
@@ -27,7 +27,7 @@ export default class StatusEffects {
       }
 
       const effect = new CyberEffect(effectType, this.playerId)
-      this.positiveEffects.push(effect)
+      this.positive.push(effect)
     }
   }
 
@@ -37,7 +37,7 @@ export default class StatusEffects {
         this.removePositive('SCAN')
       } else {
         const effect = new CyberEffect(effectType, this.playerId, attackerId)  
-        this.negativeEffects.push(effect)
+        this.negative.push(effect)
       }
     }
   }

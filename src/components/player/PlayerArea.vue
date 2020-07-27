@@ -30,9 +30,9 @@
 
 
 <script>
-import PlayerDetails from '@/components/game/PlayerDetails'
-import PlayerScore from '@/components/game/PlayerScore'
-import PlayerEffects from '@/components/game/PlayerEffects'
+import PlayerDetails from '@/components/player/PlayerDetails'
+import PlayerScore from '@/components/player/PlayerScore'
+import PlayerEffects from '@/components/player/PlayerEffects'
 import PlayerAreaInfo from '@/components/info/PlayerAreaInfo'
 
 /**

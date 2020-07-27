@@ -7,10 +7,10 @@
 
   <ul id="stack-list">
     <div id="method">
-      <card-stack :stack="player.method"></card-stack>
+      <card-stack :stack="player.stacks.method"></card-stack>
     </div>
 
-    <li class="card-stack" v-for="stack in player.stacks" v-bind:key="stack.id">
+    <li class="card-stack" v-for="stack in player.stacks.stacks" v-bind:key="stack.id">
       <card-stack :stack="stack"></card-stack>
     </li>
   </ul>

@@ -26,6 +26,6 @@ export default class Player {
   }
 
   getScore () {
-    return stacks.getScore(this.statusEffects)
+    return this.stacks.getScore(this.statusEffects)
   }
 }

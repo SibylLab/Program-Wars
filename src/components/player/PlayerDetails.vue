@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import SpyAccessor from '@/components/game/SpyAccessor.vue'
+import SpyAccessor from '@/components/player/SpyAccessor.vue'
 
 export default {
   name: 'player-details',

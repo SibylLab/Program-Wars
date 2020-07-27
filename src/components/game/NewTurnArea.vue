@@ -31,7 +31,7 @@
 
 <script>
 import TurnAreaInfo from '@/components/info/TurnAreaInfo'
-import playerHand from '@/components/game/PlayerHand'
+import playerHand from '@/components/player/PlayerHand'
 import TurnHistory from '@/components/game/TurnHistory'
 
 /**
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     redraw () {
-      if (!this.pageState.currentPlayer().isAi) {
+      if (!this.pageState.currentPlayer().isAI) {
         const player = this.pageState.currentPlayer()
         this.pageState.takeTurn({type: "discardHand", player: player})
       }

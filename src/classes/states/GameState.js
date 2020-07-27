@@ -33,14 +33,14 @@ export default class GameState {
   }
 
   drawCards (player) {
-    for (let i = player.hand.length; i < player.handSize; i++) {
-      player.hand.push(this.deck.draw())
+    for (let i = player.hand.numCards(); i < player.hand.maxCards; i++) {
+      player.hand.addCard(this.deck.draw())
     }
   }
 
   getAttackablePlayers (attackType) {
     return this.players.filter((p) => {
-      return !p.isProtectedFrom(attackType) && !p.hurtBy(attackType)
+      return !p.protectedFrom(attackType) && !p.hurtBy(attackType)
           && p !== this.currentPlayer()
     })
   }
@@ -111,8 +111,8 @@ export default class GameState {
   // Play types //////////////////////////////////////////////////////////////
 
   discardHand (playInfo) {
-    const cards = playInfo.player.hand
-    playInfo.player.hand = []
+    const cards = playInfo.player.hand.cards
+    playInfo.player.hand.cards = []
     this.discardCards(cards)
     this.drawCards(playInfo.player)
   }
@@ -187,8 +187,13 @@ export default class GameState {
   }
 
   // Scoreing ////////////////////////////////////////////////////////////////
-
   getScores () {
+    return this.players.map(p => {
+      return {full: p.getScore(), base: p.getScore()}
+    })
+  }
+
+  _getScores () {
     const scores = this.players.map(() => {
       return {full: 0, base: 0}
     })

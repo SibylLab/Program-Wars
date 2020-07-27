@@ -7,6 +7,10 @@ export default class Hand {
     this.cards = []
   }
 
+  numCards () {
+    return this.cards.length
+  }
+
   addCard (card) {
     this.cards.push(card)
   }
