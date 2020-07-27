@@ -12,7 +12,7 @@ const bonuses = {
 
 export default class EffectFactory {
   newSafetyEffect (type, playerId) {
-    return new StatusEffect(type, player)
+    return new StatusEffect(type, playerId)
   }
 
   newAttackEffect (type, playerId, attacker) {

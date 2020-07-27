@@ -1,25 +1,8 @@
-/**
- * @file the card class file
- * @author Josh on 2017-03-13, Steven modified on 2020-05-25
- */
-
-// Function to create a unique object id
-const uuidV1 = require('uuid/v1')
-
 // The maximum number of repeats allowed in a stack
 const MAX_REPEATS = 2
 
-
-/**
- * A stack of cards played by a player.
- */
 export default class Stack {
-  /**
-   * Constructor for Stack
-   * @param {int} playerId The ID of the player
-   */
   constructor (playerId) {
-    this.stackId = uuidV1()
     this.playerId = playerId
     this.cards = []
     this.isMethod = false
@@ -37,12 +20,12 @@ export default class Stack {
    * Calculates the stack's score.
    * @return {int} the stack's total score.
    */
-  getScore () {
+  getScore (penalties) {
     if (this.isEmpty()) {
       return 0
     }
 
-    let score = this.getBaseValue()
+    let score = this.getBaseValue(penalties)
     for (let i = 1; i < this.cards.length; i++) {
       if (this.cards[i].type === "VIRUS") {
         score *= this.getBase().type === "METHOD" ? 0.5 : 0
@@ -50,7 +33,7 @@ export default class Stack {
         score *= this.cards[i].value
       }
     }
-    return Math.floor(score)
+    return Math.floor(score) - penalties.stack
   }
 
   /**
@@ -61,8 +44,8 @@ export default class Stack {
     return this.cards[0]
   }
 
-  getBaseValue () {
-    return this.getBase().value
+  getBaseValue (penalties) {
+    return this.getBase().value - penalties.base
   }
 
   /**

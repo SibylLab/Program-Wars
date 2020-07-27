@@ -1,4 +1,3 @@
-import CyberEffect from '@/classes/player/CyberEffect'
 import EffectFactory from '@/classes/statusEffects/EffectFactory'
 
 export default class StatusEffects {

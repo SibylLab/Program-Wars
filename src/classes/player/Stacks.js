@@ -31,10 +31,9 @@ export default class Stacks {
     stack.cards.push(virus)
   }
 
-  getScore () {
-    // will need to add a way to do stack overflow
+  getScore (penalties) {
     return this.stacks.reduce((acc, stack) => {
-      return acc += stack.getScore()
+      return acc += stack.getScore(penalties)
     }, 0)
   } 
 

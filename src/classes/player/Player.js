@@ -26,6 +26,10 @@ export default class Player {
   }
 
   getScore () {
-    return this.stacks.getScore()
+    const penalties = {method: 0, base: 0, stack: 0}
+    if (this.effects.hurtBy('SQL_INJECTION')) {
+      penalties.method = 2
+    }
+    return this.stacks.getScore(penalties)
   }
 }
