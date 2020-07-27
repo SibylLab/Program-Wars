@@ -1,6 +1,5 @@
-import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
-import Player from '@/classes/game/Player'
-import MethodStack from '@/classes/game/MethodStack'
+import Player from '@/classes/player/Player'
+import AIPlayer from '@/classes/player/AIPlayer'
 
 const botInfo = [
   {name: 'n00b_b0t', personality: 'standard'},
@@ -93,15 +92,16 @@ export default class HomeState {
   }
 
   createPlayers () {
-    const factory = new AiHandlerFactory()
-
     let id = 0
-    return this.players.map((p) => {
-      const player = new Player(id, p.name, p.isAI)
-      player.method = new MethodStack(id)
 
-      if (player.isAI) {
-        player.handler = factory.newHandler(p.personality, player)
+    // Will need to distiguish modes to decide what type of player to create
+    // when standard mode is added
+    return this.players.map((p) => {
+      let player
+      if (p.isAI) {
+        player = new AIPlayer(id, p.name, p.personality)
+      } else {
+        player = new Player(id, p.name)
       }
 
       id++

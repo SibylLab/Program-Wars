@@ -57,7 +57,7 @@ export default class StatusEffects {
 
   // Helpers //
 
-  cleanMalware (player) {
+  cleanMalware () {
     this.removeNegative('RANSOM')
     this.removeNegative('SPYWARE')
   }

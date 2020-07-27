@@ -10,6 +10,7 @@ export default class Player {
     this.hand = new Hand(id)
     this.stacks = new Stacks(id)
     this.effects = new StatusEffects(id)
+    this.image = 'static/playerImages/player' + id + '.png'
   }
 
   helpedBy (effectType) {
