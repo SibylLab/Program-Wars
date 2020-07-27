@@ -54,7 +54,7 @@ export default {
       const id = event.dataTransfer.getData('playerId')
       const player = this.pageState.players[id]
       const cardId = event.dataTransfer.getData('cardId')
-      const card = player.hand.find(c => c.id === cardId)
+      const card = player.hand.cards.find(c => c.id === cardId)
 
       if (this.pageState.currentPlayer() === this.player && card.isBase()) {
         event.stopPropagation();

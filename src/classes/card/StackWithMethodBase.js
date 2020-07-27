@@ -1,4 +1,4 @@
-import Stack from '@/classes/game/Stack'
+import Stack from '@/classes/card/Stack'
 
 export default class StackWithMethodBase extends Stack {
   constructor (playerId, method) {

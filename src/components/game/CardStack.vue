@@ -75,11 +75,11 @@ export default {
       const id = event.dataTransfer.getData('playerId')
       const player = this.pageState.players[id]
       const cardId = event.dataTransfer.getData('cardId')
-      const card = player.hand.find(c => c.id === cardId)
+      const card = player.hand.cards.find(c => c.id === cardId)
 
       if (this.stack.playerId !== this.pageState.currentPlayer().id) {
         const targetPlayer = this.pageState.players[this.stack.playerId]
-        if (card.type !== 'VIRUS' || targetPlayer.isProtectedFrom('VIRUS')) {
+        if (card.type !== 'VIRUS' || targetPlayer.protectedFrom('VIRUS')) {
           return
         }
       }
@@ -103,7 +103,7 @@ export default {
       } else if (this.pageState.currentCard.type === 'VIRUS') {
           let targetPlayer = this.pageState.players[this.stack.playerId]
           if (this.stack.playerId !== this.pageState.currentPlayer().id
-              && !targetPlayer.isProtectedFrom('VIRUS')) {
+              && !targetPlayer.protectedFrom('VIRUS')) {
             result = 'attack'
           }
       } else if (this.stack.playerId === this.pageState.currentPlayer().id) {

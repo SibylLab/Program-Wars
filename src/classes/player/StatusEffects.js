@@ -1,8 +1,13 @@
+import CyberEffect from '@/classes/player/CyberEffect'
+import EffectFactory from '@/classes/statusEffects/EffectFactory'
+
 export default class StatusEffects {
   constructor (playerId) {
     this.playerId = playerId
     this.positive = []
     this.negative = []
+    this.bonus = []
+    this.fact = new EffectFactory()
   }
 
   hasPositive (effectType) {
@@ -26,17 +31,17 @@ export default class StatusEffects {
         this.cleanHacks()
       }
 
-      const effect = new CyberEffect(effectType, this.playerId)
+      const effect = this.fact.newStatusEffect(effectType, this.playerId)
       this.positive.push(effect)
     }
   }
 
-  addNegative (effectType, attackerId) {
+  addNegative (effectType, attacker) {
     if (!this.hasNegative(effectType) && !this.hasProtectionFrom(effectType)) {
       if (this.hasPositive('SCAN')) {
         this.removePositive('SCAN')
       } else {
-        const effect = new CyberEffect(effectType, this.playerId, attackerId)  
+        const effect = this.fact.newAttackEffect(effectType, this.playerId, attacker)  
         this.negative.push(effect)
       }
     }
@@ -45,6 +50,7 @@ export default class StatusEffects {
   removeEffect (effect) {
     this.positive = this.positive.filter(e => e !== effect)
     this.negative = this.negative.filter(e => e !== effect)
+    effect.destroy()
   }
 
   getPositive (effectType) {
@@ -53,6 +59,23 @@ export default class StatusEffects {
 
   getNegative (effectType) {
     return this.negative.find(e => e.type === effectType)
+  }
+
+  addBonus (bonus) {
+    this.bonus.push(bonus)
+  }
+
+  removeBonus (effectId) {
+    this.bonus = this.bonus.filter(b => b.effectId !== effectId)
+  }
+
+  getScoreAdjustment () {
+    let score = this.bonus.reduce((acc, b) => { return acc + b.amount }, 0)
+
+    const negatives = this.negative.filter(e => e.type !== 'SQL_INJECTION')
+    score -= negatives.reduce((acc, e) => { return acc + e.penalty }, 0)
+
+    return score
   }
 
   // Helpers //
@@ -68,11 +91,13 @@ export default class StatusEffects {
   }
 
   removePositive (effectType) {
-    this.positive = this.positive.filter(e => e.type !== effectType)
+    const effect = this.positive.find(e => e.type === effectType)
+    this.removeEffect(effect)
   }
 
   removeNegative (effectType) {
-    this.negative = this.negative.filter(e => e.type !== effectType)
+    const effect = this.negative.find(e => e.type === effectType)
+    this.removeEffect(effect)
   }
 
   isHack (effectType) {
