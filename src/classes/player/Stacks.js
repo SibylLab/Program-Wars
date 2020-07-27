@@ -1,4 +1,4 @@
-import MethodStack from '@/classes/game/MethodStack'
+import MethodStack from '@/classes/card/MethodStack'
 
 export default class Stacks {
   constructor (playerId) {

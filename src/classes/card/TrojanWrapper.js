@@ -1,5 +1,4 @@
-import Card from '@/classes/game/Card'
-
+import Card from '@/classes/card/Card'
 
 /**
  * A Card that will pretend to be another card but will change the cards effect

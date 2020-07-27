@@ -1,6 +1,9 @@
+const MAX_CARDS = 5
+
 export default class Hand {
   constructor (playerId) {
     this.playerId = playerId
+    this.maxCards = MAX_CARDS
     this.cards = []
   }
 

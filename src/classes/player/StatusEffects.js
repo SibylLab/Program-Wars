@@ -47,6 +47,14 @@ export default class StatusEffects {
     this.negative = this.negative.filter(e => e !== effect)
   }
 
+  getPositive (effectType) {
+    return this.positive.find(e => e.type === effectType)
+  }
+
+  getNegative (effectType) {
+    return this.negative.find(e => e.type === effectType)
+  }
+
   // Helpers //
 
   cleanMalware (player) {

@@ -1,4 +1,4 @@
-import Card from '@/classes/game/Card'
+import Card from '@/classes/card/Card'
 
 export default class VirusWrapper extends Card {
   constructor (playerId, card) {
