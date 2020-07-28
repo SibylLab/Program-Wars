@@ -40,4 +40,8 @@ export default class Hand {
       return c
     })
   }
+
+  getMimics () {
+    return this.cards.filter(c => c.isMimic)
+  }
 }

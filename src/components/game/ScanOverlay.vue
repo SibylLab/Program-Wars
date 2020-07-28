@@ -1,5 +1,9 @@
 <template>
 <div id="scan-overlay">
+  <scan-modal id="scan-modal" class="modal fade" :attacks="getAttacks"
+      tabindex="-1" role="dialog" :cardOwner="player" :card="card"
+      data-backdrop='static' data-keyboard='false'>
+  </scan-modal>
 
   <h5>Scan</h5>
 
@@ -20,10 +24,23 @@ export default {
       pageState: this.$store.state.pageState
     }
   },
+  computed: {
+    getAttacks () {
+      return this.player.getAllAttacks()
+    }
+  },
   methods: {
     playScan () {
-      // if there is nothing to remove add the scan effect to the player
-      // if there is something to remove open the scan modal to clear something
+      const attacks = this.getAttacks
+      if (attacks.effects.length > 0 || attacks.virusStacks.length > 0
+          || attacks.mimics.length > 0) {
+        $('#scan-modal').modal('show')
+      } else {
+        this.pageState.takeTurn({
+          type: 'playSpecialCard', card: this.card, cardOwner: this.cardOwner,
+          target: this.player, player: this.player
+        })
+      }
     }
   }
 }
@@ -31,7 +48,7 @@ export default {
 
 
 <style scoped>
-#target-overlay {
+#scan-overlay {
   position: absolute;
   width: 100%;
   border: solid black 2px;

@@ -48,4 +48,8 @@ export default class Stacks {
     }
     return viruses
   }
+
+  getStacksWithVirus () {
+    return this.stacks.filter(s => s.getTop().type === 'VIRUS')
+  }
 }

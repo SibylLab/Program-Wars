@@ -12,7 +12,12 @@
 
       <div class="modal-body" style="padding-top: 0;">
         <h3 class="modal-title"><b>Active Scan</b></h3>
-        <!-- List all attacks -->
+        <!--
+          List all attacks, first viruses, then trojans, then effects
+          each should have a button to clean it
+          The buttons can call functions specific to the type if needed to
+          deal with them differently
+        -->
       </div>
 
       <div class="modal-footer">
@@ -31,6 +36,7 @@
 <script>
 export default {
   name: 'active-scan',
+  props: ['cardOwner', 'card', 'attacks'],
   data () {
     return {
       pageState: this.$store.state.pageState,
@@ -39,7 +45,6 @@ export default {
   },
   methods: {
     playScan (target) {
-      // Not sure yet where some of this info will come from
       this.pageState.takeTurn({
         type: "playScan", player: this.player,
         card: this.card, cardOwner: this.cardOwner,
@@ -48,7 +53,7 @@ export default {
     },
     discard () {
       this.pageState.takeTurn({
-        type: 'discardCard', card: this.cards, cardOwner: this.cardOwner
+        type: 'discardCard', card: this.card, cardOwner: this.cardOwner
       })
     }
   }

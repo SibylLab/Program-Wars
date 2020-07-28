@@ -25,6 +25,13 @@ export default class Player {
     return this.effects.hasProtectionFrom(effectType)
   }
 
+  getAllAttacks () {
+    const effects = this.effects.negative()
+    const virusStacks = this.stacks.getStacksWithVirus()
+    const mimics = this.hand.getMimics()
+    return { effects, virusStacks, mimics }
+  }
+
   getScore () {
     const penalties = {method: 0, base: 0, stack: 0}
     if (this.hurtBy('SQL_INJECTION')) {
