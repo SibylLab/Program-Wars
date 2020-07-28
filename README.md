@@ -3,9 +3,8 @@
 [![GitHub open issues](https://img.shields.io/github/issues-raw/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/issues)
 
-[![DeepScan grade](https://deepscan.io/api/projects/2681/branches/18539/badge/grade.svg)](https://deepscan.io/dashboard#view=project&pid=2681&bid=18539)
+[![DeepScan grade](https://deepscan.io/api/teams/10352/projects/13104/branches/214253/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=10352&pid=13104&bid=214253)
 [![Coverage Status](https://coveralls.io/repos/github/SibylLab/Program-Wars/badge.svg?branch=master)](https://coveralls.io/github/SibylLab/Program-Wars?branch=master)
-
 [![GitHub release](https://img.shields.io/github/release/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/releases/latest)
 [![GitHub contributors](https://img.shields.io/github/contributors/johnanvik/program-wars.svg)](https://github.com/johnanvik/program-wars/graphs/contributors)
 [![Open Source Love](https://badges.frapsoft.com/os/gpl/gpl.svg?v=102)](https://github.com/johnanvik/open-source-badge/)
