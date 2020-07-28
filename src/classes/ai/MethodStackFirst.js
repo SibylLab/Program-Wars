@@ -15,19 +15,12 @@ import ActionHandler from '@/classes/ai/ActionHandler'
  */
 export default class MethodStackFirst extends ActionHandler {
   /**
-   * @constructor MethodStackFirst
-   */
-  constructor (player) {
-    super(player)
-  }
-
-  /**
    * Returns a playCardOnStack play if the player has an instruction that can
    * be played on the method stack.
    */
-  handle(hand, players, stacks, method, scores) {  // eslint-disable-line no-unused-vars
-    let instructions = hand.cards.filter((c) => {
-      return c.type === "INSTRUCTION" && c.value <= method.toLimit()
+  handle(player, players, scores) {  // eslint-disable-line no-unused-vars
+    let instructions = player.hand.cards.filter((c) => {
+      return c.type === "INSTRUCTION" && c.value <= player.method.toLimit()
     })
 
     if (instructions.length > 0) {
@@ -36,8 +29,9 @@ export default class MethodStackFirst extends ActionHandler {
       return {
         playType: 'playCardOnStack',
         card: card,
-        player: this.player,
-        target: method
+        cardOwner: player,
+        player: player,
+        target: player.method
       }
     } else {
       return undefined

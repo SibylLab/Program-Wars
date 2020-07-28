@@ -10,21 +10,12 @@ import ActionHandler from '@/classes/ai/ActionHandler'
  */
 export default class RedrawAction extends ActionHandler {
   /**
-   * @constructor RedrawAction
-   */
-  constructor (player) {
-    super(player)
-  }
-
-  /**
    * Returns a redraw turn object for an ai player.
    */
   handle(hand, players, stacks, scores) {  // eslint-disable-line no-unused-vars
     return {
-      playType: "REDRAW",
-      card: undefined,
-      player: this.player,
-      target: this.player
+      playType: "discardHand",
+      player: this.player
     }
   }
 }

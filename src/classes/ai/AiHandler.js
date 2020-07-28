@@ -21,26 +21,24 @@ export default class AiHandler {
    * @constructor AiHandler
    * @param {Player} player The Ai player this handler is for.
    */
-  constructor (player, handlers) {
-    this.player = player
+  constructor (handlers) {
     this.actionHandlers = handlers
-    this.defaultAction = new RedrawAction(this.player)
+    this.defaultAction = new RedrawAction()
   }
 
   /**
    * Make a choice for the player that it controls.
    * @param hand The hand of the Ai player.
+   * @param player The player taking the action. 
    * @param players A list of all players in the game.
-   * @param stacks A list of all stacks in play.
-   * @param method The players method stack.
    * @param scores A list of current player scores.
    * @return a turn object {playType, card, player, target}
    */
-  chooseAction(hand, players, stacks, method, scores) {
+  chooseAction(player, players, scores) {
     // Try all the action handlers until one returns a turn object
     for (let action of this.actionHandlers) {
       try {
-        let result = action.handle(hand, players, stacks, method, scores)
+        let result = action.handle(player, players, scores)
         if (result) {
           return result
         }
@@ -52,6 +50,6 @@ export default class AiHandler {
       }
     }
     // If no handler can handle this action use the default action
-    return this.defaultAction.handle(hand, players, stacks, method, scores)
+    return this.defaultAction.handle(player, players, scores)
   }
 }

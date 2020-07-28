@@ -38,16 +38,16 @@ export default class AiHandlerFactory {
   /**
    * Create and return an AiHandler of the given type for the given player.
    */
-  newHandler (personality, player) {
-    let actions = [new MethodStackFirst(player)]
+  newHandler (personality) {
+    let actions = [new MethodStackFirst()]
 
     let cards = CARD_ORDER.basic
     if (personality in CARD_ORDER) {
       cards = CARD_ORDER[personality]
     }
-    actions.push( new PlayBestCardAction(player, cards) )
+    actions.push( new PlayBestCardAction(cards) )
 
-    let handler = new AiHandler(player, actions)
+    let handler = new AiHandler(actions)
     return handler
   }
 }

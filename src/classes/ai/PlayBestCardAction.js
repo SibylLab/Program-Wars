@@ -23,8 +23,8 @@ export default class PlayBestCardAction extends ActionHandler {
    * @param playOrder A list of cards type in the order that they should be
    * considered for play. Types not in the order will never be played.
    */
-  constructor (player, playOrder) {
-    super(player)
+  constructor (playOrder) {
+    super()
     this.playOrder = this.createOrder(playOrder)
   }
 
@@ -33,7 +33,7 @@ export default class PlayBestCardAction extends ActionHandler {
    * sorting the players hand.
    */
   createOrder (playOrder) {
-    let cardOrder = {}
+    const cardOrder = {}
     for (let i = 0; i < playOrder.length; i++) {
       cardOrder[playOrder[i]] = i
     }
@@ -47,10 +47,10 @@ export default class PlayBestCardAction extends ActionHandler {
    * A mini chain of responsibility for cards that uses internal functions for
    * each card type for now.
    */
-  handle (hand, players, stacks, method, scores) {
-    let cards = this.sortHand(hand)
-    for (let card of cards) {
-      let type = card.type.toLowerCase()
+  handle (player, players, scores) {
+    const cards = this.sortHand(player.hand)
+    for (const card of cards) {
+      const type = card.type.toLowerCase()
 
       // Finding the correct method for this card type
       if (card.type in this.playOrder) {
@@ -60,7 +60,7 @@ export default class PlayBestCardAction extends ActionHandler {
         } else if (card.isAttack()) {
           move = this.playAttack(card, players, scores)
         } else if (type in this) {
-          move = this[type](card, {hand, players, stacks, method, scores})
+          move = this[type](card, {player, players, scores})
         }
         if (move) { return move }
       }
@@ -93,29 +93,31 @@ export default class PlayBestCardAction extends ActionHandler {
    * @param state an object with all the state needed to make a decision
    * @return a move object for starting a new stack with the given card.
    */
-  instruction (card, state) {
-    let move = {
+  instruction (card, {player}) {
+    const move = {
       card: card,
-      player: this.player,
+      cardOwner: player,
+      player: player,
     }
 
-    if (!state.method.isComplete() && card.value <= state.method.toLimit()) {
+    if (!player.method.isComplete() && card.value <= player.method.toLimit()) {
       move.playType = 'playCardOnStack',
-      move.target = state.method
+      move.target = player.method
     } else {
       move.playType = 'startNewStack',
-      move.target = this.player
+      move.target = player
     }
     return move
   }
 
 
-  method (card, state) { // eslint-disable-line no-unused-vars
+  method (card, {player}) {
     return {
       playType: 'startNewStack',
       card: card,
-      player: this.player,
-      target: this.player
+      cardOwner: player,
+      player: player,
+      target: player
     }
   }
 
@@ -127,10 +129,10 @@ export default class PlayBestCardAction extends ActionHandler {
    * @return a move object for adding a repeat to a stack, or undefined if
    * no stack can be played on.
    */
-  repeat (card, state) {
-    // get the player owned stack with the largest score
-    let stack = state.stacks.filter((s) => {
-      return s.playerId === this.player.id && s.willAccept(card)
+  repeat (card, {player}) {
+    // get the stack with the largest score
+    const stack = player.stacks.stacks.filter((s) => {
+      return s.willAccept(card)
     }).sort((a, b) => {
       return b.getScore() - a.getScore()
     }).shift()
@@ -139,7 +141,8 @@ export default class PlayBestCardAction extends ActionHandler {
       return {
         playType: 'playCardOnStack',
         card: card,
-        player: this.player,
+        cardOwner: player,
+        player: player,
         target: stack
       }
     }
@@ -154,17 +157,18 @@ export default class PlayBestCardAction extends ActionHandler {
    * @return a move object for adding a variable to a stack, or undefined if
    * no stack can be played on.
    */
-  variable (card, state) {
-    let stacks = state.stacks.filter((s) => {
-      return s.playerId === this.player.id && s.willAccept(card)
+  variable (card, {player}) {
+    const stacks = player.stacks.stacks.filter((s) => {
+      return s.willAccept(card)
     })
-    let stack = stacks.sort(helpers.varStackCompare).shift()
+    const stack = stacks.sort(helpers.varStackCompare).shift()
 
     if (stack) {
       return {
         playType: 'playCardOnStack',
         card: card,
-        player: this.player,
+        cardOwner: player,
+        player: player,
         target: stack
       }
     }
@@ -180,9 +184,17 @@ export default class PlayBestCardAction extends ActionHandler {
    * @return a move object for hacking a stack, or undefined if
    * no stack can be attacked.
    */
-  virus (card, state) {
-    let stack = state.stacks.filter((s) => {
-      return s.playerId !== this.player.id && s.cards.length > 1
+  virus (card, {player, players}) {
+    const opponents = players.filter(p => p !== player)
+    let stacks = []
+    for (const player of opponents) {
+      if (!player.protectedFrom('VIRUS')) {
+        stacks = stacks.concat(player.stacks.stacks)
+      }
+    }
+
+    const stack = stacks.filter((s) => {
+      return s.cards.length > 1 && !stack.isMethod
     }).sort((a, b) => {
       return b.getScore() - a.getScore()
     }).shift()
@@ -191,7 +203,8 @@ export default class PlayBestCardAction extends ActionHandler {
       return {
         playType: 'playCardOnStack',
         card: card,
-        player: this.player,
+        cardOwner: player,
+        player: player,
         target: stack
       }
     }
@@ -205,13 +218,14 @@ export default class PlayBestCardAction extends ActionHandler {
    * @return a move object for playing a safety, or undefined
    * if the player is already protected.
    */
-  playSafety (card) {
+  playSafety (card, {player}) {
     if (!this.player.helpedBy(card.type)) {
       return {
         playType: 'playSpecialCard',
         card: card,
-        player: this.player,
-        target: this.player
+        cardOwner: player,
+        player: player,
+        target: player
       }
     }
     return undefined
@@ -225,18 +239,20 @@ export default class PlayBestCardAction extends ActionHandler {
    * @return a move object for playing an attack, or undefined
    * no target can be found.
    */
-  playAttack (card, players, scores) {
-    let target = players.filter((p) => {
-      return p.id !== this.player.id && !p.hurtBy(card.type) && !p.isProtectedFrom(card.type)
+  playAttack (card, {player, players, scores}) {
+    const opponents = players.filter(p => p !== player)
+    const target = opponents.filter((p) => {
+      return !p.hurtBy(card.type) && !p.isProtectedFrom(card.type)
     }).sort((a, b) => {
-      return scores[b.id].score - scores[a.id].score
+      return scores[b.id] - scores[a.id]
     }).shift()
 
     if (target) {
       return {
         playType: 'playSpecialCard',
         card: card,
-        player: this.player,
+        cardOwner: player,
+        player: player,
         target: target
       }
     }
