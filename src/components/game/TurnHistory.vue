@@ -86,7 +86,8 @@ export default {
      * Checks to see if a play should have a target player.
      */
     hasTargetPlayer (play) {
-      if (play.card && (play.card.isAttack() || play.card.type === 'VIRUS')) {
+      if (play.type !== 'discardCard' && play.card
+          && (play.card.isAttack() || play.card.type === 'VIRUS')) {
         return true
       }
       return false

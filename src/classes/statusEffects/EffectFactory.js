@@ -11,18 +11,18 @@ const bonuses = {
 }
 
 export default class EffectFactory {
-  newSafetyEffect (type, playerId) {
-    return new StatusEffect(type, playerId)
+  newSafetyEffect (card, playerId) {
+    return new StatusEffect(card, playerId)
   }
 
-  newAttackEffect (type, playerId, attacker) {
+  newAttackEffect (card, playerId, attacker) {
     let effect
-    if (type in bonuses) {
-      effect = new AttackWithBonus(type, playerId, attacker, this.getBonus(type))
-      effect.penalty = this.getPenalty(type)
+    if (card.type in bonuses) {
+      effect = new AttackWithBonus(card, playerId, attacker, this.getBonus(card.type))
+      effect.penalty = this.getPenalty(card.type)
     } else {
-      effect = new CyberAttack(type, playerId, attacker)
-      effect.penalty = this.getPenalty(type)
+      effect = new CyberAttack(card, playerId, attacker)
+      effect.penalty = this.getPenalty(card.type)
     }
     return effect
   }

@@ -11,11 +11,11 @@ export default class StatusEffects {
   }
 
   hasPositive (effectType) {
-    return this.positive.find(e => e.type === effectType)
+    return this.getPositive(effectType) !== undefined
   }
 
   hasNegative (effectType) {
-    return this.negative.find(e => e.type === effectType)
+    return this.getNegative(effectType) !== undefined
   }
 
   hasProtectionFrom (effectType) {
@@ -23,42 +23,49 @@ export default class StatusEffects {
         || (this.isMalware(effectType) && this.hasPositive('ANTIVIRUS'))
   }
 
-  addPositive (effectType) {
-    if (!this.hasPositive(effectType)) {
-      if (effectType === 'ANTIVIRUS') {
-        this.cleanMalware()
-      } else if (effectType === 'FIREWALL') {
-        this.cleanHacks()
+  addPositive (card) {
+    const discard = []
+    if (!this.hasPositive(card.type)) {
+      if (card.type === 'ANTIVIRUS') {
+        this.cleanMalware(discard)
+      } else if (card.type === 'FIREWALL') {
+        this.cleanHacks(discard)
       }
 
-      const effect = this.fact.newSafetyEffect(effectType, this.playerId)
+      const effect = this.fact.newSafetyEffect(card, this.playerId)
       this.positive.push(effect)
     }
+    return discard
   }
 
-  addNegative (effectType, attacker) {
-    if (!this.hasNegative(effectType) && !this.hasProtectionFrom(effectType)) {
+  addNegative (card, attacker) {
+    const discard = []
+    if (!this.hasNegative(card.type) && !this.hasProtectionFrom(card.type)) {
       if (this.hasPositive('SCAN')) {
-        this.removePositive('SCAN')
+        this.removePositive('SCAN', discard)
       } else {
-        const effect = this.fact.newAttackEffect(effectType, this.playerId, attacker)  
+        const effect = this.fact.newAttackEffect(card, this.playerId, attacker)  
         this.negative.push(effect)
       }
     }
+    return discard
   }
 
   removeEffect (effect) {
-    this.positive = this.positive.filter(e => e !== effect)
-    this.negative = this.negative.filter(e => e !== effect)
-    effect.destroy()
+    if (effect.card.isSafety()) {
+      this.positive = this.positive.filter(e => e !== effect)
+    } else {
+      this.negative = this.negative.filter(e => e !== effect)
+    }
+    return effect.destroy()
   }
 
   getPositive (effectType) {
-    return this.positive.find(e => e.type === effectType)
+    return this.positive.find(e => e.card.type === effectType)
   }
 
   getNegative (effectType) {
-    return this.negative.find(e => e.type === effectType)
+    return this.negative.find(e => e.card.type === effectType)
   }
 
   addBonus (type, effectId, amount) {
@@ -72,7 +79,7 @@ export default class StatusEffects {
   getScoreAdjustment () {
     let score = this.bonus.reduce((acc, b) => { return acc + b.amount }, 0)
 
-    const negatives = this.negative.filter(e => e.type !== 'SQL_INJECTION')
+    const negatives = this.negative.filter(e => e.card.type !== 'SQL_INJECTION')
     score -= negatives.reduce((acc, e) => { return acc + e.penalty }, 0)
 
     return score
@@ -80,27 +87,27 @@ export default class StatusEffects {
 
   // Helpers //
 
-  cleanMalware () {
-    this.removeNegative('RANSOM')
-    this.removeNegative('SPYWARE')
+  cleanMalware (discard) {
+    this.removeNegative('RANSOM', discard)
+    this.removeNegative('SPYWARE', discard)
   }
 
-  cleanHacks () {
-    this.removeNegative('STACK_OVERFLOW')
-    this.removeNegative('SQL_INJECTION')
+  cleanHacks (discard) {
+    this.removeNegative('STACK_OVERFLOW', discard)
+    this.removeNegative('SQL_INJECTION', discard)
   }
 
-  removePositive (effectType) {
-    const effect = this.positive.find(e => e.type === effectType)
+  removePositive (effectType, discard) {
+    const effect = this.getPositive(effectType)
     if (effect) {
-      this.removeEffect(effect)
+      discard.push(this.removeEffect(effect))
     }
   }
 
-  removeNegative (effectType) {
-    const effect = this.negative.find(e => e.type === effectType)
+  removeNegative (effectType, discard) {
+    const effect = this.getNegative(effectType)
     if (effect) {
-      this.removeEffect(effect)
+      discard.push(this.removeEffect(effect))
     }
   }
 

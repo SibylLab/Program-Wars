@@ -89,6 +89,7 @@ export default class GameState {
     // this.currentPlayer().update() // needed for other effect types
     this.scores = this.getScores()
     this.checkGameStatus()
+    console.log(this.deck.discard.map(c => c.type))
 
     if (!this.isOver) {
       this.nextPlayer()
@@ -166,7 +167,8 @@ export default class GameState {
     } else {
       this.addCardEffect(playInfo)
     }
-    this.discardCard(playInfo)
+    this.removeCard(playInfo.card, playInfo.cardOwner)
+    this.drawCards(playInfo.cardOwner)
   }
 
   // Special card actions ////////////////////////////////////////////////////
@@ -174,6 +176,7 @@ export default class GameState {
   playScan (playInfo) {
     console.log(playInfo.card.type)
     // set us into scan state to do the scanning and remove a chosen effect
+    this.discardCards([playInfo.card])
   }
 
   playTrojan (playInfo) {
@@ -195,16 +198,20 @@ export default class GameState {
   }
 
   addCardEffect (playInfo) {
+    let discards = []
     if (playInfo.card.isSafety()) {
-      playInfo.target.effects.addPositive(playInfo.card.type)
+      const pos = playInfo.target.effects.addPositive(playInfo.card)
+      discards = discards.concat(pos)
+
       if (playInfo.card.type === 'ANTIVIRUS') {
         playInfo.target.hand.cleanTrojans()
-        const cards = playInfo.target.stacks.cleanViruses()
-        this.discardCards(cards)
+        discards = discards.concat(playInfo.target.stacks.cleanViruses())
       }
     } else {
-      playInfo.target.effects.addNegative(playInfo.card.type, playInfo.player)
+      const neg = playInfo.target.effects.addNegative(playInfo.card, playInfo.player)
+      discards = discards.concat(neg)
     }
+    this.discardCards(discards)
   }
 
   // Scoreing ////////////////////////////////////////////////////////////////
