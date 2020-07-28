@@ -10,6 +10,7 @@
        src="static/miscIcons/trash.png" v-on:click="discard(card)">
 
     <div class="overlay" v-if="showOverlay(card)">
+      <!-- add a v-if to decide to show target or scan overlay -->
       <target-overlay :card="card" :player="player"/>
     </div>
   </div>

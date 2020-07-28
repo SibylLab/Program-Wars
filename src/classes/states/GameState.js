@@ -160,9 +160,7 @@ export default class GameState {
   }
 
   playSpecialCard (playInfo) {
-    if (playInfo.card.type === 'SCAN') {
-      this.playScan(playInfo)
-    } else if (playInfo.card.type === 'TROJAN') {
+    if (playInfo.card.type === 'TROJAN') {
       this.playTrojan(playInfo)
     } else {
       this.addCardEffect(playInfo)
@@ -171,13 +169,20 @@ export default class GameState {
     this.drawCards(playInfo.cardOwner)
   }
 
-  // Special card actions ////////////////////////////////////////////////////
-
   playScan (playInfo) {
-    console.log(playInfo.card.type)
-    // set us into scan state to do the scanning and remove a chosen effect
+    // we are going to get a card for the scan card and a target that must
+    // be dealt with depending on what kind of effect it is. For normal
+    // attacks we can just remove them and discard their card. For viruses
+    // we can do the same, but will have to recognize that it is a stack.
+    // For trojans we need to discard the card from the hand.
+    // We could get these cards by adding some extra methods to stack and
+    // hand to retrieve the card for us. If the method had the same name
+    // we could just call it with some parameter so that we don't have to
+    // switch on type here.
     this.discardCards([playInfo.card])
   }
+
+  // Special card actions ////////////////////////////////////////////////////
 
   playTrojan (playInfo) {
     if (playInfo.target.helpedBy('SCAN')) {
