@@ -94,7 +94,7 @@ export default {
   padding-top: 60px;
   transition: 0.5s;
   right: 0;
-  z-index: 1000;
+  z-index: 500;
 }
 
 .sidenav a {

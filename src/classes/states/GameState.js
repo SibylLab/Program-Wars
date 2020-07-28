@@ -171,16 +171,21 @@ export default class GameState {
   }
 
   playScan (playInfo) {
-    // we are going to get a card for the scan card and a target that must
-    // be dealt with depending on what kind of effect it is. For normal
-    // attacks we can just remove them and discard their card. For viruses
-    // we can do the same, but will have to recognize that it is a stack.
-    // For trojans we need to discard the card from the hand.
-    // We could get these cards by adding some extra methods to stack and
-    // hand to retrieve the card for us. If the method had the same name
-    // we could just call it with some parameter so that we don't have to
-    // switch on type here.
-    this.discardCards([playInfo.card])
+    const discards = [playInfo.card]
+
+    if (playInfo.targetType === 'mimic') {
+      this.removeCard(playInfo.target, playInfo.player)
+      this.drawCards(playInfo.player)
+      discards.push(playInfo.target)
+    } else if (playInfo.targetType === 'stack') {
+      discards.push(playInfo.target.cards.pop())
+    } else if (playInfo.targetType === 'effect') {
+      discards.push(playInfo.player.effects.removeEffect(playInfo.target))
+    }
+
+    this.removeCard(playInfo.card, playInfo.cardOwner)
+    this.drawCards(playInfo.cardOwner)
+    this.discardCards(discards)
   }
 
   // Special card actions ////////////////////////////////////////////////////

@@ -68,7 +68,7 @@ export default {
   padding: 10px;
   text-align: left;
   font-size: 15px;
-  z-index: 2000;
+  z-index: 600;
 }
 
 #info-button {

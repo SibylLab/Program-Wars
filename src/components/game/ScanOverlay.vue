@@ -1,8 +1,7 @@
 <template>
 <div id="scan-overlay">
-  <scan-modal id="scan-modal" class="modal fade" :attacks="getAttacks"
-      tabindex="-1" role="dialog" :cardOwner="player" :card="card"
-      data-backdrop='static' data-keyboard='false'>
+  <scan-modal v-if="activeScan" :attacks="getAttacks"
+      :cardOwner="player" :card="card">
   </scan-modal>
 
   <h5>Scan</h5>
@@ -23,7 +22,8 @@ export default {
   props: ['card', 'player'],
   data () {
     return {
-      pageState: this.$store.state.pageState
+      pageState: this.$store.state.pageState,
+      activeScan: false
     }
   },
   components: {
@@ -39,8 +39,9 @@ export default {
       const attacks = this.getAttacks
       if (attacks.effects.length > 0 || attacks.virusStacks.length > 0
           || attacks.mimics.length > 0) {
-        $('#scan-modal').modal('show')
+        this.activeScan = true
       } else {
+        this.activeScan = false
         this.pageState.takeTurn({
           type: 'playSpecialCard',
           card: this.card, cardOwner: this.player,
