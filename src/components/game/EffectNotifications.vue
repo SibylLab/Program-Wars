@@ -52,7 +52,7 @@ export default {
         return
       }
 
-      if (play.card && play.card.isMimic) {
+      if (play.card.isMimic) {
         this.showing = true
         this.block = false
         this.clean = false
@@ -65,7 +65,7 @@ export default {
         this.rightImage = this.imagePath + replaced.type + '.png'
         setTimeout(() => {this.showing = false}, this.timeout)
 
-      } else if (play.card && (play.card.isAttack() || play.card.type === "VIRUS")) {
+      } else if (play.card.isAttack() || play.card.type === "VIRUS") {
         let target = play.target
         if (play.card.type === "VIRUS") {
           target = this.players.find(p => p.id === play.target.playerId)
