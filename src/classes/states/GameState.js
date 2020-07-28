@@ -61,11 +61,10 @@ export default class GameState {
   // Turn Logic //////////////////////////////////////////////////////////////
 
   takeTurn (playInfo) {
-    if (!this.play(playInfo)) {
-      return
+    if (this.play(playInfo)) {
+      this.addHistory(playInfo)
     }
 
-    this.addHistory(playInfo)
     this.endTurn()
   }
 
@@ -77,7 +76,8 @@ export default class GameState {
       this[playInfo.type](playInfo)
       return true
     }
-    // log an error?
+
+    console.log('play error: Invalid play info:', playInfo)
     return false
   }
 
@@ -89,12 +89,11 @@ export default class GameState {
     // this.currentPlayer().update() // needed for other effect types
     this.scores = this.getScores()
     this.checkGameStatus()
-    console.log(this.deck.discard.map(c => c.type))
 
     if (!this.isOver) {
       this.nextPlayer()
 
-      if (this.currentPlayer().isAi) {
+      if (this.currentPlayer().isAI) {
         this.aiTurn()
       }
     } else {
@@ -114,7 +113,8 @@ export default class GameState {
 
   aiTurn () {
     const player = this.currentPlayer()
-    this.takeTurn({type: 'discardHand', player})
+    const playInfo = player.getPlay(this.players, this.scores)
+    this.takeTurn(playInfo)
   }
 
   // Play types //////////////////////////////////////////////////////////////

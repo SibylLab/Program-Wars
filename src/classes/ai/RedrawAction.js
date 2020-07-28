@@ -12,10 +12,10 @@ export default class RedrawAction extends ActionHandler {
   /**
    * Returns a redraw turn object for an ai player.
    */
-  handle(hand, players, stacks, scores) {  // eslint-disable-line no-unused-vars
+  handle(player) {  // eslint-disable-line no-unused-vars
     return {
-      playType: "discardHand",
-      player: this.player
+      type: "discardHand",
+      player: player
     }
   }
 }

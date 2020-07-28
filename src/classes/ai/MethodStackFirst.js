@@ -20,18 +20,18 @@ export default class MethodStackFirst extends ActionHandler {
    */
   handle(player, players, scores) {  // eslint-disable-line no-unused-vars
     let instructions = player.hand.cards.filter((c) => {
-      return c.type === "INSTRUCTION" && c.value <= player.method.toLimit()
+      return c.type === "INSTRUCTION" && c.value <= player.stacks.method.toLimit()
     })
 
     if (instructions.length > 0) {
       instructions.sort((a,b) => { return b.value - a.value })
       let card = instructions.shift()
       return {
-        playType: 'playCardOnStack',
+        type: 'playOnStack',
         card: card,
         cardOwner: player,
         player: player,
-        target: player.method
+        target: player.stacks.method
       }
     } else {
       return undefined

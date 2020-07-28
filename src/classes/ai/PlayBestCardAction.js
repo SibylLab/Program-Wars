@@ -100,11 +100,12 @@ export default class PlayBestCardAction extends ActionHandler {
       player: player,
     }
 
-    if (!player.method.isComplete() && card.value <= player.method.toLimit()) {
-      move.playType = 'playCardOnStack',
-      move.target = player.method
+    if (!player.stacks.method.isComplete()
+        && card.value <= player.stacks.method.toLimit()) {
+      move.type = 'playOnStack',
+      move.target = player.stacks.method
     } else {
-      move.playType = 'startNewStack',
+      move.type = 'newStack',
       move.target = player
     }
     return move
@@ -113,7 +114,7 @@ export default class PlayBestCardAction extends ActionHandler {
 
   method (card, {player}) {
     return {
-      playType: 'startNewStack',
+      type: 'newStack',
       card: card,
       cardOwner: player,
       player: player,
@@ -139,7 +140,7 @@ export default class PlayBestCardAction extends ActionHandler {
 
     if (stack) {
       return {
-        playType: 'playCardOnStack',
+        type: 'playOnStack',
         card: card,
         cardOwner: player,
         player: player,
@@ -165,7 +166,7 @@ export default class PlayBestCardAction extends ActionHandler {
 
     if (stack) {
       return {
-        playType: 'playCardOnStack',
+        type: 'playOnStack',
         card: card,
         cardOwner: player,
         player: player,
@@ -201,7 +202,7 @@ export default class PlayBestCardAction extends ActionHandler {
 
     if (stack) {
       return {
-        playType: 'playCardOnStack',
+        type: 'playOnStack',
         card: card,
         cardOwner: player,
         player: player,
@@ -219,9 +220,10 @@ export default class PlayBestCardAction extends ActionHandler {
    * if the player is already protected.
    */
   playSafety (card, {player}) {
+    // need to add a play scan now that it is it's own thing
     if (!this.player.helpedBy(card.type)) {
       return {
-        playType: 'playSpecialCard',
+        type: 'playSpecialCard',
         card: card,
         cardOwner: player,
         player: player,
@@ -249,7 +251,7 @@ export default class PlayBestCardAction extends ActionHandler {
 
     if (target) {
       return {
-        playType: 'playSpecialCard',
+        type: 'playSpecialCard',
         card: card,
         cardOwner: player,
         player: player,
