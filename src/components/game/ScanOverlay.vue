@@ -16,6 +16,8 @@
 
 
 <script>
+import ScanModal from '@/components/modals/ScanModal'
+
 export default {
   name: 'scan-overlay',
   props: ['card', 'player'],
@@ -23,6 +25,9 @@ export default {
     return {
       pageState: this.$store.state.pageState
     }
+  },
+  components: {
+    'scan-modal': ScanModal
   },
   computed: {
     getAttacks () {
@@ -37,8 +42,10 @@ export default {
         $('#scan-modal').modal('show')
       } else {
         this.pageState.takeTurn({
-          type: 'playSpecialCard', card: this.card, cardOwner: this.cardOwner,
-          target: this.player, player: this.player
+          type: 'playSpecialCard',
+          card: this.card, cardOwner: this.player,
+          target: this.pageState.currentPlayer(),
+          player: this.pageState.currentPlayer()
         })
       }
     }

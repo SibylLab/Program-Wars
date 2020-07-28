@@ -4,10 +4,6 @@
     <div class="modal-content" style="border-radius: 30px">
 
       <div class="modal-header" style="padding-bottom: 0;">
-        <button type="button" class="close" data-dismiss="modal"
-            aria-label="Close" v-on:click="leaveGame">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
 
       <div class="modal-body" style="padding-top: 0;">
@@ -51,7 +47,7 @@ export default {
         target: target
       })
     },
-    discard () {
+    discardScan () {
       this.pageState.takeTurn({
         type: 'discardCard', card: this.card, cardOwner: this.cardOwner
       })

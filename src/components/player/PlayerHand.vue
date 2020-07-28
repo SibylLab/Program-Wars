@@ -11,7 +11,8 @@
 
     <div class="overlay" v-if="showOverlay(card)">
       <!-- add a v-if to decide to show target or scan overlay -->
-      <target-overlay :card="card" :player="player"/>
+      <scan-overlay v-if="isScan(card)" :card="card" :player="player"/>
+      <target-overlay v-else :card="card" :player="player"/>
     </div>
   </div>
 
@@ -20,6 +21,7 @@
 
 <script>
 import TargetOverlay from '@/components/game/TargetOverlay'
+import ScanOverlay from '@/components/game/ScanOverlay'
 import { bus } from '@/components/shared/Bus'
 
 export default {
@@ -32,9 +34,13 @@ export default {
     }
   },
   components: {
-    'target-overlay': TargetOverlay
+    'target-overlay': TargetOverlay,
+    'scan-overlay': ScanOverlay
   },
   methods: {
+    isScan (card) {
+      return card.type === 'SCAN'
+    },
     canDrag (card) {
       return !card.isSpecial() && this.pageState.canPlayCard(card)
     },

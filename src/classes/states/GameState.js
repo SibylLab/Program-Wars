@@ -142,8 +142,9 @@ export default class GameState {
     const targetPlayer = this.players[playInfo.target.playerId]
     if (playInfo.card.type === 'VIRUS') {
       if (targetPlayer.helpedBy('SCAN')) {
-        targetPlayer.removeEffect('SCAN')   
-        this.discardCards([playInfo.card])
+        const discards = [playInfo.card]
+        targetPlayer.effects.removePositive('SCAN', discards)   
+        this.discardCards(discards)
       } else {
         playInfo.player.stacks.addVirus(
             playInfo.card, playInfo.target, playInfo.cardOwner.id)
