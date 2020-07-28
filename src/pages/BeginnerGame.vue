@@ -1,5 +1,5 @@
 <template>
-<div id="begginer-game">
+<div id="beginner-game">
   <winner-modal id="winner-modal" class="modal fade"
       tabindex="-1" role="dialog"
       data-backdrop='static' data-keyboard='false'>
@@ -39,7 +39,7 @@ import PlayField from '@/components/game/NewPlayField'
 import { bus } from '@/components/shared/Bus'
 
 export default {
-  name: 'begginer-game',
+  name: 'beginner-game',
   data () {
     return {
       pageState: this.$store.state.pageState
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style>
-#begginer-game {
+#beginner-game {
   position: absolute;
   top: 0;
   width: 100%;

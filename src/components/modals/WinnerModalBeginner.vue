@@ -55,7 +55,7 @@ import {mapActions} from 'vuex'
 import { bus } from '@/components/shared/Bus'
 
 export default {
-  name: 'winner-modal-begginer',
+  name: 'winner-modal-beginner',
   data () {
     return {
       pageState: this.$store.state.pageState,

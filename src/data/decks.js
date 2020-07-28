@@ -11,7 +11,7 @@ const standardDeck = {
   "SCAN": {0: 5},
 }
 
-const begginerDeck = {
+const beginnerDeck = {
   "INSTRUCTION": {1: 10, 2: 12, 3: 6},
   "REPEAT": {1: 5, 2: 5, 3: 4, 4: 2},
   "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
@@ -103,7 +103,7 @@ const emptyCards = {
 
 export {
   standardDeck,
-  begginerDeck,
+  beginnerDeck,
   baseCards,
   premadeCards,
   optionalCards,

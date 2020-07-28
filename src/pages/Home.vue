@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'startBegginerGame',
+      'startBeginnerGame',
       'startRequirements',
       'startBasicGame'
     ]),
@@ -51,8 +51,8 @@ export default {
 
       if (this.pageState.mode === 'agile') {
         this.startRequirements({players: this.pageState.players})
-      } else if (this.pageState.mode === 'begginer') {
-        this.startBegginerGame({players: this.pageState.createPlayers()})
+      } else if (this.pageState.mode === 'beginner') {
+        this.startBeginnerGame({players: this.pageState.createPlayers()})
       } else {
         this.startBasicGame({players: this.pageState.players}) // eventually create them?
       }

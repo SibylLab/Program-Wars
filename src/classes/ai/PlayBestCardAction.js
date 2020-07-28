@@ -53,12 +53,12 @@ export default class PlayBestCardAction extends ActionHandler {
       const type = card.type.toLowerCase()
 
       // Finding the correct method for this card type
-      if (card.type in this.playOrder) {
+      if (this.isValidCard(card)) {
         let move
         if (card.isSafety()) {
-          move = this.playSafety(card)
+          move = this.playSafety(card, {player, players, scores})
         } else if (card.isAttack()) {
-          move = this.playAttack(card, players, scores)
+          move = this.playAttack(card, {player, players, scores})
         } else if (type in this) {
           move = this[type](card, {player, players, scores})
         }
@@ -83,6 +83,10 @@ export default class PlayBestCardAction extends ActionHandler {
       }
       return this.playOrder[a.type] - this.playOrder[b.type]
     })
+  }
+
+  isValidCard (card) {
+    return card.type in this.playOrder
   }
 
   /**
@@ -195,7 +199,7 @@ export default class PlayBestCardAction extends ActionHandler {
     }
 
     const stack = stacks.filter((s) => {
-      return s.cards.length > 1 && !stack.isMethod
+      return s.cards.length > 1 && !s.isMethod
     }).sort((a, b) => {
       return b.getScore() - a.getScore()
     }).shift()
@@ -221,7 +225,7 @@ export default class PlayBestCardAction extends ActionHandler {
    */
   playSafety (card, {player}) {
     // need to add a play scan now that it is it's own thing
-    if (!this.player.helpedBy(card.type)) {
+    if (!player.helpedBy(card.type)) {
       return {
         type: 'playSpecialCard',
         card: card,
@@ -244,7 +248,7 @@ export default class PlayBestCardAction extends ActionHandler {
   playAttack (card, {player, players, scores}) {
     const opponents = players.filter(p => p !== player)
     const target = opponents.filter((p) => {
-      return !p.hurtBy(card.type) && !p.isProtectedFrom(card.type)
+      return !p.hurtBy(card.type) && !p.protectedFrom(card.type)
     }).sort((a, b) => {
       return scores[b.id] - scores[a.id]
     }).shift()

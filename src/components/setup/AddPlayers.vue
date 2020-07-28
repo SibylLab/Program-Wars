@@ -2,7 +2,7 @@
 <div id="add-players">
 
   <h5 class="sub-heading">Add Players</h5>
-  <p v-if="pageState.mode === 'begginer'">Add 2 players</p>
+  <p v-if="pageState.mode === 'beginner'">Add 2 players</p>
   <p v-else>Add 2 or 4 players</p>
 
   <input id="enter-name" type="text" :placeholder="inputPlaceholder" maxlength="10"

@@ -1,5 +1,5 @@
 import HomeState from '@/classes/states/HomeState'
-import BegginerGame from '@/classes/states/BegginerGame'
+import BeginnerGame from '@/classes/states/BeginnerGame'
 import RequirementsState from '@/classes/states/RequirementsState'
 import DeckSetupState from '@/classes/states/DeckSetupState'
 import { bus } from '@/components/shared/Bus'
@@ -25,10 +25,10 @@ export default {
     router.push('/')
   },
 
-  startBegginerGame (context, payload) {
-    context.state.gameState = 'begginer'
-    context.state.pageState = new BegginerGame(payload.players)
-    router.push('begginer')
+  startBeginnerGame (context, payload) {
+    context.state.gameState = 'beginner'
+    context.state.pageState = new BeginnerGame(payload.players)
+    router.push('beginner')
   },
 
   startBasicGame (context, payload) {

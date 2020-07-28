@@ -36,10 +36,10 @@ const routes = [
     component: () => import('@/components/agileGame/Game.vue')
   },
   {
-    path: '/begginer',
-    name: 'Begginer Game',
+    path: '/beginner',
+    name: 'Beginner Game',
     canReuse: false,
-    component: () => import('@/pages/BegginerGame.vue')
+    component: () => import('@/pages/BeginnerGame.vue')
   },
   {
     path: '*',

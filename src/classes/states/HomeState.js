@@ -5,7 +5,7 @@ const botInfo = [
   {name: 'n00b_b0t', personality: 'standard'},
   {name: 'L33T_g3Ars', personality: 'aggresive'},
   {name: 'RoboVaC', personality: 'defensive'},
-  {name: 'BlueScr33n', personality: 'basic'}
+  {name: 'BlueScr33n', personality: 'beginner'}
 ]
 
 
@@ -17,7 +17,7 @@ export default class HomeState {
   }
 
   changeMode (newMode) {
-    if (newMode === 'begginer' && this.players.length > 2) {
+    if (newMode === 'beginner' && this.players.length > 2) {
       this.players.splice(2)
     }
     this.mode = newMode
@@ -80,7 +80,7 @@ export default class HomeState {
   }
 
   playerLimit () {
-    if (this.mode === "begginer") {
+    if (this.mode === "beginner") {
       return this.players.length >= 2
     } else {
       return this.players.length >= 4
@@ -99,6 +99,7 @@ export default class HomeState {
     return this.players.map((p) => {
       let player
       if (p.isAI) {
+        if (this.mode === 'beginner') { p.personality = 'beginner' }
         player = new AIPlayer(id, p.name, p.personality)
       } else {
         player = new Player(id, p.name)
