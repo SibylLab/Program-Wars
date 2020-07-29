@@ -91,6 +91,7 @@ export default class GameState {
     // this.currentPlayer().update() // needed for other effect types
     this.scores = this.getScores()
     this.checkGameStatus()
+    this.currentCard = null
 
     if (!this.isOver) {
       this.nextPlayer()
