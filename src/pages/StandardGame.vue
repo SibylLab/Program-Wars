@@ -1,9 +1,6 @@
 <template>
 <div id="standard-game">
-  <winner-modal id="winner-modal" class="modal fade"
-      tabindex="-1" role="dialog"
-      data-backdrop='static' data-keyboard='false'>
-  </winner-modal>
+  <winner-modal id="winner-modal" class="modal fade"/>
 
   <page-header/>
 

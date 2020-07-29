@@ -30,7 +30,7 @@
           <tbody>
             <tr> <th>Final Score</th>
               <td v-for="player in pageState.players" :key="player.id">
-                {{ player.getFinalScore() }}
+                {{ player.getScore() }}
               </td>
             </tr>
           </tbody>
@@ -69,7 +69,7 @@ export default {
     setWinner () {
       this.winner = this.pageState.players[0]
       for (const player of this.pageState.players) {
-        if (player.getFinalScore() > this.winner.getFinalScore()) {
+        if (player.getScore() > this.winner.getScore()) {
           this.winner = player
         }
       }

@@ -5,7 +5,6 @@ export default class AIPlayer extends Player {
   constructor (id, name, type) {
     super(id, name)
     this.isAI = true
-    this.type = type // replace when adding the handler with call to factory
     this.handler = this.getHandler(type)
   }
 

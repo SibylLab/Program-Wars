@@ -1,6 +1,6 @@
-import StatusEffects from '@/classes/player/StatusEffects'
 import Hand from '@/classes/player/Hand'
 import Stacks from '@/classes/player/Stacks'
+import StatusEffects from '@/classes/player/StatusEffects'
 
 export default class Player {
   constructor (id, name) {
@@ -40,9 +40,5 @@ export default class Player {
     let score = this.stacks.getScore(penalties)
     score += this.effects.getScoreAdjustment()
     return score
-  }
-
-  getFinalScore () {
-    return this.getScore()
   }
 }

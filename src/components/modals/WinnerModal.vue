@@ -1,6 +1,7 @@
 <template>
 <div>
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-lg" role="document"
+      data-backdrop='static' data-keyboard='false'>
     <div class="modal-content" style="border-radius: 30px">
 
       <div class="modal-header" style="padding-bottom: 0;">
@@ -27,31 +28,44 @@
           
           <tbody>
             <tr> <th>Instruction Score</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).score }}</td>
+              <td v-for="player in players" :key="player.id">
+                {{ player.getScore() }} </td>
             </tr>
             <tr>
-              <td colspan="5" style="text-align: left;"><h5><b>Side Objectives</b></h5></td>
+              <td colspan="5" style="text-align: left;">
+                <h5><b>Side Objectives</b></h5> </td>
             </tr>
             <tr> <th>Repetition Bonus</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.repeat }}</td>
+              <td v-for="player in players" :key="player.id">
+                {{ bonuses[player.id].repeat }} </td>
             </tr>
             <tr> <th>Variable Bonus</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.variable }}</td>
+              <td v-for="player in players" :key="player.id">
+                {{ bonuses[player.id].variable }} </td>
             </tr>
             <tr> <th>Safety Bonus</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.safety }}</td>
+              <td v-for="player in players" :key="player.id">
+                {{ bonuses[player.id].safety }} </td>
             </tr>
             <tr> <th>Nested Loops</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.complete }}</td>
+              <td v-for="player in players" :key="player.id">
+                {{ bonuses[player.id].nested }} </td>
             </tr>
             <tr> <th>Defensive Programmer</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.defensive }}</td>
+              <td v-for="player in players" :key="player.id">
+                {{ bonuses[player.id].defensive }} </td>
             </tr>
             <tr> <th>Clean System (No Malware)</th>
-              <td v-for="player in players" :key="player.id">{{ playerScore(player.id).bonuses.clean }}</td>
+              <td v-for="player in players" :key="player.id">
+                {{ bonuses[player.id].clean }} </td>
+            </tr>
+            <tr> <th>Full Method</th>
+              <td v-for="player in players" :key="player.id">
+                {{ bonuses[player.id].method }} </td>
             </tr>
             <tr> <th style="font-size: 20px;">Final Score</th>
-              <td v-for="player in players" :key="player.id" style="font-size: 20px;">{{ finalScore(player) }}</td>
+              <td v-for="player in players" :key="player.id" style="font-size: 20px;">
+                {{ player.getScore() + bonuses[player.id].total }} </td>
             </tr>
           </tbody>
         </table>
@@ -72,65 +86,45 @@
 
 <script>
 import {bus} from '@/components/shared/Bus'
-import {mapActions, mapState} from 'vuex'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'winner-modal',
   data () {
     return {
-      scores: undefined,
-      winner: undefined
+      pageState: this.$store.state.pageState,
+      bonuses: []
     }
   },
   computed: {
-    ...mapState([
-      'players',
-      'stacks',
-      'hands'
-    ]),
-    // does not deal with ties
-    getWinner () {
-      let winner = this.players[0]
-      for (let player of this.players) {
-        if (this.finalScore(player) > this.finalScore(winner)) {
-          winner = player
-        }
-      }
-      return winner
+    players () {
+      return this.pageState.players
     }
   },
   methods: {
     ...mapActions([
       'leaveGame'
     ]),
-    playerScore (id) {
-      return this.scores.find(scr => scr.playerId === id)
-    },
-    addBonuses (player) {
-      let scores = this.playerScore(player.id)
-      let stacks = this.stacks.filter(s => s.playerId === player.id)
-      let hand = this.hands.find(h => h.playerId === player.id)
-      scores.bonuses = player.objectives.getBonuses(player, hand, stacks)
-    },
-    finalScore (player) {
-      let score = this.playerScore(player.id)
-      return score.score + score.bonuses.total
-    },
-    setup () {
-      // order matters
-      this.scores = this.$store.getters.getPlayerScores()
-      for (let player of this.players) {
-        this.addBonuses(player)
+    setWinner () {
+      this.setBonuses()
+      this.winner = this.pageState.players[0]
+      for (const player of this.pageState.players) {
+        if (player.getScore() > this.winner.getScore()) {
+          this.winner = player
+        }
       }
-      this.winner = this.getWinner
+    },
+    setBonuses () {
+      this.bonuses = this.pageState.players.map(p => this.pageState.getPlayerBonuses(p))
     }
   },
-  created () {
-    this.setup()
-
-    bus.$on('game-over', () => {
-      this.setup()
-    })
+  created ()  {
+    this.setBonuses()
+    this.setWinner()
+    bus.$on('game-over', this.setWinner)
+  },
+  beforeDestroy () {
+    bus.$off('game-over', this.setWinner)
   }
 }
 </script>
