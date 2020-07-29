@@ -7,14 +7,13 @@
   </button>
 
   <div id="hand-box" v-if="showHand">
-    <h3 style="color: white;">
+    <h3 style="color: white; margin-top: 1.5%;">
       {{ player.name }}'s hand
     </h3>
-    <ul>
-      <li v-for="card in player.hand" v-bind:key="card.id">
-        <img :src="card.image" class="spy-card" ondragstart="return false">
-      </li>
-    </ul>
+    <div id="cards-list">
+      <img v-for="card in player.hand.cards" v-bind:key="card.id"
+          :src="card.image" class="spy-card" ondragstart="return false">
+    </div>
   </div>
 
 </div>
@@ -75,13 +74,18 @@ export default {
   z-index: 200;
 }
 
+#cards-list {
+  margin-top: 3%;
+}
+
 .spy-button {
 }
 
 .spy-card {
   display: inline;
-  width: 90px;
+  width: 15%;
   height: auto;
+  margin: 0 2%;
 }
 
 .acs {
