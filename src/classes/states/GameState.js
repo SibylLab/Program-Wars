@@ -68,7 +68,6 @@ export default class GameState {
       this.addHistory(playInfo)
     }
 
-    console.log(this.deck.discard.map(c => c.type))
     this.endTurn()
   }
 
