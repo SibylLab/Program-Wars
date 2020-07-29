@@ -44,7 +44,7 @@ export default {
     ...mapActions([
       'startBeginnerGame',
       'startRequirements',
-      'startBasicGame'
+      'startStandardGame'
     ]),
     playGame () {
       if (!this.pageState.canStart()) { return }
@@ -54,7 +54,7 @@ export default {
       } else if (this.pageState.mode === 'beginner') {
         this.startBeginnerGame({players: this.pageState.createPlayers()})
       } else {
-        this.startBasicGame({players: this.pageState.players}) // eventually create them?
+        this.startStandardGame({players: this.pageState.createPlayers()})
       }
     }
   }

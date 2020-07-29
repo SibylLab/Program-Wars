@@ -12,10 +12,10 @@ const routes = [
     component: HomePage
   },
   {
-    path: '/game',
-    name: 'Game',
+    path: '/standard',
+    name: 'Standard Game',
     canReuse: false,
-    component: () => import('@/components/game/Game.vue')
+    component: () => import('@/pages/StandardGame.vue')
   },
   {
     path: '/requirements',
