@@ -5,6 +5,7 @@
     <img :src="cardImage(card)" :class="['card', cardShadow(card)]"
       :draggable="canDrag(card)" v-on:dragstart="startDrag($event, card)"
       v-on:mouseover="select(card)">
+    <div v-if="card.isMimic" style="width: 30px; height: 30px; background-color: red;"/>
 
     <input type="image" id="discard-button" title="Discard Card" v-if="isActiveCard(card)"
        src="static/miscIcons/trash.png" v-on:click="discard(card)">

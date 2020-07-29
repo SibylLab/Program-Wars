@@ -1,9 +1,9 @@
 import Card from '@/classes/card/Card'
 
 export default class VirusWrapper extends Card {
-  constructor (playerId, card) {
+  constructor (player, card) {
     super(card.type, card.value)
-    this.playerId = playerId
+    this.player = player
     this.card = card
     this.isWrapper = true
   } 

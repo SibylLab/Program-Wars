@@ -31,7 +31,10 @@ export default class GameState {
     for (const card of cards) {
       if (card.isWrapper && card.card) {
         this.deck.discard.push(card.card)
-      } else {
+        if (card.isMimic) {
+          this.deck.discard.push(card.trojan)
+        }
+      } else if (!card.isExtra) {
         this.deck.discard.push(card)
       }
     }
@@ -65,20 +68,20 @@ export default class GameState {
       this.addHistory(playInfo)
     }
 
+    console.log(this.deck.discard.map(c => c.type))
     this.endTurn()
   }
 
   play (playInfo) {
-    if (playInfo.card && playInfo.card.isMimic) {
-      playInfo.card = playInfo.card.replace()
-      return this.play(playInfo)
+    if (playInfo.card && playInfo.card.isMimic && playInfo.type !== 'discardCard' && playInfo.type !== 'discardHand') {
+      this.playMimic(playInfo)
     } else if (playInfo.type in this) {
       this[playInfo.type](playInfo)
-      return true
+    } else {
+      console.log('play error: Invalid play info:', playInfo)
+      return false
     }
-
-    console.log('play error: Invalid play info:', playInfo)
-    return false
+    return true
   }
 
   addHistory (playInfo) {
@@ -184,15 +187,17 @@ export default class GameState {
     }
 
     this.removeCard(playInfo.card, playInfo.cardOwner)
-    this.drawCards(playInfo.cardOwner)
-    this.discardCards(discards)
+      this.drawCards(playInfo.cardOwner)
+      this.discardCards(discards)
   }
 
   // Special card actions ////////////////////////////////////////////////////
 
   playTrojan (playInfo) {
     if (playInfo.target.helpedBy('SCAN')) {
-      playInfo.target.removeEffect('SCAN')
+      const discards = [playInfo.card]
+      playInfo.target.effects.removePositive('SCAN', discards)
+      this.discardCards(discards)
     } else {
       const hand = playInfo.target.hand
       const TRIES = 10  // Number of times to try finding a card we can replace
@@ -201,10 +206,29 @@ export default class GameState {
         const idx = Math.floor(Math.random() * hand.cards.length)
 
         if (!hand.cards[idx].isMimic) {
-          hand.cards[idx] = new TrojanWrapper(hand.cards[idx], playInfo.player)
+          hand.cards[idx] = new TrojanWrapper(hand.cards[idx], playInfo.card, playInfo.player)
           return
         }
       }
+    }
+  }
+
+  playMimic (playInfo) {
+    this.removeCard(playInfo.card, playInfo.cardOwner)
+    this.discardCards([playInfo.card.trojan])
+    if (playInfo.card.card.type === 'SCAN') {
+      this.discardCards([playInfo.card.card])
+    }
+
+    playInfo.type = 'playMimic'
+    playInfo.player = playInfo.card.player
+    playInfo.card = playInfo.card.replace()
+
+    if (playInfo.card.type === 'VIRUS') {
+      this.playOnStack(playInfo)
+    } else {
+      playInfo.target = playInfo.cardOwner
+      this.playSpecialCard(playInfo)
     }
   }
 

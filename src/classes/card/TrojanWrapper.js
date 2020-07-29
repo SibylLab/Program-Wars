@@ -11,9 +11,10 @@ export default class TrojanWrapper extends Card {
    * @param {Card} card The card the trojan is hiding behind.
    * @param {Player} player The player that played the trojan.
    */
-  constructor (card, player) {
+  constructor (card, trojan, player) {
     super(card.type, card.value)
     this.card = card
+    this.trojan = trojan
     this.player = player
     this.isMimic = true
     this.isWrapper = true

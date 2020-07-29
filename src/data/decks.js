@@ -101,11 +101,27 @@ const emptyCards = {
   "SCAN": {0: 0},
 }
 
+// change and pass at creation to debug certain cards easier
+const debugDeck = {
+  "INSTRUCTION": {1: 0, 2: 0, 3: 0},
+  "METHOD": {0: 0},
+  "REPEAT": {1: 0, 2: 0, 3: 0},
+  "VARIABLE": {4: 0, 5: 0, 6: 0},
+  "VIRUS": {0: 0},
+  "RANSOM": {0: 0},
+  "SPYWARE": {0: 0},
+  "TROJAN": {0: 5},
+  "ANTIVIRUS": {0: 0},
+  "FIREWALL": {0: 0},
+  "SCAN": {0: 10},
+}
+
 export {
   standardDeck,
   beginnerDeck,
   baseCards,
   premadeCards,
   optionalCards,
-  emptyCards
+  emptyCards,
+  debugDeck
 }

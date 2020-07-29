@@ -4,9 +4,9 @@
       :cardOwner="player" :card="card">
   </scan-modal>
 
-  <h5>Scan</h5>
+  <h5>{{ scanText }}</h5>
 
-  <button class="btn btn-sm btn-primary my-btn" v-on:click="playScan()">
+  <button v-if="canScan" class="btn btn-sm btn-primary my-btn" v-on:click="playScan()">
     Activate
   </button>
 
@@ -30,15 +30,24 @@ export default {
     'scan-modal': ScanModal
   },
   computed: {
+    canScan() {
+      return !this.player.helpedBy('SCAN')
+    },
+    scanText () {
+      return this.canScan ? "Scan" : "Scan Active"
+    },
     getAttacks () {
       return this.player.getAllAttacks()
-    }
+    },
+    needToClean () {
+      const attacks = this.getAttacks
+      return attacks.effects.length > 0 || attacks.virusStacks.length > 0
+          || attacks.mimics.length > 0
+    }  
   },
   methods: {
     playScan () {
-      const attacks = this.getAttacks
-      if (attacks.effects.length > 0 || attacks.virusStacks.length > 0
-          || attacks.mimics.length > 0) {
+      if (!this.card.isMimic && this.needToClean) {
         this.activeScan = true
       } else {
         this.activeScan = false
