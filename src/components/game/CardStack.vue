@@ -9,7 +9,7 @@
 
   <ul id="card-list">
     <img v-for="card in stack.cards" v-bind:key="card.id" :src="card.image"
-        :class="[{card: true}, shadow(card)]" :style="{'margin-right': overlap}"
+        :class="['card', shadow(card)]" :style="{'margin-right': overlap}"
         draggable="false">
   </ul>
 
@@ -98,7 +98,8 @@ export default {
      */
     shadow (card) {
       let result = ''
-      if (!this.pageState.currentCard || this.stack.getTop() !== card) {
+      if (!this.pageState.currentCard || this.stack.getTop() !== card
+          || this.pageState.currentPlayer().isAI || this.pageState.wait) {
         return result
       } else if (this.pageState.currentCard.type === 'VIRUS') {
           let targetPlayer = this.pageState.players[this.stack.playerId]

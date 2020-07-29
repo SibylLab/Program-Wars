@@ -41,4 +41,7 @@ export default class Player {
     score += this.effects.getScoreAdjustment()
     return score
   }
+
+  update () {
+  }
 }

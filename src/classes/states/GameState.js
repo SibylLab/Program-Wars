@@ -8,6 +8,7 @@ export default class GameState {
     this.turnHistory = []
     this.scores = this.getScores()
     this.isOver = false
+    this.wait = false
     this.initGame()
   }
 
@@ -64,6 +65,8 @@ export default class GameState {
   // Turn Logic //////////////////////////////////////////////////////////////
 
   takeTurn (playInfo) {
+    if (this.wait) { return }
+
     if (this.play(playInfo)) {
       this.addHistory(playInfo)
     }
@@ -72,6 +75,7 @@ export default class GameState {
   }
 
   play (playInfo) {
+    // this first if statement is unpleasant
     if (playInfo.card && playInfo.card.isMimic && playInfo.type !== 'discardCard' && playInfo.type !== 'discardHand') {
       this.playMimic(playInfo)
     } else if (playInfo.type in this) {
@@ -88,21 +92,25 @@ export default class GameState {
   }
 
   endTurn () {
-    // this.currentPlayer().update() // needed for other effect types
+    this.currentPlayer().update() // needed for other effect types
     this.scores = this.getScores()
     this.checkGameStatus()
     this.currentCard = null
+    this.wait = true
     bus.$emit('end-turn')
 
+    setTimeout(() => {
     if (!this.isOver) {
       this.nextPlayer()
+      this.wait = false
 
       if (this.currentPlayer().isAI) {
-        this.aiTurn()
+        setTimeout(() => { this.aiTurn() }, 500)
       }
     } else {
       this.endGame()
     }
+    }, 1250)
   }
 
   checkGameStatus () {
@@ -188,8 +196,8 @@ export default class GameState {
     }
 
     this.removeCard(playInfo.card, playInfo.cardOwner)
-      this.drawCards(playInfo.cardOwner)
-      this.discardCards(discards)
+    this.drawCards(playInfo.cardOwner)
+    this.discardCards(discards)
   }
 
   // Special card actions ////////////////////////////////////////////////////
