@@ -19,12 +19,33 @@ export default class Stacks {
     }
     stack.cards.push(baseCard)
     // consider where we put it?
-    this.stacks.push(stack)
+    this.addStack(stack)
+  }
+
+  addStack (stack) {
+    const baseType = stack.getBase().type
+
+    const completeStack = this.stacks.find(s => s.isComplete())
+    const singleInstruction = this.stacks.find((s) => {
+      return s.cards.length === 1 && s.getBase().type === 'INSTRUCTION'
+    })
+
+    let idx = this.stacks.length
+    if (baseType === 'METHOD' && singleInstruction) {
+      idx = this.stacks.indexOf(singleInstruction)
+    } else if (completeStack) {
+      idx = this.stacks.indexOf(completeStack)
+    }
+
+    this.stacks.splice(idx, 0, stack)
   }
 
   addCard (card, stack) {
-    // move complete stacks to the back?
     stack.cards.push(card)
+    if (stack.isComplete() && stack !== this.method) {
+      this.stacks = this.stacks.filter(s => s !== stack)
+      this.stacks.push(stack)
+    }
   }
 
   addVirus (card, stack, attackerId) {
@@ -39,7 +60,6 @@ export default class Stacks {
   } 
 
   cleanViruses () {
-    // The virus card contained in the Virus needs to be returned for discard
     const viruses = []
     for (const stack of this.stacks) {
       if (stack.getTop().type === 'VIRUS') {
