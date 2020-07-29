@@ -92,6 +92,7 @@ export default class GameState {
     this.scores = this.getScores()
     this.checkGameStatus()
     this.currentCard = null
+    bus.$emit('end-turn')
 
     if (!this.isOver) {
       this.nextPlayer()

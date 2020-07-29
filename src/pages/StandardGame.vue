@@ -9,7 +9,7 @@
   </div>
 
   <div class="play-field" style="left: 1%">
-    <play-field :player="pageState.players[0]"/>
+    <stacks-area :player="pageState.players[0]" tabSide="right"/>
   </div>
 
   <div class="turn-area">
@@ -21,7 +21,7 @@
   </div>
 
   <div class="play-field" style="right: 1%;">
-    <play-field :player="pageState.players[1]"/>
+    <stacks-area :player="pageState.players[1]" tabSide="left"/>
   </div>
 
 </div>
@@ -32,7 +32,7 @@ import WinnerModal from '@/components/modals/WinnerModal'
 import PageHeader from '@/components/shared/PageHeader'
 import PlayerArea from '@/components/player/PlayerArea'
 import TurnArea from '@/components/game/NewTurnArea'
-import PlayField from '@/components/game/NewPlayField'
+import StacksArea from '@/components/game/StacksArea'
 import { bus } from '@/components/shared/Bus'
 
 export default {
@@ -47,7 +47,7 @@ export default {
     'page-header': PageHeader,
     'player-area': PlayerArea,
     'turn-area': TurnArea,
-    'play-field': PlayField
+    'stacks-area': StacksArea
   },
   methods: {
     showWinner () {

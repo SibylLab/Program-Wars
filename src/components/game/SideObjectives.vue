@@ -13,20 +13,7 @@
   </ul>
 
   <div id="info-button">
-    <info-popup>
-      <h3 style="margin: 0">Side Objectives</h3>
-      <p>This area tracks a player's progress toward side objectives that will award
-         bonus points at the end of the game. The bonus points do not contribute to
-         the players progress toward the score limit.</p>
-      <p>Each objective is written in the form of an <b>if</b> statement. The text
-         inside the round brackets represents the condition that must be met for the
-         objective. The portion in the curly brackets is the reward if the condition
-         is met. When a condition is met the reward will appear green and the total
-         at the top of the window will be increased</p>
-      <p>Some objectives are applied for each card of that type that is played. Other
-         objectives track the state of the player and update when a player gains or
-         loses an effect.</p>
-    </info-popup>
+    <side-objectives-info/>
   </div>
 
 </div>
@@ -34,9 +21,8 @@
 
 
 <script>
-import InfoPopup from '@/components/shared/InfoPopup'
+import SideObjectivesInfo from '@/components/info/SideObjectivesInfo.vue'
 import {bus} from '@/components/shared/Bus'
-import {mapState} from 'vuex'
 
 /**
  * Displays available side objectives and a players progress by higlighting
@@ -47,17 +33,14 @@ export default {
   props: ['player'],
   data () {
     return {
-      bonuses: undefined
+      pageState: this.$store.state.pageState,
+      bonuses: null
     }
   },
   components: {
-   'info-popup': InfoPopup
+   'side-objectives-info': SideObjectivesInfo
   },
   computed: {
-    ...mapState([
-      'stacks',
-      'hands'
-    ]),
     /**
      * Returns a list of all the condition data.
      * Each item text for in the if statement, text for in the body,
@@ -71,31 +54,28 @@ export default {
                   val: this.bonuses.variable})
       conds.push({if: "safety_card_played",  reward: "+3 pts/card",
                   val: this.bonuses.safety})
-      conds.push({if: "defensive_bonus", reward: "Antivirus +10 || Firewall +5",
+      conds.push({if: "nested_loop_made", reward: "+5 pts/stack",
+                  val: this.bonuses.nested})
+      conds.push({if: "antivirus && firewall", reward: "+10 pts",
                   val: this.bonuses.defensive})
-      conds.push({if: "no_malware", reward: "+10 pts",
+      conds.push({if: "no_malware && no_hacks", reward: "+10 pts",
                   val: this.bonuses.clean})
-      conds.push({if: "nested_loops", reward: "+5 pts/per nested loop",
-                  val: this.bonuses.complete})
+      conds.push({if: "complete_method", reward: "+10 pts",
+                  val: this.bonuses.method})
       return conds
     }
   },
   methods: {
-    /**
-     * Get an object with all the player's bonus scores.
-     */
-    getBonuses () {
-      let stacks = this.stacks.filter(s => s.playerId === this.player.id)
-      let hand = this.hands.find(h => h.playerId === this.player.id)
-      return this.player.objectives.getBonuses(this.player, hand, stacks)
+    setBonuses () {
+      this.bonuses = this.pageState.getPlayerBonuses(this.player)
     }
   },
   created () {
-    this.bonuses = this.getBonuses()
-
-    bus.$on('end-turn', () => {
-      this.bonuses = this.getBonuses()
-    })
+    this.setBonuses()
+    bus.$on('end-turn', this.setBonuses)
+  },
+  beforeDestroy () {
+    bus.$off('end-turn', this.setBonuses)
   }
 }
 </script>
@@ -128,6 +108,8 @@ export default {
 }
 
 ul {
+  list-style: none;
+  padding: 10px 0 0 10px;
   font-size: 18px;
 }
 

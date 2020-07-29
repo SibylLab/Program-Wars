@@ -38,13 +38,20 @@ export default class StandardGameState extends GameState {
     const repeat = plays.filter(p => p.card.type === 'REPEAT').length * REPEAT_BONUS
     const variable = plays.filter(p => p.card.type === 'VARIABLE').length * VAR_BONUS
     const safety = plays.filter(p => p.card.isSafety()).length * SAFETY_BONUS
-    const clean = player.effects.negative.length === 0 ? CLEAN_BONUS : 0
     const method = player.stacks.method.isComplete() ? METHOD_BONUS : 0
+    const clean = this.getCleanBonus(player)
     const defensive = this.getDefensiveBonus(player)
     const nested = this.getNestedBonus(player)
     
     const total = repeat + variable + safety + defensive + clean + nested + method
     return {total, repeat, variable, safety, defensive, clean, nested, method}
+  }
+
+  getCleanBonus (player) {
+    const noNegativeEffects = player.effects.negative.length === 0
+    const noViruses = player.stacks.getStacksWithVirus().length === 0
+    const noMimics = player.hand.getMimics().length === 0
+    return noNegativeEffects && noViruses && noMimics ? CLEAN_BONUS : 0
   }
 
   getDefensiveBonus (player) {

@@ -18,7 +18,6 @@ export default class Stacks {
       stack = new Stack(this.playerId)
     }
     stack.cards.push(baseCard)
-    // consider where we put it?
     this.addStack(stack)
   }
 

@@ -7,7 +7,8 @@ const standardDeck = {
   "RANSOM": {0: 3},
   "TROJAN": {0: 3},
   "SPYWARE": {0: 3},
-  "ANTIVIRUS": {0: 1},
+  "ANTIVIRUS": {0: 2},
+  "FIREWALL": {0: 2},
   "SCAN": {0: 5},
 }
 

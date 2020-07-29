@@ -1,5 +1,6 @@
 <template>
-<div id="stacks-area" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+<div id="play-field" :class="{ play: showShadow }"
+    @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
 
   <div id="main-fucntion">
     <h3 id="main-func">{{ player.name }}_main:</h3>
@@ -7,11 +8,11 @@
 
   <ul id="stack-list">
     <div id="method">
-      <card-stack :stack="player.stacks.method"></card-stack>
+      <card-stack :stack="player.stacks.method"/>
     </div>
 
     <li class="card-stack" v-for="stack in player.stacks.stacks" v-bind:key="stack.id">
-      <card-stack :stack="stack"></card-stack>
+      <card-stack :stack="stack"/>
     </li>
   </ul>
 
@@ -44,6 +45,12 @@ export default {
    'card-stack': CardStack,
    'play-field-info': PlayFieldInfo
   },
+  computed: {
+    showShadow () {
+      return this.pageState.currentPlayer() === this.player
+          && this.$store.state.gameState === 'beginner'
+    }
+  },
   methods: {
     /**
      * Handles events when a card is dropped in the playing feild.
@@ -70,7 +77,7 @@ export default {
 
 
 <style scoped>
-#stacks-area {
+#play-field {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -107,6 +114,12 @@ export default {
   position: relative;
   display: inline-block;
   margin-left: 5px;
+}
+
+.play {
+  -webkit-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
+  -moz-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
+  box-shadow: 0 0 24px 10px rgba(0,255,0,1);
 }
 
 h3 {
