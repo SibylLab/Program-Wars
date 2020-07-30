@@ -24,6 +24,8 @@
     <stacks-area :player="pageState.players[1]" tabSide="left"/>
   </div>
 
+  <effect-notifications/>
+
 </div>
 </template>
 
@@ -33,6 +35,7 @@ import PageHeader from '@/components/shared/PageHeader'
 import PlayerArea from '@/components/player/PlayerArea'
 import TurnArea from '@/components/game/NewTurnArea'
 import StacksArea from '@/components/game/StacksArea'
+import NewEffectNotifications from '@/components/game/NewEffectNotifications'
 import { bus } from '@/components/shared/Bus'
 
 export default {
@@ -47,6 +50,7 @@ export default {
     'page-header': PageHeader,
     'player-area': PlayerArea,
     'turn-area': TurnArea,
+    'effect-notifications': NewEffectNotifications,
     'stacks-area': StacksArea
   },
   methods: {

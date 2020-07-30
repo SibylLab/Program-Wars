@@ -161,6 +161,7 @@ export default class GameState {
         const discards = [playInfo.card]
         targetPlayer.effects.removePositive('SCAN', discards)   
         this.discardCards(discards)
+        bus.$emit('scan-used', 'VIRUS')
       } else {
         playInfo.player.stacks.addVirus(
             playInfo.card, playInfo.target, playInfo.cardOwner.id)
@@ -193,10 +194,13 @@ export default class GameState {
       this.removeCard(playInfo.target, playInfo.player)
       this.drawCards(playInfo.player)
       discards.push(playInfo.target)
+      bus.$emit('scan-used', 'TROJAN')
     } else if (playInfo.targetType === 'stack') {
       discards.push(playInfo.target.cards.pop())
+      bus.$emit('scan-used', 'VIRUS')
     } else if (playInfo.targetType === 'effect') {
       discards.push(playInfo.player.effects.removeEffect(playInfo.target))
+      bus.$emit('scan-used', playInfo.target.card.type)
     }
 
     this.removeCard(playInfo.card, playInfo.cardOwner)
@@ -211,6 +215,7 @@ export default class GameState {
       const discards = [playInfo.card]
       playInfo.target.effects.removePositive('SCAN', discards)
       this.discardCards(discards)
+      bus.$emit('scan-used', 'TROJAN')
     } else {
       const hand = playInfo.target.hand
       const TRIES = 10  // Number of times to try finding a card we can replace
@@ -243,6 +248,8 @@ export default class GameState {
       playInfo.target = playInfo.cardOwner
       this.playSpecialCard(playInfo)
     }
+
+    bus.$emit('mimic-played', playInfo)
   }
 
   addCardEffect (playInfo) {
@@ -256,6 +263,9 @@ export default class GameState {
         discards = discards.concat(playInfo.target.stacks.cleanViruses())
       }
     } else {
+      if (playInfo.target.helpedBy('SCAN')) {
+        bus.$emit('scan-used', playInfo.card.type)
+      }
       const neg = playInfo.target.effects.addNegative(playInfo.card, playInfo.player)
       discards = discards.concat(neg)
     }
