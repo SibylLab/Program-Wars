@@ -6,6 +6,12 @@
 // Function to create a unique object id
 const uuidV1 = require('uuid/v1')
 
+// attack card types (no virus, only cards that create effects)
+const ATTACKS = [
+  "RANSOM", "SPYWARE", "TROJAN", "STACK_OVERFLOW", "STACK_UNDERFLOW",
+  "DDOS", "SQL_INJECTION"
+]
+
 /**
  * A Playing card.
  */
@@ -30,9 +36,7 @@ export default class Card {
    * not placed.
    */
   isAttack () {
-    return this.type === "RANSOM" || this.type === "SPYWARE"
-           || this.type === "TROJAN" || this.type === "STACK_OVERFLOW"
-           || this.type === "SQL_INJECTION"
+    return ATTACKS.find(a => a === this.type) !== undefined
   }
 
   /**

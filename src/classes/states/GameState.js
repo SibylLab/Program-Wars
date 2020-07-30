@@ -28,7 +28,6 @@ export default class GameState {
   }
 
   discardCards (cards) {
-    // need to consider virus and trojan wrappers
     for (const card of cards) {
       if (card.isWrapper && card.card) {
         this.deck.discard.push(card.card)
@@ -42,8 +41,10 @@ export default class GameState {
   }
 
   drawCards (player) {
-    for (let i = player.hand.numCards(); i < player.hand.maxCards; i++) {
-      player.hand.addCard(this.deck.draw())
+    if (!player.hurtBy('DDOS')) {
+      for (let i = player.hand.numCards(); i < player.hand.maxCards; i++) {
+        player.hand.addCard(this.deck.draw())
+      }
     }
   }
 
@@ -56,7 +57,7 @@ export default class GameState {
 
   canPlayCard (card) {
     if (card.isSpecial()) {
-      return true
+      return !this.currentPlayer().hurtBy('STACK_UNDERFLOW')
     } else {
       return !this.currentPlayer().hurtBy('STACK_OVERFLOW')
     }
@@ -134,6 +135,7 @@ export default class GameState {
   }
 
   // Play types //////////////////////////////////////////////////////////////
+  pass () {}
 
   discardHand (playInfo) {
     const cards = playInfo.player.hand.cards

@@ -111,7 +111,9 @@ export default class StatusEffects {
 
   cleanHacks (discard) {
     this.removeNegative('STACK_OVERFLOW', discard)
+    this.removeNegative('STACK_UNDERFLOW', discard)
     this.removeNegative('SQL_INJECTION', discard)
+    this.removeNegative('DDOS', discard)
   }
 
   removePositive (effectType, discard) {
@@ -130,6 +132,7 @@ export default class StatusEffects {
 
   isHack (effectType) {
     return effectType === 'STACK_OVERFLOW' || effectType === 'SQL_INJECTION'
+        || effectType === 'STACK_UNDERFLOW' || effectType === 'DDOS'
   }
 
   isMalware (effectType) {

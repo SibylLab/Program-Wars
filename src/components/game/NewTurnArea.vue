@@ -4,7 +4,7 @@
     <button class="btn btn-sm btn-danger" v-on:click="redraw"
         style="border-radius: 40px; margin-top: 1%;"
         title="Discard your hand and draw 5 new cards">
-      REDRAW
+      {{ redrawText }}
     </button>
   </slot>
 
@@ -53,11 +53,24 @@ export default {
     'turn-history': TurnHistory,
     'player-hand': playerHand
   },
+  computed: {
+    player () {
+      return this.pageState.currentPlayer()
+    }, 
+    redrawText () {
+      if (this.pageState.currentPlayer().hurtBy('DDOS')) {
+        return 'PASS'
+      }
+      return 'REDRAW'
+    }
+  },
   methods: {
     redraw () {
-      if (!this.pageState.currentPlayer().isAI) {
-        const player = this.pageState.currentPlayer()
-        this.pageState.takeTurn({type: "discardHand", player: player})
+      if (!this.player.isAI) {
+        if (this.player.hurtBy('DDOS')) {
+          this.pageState.takeTurn({type: 'pass', player: this.player})
+        }
+        this.pageState.takeTurn({type: 'discardHand', player: this.player})
       }
     }
   },

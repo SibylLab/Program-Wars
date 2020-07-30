@@ -55,6 +55,7 @@ export default {
     },
     showOverlay (card) {
       return this.isActiveCard(card) && card.isSpecial()
+          && this.pageState.canPlayCard(card)
     },
     cardImage (card) {
       if (this.pageState.currentPlayer().isAI) {
