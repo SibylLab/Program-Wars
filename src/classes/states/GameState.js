@@ -100,23 +100,24 @@ export default class GameState {
     bus.$emit('end-turn')
 
     setTimeout(() => {
-    if (!this.isOver) {
-      this.nextPlayer()
-      this.wait = false
+      if (this.isOver && this.playerNum === this.players.length - 1) {
+        this.endGame()
+      } else {
+        this.nextPlayer()
+        this.wait = false
 
-      if (this.currentPlayer().isAI) {
-        setTimeout(() => { this.aiTurn() }, 500)
+        if (this.currentPlayer().isAI) {
+          setTimeout(() => { this.aiTurn() }, 500)
+        }
       }
-    } else {
-      this.endGame()
-    }
     }, 1250)
   }
 
   checkGameStatus () {
-    this.isOver = this.scores.reduce((acc, score) => {
+    const reachedLimit = this.scores.reduce((acc, score) => {
       return acc || score >= this.scoreLimit
     }, false)
+    this.isOver = this.isOver || reachedLimit
   }
 
   endGame () {
