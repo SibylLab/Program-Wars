@@ -265,4 +265,13 @@ export default class GameState {
       return p.getScore()
     })
   }
+
+  getWinners () {
+    return this.highestScoreingPlayers(this.players)
+  }
+
+  highestScoreingPlayers (players) {
+    let winningScore = Math.max(...players.map(p => p.getScore()))
+    return players.filter(p => p.getScore() === winningScore)
+  }
 }

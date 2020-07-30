@@ -14,7 +14,7 @@
       <div class="modal-body" style="padding-top: 0;">
         <h3 class="modal-title"><b>Game Over</b></h3>
         <div style="border: 6px ridge grey; padding: 5px; border-radius: 5px; background-color: royalblue;">
-          <h5 style="color: white; font-size: 30px">{{ winner.name }} Wins!!!</h5>
+          <h5 style="color: white; font-size: 30px">{{ winnerText }}</h5>
         </div>
       </div>
 
@@ -93,12 +93,20 @@ export default {
   data () {
     return {
       pageState: this.$store.state.pageState,
-      bonuses: []
+      bonuses: [],
+      winners: []
     }
   },
   computed: {
     players () {
       return this.pageState.players
+    },
+    winnerText () {
+      if (this.winners.length === 1) {
+        return this.winners[0].name + ' Wins!!!'
+      } else {
+        return this.winners.map(w => w.name).join(' and ') + ' Tied!'
+      }
     }
   },
   methods: {
@@ -107,15 +115,10 @@ export default {
     ]),
     setWinner () {
       this.setBonuses()
-      this.winner = this.pageState.players[0]
-      for (const player of this.pageState.players) {
-        if (player.getScore() > this.winner.getScore()) {
-          this.winner = player
-        }
-      }
+      this.winners = this.pageState.getWinners()
     },
     setBonuses () {
-      this.bonuses = this.pageState.players.map(p => this.pageState.getPlayerBonuses(p))
+      this.bonuses = this.pageState.getBonuses()
     }
   },
   created ()  {

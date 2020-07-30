@@ -13,7 +13,7 @@
       <div class="modal-body" style="padding-top: 0;">
         <h3 class="modal-title"><b>Game Over</b></h3>
         <div style="border: 6px ridge grey; padding: 5px; border-radius: 5px; background-color: royalblue;">
-          <h5 style="color: white; font-size: 30px">{{ winner.name }} Wins!!!</h5>
+          <h5 style="color: white; font-size: 30px">{{ winnerText }}</h5>
         </div>
       </div>
 
@@ -59,28 +59,32 @@ export default {
   data () {
     return {
       pageState: this.$store.state.pageState,
-      winner: undefined
+      winners: []
+    }
+  },
+  computed: {
+    winnerText () {
+      if (this.winners.length === 1) {
+        return this.winners[0].name + ' Wins!!!'
+      } else {
+        return this.winners.map(w => w.name).join(' and ') + ' Tied!'
+      }
     }
   },
   methods: {
     ...mapActions([
       'leaveGame'
     ]),
-    setWinner () {
-      this.winner = this.pageState.players[0]
-      for (const player of this.pageState.players) {
-        if (player.getScore() > this.winner.getScore()) {
-          this.winner = player
-        }
-      }
+    setWinners () {
+      this.winners = this.pageState.getWinners()
     }
   },
   created () {
-    this.setWinner()
-    bus.$on('game-over', this.setWinner)
+    this.setWinners()
+    bus.$on('game-over', this.setWinners)
   },
   beforeDestroy () {
-    bus.$off('game-over', this.setWinner)
+    bus.$off('game-over', this.setWinners)
   }
 }
 </script>

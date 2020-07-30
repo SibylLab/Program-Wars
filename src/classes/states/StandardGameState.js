@@ -11,13 +11,18 @@ const CLEAN_BONUS = 10
 const NESTED_BONUS = 5
 const METHOD_BONUS = 10
 
+// bonus types to use for tie breaking
+const TIE_BREAK_TYPES = [
+  "total", "method", "nested", "defensive", "clean", "safety", "variable", "repeat"
+]
+
 export default class StandardGameState extends GameState {
   constructor (players) {
     super(players)
   }
 
   initGame () {
-    this.scoreLimit = 150
+    this.scoreLimit = 10
     this.deck = new Deck(standardDeck)
     this.givePlayerHands()
     this.currentCard = undefined
@@ -66,6 +71,31 @@ export default class StandardGameState extends GameState {
     return player.stacks.stacks.reduce((acc, stack) => {
       return acc + (stack.isComplete() ? NESTED_BONUS : 0)
     }, 0)
+  }
+
+  getBonuses () {
+    return this.players.map(p => this.getPlayerBonuses(p))
+  }
+
+  getWinners () {
+    // get winners using bonus totals
+    const bonuses = this.getBonuses()
+    const highest = Math.max(...this.players.map(p => p.getScore() + bonuses[p.id].total))
+    let winners = this.players.filter(p => p.getScore() + bonuses[p.id].total === highest)
+
+    // To break ties filter out players who had the highest normal score first
+    winners = this.highestScoreingPlayers(winners)
+
+    // Otherwise filter out players with highest bonus score of each type
+    for (const type of TIE_BREAK_TYPES) {
+      winners = this.tieBreak(winners, bonuses, type)
+    }
+    return winners
+  }
+
+  tieBreak (players, bonuses, bonusType) {
+    const highest = Math.max(...players.map(p => bonuses[p.id][bonusType]))
+    return players.filter(p => bonuses[p.id][bonusType] === highest)
   }
 }
 
