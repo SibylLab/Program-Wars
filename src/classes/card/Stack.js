@@ -20,12 +20,12 @@ export default class Stack {
    * Calculates the stack's score.
    * @return {int} the stack's total score.
    */
-  getScore (penalties = {method: 0, stack: 0, base: 0}) {
+  getScore (adjustments = {}) {
     if (this.isEmpty()) {
       return 0
     }
 
-    let score = this.getBaseValue(penalties)
+    let score = this.getBaseValue(adjustments)
     for (let i = 1; i < this.cards.length; i++) {
       if (this.cards[i].type === "VIRUS") {
         score *= this.getBase().type === "METHOD" ? 0.5 : 0
@@ -33,7 +33,7 @@ export default class Stack {
         score *= this.cards[i].value
       }
     }
-    return Math.floor(score) - penalties.stack
+    return Math.floor(score)
   }
 
   /**
@@ -44,8 +44,8 @@ export default class Stack {
     return this.cards[0]
   }
 
-  getBaseValue (penalties) {
-    return this.getBase().value - penalties.base
+  getBaseValue (adjustments) { // eslint-disable-line no-unused-vars
+    return this.getBase().value
   }
 
   /**

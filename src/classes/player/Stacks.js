@@ -52,9 +52,9 @@ export default class Stacks {
     stack.cards.push(virus)
   }
 
-  getScore (penalties) {
+  getScore (adjustments) {
     return this.stacks.reduce((acc, stack) => {
-      return acc += stack.getScore(penalties)
+      return acc += stack.getScore(adjustments)
     }, 0)
   } 
 

@@ -41,6 +41,10 @@ export default {
     player () {
       return this.pageState.players[this.stack.playerId]
     },
+    hurtBySql () {
+      return (this.stack.isMethod || this.stack.getBase().type === 'METHOD')
+          && this.player.hurtBy('SQL_INJECTION')
+    },
     /**
      * Determines the score color based on whether the stacks owner is under
      * an effect that changes how much of the stack score is added to the
@@ -48,9 +52,7 @@ export default {
      */
     scoreColor () {
       const top = this.stack.getTop()
-      if ((top && top.type  === 'VIRUS') ||
-          ((this.stack.isMethod || this.stack.getBase().type === 'METHOD')
-          && this.player.hurtBy('SQL_INJECTION'))) {
+      if ((top && top.type  === 'VIRUS') || this.hurtBySql) {
         return 'score-red'
       } else if (this.stack.isComplete()) {
         return 'score-green'
@@ -69,16 +71,7 @@ export default {
       }
     },
     getScore () {
-      const penalties = { method: 0, base: 0, stack: 0 }
-      if (this.player.hurtBy('SQL_INJECTION')) {
-        const sql = this.player.effects.getNegative('SQL_INJECTION')
-        if (this.stack.isMethod) {
-          penalties.stack = sql.penalty
-        } else {
-          penalties.method = sql.penalty
-        }
-      }
-      return this.stack.getScore(penalties)
+      return this.stack.getScore(this.player.getStackAdjustments())
     }
   },
   methods: {
