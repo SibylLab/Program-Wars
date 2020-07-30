@@ -13,14 +13,14 @@ import MethodStackFirst from '@/classes/ai/MethodStackFirst'
 const CARD_ORDER = {
   standard: [
     "METHOD", "VARIABLE", "REPEAT", "INSTRUCTION", "ANTIVIRUS", "FIREWALL",
-    "OVERCLOCK", "RANSOM", "TROJAN", "VIRUS"
+    "SCAN", "RANSOM", "TROJAN", "VIRUS"
   ],
   aggresive: [
     "VIRUS", "RANSOM", "TROJAN", "VARIABLE", "REPEAT", "INSTRUCTION", "METHOD",
-    "FIREWALL", "ANTIVIRUS", "OVERCLOCK"
+    "FIREWALL", "ANTIVIRUS", "SCAN"
   ],
   defensive: [
-    "FIREWALL", "ANTIVIRUS", "OVERCLOCK", "METHOD", "VARIABLE", "REPEAT",
+    "FIREWALL", "ANTIVIRUS", "SCAN", "METHOD", "VARIABLE", "REPEAT",
     "INSTRUCTION", "TROJAN", "VIRUS", "RANSOM"
   ]
 }

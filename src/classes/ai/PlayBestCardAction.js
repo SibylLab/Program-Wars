@@ -224,8 +224,15 @@ export default class PlayBestCardAction extends ActionHandler {
    * if the player is already protected.
    */
   playSafety (card, {player}) {
-    // need to add a play scan now that it is it's own thing
     if (!player.helpedBy(card.type)) {
+      if (card.type === 'SCAN') {
+        const attacks = player.getAllAttacks()
+        if (attacks.effects.length > 0 || attacks.virusStacks.length > 0
+            || attacks.mimics.length > 0) {
+          return this.playScan(card, attacks, player)
+        }
+      }
+
       return {
         type: 'playSpecialCard',
         card: card,
@@ -234,7 +241,31 @@ export default class PlayBestCardAction extends ActionHandler {
         target: player
       }
     }
+
     return undefined
+  }
+
+  playScan (card, attacks, player) {
+    const play = { type: 'playScan', player, card, cardOwner: player }
+
+    const overflow = attacks.effects.find(e => e.card.type === 'STACK_OVERFLOW')
+    if (overflow) {
+      play.target = overflow
+      play.targetType = 'effect'
+    } else if (attacks.virusStacks.length > 0) {
+      play.target = attacks.virusStacks.reduce((acc, stack) => {
+        return acc.getScore() > stack.getScore() ? acc : stack
+      }, attacks.virusStacks[0])
+      play.targetType = 'stack'
+    } else if (attacks.mimics.length > 0) {
+      play.target = attacks.mimics.pop()
+      play.targetType = 'mimic'
+    } else {
+      play.target = attacks.effects.pop()
+      play.targetType = 'effect'
+    }
+
+    return play
   }
  
   /**

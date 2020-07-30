@@ -105,16 +105,16 @@ const emptyCards = {
 // change and pass at creation to debug certain cards easier
 const debugDeck = {
   "INSTRUCTION": {1: 0, 2: 0, 3: 0},
-  "METHOD": {0: 0},
+  "METHOD": {0: 5},
   "REPEAT": {1: 0, 2: 0, 3: 0},
   "VARIABLE": {4: 0, 5: 0, 6: 0},
-  "VIRUS": {0: 0},
+  "VIRUS": {0: 5},
   "RANSOM": {0: 0},
   "SPYWARE": {0: 0},
-  "TROJAN": {0: 5},
+  "TROJAN": {0: 0},
   "ANTIVIRUS": {0: 0},
   "FIREWALL": {0: 0},
-  "SCAN": {0: 10},
+  "SCAN": {0: 15},
 }
 
 export {

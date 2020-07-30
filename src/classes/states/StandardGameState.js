@@ -1,4 +1,4 @@
-import { standardDeck } from '@/data/decks'
+import { debugDeck } from '@/data/decks'
 import Deck from '@/classes/card/Deck'
 import GameState from '@/classes/states/GameState'
 
@@ -22,8 +22,8 @@ export default class StandardGameState extends GameState {
   }
 
   initGame () {
-    this.scoreLimit = 20
-    this.deck = new Deck(standardDeck)
+    this.scoreLimit = 200
+    this.deck = new Deck(debugDeck)
     this.givePlayerHands()
     this.currentCard = undefined
   }
