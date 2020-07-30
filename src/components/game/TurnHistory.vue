@@ -57,6 +57,8 @@ export default {
         path += 'REDRAW'
       } else if (play.type === "discardCard") {
         path += 'DISCARD'
+      } else if (play.type === 'pass') {
+        path += 'PASS'
       } else if (card.isSpecial() || card.type === 'VIRUS'
                  || card.type === 'METHOD'){
         path += card.type
