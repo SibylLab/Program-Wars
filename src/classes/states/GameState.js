@@ -93,7 +93,7 @@ export default class GameState {
 
   endTurn () {
     const discards = this.currentPlayer().update()
-    this.discardCards([discards])
+    this.discardCards(discards)
 
     this.scores = this.getScores()
     this.checkGameStatus()

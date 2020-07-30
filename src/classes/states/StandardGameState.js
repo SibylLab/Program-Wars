@@ -1,5 +1,5 @@
 import { standardDeck } from '@/data/decks'
-import Deck from '@/classes/game/Deck'
+import Deck from '@/classes/card/Deck'
 import GameState from '@/classes/states/GameState'
 
 // Side objective bonuses

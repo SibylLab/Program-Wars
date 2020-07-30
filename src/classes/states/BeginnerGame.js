@@ -1,5 +1,5 @@
 import { beginnerDeck } from '@/data/decks'
-import Deck from '@/classes/game/Deck'
+import Deck from '@/classes/card/Deck'
 import StandardGameState from '@/classes/states/StandardGameState'
 
 export default class BeginnerGame extends StandardGameState {
