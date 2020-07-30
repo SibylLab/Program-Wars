@@ -22,7 +22,7 @@ export default class StandardGameState extends GameState {
   }
 
   initGame () {
-    this.scoreLimit = 10
+    this.scoreLimit = 20
     this.deck = new Deck(standardDeck)
     this.givePlayerHands()
     this.currentCard = undefined

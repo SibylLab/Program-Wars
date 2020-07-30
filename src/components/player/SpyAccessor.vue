@@ -37,8 +37,9 @@ export default {
       return this.showHand ? 'Stop Spying' : 'Spy Hand'
     },
     canSpy () {
-      // make sure the player whos turn it is has hurt this player with spyware
-      return true;
+      // this will have to be better tested with 4 player mode
+      const spy = this.player.effects.getNegative('SPYWARE')
+      return this.pageState.currentPlayer() === spy.attacker
     }
   },
   methods: {

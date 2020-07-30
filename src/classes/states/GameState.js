@@ -92,9 +92,12 @@ export default class GameState {
   }
 
   endTurn () {
-    this.currentPlayer().update() // needed for other effect types
+    const discards = this.currentPlayer().update()
+    this.discardCards([discards])
+
     this.scores = this.getScores()
     this.checkGameStatus()
+
     this.currentCard = null
     this.wait = true
     bus.$emit('end-turn')

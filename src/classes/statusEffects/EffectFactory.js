@@ -7,7 +7,11 @@ const penalties = {
 }
 
 const bonuses = {
-  'RANSOM': 10, 'SPY': 0
+  'RANSOM': 10
+}
+
+const turns = {
+  'SPYWARE': 6
 }
 
 export default class EffectFactory {
@@ -19,11 +23,12 @@ export default class EffectFactory {
     let effect
     if (card.type in bonuses) {
       effect = new AttackWithBonus(card, playerId, attacker, this.getBonus(card.type))
-      effect.penalty = this.getPenalty(card.type)
     } else {
       effect = new CyberAttack(card, playerId, attacker)
-      effect.penalty = this.getPenalty(card.type)
     }
+
+    effect.penalty = this.getPenalty(card.type)
+    effect.turnsLeft = this.getTurnsLeft(card.type)
     return effect
   }
 
@@ -33,5 +38,9 @@ export default class EffectFactory {
 
   getBonus (type) {
     return type in bonuses ? bonuses[type] : 0
+  }
+
+  getTurnsLeft (type) {
+    return type in turns ? turns[type] : -1
   }
 }

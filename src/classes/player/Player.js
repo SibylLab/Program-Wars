@@ -43,5 +43,6 @@ export default class Player {
   }
 
   update () {
+    return this.effects.update()
   }
 }

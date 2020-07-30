@@ -10,6 +10,23 @@ export default class StatusEffects {
     this.fact = new EffectFactory()
   }
 
+  update () {
+    let discards = this.updateEffects(this.positive) 
+    return discards.concat(this.updateEffects(this.negative))
+  }
+
+  updateEffects (effects) {
+    effects.map(e => e.update())
+
+    const discards = effects.filter(e => {
+      return e.turnsLeft === 0
+    }).map(e => {
+      return this.removeEffect(e)
+    })
+
+    return discards
+  }
+
   hasPositive (effectType) {
     return this.getPositive(effectType) !== undefined
   }
