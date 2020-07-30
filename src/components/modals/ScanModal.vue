@@ -6,25 +6,22 @@
       <h3 style="margin-top: 2%;"><b>Active Scan</b></h3>
 
       <div class="content">
-        <!--
-          List all attacks, first viruses, then trojans, then effects
-          each should have a button to clean it
-          The buttons can call functions specific to the type if needed to
-          deal with them differently
-        -->
-        <div v-for="mimic in attacks.mimics" v-bind:key="mimic.id" class="attack mimic">
+        <div v-for="mimic in attacks.mimics" v-bind:key="mimic.id" class="attack">
           <img class="card" :src="mimic.card.image">
+          <img class="icon" :src="trojanImage">
           <button v-on:click="playScan(mimic, 'mimic')" class="btn btn-success clean">
             Clean </button>
         </div>
 
-        <div v-for="stack in attacks.virusStacks" v-bind:key="stack.id" class="attack stack">
-          <card-stack :stack="stack"/>
+        <div v-for="stack in attacks.virusStacks" v-bind:key="stack.id" class="attack">
+          <div class="card-stack">
+            <card-stack :stack="stack"/>
+          </div>
           <button v-on:click="playScan(stack, 'stack')" class="btn btn-success clean">
             Clean </button>
         </div>
 
-        <div v-for="effect in attacks.effects" v-bind:key="effect.id" class="attack effect">
+        <div v-for="effect in attacks.effects" v-bind:key="effect.id" class="attack">
           <img class="card" :src="effect.card.image">
           <button v-on:click="playScan(effect, 'effect')" class="btn btn-success clean">
             Clean </button>
@@ -50,12 +47,15 @@ export default {
   props: ['cardOwner', 'card', 'attacks'],
   data () {
     return {
-      pageState: this.$store.state.pageState,
-      player: this.$store.state.pageState.currentPlayer()
+      pageState: this.$store.state.pageState
     }
   },
   components: {
     'card-stack': CardStack
+  },
+  computed: {
+    player () { return this.pageState.currentPlayer() },
+    trojanImage () { return 'static/cardImages/effects/TROJAN.png' }
   },
   methods: {
     playScan (target, type) {
@@ -87,8 +87,8 @@ export default {
 .container {
   position: absolute;
   top: 10%;
-  left: 20%;
-  width: 60%;
+  left: 30%;
+  width: 30%;
   height: 80%;
   border: ridge grey 4px;
   border-radius: 20px;
@@ -102,7 +102,8 @@ export default {
   left: 5%;
   width: 90%;
   height: 80%;
-  background: grey;
+  overflow: auto;
+  text-align: left;
 }
 
 .backdrop {
@@ -120,15 +121,33 @@ export default {
   margin-right: auto;
 }
 
+.card-stack {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+}
+
 .card {
   display: inline;
+  width: 22%;
+  margin: 0 5%;
 }
 
 .clean {
-  display: inline;
+  position: absolute;
+  top: 35%;
+  right: 5%;
 }
 
 .attack {
-  display: inline;
+  position: relative;
+  margin: 5% 0;
+}
+
+.icon {
+  position: absolute;
+  top: 35%;
+  left: 22%;
+  width: 10%;
 }
 </style>
