@@ -56,7 +56,9 @@ export default class GameState {
   }
 
   canPlayCard (card) {
-    if (card.isSpecial()) {
+    if (card.type === 'VIRUS') {
+      return this.getAttackablePlayers('VIRUS').length > 0
+    } else if (card.isSpecial()) {
       return !this.currentPlayer().hurtBy('STACK_UNDERFLOW')
     } else {
       return !this.currentPlayer().hurtBy('STACK_OVERFLOW')
