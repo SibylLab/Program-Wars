@@ -237,6 +237,7 @@ export default class GameState {
 
     playInfo.type = 'playMimic'
     playInfo.player = playInfo.card.player
+    playInfo.playedCard = playInfo.card.card
     playInfo.card = playInfo.card.replace()
 
     if (playInfo.card.type === 'VIRUS') {

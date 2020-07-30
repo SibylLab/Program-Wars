@@ -34,15 +34,17 @@ export default class StandardGameState extends GameState {
     }
   }
 
+  // Computing bonuses ///////////////////////////////////////////////////////
+
   getPlayerBonuses (player) {
     const plays = this.turnHistory.filter((play) => {
       return play.player === player && play.type !== 'discardHand'
           && play.type !== 'discardCard'
     })
 
-    const repeat = plays.filter(p => p.card.type === 'REPEAT').length * REPEAT_BONUS
-    const variable = plays.filter(p => p.card.type === 'VARIABLE').length * VAR_BONUS
-    const safety = plays.filter(p => p.card.isSafety()).length * SAFETY_BONUS
+    const repeat = this.getTypeCount(plays, 'REPEAT') * REPEAT_BONUS
+    const variable = this.getTypeCount(plays, 'VARIABLE') * VAR_BONUS
+    const safety = this.getSafetyCount(plays) * SAFETY_BONUS
     const method = player.stacks.method.isComplete() ? METHOD_BONUS : 0
     const clean = this.getCleanBonus(player)
     const defensive = this.getDefensiveBonus(player)
@@ -50,6 +52,14 @@ export default class StandardGameState extends GameState {
     
     const total = repeat + variable + safety + defensive + clean + nested + method
     return {total, repeat, variable, safety, defensive, clean, nested, method}
+  }
+
+  getTypeCount (plays, type) {
+    return plays.filter(p => !p.type !== 'playMimic' && p.card.type === type).length
+  }
+
+  getSafetyCount (plays) {
+    return plays.filter(p => !p.type !== 'playMimic' && p.card.isSafety()).length
   }
 
   getCleanBonus (player) {
@@ -76,6 +86,8 @@ export default class StandardGameState extends GameState {
   getBonuses () {
     return this.players.map(p => this.getPlayerBonuses(p))
   }
+
+  // Finding winners /////////////////////////////////////////////////////////
 
   getWinners () {
     // get winners using bonus totals

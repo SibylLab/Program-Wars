@@ -3,9 +3,10 @@
 
     <h5 id="good-effects-text" :class="side"><b>Threat Prevention</b></h5>
     <div id="good-effects" :class="side">
-      <img v-for="effect in player.effects.positive" v-bind:key="effect.id"
-          class="effect-icon" :src="effect.image"
-          :title="effectTooltip(effect.type)">
+      <div v-for="effect in player.effects.positive" v-bind:key="effect.id"
+          class="effect">
+        <img class="effect-icon" :src="effect.image" :title="effectTooltip(effect.type)">
+      </div>
     </div>
 
     <h5 id="bad-effects-text" :class="side"><b>Active Threats</b></h5>

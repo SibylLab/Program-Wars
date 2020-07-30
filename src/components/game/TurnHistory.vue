@@ -5,6 +5,7 @@
       <img id="play-image" :src="image(play)">
       <img id="player-image" :src="playerImage(play)">
       <img id="target-image" v-if="hasTargetPlayer(play)" :src="targetImage(play)">
+      <img id="trojan-icon" v-if="play.type === 'playMimic'" :src="trojanIcon">
     </li>
   </ul>
 
@@ -41,7 +42,8 @@ export default {
       const end = this.pageState.turnHistory.length
       const start = end < 10 ? 0 : Math.abs(end - 10)
       return this.pageState.turnHistory.slice(start, end).reverse()
-    }
+    },
+    trojanIcon () { return 'static/cardImages/effects/TROJAN.png' }
   },
   methods: {
     /**
@@ -49,17 +51,19 @@ export default {
      * or effect.
      */
     image (play) {
+      const card = play.type === 'playMimic' ? play.playedCard : play.card
       let path = 'static/cardImages/effects/'
       if (play.type === "discardHand") {
         path += 'REDRAW'
       } else if (play.type === "discardCard") {
         path += 'DISCARD'
-      } else if (play.card.isSpecial() || play.card.type === 'VIRUS'
-                 || play.card.type === 'METHOD'){
-        path += play.card.type
+      } else if (card.isSpecial() || card.type === 'VIRUS'
+                 || card.type === 'METHOD'){
+        path += card.type
       } else {
-        path += play.card.type + play.card.value
+        path += card.type + card.value
       }
+
       return path + '.png'
     },
     /**
@@ -136,6 +140,15 @@ export default {
   width: 20px;
   height: 20px;
   border: solid black 2px;
+}
+
+#trojan-icon {
+  position: absolute;
+  top: 27px;
+  left: -3px;
+  width: 20px;
+  height: 20px;
+  border: solid darkgrey 1px;
 }
 
 #info {
