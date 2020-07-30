@@ -11,7 +11,7 @@ const bonuses = {
 }
 
 const turns = {
-  'SPYWARE': 6
+  'SPYWARE': 6, 'STACK_OVERFLOW': 2
 }
 
 export default class EffectFactory {

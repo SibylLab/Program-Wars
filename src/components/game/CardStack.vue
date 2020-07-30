@@ -3,7 +3,7 @@
 
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">
-      {{ scoreText }}: {{ stack.getScore() }}
+      {{ scoreText }}: {{ getScore }}
     </h5>
   </div>
 
@@ -38,14 +38,19 @@ export default {
     }
   },
   computed: {
+    player () {
+      return this.pageState.players[this.stack.playerId]
+    },
     /**
      * Determines the score color based on whether the stacks owner is under
      * an effect that changes how much of the stack score is added to the
      * players total score.
      */
     scoreColor () {
-      let top = this.stack.getTop()
-      if (top && top.type  === 'VIRUS') {
+      const top = this.stack.getTop()
+      if ((top && top.type  === 'VIRUS') ||
+          ((this.stack.isMethod || this.stack.getBase().type === 'METHOD')
+          && this.player.hurtBy('SQL_INJECTION'))) {
         return 'score-red'
       } else if (this.stack.isComplete()) {
         return 'score-green'
@@ -62,6 +67,18 @@ export default {
       } else {
         return 'Score'
       }
+    },
+    getScore () {
+      const penalties = { method: 0, base: 0, stack: 0 }
+      if (this.player.hurtBy('SQL_INJECTION')) {
+        const sql = this.player.effects.getNegative('SQL_INJECTION')
+        if (this.stack.isMethod) {
+          penalties.stack = sql.penalty
+        } else {
+          penalties.method = sql.penalty
+        }
+      }
+      return this.stack.getScore(penalties)
     }
   },
   methods: {

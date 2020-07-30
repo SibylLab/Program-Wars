@@ -6,7 +6,7 @@ export default class StackWithMethodBase extends Stack {
     this.method = method
   }
 
-  getBaseValue (penalties) {
-    return this.method.getScore() - penalties.method
+  getBaseValue (penalty) {
+    return this.method.getScore(penalty)
   }
 }
