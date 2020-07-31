@@ -3,7 +3,7 @@
  * @author Steven on 2020-06-10
  */
 
-import ActionHandler from '@/classes/ai/ActionHandler'
+import ActionHandler from '@/classes/AIHandler/ActionHandler'
 
 /**
  * Takes a Redraw action for the ai players turn.

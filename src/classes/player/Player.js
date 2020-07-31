@@ -1,6 +1,6 @@
 import Hand from '@/classes/player/Hand'
-import Stacks from '@/classes/player/Stacks'
-import StatusEffects from '@/classes/player/StatusEffects'
+import Stacks from '@/classes/stack/Stacks'
+import StatusEffects from '@/classes/statusEffect/StatusEffects'
 
 export default class Player {
   constructor (id, name) {
@@ -8,9 +8,19 @@ export default class Player {
     this.name = name
     this.isAI = false
     this.hand = new Hand(id)
-    this.stacks = new Stacks(id)
+    this.playField = new Stacks(id)
     this.effects = new StatusEffects(id)
     this.image = 'static/playerImages/player' + id + '.png'
+  }
+
+  update () {
+    return this.effects.update()
+  }
+
+  getScore () {
+    let score = this.stacks.getScore(this.getStackAdjustments())
+    score += this.effects.getScoreAdjustment()
+    return score
   }
 
   helpedBy (effectType) {
@@ -30,24 +40,5 @@ export default class Player {
     const virusStacks = this.stacks.getStacksWithVirus()
     const mimics = this.hand.getMimics()
     return { effects, virusStacks, mimics }
-  }
-
-  getScore () {
-    let score = this.stacks.getScore(this.getStackAdjustments())
-    score += this.effects.getScoreAdjustment()
-    return score
-  }
-
-  update () {
-    return this.effects.update()
-  }
-
-  getStackAdjustments () {
-    const adjs = {method: 0}
-    if (this.hurtBy('SQL_INJECTION')) {
-      const sql = this.effects.getNegative('SQL_INJECTION')
-      adjs.method -= sql.penalty
-    }
-    return adjs
   }
 }

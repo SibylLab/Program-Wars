@@ -1,12 +1,12 @@
 import Cardfrom '@/classes/card/Card'
 
-export default CardWrapper extends Card {
+export default class CardWrapper extends Card {
   constructor (card) {
     super(card.value, card.owner)
     this.card = card
   }
 
-  discards () {
+  getDiscards () {
     return [this.card]
   }
 }

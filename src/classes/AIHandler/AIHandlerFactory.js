@@ -3,10 +3,10 @@
  * @author Steven on 2020-06-10
  */
 
-import AiHandler from '@/classes/ai/AiHandler'
-import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
-import PlayRandomCardAction from '@/classes/ai/PlayRandomCardAction'
-import MethodStackFirst from '@/classes/ai/MethodStackFirst'
+import AIHandler from '@/classes/AIHandler//AIHandler'
+import PlayBestCardAction from '@/classes/AIHandler/PlayBestCardAction'
+import PlayRandomCardAction from '@/classes/AIHandler/PlayRandomCardAction'
+import MethodStackFirst from '@/classes/AIHandler/MethodStackFirst'
 
 
 // card orders for different AI personalities
@@ -30,16 +30,16 @@ const CARD_ORDER = {
 
 
 /**
- * A factory to create different types of AiHandlers.
+ * A factory to create different types of /AIHandlers.
  */
-export default class AiHandlerFactory {
+export default class /AIHandlerFactory {
   /**
-   * @constructor AiHandlerFactory
+   * @constructor /AIHandlerFactory
    */
   constructor () {}
 
   /**
-   * Create and return an AiHandler of the given type for the given player.
+   * Create and return an /AIHandler of the given type for the given player.
    */
   newHandler (personality) {
     if (personality === 'beginner') {
@@ -58,12 +58,12 @@ export default class AiHandlerFactory {
     }
     actions.push( new PlayBestCardAction(cards) )
 
-    let handler = new AiHandler(actions)
+    let handler = new /AIHandler(actions)
     return handler
   }
 
   newBeginnerHandler () {
-    return new AiHandler([new PlayRandomCardAction()])
+    return new /AIHandler([new PlayRandomCardAction()])
   }
 }
 

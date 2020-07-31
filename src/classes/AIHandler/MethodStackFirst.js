@@ -3,7 +3,7 @@
  * @author Steven on 2020-07-03
  */
 
-import ActionHandler from '@/classes/ai/ActionHandler'
+import ActionHandler from '@/classes/AIHandler/ActionHandler'
 
 /**
  * Play an instruction on the method stack first if it has room.

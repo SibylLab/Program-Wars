@@ -3,9 +3,9 @@ import MimicWrapper '@/classes/card/MimicWrapper'
 
 const MAX_TRIES = 10
 
-export default class Virus extends Card {
+export default class Trojan extends Card {
   constructor (ownerId = -1) {
-    super(value, 'VIRUS', this._makeImage('virus'), ownerId)
+    super(value, 'TROJAN', this._makeImage('trojan'), ownerId)
   }
 
   play ({player, target}) {

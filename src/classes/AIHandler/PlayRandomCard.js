@@ -1,4 +1,4 @@
-import PlayBestCardAction from '@/classes/ai/PlayBestCardAction'
+import PlayBestCardAction from '@/classes/AIHandler/PlayBestCardAction'
 
 export default class PlayRandomCardAction extends PlayBestCardAction {
   constructor () {

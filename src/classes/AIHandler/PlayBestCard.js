@@ -3,8 +3,8 @@
  * @author Steven on 2020-06-10
  */
 
-import ActionHandler from '@/classes/ai/ActionHandler'
-import helpers from '@/classes/ai/aiHelpers'
+import ActionHandler from '@/classes/AIHandler/ActionHandler'
+import helpers from '@/classes/AIHandler/aiHelpers'
 
 /**
  * Attempts to play cards from an AI players hand based on a given
@@ -13,7 +13,7 @@ import helpers from '@/classes/ai/aiHelpers'
  *
  * If a card type is not included in the priority it will not be played
  * even if it is in the hand. This make it possible to make more complicated
- * ActionHandlers that can be added to the AiHandler if desired.
+ * ActionHandlers that can be added to the AIHandler if desired.
  */
 export default class PlayBestCardAction extends ActionHandler {
   /**

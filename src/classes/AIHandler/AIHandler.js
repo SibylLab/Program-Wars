@@ -1,12 +1,12 @@
 /**
- * @file AiHandler.js file
+ * @file AIHandler.js file
  * @author Steven on 2020-06-10
  */
 
-import RedrawAction from '@/classes/ai/RedrawAction'
+import Redraw from '@/classes/AIHandler/RedrawAction'
 
 /**
- * A handler to take an Ai players turn.
+ * A handler to take an AI players turn.
  * Uses a pattern similar to Chain of Responsibility to make turn choices.
  * Consults objects in the actionHandlers list in order until one can
  * perform its action. If all actions fail it will take the default action
@@ -15,20 +15,20 @@ import RedrawAction from '@/classes/ai/RedrawAction'
  * Some more info aboout chain of responsibility can be found at:
  * https://refactoring.guru/design-patterns/chain-of-responsibility
  */
-export default class AiHandler {
+export default class AIHandler {
   /**
-   * Creates a new AiHandler to make turn choices for a player.
-   * @constructor AiHandler
-   * @param {Player} player The Ai player this handler is for.
+   * Creates a new AIHandler to make turn choices for a player.
+   * @constructor AIHandler
+   * @param {Player} player The AI player this handler is for.
    */
   constructor (handlers) {
     this.actionHandlers = handlers
-    this.defaultAction = new RedrawAction()
+    this.defaultAction = new Redraw()
   }
 
   /**
    * Make a choice for the player that it controls.
-   * @param hand The hand of the Ai player.
+   * @param hand The hand of the AI player.
    * @param player The player taking the action. 
    * @param players A list of all players in the game.
    * @param scores A list of current player scores.
