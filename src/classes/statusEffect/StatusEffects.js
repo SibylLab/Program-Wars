@@ -1,5 +1,6 @@
 import EffectFactory from '@/classes/statusEffects/EffectFactory'
 import BonusEffect from '@/classes/statusEffects/BonusEffect'
+import cardData from '@/classes/card/cardData'
 
 export default class StatusEffects {
   constructor (playerId) {
@@ -27,73 +28,6 @@ export default class StatusEffects {
     return discards
   }
 
-  hasPositive (effectType) {
-    return this.getPositive(effectType) !== undefined
-  }
-
-  hasNegative (effectType) {
-    return this.getNegative(effectType) !== undefined
-  }
-
-  hasProtectionFrom (effectType) {
-    return (this.isHack(effectType) && this.hasPositive('FIREWALL'))
-        || (this.isMalware(effectType) && this.hasPositive('ANTIVIRUS'))
-  }
-
-  addPositive (card) {
-    const discard = []
-    if (!this.hasPositive(card.type)) {
-      if (card.type === 'ANTIVIRUS') {
-        this.cleanMalware(discard)
-      } else if (card.type === 'FIREWALL') {
-        this.cleanHacks(discard)
-      }
-
-      const effect = this.fact.newSafetyEffect(card, this.playerId)
-      this.positive.push(effect)
-    }
-    return discard
-  }
-
-  addNegative (card, attacker) {
-    const discard = []
-    if (!this.hasNegative(card.type) && !this.hasProtectionFrom(card.type)) {
-      if (this.hasPositive('SCAN')) {
-        this.removePositive('SCAN', discard)
-        discard.push(card)
-      } else {
-        const effect = this.fact.newAttackEffect(card, this.playerId, attacker)  
-        this.negative.push(effect)
-      }
-    }
-    return discard
-  }
-
-  removeEffect (effect) {
-    if (effect.card.isSafety()) {
-      this.positive = this.positive.filter(e => e !== effect)
-    } else {
-      this.negative = this.negative.filter(e => e !== effect)
-    }
-    return effect.destroy()
-  }
-
-  getPositive (effectType) {
-    return this.positive.find(e => e.card.type === effectType)
-  }
-
-  getNegative (effectType) {
-    return this.negative.find(e => e.card.type === effectType)
-  }
-
-  addBonus (type, effectId, amount) {
-    this.bonus.push(new BonusEffect(type, effectId, amount))
-  }
-
-  removeBonus (effectId) {
-    this.bonus = this.bonus.filter(b => b.effectId !== effectId)
-  }
-
   getScoreAdjustment () {
     let score = this.bonus.reduce((acc, b) => { return acc + b.amount }, 0)
 
@@ -103,41 +37,79 @@ export default class StatusEffects {
     return score
   }
 
-  // Helpers //
-
-  cleanMalware (discard) {
-    this.removeNegative('RANSOM', discard)
-    this.removeNegative('SPYWARE', discard)
+  hasPositive (effectType) {
+    return this.positive.filter(p => p.card.type === effectType).length > 0
   }
 
-  cleanHacks (discard) {
-    this.removeNegative('STACK_OVERFLOW', discard)
-    this.removeNegative('STACK_UNDERFLOW', discard)
-    this.removeNegative('SQL_INJECTION', discard)
-    this.removeNegative('DDOS', discard)
+  hasNegative (effectType) {
+    return this.negative.filter(n => n.card.type === effectType).length > 0
   }
 
-  removePositive (effectType, discard) {
-    const effect = this.getPositive(effectType)
-    if (effect) {
-      discard.push(this.removeEffect(effect))
+  hasProtectionFrom (effectType) {
+    return (cardData.isHack(effectType) && this.hasPositive('FIREWALL'))
+        || (cardData.isMalware(effectType) && this.hasPositive('ANTIVIRUS'))
+  }
+
+  // don't add cards that are already here
+  addPositive (card) {
+    const effect = this.fact.newSafetyEffect(card, this.playerId)
+    this.positive.push(effect)
+  }
+
+  // don't add cards that are already here
+  addNegative (card, attacker) {
+    const effect = this.fact.newAttackEffect(card, this.playerId, attacker)  
+    this.negative.push(effect)
+  }
+
+  // don't add cards that are already here
+  addSql (card, attacker, methodStack) {
+    const effect = this.fact.newSqlEffect(card, this.playerId, attacker, methodStack)
+    this.negative.push(effect)
+  }
+
+  removeEffect (effect) {
+    if (cardData.isPositiveEffect(effect.card.type)) {
+      this.positive = this.positive.filter(e => e !== effect)
+    } else {
+      this.negative = this.negative.filter(e => e !== effect)
     }
+    return effect.destroy()
   }
 
-  removeNegative (effectType, discard) {
-    const effect = this.getNegative(effectType)
-    if (effect) {
-      discard.push(this.removeEffect(effect))
-    }
+  removePositiveType (effectType) {
+    this.positive = this.positive.filter(p => p.card.type !== effectType)
+    const effects = this.positive.filter(p => p.card.type === effectType)
+    return effects.map(e => e.destroy())
   }
 
-  isHack (effectType) {
-    return effectType === 'STACK_OVERFLOW' || effectType === 'SQL_INJECTION'
-        || effectType === 'STACK_UNDERFLOW' || effectType === 'DDOS'
+  removeNegativeType (effectType) {
+    this.negative = this.negative.filter(n => n.card.type !== effectType)
+    const effects = this.negative.filter(n => n.card.type === effectType)
+    return effects.map(e => e.destroy())
   }
 
-  isMalware (effectType) {
-    return effectType === 'VIRUS' || effectType === 'TROJAN'
-        || effectType === 'RANSOM' || effectType === 'SPYWARE'
+  cleanMalware () {
+    return [
+      ...this.removeNegativeType('RANSOM'),
+      ...this.removeNegativeType('SPYWARE')
+    ]
+  }
+
+  cleanHacks () {
+    return [
+      ...this.removeNegativeType('STACK_OVERFLOW'),
+      ...this.removeNegativeType('STACK_UNDERFLOW'),
+      ...this.removeNegativeType('SQL_INJECTION'),
+      ...this.removeNegativeType('DDOS')
+    ]
+  }
+
+  addBonus (type, effectId, amount) {
+    this.bonus.push(new BonusEffect(type, effectId, amount))
+  }
+
+  removeBonus (effectId) {
+    this.bonus = this.bonus.filter(b => b.effectId !== effectId)
   }
 }

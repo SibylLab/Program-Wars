@@ -12,11 +12,12 @@ export default class MethodStack extends Stack {
   constructor (playerId) {
     super(playerId)
     this.isMethod = true
+    this.adjustment = 0
   }
 
-  getScore (adjustments = {}) {
+  getScore () {
     let score = this.cards.reduce((acc, card) => { return acc + card.value }, 0)
-    score = adjustments.method ? score + adjustments.method : score
+    score += this.adjustment
     return score < 0 ? 0 : score
   }
 

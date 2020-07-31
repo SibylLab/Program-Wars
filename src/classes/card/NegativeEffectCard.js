@@ -7,7 +7,8 @@ export default class NegativeEffectCard extends Card {
 
   play ({player, target}) {
     if (!target.hurtBy(this.type) && !target.protectedFrom(this.type)) {
-      return target.effects.addNegative(this, player)
+      target.effects.addNegative(this, player)
+      return []
     } else {
       return [this]
     }

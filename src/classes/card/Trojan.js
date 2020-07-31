@@ -11,8 +11,8 @@ export default class Trojan extends Card {
   play ({player, target}) {
     const discards = []
     if (target.helpedBy('SCAN')) {
-      target.removePositive('SCAN', discards)
-      discars.push(this)
+      discards.push(...target.removePositiveType('SCAN'))
+      discards.push(this)
     } else if (!target.protectedFrom(this.type)) {
       this._mimicCard(target.hand, discards) 
     } else {

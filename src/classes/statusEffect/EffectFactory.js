@@ -3,7 +3,7 @@ import CyberAttack from '@/classes/statusEffects/CyberAttack'
 import AttackWithBonus from '@/classes/statusEffects/AttackWithBonus'
 
 const penalties = {
-  'RANSOM': 10, 'SQL_INJECTION': 2
+  'RANSOM': 10
 }
 
 const bonuses = {
@@ -30,6 +30,10 @@ export default class EffectFactory {
     effect.penalty = this.getPenalty(card.type)
     effect.turnsLeft = this.getTurnsLeft(card.type)
     return effect
+  }
+
+  newSqlEffect (card, playerId, attacker, method) {
+    return new SqlEffect(card, playerId, attacker, method)
   }
 
   getPenalty (type) {

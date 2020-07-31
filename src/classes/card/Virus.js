@@ -8,8 +8,8 @@ export default class Virus extends Card {
   play ({target, stack}) {
     const discards = []
     if (target.helpedBy('SCAN')) {
-      target.removePositive('SCAN', discards)
-      discars.push(this)
+      discards.push(...target.removePositiveType('SCAN'))
+      discards.push(this)
     } else if (stack.getTop().type !== 'VIRUS' && !target.protectedFrom(this.type)) {
       stack.addCard(this)
     } else {
