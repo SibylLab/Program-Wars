@@ -10,7 +10,11 @@ export default class PositiveEffectCard extends Card {
       target.effects.addPositive(this)
 
       if (this.type === 'ANTIVIRUS') {
-        return target.effects.cleanMalware()
+        return [
+          ...target.hand.cleanMimics(),
+          ...target.playField.cleanViruses(),
+          ...target.effects.cleanMalware()
+        ]
       } else if (this.type === 'FIREWALL') {
         return target.effects.cleanHacks()    
       }

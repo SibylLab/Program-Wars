@@ -10,6 +10,14 @@ export default class PlayField {
     this.stacks = []
   }
 
+  addCardToStack (card, stack) {
+    stack.cards.push(card)
+    if (stack.isComplete() && stack !== this.method) {
+      this.stacks = this.stacks.filter(s => s !== stack)
+      this.stacks.push(stack)
+    }
+  }
+
   addStack (stack) {
     const baseType = stack.getBase().type
 
@@ -28,33 +36,15 @@ export default class PlayField {
     this.stacks.splice(idx, 0, stack)
   }
 
-  addCard (card, stack) {
-    stack.cards.push(card)
-    if (stack.isComplete() && stack !== this.method) {
-      this.stacks = this.stacks.filter(s => s !== stack)
-      this.stacks.push(stack)
-    }
-  }
-
-  addVirus (card, stack, attackerId) {
-    const virus = new VirusWrapper(attackerId, card)
-    stack.cards.push(virus)
-  }
-
-  getScore (adjustments) {
+  getScore () {
     return this.stacks.reduce((acc, stack) => {
-      return acc += stack.getScore(adjustments)
+      return acc += stack.getScore()
     }, 0)
   } 
 
   cleanViruses () {
-    const viruses = []
-    for (const stack of this.stacks) {
-      if (stack.getTop().type === 'VIRUS') {
-        viruses.push(stack.cards.pop())
-      }
-    }
-    return viruses
+    const infected = this.getStacksWithVirus()
+    return infected.map(s => s.cards.pop())
   }
 
   getStacksWithVirus () {

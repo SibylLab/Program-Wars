@@ -34,7 +34,7 @@ export default class Game {
   }
 
   discard {
-    this.deck.addDiscard(card)
+    this.deck.discard(card)
   }
 
   drawCards (player) {

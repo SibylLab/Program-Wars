@@ -31,14 +31,10 @@ export default class Hand {
     }
   }
 
-  cleanTrojans () {
-    // Trojan mimics are not actual cards so they do not need to be returned for discard
-    this.cards = this.cards.map(c => {
-      if (c.isMimic) {
-        return c.card
-      }
-      return c
-    })
+  cleanMimics () {
+    const mimics = this.getMimics()
+    this.cards = this.cards.filter(c => !c.isMimic)
+    return mimics
   }
 
   getMimics () {

@@ -16,7 +16,7 @@ export default class MethodStack extends Stack {
   }
 
   getScore () {
-    let score = this.cards.reduce((acc, card) => { return acc + card.value }, 0)
+    let score = this.cards.reduce((acc, card) => { return acc + card.getValue() }, 0)
     score += this.adjustment
     return score < 0 ? 0 : score
   }
@@ -31,7 +31,7 @@ export default class MethodStack extends Stack {
 
   // only instruction cards that adding will keep below or at the limit
   willAccept (card) {
-    return card.type === 'INSTRUCTION' && card.value + this.getScore() <= METHOD_LIMIT
+    return card.type === 'INSTRUCTION' && card.getValue() + this.getScore() <= METHOD_LIMIT
   }
 
   // is the method up to the limit yet

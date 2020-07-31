@@ -11,6 +11,7 @@ export default class Card {
     this.image = image
     this.ownerId = ownerId
     this.id = uuidV1()
+    this.isMimic = false
   }
 
   getValue () {

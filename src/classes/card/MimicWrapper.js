@@ -7,6 +7,7 @@ export default class MimicWrapper extends CardWrapper {
   constructor (card, trojan) {
     super(card)
     this.trojan = trojan
+    this.isMimic = true
   }
 
   getDiscards () {

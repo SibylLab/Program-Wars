@@ -10,13 +10,16 @@ export default class Deck {
     this.shuffle(NUM_SHUFFLES)
   }
 
-  addCards (cardTypes) {
-    const fact = new CardFactory()
-    for (const {type, val, num} of cardTypes) {
-      for (let i = 0; i < num; i++) {
-        this.cards.push(fact.newCard(type, val))
-      }
+  draw () {
+    if (this.cards.length === 0) {
+      this.cards = this.cards.concat(this.discard)
+      this.discard = []
     }
+    return this.cards.shift()
+  }
+
+  discard (card) {
+    this.discard.push(card)
   }
 
   shuffle (times) {
@@ -25,12 +28,13 @@ export default class Deck {
     }
   }
 
-  draw () {
-    if (this.cards.length === 0) {
-      this.cards = this.cards.concat(this.discard)
-      this.discard = []
+  _addCards (cardTypes) {
+    const fact = new CardFactory()
+    for (const {type, val, num} of cardTypes) {
+      for (let i = 0; i < num; i++) {
+        this.cards.push(fact.newCard(type, val))
+      }
     }
-    return this.cards.shift()
   }
 
   /**
