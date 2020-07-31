@@ -3,21 +3,20 @@ import ExtraCardWrapper from '@/classes/card/ExtraCardWrapper'
 import NegtiveEffectCard from '@/classes/card/NegativeEffectCard'
 import Virus from '@/classes/card/Virus'
 
-export default class MimicWrapper extends Card {
+export default class MimicWrapper extends CardWrapper {
   constructor (card, trojan) {
-    super(card.value, card.ownerId)
-    this.card = card
+    super(card)
+    this.trojan = trojan
   }
 
   getDiscards () {
-    return [this.card, this.trojan]
+    let discards = super.getDiscards()
+    return discards.concat(this.trojan.getDiscards())
   }
 
   play (playInfo) {
     const replacement = this._replace()
-    discards = replacement.play(playInfo)
-    discards.push(this.trojan)
-    return discards
+    return replacement.play(playInfo)
   }
 
   _replace () {

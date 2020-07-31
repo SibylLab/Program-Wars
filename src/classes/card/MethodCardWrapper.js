@@ -1,9 +1,8 @@
 import CardWrapper from '@/classes/card/CardWrapper'
 
-export default class MethodCardWrapper extends Card {
+export default class MethodCardWrapper extends CardWrapper {
   constructor (card, method) {
-    super(card.value, card.ownerId)
-    this.card = card
+    super(card)
     this.method = method
   }
 
