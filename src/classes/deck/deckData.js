@@ -1,32 +1,76 @@
-const standardDeck = {
-  "INSTRUCTION": {1: 10, 2: 12, 3: 6},
-  "REPEAT": {1: 5, 2: 5, 3: 4, 4: 2},
-  "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
-  "METHOD": {0: 14},
-  "VIRUS": {0: 2},
-  "RANSOM": {0: 2},
-  "TROJAN": {0: 2},
-  "SPYWARE": {0: 2},
-  "STACK_OVERFLOW": {0: 2},
-  "STACK_UNDERFLOW": {0: 2},
-  "SQL_INJECTION": {0: 2},
-  "DDOS": {0: 2},
-  "ANTIVIRUS": {0: 2},
-  "FIREWALL": {0: 2},
-  "SCAN": {0: 5},
+// make an object to record the type value and number of a card that
+// will be in a deck.
+function makeType (type, val, num) {
+  return { type, val, num }
 }
 
-const beginnerDeck = {
-  "INSTRUCTION": {1: 10, 2: 12, 3: 6},
-  "REPEAT": {1: 5, 2: 5, 3: 4, 4: 2},
-  "VARIABLE": {3: 2, 4: 2, 5: 2, 6: 1},
-  "METHOD": {0: 12},
-  "VIRUS": {0: 3},
-  "RANSOM": {0: 3},
-  "ANTIVIRUS": {0: 1},
-  "SCAN": {0: 5},
+// Begginer Decks ////////////////////////////////////////////////////////////
+
+const begginerBase = [
+  makeType("INSTRUCTION", 1, 8),
+  makeType("INSTRUCTION", 2, 10),
+  makeType("INSTRUCTION", 3, 6),
+  makeType("REPEAT", 1, 5),
+  makeType("REPEAT", 2, 5),
+  makeType("REPEAT", 3, 4),
+  makeType("VARIABLE", 4, 3),
+  makeType("VARIABLE", 5, 3),
+  makeType("METHOD", 0, 12),
+]
+
+const b1Special = [
+  makeType("SPYWARE", 0, 3),
+  makeType("RANSOM", 0, 3),
+  makeType("ANTIVIRUS", 0, 1),
+  // makeType("SEARCH", 0, 2),
+  makeType("SCAN", 0, 4)
+]
+
+
+const begginer1 = {
+  base: begginerBase,
+  extra: b1Special
 }
 
+const begginerDefault = begginer1
+
+// Standard Decks ////////////////////////////////////////////////////////////
+
+const standardBase = [
+  makeType("INSTRUCTION", 1, 10),
+  makeType("INSTRUCTION", 2, 12),
+  makeType("INSTRUCTION", 3, 8),
+  makeType("REPEAT", 1, 5),
+  makeType("REPEAT", 2, 5),
+  makeType("REPEAT", 3, 5),
+  makeType("REPEAT", 4, 2),
+  makeType("VARIABLE", 4, 3),
+  makeType("VARIABLE", 5, 3),
+  makeType("VARIABLE", 6, 2),
+  makeType("METHOD", 0, 14),
+]
+
+const s1Special = [
+  makeType("SPYWARE", 0, 2),
+  makeType("RANSOM", 0, 2),
+  makeType("TROJAN", 0, 2),
+  makeType("VIRUS", 0, 2),
+  makeType("ANTIVIRUS", 0, 2),
+  // makeType("SEARCH", 0, 2),
+  // makeType("SORT", 0, 2),
+  makeType("SCAN", 0, 5)
+]
+
+const standard1 = {
+  base: standardBase,
+  extra: s1Special
+}
+
+const standardDefault = standard1
+
+// Agile Decks ///////////////////////////////////////////////////////////////
+
+// need to be changed to match the new style
 
 // 30 cards that should be in all decks (for now)
 const baseCards = {
@@ -91,42 +135,16 @@ const optionalCards = {
   }
 }
 
-// All types and available values of cards, but with 0 number
-const emptyCards = {
-  "INSTRUCTION": {1: 0, 2: 0, 3: 0},
-  "METHOD": {0: 0},
-  "REPEAT": {1: 0, 2: 0, 3: 0},
-  "VARIABLE": {4: 0, 5: 0, 6: 0},
-  "VIRUS": {0: 0},
-  "RANSOM": {0: 0},
-  "SPYWARE": {0: 0},
-  "TROJAN": {0: 0},
-  "ANTIVIRUS": {0: 0},
-  "FIREWALL": {0: 0},
-  "SCAN": {0: 0},
-}
-
-// change and pass at creation to debug certain cards easier
-const debugDeck = {
-  "INSTRUCTION": {1: 0, 2: 0, 3: 0},
-  "METHOD": {0: 5},
-  "REPEAT": {1: 0, 2: 0, 3: 0},
-  "VARIABLE": {4: 0, 5: 0, 6: 0},
-  "VIRUS": {0: 5},
-  "RANSOM": {0: 0},
-  "SPYWARE": {0: 0},
-  "TROJAN": {0: 0},
-  "ANTIVIRUS": {0: 0},
-  "FIREWALL": {0: 0},
-  "SCAN": {0: 15},
-}
-
-export {
-  standardDeck,
-  beginnerDeck,
-  baseCards,
-  premadeCards,
-  optionalCards,
-  emptyCards,
-  debugDeck
+export default {
+  begginer: {
+    begginer1,
+    default: begginerDefault
+  },
+  standard: {
+    standard1,
+    default: standardDefault
+  },
+  agile: {
+    default: begginerDefault
+  }
 }
