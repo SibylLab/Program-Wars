@@ -3,22 +3,11 @@ import MethodStack from '@/classes/card/MethodStack'
 import StackWithMethodBase from '@/classes/card/StackWithMethodBase'
 import VirusWrapper from '@/classes/card/VirusWrapper'
 
-export default class Stacks {
+export default class PlayField {
   constructor (playerId) {
     this.playerId = playerId
     this.method = new MethodStack(playerId)
     this.stacks = []
-  }
-
-  newStack (baseCard) {
-    let stack
-    if (baseCard.type === 'METHOD') {
-      stack = new StackWithMethodBase(this.playerId, this.method)
-    } else {
-      stack = new Stack(this.playerId)
-    }
-    stack.cards.push(baseCard)
-    this.addStack(stack)
   }
 
   addStack (stack) {

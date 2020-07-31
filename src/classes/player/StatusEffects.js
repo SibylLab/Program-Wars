@@ -60,6 +60,7 @@ export default class StatusEffects {
     if (!this.hasNegative(card.type) && !this.hasProtectionFrom(card.type)) {
       if (this.hasPositive('SCAN')) {
         this.removePositive('SCAN', discard)
+        discard.push(card)
       } else {
         const effect = this.fact.newAttackEffect(card, this.playerId, attacker)  
         this.negative.push(effect)
