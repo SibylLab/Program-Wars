@@ -12,6 +12,12 @@ const routes = [
     component: HomePage
   },
   {
+    path: '/beginner',
+    name: 'Beginner Game',
+    canReuse: false,
+    component: () => import('@/pages/BeginnerGame.vue')
+  },
+  {
     path: '/standard',
     name: 'Standard Game',
     canReuse: false,
@@ -34,12 +40,6 @@ const routes = [
     name: 'Agile Game',
     canReuse: false,
     component: () => import('@/components/agileGame/Game.vue')
-  },
-  {
-    path: '/beginner',
-    name: 'Beginner Game',
-    canReuse: false,
-    component: () => import('@/pages/BeginnerGame.vue')
   },
   {
     path: '*',

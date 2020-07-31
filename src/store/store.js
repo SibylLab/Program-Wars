@@ -18,19 +18,8 @@ import getters from './getters'
  */
 export const store = new Vuex.Store({
   state: {
-    players: [],
-    stacks: [],
-    hands: [],
-    methods: [],
-    aiHandlers: [],
-    requirements: [],
-    deck: undefined,
     gameState: 'home',
-    activePlayer: undefined,
-    activeCard: undefined,
-    scoreLimit: 150,
-    showBackstory: true,
-    turnPlays: [],
+    seenBackstory: false,
     pageState: new HomeState()
   },
 
