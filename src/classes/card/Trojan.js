@@ -1,5 +1,5 @@
 import Card from '@/classes/card/Card'
-import MimicWrapper '@/classes/card/MimicWrapper'
+import MimicWrapper from '@/classes/card/MimicWrapper'
 
 const MAX_TRIES = 10
 

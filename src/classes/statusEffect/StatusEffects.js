@@ -1,5 +1,5 @@
-import EffectFactory from '@/classes/statusEffects/EffectFactory'
-import BonusEffect from '@/classes/statusEffects/BonusEffect'
+import EffectFactory from '@/classes/statusEffect/EffectFactory'
+import BonusEffect from '@/classes/statusEffect/BonusEffect'
 import cardData from '@/classes/card/cardData'
 
 export default class StatusEffects {

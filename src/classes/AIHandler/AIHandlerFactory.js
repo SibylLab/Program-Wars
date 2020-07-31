@@ -1,13 +1,7 @@
-/**
- * @file RedrawAction.js file
- * @author Steven on 2020-06-10
- */
-
-import AIHandler from '@/classes/AIHandler//AIHandler'
-import PlayBestCardAction from '@/classes/AIHandler/PlayBestCardAction'
-import PlayRandomCardAction from '@/classes/AIHandler/PlayRandomCardAction'
+import AIHandler from '@/classes/AIHandler/AIHandler'
+import PlayBestCard from '@/classes/AIHandler/PlayBestCard'
+import PlayRandomCard from '@/classes/AIHandler/PlayRandomCard'
 import MethodStackFirst from '@/classes/AIHandler/MethodStackFirst'
-
 
 // card orders for different AI personalities
 const CARD_ORDER = {
@@ -28,18 +22,17 @@ const CARD_ORDER = {
   ]
 }
 
-
 /**
- * A factory to create different types of /AIHandlers.
+ * A factory to create different types of AIHandlers.
  */
-export default class /AIHandlerFactory {
+export default class AIHandlerFactory {
   /**
-   * @constructor /AIHandlerFactory
+   * @constructor AIHandlerFactory
    */
   constructor () {}
 
   /**
-   * Create and return an /AIHandler of the given type for the given player.
+   * Create and return an AIHandler of the given type for the given player.
    */
   newHandler (personality) {
     if (personality === 'beginner') {
@@ -58,12 +51,12 @@ export default class /AIHandlerFactory {
     }
     actions.push( new PlayBestCardAction(cards) )
 
-    let handler = new /AIHandler(actions)
+    let handler = new AIHandler(actions)
     return handler
   }
 
   newBeginnerHandler () {
-    return new /AIHandler([new PlayRandomCardAction()])
+    return new AIHandler([new PlayRandomCardAction()])
   }
 }
 

@@ -1,8 +1,8 @@
-import Player2 from '@/classes/game/Player2'
-import ReqFactory from '@/classes/agile/ReqFactory'
-import requirements from '@/data/requirements'
+import Player from '@/classes/player/Player'
+import ReqFactory from '@/classes/requirement/ReqFactory'
+import reqData from '@/classes/requirement/requirementData'
 
-export default class RequirementsState {
+export default class Requirements {
   constructor (playerList) {
     this.players = this.addPlayers(playerList)
     this.playerNum = 0
@@ -52,7 +52,7 @@ export default class RequirementsState {
     let id = 0
 
     return this.players.map((p) => {
-      const player = new Player2(id++, p.name, p.isAI)
+      const player = new Player(id++, p.name, p.isAI)
       player.requirement = player.AI ? fact.newAIReq(p.personality) : fact.newReq(p.req)
       return { player: player, premade: p.premade }
     })

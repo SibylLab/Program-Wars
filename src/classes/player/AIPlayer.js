@@ -1,5 +1,5 @@
 import Player from '@/classes/player/Player'
-import AiHandlerFactory from '@/classes/ai/AiHandlerFactory'
+import AIHandlerFactory from '@/classes/AIHandler/AIHandlerFactory'
 
 export default class AIPlayer extends Player {
   constructor (id, name, type) {
@@ -9,7 +9,7 @@ export default class AIPlayer extends Player {
   }
 
   getHandler (type) {
-    const fact = new AiHandlerFactory()
+    const fact = new AIHandlerFactory()
     return fact.newHandler(type)
   }
 

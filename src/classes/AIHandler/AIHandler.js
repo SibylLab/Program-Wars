@@ -1,9 +1,4 @@
-/**
- * @file AIHandler.js file
- * @author Steven on 2020-06-10
- */
-
-import Redraw from '@/classes/AIHandler/RedrawAction'
+import Redraw from '@/classes/AIHandler/Redraw'
 
 /**
  * A handler to take an AI players turn.

@@ -33,7 +33,7 @@ export default class Game {
     card.getDiscards().map(c => this.discard(c))
   }
 
-  discard {
+  discard (card) {
     this.deck.discard(card)
   }
 

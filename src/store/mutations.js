@@ -3,7 +3,7 @@ export default {
     state.showBackstory = false
   },
 
-  changeGameState (state, { state }) {
-    state.gameState = state
+  changeGameState (state, payload) {
+    state.gameState = payload.state
   }
 }

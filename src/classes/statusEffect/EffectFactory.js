@@ -1,6 +1,6 @@
-import StatusEffect from '@/classes/statusEffects/StatusEffect'
-import CyberAttack from '@/classes/statusEffects/CyberAttack'
-import AttackWithBonus from '@/classes/statusEffects/AttackWithBonus'
+import StatusEffect from '@/classes/statusEffect/StatusEffect'
+import CyberAttack from '@/classes/statusEffect/CyberAttack'
+import AttackWithBonus from '@/classes/statusEffect/AttackWithBonus'
 
 const penalties = {
   'RANSOM': 10

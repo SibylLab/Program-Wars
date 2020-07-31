@@ -1,4 +1,4 @@
-import Requirement from '@/classes/agile/Requirement'
+import Requirement from '@/classes/requirement/Requirement'
 
 /**
  * Keeps track of progress toward the InfoSec requirement.

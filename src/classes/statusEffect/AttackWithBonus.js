@@ -1,4 +1,4 @@
-import CyberAttack from '@/classes/statusEffects/CyberAttack'
+import CyberAttack from '@/classes/statusEffect/CyberAttack'
 
 export default class AttackWithBonus extends CyberAttack {
   constructor (card, playerId, attacker, bonus = 0) {

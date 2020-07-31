@@ -1,15 +1,14 @@
-import PlayerDeck from '@/classes/game/PlayerDeck'
-import { baseCards, premadeCards, optionalCards } from '@/data/decks'
-
+import AgileDeck from '@/classes/deck/AgileDeck'
 
 export default class DeckSetupState {
   constructor (playerList) {
     this.playerNum = 0  // must go before addPlayers
-    this.players = this.addPlayers(playerList)
+    // this.players = this.addPlayers(playerList)
     this.optionalCards = []
-    this.cardPool = this.poolCards(this.currentPlayer())
+    // this.cardPool = this.poolCards(this.currentPlayer())
   }
 
+  /*
   addPlayers (playerList) {
     return playerList.map((p) => {
       if (p.premade) {
@@ -42,7 +41,7 @@ export default class DeckSetupState {
   }
 
   premadeDeck (type) {
-    const deck = new PlayerDeck()
+    const deck = new AgileDeck()
     deck.addCards(this.cardList(baseCards))
     deck.addCards(this.cardList(premadeCards[type]))
     return deck
@@ -50,7 +49,7 @@ export default class DeckSetupState {
 
   finalizeDeck () {
     if (this.currentPlayer().deck !== undefined) { return }
-    const deck = new PlayerDeck()
+    const deck = new AgileDeck()
     deck.addCards(this.cardList(baseCards))
     deck.addCards(this.optionalCards)
     this.currentPlayer().deck = deck
@@ -111,4 +110,5 @@ export default class DeckSetupState {
     this.cardPool.push(card)
     this.sortCards(this.cardPool)
   }
+  */
 }

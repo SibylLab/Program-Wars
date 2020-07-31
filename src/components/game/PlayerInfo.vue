@@ -90,7 +90,7 @@
 
 <script>
 import InfoPopup from '@/components/shared/InfoPopup'
-import tooltips from '@/data/tooltips'
+import tooltips from '@/components/tooltips'
 import {bus} from '@/components/shared/Bus'
 import {mapState} from 'vuex'
 

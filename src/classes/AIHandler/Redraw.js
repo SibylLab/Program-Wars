@@ -1,14 +1,9 @@
-/**
- * @file RedrawAction.js file
- * @author Steven on 2020-06-10
- */
-
 import ActionHandler from '@/classes/AIHandler/ActionHandler'
 
 /**
  * Takes a Redraw action for the ai players turn.
  */
-export default class RedrawAction extends ActionHandler {
+export default class Redraw extends ActionHandler {
   /**
    * Returns a redraw turn object for an ai player.
    */

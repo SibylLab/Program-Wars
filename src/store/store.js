@@ -1,4 +1,4 @@
-import HomeState from '@/classes/states/HomeState'
+import Home from '@/pages/pageStates/Home'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -20,7 +20,7 @@ export const store = new Vuex.Store({
   state: {
     gameState: 'home',
     showBackstory: true,
-    pageState: new HomeState()
+    pageState: new Home()
   },
 
   getters,

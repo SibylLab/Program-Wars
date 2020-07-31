@@ -1,6 +1,6 @@
-import DryReq from '@/classes/agile/DryReq'
-import InfoSecReq from '@/classes/agile/InfoSecReq'
-import WhiteHatReq from '@/classes/agile/WhiteHatReq'
+import DryReq from '@/classes/requirement/DryReq'
+import InfoSecReq from '@/classes/requirement/InfoSecReq'
+import WhiteHatReq from '@/classes/requirement/WhiteHatReq'
 
 const personalityToType = {
   'standard': 'DRY',

@@ -1,5 +1,5 @@
 import DeckFactory from '@/classes/deck/DeckFactory'
-import Game from '@/classes/states/Game'
+import Game from '@/pages/pageStates/Game'
 
 export default class BeginnerGame extends Game {
   constructor (players, deckType) {

@@ -1,4 +1,4 @@
-import StatusEffect from '@/classes/statusEffects/StatusEffect.js'
+import StatusEffect from '@/classes/statusEffect/StatusEffect.js'
 
 export default class CyberAttack extends StatusEffect {
   constructor (card, playerId, attacker) {

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import tooltips from '@/data/tooltips'
+import tooltips from '@/components/tooltips'
 
 export default {
   name: 'player-effect',
