@@ -1,15 +1,11 @@
-import { beginnerDeck } from '@/data/decks'
-import Deck from '@/classes/card/Deck'
-import StandardGameState from '@/classes/states/StandardGameState'
+import DeckFactory from '@/classes/deck/DeckFactory'
+import Game from '@/classes/states/Game'
 
-export default class BeginnerGame extends StandardGameState {
-  constructor (players) {
-    super(players)
-  }
-
-  initGame () {
+export default class BeginnerGame extends Game {
+  constructor (players, deckType) {
+    super(players, deckType)
+    this.deck = new DeckFactory().begginerDeck(deckType)
     this.scoreLimit = 100
-    this.deck = new Deck(beginnerDeck)
-    this.givePlayerHands()
+    this.refreshHands()
   }
 }

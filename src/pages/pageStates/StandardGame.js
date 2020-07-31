@@ -1,6 +1,5 @@
-import { standardDeck } from '@/data/decks'
-import Deck from '@/classes/card/Deck'
-import GameState from '@/classes/states/GameState'
+import DeckFactory from '@/classes/deck/DeckFactory'
+import Game from '@/classes/states/Game'
 
 // Side objective bonuses
 const REPEAT_BONUS = 3
@@ -16,22 +15,12 @@ const TIE_BREAK_TYPES = [
   "total", "method", "nested", "defensive", "clean", "safety", "variable", "repeat"
 ]
 
-export default class StandardGameState extends GameState {
-  constructor (players) {
-    super(players)
-  }
-
-  initGame () {
+export default class StandardGameState extends Game {
+  constructor (players, deckType) {
+    super(players, deckType)
+    this.deck = new DeckFactory().standardDeck(deckType)
     this.scoreLimit = 200
-    this.deck = new Deck(standardDeck)
-    this.givePlayerHands()
-    this.currentCard = undefined
-  }
-
-  givePlayerHands () {
-    for (const player of this.players) {
-      this.drawCards(player)
-    }
+    this.refreshHands()
   }
 
   // Computing bonuses ///////////////////////////////////////////////////////
@@ -90,15 +79,13 @@ export default class StandardGameState extends GameState {
   // Finding winners /////////////////////////////////////////////////////////
 
   getWinners () {
-    // get winners using bonus totals
     const bonuses = this.getBonuses()
-    const highest = Math.max(...this.players.map(p => p.getScore() + bonuses[p.id].total))
-    let winners = this.players.filter(p => p.getScore() + bonuses[p.id].total === highest)
+    const totals = this.players.map(p => p.getScore() + bonuses[p.id].total)
+    const highest = Math.max(...totals)
+    let winners = this.players.filter(p => totals[p.id] === highest)
 
-    // To break ties filter out players who had the highest normal score first
-    winners = this.highestScoreingPlayers(winners)
-
-    // Otherwise filter out players with highest bonus score of each type
+    // Break ties with highes normal score and then by comparing bonuse types
+    winners = this.highestScoringPlayers(winners)
     for (const type of TIE_BREAK_TYPES) {
       winners = this.tieBreak(winners, bonuses, type)
     }
@@ -106,8 +93,9 @@ export default class StandardGameState extends GameState {
   }
 
   tieBreak (players, bonuses, bonusType) {
-    const highest = Math.max(...players.map(p => bonuses[p.id][bonusType]))
-    return players.filter(p => bonuses[p.id][bonusType] === highest)
+    const scores = players.map(p => bonuses[p.id][bonusType])
+    const highest = Math.max(...scores)
+    return players.filter(p => scores[p.id] === highest)
   }
 }
 
