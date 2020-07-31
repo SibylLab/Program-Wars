@@ -49,14 +49,14 @@ export default class AIHandlerFactory {
     if (personality in CARD_ORDER) {
       cards = CARD_ORDER[personality]
     }
-    actions.push( new PlayBestCardAction(cards) )
+    actions.push( new PlayBestCard(cards) )
 
     let handler = new AIHandler(actions)
     return handler
   }
 
   newBeginnerHandler () {
-    return new AIHandler([new PlayRandomCardAction()])
+    return new AIHandler([new PlayRandomCard()])
   }
 }
 

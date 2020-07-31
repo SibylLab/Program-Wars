@@ -3,7 +3,7 @@ import CardFactory from '@/classes/card/CardFactory'
 const NUM_SHUFFLES = 4
 
 export default class Deck {
-  constructor (cardsTypes) {
+  constructor (cardTypes) {
     this.cards = []
     this.discard = []
     this.addCards(cardTypes)

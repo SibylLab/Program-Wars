@@ -4,7 +4,7 @@ const malware = [
 ]
 
 // All hack card types
-const hacks = [
+const hack = [
   "STACK_OVERFLOW", "STACK_UNDERFLOW", "SQL_INJECTION", "DDOS"
 ]
 
@@ -21,7 +21,7 @@ const algorithm = [
 // all card types that use the NegativeEffectCard
 const negativeEffects = [
   ...malware.filter(m => m !== "VIRUS"),
-  ...hacks.filter(h => h !== "SQL_INJECTION")
+  ...hack.filter(h => h !== "SQL_INJECTION")
 ]
 
 // all card types that use the PositiveEffectCard
@@ -31,7 +31,7 @@ const positiveEffects = [
 
 // Cards that will have an overlay to play them
 const special = [
-  ...safety, ...algorithms, ...hacks,
+  ...safety, ...algorithm, ...hack,
   ...malware.filter(m => m !== "VIRUS"),
 ]
 
@@ -47,7 +47,7 @@ export default {
   isHack: _isType(hack),
   isSafety: _isType(safety),
   isAlgorithm: _isType(algorithm),
-  isNegativeEffect: _isType(negative),
-  isPositiveEffect: _isType(positive),
+  isNegativeEffect: _isType(negativeEffects),
+  isPositiveEffect: _isType(positiveEffects),
   isSpecial: _isType(special)
 }

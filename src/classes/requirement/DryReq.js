@@ -1,4 +1,5 @@
 import Requirement from '@/classes/requirement/Requirement'
+import Card from '@/classes/card/Card'
 
 /**
  * Keeps track of progress toward the DRY requirement.
@@ -13,9 +14,9 @@ export default class DryReq extends Requirement {
     if (round === 1) {
       return playerDetails.method.getScore() === 9
     } else if (round === 2) {
-      return numCompleteMethodStacks(playerDetails.stacks) >= 1
+      return this.numCompleteMethodStacks(playerDetails.stacks) >= 1
     } else if (round === 3) {
-      return numCompleteMethodStacks(playerDetails.stacks) >= 3
+      return this.numCompleteMethodStacks(playerDetails.stacks) >= 3
     }
     return false
   }

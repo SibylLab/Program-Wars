@@ -1,4 +1,4 @@
-import CyberAttack from '@/classes/statusEffects/CyberAttack"
+import CyberAttack from '@/classes/statusEffect/CyberAttack'
 
 const SQL_PENALTY = 2
 

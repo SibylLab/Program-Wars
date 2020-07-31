@@ -9,13 +9,13 @@ import router from '@/router'
 export default {
   startHomePage ({ commit }) {
     commit('changeGameState', { state: 'home' })
-    commit('changePageState', { pageState: new HomeState() })
+    commit('changePageState', { pageState: new Home() })
     router.push('/')
   },
 
   startBeginnerGame ({ commit }, { players }) {
-    context.state.gameState = 'beginner'
-    context.commit('changePageState', { pageState: new BeginnerGame(players) })
+    commit('changeGameState', { state: 'beginner' })
+    commit('changePageState', { pageState: new BeginnerGame(players) })
     router.push('beginner')
   },
 

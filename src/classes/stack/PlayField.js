@@ -1,7 +1,5 @@
-import Stack from '@/classes/card/Stack'
-import MethodStack from '@/classes/card/MethodStack'
-import StackWithMethodBase from '@/classes/card/StackWithMethodBase'
-import VirusWrapper from '@/classes/card/VirusWrapper'
+import Stack from '@/classes/stack/Stack'
+import MethodStack from '@/classes/stack/MethodStack'
 
 export default class PlayField {
   constructor (playerId) {

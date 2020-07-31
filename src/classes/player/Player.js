@@ -1,5 +1,5 @@
 import Hand from '@/classes/player/Hand'
-import Stacks from '@/classes/stack/Stacks'
+import PlayField from '@/classes/stack/PlayField'
 import StatusEffects from '@/classes/statusEffect/StatusEffects'
 
 export default class Player {
@@ -8,7 +8,7 @@ export default class Player {
     this.name = name
     this.isAI = false
     this.hand = new Hand(id)
-    this.playField = new Stacks(id)
+    this.playField = new PlayField(id)
     this.effects = new StatusEffects(id)
     this.image = 'static/playerImages/player' + id + '.png'
   }

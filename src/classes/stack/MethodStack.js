@@ -1,4 +1,4 @@
-import Stack from '@/classes/game/Stack'
+import Stack from '@/classes/stack/Stack'
 
 
 // The maximum score allowed for a method

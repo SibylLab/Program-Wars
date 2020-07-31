@@ -1,6 +1,6 @@
 import PlayBestCard from '@/classes/AIHandler/PlayBestCard'
 
-export default class PlayRandomCardAction extends PlayBestCardAction {
+export default class PlayRandomCard extends PlayBestCard {
   constructor () {
     super([])
   }

@@ -1,6 +1,7 @@
 import StatusEffect from '@/classes/statusEffect/StatusEffect'
 import CyberAttack from '@/classes/statusEffect/CyberAttack'
 import AttackWithBonus from '@/classes/statusEffect/AttackWithBonus'
+import SqlEffect from '@/classes/statusEffect/SqlEffect'
 
 const penalties = {
   'RANSOM': 10
