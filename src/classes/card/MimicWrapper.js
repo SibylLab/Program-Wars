@@ -1,6 +1,6 @@
 import CardWrapper from '@/classes/card/CardWrapper'
 import ExtraCardWrapper from '@/classes/card/ExtraCardWrapper'
-import NegtiveEffectCard from '@/classes/card/NegativeEffectCard'
+import NegativeEffectCard from '@/classes/card/NegativeEffectCard'
 import Virus from '@/classes/card/Virus'
 
 export default class MimicWrapper extends CardWrapper {

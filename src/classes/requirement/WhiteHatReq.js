@@ -9,6 +9,7 @@ export default class WhiteHatReq extends Requirement {
     this.type = 'whiteHat'
   }
 
+  /*
   hasCompletedSprint (round, playerDetails) {
     const cardsPlayed = playerDetails.player.objectives.cardsPlayed
     if (round === 1) {
@@ -44,6 +45,7 @@ export default class WhiteHatReq extends Requirement {
       this.bonusPoints += 20
     }
   }
+  */
 }
 
 

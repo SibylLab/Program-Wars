@@ -71,7 +71,7 @@ export default {
       }
     },
     getScore () {
-      return this.stack.getScore(this.player.getStackAdjustments())
+      return this.stack.getScore()
     }
   },
   methods: {

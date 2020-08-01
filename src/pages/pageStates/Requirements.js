@@ -4,11 +4,12 @@ import reqData from '@/classes/requirement/requirementData'
 
 export default class Requirements {
   constructor (playerList) {
-    this.players = this.addPlayers(playerList)
+    // this.players = this.addPlayers(playerList)
     this.playerNum = 0
     this.req = 'DRY'
   }
 
+  /*
   addPlayers (playerList) {
     return playerList.map((p) => {
       p.req = 'DRY'
@@ -57,4 +58,5 @@ export default class Requirements {
       return { player: player, premade: p.premade }
     })
   }
+  */
 }

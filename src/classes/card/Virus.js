@@ -2,7 +2,7 @@ import Card from '@/classes/card/Card'
 
 export default class Virus extends Card {
   constructor (ownerId = -1) {
-    super(value, 'VIRUS', this._makeImage('virus'), ownerId)
+    super(0, 'VIRUS', 'virus', ownerId)
   }
 
   play ({target, stack}) {

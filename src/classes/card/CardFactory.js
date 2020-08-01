@@ -27,9 +27,9 @@ export default class CardFactory {
     } else if (type === 'SQL_INJECTION') {
       return new SqlInjection(ownerId)
     } else if (cardData.isNegativeEffect(type)) {
-      return new NegativeEffectCard(ownerId)
+      return new NegativeEffectCard(type, ownerId)
     } else if (cardData.isPositiveEffect(type)) {
-      return new PositiveEffectCard(ownerId)
+      return new PositiveEffectCard(type, ownerId)
     } else {
       throw "Not a valid card type: " + type
     }

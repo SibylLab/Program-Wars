@@ -5,7 +5,7 @@ const MAX_TRIES = 10
 
 export default class Trojan extends Card {
   constructor (ownerId = -1) {
-    super(value, 'TROJAN', this._makeImage('trojan'), ownerId)
+    super(0, 'TROJAN', 'trojan', ownerId)
   }
 
   play ({player, target}) {

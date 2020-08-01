@@ -8,10 +8,10 @@
 
   <ul id="stack-list">
     <div id="method">
-      <card-stack :stack="player.stacks.method"/>
+      <card-stack :stack="player.playField.method"/>
     </div>
 
-    <li class="card-stack" v-for="stack in player.stacks.stacks" v-bind:key="stack.id">
+    <li class="card-stack" v-for="stack in player.playField.stacks" v-bind:key="stack.id">
       <card-stack :stack="stack"/>
     </li>
   </ul>

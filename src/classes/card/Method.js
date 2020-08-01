@@ -1,9 +1,10 @@
 import Card from '@/classes/card/Card'
 import MethodCardWrapper from '@/classes/card/MethodCardWrapper'
+import Stack from '@/classes/stack/Stack'
 
 export default class MethodCard extends Card {
   constructor (ownerId = -1) {
-    super(value, 'METHOD', this._makeImage('method'), ownerId)
+    super(0, 'METHOD', 'method', ownerId)
   }
 
   play ({player}) {

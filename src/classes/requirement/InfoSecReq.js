@@ -9,6 +9,7 @@ export default class InfoSecReq extends Requirement {
     this.type = 'infoSec'
   }
 
+  /*
   hasCompletedSprint (round, playerDetails) {
     const cardsPlayed = playerDetails.player.objectives.cardsPlayed
     if (round === 1) {
@@ -42,5 +43,6 @@ export default class InfoSecReq extends Requirement {
       this.bonusPoints += 30
     }
   }
+  */
 }
 

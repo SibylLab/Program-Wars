@@ -4,8 +4,9 @@ const MAX_REPEATS = 2
 export default class Stack {
   constructor (baseCard, playerId) {
     this.playerId = playerId
-    this.cards = [baseCard]
+    this.cards = []
     this.isMethod = false
+    if (baseCard) { this.addCard(baseCard) }
   }
 
   addCard (card) {

@@ -10,7 +10,7 @@ const METHOD_LIMIT = 9
  */
 export default class MethodStack extends Stack {
   constructor (playerId) {
-    super(playerId)
+    super(null, playerId)
     this.isMethod = true
     this.adjustment = 0
   }

@@ -1,3 +1,4 @@
+import cardData from '@/classes/card/cardData'
 import { bus } from '@/components/shared/Bus'
 
 const TURN_DELAY = 1250
@@ -58,7 +59,7 @@ export default class Game {
   canPlayCard (card) {
     if (card.type === 'VIRUS') {
       return this.getAttackablePlayers('VIRUS').length > 0
-    } else if (card.isSpecial()) {
+    } else if (cardData.isSpecial(card.type)) {
       return !this.currentPlayer().hurtBy('STACK_UNDERFLOW')
     } else {
       return !this.currentPlayer().hurtBy('STACK_OVERFLOW')
@@ -88,7 +89,7 @@ export default class Game {
 
   cardNotPlayed ({type, player, card}) {
     if (type === 'discardHand') {
-      const cards = playInfo.player.hand.empty()
+      const cards = player.hand.empty()
       this.discardCards(cards)
     } else if (type === 'discardCard') {
       this.discardCard(card)
@@ -159,7 +160,7 @@ export default class Game {
   }
 
   getWinners () {
-    return this.highestScoreingPlayers(this.players)
+    return this.highestScoringPlayers(this.players)
   }
 
   highestScoringPlayers (players) {

@@ -4,30 +4,33 @@ import deckData from '@/classes/deck/deckData'
 
 export default class DeckFactory {
   begginerDeck (type) {
+    let data
     if (type in deckData.begginer) {
-      const data = deckData.beginner[type]
-      return new Deck(this._merge(data.base, data.extra))
+      data = deckData.beginner[type]
     } else {
-      return new Deck(deckData.begginer.default)
+      data = deckData.begginer.default
     }
+    return new Deck(this._merge(data.base, data.extra))
   }
 
   standardDeck (type) {
+    let data
     if (type in deckData.standard) {
-      const data = deckData.standard[type]
-      return new Deck(this._merge(data.base, data.extra))
+      data = deckData.standard[type]
     } else {
-      return new Deck(deckData.standard.default)
+      data = deckData.standard.default
     }
+    return new Deck(this._merge(data.base, data.extra))
   }
 
   agileDeck (type) {
+    let data
     if (type in deckData.agile) {
-      const data = deckData.agile[type]
-      return new AgileDeck(this._merge(data.base, data.extra))
+      data = deckData.agile[type]
     } else {
-      return new AgileDeck(deckData.agile.default)
+      data = deckData.agile.default
     }
+    return new AgileDeck(this._merge(data.base, data.extra))
   }
 
   _merge (baseCards, extraCards) { 

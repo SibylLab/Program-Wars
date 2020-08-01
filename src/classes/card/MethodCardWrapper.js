@@ -7,7 +7,7 @@ export default class MethodCardWrapper extends CardWrapper {
   }
 
   getValue () {
-    return method.getScore()
+    return this.method.getScore()
   }
 }
 

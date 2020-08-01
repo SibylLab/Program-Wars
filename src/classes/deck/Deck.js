@@ -6,7 +6,7 @@ export default class Deck {
   constructor (cardTypes) {
     this.cards = []
     this.discard = []
-    this.addCards(cardTypes)
+    this._addCards(cardTypes)
     this.shuffle(NUM_SHUFFLES)
   }
 

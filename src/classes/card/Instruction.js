@@ -3,7 +3,7 @@ import Stack from '@/classes/stack/Stack'
 
 export default class Instruction extends Card {
   constructor (value, ownerId = -1) {
-    super(value, 'INSTRUCTION', this._makeImage('instruction' + value), ownerId)
+    super(value, 'INSTRUCTION', 'instruction' + value, ownerId)
   }
 
   play ({player}) {

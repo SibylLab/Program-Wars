@@ -18,7 +18,7 @@ export default class Player {
   }
 
   getScore () {
-    let score = this.stacks.getScore(this.getStackAdjustments())
+    let score = this.playField.getScore()
     score += this.effects.getScoreAdjustment()
     return score
   }
@@ -37,7 +37,7 @@ export default class Player {
 
   getAllAttacks () {
     const effects = this.effects.negative
-    const virusStacks = this.stacks.getStacksWithVirus()
+    const virusStacks = this.playField.getStacksWithVirus()
     const mimics = this.hand.getMimics()
     return { effects, virusStacks, mimics }
   }

@@ -2,7 +2,7 @@ import Card from '@/classes/card/Card'
 
 export default class NegativeEffectCard extends Card {
   constructor (type, ownerId = -1) {
-    super(value, type, this._makeImage(type), ownerId)
+    super(0, type, type.toLowerCase(), ownerId)
   }
 
   play ({player, target}) {
