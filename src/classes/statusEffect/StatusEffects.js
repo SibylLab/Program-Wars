@@ -45,6 +45,10 @@ export default class StatusEffects {
     return this.negative.filter(n => n.card.type === effectType).length > 0
   }
 
+  getNegative (type, attacker) {
+    return this.negative.find(n => n.card.type === type && n.attacker === attacker)
+  }
+
   hasProtectionFrom (effectType) {
     return (cardData.isHack(effectType) && this.hasPositive('FIREWALL'))
         || (cardData.isMalware(effectType) && this.hasPositive('ANTIVIRUS'))
@@ -78,14 +82,14 @@ export default class StatusEffects {
   }
 
   removePositiveType (effectType) {
-    this.positive = this.positive.filter(p => p.card.type !== effectType)
     const effects = this.positive.filter(p => p.card.type === effectType)
+    this.positive = this.positive.filter(p => p.card.type !== effectType)
     return effects.map(e => e.destroy())
   }
 
   removeNegativeType (effectType) {
-    this.negative = this.negative.filter(n => n.card.type !== effectType)
     const effects = this.negative.filter(n => n.card.type === effectType)
+    this.negative = this.negative.filter(n => n.card.type !== effectType)
     return effects.map(e => e.destroy())
   }
 

@@ -39,8 +39,7 @@ export default {
     },
     showSpy () {
       if (this.player.hurtBy('SPYWARE')) {
-        const spy = this.player.effects.getNegative('SPYWARE')
-        return spy.attacker.id === this.pageState.currentPlayer().id
+        return this.player.effects.getNegative('SPYWARE', this.pageState.currentPlayer())
       }
       return false
     }

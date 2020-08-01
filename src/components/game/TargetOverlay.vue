@@ -14,6 +14,7 @@
 
 
 <script>
+import cardData from '@/classes/card/cardData'
 
 /**
  * Displays buttons for targeting players or activating special cards, or
@@ -32,20 +33,20 @@ export default {
   },
   computed: {
     titleText () {
-      if (this.card.isSafety()) {
+      if (cardData.isSafety(this.card.type)) {
         return this.pageState.currentPlayer().helpedBy(this.card.type) ? 'Protected' : 'Activate'
       } else {
         return this.pageState.getAttackablePlayers(this.card.type).length > 0 ? 'Targets' : 'No Targets'
       }
     },
     noButtonsText () {
-      if (!this.card.isSafety()) {
+      if (!cardData.isSafety(this.card.type)) {
         return 'None'
       }
       return ''
     },
     targetPlayers () {
-      if (this.card.isSafety()) {
+      if (cardData.isSafety(this.card.type)) {
         return [this.pageState.currentPlayer()]
       } else {
         return this.pageState.getAttackablePlayers(this.card.type)
@@ -54,7 +55,7 @@ export default {
   },
   methods: {
     buttonText (player) {
-      if (this.card.isSafety()) {
+      if (cardData.isSafety(this.card.type)) {
         return 'OK'
       }
       return player.name

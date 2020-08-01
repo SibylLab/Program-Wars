@@ -37,9 +37,7 @@ export default {
       return this.showHand ? 'Stop Spying' : 'Spy Hand'
     },
     canSpy () {
-      // this will have to be better tested with 4 player mode
-      const spy = this.player.effects.getNegative('SPYWARE')
-      return this.pageState.currentPlayer() === spy.attacker
+      return this.player.effects.getNegative('SPYWARE', this.pageState.currentPlayer())
     }
   },
   methods: {
