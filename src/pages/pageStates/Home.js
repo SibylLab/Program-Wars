@@ -12,7 +12,7 @@ const botInfo = [
 export default class HomeState {
   constructor () {
     this.players = []
-    this.mode = 'standard'
+    this.mode = 'beginner'
     this.message = ''
   }
 

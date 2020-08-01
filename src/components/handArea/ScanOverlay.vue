@@ -16,13 +16,13 @@
 
 <script>
 import ScanModal from '@/components/modals/ScanModal'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'scan-overlay',
   props: ['card', 'player'],
   data () {
     return {
-      pageState: this.$store.state.pageState,
       activeScan: false
     }
   },
@@ -30,6 +30,7 @@ export default {
     'scan-modal': ScanModal
   },
   computed: {
+    ...mapGetters(['state']),
     canScan() {
       return !this.player.helpedBy('SCAN')
     },
@@ -51,11 +52,11 @@ export default {
         this.activeScan = true
       } else {
         this.activeScan = false
-        this.pageState.takeTurn({
+        this.state.takeTurn({
           type: 'playSpecialCard',
           card: this.card, cardOwner: this.player,
-          target: this.pageState.currentPlayer(), targetType: 'player',
-          player: this.pageState.currentPlayer()
+          target: this.state.currentPlayer(), targetType: 'player',
+          player: this.state.currentPlayer()
         })
       }
     }

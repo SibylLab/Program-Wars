@@ -33,7 +33,6 @@
       </button>
     </div>
 
-
   </div>
 </div>
 </template>
@@ -41,34 +40,32 @@
 
 <script>
 import CardStack from '@/components/stackArea/CardStack'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'active-scan',
   props: ['cardOwner', 'card', 'attacks'],
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   components: {
     'card-stack': CardStack
   },
   computed: {
-    player () { return this.pageState.currentPlayer() },
-    trojanImage () { return 'static/cardImages/effects/TROJAN.png' }
+    ...mapGetters(['state']),
+    trojanImage () {
+      return 'static/cardImages/effects/TROJAN.png'
+    }
   },
   methods: {
     playScan (target, type) {
-      this.pageState.takeTurn({
-        type: "playScan", player: this.player,
+      this.state.takeTurn({
+        type: "playScan", player: this.state.currentPlayer(),
         card: this.card, cardOwner: this.cardOwner,
         target: target, targetType: type
       })
     },
     discardScan () {
-      this.pageState.takeTurn({
+      this.state.takeTurn({
         type: 'discardCard', card: this.card, cardOwner: this.cardOwner,
-        player: this.player
+        player: this.state.currentPlayer()
       })
     }
   }
@@ -87,9 +84,9 @@ export default {
 .container {
   position: absolute;
   top: 10%;
-  left: 30%;
+  left: 35%;
   width: 30%;
-  height: 80%;
+  height: 70%;
   border: ridge grey 4px;
   border-radius: 20px;
   background-color: white;
