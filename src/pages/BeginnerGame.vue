@@ -1,18 +1,14 @@
 <template>
 <div id="beginner-game">
-  <winner-modal id="winner-modal" class="modal fade"
-      tabindex="-1" role="dialog"
-      data-backdrop='static' data-keyboard='false'>
-  </winner-modal>
-
+  <winner-modal id="winner-modal" class="modal fade"/>
   <page-header/>
 
   <div class="begin-player" style="left: 0;">
-    <player-area :player="pageState.players[0]" side="left"/>
+    <player-area :player="state.players[0]" side="left"/>
   </div>
 
   <div class="begin-play-field" style="left: 1%">
-    <play-field :player="pageState.players[0]"/>
+    <play-field :player="state.players[0]"/>
   </div>
 
   <div class="begin-turn-area">
@@ -20,11 +16,11 @@
   </div>
 
   <div class="begin-player" style="right: 0;">
-    <player-area :player="pageState.players[1]" side="right"/>
+    <player-area :player="state.players[1]" side="right"/>
   </div>
 
   <div class="begin-play-field" style="right: 1%;">
-    <play-field :player="pageState.players[1]"/>
+    <play-field :player="state.players[1]"/>
   </div>
 
   <effect-notifications/>
@@ -39,15 +35,11 @@ import PlayerArea from '@/components/player/PlayerArea'
 import TurnArea from '@/components/game/NewTurnArea'
 import PlayField from '@/components/game/NewPlayField'
 import NewEffectNotifications from '@/components/game/NewEffectNotifications'
+import { mapActions, mapGetters } from 'vuex'
 import { bus } from '@/components/shared/Bus'
 
 export default {
   name: 'beginner-game',
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   components: {
     'winner-modal': WinnerModalBeginner,
     'page-header': PageHeader,
@@ -56,12 +48,19 @@ export default {
     'effect-notifications': NewEffectNotifications,
     'play-field': PlayField
   },
+  computed: {
+    ...mapGetters(['state', 'page'])
+  },
   methods: {
+    ...mapActions(['leaveGame']),
     showWinner () {
       $('#winner-modal').modal('show')
     }
   },
   created () {
+    if (this.page !== 'beginner') {
+      this.leaveGame()
+    }
     bus.$on('game-over', this.showWinner)
   },
   beforeDestroy () {

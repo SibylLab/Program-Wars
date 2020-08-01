@@ -8,38 +8,38 @@ import router from '@/router'
 
 export default {
   startHomePage ({ commit }) {
-    commit('changeGameState', { state: 'home' })
+    commit('changePage', { page: 'home' })
     commit('changePageState', { pageState: new Home() })
     router.push('/')
   },
 
   startBeginnerGame ({ commit }, { players }) {
-    commit('changeGameState', { state: 'beginner' })
+    commit('changePage', { page: 'beginner' })
     commit('changePageState', { pageState: new BeginnerGame(players) })
     router.push('beginner')
   },
 
   startStandardGame ({ commit }, { players }) {
-    commit('changeGameState', { state: 'standard' })
+    commit('changePage', { page: 'standard' })
     commit('changePageState', { pageState: new StandardGame(players) })
     router.push('standard')
   },
 
   startRequirements ({ commit }, { players }) {
-    commit('changeGameState', { state: 'requirements' })
+    commit('changePage', { page: 'requirements' })
     commit('changePageState', { pageState: new Requirements(players) })
     router.push('requirements')
   },
 
   startDeckSetup ({ commit }, { players }) {
-    commit('changeGameState', { state: 'decks' })
+    commit('changePage', { page: 'decks' })
     commit('changePageState', { pageState: new DeckSetup(players) })
     router.push('decks')
   },
 
   startAgileGame ({ commit, dispatch }, { players }) {
     /*
-    commit('changeGameState', { state: 'agile' })
+    commit('changePage', { page: 'agile' })
     commit('changePageState', { pageState: new AgileGame(players) })
     router.push('agile')
     */
@@ -47,7 +47,7 @@ export default {
   },
 
   leaveGame ({ commit }) {
-    commit('changeGameState', { state: 'home' })
+    commit('changePage', { page: 'home' })
     commit('seenBackstory')
     this.dispatch('startHomePage')
   }

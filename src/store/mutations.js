@@ -3,8 +3,8 @@ export default {
     state.showBackstory = false
   },
 
-  changeGameState (state, payload) {
-    state.gameState = payload.state
+  changePage (state, { page }) {
+    state.page = page
   },
 
   changePageState (state, { pageState }) {
