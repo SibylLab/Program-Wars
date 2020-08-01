@@ -74,8 +74,8 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  min-width: 700px;
-  min-height: 650px;
+  min-width: 1350px;
+  min-height: 750px;
   background-image: linear-gradient(to bottom right, purple, darkblue);
   font-family: monospace;
   font-size: 15px;
@@ -83,9 +83,9 @@ export default {
 
 #game-setup {
   position: absolute;
-  top: 50px;
+  top: 60px;
   width: 650px;
-  height: 600px;
+  height: 580px;
   background-color: white;
   border-radius: 30px;
 }

@@ -75,6 +75,9 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
+  min-width: 1350px;
+  min-height: 750px;
+  font-family: monospace;
 }
 
 .begin-player {

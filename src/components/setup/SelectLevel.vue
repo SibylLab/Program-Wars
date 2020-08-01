@@ -7,7 +7,7 @@
     <div class="dropdown my-drop">
       <button class="btn btn-sm btn-warning dropdown-toggle" type="button"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{ state.level.name }}
+        {{ currentLevel.name }}
       </button>
 
       <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -20,7 +20,7 @@
 
     <div class="describe">
       <span v-if="state.mode !== 'agile'" style="color: black;"> Cards: </span>
-      {{ state.level.description }}
+      {{ currentLevel.description }}
     </div>
   </div>
 
@@ -34,14 +34,14 @@ export default {
   name: 'select-level',
   computed: {
     ...mapGetters(['state']),
-  },
-  methods: {
     currentLevel () {
       if (this.state.level) { // stop error when changing pages
         return this.state.level
       }
-      return { name: 'null' }
+      return { name: 'null', description: 'null' }
     },
+  },
+  methods: {
     select (level) {
       this.state.level = level
     }

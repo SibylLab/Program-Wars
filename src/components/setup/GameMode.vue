@@ -3,23 +3,25 @@
 
   <h5 class="sub-heading">Select Game Type</h5>
 
-  <input type="radio" class="form-check-input" id="beginner" name="game-type"
-      v-on:click="state.changeMode('beginner')">
-  <label for="beginner">
-    <b>Beginner:</b> Play with fewer card types and easier AI
-  </label>
-  <br>
-  <input type="radio" class="form-check-input" id="standard" name="game-type"
-      v-on:click="state.changeMode('standard')">
-  <label for="standard">
-    <b>Standard:</b> Play with more card types and smarter AI
-  </label>
-  <br>
-  <input type="radio" class="form-check-input" id="agile" name="game-type"
-    v-on:click="state.changeMode('agile')">
-  <label for="agile">
-    <b>Agile: </b> Play to complete chosen goals with a customized deck
-  </label>
+  <div class="drop-menu">
+    <div class="dropdown my-drop">
+      <button class="btn btn-sm btn-info dropdown-toggle" type="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ state.mode }}
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <button v-for="mode in getModes" v-bind:key="mode"
+            v-on:click="state.changeMode(mode)" class="dropdown-item" type="button">
+          {{ mode }}
+        </button>
+      </div>
+    </div>
+
+    <div class="describe">
+      {{ describe }}
+    </div>
+  </div>
 
 </div>
 </template>
@@ -29,17 +31,20 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'game-mode',
-  data () {
-    return {
-      checked: 'beginner'
-    }
-  },
   computed: {
-    ...mapGetters(['state'])
-  },
-  mounted () {
-    this.state.mode === this.checked
-    $('#' + this.checked).prop('checked', true)
+    ...mapGetters(['state']),
+    getModes () {
+      return ['beginner', 'standard', 'agile']
+    },
+    describe () {
+      if (this.state.mode === 'beginner') {
+        return 'Play with fewer card types and easier AI'
+      } else if (this.state.mode === 'standard') {
+        return 'Play with more card types and smarter AI'
+      } else {
+        return 'Play to complete chosen goals with a customized deck'
+      }
+    }
   }
 }
 </script>
@@ -48,5 +53,14 @@ export default {
 .sub-heading {
   text-decoration: underline;
   text-decoration-skip-ink: none;
+}
+
+.my-drop {
+  margin: 1%;
+}
+
+.describe {
+  margin: 1%;
+  color: black;
 }
 </style>
