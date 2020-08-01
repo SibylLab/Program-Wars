@@ -11,24 +11,30 @@ export default class Hand {
     return this.cards.length
   }
 
-  addCard (card) {
-    this.cards.push(card)
-  }
-
   addCards (cards) {
     for (const card of cards) {
       this.addCard(card)
     }
   }
 
-  removeCard (card) {
-    this.cards = this.cards.filter(c => c !== card)
+  addCard (card) {
+    this.cards.push(card)
+  }
+
+  takeAll () {
+    const cards = this.cards
+    this.cards = []
+    return cards
   }
 
   removeCards (cards) {
     for (const card of cards) {
       this.removeCard(card)
     }
+  }
+
+  removeCard (card) {
+    this.cards = this.cards.filter(c => c !== card)
   }
 
   cleanMimics () {

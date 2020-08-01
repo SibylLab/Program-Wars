@@ -1,6 +1,7 @@
 import cardData from '@/classes/card/cardData'
 import { bus } from '@/components/shared/Bus'
 
+const REDRAW_DELAY = 400
 const TURN_DELAY = 1250
 const AI_DELAY = 500
 
@@ -87,11 +88,12 @@ export default class Game {
     return type === 'pass' || type === 'discardHand' || 'discardCard'
   }
 
-  cardNotPlayed ({type, player, card}) {
+  cardNotPlayed ({type, player, card, cardOwner}) {
     if (type === 'discardHand') {
-      const cards = player.hand.empty()
+      const cards = player.hand.takeAll()
       this.discardCards(cards)
     } else if (type === 'discardCard') {
+      cardOwner.hand.removeCard(card)
       this.discardCard(card)
     } // else pass
   }
@@ -115,9 +117,13 @@ export default class Game {
   endTurn () {
     this.wait = true
 
+    // timeout is asynchronus so both start their countdown at the same time
+    setTimeout(() => {
+      this.refreshHands()
+    }, REDRAW_DELAY)
+
     setTimeout(() => {
       bus.$emit('end-turn')
-      this.refreshHands()
 
       if (!this.endGame()) {
         this.nextPlayer()

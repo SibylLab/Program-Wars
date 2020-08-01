@@ -5,21 +5,21 @@ const NUM_SHUFFLES = 4
 export default class Deck {
   constructor (cardTypes) {
     this.cards = []
-    this.discard = []
+    this.discardPile = []
     this._addCards(cardTypes)
     this.shuffle(NUM_SHUFFLES)
   }
 
   draw () {
     if (this.cards.length === 0) {
-      this.cards = this.cards.concat(this.discard)
-      this.discard = []
+      this.cards = this.cards.concat(this.discardPile)
+      this.discardPile = []
     }
     return this.cards.shift()
   }
 
   discard (card) {
-    this.discard.push(card)
+    this.discardPile.push(card)
   }
 
   shuffle (times) {
