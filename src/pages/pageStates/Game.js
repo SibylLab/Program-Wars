@@ -1,4 +1,4 @@
-import cardData from '@/classes/card/cardData'
+import { isSpecial } from '@/classes/card/cardData'
 import { bus } from '@/components/shared/Bus'
 
 const REDRAW_DELAY = 400
@@ -20,6 +20,10 @@ export default class Game {
 
   currentPlayer () {
     return this.players[this.playerNum]
+  }
+
+  getPlayer (id) {
+    return this.players[id]
   }
 
   nextPlayer () {
@@ -60,7 +64,7 @@ export default class Game {
   canPlayCard (card) {
     if (card.type === 'VIRUS') {
       return this.getAttackablePlayers('VIRUS').length > 0
-    } else if (cardData.isSpecial(card.type)) {
+    } else if (isSpecial(card.type)) {
       return !this.currentPlayer().hurtBy('STACK_UNDERFLOW')
     } else {
       return !this.currentPlayer().hurtBy('STACK_OVERFLOW')

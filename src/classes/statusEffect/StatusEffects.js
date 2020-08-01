@@ -1,6 +1,6 @@
 import EffectFactory from '@/classes/statusEffect/EffectFactory'
 import BonusEffect from '@/classes/statusEffect/BonusEffect'
-import cardData from '@/classes/card/cardData'
+import * as cardData from '@/classes/card/cardData'
 
 export default class StatusEffects {
   constructor (playerId) {

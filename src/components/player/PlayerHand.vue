@@ -21,7 +21,7 @@
 <script>
 import TargetOverlay from '@/components/game/TargetOverlay'
 import ScanOverlay from '@/components/game/ScanOverlay'
-import cardData from '@/classes/card/cardData'
+import { isSpecial } from '@/classes/card/cardData'
 import { bus } from '@/components/shared/Bus'
 
 export default {
@@ -43,7 +43,7 @@ export default {
       return card.type === 'SCAN'
     },
     canDrag (card) {
-      return !cardData.isSpecial(card.type) && this.pageState.canPlayCard(card)
+      return !isSpecial(card.type) && this.pageState.canPlayCard(card)
     },
     select (card) {
       if (this.pageState.currentCard !== card) {
@@ -56,7 +56,7 @@ export default {
       return this.pageState.currentCard === card && !this.player.isAI
     },
     showOverlay (card) {
-      return this.isActiveCard(card) && cardData.isSpecial(card.type)
+      return this.isActiveCard(card) && isSpecial(card.type)
           && this.pageState.canPlayCard(card)
     },
     cardImage (card) {

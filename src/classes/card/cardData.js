@@ -50,16 +50,26 @@ function _isType (typeList) {
   return type => typeList.find(t => t === type) !== undefined
 }
 
-// Export functions to find if a card type is in the list the function is for
+// Functions to find if a card type is in the list the function is for
 // ie) calling isMalware(card.type) will tell you if card is a malware card
-export default {
-  isMalware: _isType(malware),
-  isHack: _isType(hack),
-  isSafety: _isType(safety),
-  isAlgorithm: _isType(algorithm),
-  isAttack: _isType(attacks),
-  isNegativeEffect: _isType(negativeEffects),
-  isPositiveEffect: _isType(positiveEffects),
-  isSpecial: _isType(special),
-  isBase: _isType(base)
+const isMalware = _isType(malware)
+const isHack = _isType(hack)
+const isSafety = _isType(safety)
+const isAlgorithm = _isType(algorithm)
+const isAttack = _isType(attacks)
+const isNegativeEffect = _isType(negativeEffects)
+const isPositiveEffect = _isType(positiveEffects)
+const isSpecial = _isType(special)
+const isBase = _isType(base)
+
+export {
+  isMalware,
+  isHack,
+  isSafety,
+  isAlgorithm,
+  isAttack,
+  isNegativeEffect,
+  isPositiveEffect,
+  isSpecial,
+  isBase
 }

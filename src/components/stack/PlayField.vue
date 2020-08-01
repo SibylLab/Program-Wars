@@ -23,7 +23,7 @@
 
 <script>
 import PlayFieldInfo from '@/components/info/PlayFieldInfo'
-import CardStack from '@/components/game/CardStack'
+import CardStack from '@/components/stack/CardStack'
 import { isBase } from '@/classes/card/cardData'
 import { mapGetters } from 'vuex'
 

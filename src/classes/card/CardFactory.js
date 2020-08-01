@@ -8,7 +8,7 @@ import Trojan from '@/classes/card/Trojan'
 import SqlInjection from '@/classes/card/SqlInjection'
 import NegativeEffectCard from '@/classes/card/NegativeEffectCard'
 import PositiveEffectCard from '@/classes/card/PositiveEffectCard'
-import cardData from '@/classes/card/cardData'
+import { isNegativeEffect, isPositiveEffect } from '@/classes/card/cardData'
 
 export default class CardFactory {
   newCard (type, value, ownerId = -1) {
@@ -28,9 +28,9 @@ export default class CardFactory {
       return new Trojan(ownerId)
     } else if (type === 'SQL_INJECTION') {
       return new SqlInjection(ownerId)
-    } else if (cardData.isNegativeEffect(type)) {
+    } else if (isNegativeEffect(type)) {
       return new NegativeEffectCard(type, ownerId)
-    } else if (cardData.isPositiveEffect(type)) {
+    } else if (isPositiveEffect(type)) {
       return new PositiveEffectCard(type, ownerId)
     } else {
       throw "Not a valid card type: " + type
