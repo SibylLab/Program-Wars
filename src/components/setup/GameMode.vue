@@ -5,7 +5,7 @@
 
   <div class="drop-menu">
     <div class="dropdown my-drop">
-      <button class="btn btn-sm btn-info dropdown-toggle" type="button"
+      <button class="btn btn-sm btn-primary dropdown-toggle" type="button"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {{ state.mode }}
       </button>

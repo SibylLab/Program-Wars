@@ -83,9 +83,9 @@ export default {
 
 #game-setup {
   position: absolute;
-  top: 60px;
+  top: 80px;
   width: 650px;
-  height: 580px;
+  height: 560px;
   background-color: white;
   border-radius: 30px;
 }
@@ -96,7 +96,7 @@ export default {
 
 #message {
   position: absolute;
-  bottom: 80px;
+  bottom: 70px;
   color: red;
 }
 

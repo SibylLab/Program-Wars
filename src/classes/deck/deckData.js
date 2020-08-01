@@ -35,10 +35,26 @@ const beginner1 = {
 const beginnerDefault = beginner1
 
 const beginnerLevels = [
-  { id: 'beginner1', name: 'beginner 1', description: "Spyware, Ransom, and Search" },
-  { id: 'beginner2', name: 'beginner 2', description: "Stack Overflow, DDoS, and Search" },
-  { id: 'beginner3', name: 'beginner 3', description: "Virus, Stack Underflow, and Sort" },
-  { id: 'beginner4', name: 'beginner 4', description: "Trojan, Sql Injection, and Sort" }
+  {
+    id: 'beginner1',
+    name: 'Malware 1',
+    description: "Antivirus, Spyware, Ransom, and Search"
+  },
+  {
+    id: 'beginner2',
+    name: 'Hack 1',
+    description: "Firewall, Stack Overflow, DDoS, and Sort"
+  },
+  {
+    id: 'beginner3',
+    name: 'Combined 1',
+    description: 'Antivirus, Firewall, Virus, Stack Underflow, and Search'
+  },
+  {
+    id: 'beginner4',
+    name: 'Combined 2',
+    description: 'Antivirus, Firewall, Trojan, Sql Injection, and Sort'
+  }
 ]
 
 // Standard Decks ////////////////////////////////////////////////////////////

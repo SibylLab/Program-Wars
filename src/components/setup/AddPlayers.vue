@@ -8,7 +8,7 @@
   <input id="enter-name" type="text" :placeholder="inputPlaceholder" maxlength="10"
     v-on:keyup.enter="addPlayer" :disabled="atPlayerLimit" autofocus>
 
-  <button type="button" class="btn btn-primary btn-sm" v-on:click="addPlayer()"
+  <button type="button" class="btn btn-info btn-sm" v-on:click="addPlayer()"
     :disabled="atPlayerLimit"> Add Human </button>
 
   <button type="button" class="btn btn-danger btn-sm" v-on:click="addBot()"
