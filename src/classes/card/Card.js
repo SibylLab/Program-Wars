@@ -18,7 +18,7 @@ export default class Card {
     return this.value
   }
 
-  play (playInfo) {
+  play (playInfo) { // eslint-disable-line no-unused-vars
     return []
   }
 

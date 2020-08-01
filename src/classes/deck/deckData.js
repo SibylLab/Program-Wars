@@ -72,6 +72,7 @@ const standardDefault = standard1
 
 // need to be changed to match the new style
 
+/*
 // 30 cards that should be in all decks (for now)
 const baseCards = {
   "INSTRUCTION": {1: 5, 2: 3, 3: 2},  // 10
@@ -134,6 +135,7 @@ const optionalCards = {
     "SPYWARE": {0: 2}
   }
 }
+*/
 
 export default {
   begginer: {

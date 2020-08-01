@@ -6,7 +6,7 @@ const TURN_DELAY = 1250
 const AI_DELAY = 500
 
 export default class Game {
-  constructor (players, deckType) {
+  constructor (players, deckType) { // eslint-disable-line no-unused-vars
     this.players = players
     this.playerNum = 0
     this.turnHistory = []
@@ -107,7 +107,6 @@ export default class Game {
   }
 
   scanUsed (cards) {
-    console.log(cards.map(c => c.type))
     if (cards.find(c => c.type === 'SCAN')) {
       bus.$emit('scan-used')
     }

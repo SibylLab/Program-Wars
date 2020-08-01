@@ -1,4 +1,3 @@
-import Card from '@/classes/card/Card'
 import Instruction from '@/classes/card/Instruction'
 import Method from '@/classes/card/Method'
 import Repeat from '@/classes/card/Repeat'

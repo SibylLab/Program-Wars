@@ -5,7 +5,7 @@ export default class PositiveEffectCard extends Card {
     super(0, type, Card.imgPath(type.toLowerCase()), ownerId)
   }
 
-  play ({player, target}) {
+  play ({target}) {
     if (!target.helpedBy(this.type)) {
       target.effects.addPositive(this)
 

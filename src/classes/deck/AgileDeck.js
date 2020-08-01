@@ -1,5 +1,4 @@
 import Deck from '@/classes/deck/Deck'
-import Card from '@/classes/card/Card'
 
 export default class AgileDeck extends Deck {
   constructor (cardTypes, playerId) {

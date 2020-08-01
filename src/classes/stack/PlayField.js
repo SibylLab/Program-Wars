@@ -1,4 +1,3 @@
-import Stack from '@/classes/stack/Stack'
 import MethodStack from '@/classes/stack/MethodStack'
 
 export default class PlayField {
