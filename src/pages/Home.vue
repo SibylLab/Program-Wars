@@ -19,6 +19,7 @@
 
 
 <script>
+import Home from '@/pages/pageStates/Home'
 import PageHeader from '@/components/shared/PageHeader'
 import GameMode from '@/components/setup/GameMode'
 import AddPlayers from '@/components/setup/AddPlayers'
@@ -55,6 +56,9 @@ export default {
         this.startStandardGame({players: this.state.createPlayers()})
       }
     }
+  },
+  beforeCreate () {
+    this.$store.commit('changePageState', { pageState: new Home() })
   }
 }
 </script>

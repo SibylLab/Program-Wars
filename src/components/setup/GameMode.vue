@@ -3,21 +3,21 @@
 
   <h5 class="sub-heading">Select Game Type</h5>
 
-  <input type="radio" class="form-check-input" id="pick-beginner" name="game-type"
-      v-on:click="pageState.changeMode('beginner')" checked>
-  <label for="pick-beginner">
+  <input type="radio" class="form-check-input" id="beginner" name="game-type"
+      v-on:click="state.changeMode('beginner')">
+  <label for="beginner">
     <b>Beginner:</b> Play with fewer card types and easier AI
   </label>
   <br>
-  <input type="radio" class="form-check-input" id="pick-standard" name="game-type"
-      v-on:click="pageState.changeMode('standard')">
-  <label for="pick-standard">
-    <b>Standard:</b> Play with all card types and competive AI
+  <input type="radio" class="form-check-input" id="standard" name="game-type"
+      v-on:click="state.changeMode('standard')">
+  <label for="standard">
+    <b>Standard:</b> Play with more card types and smarter AI
   </label>
   <br>
-  <input type="radio" class="form-check-input" id="pick-agile" name="game-type"
-    v-on:click="pageState.changeMode('agile')">
-  <label for="pick-agile">
+  <input type="radio" class="form-check-input" id="agile" name="game-type"
+    v-on:click="state.changeMode('agile')">
+  <label for="agile">
     <b>Agile: </b> Play to complete chosen goals with a customized deck
   </label>
 
@@ -25,12 +25,21 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'game-mode',
   data () {
     return {
-      pageState: this.$store.state.pageState
+      checked: 'beginner'
     }
+  },
+  computed: {
+    ...mapGetters(['state'])
+  },
+  mounted () {
+    this.state.mode === this.checked
+    $('#' + this.checked).prop('checked', true)
   }
 }
 </script>

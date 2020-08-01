@@ -1,13 +1,13 @@
 import Player from '@/classes/player/Player'
 import AIPlayer from '@/classes/player/AIPlayer'
 
+// Information for creating computer opponents
 const botInfo = [
   {name: 'n00b_b0t', personality: 'standard'},
   {name: 'L33T_g3Ars', personality: 'aggresive'},
   {name: 'RoboVaC', personality: 'defensive'},
   {name: 'BlueScr33n', personality: 'beginner'}
 ]
-
 
 export default class HomeState {
   constructor () {
@@ -61,10 +61,6 @@ export default class HomeState {
     this.players = this.players.filter(p => p.name !== name)
   }
 
-  nameInUse (name) {
-    return this.players.find(p => p.name === name) !== undefined
-  }
-
   canStart () {
     if (this.players.length < 2) {
       this.message = "You must add at least 2 players"
@@ -79,12 +75,16 @@ export default class HomeState {
     return true
   }
 
-  playerLimit () {
+  atPlayerLimit () {
     if (this.mode === "beginner") {
       return this.players.length >= 2
     } else {
       return this.players.length >= 4
     }
+  }
+
+  nameInUse (name) {
+    return this.players.find(p => p.name === name) !== undefined
   }
 
   hasHuman () {
@@ -93,20 +93,19 @@ export default class HomeState {
 
   createPlayers () {
     let id = 0
-
-    // Will need to distiguish modes to decide what type of player to create
-    // when standard mode is added
     return this.players.map((p) => {
-      let player
-      if (p.isAI) {
-        if (this.mode === 'beginner') { p.personality = 'beginner' }
-        player = new AIPlayer(id, p.name, p.personality)
-      } else {
-        player = new Player(id, p.name)
-      }
-
-      id++
-      return player
+      return this.createPlayer(id++, p)
     })
+  }
+
+  createPlayer (id, playerInfo) {
+    if (playerInfo.isAI) {
+      if (this.mode === 'beginner') {
+        playerInfo.personality = 'beginner'
+      }
+      return new AIPlayer(id, playerInfo.name, playerInfo.personality)
+    } else {
+      return new Player(id, playerInfo.name)
+    }
   }
 }
