@@ -85,21 +85,21 @@
 
 
 <script>
-import {bus} from '@/components/shared/Bus'
-import {mapActions} from 'vuex'
+import { bus } from '@/components/shared/Bus'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'winner-modal',
   data () {
     return {
-      pageState: this.$store.state.pageState,
       bonuses: [],
       winners: []
     }
   },
   computed: {
+    ...mapGetters(['state']),
     players () {
-      return this.pageState.players
+      return this.state.players
     },
     winnerText () {
       if (this.winners.length === 1) {
@@ -115,10 +115,10 @@ export default {
     ]),
     setWinner () {
       this.setBonuses()
-      this.winners = this.pageState.getWinners()
+      this.winners = this.state.getWinners()
     },
     setBonuses () {
-      this.bonuses = this.pageState.getBonuses()
+      this.bonuses = this.state.getBonuses()
     }
   },
   created ()  {

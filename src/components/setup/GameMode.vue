@@ -4,13 +4,13 @@
   <h5 class="sub-heading">Select Game Type</h5>
 
   <input type="radio" class="form-check-input" id="pick-beginner" name="game-type"
-      v-on:click="pageState.changeMode('beginner')">
+      v-on:click="pageState.changeMode('beginner')" checked>
   <label for="pick-beginner">
     <b>Beginner:</b> Play with fewer card types and easier AI
   </label>
   <br>
   <input type="radio" class="form-check-input" id="pick-standard" name="game-type"
-      v-on:click="pageState.changeMode('standard')" checked>
+      v-on:click="pageState.changeMode('standard')">
   <label for="pick-standard">
     <b>Standard:</b> Play with all card types and competive AI
   </label>

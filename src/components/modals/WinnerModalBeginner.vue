@@ -21,7 +21,7 @@
         <table class="table table-condensed" style="width: 90%; margin: auto">
           <thead>
             <tr style="font-size: 20px"> <th>Players</th>
-              <th v-for="player in pageState.players" :key="player.id" style="text-align: center">
+              <th v-for="player in state.players" :key="player.id" style="text-align: center">
                 {{ player.name }}
               </th>
             </tr>
@@ -29,7 +29,7 @@
           
           <tbody>
             <tr> <th>Final Score</th>
-              <td v-for="player in pageState.players" :key="player.id">
+              <td v-for="player in state.players" :key="player.id">
                 {{ player.getScore() }}
               </td>
             </tr>
@@ -51,18 +51,18 @@
 
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { bus } from '@/components/shared/Bus'
 
 export default {
   name: 'winner-modal-beginner',
   data () {
     return {
-      pageState: this.$store.state.pageState,
       winners: []
     }
   },
   computed: {
+    ...mapGetters(['state']),
     winnerText () {
       if (this.winners.length === 1) {
         return this.winners[0].name + ' Wins!!!'
@@ -76,7 +76,7 @@ export default {
       'leaveGame'
     ]),
     setWinners () {
-      this.winners = this.pageState.getWinners()
+      this.winners = this.state.getWinners()
     }
   },
   created () {

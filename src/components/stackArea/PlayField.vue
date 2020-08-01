@@ -22,8 +22,8 @@
 </template>
 
 <script>
+import CardStack from '@/components/stackArea/CardStack'
 import PlayFieldInfo from '@/components/info/PlayFieldInfo'
-import CardStack from '@/components/stack/CardStack'
 import { isBase } from '@/classes/card/cardData'
 import { mapGetters } from 'vuex'
 

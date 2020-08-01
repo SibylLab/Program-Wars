@@ -8,7 +8,7 @@
     <game-mode/>
     <add-players/>
 
-    <div id="message" class="centered"> {{ pageState.message }} </div>
+    <div id="message" class="centered"> {{ state.message }} </div>
     <button id="go" class="centered btn btn-success" v-on:click="playGame()">
       Play
     </button>
@@ -22,7 +22,7 @@
 import PageHeader from '@/components/shared/PageHeader'
 import GameMode from '@/components/setup/GameMode'
 import AddPlayers from '@/components/setup/AddPlayers'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 /**
  * The main landing page for the game.
@@ -30,15 +30,13 @@ import { mapActions } from 'vuex'
  */
 export default {
   name: 'home-page',
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   components: {
     'page-header': PageHeader,
     'game-mode': GameMode,
     'add-players': AddPlayers
+  },
+  computed: {
+    ...mapGetters(['state'])
   },
   methods: {
     ...mapActions([
@@ -47,14 +45,14 @@ export default {
       'startStandardGame'
     ]),
     playGame () {
-      if (!this.pageState.canStart()) { return }
+      if (!this.state.canStart()) { return }
 
-      if (this.pageState.mode === 'agile') {
-        this.startRequirements({players: this.pageState.players})
-      } else if (this.pageState.mode === 'beginner') {
-        this.startBeginnerGame({players: this.pageState.createPlayers()})
+      if (this.state.mode === 'agile') {
+        this.startRequirements({players: this.state.players})
+      } else if (this.state.mode === 'beginner') {
+        this.startBeginnerGame({players: this.state.createPlayers()})
       } else {
-        this.startStandardGame({players: this.pageState.createPlayers()})
+        this.startStandardGame({players: this.state.createPlayers()})
       }
     }
   }

@@ -18,8 +18,8 @@
 
 
 <script>
-import SideObjectives from '@/components/game/SideObjectives'
-import PlayField from '@/components/game/NewPlayField'
+import SideObjectives from '@/components/stackArea/SideObjectives'
+import PlayField from '@/components/stackArea/PlayField'
 
 /**
  * The area of the screen that holds a players play field and side objectives

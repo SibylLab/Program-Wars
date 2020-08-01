@@ -31,8 +31,8 @@
 
 <script>
 import TurnAreaInfo from '@/components/info/TurnAreaInfo'
-import playerHand from '@/components/player/PlayerHand'
-import TurnHistory from '@/components/game/TurnHistory'
+import playerHand from '@/components/handArea/PlayerHand'
+import TurnHistory from '@/components/handArea/TurnHistory'
 
 /**
  * Displays the active components needed for players to take their turn.

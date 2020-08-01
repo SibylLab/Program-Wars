@@ -11,8 +11,8 @@
     <play-field :player="state.players[0]"/>
   </div>
 
-  <div class="begin-turn-area">
-    <turn-area/>
+  <div class="begin-hand-area">
+    <hand-area/>
   </div>
 
   <div class="begin-player" style="right: 0;">
@@ -31,12 +31,12 @@
 <script>
 import WinnerModalBeginner from '@/components/modals/WinnerModalBeginner'
 import PageHeader from '@/components/shared/PageHeader'
-import PlayerArea from '@/components/player/PlayerArea'
-import TurnArea from '@/components/game/NewTurnArea'
-import PlayField from '@/components/stack/PlayField'
-import NewEffectNotifications from '@/components/game/NewEffectNotifications'
-import { mapActions, mapGetters } from 'vuex'
+import PlayerArea from '@/components/playerArea/PlayerArea'
+import HandArea from '@/components/handArea/HandArea'
+import PlayField from '@/components/stackArea/PlayField'
+import EffectNotifications from '@/components/shared/EffectNotifications'
 import { bus } from '@/components/shared/Bus'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'beginner-game',
@@ -44,8 +44,8 @@ export default {
     'winner-modal': WinnerModalBeginner,
     'page-header': PageHeader,
     'player-area': PlayerArea,
-    'turn-area': TurnArea,
-    'effect-notifications': NewEffectNotifications,
+    'hand-area': HandArea,
+    'effect-notifications': EffectNotifications,
     'play-field': PlayField
   },
   computed: {
@@ -84,7 +84,7 @@ export default {
   height: 45%;
 }
 
-.begin-turn-area {
+.begin-hand-area {
   position: absolute;
   top: 40px;
   left: 25%;

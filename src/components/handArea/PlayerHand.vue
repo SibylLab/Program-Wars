@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import TargetOverlay from '@/components/game/TargetOverlay'
-import ScanOverlay from '@/components/game/ScanOverlay'
+import TargetOverlay from '@/components/handArea/TargetOverlay'
+import ScanOverlay from '@/components/handArea/ScanOverlay'
 import { isSpecial } from '@/classes/card/cardData'
 import { bus } from '@/components/shared/Bus'
 import { mapGetters } from 'vuex'

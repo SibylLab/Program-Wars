@@ -21,8 +21,9 @@
 
 
 <script>
-import SideObjectivesInfo from '@/components/info/SideObjectivesInfo.vue'
+import SideObjectivesInfo from '@/components/info/SideObjectivesInfo'
 import {bus} from '@/components/shared/Bus'
+import { mapGetters } from 'vuex'
 
 /**
  * Displays available side objectives and a players progress by higlighting
@@ -33,7 +34,6 @@ export default {
   props: ['player'],
   data () {
     return {
-      pageState: this.$store.state.pageState,
       bonuses: null
     }
   },
@@ -41,6 +41,7 @@ export default {
    'side-objectives-info': SideObjectivesInfo
   },
   computed: {
+    ...mapGetters(['state']),
     /**
      * Returns a list of all the condition data.
      * Each item text for in the if statement, text for in the body,
@@ -67,7 +68,7 @@ export default {
   },
   methods: {
     setBonuses () {
-      this.bonuses = this.pageState.getPlayerBonuses(this.player)
+      this.bonuses = this.state.getPlayerBonuses(this.player)
     }
   },
   created () {

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import SpyAccessor from '@/components/player/SpyAccessor.vue'
+import SpyAccessor from '@/components/playerArea/SpyAccessor.vue'
 import { mapGetters } from 'vuex'
 
 export default {

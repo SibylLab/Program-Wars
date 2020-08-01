@@ -40,7 +40,7 @@
 
 
 <script>
-import CardStack from '@/components/stack/CardStack'
+import CardStack from '@/components/stackArea/CardStack'
 
 export default {
   name: 'active-scan',
