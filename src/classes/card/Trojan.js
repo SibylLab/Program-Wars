@@ -9,19 +9,15 @@ export default class Trojan extends Card {
   }
 
   play ({player, target}) {
-    const discards = []
     if (target.helpedBy('SCAN')) {
-      discards.push(...target.removePositiveType('SCAN'))
-      discards.push(this)
+      return [...target.removePositiveType('SCAN'), this]
     } else if (!target.protectedFrom(this.type)) {
-      this._mimicCard(target.hand, discards) 
-    } else {
-      discards.push(this)
+      this._mimicCard(target.hand) 
     }
-    return discards
+    return [this]
   }
 
-  _mimicCard (hand, discards) {
+  _mimicCard (hand) {
     for (let i = 0; i < MAX_TRIES; i++) {
       const idx = Math.floor(Math.random() * hand.cards.length)
 
@@ -30,7 +26,6 @@ export default class Trojan extends Card {
         return
       }
     }
-    discards.push(this)
   }
 }
 

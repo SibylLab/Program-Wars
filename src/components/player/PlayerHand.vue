@@ -1,10 +1,10 @@
 <template>
-<div id="player-hand" :key="update" v-on:mousemove="activate">
+<div id="player-hand" :key="update">
 
   <div class="player-card" v-for="card in player.hand.cards" :key="card.id">
     <img :src="cardImage(card)" :class="['card', cardShadow(card)]"
       :draggable="canDrag(card)" v-on:dragstart="startDrag($event, card)"
-      v-on:mouseover="select(card)">
+      v-on:mousemove="select(card)">
 
     <input type="image" id="discard-button" title="Discard Card" v-if="isActiveCard(card)"
        src="static/miscIcons/trash.png" v-on:click="discard(card)">
@@ -46,7 +46,7 @@ export default {
       return !cardData.isSpecial(card.type) && this.pageState.canPlayCard(card)
     },
     select (card) {
-      if (this.active && this.pageState.currentCard !== card) {
+      if (this.pageState.currentCard !== card) {
         this.pageState.currentCard = card
         this.update = !this.update
         bus.$emit('select-card')
@@ -84,19 +84,7 @@ export default {
       event.dataTransfer.effectAllowed = 'move'
       event.dataTransfer.setData('cardId', card.id)
       event.dataTransfer.setData('playerId', this.player.id)
-    },
-    activate () {
-      this.active = true
-    },
-    deactivate () {
-      this.active = false
     }
-  },
-  created () {
-    bus.$on('end-turn', this.deactivate)
-  },
-  beforeDestroy () {
-    bus.$off('end-turn', this.deactivate)
   }
 }
 </script>

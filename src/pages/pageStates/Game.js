@@ -101,8 +101,16 @@ export default class Game {
   playCard (playInfo) {
     const card = playInfo.card
     const discards = card.play(playInfo)
+    this.scanUsed(discards)
     this.discardCards(discards)
     playInfo.cardOwner.hand.removeCard(card)
+  }
+
+  scanUsed (cards) {
+    console.log(cards.map(c => c.type))
+    if (cards.find(c => c.type === 'SCAN')) {
+      bus.$emit('scan-used')
+    }
   }
 
   update () {

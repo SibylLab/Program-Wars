@@ -7,6 +7,9 @@ export default class SqlInjection extends Card {
 
   play ({player, target}) {
     if (!target.hurtBy(this.type) && !target.protectedFrom(this.type)) {
+      if (target.helpedBy('SCAN')) {
+        return [...target.removePositiveType('SCAN'), this]
+      }
       target.effects.addSql(this, player, target.playField.method)
       return []
     } else {

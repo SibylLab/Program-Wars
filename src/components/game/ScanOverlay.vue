@@ -54,7 +54,7 @@ export default {
         this.pageState.takeTurn({
           type: 'playSpecialCard',
           card: this.card, cardOwner: this.player,
-          target: this.pageState.currentPlayer(),
+          target: this.pageState.currentPlayer(), targetType: 'player',
           player: this.pageState.currentPlayer()
         })
       }

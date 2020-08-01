@@ -3,6 +3,7 @@ import Instruction from '@/classes/card/Instruction'
 import Method from '@/classes/card/Method'
 import Repeat from '@/classes/card/Repeat'
 import Variable from '@/classes/card/Variable'
+import Scan from '@/classes/card/Scan'
 import Virus from '@/classes/card/Virus'
 import Trojan from '@/classes/card/Trojan'
 import SqlInjection from '@/classes/card/SqlInjection'
@@ -20,6 +21,8 @@ export default class CardFactory {
       return new Repeat(value, ownerId)
     } else if (type === 'VARIABLE') {
       return new Variable(value, ownerId)
+    } else if (type === 'SCAN') {
+      return new Scan(ownerId)
     } else if (type === 'VIRUS') {
       return new Virus(ownerId)
     } else if (type === 'TROJAN') {

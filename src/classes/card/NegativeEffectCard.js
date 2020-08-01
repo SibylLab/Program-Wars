@@ -7,6 +7,9 @@ export default class NegativeEffectCard extends Card {
 
   play ({player, target}) {
     if (!target.hurtBy(this.type) && !target.protectedFrom(this.type)) {
+      if (target.helpedBy('SCAN')) {
+        return [...target.effects.removePositiveType('SCAN'), this]
+      }
       target.effects.addNegative(this, player)
       return []
     } else {

@@ -71,9 +71,9 @@ export default {
 }
 
 .highlight {
-  -webkit-box-shadow: 0 0 24px 40px rgba(255,0,0,1);
-  -moz-box-shadow: 0 0 24px 40px rgba(255,0,0,1);
-  box-shadow: 0 0 24px 40px rgba(255,0,0,1);
+  -webkit-box-shadow: 0 0 50px 40px rgba(255,0,0,1);
+  -moz-box-shadow: 0 0 50px 40px rgba(255,0,0,1);
+  box-shadow: 0 0 50px 40px rgba(255,0,0,1);
   border-radius: 20px;
 }
 
