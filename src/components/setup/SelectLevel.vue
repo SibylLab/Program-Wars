@@ -36,6 +36,12 @@ export default {
     ...mapGetters(['state']),
   },
   methods: {
+    currentLevel () {
+      if (this.state.level) { // stop error when changing pages
+        return this.state.level
+      }
+      return { name: 'null' }
+    },
     select (level) {
       this.state.level = level
     }
