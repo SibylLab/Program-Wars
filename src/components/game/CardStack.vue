@@ -83,9 +83,9 @@ export default {
      */
     onDrop (event) {
       const id = event.dataTransfer.getData('playerId')
-      const player = this.pageState.players[id]
+      const owner = this.pageState.players[id]
       const cardId = event.dataTransfer.getData('cardId')
-      const card = player.hand.getCardById(cardId)
+      const card = owner.hand.getCardById(cardId)
 
       if (!card) {
         return
@@ -100,7 +100,7 @@ export default {
         event.stopPropagation();
         this.pageState.takeTurn({
           type: "playOnStack", player: this.pageState.currentPlayer(),
-          stack: this.stack, card: card, cardOwner: player
+          stack: this.stack, card: card, cardOwner: owner
         })
       }
     },

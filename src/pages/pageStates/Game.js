@@ -117,6 +117,7 @@ export default class Game {
 
   endTurn () {
     this.wait = true
+    bus.$emit('end-turn')
 
     // timeout is asynchronus so both start their countdown at the same time
     setTimeout(() => {
@@ -124,8 +125,6 @@ export default class Game {
     }, REDRAW_DELAY)
 
     setTimeout(() => {
-      bus.$emit('end-turn')
-
       if (!this.endGame()) {
         this.nextPlayer()
         this.wait = false

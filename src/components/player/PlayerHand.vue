@@ -1,5 +1,5 @@
 <template>
-<div id="player-hand" :key="update">
+<div id="player-hand" :key="update" v-on:mousemove="activate">
 
   <div class="player-card" v-for="card in player.hand.cards" :key="card.id">
     <img :src="cardImage(card)" :class="['card', cardShadow(card)]"
@@ -30,7 +30,8 @@ export default {
   data () {
     return {
       pageState: this.$store.state.pageState,
-      update: true
+      update: true,
+      active: false
     }
   },
   components: {
@@ -45,7 +46,7 @@ export default {
       return !cardData.isSpecial(card.type) && this.pageState.canPlayCard(card)
     },
     select (card) {
-      if (this.pageState.currentCard !== card) {
+      if (this.active && this.pageState.currentCard !== card) {
         this.pageState.currentCard = card
         this.update = !this.update
         bus.$emit('select-card')
@@ -83,7 +84,19 @@ export default {
       event.dataTransfer.effectAllowed = 'move'
       event.dataTransfer.setData('cardId', card.id)
       event.dataTransfer.setData('playerId', this.player.id)
+    },
+    activate () {
+      this.active = true
+    },
+    deactivate () {
+      this.active = false
     }
+  },
+  created () {
+    bus.$on('end-turn', this.deactivate)
+  },
+  beforeDestroy () {
+    bus.$off('end-turn', this.deactivate)
   }
 }
 </script>

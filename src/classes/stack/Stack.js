@@ -73,7 +73,7 @@ export default class Stack {
     let vars = []
     for (let idx in this.cards) {
       if (this.cards[idx].type === "VARIABLE") {
-        vars.push({idx: idx, value: this.cards[idx].getValue()})
+        vars.push({idx: idx, val: this.cards[idx].getValue()})
       }
     }
 
@@ -85,7 +85,7 @@ export default class Stack {
     // Find the min variable and replace it with the given card
     let min = vars[0]
     for (let v of vars) {
-      if (v.getValue() < min.getValue()) {
+      if (v.val < min.val) {
         min = v
       }
     }
@@ -110,7 +110,7 @@ export default class Stack {
     }
     // Variable cards can only go on Rx cards or replace other variables
     if (card.type === "VARIABLE") {
-      if (top.type === "REPEAT" && top.getValue() === 1) {
+      if (this.topIsRx()) {
         return true
       } else {
         let vars = this.cards.filter(c => c.type === "VARIABLE")
@@ -121,10 +121,7 @@ export default class Stack {
       }
     // Repeat cards can't be used if the top is Rx or there are alredy 2 repeats
     } else if (card.type === "REPEAT" && !this.hasMaxRepeats()) {
-      if (top.type === "REPEAT") {
-        return top.getValue() !== 1
-      }
-      return true
+      return !this.topIsRx()
     }
     // Only variable and repeat cards can be put on a non-empty stack
     return false
@@ -142,7 +139,7 @@ export default class Stack {
     // Checks to make sure there are no unpaired Rx cards
     for (let idx in this.cards) {
       let card = this.cards[idx]
-      if (card.type === "REPEAT" && card.getValue() === 1) {
+      if (this._isRx(card)) {
         if (this.getTop() === card) {
           return false
         } 
@@ -153,9 +150,17 @@ export default class Stack {
   }
 
   willReplace (card) {
-    if (this.getTop() && this.getTop().type === "REPEAT" && this.getTop().getValue() === 1) {
+    if (this.getTop() && this.topIsRx()) {
       return false
     }
     return card.type === "VARIABLE" && this.hasVariable()
+  }
+
+  topIsRx () {
+    return this._isRx(this.getTop())
+  }
+
+  _isRx (card) {
+    return card.type === "REPEAT" && card.getValue() === 1
   }
 }

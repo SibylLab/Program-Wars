@@ -7,9 +7,9 @@ export default class Variable extends Card {
 
   play ({stack}) {
     const discards = []
-    if (this._topIsRx(stack)) {
+    if (stack.topIsRx()) {
       stack.addCard(this)
-    } else if (stack.hasVariable()) {
+    } else if (stack.willAccept(this)) {  // this should explicitly check variable stuff
       discards.push(stack.replaceLowestVar(this))
     } else {
       discards.push(this)
