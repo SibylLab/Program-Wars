@@ -54,9 +54,11 @@ export default {
       if (this.state.mode === 'agile') {
         this.startRequirements({players: this.state.players})
       } else if (this.state.mode === 'beginner') {
-        this.startBeginnerGame({players: this.state.createPlayers()})
+        this.startBeginnerGame({
+          players: this.state.createPlayers(), level: this.state.level })
       } else {
-        this.startStandardGame({players: this.state.createPlayers()})
+        this.startStandardGame({
+          players: this.state.createPlayers(), level: this.state.level })
       }
     }
   },

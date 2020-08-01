@@ -6,7 +6,7 @@ const TURN_DELAY = 1250
 const AI_DELAY = 500
 
 export default class Game {
-  constructor (players, deckType) { // eslint-disable-line no-unused-vars
+  constructor (players) {
     this.players = players
     this.playerNum = 0
     this.turnHistory = []

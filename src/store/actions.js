@@ -13,15 +13,15 @@ export default {
     router.push('/')
   },
 
-  startBeginnerGame ({ commit }, { players }) {
+  startBeginnerGame ({ commit }, { players, level }) {
     commit('changePage', { page: 'beginner' })
-    commit('changePageState', { pageState: new BeginnerGame(players) })
+    commit('changePageState', { pageState: new BeginnerGame(players, level) })
     router.push('beginner')
   },
 
-  startStandardGame ({ commit }, { players }) {
+  startStandardGame ({ commit }, { players, level }) {
     commit('changePage', { page: 'standard' })
-    commit('changePageState', { pageState: new StandardGame(players) })
+    commit('changePageState', { pageState: new StandardGame(players, level) })
     router.push('standard')
   },
 

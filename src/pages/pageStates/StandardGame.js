@@ -16,9 +16,9 @@ const TIE_BREAK_TYPES = [
 ]
 
 export default class StandardGameState extends Game {
-  constructor (players, deckType) {
-    super(players, deckType)
-    this.deck = new DeckFactory().standardDeck(deckType)
+  constructor (players, level) {
+    super(players)
+    this.deck = new DeckFactory().standardDeck(level.id)
     this.scoreLimit = 200
     this.refreshHands()
   }
