@@ -4,7 +4,7 @@ import Stack from '@/classes/stack/Stack'
 
 export default class MethodCard extends Card {
   constructor (ownerId = -1) {
-    super(0, 'METHOD', 'method', ownerId)
+    super(0, 'METHOD', Card.imgPath('method'), ownerId)
   }
 
   play ({player}) {

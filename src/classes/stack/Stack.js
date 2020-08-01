@@ -18,11 +18,7 @@ export default class Stack {
    * @return {int} the stack's total score.
    */
   getScore (adjustments = {}) {
-    if (this.isEmpty()) {
-      return 0
-    }
-
-    let score = this.getBase().getValue()
+    let score = this.cards.length === 0 ? 0 : this.getBase().getValue()
     for (let i = 1; i < this.cards.length; i++) {
       if (this.cards[i].type === "VIRUS") {
         score *= this.getBase().type === "METHOD" ? 0.5 : 0

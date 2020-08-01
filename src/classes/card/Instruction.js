@@ -3,12 +3,20 @@ import Stack from '@/classes/stack/Stack'
 
 export default class Instruction extends Card {
   constructor (value, ownerId = -1) {
-    super(value, 'INSTRUCTION', 'instruction' + value, ownerId)
+    super(value, 'INSTRUCTION', Card.imgPath('instruction' + value), ownerId)
   }
 
-  play ({player}) {
-    const stack = new Stack(this, player.id)
-    player.playField.addStack(stack)
+  play ({player, stack}) {
+    if (stack) {
+      if (stack.isMethod) {
+        player.playField.method.addCard(this)
+      } else {
+        return [this]
+      }
+    } else {
+      const newStack = new Stack(this, player.id)
+      player.playField.addStack(newStack)
+    }
     return []
   }
 }

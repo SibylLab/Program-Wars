@@ -18,6 +18,7 @@
 
 <script>
 import TurnHistoryInfo from '@/components/info/TurnHistoryInfo'
+import cardData from '@/classes/card/cardData'
 
 /**
  * Shows the last 8 plays that have been made with the card, player, and target
@@ -59,7 +60,7 @@ export default {
         path += 'DISCARD'
       } else if (play.type === 'pass') {
         path += 'PASS'
-      } else if (card.isSpecial() || card.type === 'VIRUS'
+      } else if (cardData.isSpecial(card.type) || card.type === 'VIRUS'
                  || card.type === 'METHOD'){
         path += card.type
       } else {
@@ -93,7 +94,7 @@ export default {
      */
     hasTargetPlayer (play) {
       if (play.type !== 'discardCard' && play.card
-          && (play.card.isAttack() || play.card.type === 'VIRUS')) {
+          && cardData.isAttack(play.card.type)) {
         return true
       }
       return false

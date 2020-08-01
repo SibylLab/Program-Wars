@@ -18,6 +18,16 @@ const algorithm = [
   "SEARCH", "SORT", "REDRAW"
 ]
 
+// types that can start a stack
+const base = [
+  "INSTRUCTION", "METHOD"
+]
+
+// all cards that are considered attacks
+const attacks = [
+  ...malware, ...hack
+]
+
 // all card types that use the NegativeEffectCard
 const negativeEffects = [
   ...malware.filter(m => m !== "VIRUS"),
@@ -47,7 +57,9 @@ export default {
   isHack: _isType(hack),
   isSafety: _isType(safety),
   isAlgorithm: _isType(algorithm),
+  isAttack: _isType(attacks),
   isNegativeEffect: _isType(negativeEffects),
   isPositiveEffect: _isType(positiveEffects),
-  isSpecial: _isType(special)
+  isSpecial: _isType(special),
+  isBase: _isType(base)
 }

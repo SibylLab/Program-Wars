@@ -27,6 +27,7 @@
 <script>
 import PlayFieldInfo from '@/components/info/PlayFieldInfo'
 import CardStack from '@/components/game/CardStack'
+import cardData from '@/classes/card/cardData'
 
 /**
  * A component to hold all of the players card stacks during a game.
@@ -63,7 +64,7 @@ export default {
       const cardId = event.dataTransfer.getData('cardId')
       const card = player.hand.cards.find(c => c.id === cardId)
 
-      if (this.pageState.currentPlayer() === this.player && card.isBase()) {
+      if (this.pageState.currentPlayer() === this.player && cardData.isBase(card.type)) {
         event.stopPropagation();
         this.pageState.takeTurn({
           type: "newStack", player: this.player, target: this.player,

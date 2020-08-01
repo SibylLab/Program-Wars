@@ -11,6 +11,10 @@ export default class Hand {
     return this.cards.length
   }
 
+  getCardById (cardId) {
+    return this.cards.find(c => c.id === cardId)
+  }
+
   addCards (cards) {
     for (const card of cards) {
       this.addCard(card)

@@ -85,7 +85,7 @@ export default class Game {
   }
 
   didNotPlayCard (type) {
-    return type === 'pass' || type === 'discardHand' || 'discardCard'
+    return type === 'pass' || type === 'discardHand' || type === 'discardCard'
   }
 
   cardNotPlayed ({type, player, card, cardOwner}) {
@@ -102,6 +102,7 @@ export default class Game {
     const card = playInfo.card
     const discards = card.play(playInfo)
     this.discardCards(discards)
+    playInfo.cardOwner.hand.removeCard(card)
   }
 
   update () {

@@ -2,7 +2,7 @@ import Card from '@/classes/card/Card'
 
 export default class SqlInjection extends Card {
   constructor (ownerId = -1) {
-    super(0, "SQL_INJECTION", "sql_injection", ownerId)
+    super(0, "SQL_INJECTION", Card.imgPath("sql_injection"), ownerId)
   }
 
   play ({player, target}) {
