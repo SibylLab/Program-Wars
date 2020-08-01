@@ -15,8 +15,6 @@
     :disabled="atPlayerLimit"> Add Bot </button>
 
   <div class='section'>
-    <h5 class="sub-heading"> Current Players </h5>
-
     <ol id="player-list">
       <li v-for="player in state.players" v-bind:key="player.name">
         {{ player.name }}

@@ -1,7 +1,11 @@
 import Player from '@/classes/player/Player'
 import AIPlayer from '@/classes/player/AIPlayer'
+import deckData from '@/classes/deck/deckData'
 
 // Information for creating computer opponents
+// could change to just be names and set personality based on the
+// level instead. That way we could adjust difficulty beyond the cards
+// or at least taylor the personality to the cards being used.
 const botInfo = [
   {name: 'n00b_b0t', personality: 'standard'},
   {name: 'L33T_g3Ars', personality: 'aggresive'},
@@ -14,6 +18,7 @@ export default class HomeState {
     this.players = []
     this.mode = 'beginner'
     this.message = ''
+    this.level = deckData[this.mode].levels[0]
   }
 
   changeMode (newMode) {
@@ -21,6 +26,11 @@ export default class HomeState {
       this.players.splice(2)
     }
     this.mode = newMode
+    this.level = deckData[this.mode].levels[0]
+  }
+
+  getLevels () {
+    return deckData[this.mode].levels
   }
 
   sortPlayers () {

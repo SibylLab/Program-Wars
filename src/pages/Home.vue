@@ -6,6 +6,7 @@
     <h3 id="title">Welcome to Program Wars!</h3>
 
     <game-mode/>
+    <select-level/>
     <add-players/>
 
     <div id="message" class="centered"> {{ state.message }} </div>
@@ -22,6 +23,7 @@
 import Home from '@/pages/pageStates/Home'
 import PageHeader from '@/components/shared/PageHeader'
 import GameMode from '@/components/setup/GameMode'
+import SelectLevel from '@/components/setup/SelectLevel'
 import AddPlayers from '@/components/setup/AddPlayers'
 import { mapActions, mapGetters } from 'vuex'
 
@@ -34,6 +36,7 @@ export default {
   components: {
     'page-header': PageHeader,
     'game-mode': GameMode,
+    'select-level': SelectLevel,
     'add-players': AddPlayers
   },
   computed: {
@@ -78,9 +81,9 @@ export default {
 
 #game-setup {
   position: absolute;
-  top: 80px;
+  top: 50px;
   width: 650px;
-  height: 530px;
+  height: 600px;
   background-color: white;
   border-radius: 30px;
 }
@@ -91,13 +94,13 @@ export default {
 
 #message {
   position: absolute;
-  bottom: 100px;
+  bottom: 80px;
   color: red;
 }
 
 #go {
   position: absolute;
-  bottom: 40px;
+  bottom: 20px;
 }
 
 .centered {

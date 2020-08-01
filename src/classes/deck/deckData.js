@@ -6,7 +6,7 @@ function makeType (type, val, num) {
 
 // Begginer Decks ////////////////////////////////////////////////////////////
 
-const begginerBase = [
+const beginnerBase = [
   makeType("INSTRUCTION", 1, 8),
   makeType("INSTRUCTION", 2, 10),
   makeType("INSTRUCTION", 3, 6),
@@ -27,12 +27,19 @@ const b1Special = [
 ]
 
 
-const begginer1 = {
-  base: begginerBase,
+const beginner1 = {
+  base: beginnerBase,
   extra: b1Special
 }
 
-const begginerDefault = begginer1
+const beginnerDefault = beginner1
+
+const beginnerLevels = [
+  { id: 'beginner1', name: 'beginner 1', description: "Spyware, Ransom, and Search" },
+  { id: 'beginner2', name: 'beginner 2', description: "Stack Overflow, DDoS, and Search" },
+  { id: 'beginner3', name: 'beginner 3', description: "Virus, Stack Underflow, and Sort" },
+  { id: 'beginner4', name: 'beginner 4', description: "Trojan, Sql Injection, and Sort" }
+]
 
 // Standard Decks ////////////////////////////////////////////////////////////
 
@@ -67,6 +74,12 @@ const standard1 = {
 }
 
 const standardDefault = standard1
+
+const standardLevels = [
+  { id: 'standard1', name: 'standard 1', description: "Spyware, Ransom, and Search" },
+  { id: 'standard2', name: 'standard 2', description: "Spyware, Ransom, and Search" },
+  { id: 'standard3', name: 'standard 3', description: "Spyware, Ransom, and Search" }
+]
 
 // Agile Decks ///////////////////////////////////////////////////////////////
 
@@ -138,15 +151,17 @@ const optionalCards = {
 */
 
 export default {
-  begginer: {
-    begginer1,
-    default: begginerDefault
+  beginner: {
+    beginner1,
+    default: beginnerDefault,
+    levels: beginnerLevels
   },
   standard: {
     standard1,
-    default: standardDefault
+    default: standardDefault,
+    levels: standardLevels
   },
   agile: {
-    default: begginerDefault
+    default: beginnerDefault
   }
 }
