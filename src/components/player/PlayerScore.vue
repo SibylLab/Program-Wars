@@ -1,34 +1,29 @@
 <template>
-<div id="player-score" :style="{'text-align': side}">
+<div id="player-score" :style="{ 'text-align': side }">
 
     <h5 class="score-title">
-      <b>Score:</b> <b>{{ player.getScore() }}/{{ limit }}</b>
+      <b>Score:</b> <b>{{ player.getScore() }}/{{ state.scoreLimit }}</b>
     </h5>
 
     <meter class="score-meter"
-       :max="limit" min=0
+       :max="state.scoreLimit" min=0
        :value="player.getScore()"
-       :high="limit * 0.7"
-       :low="limit / 2"
-       :optimum="limit * 0.9">
+       :high="state.scoreLimit * 0.66"
+       :low="state.scoreLimit * 0.33"
+       :optimum="state.scoreLimit * 0.9">
     </meter>
 
 </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'player-score',
   props: ['player', 'side'],
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   computed: {
-    limit () {
-      return this.pageState.scoreLimit
-    }
+    ...mapGetters(['state']),
   }
 }
 </script>

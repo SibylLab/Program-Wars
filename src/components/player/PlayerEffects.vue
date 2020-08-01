@@ -1,19 +1,21 @@
 <template>
 <div id="player-effects">
 
-    <h5 id="good-effects-text" :class="side"><b>Threat Prevention</b></h5>
+    <h5 id="good-effects-text" :class="side"> <b>Threat Prevention</b> </h5>
+
     <div id="good-effects" :class="side">
       <div v-for="effect in player.effects.positive" v-bind:key="effect.id"
           class="effect">
-        <img class="effect-icon" :src="effect.image" :title="effectTooltip(effect.type)">
+        <img class="effect-icon" :src="effect.image" :title="tooltip(effect)">
       </div>
     </div>
 
-    <h5 id="bad-effects-text" :class="side"><b>Active Threats</b></h5>
+    <h5 id="bad-effects-text" :class="side"> <b>Active Threats</b> </h5>
+
     <div id="bad-effects" :class="side">
       <div v-for="effect in player.effects.negative" v-bind:key="effect.id"
           class="effect">
-        <img class="effect-icon" :src="effect.image" :title="effectTooltip(effect.type)">
+        <img class="effect-icon" :src="effect.image" :title="tooltip(effect)">
         <div v-if="hasLimit(effect)" class="turns"> {{ effect.turnsLeft }} </div>
       </div>
     </div>
@@ -27,14 +29,9 @@ import tooltips from '@/components/tooltips'
 export default {
   name: 'player-effect',
   props: ['player', 'side'],
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   methods: {
-    effectTooltip (type) {
-      return tooltips.effects[type]
+    tooltip (effect) {
+      return tooltips.effects[effect.card.type]
     },
     hasLimit (effect) {
       return effect.turnsLeft !== -1

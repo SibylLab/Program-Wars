@@ -2,44 +2,40 @@
 <div id="player-details">
 
   <div :class="[side, 'player-info']">
-    <h3 :class="[side, 'name']">
-      {{ player.name }}
-    </h3>
+    <h3 :class="[side, 'name']"> {{ player.name }} </h3>
 
-    <img :class="['avatar', side, {active: isCurrentPlayer}]"
+    <img :class="['avatar', side, { active: isCurrentPlayer }]"
         :src="player.image">
   </div>
 
   <div :class="[oppSide, 'player-access']">
     <spy-accessor v-if="showSpy" :player="player"/>
   </div>
+
 </div>
 </template>
 
 <script>
 import SpyAccessor from '@/components/player/SpyAccessor.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'player-details',
   props: ['player', 'side'],
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   components: {
     'spy-accessor': SpyAccessor
   },
   computed: {
+    ...mapGetters(['state']),
     isCurrentPlayer () {
-      return this.player.id === this.pageState.currentPlayer().id
+      return this.state.currentPlayer() === this.player
     },
     oppSide () {
       return this.side === 'right' ? 'left' : 'right'
     },
     showSpy () {
       if (this.player.hurtBy('SPYWARE')) {
-        return this.player.effects.getNegative('SPYWARE', this.pageState.currentPlayer())
+        return this.player.effects.getNegative('SPYWARE', this.state.currentPlayer())
       }
       return false
     }

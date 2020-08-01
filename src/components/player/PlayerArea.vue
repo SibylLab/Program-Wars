@@ -14,7 +14,7 @@
   </div>
 
   <div id="effects">
-    <slot name="player-effects">
+    <slot name="effects">
       <player-effects :player="player" :side="side"/>
     </slot>
   </div>
@@ -35,19 +35,9 @@ import PlayerScore from '@/components/player/PlayerScore'
 import PlayerEffects from '@/components/player/PlayerEffects'
 import PlayerAreaInfo from '@/components/info/PlayerAreaInfo'
 
-/**
- * Displays the information for a single player.
- * Organizes the players name, avatar, score, and active effects together.
- * Is highlighted when the player is the active player.
- */
 export default {
   name: 'player-area',
   props: ['player', 'side'],
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   components: {
     'player-details': PlayerDetails,
     'player-score': PlayerScore,
@@ -61,7 +51,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
 #player-area {
@@ -106,5 +95,3 @@ export default {
   right: 5%;
 }
 </style>
-
-

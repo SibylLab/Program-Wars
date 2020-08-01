@@ -7,12 +7,10 @@
   </button>
 
   <div id="hand-box" v-if="showHand">
-    <h3 style="color: white; margin-top: 1.5%;">
-      {{ player.name }}'s hand
-    </h3>
-    <div id="cards-list">
+    <h3> {{ player.name }}'s hand </h3>
+    <div style="margin-top: 3%;">
       <img v-for="card in player.hand.cards" v-bind:key="card.id"
-          :src="card.image" class="spy-card" ondragstart="return false">
+          :src="card.image" class="spy-card" :draggable="false">
     </div>
   </div>
 
@@ -20,16 +18,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'spy-accessor',
   props: ['player'],
   data () {
     return {
-      pageState: this.$store.state.pageState,
       showHand: false
     }
   },
   computed: {
+    ...mapGetters(['state']),
     spyStyle () {
       return this.showHand ? 'btn-danger' : 'btn-success'
     },
@@ -37,7 +37,7 @@ export default {
       return this.showHand ? 'Stop Spying' : 'Spy Hand'
     },
     canSpy () {
-      return this.player.effects.getNegative('SPYWARE', this.pageState.currentPlayer())
+      return this.player.effects.getNegative('SPYWARE', this.state.currentPlayer())
     }
   },
   methods: {
@@ -73,10 +73,6 @@ export default {
   z-index: 200;
 }
 
-#cards-list {
-  margin-top: 3%;
-}
-
 .spy-button {
 }
 
@@ -89,5 +85,10 @@ export default {
 
 .acs {
   margin: 2px;
+}
+
+h3 {
+  color: white;
+  margin-top: 1.5%;
 }
 </style>

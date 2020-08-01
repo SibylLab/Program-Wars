@@ -1,6 +1,7 @@
 import Hand from '@/classes/player/Hand'
 import PlayField from '@/classes/stack/PlayField'
 import StatusEffects from '@/classes/statusEffect/StatusEffects'
+import { isAttack, isAlgorithm, isSpecial } from '@/classes/card/cardData'
 
 export default class Player {
   constructor (id, name) {
@@ -40,5 +41,14 @@ export default class Player {
     const virusStacks = this.playField.getStacksWithVirus()
     const mimics = this.hand.getMimics()
     return { effects, virusStacks, mimics }
+  }
+
+  canPlay (type) {
+    if (isAttack(type) || isAlgorithm(type)) {
+      return !this.hurtBy('STACK_UNDERFLOW')
+    } else if (!isSpecial(type)) {
+      return !this.hurtBy('STACK_OVERFLOW')
+    }
+    return true
   }
 }

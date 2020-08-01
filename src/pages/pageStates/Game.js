@@ -31,6 +31,10 @@ export default class Game {
     this.playerNum = this.playerNum % this.players.length
   }
 
+  setCurrentCard (card) {
+    this.currentCard = card
+  }
+
   discardCards (cards) {
     cards.map(c => this.discardCard(c)) 
   }
@@ -59,16 +63,6 @@ export default class Game {
           && p !== this.currentPlayer()
     })
     return attackable
-  }
-
-  canPlayCard (card) {
-    if (card.type === 'VIRUS') {
-      return this.getAttackablePlayers('VIRUS').length > 0
-    } else if (isSpecial(card.type)) {
-      return !this.currentPlayer().hurtBy('STACK_UNDERFLOW')
-    } else {
-      return !this.currentPlayer().hurtBy('STACK_OVERFLOW')
-    }
   }
 
   // Turn Logic //////////////////////////////////////////////////////////////

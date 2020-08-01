@@ -1,12 +1,12 @@
 <template>
 <div id="player-hand" :key="update">
 
-  <div class="player-card" v-for="card in player.hand.cards" :key="card.id">
+  <div class="player-card" v-for="card in player.hand.cards" v-bind:key="card.id">
     <img :src="cardImage(card)" :class="['card', cardShadow(card)]"
       :draggable="canDrag(card)" v-on:dragstart="startDrag($event, card)"
       v-on:mousemove="select(card)">
 
-    <input type="image" id="discard-button" title="Discard Card" v-if="isActiveCard(card)"
+    <input type="image" id="discard-button" title="Discard" v-if="isCurrentCard(card)"
        src="static/miscIcons/trash.png" v-on:click="discard(card)">
 
     <div class="overlay" v-if="showOverlay(card)">
@@ -23,13 +23,13 @@ import TargetOverlay from '@/components/game/TargetOverlay'
 import ScanOverlay from '@/components/game/ScanOverlay'
 import { isSpecial } from '@/classes/card/cardData'
 import { bus } from '@/components/shared/Bus'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'player-hand',
   props: ['player'],
   data () {
     return {
-      pageState: this.$store.state.pageState,
       update: true,
       active: false
     }
@@ -38,44 +38,48 @@ export default {
     'target-overlay': TargetOverlay,
     'scan-overlay': ScanOverlay
   },
+  computed: {
+    ...mapGetters(['state'])
+  },
   methods: {
+    isCurrentCard (card) {
+      return this.state.currentCard === card && !this.player.isAI
+    },
     isScan (card) {
       return card.type === 'SCAN'
     },
     canDrag (card) {
-      return !isSpecial(card.type) && this.pageState.canPlayCard(card)
-    },
-    select (card) {
-      if (this.pageState.currentCard !== card) {
-        this.pageState.currentCard = card
-        this.update = !this.update
-        bus.$emit('select-card')
-      }
-    },
-    isActiveCard (card) {
-      return this.pageState.currentCard === card && !this.player.isAI
+      return !isSpecial(card.type) && this.player.canPlay(card)
     },
     showOverlay (card) {
-      return this.isActiveCard(card) && isSpecial(card.type)
-          && this.pageState.canPlayCard(card)
+      return this.isCurrentCard(card) && isSpecial(card.type)
+          && this.player.canPlay(card)
     },
     cardImage (card) {
-      if (this.pageState.currentPlayer().isAI) {
+      if (this.state.currentPlayer().isAI) {
         return 'static/cardImages/backOfCard.png'
       }
       return card.image
     },
     cardShadow (card) {
-      if (!this.isActiveCard(card)) {
+      if (!this.isCurrentCard(card)) {
         return ''
       }
-      return this.pageState.canPlayCard(card) ? 'play' : 'no-play'
+      return this.player.canPlay(card.type) ? 'play' : 'no-play'
+    },
+    select (card) {
+      if (!this.isCurrentCard(card)) {
+        this.state.setCurrentCard(card)
+        this.update = !this.update
+        bus.$emit('select-card')
+      }
     },
     discard (card) {
       if (!this.player.isAi) {
-        this.pageState.takeTurn({
-          type: "discardCard", player: this.player, card: card,
-          cardOwner: this.player
+        this.state.takeTurn({
+          type: "discardCard",
+          player: this.player,
+          card: card, cardOwner: this.player
         })
       }
     },
