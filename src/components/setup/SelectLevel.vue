@@ -11,7 +11,7 @@
       </button>
 
       <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-        <button v-for="level in state.getLevels()" v-bind:key="level.num"
+        <button v-for="level in getLevels" v-bind:key="level.num"
             v-on:click="select(level)" class="dropdown-item" type="button">
           {{ level.name }}
         </button>
@@ -34,6 +34,12 @@ export default {
   name: 'select-level',
   computed: {
     ...mapGetters(['state']),
+    getLevels () {
+      if (this.state.getLevels) { // stop error when changing pages
+        return this.state.getLevels()
+      }
+      return []
+    },
     currentLevel () {
       if (this.state.level) { // stop error when changing pages
         return this.state.level
