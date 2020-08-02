@@ -26,12 +26,17 @@
   <effect-notifications/>
 
 </div>
+<!-- should probably be it's own component -->
 <div v-else id="reset">
   <div id="container">
     <h1> Oops... <br> Looks like something went wrong <br> Or you refreshed the page </h1>
-    <button class="btn btn-primary" v-on:click="leaveGame()"> Back To Home </button>
-    <a class="btn btn-danger" href="https://gitreports.com/issue/SibylLab/Program-Wars"
-        target="_blank"> Report Issue </a>
+    <button class="btn btn-primary my-btn" v-on:click="leaveGame()">
+      Back To Home
+    </button>
+    <a class="btn btn-danger my-btn"
+        href="https://gitreports.com/issue/SibylLab/Program-Wars" target="_blank">
+       Report Issue 
+    </a>
   </div>
 </div>
 </template>
@@ -122,7 +127,7 @@ export default {
   background-color: white;
 }
 
-.btn {
+.my-btn {
   margin: 2%;
 }
 </style>
