@@ -4,24 +4,16 @@ import StandardGame from '@/pages/pageStates/StandardGame'
 // import Requirements from '@/pages/pageStates/Requirements'
 // import DeckSetup from '@/pages/pageStates/DeckSetup'
 // import AgileGame from '@/pages/pageStates/AgileGame'
-import router from '@/router'
 
 export default {
-  startHomePage ({ commit }) {
-    commit('changePage', { page: 'home' })
-    router.push('/')
-  },
-
   startBeginnerGame ({ commit }, { players, level }) {
-    commit('changePage', { page: 'beginner' })
     commit('pushGameState', { gameState: new BeginnerGame(players, level) })
-    router.push('beginner')
+    commit('changePage', { page: 'beginner' })
   },
 
   startStandardGame ({ commit }, { players, level }) {
-    commit('changePage', { page: 'standard' })
     commit('pushGameState', { gameState: new StandardGame(players, level) })
-    router.push('standard')
+    commit('changePage', { page: 'standard' })
   },
 
   /*
@@ -47,7 +39,7 @@ export default {
 
   leaveGame ({ commit }) {
     commit('seenBackstory')
-    this.dispatch('startHomePage')
+    commit('changePage', { page: 'home' })
   }
 }
 

@@ -4,11 +4,11 @@
   <page-header/>
 
   <div class="begin-player" style="left: 0;">
-    <player-area :player="game.players[0]" side="left"/>
+    <player-area :player="game.getPlayer(0)" side="left"/>
   </div>
 
   <div class="begin-play-field" style="left: 1%">
-    <play-field :player="game.players[0]"/>
+    <play-field :player="game.getPlayer(0)"/>
   </div>
 
   <div class="begin-hand-area">
@@ -16,11 +16,11 @@
   </div>
 
   <div class="begin-player" style="right: 0;">
-    <player-area :player="game.players[1]" side="right"/>
+    <player-area :player="game.getPlayer(1)" side="right"/>
   </div>
 
   <div class="begin-play-field" style="right: 1%;">
-    <play-field :player="game.players[1]"/>
+    <play-field :player="game.getPlayer(1)"/>
   </div>
 
   <effect-notifications/>

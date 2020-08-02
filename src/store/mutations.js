@@ -1,3 +1,5 @@
+import router from '@/router'
+
 export default {
   seenBackstory (state) {
     state.showBackstory = false
@@ -5,9 +7,14 @@ export default {
 
   changePage (state, { page }) {
     state.page = page
+    if (page === 'home') {
+      router.push('/')
+    } else {
+      router.push(page)
+    }
   },
 
   pushGameState (state, { gameState }) {
-    state.pageState = gameState
+    state.game = gameState
   }
 }
