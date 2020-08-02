@@ -6,7 +6,9 @@
 
 <script>
   /**
-   * This is the main component of any vue application, this is what will be injected into the index.html file.
+   * This is the main component of any vue application.
+   * It is injected into the index.html file and contains all other pages
+   * and components pushed by the router.
    */
   export default {
     name: 'app'
@@ -15,7 +17,7 @@
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

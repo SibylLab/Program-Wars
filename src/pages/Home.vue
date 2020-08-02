@@ -1,16 +1,17 @@
 <template>
 <div id="home-page">
-  <page-header/>
+  <page-header>
+    <template v-slot:pageHeading> Welcome to Program Wars! </template>
+  </page-header>
 
   <div id="game-setup" class="centered">
-    <h3 id="title">Welcome to Program Wars!</h3>
-
     <game-mode/>
     <select-level/>
     <add-players/>
 
-    <div id="message" class="centered"> {{ state.message }} </div>
-    <button id="go" class="centered btn btn-success" v-on:click="playGame()">
+    <div id="message" class="centered"> {{ home.message }} </div>
+    <button id="go" class="centered btn btn-success" v-on:click="playGame()"
+        :disabled="!home.hasEnoughPlayers()">
       Play
     </button>
   </div>
@@ -40,7 +41,7 @@ export default {
     'add-players': AddPlayers
   },
   computed: {
-    ...mapGetters(['state'])
+    ...mapGetters(['home'])
   },
   methods: {
     ...mapActions([
@@ -49,21 +50,18 @@ export default {
       'startStandardGame'
     ]),
     playGame () {
-      if (!this.state.canStart()) { return }
+      if (!this.home.canStart()) { return }
 
-      if (this.state.mode === 'agile') {
-        this.startRequirements({players: this.state.players})
-      } else if (this.state.mode === 'beginner') {
+      if (this.home.mode === 'agile') {
+        this.startRequirements({players: this.home.players})
+      } else if (this.home.mode === 'beginner') {
         this.startBeginnerGame({
-          players: this.state.createPlayers(), level: this.state.level })
+          players: this.home.createPlayers(), level: this.home.level })
       } else {
         this.startStandardGame({
-          players: this.state.createPlayers(), level: this.state.level })
+          players: this.home.createPlayers(), level: this.home.level })
       }
     }
-  },
-  beforeCreate () {
-    this.$store.commit('changePageState', { pageState: new Home() })
   }
 }
 </script>
@@ -85,18 +83,14 @@ export default {
   position: absolute;
   top: 80px;
   width: 650px;
-  height: 560px;
+  height: 540px;
   background-color: white;
   border-radius: 30px;
 }
 
-#title {
-  margin-top: 20px;
-}
-
 #message {
   position: absolute;
-  bottom: 70px;
+  bottom: 75px;
   color: red;
 }
 

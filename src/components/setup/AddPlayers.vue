@@ -1,22 +1,21 @@
 <template>
 <div id="add-players">
 
-  <h5 class="sub-heading"> Add Players </h5>
-  <p v-if="state.mode === 'beginner'"> Add 2 players </p>
-  <p v-else> Add 2 or 4 players </p>
+  <h4 class="sub-heading"> Players </h4>
+  <p style="color: red;"> {{ howManyPlayers }} </p>
 
   <input id="enter-name" type="text" :placeholder="inputPlaceholder" maxlength="10"
-    v-on:keyup.enter="addPlayer" :disabled="atPlayerLimit" autofocus>
+    v-on:keyup.enter="addPlayer" :disabled="home.atPlayerLimit()" autofocus>
 
   <button type="button" class="btn btn-info btn-sm" v-on:click="addPlayer()"
-    :disabled="atPlayerLimit"> Add Human </button>
+    :disabled="home.atPlayerLimit()"> Add Human </button>
 
   <button type="button" class="btn btn-danger btn-sm" v-on:click="addBot()"
-    :disabled="atPlayerLimit"> Add Bot </button>
+    :disabled="home.atPlayerLimit()"> Add Bot </button>
 
   <div class='section'>
     <ol id="player-list">
-      <li v-for="player in state.players" v-bind:key="player.name">
+      <li v-for="player in home.players" v-bind:key="player.name">
         {{ player.name }}
 
         <div class="tag" v-if="player.isAI"> (BOT) </div>
@@ -37,15 +36,12 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'add-players',
   computed: {
-    ...mapGetters(['state']),
-    atPlayerLimit () {
-      if (this.state.atPlayerLimit) { // to stop an error switching states
-        return this.state.atPlayerLimit()
-      }
-      return true
+    ...mapGetters(['home']),
+    howManyPlayers () {
+      return this.home.mode === 'beginner' ? '2 players only' : '2 or 4 players'
     },
     inputPlaceholder () {
-      return this.atPlayerLimit ? "Reached Player Limit" : " Enter Human Name..."
+      return this.home.atPlayerLimit() ? "Reached Player Limit" : " Enter Human Name..."
     }
   },
   methods: {
@@ -54,18 +50,18 @@ export default {
       this.refresh()
       if (!name) { return }
 
-      this.state.addPlayer(name)
+      this.home.addPlayer(name)
     },
     addBot () {
-      this.state.addBot()
+      this.home.addBot()
       this.refresh()
     },
     removePlayer (name) {
-      this.state.removePlayer(name)
+      this.home.removePlayer(name)
       this.refresh()
     },
     refresh () {
-      this.state.message = ""
+      this.home.message = ""
       $('#enter-name').val('')
       $('#enter-name').focus()
     }
@@ -74,6 +70,10 @@ export default {
 </script>
 
 <style scoped>
+#add-players {
+  margin: 2%;
+}
+
 #player-list {
   margin: 0 25%;
 }
@@ -85,6 +85,7 @@ export default {
 }
 
 .sub-heading {
+  color: black;
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }

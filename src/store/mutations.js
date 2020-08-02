@@ -7,7 +7,7 @@ export default {
     state.page = page
   },
 
-  changePageState (state, { pageState }) {
-    state.pageState = pageState
+  pushGameState (state, { gameState }) {
+    state.pageState = gameState
   }
 }

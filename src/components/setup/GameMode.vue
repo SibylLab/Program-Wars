@@ -1,18 +1,18 @@
 <template>
 <div id="game-mode">
 
-  <h5 class="sub-heading">Select Game Type</h5>
+  <h4 class="sub-heading"> Game Type </h4>
 
   <div class="drop-menu">
     <div class="dropdown my-drop">
       <button class="btn btn-sm btn-primary dropdown-toggle" type="button"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{ state.mode }}
+        {{ home.mode }}
       </button>
 
       <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
         <button v-for="mode in getModes" v-bind:key="mode"
-            v-on:click="state.changeMode(mode)" class="dropdown-item" type="button">
+            v-on:click="home.changeMode(mode)" class="dropdown-item" type="button">
           {{ mode }}
         </button>
       </div>
@@ -32,14 +32,14 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'game-mode',
   computed: {
-    ...mapGetters(['state']),
+    ...mapGetters(['home']),
     getModes () {
       return ['beginner', 'standard', 'agile']
     },
     describe () {
-      if (this.state.mode === 'beginner') {
+      if (this.home.mode === 'beginner') {
         return 'Play with fewer card types and easier AI'
-      } else if (this.state.mode === 'standard') {
+      } else if (this.home.mode === 'standard') {
         return 'Play with more card types and smarter AI'
       } else {
         return 'Play to complete chosen goals with a customized deck'
@@ -50,7 +50,12 @@ export default {
 </script>
 
 <style scoped>
+#game-mode {
+  margin: 2%;
+}
+
 .sub-heading {
+  color: black;
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }
@@ -61,6 +66,5 @@ export default {
 
 .describe {
   margin: 1%;
-  color: black;
 }
 </style>

@@ -1,17 +1,17 @@
 <template>
 <div id="select-level">
 
-  <h5 class="sub-heading"> Select Level </h5>
+  <h4 class="sub-heading"> Level </h4>
 
   <div class="drop-menu">
     <div class="dropdown my-drop">
       <button class="btn btn-sm btn-warning dropdown-toggle" type="button"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{ currentLevel.name }}
+        {{ home.level.name }}
       </button>
 
       <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-        <button v-for="level in getLevels" v-bind:key="level.num"
+        <button v-for="level in home.getLevels()" v-bind:key="level.num"
             v-on:click="select(level)" class="dropdown-item" type="button">
           {{ level.name }}
         </button>
@@ -19,8 +19,8 @@
     </div>
 
     <div class="describe">
-      <span v-if="state.mode !== 'agile'" style="color: black;"> Cards: </span>
-      {{ currentLevel.description }}
+      <span v-if="home.mode !== 'agile'"> Cards: </span>
+      <span style="color: red"> {{ home.level.description }} </span>
     </div>
   </div>
 
@@ -33,30 +33,23 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'select-level',
   computed: {
-    ...mapGetters(['state']),
-    getLevels () {
-      if (this.state.getLevels) { // stop error when changing pages
-        return this.state.getLevels()
-      }
-      return []
-    },
-    currentLevel () {
-      if (this.state.level) { // stop error when changing pages
-        return this.state.level
-      }
-      return { name: 'null', description: 'null' }
-    },
+    ...mapGetters(['home'])
   },
   methods: {
     select (level) {
-      this.state.level = level
+      this.home.level = level
     }
   }
 }
 </script>
 
 <style scoped>
+#select-level {
+  margin: 2%;
+}
+
 .sub-heading {
+  color: black;
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }
@@ -67,7 +60,6 @@ export default {
 
 .describe {
   margin: 1%;
-  color: red;
 }
 </style>
 

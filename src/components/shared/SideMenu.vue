@@ -1,21 +1,21 @@
 <template>
 <div>
   <!-- Modals -->
-  <backstory-modal id="backstoryModal" class="modal fade backstory "></backstory-modal>
-  <rules-modal id="rulesModal" class="modal fade rules "></rules-modal>
-  <credits-modal id="creditsModal" class="modal fade credits"></credits-modal>
+  <backstory-modal id="backstoryModal" class="modal fade backstory "/>
+  <rules-modal id="rulesModal" class="modal fade rules "/>
+  <credits-modal id="creditsModal" class="modal fade credits"/>
 
   <!-- Side menu using a sidenav -->
   <input type='image'  src='static/miscIcons/burgerIcon.png'
-      v-on:click="openMenu" style="width: 36px; height: 36px;">
+      v-on:click="openMenu()" style="width: 36px; height: 36px;">
   <div id="mySidenav" class="sidenav">
-    <a class="closebtn menu-item" v-on:click="closeMenu">&times;</a>
-    <a class="menu-item" v-if="showNewGame" v-on:click="leaveGame">New Game</a>
-    <a class="menu-item" data-toggle="modal" data-target=".backstory">Backstory</a>
-    <a class="menu-item" data-toggle="modal" data-target=".rules">Rules</a>
-    <a class="menu-item" data-toggle="modal" data-target=".credits">Credits</a>
+    <a class="closebtn menu-item" v-on:click="closeMenu()"> &times; </a>
+    <a class="menu-item" v-if="inGame" v-on:click="leaveGame()"> New Game </a>
+    <a class="menu-item" data-toggle="modal" data-target=".backstory"> Backstory </a>
+    <a class="menu-item" data-toggle="modal" data-target=".rules"> Rules </a>
+    <a class="menu-item" data-toggle="modal" data-target=".credits"> Credits </a>
     <a class="menu-item" href="https://gitreports.com/issue/SibylLab/Program-Wars"
-        target="_blank">Report Issue</a>
+        target="_blank"> Report Issue </a>
   </div>
 
 </div>
@@ -26,7 +26,7 @@
 import BackstoryModal from '@/components/modals/BackstoryModal'
 import RulesModal from '@/components/modals/RulesModal'
 import CreditsModal from '@/components/modals/CreditsModal'
-import {mapActions, mapState, mapMutations} from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
 /**
  * The main game menu.
@@ -34,32 +34,18 @@ import {mapActions, mapState, mapMutations} from 'vuex'
  */
 export default {
   name: 'side-menu',
-  data () {
-    return {
-      showMenu: false
-    }
-  },
   components: {
     'backstory-modal': BackstoryModal,
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal
   },
   computed: {
-    ...mapState([
-      'gameState',
-      'showBackstory'
-    ]),
-    showNewGame () {
-      return this.gameState !== "home"
-    }
+    ...mapState(['showBackstory']),
+    ...mapGetters(['inGame'])
   },
   methods: {
-    ...mapMutations([
-      'seenBackstory'
-    ]),
-    ...mapActions([
-      'leaveGame'
-    ]),
+    ...mapMutations(['seenBackstory']),
+    ...mapActions(['leaveGame']),
     openMenu () {
       this.showMenu = true
       $('.sidenav').width('250px')
@@ -70,7 +56,7 @@ export default {
     }
   },
   mounted () {
-    // Show the backstory on first visit to the landing page
+    // Show the backstory on first visit to the game
     if (this.showBackstory) {
       $('#backstoryModal').modal('show')
       this.seenBackstory()

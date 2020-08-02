@@ -19,7 +19,8 @@ import getters from './getters'
 export const store = new Vuex.Store({
   state: {
     page: 'home',
-    pageState: new Home(),
+    home: new Home(),
+    game: null,
     showBackstory: true
   },
 

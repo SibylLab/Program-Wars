@@ -72,17 +72,24 @@ export default class HomeState {
   }
 
   canStart () {
-    if (this.players.length < 2) {
-      this.message = "You must add at least 2 players"
-      return false
-    } else if (this.players.length === 3) {
-      this.message = "You can only play with 2 or 4 players"
-      return false
+    let result = true
+    if (!this.hasEnoughPlayers()) {
+      this.message = "You don't have the right number of players"
+      result = false
     } else if (!this.hasHuman()) {
       this.message = "You must add at least 1 human player"
-      return false
+      result = false
     }
-    return true
+    return result
+  }
+
+  hasEnoughPlayers () {
+    if (this.players.length === 2) {
+      return true
+    } else if (this.players.length === 4) {
+      return this.mode !== 'beginner'
+    }
+    return false
   }
 
   atPlayerLimit () {

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="color: initial;">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content" style="border-radius: 30px">
 

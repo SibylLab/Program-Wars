@@ -1,13 +1,13 @@
 <template>
 <div id="header">
 
-  <h4 id="title" class="head-text">Program Wars</h4>
+  <h4 id="title"> Program Wars </h4>
 
-  <h4 id="limit" class="head-text" v-if="isGame">
-    Score Limit: {{ scoreLimit }}
-  </h4>
+  <h3 id="heading">
+    <slot name="pageHeading"></slot>
+  </h3>
 
-  <side-menu id="menu"></side-menu>
+  <side-menu id="menu"/>
 
 </div>
 </template>
@@ -15,7 +15,7 @@
 
 <script>
 import SideMenu from '@/components/shared/SideMenu'
-import {mapState} from 'vuex'
+import { mapGetters } from 'vuex'
 
 /**
  * A component for placing a title bar for the game on top of a page.
@@ -24,21 +24,12 @@ import {mapState} from 'vuex'
  * game it will also display the scoreLimit and a game tips toggle.
  */
 export default {
-  name: 'landing-page',
-  data () {
-    return {}
-  },
+  name: 'page-header',
   components: {
     'side-menu': SideMenu,
   },
   computed: {
-    ...mapState([
-      'scoreLimit',
-      'gameState'
-    ]),
-    isGame () {
-      return this.gameState === 'game' || this.gameState === 'wait'
-    }
+    ...mapGetters(['game', 'inGame']),
   }
 }
 </script>
@@ -50,8 +41,8 @@ export default {
   top: 0px;
   width: 100%;
   height: 40px;
+  color: white;
   background-color: #333333;
-  font-family: monospace;
 }
 
 #title {
@@ -60,16 +51,11 @@ export default {
   left: 1%;
 }
 
-#limit {
+#heading {
   position: relative;
   top: 10px;
   text-align: 'center';
-}
-
-.head-text {
-  margin-top: 0;
-  margin-bottom: 0;
-  color: #fff;
+  color: white;
 }
 
 #menu {
