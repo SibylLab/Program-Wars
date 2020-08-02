@@ -5,16 +5,15 @@ export default class Variable extends Card {
     super(value, 'VARIABLE', Card.imgPath('variable' + value), ownerId)
   }
 
-  play ({stack}) {
-    const discards = []
+  play ({stack, stackOwner}) {
     if (stack.topIsRx()) {
-      stack.addCard(this)
+      stackOwner.playField.addCardToStack(this, stack)
     } else if (stack.willAccept(this)) {  // this should explicitly check variable stuff
-      discards.push(stack.replaceLowestVar(this))
+      return [stack.replaceLowestVar(this)]
     } else {
-      discards.push(this)
+      return [this]
     }
-    return discards
+    return []
   }
 }
 

@@ -7,10 +7,10 @@ export default class MethodCard extends Card {
     super(0, 'METHOD', Card.imgPath('method'), ownerId)
   }
 
-  play ({player}) {
-    const wrapper = new MethodCardWrapper(this, player.playField.method)
-    const stack = new Stack(wrapper, player.id)
-    player.playField.addStack(stack)
+  play ({ stackOwner }) {
+    const wrapper = new MethodCardWrapper(this, stackOwner.playField.method)
+    const stack = new Stack(wrapper, stackOwner.id)
+    stackOwner.playField.addStack(stack)
     return []
   }
 }

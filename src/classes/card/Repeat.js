@@ -5,9 +5,9 @@ export default class Repeat extends Card {
     super(value, 'REPEAT', Card.imgPath('repeat' + value), ownerId)
   }
 
-  play ({stack}) {
+  play ({stack, stackOwner}) {
     if (!stack.isComplete()) {
-      stack.addCard(this)
+      stackOwner.playField.addCardToStack(this, stack)
       return []
     } else {
       return [this]

@@ -61,7 +61,8 @@ export default {
         event.stopPropagation();
         this.game.takeTurn({
           type: "newStack",
-          player: this.player, target: this.player,
+          player: this.game.currentPlayer(),
+          stackOwner: this.player,
           card: card, cardOwner: owner
         })
       }
