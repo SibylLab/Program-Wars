@@ -1,5 +1,5 @@
 <template>
-<div id="turn-area">
+<div id="hand-area">
   <slot name="buttons">
     <button class="btn btn-sm btn-danger" v-on:click="redraw"
         style="border-radius: 40px; margin-top: 1%;"
@@ -42,7 +42,7 @@ import { mapGetters } from 'vuex'
  * game tips.
  */
 export default {
-  name: 'card-area',
+  name: 'hand-area',
   data () {
     return {
       update: 1,
@@ -68,7 +68,9 @@ export default {
         if (this.game.currentPlayer().hurtBy('DDOS')) {
           this.game.takeTurn({type: 'pass'})
         }
-        this.game.takeTurn({type: 'discardHand', player: this.player})
+        this.game.takeTurn({
+          type: 'discardHand', player: this.game.currentPlayer()
+        })
       }
     }
   },
