@@ -3,7 +3,7 @@
   <div class="backdrop">
 
     <div class="container">
-      <h3 style="margin-top: 2%;"><b>Active Scan</b></h3>
+      <h3 style="margin-top: 2%;"> <b>Active Scan</b> </h3>
 
       <div class="content">
         <div v-for="mimic in attacks.mimics" v-bind:key="mimic.id" class="attack">
@@ -49,23 +49,23 @@ export default {
     'card-stack': CardStack
   },
   computed: {
-    ...mapGetters(['state']),
+    ...mapGetters(['game']),
     trojanImage () {
       return 'static/cardImages/effects/TROJAN.png'
     }
   },
   methods: {
     playScan (target, type) {
-      this.state.takeTurn({
-        type: "playScan", player: this.state.currentPlayer(),
+      this.game.takeTurn({
+        type: "playScan", player: this.game.currentPlayer(),
         card: this.card, cardOwner: this.cardOwner,
         target: target, targetType: type
       })
     },
     discardScan () {
-      this.state.takeTurn({
+      this.game.takeTurn({
         type: 'discardCard', card: this.card, cardOwner: this.cardOwner,
-        player: this.state.currentPlayer()
+        player: this.game.currentPlayer()
       })
     }
   }

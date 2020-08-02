@@ -42,7 +42,7 @@ export default {
       return this.game.getPlayer(this.stack.playerId)
     },
     ownedByCurrentPlayer () {
-      return this.stackOwner === this.game.currentPayer()
+      return this.stackOwner === this.game.currentPlayer()
     },
     willAcceptVirus () {
       return !this.ownedByCurrentPlayer && !this.stackOwner.protectedFrom('VIRUS')
@@ -76,13 +76,16 @@ export default {
   methods: {
     canPlayOnStack (card) {
       if (this.stack.willAccept(card)) {
-        return card.type === 'VIRUS' && !this.willAcceptVirus
+        if (card.type === 'VIRUS') {
+          return !this.willAcceptVirus
+        }
+        return true
       }
       return false
     },
     cardWillAcceptCurrent (card) {
-      return !this.game.currentCard || this.game.currentPlayer.isAI || this.game.wait
-          || card !== this.stack.getTop() || this.willAcceptCard(card)
+      return this.game.currentCard && !this.game.currentPlayer.isAI && !this.game.wait
+          && card === this.stack.getTop() && this.canPlayOnStack(this.game.currentCard)
     },
     /**
      * Decide what shadow the given card should have around it based on its
@@ -93,7 +96,7 @@ export default {
         if (this.game.currentCard.type === 'VIRUS') {
           return this.willAcceptVirus ? 'attack' : ''
         } else {
-          return 'play'
+          return this.ownedByCurrentPlayer ? 'play' : ''
         }
       } else {
         return ''
