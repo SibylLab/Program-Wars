@@ -11,8 +11,12 @@ export default {
     return state.game
   },
 
+  inBeginnerGame (state) {
+    return state.page === 'beginner'
+  },
+
   inGame (state) {
-    return state.page === 'game'
+    return state.page === 'beginner' || state.page === 'standard'
   }
 }
 

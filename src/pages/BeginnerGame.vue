@@ -1,5 +1,5 @@
 <template>
-<div id="beginner-game">
+<div id="beginner-game" v-if="inBeginnerGame">
   <winner-modal id="winner-modal" class="modal fade"/>
   <page-header/>
 
@@ -26,6 +26,14 @@
   <effect-notifications/>
 
 </div>
+<div v-else id="reset">
+  <div id="container">
+    <h1> Oops... <br> Looks like something went wrong <br> Or you refreshed the page </h1>
+    <button class="btn btn-primary" v-on:click="leaveGame()"> Back To Home </button>
+    <a class="btn btn-danger" href="https://gitreports.com/issue/SibylLab/Program-Wars"
+        target="_blank"> Report Issue </a>
+  </div>
+</div>
 </template>
 
 <script>
@@ -49,7 +57,7 @@ export default {
     'play-field': PlayField
   },
   computed: {
-    ...mapGetters(['game', 'page'])
+    ...mapGetters(['game', 'inBeginnerGame'])
   },
   methods: {
     ...mapActions(['leaveGame']),
@@ -58,9 +66,6 @@ export default {
     }
   },
   created () {
-    if (this.page !== 'beginner') {
-      this.leaveGame()
-    }
     bus.$on('game-over', this.showWinner)
   },
   beforeDestroy () {
@@ -100,5 +105,24 @@ export default {
   top: 50%;
   width: 48%;
   height: 49%;
+}
+
+#reset {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom right, purple, darkblue);
+}
+
+#container {
+  display: inline-block;
+  padding: 2%;
+  margin: 5%;
+  border-radius: 30px;
+  background-color: white;
+}
+
+.btn {
+  margin: 2%;
 }
 </style>
