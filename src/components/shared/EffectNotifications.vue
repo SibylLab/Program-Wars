@@ -19,21 +19,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['state']),
-    players () {
-      return this.state.players
-    }
+    ...mapGetters(['game'])
   },
   methods: {
     mimicPlayed () {
       this.showing = true
       this.imagePath = 'static/cardImages/effects/TROJAN.png'
-      setTimeout(() => {this.showing = false}, this.timeout)
+      setTimeout(() => { this.showing = false }, this.timeout)
     },
     scanUsed () {
       this.showing = true
       this.imagePath = 'static/cardImages/effects/SCAN.png'
-      setTimeout(() => {this.showing = false}, this.timeout)
+      setTimeout(() => { this.showing = false }, this.timeout)
     }
   },
   created () {
@@ -64,9 +61,9 @@ export default {
 }
 
 .highlight {
-  -webkit-box-shadow: 0 0 50px 40px rgba(255,0,0,1);
-  -moz-box-shadow: 0 0 50px 40px rgba(255,0,0,1);
-  box-shadow: 0 0 50px 40px rgba(255,0,0,1);
+  -webkit-box-shadow: 0 0 60px 40px rgba(255,255,0,1);
+  -moz-box-shadow: 0 0 60px 40px rgba(255,255,0,1);
+  box-shadow: 0 0 60px 40px rgba(255,255,0,1);
   border-radius: 20px;
 }
 

@@ -4,7 +4,7 @@
       :cardOwner="player" :card="card">
   </scan-modal>
 
-  <h5>{{ scanText }}</h5>
+  <h5> {{ scanText }} </h5>
 
   <button v-if="canScan" class="btn btn-sm btn-primary my-btn" v-on:click="playScan()">
     Activate
@@ -30,7 +30,7 @@ export default {
     'scan-modal': ScanModal
   },
   computed: {
-    ...mapGetters(['state']),
+    ...mapGetters(['game']),
     canScan() {
       return !this.player.helpedBy('SCAN')
     },
@@ -52,11 +52,11 @@ export default {
         this.activeScan = true
       } else {
         this.activeScan = false
-        this.state.takeTurn({
+        this.game.takeTurn({
           type: 'playSpecialCard',
           card: this.card, cardOwner: this.player,
-          target: this.state.currentPlayer(), targetType: 'player',
-          player: this.state.currentPlayer()
+          target: this.game.currentPlayer(), targetType: 'player',
+          player: this.game.currentPlayer()
         })
       }
     }

@@ -29,7 +29,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['state']),
+    ...mapGetters(['game']),
     spyStyle () {
       return this.showHand ? 'btn-danger' : 'btn-success'
     },
@@ -37,7 +37,7 @@ export default {
       return this.showHand ? 'Stop Spying' : 'Spy Hand'
     },
     canSpy () {
-      return this.player.effects.getNegative('SPYWARE', this.state.currentPlayer())
+      return this.player.effects.getNegative('SPYWARE', this.game.currentPlayer())
     }
   },
   methods: {

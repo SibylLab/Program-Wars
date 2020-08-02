@@ -40,9 +40,9 @@ export default {
    'play-field-info': PlayFieldInfo
   },
   computed: {
-    ...mapGetters(['state']),
+    ...mapGetters(['game']),
     isCurrentPlayer () {
-      return this.state.currentPlayer() === this.player
+      return this.game.currentPlayer() === this.player
     }
   },
   methods: {
@@ -53,13 +53,13 @@ export default {
      */
     onDrop (event) {
       const id = event.dataTransfer.getData('playerId')
-      const owner = this.state.getPlayer(id)
+      const owner = this.game.getPlayer(id)
       const cardId = event.dataTransfer.getData('cardId')
       const card = owner.hand.getCardById(cardId)
 
       if (this.isCurrentPlayer && isBase(card.type)) {
         event.stopPropagation();
-        this.state.takeTurn({
+        this.game.takeTurn({
           type: "newStack",
           player: this.player, target: this.player,
           card: card, cardOwner: owner

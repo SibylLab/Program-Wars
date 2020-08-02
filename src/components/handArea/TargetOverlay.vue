@@ -1,7 +1,7 @@
 <template>
 <div id="target-overlay">
 
-  <h5>{{ titleText }}</h5>
+  <h5> {{ titleText }} </h5>
 
   <button id="target-button" class="btn btn-sm btn-primary my-btn"
       v-for="target in targetPlayers" v-bind:key="target.id"
@@ -15,6 +15,7 @@
 
 <script>
 import { isSafety } from '@/classes/card/cardData'
+import { mapGetters } from 'vuex'
 
 /**
  * Displays buttons for targeting players or activating special cards, or
@@ -26,17 +27,13 @@ import { isSafety } from '@/classes/card/cardData'
 export default {
   name: 'target-overlay',
   props: ['card', 'player'],
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   computed: {
+    ...mapGetters(['game']),
     titleText () {
       if (isSafety(this.card.type)) {
-        return this.pageState.currentPlayer().helpedBy(this.card.type) ? 'Protected' : 'Activate'
+        return this.game.currentPlayer().helpedBy(this.card.type) ? 'Protected' : 'Activate'
       } else {
-        return this.pageState.getAttackablePlayers(this.card.type).length > 0 ? 'Targets' : 'No Targets'
+        return this.game.getAttackablePlayers(this.card.type).length > 0 ? 'Targets' : 'No Targets'
       }
     },
     noButtonsText () {
@@ -47,9 +44,9 @@ export default {
     },
     targetPlayers () {
       if (isSafety(this.card.type)) {
-        return [this.pageState.currentPlayer()]
+        return [this.game.currentPlayer()]
       } else {
-        return this.pageState.getAttackablePlayers(this.card.type)
+        return this.game.getAttackablePlayers(this.card.type)
       }
     }
   },
@@ -61,9 +58,9 @@ export default {
       return player.name
     },
     playSpecialCard (player) {
-      if (!this.pageState.currentPlayer().isAi) {
-        this.pageState.takeTurn({
-          type: 'playSpecialCard', player: this.pageState.currentPlayer(),
+      if (!this.game.currentPlayer().isAi) {
+        this.game.takeTurn({
+          type: 'playSpecialCard', player: this.game.currentPlayer(),
           target: player, card: this.card, cardOwner: this.player
         })
       }

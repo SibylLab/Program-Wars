@@ -2,15 +2,15 @@
 <div id="player-score" :style="{ 'text-align': side }">
 
     <h5 class="score-title">
-      <b>Score:</b> <b>{{ player.getScore() }}/{{ state.scoreLimit }}</b>
+      <b>Score:</b> <b>{{ player.getScore() }}/{{ game.scoreLimit }}</b>
     </h5>
 
     <meter class="score-meter"
-       :max="state.scoreLimit" min=0
+       :max="game.scoreLimit" min=0
        :value="player.getScore()"
-       :high="state.scoreLimit * 0.66"
-       :low="state.scoreLimit * 0.33"
-       :optimum="state.scoreLimit * 0.9">
+       :high="game.scoreLimit * 0.66"
+       :low="game.scoreLimit * 0.33"
+       :optimum="game.scoreLimit * 0.9">
     </meter>
 
 </div>
@@ -23,7 +23,7 @@ export default {
   name: 'player-score',
   props: ['player', 'side'],
   computed: {
-    ...mapGetters(['state']),
+    ...mapGetters(['game']),
   }
 }
 </script>

@@ -3,7 +3,7 @@
 
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">
-      {{ scoreText }}: {{ getScore }}
+      {{ scoreText }}: {{ stack.getScore() }}
     </h5>
   </div>
 
@@ -16,9 +16,9 @@
 </div>
 </template>
 
-
 <script>
 import { bus } from '@/components/shared/Bus'
+import { mapGetters } from 'vuex'
 
 /**
  * Displays a stack of cards and its total score.
@@ -33,17 +33,23 @@ export default {
   props: ['stack'],
   data () {
     return {
-      pageState: this.$store.state.pageState,
       update: true
     }
   },
   computed: {
-    player () {
-      return this.pageState.players[this.stack.playerId]
+    ...mapGetters(['game']),
+    stackOwner () {
+      return this.game.getPlayer(this.stack.playerId)
     },
-    hurtBySql () {
+    ownedByCurrentPlayer () {
+      return this.stackOwner === this.game.currentPayer()
+    },
+    willAcceptVirus () {
+      return !this.ownedByCurrentPlayer && !this.stackOwner.protectedFrom('VIRUS')
+    },
+    ownerHurtBySql () {
       return (this.stack.isMethod || this.stack.getBase().type === 'METHOD')
-          && this.player.hurtBy('SQL_INJECTION')
+          && this.stackOwner.hurtBy('SQL_INJECTION')
     },
     /**
      * Determines the score color based on whether the stacks owner is under
@@ -52,7 +58,7 @@ export default {
      */
     scoreColor () {
       const top = this.stack.getTop()
-      if ((top && top.type  === 'VIRUS') || this.hurtBySql) {
+      if ((top && top.type  === 'VIRUS') || this.ownerHurtBySql) {
         return 'score-red'
       } else if (this.stack.isComplete()) {
         return 'score-green'
@@ -64,17 +70,35 @@ export default {
       return this.stack.isMethod ? '-44px' : '-36px'
     },
     scoreText () {
-      if (this.stack.isMethod ) {
-        return 'MethodStack'
-      } else {
-        return 'Score'
-      }
-    },
-    getScore () {
-      return this.stack.getScore()
+      return this.stack.isMethod ? 'MethodStack' : 'Score'
     }
   },
   methods: {
+    canPlayOnStack (card) {
+      if (this.stack.willAccept(card)) {
+        return card.type === 'VIRUS' && !this.willAcceptVirus
+      }
+      return false
+    },
+    cardWillAcceptCurrent (card) {
+      return !this.game.currentCard || this.game.currentPlayer.isAI || this.game.wait
+          || card !== this.stack.getTop() || this.willAcceptCard(card)
+    },
+    /**
+     * Decide what shadow the given card should have around it based on its
+     * type and position in the stack as well as the active card type.
+     */
+    shadow (card) {
+      if (this.cardWillAcceptCurrent(card)) {
+        if (this.game.currentCard.type === 'VIRUS') {
+          return this.willAcceptVirus ? 'attack' : ''
+        } else {
+          return 'play'
+        }
+      } else {
+        return ''
+      }
+    },
     /**
      * Handles the event where a card is dropped on the stack.
      * If the stack belongs to the current player and the card can be
@@ -83,46 +107,17 @@ export default {
      */
     onDrop (event) {
       const id = event.dataTransfer.getData('playerId')
-      const owner = this.pageState.players[id]
+      const owner = this.game.getPlayer(id)
       const cardId = event.dataTransfer.getData('cardId')
       const card = owner.hand.getCardById(cardId)
 
-      if (!card) {
-        return
-      } else if (this.stack.playerId !== this.pageState.currentPlayer().id) {
-        const targetPlayer = this.pageState.players[this.stack.playerId]
-        if (card.type !== 'VIRUS' || targetPlayer.protectedFrom('VIRUS')) {
-          return
-        }
-      }
-
-      if (this.stack.willAccept(card)) {
+      if (this.canPlayOnStack(card)) {
         event.stopPropagation();
-        this.pageState.takeTurn({
-          type: "playOnStack", player: this.pageState.currentPlayer(),
+        this.game.takeTurn({
+          type: "playOnStack", player: this.game.currentPlayer(),
           stack: this.stack, card: card, cardOwner: owner
         })
       }
-    },
-    /**
-     * Decide what shadow the given card should have around it based on its
-     * type and position in the stack as well as the active card type.
-     */
-    shadow (card) {
-      let result = ''
-      if (!this.pageState.currentCard || this.stack.getTop() !== card
-          || this.pageState.currentPlayer().isAI || this.pageState.wait) {
-        return result
-      } else if (this.pageState.currentCard.type === 'VIRUS') {
-          let targetPlayer = this.pageState.players[this.stack.playerId]
-          if (this.stack.playerId !== this.pageState.currentPlayer().id
-              && !targetPlayer.protectedFrom('VIRUS')) {
-            result = 'attack'
-          }
-      } else if (this.stack.playerId === this.pageState.currentPlayer().id) {
-        result = 'play'
-      }
-      return this.stack.willAccept(this.pageState.currentCard) ? result : ''
     },
     refresh () {
       this.update = !this.update
@@ -136,7 +131,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
 #stack {

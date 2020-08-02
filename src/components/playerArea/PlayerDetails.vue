@@ -26,16 +26,16 @@ export default {
     'spy-accessor': SpyAccessor
   },
   computed: {
-    ...mapGetters(['state']),
+    ...mapGetters(['game']),
     isCurrentPlayer () {
-      return this.state.currentPlayer() === this.player
+      return this.game.currentPlayer() === this.player
     },
     oppSide () {
       return this.side === 'right' ? 'left' : 'right'
     },
     showSpy () {
       if (this.player.hurtBy('SPYWARE')) {
-        return this.player.effects.getNegative('SPYWARE', this.state.currentPlayer())
+        return this.player.effects.getNegative('SPYWARE', this.game.currentPlayer())
       }
       return false
     }

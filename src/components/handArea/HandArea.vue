@@ -16,13 +16,13 @@
 
   <slot name="hand">
     <div id="hand">
-      <player-hand :player="pageState.currentPlayer()"/>
+      <player-hand :player="game.currentPlayer()"/>
     </div>
   </slot>
 
   <slot name="history">
     <div id="turns">
-      <turn-history></turn-history>
+      <turn-history/>
     </div>
   </slot>
 </div>
@@ -33,6 +33,7 @@
 import TurnAreaInfo from '@/components/info/TurnAreaInfo'
 import playerHand from '@/components/handArea/PlayerHand'
 import TurnHistory from '@/components/handArea/TurnHistory'
+import { mapGetters } from 'vuex'
 
 /**
  * Displays the active components needed for players to take their turn.
@@ -45,7 +46,6 @@ export default {
   data () {
     return {
       update: 1,
-      pageState: this.$store.state.pageState
     }
   },
   components: {
@@ -54,11 +54,9 @@ export default {
     'player-hand': playerHand
   },
   computed: {
-    player () {
-      return this.pageState.currentPlayer()
-    }, 
+    ...mapGetters(['game']),
     redrawText () {
-      if (this.pageState.currentPlayer().hurtBy('DDOS')) {
+      if (this.game.currentPlayer().hurtBy('DDOS')) {
         return 'PASS'
       }
       return 'REDRAW'
@@ -66,11 +64,11 @@ export default {
   },
   methods: {
     redraw () {
-      if (!this.player.isAI) {
-        if (this.player.hurtBy('DDOS')) {
-          this.pageState.takeTurn({type: 'pass'})
+      if (!this.game.currentPlayer().isAI) {
+        if (this.game.currentPlayer().hurtBy('DDOS')) {
+          this.game.takeTurn({type: 'pass'})
         }
-        this.pageState.takeTurn({type: 'discardHand', player: this.player})
+        this.game.takeTurn({type: 'discardHand', player: this.player})
       }
     }
   },
@@ -103,6 +101,3 @@ export default {
   height: 80px;
 }
 </style>
-
-
-

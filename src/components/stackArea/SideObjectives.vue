@@ -41,7 +41,7 @@ export default {
    'side-objectives-info': SideObjectivesInfo
   },
   computed: {
-    ...mapGetters(['state']),
+    ...mapGetters(['game']),
     /**
      * Returns a list of all the condition data.
      * Each item text for in the if statement, text for in the body,
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     setBonuses () {
-      this.bonuses = this.state.getPlayerBonuses(this.player)
+      this.bonuses = this.game.getPlayerBonuses(this.player)
     }
   },
   created () {

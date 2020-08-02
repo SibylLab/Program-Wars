@@ -1,7 +1,7 @@
 <template>
 <div id='stacks-area' :key="activeTab" :class="{ play: showShadow }">
 
-  <div id="tabs" v-if="!pageState.currentPlayer().isAI" :class="tabSide">
+  <div id="tabs" v-if="!game.currentPlayer().isAI" :class="tabSide">
     <ul>
       <li v-on:click="changeTab(1)" :class="['tab', { active: isActiveTab(1) }]">
         Stacks </li>
@@ -20,6 +20,7 @@
 <script>
 import SideObjectives from '@/components/stackArea/SideObjectives'
 import PlayField from '@/components/stackArea/PlayField'
+import { mapGetters } from 'vuex'
 
 /**
  * The area of the screen that holds a players play field and side objectives
@@ -33,7 +34,6 @@ export default {
   props: ['player', 'tabSide'],
   data () {
     return {
-      pageState: this.$store.state.pageState,
       activeTab: 1
     }
   },
@@ -42,8 +42,9 @@ export default {
     'side-objectives': SideObjectives
   },
   computed: {
+    ...mapGetters(['game']),
     showShadow () {
-      return this.player === this.pageState.currentPlayer()
+      return this.player === this.game.currentPlayer()
     }
   },
   methods: {

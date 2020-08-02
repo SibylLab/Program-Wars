@@ -39,11 +39,11 @@ export default {
     'scan-overlay': ScanOverlay
   },
   computed: {
-    ...mapGetters(['state'])
+    ...mapGetters(['game'])
   },
   methods: {
     isCurrentCard (card) {
-      return this.state.currentCard === card && !this.player.isAI
+      return this.game.currentCard === card && !this.player.isAI
     },
     isScan (card) {
       return card.type === 'SCAN'
@@ -56,7 +56,7 @@ export default {
           && this.player.canPlay(card)
     },
     cardImage (card) {
-      if (this.state.currentPlayer().isAI) {
+      if (this.game.currentPlayer().isAI) {
         return 'static/cardImages/backOfCard.png'
       }
       return card.image
@@ -69,14 +69,14 @@ export default {
     },
     select (card) {
       if (!this.isCurrentCard(card)) {
-        this.state.setCurrentCard(card)
+        this.game.setCurrentCard(card)
         this.update = !this.update
         bus.$emit('select-card')
       }
     },
     discard (card) {
       if (!this.player.isAi) {
-        this.state.takeTurn({
+        this.game.takeTurn({
           type: "discardCard",
           player: this.player,
           card: card, cardOwner: this.player

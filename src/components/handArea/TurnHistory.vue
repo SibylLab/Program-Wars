@@ -19,6 +19,7 @@
 <script>
 import TurnHistoryInfo from '@/components/info/TurnHistoryInfo'
 import { isAttack, isSpecial } from '@/classes/card/cardData'
+import { mapGetters } from 'vuex'
 
 /**
  * Shows the last 8 plays that have been made with the card, player, and target
@@ -27,22 +28,18 @@ import { isAttack, isSpecial } from '@/classes/card/cardData'
  */
 export default {
   name: 'turn-history',
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   components: {
     'turn-history-info': TurnHistoryInfo,
   },
   computed: {
+    ...mapGetters(['game']),
     /**
      * Returns the last 10 plays that were made.
      */
     history () {
-      const end = this.pageState.turnHistory.length
+      const end = this.game.turnHistory.length
       const start = end < 10 ? 0 : Math.abs(end - 10)
-      return this.pageState.turnHistory.slice(start, end).reverse()
+      return this.game.turnHistory.slice(start, end).reverse()
     },
     trojanIcon () { return 'static/cardImages/effects/TROJAN.png' }
   },
