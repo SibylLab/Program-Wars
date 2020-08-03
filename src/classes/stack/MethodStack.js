@@ -31,7 +31,8 @@ export default class MethodStack extends Stack {
 
   // only instruction cards that adding will keep below or at the limit
   willAccept (card) {
-    return card.type === 'INSTRUCTION' && card.getValue() + this.getScore() <= METHOD_LIMIT
+    return card.type === 'INSTRUCTION'
+        && card.getValue() + this.getScore() - this.adjustment <= METHOD_LIMIT
   }
 
   // is the method up to the limit yet
