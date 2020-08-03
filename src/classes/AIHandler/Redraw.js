@@ -7,7 +7,7 @@ export default class Redraw extends ActionHandler {
   /**
    * Returns a redraw turn object for an ai player.
    */
-  handle(player) {  // eslint-disable-line no-unused-vars
+  handle(player) {
     return {
       type: "discardHand",
       player: player

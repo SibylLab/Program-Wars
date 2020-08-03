@@ -5,7 +5,7 @@ export default class Scan extends Card {
     super(0, 'SCAN', Card.imgPath('scan'), ownerId)
   }
 
-  play ({player, target, targetType}) {
+  play ({ player, target, targetType }) {
     if (targetType === 'player' && this._canAddScan(target)) {
       target.effects.addPositive(this)
       return []
