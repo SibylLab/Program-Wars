@@ -10,9 +10,9 @@
        src="static/miscIcons/trash.png" v-on:click="discard(card)">
 
     <div class="overlay" v-if="showOverlay(card)">
-      <scan-overlay v-if="isScan(card)" :card="card" :player="player"/>
+      <scan-overlay v-if="isScan(card.type)" :card="card" :player="player"/>
       <algorithm-overlay v-if="isAlgorithm(card.type)" :card="card" :owner="player"/>
-      <target-overlay v-else :card="card" :player="player"/>
+      <target-overlay v-if="isOther(card.type)" :card="card" :player="player"/>
     </div>
   </div>
 
@@ -48,11 +48,14 @@ export default {
     isCurrentCard (card) {
       return this.game.currentCard === card && !this.player.isAI
     },
-    isScan (card) {
-      return card.type === 'SCAN'
+    isScan (type) {
+      return type === 'SCAN'
     },
     isAlgorithm (type) {
       return isAlgorithm(type)
+    },
+    isOther (type) {
+      return isSpecial(type) && !this.isScan(type) && !this.isAlgorithm(type)
     },
     canDrag (card) {
       return !isSpecial(card.type) && this.player.canPlay(card)
