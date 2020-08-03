@@ -1,17 +1,23 @@
 <template>
 <div id="info-component">
-  <input v-if="!active" type='image' id='info-button' src='static/miscIcons/info.png'
+  <input type='image' id='info-button' src='static/miscIcons/info.png'
       v-on:click="active = true">
 
   <div id="info-popup" v-if="active">
-    <slot></slot>
-    <button class="btn btn-sm btn-info action" v-on:click="openRules">
-      More Info
-    </button>
-    <button class="btn btn-sm btn-primary action" v-on:click="active = false">
-      Close
-    </button>
+    <div class="backdrop">
+      <div class="container">
+        <slot></slot>
+
+        <button class="btn btn-sm btn-info action" v-on:click="openRules">
+          More Info
+        </button>
+        <button class="btn btn-sm btn-primary action" v-on:click="active = false">
+          Close
+        </button>
+      </div>
+    </div>
   </div>
+
 </div>
 </template>
 
@@ -51,29 +57,42 @@ export default {
   position: relative;
 }
 
+#info-button {
+  width: 20px;
+  height: 20px;
+}
+
 #info-popup {
   position: fixed;
-  left: 30%;
-  top: 10%;
-  width: 40%;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.container {
+  position: absolute;
+  left: 25%;
+  top: 7%;
+  width: 50%;
   min-width: 400px;
-  min-height: 300px;
-  max-height: 80%;
+  max-height: 85%;
   overflow: auto;
-  height: auto;
   border: ridge grey 5px;
   border-radius: 10px;
   background-color: white;
   color: black;
   padding: 10px;
   text-align: left;
-  font-size: 15px;
-  z-index: 600;
+  font-size: 20px;
+  z-index: 1000;
 }
 
-#info-button {
-  width: 20px;
-  height: 20px;
+.backdrop {
+  width: 100%;
+  height: 100%;
+  background: rgba(50, 50, 50, 0.4);
 }
 
 .action {

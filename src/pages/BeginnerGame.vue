@@ -1,7 +1,9 @@
 <template>
 <div id="beginner-game" v-if="inBeginnerGame">
   <winner-modal id="winner-modal" class="modal fade"/>
-  <page-header/>
+  <page-header>
+    <template v-slot:pageHeading> Score Limit: {{ game.scoreLimit }} </template>
+  </page-header>
 
   <div class="begin-player" style="left: 0;">
     <player-area :player="game.getPlayer(0)" side="left"/>
