@@ -8,6 +8,8 @@ import Trojan from '@/classes/card/Trojan'
 import SqlInjection from '@/classes/card/SqlInjection'
 import NegativeEffectCard from '@/classes/card/NegativeEffectCard'
 import PositiveEffectCard from '@/classes/card/PositiveEffectCard'
+import Search from '@/classes/card/Search'
+import Sort from '@/classes/card/Sort'
 import { isNegativeEffect, isPositiveEffect } from '@/classes/card/cardData'
 
 export default class CardFactory {
@@ -32,8 +34,12 @@ export default class CardFactory {
       return new NegativeEffectCard(type, ownerId)
     } else if (isPositiveEffect(type)) {
       return new PositiveEffectCard(type, ownerId)
+    } else if (type === 'SEARCH') {
+      return new Search(ownerId)
+    } else if (type === 'SORT') {
+      return new Sort(ownerId)
     } else {
-      throw "Not a valid card type: " + type
+      throw "CardFactory: Not a valid card type: " + type
     }
   }
 }

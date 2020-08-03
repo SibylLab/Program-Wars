@@ -5,8 +5,9 @@ export default class Search extends Card {
     super(0, 'SEARCH', Card.imgPath('search'), ownerId)
   }
 
-  play ({ player, foundCard }) {
-    player.hand.addCard(foundCard)
+  play ({ player, chosenCard, deck }) {
+    player.hand.addCard(chosenCard)
+    deck.shuffle()
     return [this]
   }
 }

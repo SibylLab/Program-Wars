@@ -1,11 +1,9 @@
 <template>
 <div id="scan-overlay">
-  <scan-modal v-if="activeScan" :attacks="getAttacks"
-      :cardOwner="player" :card="card">
-  </scan-modal>
+  <active-scan v-if="activeScan" :attacks="getAttacks"
+      :cardOwner="player" :card="card"/>
 
-  <h5> {{ scanText }} </h5>
-
+  <h5> {{ titleText }} </h5>
   <button v-if="canScan" class="btn btn-sm btn-primary my-btn" v-on:click="playScan()">
     Activate
   </button>
@@ -15,7 +13,7 @@
 
 
 <script>
-import ScanModal from '@/components/modals/ScanModal'
+import ActiveScan from '@/components/shared/ActiveScan'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -27,14 +25,14 @@ export default {
     }
   },
   components: {
-    'scan-modal': ScanModal
+    'active-scan': ActiveScan
   },
   computed: {
     ...mapGetters(['game']),
     canScan() {
       return !this.player.helpedBy('SCAN')
     },
-    scanText () {
+    titleText () {
       return this.canScan ? "Scan" : "Scan Active"
     },
     getAttacks () {

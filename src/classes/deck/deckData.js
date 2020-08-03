@@ -22,7 +22,7 @@ const b1Special = [
   makeType("SPYWARE", 0, 3),
   makeType("RANSOM", 0, 3),
   makeType("ANTIVIRUS", 0, 1),
-  // makeType("SEARCH", 0, 2),
+  makeType("SEARCH", 0, 3),
   makeType("SCAN", 0, 4)
 ]
 

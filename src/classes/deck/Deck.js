@@ -1,13 +1,11 @@
 import CardFactory from '@/classes/card/CardFactory'
 
-const NUM_SHUFFLES = 4
-
 export default class Deck {
   constructor (cardTypes) {
     this.cards = []
     this.discardPile = []
     this._addCards(cardTypes)
-    this.shuffle(NUM_SHUFFLES)
+    this.shuffle()
   }
 
   draw () {
@@ -22,7 +20,7 @@ export default class Deck {
     this.discardPile.push(card)
   }
 
-  shuffle (times) {
+  shuffle (times = 7) {
     for (let i = 0; i < times; i++) {
       this._shuffleCards(this.cards)
     }

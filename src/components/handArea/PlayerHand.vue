@@ -11,6 +11,7 @@
 
     <div class="overlay" v-if="showOverlay(card)">
       <scan-overlay v-if="isScan(card)" :card="card" :player="player"/>
+      <algorithm-overlay v-if="isAlgorithm(card.type)" :card="card" :owner="player"/>
       <target-overlay v-else :card="card" :player="player"/>
     </div>
   </div>
@@ -21,7 +22,8 @@
 <script>
 import TargetOverlay from '@/components/handArea/TargetOverlay'
 import ScanOverlay from '@/components/handArea/ScanOverlay'
-import { isSpecial } from '@/classes/card/cardData'
+import AlgorithmOverlay from '@/components/handArea/AlgorithmOverlay'
+import { isSpecial, isAlgorithm } from '@/classes/card/cardData'
 import { bus } from '@/components/shared/Bus'
 import { mapGetters } from 'vuex'
 
@@ -36,7 +38,8 @@ export default {
   },
   components: {
     'target-overlay': TargetOverlay,
-    'scan-overlay': ScanOverlay
+    'scan-overlay': ScanOverlay,
+    'algorithm-overlay': AlgorithmOverlay
   },
   computed: {
     ...mapGetters(['game'])
@@ -47,6 +50,9 @@ export default {
     },
     isScan (card) {
       return card.type === 'SCAN'
+    },
+    isAlgorithm (type) {
+      return isAlgorithm(type)
     },
     canDrag (card) {
       return !isSpecial(card.type) && this.player.canPlay(card)
