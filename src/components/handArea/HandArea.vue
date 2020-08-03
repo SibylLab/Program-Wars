@@ -66,7 +66,9 @@ export default {
     redraw () {
       if (!this.game.currentPlayer().isAI) {
         if (this.game.currentPlayer().hurtBy('DDOS')) {
-          this.game.takeTurn({type: 'pass'})
+          this.game.takeTurn({
+            type: 'pass', player: this.game.currentPlayer()
+          })
         }
         this.game.takeTurn({
           type: 'discardHand', player: this.game.currentPlayer()
