@@ -35,6 +35,10 @@ export default class Game {
     this.currentCard = card
   }
 
+  getDeck () {
+    return this.deck
+  }
+
   discardCards (cards) {
     cards.map(c => this.discardCard(c)) 
   }
