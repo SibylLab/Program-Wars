@@ -16,6 +16,7 @@ const beginnerBase = [
   makeType("VARIABLE", 4, 3),
   makeType("VARIABLE", 5, 3),
   makeType("METHOD", 0, 12),
+  makeType("SCAN", 0, 4)
 ]
 
 const b1Special = [
@@ -23,13 +24,49 @@ const b1Special = [
   makeType("RANSOM", 0, 3),
   makeType("ANTIVIRUS", 0, 1),
   makeType("SEARCH", 0, 3),
-  makeType("SCAN", 0, 4)
 ]
 
+const b2Special = [
+  makeType("DDOS", 0, 3),
+  makeType("STACK_OVERFLOW", 0, 3),
+  makeType("FIREWALL", 0, 1),
+  makeType("SORT", 0, 3),
+]
+
+const b3Special = [
+  makeType("VIRUS", 0, 3),
+  makeType("STACK_UNDERFLOW", 0, 3),
+  makeType("ANTIVIRUS", 0, 1),
+  makeType("FIREWALL", 0, 1),
+  makeType("SEARCH", 0, 3),
+]
+
+const b4Special = [
+  makeType("TROJAN", 0, 3),
+  makeType("SQL_INJECTION", 0, 3),
+  makeType("ANTIVIRUS", 0, 1),
+  makeType("FIREWALL", 0, 1),
+  makeType("SORT", 0, 3),
+]
 
 const beginner1 = {
   base: beginnerBase,
   extra: b1Special
+}
+
+const beginner2 = {
+  base: beginnerBase,
+  extra: b2Special
+}
+
+const beginner3 = {
+  base: beginnerBase,
+  extra: b3Special
+}
+
+const beginner4 = {
+  base: beginnerBase,
+  extra: b4Special
 }
 
 const beginnerDefault = beginner1
@@ -168,7 +205,7 @@ const optionalCards = {
 
 export default {
   beginner: {
-    beginner1,
+    beginner1, beginner2, beginner3, beginner4,
     default: beginnerDefault,
     levels: beginnerLevels
   },
