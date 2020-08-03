@@ -121,7 +121,7 @@ export default class Game {
 
     this.isOver = this.scores.reduce((acc, score) => {
       return acc || score >= this.scoreLimit
-    }, this.isOver)
+    }, false)
   }
 
   endTurn () {
