@@ -2,9 +2,8 @@
 <div id="algorithm-overlay">
   <search v-if="isActive('SEARCH')" :deck="game.getDeck()"
     :card="card" :cardOwner="owner"/> 
-  <!-- algorithm components here
-  <sort v-if="isActive('SORT')" :deck="game.getDeck()"/>
-  -->
+  <sort v-if="isActive('SORT')" :deck="game.getDeck()"
+    :card="card" :cardOwner="owner"/> 
 
   <h5> {{ titleText }} </h5>
   <button v-if="canPlay" class="btn btn-sm btn-primary my-btn" v-on:click="play()">
@@ -17,6 +16,7 @@
 
 <script>
 import Search from '@/components/shared/Search'
+import Sort from '@/components/shared/Sort'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -28,7 +28,8 @@ export default {
     }
   },
   components: {
-    'search': Search
+    'search': Search,
+    'sort': Sort
   },
   computed: {
     ...mapGetters(['game']),

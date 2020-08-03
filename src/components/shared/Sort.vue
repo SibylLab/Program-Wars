@@ -6,10 +6,12 @@
       <h3 style="margin-top: 2%;"> <b>Sort</b> </h3>
 
       <div class="content">
+        <img v-for="card in sortedCards" v-bind:key="card.id"
+          :src="card.image" class="card" draggable>
       </div>
 
-      <button class="btn btn-primary my-btn" v-on:click="discard">
-        Discard
+      <button class="btn btn-primary my-btn" v-on:click="finish">
+        Finish
       </button>
     </div>
 
@@ -24,27 +26,20 @@ export default {
   name: 'search',
   props: ['cardOwner', 'card', 'deck'],
   data () {
-    return () {
-      sortedCards: this.deck.removeNumCards(this.card.value),
+    return {
+      sortedCards: this.deck.drawCards(this.card.value),
     }
   },
   computed: {
     ...mapGetters(['game'])
   },
   methods: {
-    play () {
+    finish () {
       this.game.takeTurn({
         type: 'playSort',
         player: this.game.currentPlayer(),
         card: this.card, cardOwner: this.cardOwner,
         sortedCards: this.sortedCards, deck: this.deck
-      })
-    },
-    discard () {
-      this.game.takeTurn({
-        type: 'discardCard', 
-        player: this.game.currentPlayer(),
-        card: this.card, cardOwner: this.cardOwner
       })
     }
   }
@@ -52,7 +47,7 @@ export default {
 </script>
 
 <style scoped>
-#search {
+#sort {
   position: fixed;
   top: 0;
   left: 0;
@@ -63,23 +58,28 @@ export default {
 .container {
   position: absolute;
   top: 10%;
-  left: 35%;
-  width: 30%;
-  height: 70%;
+  left: 20%;
+  width: 60%;
+  height: 40%;
   border: ridge grey 4px;
   border-radius: 20px;
   background-color: white;
   z-index: 1000;
+  min-width: 800px;
+  min-height: 300px;
+}
+
+.title {
+  margin: 0;
+  margin-top: 1%;
 }
 
 .content {
-  position: absolute;
-  top: 10%;
-  left: 5%;
-  width: 90%;
-  height: 80%;
-  overflow: auto;
-  text-align: left;
+  position: relative;
+  height: 65%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 
 .backdrop {
@@ -89,17 +89,12 @@ export default {
 }
 
 .my-btn {
-  position: absolute;
-  bottom: 2%;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0;
 }
 
 .card {
-  display: inline;
-  width: 22%;
-  margin: 0 5%;
+  display: inline-block;
+  height: 80%;
+  margin: 2%;
 }
 </style>

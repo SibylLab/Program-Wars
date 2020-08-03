@@ -11,13 +11,37 @@ export default class Deck {
   draw () {
     if (this.cards.length === 0) {
       this.refresh()
+      if (this.cards.length === 0) {
+        return null
+      }
     }
     return this.cards.shift()
+  }
+
+  drawCards (numCards) {
+    const drawn = []
+    for (let i = 0; i < numCards; i++) {
+      const card = this.draw()
+      if (card) {
+        drawn.push(card)
+      } else {
+        break
+      }
+    }
+    return drawn
   }
 
   refresh () {
     this.cards = this.cards.concat(this.discardPile)
     this.discardPile = []
+  }
+
+  putCardOnTop (card) {
+    this.cards.unshift(card)
+  }
+
+  addCardsToTop (cards) {
+    cards.map(c => this.putCardOnTop(c))
   }
 
   discard (card) {
