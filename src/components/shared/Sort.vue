@@ -7,7 +7,9 @@
 
       <div class="content">
         <img v-for="card in sortedCards" v-bind:key="card.id"
-          :src="card.image" class="card" draggable>
+          :src="card.image" class="card" draggable
+          v-on:dragstart="startDrag($event, card)"
+          @drop="onDrop($event, card)" @dragover.prevent @dragenter.prevent>
       </div>
 
       <button class="btn btn-primary my-btn" v-on:click="finish">
@@ -41,6 +43,19 @@ export default {
         card: this.card, cardOwner: this.cardOwner,
         sortedCards: this.sortedCards, deck: this.deck
       })
+    },
+    startDrag (event, card) {
+      event.dataTransfer.dropEffect = 'move'
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('cardId', card.id)
+    },
+    onDrop (event, card) {
+      const droppedId = event.dataTransfer.getData('cardId')
+      const dropped = this.sortedCards.find(c => c.id === droppedId)
+
+      const idx = this.sortedCards.indexOf(card)
+      this.sortedCards = this.sortedCards.filter(c => c !== dropped)
+      this.sortedCards.splice(idx, 0, dropped)
     }
   }
 }

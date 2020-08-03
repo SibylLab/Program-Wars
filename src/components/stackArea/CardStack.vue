@@ -1,5 +1,6 @@
 <template>
-<div id="stack" :key="update" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+<div id="stack" :key="update" @drop="onDrop($event)"
+    @dragover.prevent @dragenter.prevent>
 
   <div style="text-align: center">
     <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">

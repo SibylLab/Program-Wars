@@ -6,10 +6,8 @@ export default class Sort extends Card {
   }
 
   play ({ sortedCards, deck }) {
-    console.log(deck.cards.map(c => c.type).slice(0, 10))
     sortedCards.reverse()
     deck.addCardsToTop(sortedCards)
-    console.log(deck.cards.map(c => c.type).slice(0, 10))
     return [this]
   }
 }
