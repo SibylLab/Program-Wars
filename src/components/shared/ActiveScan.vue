@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style scoped>
-#scan-modal {
+#active-scan {
   position: fixed;
   top: 0;
   left: 0;
