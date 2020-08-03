@@ -77,7 +77,7 @@ export default {
     canPlayOnStack (card) {
       if (this.stack.willAccept(card)) {
         if (card.type === 'VIRUS') {
-          return !this.willAcceptVirus
+          return this.willAcceptVirus
         }
         return true
       }

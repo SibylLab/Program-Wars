@@ -2,6 +2,7 @@ import CardWrapper from '@/classes/card/CardWrapper'
 import ExtraCardWrapper from '@/classes/card/ExtraCardWrapper'
 import NegativeEffectCard from '@/classes/card/NegativeEffectCard'
 import Virus from '@/classes/card/Virus'
+import { isBase, isAttack } from '@/classes/card/cardData'
 
 export default class MimicWrapper extends CardWrapper {
   constructor (card, trojan) {
@@ -17,6 +18,7 @@ export default class MimicWrapper extends CardWrapper {
 
   play (playInfo) {
     const replacement = this._replace()
+    playInfo.target = playInfo.player
     return replacement.play(playInfo)
   }
 
@@ -24,9 +26,9 @@ export default class MimicWrapper extends CardWrapper {
     let card
     if (this.card.type === 'REPEAT' || this.card.type === 'VARIABLE') {
       card = new Virus()
-    } else if (this.card.isBase()) {
+    } else if (isBase(this.card.type)) {
       card = new NegativeEffectCard('STACK_OVERFLOW')
-    } else if (this.card.isAttack()) {
+    } else if (isAttack(this.card.type)) {
       card = new NegativeEffectCard('STACK_UNDERFLOW')
     } else {
       card = new NegativeEffectCard('RANSOM')

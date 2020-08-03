@@ -5,10 +5,10 @@ export default class Virus extends Card {
     super(0, 'VIRUS', Card.imgPath('virus'), ownerId)
   }
 
-  play ({target, stack}) {
-    if (target.helpedBy('SCAN')) {
-      return [...target.removePositiveType('SCAN'), this]
-    } else if (stack.getTop().type !== 'VIRUS' && !target.protectedFrom(this.type)) {
+  play ({stackOwner, stack}) {
+    if (stackOwner.helpedBy('SCAN')) {
+      return [...stackOwner.removePositiveType('SCAN'), this]
+    } else if (stack.getTop().type !== 'VIRUS' && !stackOwner.protectedFrom(this.type)) {
       stack.addCard(this)
     }
     return []

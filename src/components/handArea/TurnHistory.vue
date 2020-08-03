@@ -80,7 +80,7 @@ export default {
       let path = 'static/playerImages/player'
       let id = '0'
       if (play.card.type === 'VIRUS') {
-        id = play.target.playerId
+        id = play.stackOwner.id
       } else {
         id = play.target.id
       }

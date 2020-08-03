@@ -45,6 +45,10 @@ export default class Stack {
     return this.cards[this.cards.length - 1]
   }
 
+  popTop () {
+    return this.cards.pop()
+  }
+
   /**
    * Checks if the stack has the maximum allowed number of repeats.
    * @return {bool} true if the max repeats has been reached, false otherwise.

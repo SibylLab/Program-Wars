@@ -10,8 +10,9 @@ export default class Scan extends Card {
       target.effects.addPositive(this)
       return []
     } else if (targetType === 'stack') {
-      return [target.getTop(), this]
+      return [target.popTop(), this]
     } else if (targetType === 'mimic') {
+      player.hand.removeCard(target)
       return [target, this]
     } else if (targetType === 'effect') {
       return [player.effects.removeEffect(target), this]

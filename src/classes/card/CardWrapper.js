@@ -9,4 +9,8 @@ export default class CardWrapper extends Card {
   getDiscards () {
     return this.card.getDiscards()
   }
+
+  play (playInfo) {
+    return this.card.play(playInfo)
+  }
 }
