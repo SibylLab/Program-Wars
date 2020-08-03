@@ -62,7 +62,7 @@ export default {
     },
     showOverlay (card) {
       return this.isCurrentCard(card) && isSpecial(card.type)
-          && this.player.canPlay(card)
+          && this.player.canPlay(card.type)
     },
     cardImage (card) {
       if (this.game.currentPlayer().isAI) {
