@@ -11,14 +11,10 @@
           v-on:click="select(card)">
       </div>
 
-      <div class="buttons">
-        <button class="btn btn-success my-btn" v-on:click="choose">
-          Choose Card
-        </button>
-        <button class="btn btn-primary my-btn" v-on:click="discard">
-          Discard Search
-        </button>
-      </div>
+      <button class="btn btn-success my-btn" v-on:click="choose"
+          :disabled="!selected">
+        Choose Card
+      </button>
     </div>
 
   </div>
@@ -30,7 +26,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'search',
-  props: ['cardOwner', 'card', 'deck'],
+  props: ['cardOwner', 'card', 'deck', 'cancel'],
   data () {
     return {
       selected: null,
@@ -57,13 +53,11 @@ export default {
         card: this.card, cardOwner: this.cardOwner,
         chosenCard: this.selected, deck: this.deck
       })
-    },
-    discard () {
-      this.game.takeTurn({
-        type: 'discardCard', 
-        player: this.game.currentPlayer(),
-        card: this.card, cardOwner: this.cardOwner
-      })
+    }
+  },
+  created () {
+    if (this.deckCards === 0) {
+      this.deck.refresh()
     }
   }
 }
@@ -111,13 +105,8 @@ export default {
   background: rgba(50, 50, 50, 0.4);
 }
 
-.buttons {
-  position: relative;
-  margin: 1%;
-}
-
 .my-btn {
-  margin: 0 1%;
+  margin: 1%;
 }
 
 .card {

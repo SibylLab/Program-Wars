@@ -27,10 +27,6 @@
             Clean </button>
         </div>
       </div>
-
-      <button class="btn btn-primary my-btn" v-on:click="discardScan">
-        Discard Scan
-      </button>
     </div>
 
   </div>
@@ -98,7 +94,7 @@ export default {
   top: 10%;
   left: 5%;
   width: 90%;
-  height: 80%;
+  height: 88%;
   overflow: auto;
   text-align: left;
 }
@@ -107,15 +103,6 @@ export default {
   width: 100%;
   height: 100%;
   background: rgba(50, 50, 50, 0.4);
-}
-
-.my-btn {
-  position: absolute;
-  bottom: 2%;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .card-stack {

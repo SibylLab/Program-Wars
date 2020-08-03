@@ -10,10 +10,14 @@ export default class Deck {
 
   draw () {
     if (this.cards.length === 0) {
-      this.cards = this.cards.concat(this.discardPile)
-      this.discardPile = []
+      this.refresh()
     }
     return this.cards.shift()
+  }
+
+  refresh () {
+    this.cards = this.cards.concat(this.discardPile)
+    this.discardPile = []
   }
 
   discard (card) {

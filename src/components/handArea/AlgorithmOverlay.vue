@@ -1,7 +1,7 @@
 <template>
 <div id="algorithm-overlay">
   <search v-if="isActive('SEARCH')" :deck="game.getDeck()"
-    :card="card" :cardOwner="owner"/>
+    :card="card" :cardOwner="owner"/> 
   <!-- algorithm components here
   <sort v-if="isActive('SORT')" :deck="game.getDeck()"/>
   -->
@@ -24,7 +24,7 @@ export default {
   props: ['card', 'owner'],
   data () {
     return {
-      active: 'none'
+      active: null
     }
   },
   components: {
