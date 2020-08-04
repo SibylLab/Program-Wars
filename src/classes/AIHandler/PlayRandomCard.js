@@ -21,7 +21,6 @@ export default class PlayRandomCard extends PlayBestCard {
     const chosen = deck.takeCardAt(idx)
 
     if (chosen) {
-      console.log('search', chosen.type)
       return {
         type: 'playSearch',
         player, card, cardOwner: player,

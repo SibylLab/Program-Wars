@@ -250,7 +250,8 @@ export default class PlayBestCardAction extends ActionHandler {
         card: card,
         cardOwner: player,
         player: player,
-        target: player
+        target: player,
+        targetType: 'player' // for scan
       }
     }
 
