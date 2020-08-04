@@ -5,12 +5,14 @@ export default class SqlInjection extends Card {
     super(0, "SQL_INJECTION", Card.imgPath("sql_injection"), ownerId)
   }
 
-  play ({player, target}) {
-    if (!target.hurtBy(this.type) && !target.protectedFrom(this.type)) {
-      if (target.helpedBy('SCAN')) {
-        return [...target.removePositiveType('SCAN'), this]
+  play (playInfo) {
+    if (!playInfo.target.hurtBy(this.type)
+        && !playInfo.target.protectedFrom(this.type)) {
+      if (playInfo.target.helpedBy('SCAN')) {
+        return this._blockedByScan(playInfo)
       }
-      target.effects.addSql(this, player, target.playField.method)
+      playInfo.target.effects.addSql(
+        this, playInfo.player, playInfo.target.playField.method)
       return []
     } else {
       return [this]

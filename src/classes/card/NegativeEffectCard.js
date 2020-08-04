@@ -5,12 +5,13 @@ export default class NegativeEffectCard extends Card {
     super(0, type, Card.imgPath(type.toLowerCase()), ownerId)
   }
 
-  play ({player, target}) {
-    if (!target.hurtBy(this.type) && !target.protectedFrom(this.type)) {
-      if (target.helpedBy('SCAN')) {
-        return [...target.effects.removePositiveType('SCAN'), this]
+  play (playInfo) {
+    if (!playInfo.target.hurtBy(this.type)
+        && !playInfo.target.protectedFrom(this.type)) {
+      if (playInfo.target.helpedBy('SCAN')) {
+        return this._blockedByScan(playInfo)
       }
-      target.effects.addNegative(this, player)
+      playInfo.target.effects.addNegative(this, playInfo.player)
       return []
     } else {
       return [this]

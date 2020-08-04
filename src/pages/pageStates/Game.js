@@ -103,14 +103,16 @@ export default class Game {
   playCard (playInfo) {
     const card = playInfo.card
     const discards = card.play(playInfo)
-    this.scanUsed(discards)
     this.discardCards(discards)
+    this.notifications(playInfo)
     playInfo.cardOwner.hand.removeCard(card)
   }
 
-  scanUsed (cards) {
-    if (cards.find(c => c.type === 'SCAN')) {
+  notifications (playInfo) {
+    if (playInfo.scanned) {
       bus.$emit('scan-used')
+    } else if (playInfo.replaced) {
+      bus.$emit('mimic-played')
     }
   }
 

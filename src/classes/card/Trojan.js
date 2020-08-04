@@ -8,11 +8,11 @@ export default class Trojan extends Card {
     super(0, 'TROJAN', Card.imgPath('trojan'), ownerId)
   }
 
-  play ({target}) {
-    if (target.helpedBy('SCAN')) {
-      return [...target.removePositiveType('SCAN'), this]
-    } else if (!target.protectedFrom(this.type)) {
-      this._mimicCard(target.hand) 
+  play (playInfo) {
+    if (playInfo.target.helpedBy('SCAN')) {
+      return this._blockedByScan(playInfo)
+    } else if (!playInfo.target.protectedFrom(this.type)) {
+      this._mimicCard(playInfo.target.hand) 
     }
     return [this]
   }

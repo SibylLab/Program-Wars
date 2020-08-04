@@ -19,6 +19,7 @@ export default class MimicWrapper extends CardWrapper {
   play (playInfo) {
     const replacement = this._replace()
     playInfo.target = playInfo.player
+    playInfo.replaced = true
     return replacement.play(playInfo)
   }
 

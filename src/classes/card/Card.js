@@ -29,4 +29,13 @@ export default class Card {
   static imgPath (cardName) {
     return 'static/cardImages/' + cardName + '.png'
   }
+
+  _blockedByScan (playInfo) {
+    playInfo.scanned = true
+    if (this.type === 'VIRUS') {
+      return [...playInfo.stackOwner.effects.removePositiveType('SCAN'), this]
+    } else { 
+      return [...playInfo.target.effects.removePositiveType('SCAN'), this]
+    }
+  }
 }
