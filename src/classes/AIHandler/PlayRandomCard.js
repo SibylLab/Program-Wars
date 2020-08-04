@@ -5,18 +5,29 @@ export default class PlayRandomCard extends PlayBestCard {
     super([])
   }
 
-  // changs sort hand to shuffle the hand instead
-  // since we loop through the cards in the hand this will make the play attemps
-  // random
-  sortHand (hand) {
-    for (let i = hand.cards.length; i; i--) {
+  sortCards (cards) {
+    for (let i = cards.length; i; i--) {
       const j = Math.floor(Math.random() * i);
-      [hand.cards[i - 1], hand.cards[j]] = [hand.cards[j], hand.cards[i - 1]]
+      [cards[i - 1], cards[j]] = [cards[j], cards[i - 1]]
     }
-    return hand.cards
   }
 
   isValidCard (card) {
     return card !== undefined
+  }
+
+  search (card, { player, deck }) {
+    const idx = Math.floor(Math.random() * deck.cards.length)
+    const chosen = deck.takeCardAt(idx)
+
+    if (chosen) {
+      console.log('search', chosen.type)
+      return {
+        type: 'playSearch',
+        player, card, cardOwner: player,
+        chosenCard: chosen, deck
+      }
+    }
+    return undefined
   }
 }

@@ -29,11 +29,11 @@ export default class AIHandler {
    * @param scores A list of current player scores.
    * @return a turn object {type, card, player, target}
    */
-  chooseAction(player, players, scores) {
+  chooseAction(player, players, scores, deck) {
     // Try all the action handlers until one returns a turn object
     for (let action of this.actionHandlers) {
       try {
-        let result = action.handle(player, players, scores)
+        let result = action.handle(player, players, scores, deck)
         if (result) {
           return result
         }
@@ -45,6 +45,6 @@ export default class AIHandler {
       }
     }
     // If no handler can handle this action use the default action
-    return this.defaultAction.handle(player, players, scores)
+    return this.defaultAction.handle(player, players, scores, deck)
   }
 }

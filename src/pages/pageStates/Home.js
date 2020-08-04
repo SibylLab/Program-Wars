@@ -10,7 +10,7 @@ const botInfo = [
   {name: 'n00b_b0t', personality: 'standard'},
   {name: 'L33T_g3Ars', personality: 'aggresive'},
   {name: 'RoboVaC', personality: 'defensive'},
-  {name: 'BlueScr33n', personality: 'beginner'}
+  {name: 'BlueScr33n', personality: 'standard'}
 ]
 
 export default class HomeState {

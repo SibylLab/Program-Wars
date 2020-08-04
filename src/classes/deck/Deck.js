@@ -31,6 +31,16 @@ export default class Deck {
     return drawn
   }
 
+  takeCardAt (idx) {
+    const card = this.cards[idx]
+    this.removeCard(card)
+    return card
+  }
+
+  removeCard (card) {
+    this.cards = this.cards.filter(c => c !== card)
+  }
+
   refresh () {
     this.cards = this.cards.concat(this.discardPile)
     this.discardPile = []

@@ -26,17 +26,18 @@ export default class PlayBestCardAction extends ActionHandler {
    */
   constructor (playOrder) {
     super()
-    this.playOrder = this.createOrder(playOrder)
+    this.playOrder = playOrder
+    this.cardPriority = this.createOrder()
   }
 
   /**
    * Creates an object that maps card types to priorities to be used when
    * sorting the players hand.
    */
-  createOrder (playOrder) {
+  createOrder () {
     const cardOrder = {}
-    for (let i = 0; i < playOrder.length; i++) {
-      cardOrder[playOrder[i]] = i
+    for (let i = 0; i < this.playOrder.length; i++) {
+      cardOrder[this.playOrder[i]] = i
     }
     return cardOrder
   }
@@ -48,7 +49,7 @@ export default class PlayBestCardAction extends ActionHandler {
    * A mini chain of responsibility for cards that uses internal functions for
    * each card type for now.
    */
-  handle (player, players, scores) {
+  handle (player, players, scores, deck) {
     const cards = this.sortHand(player.hand)
     for (const card of cards) {
       const type = card.type.toLowerCase()
@@ -56,13 +57,16 @@ export default class PlayBestCardAction extends ActionHandler {
       // Finding the correct method for this card type
       if (this.isValidCard(card)) {
         let move
+        const args = { player, players, scores, deck }
+
         if (isSafety(card.type)) {
-          move = this.playSafety(card, {player, players, scores})
+          move = this.playSafety(card, args)
         } else if (isAttack(card.type)) {
-          move = this.playAttack(card, {player, players, scores})
+          move = this.playAttack(card, args)
         } else if (type in this) {
-          move = this[type](card, {player, players, scores})
+          move = this[type](card, args)
         }
+
         if (move) { return move }
       }
     }
@@ -75,19 +79,24 @@ export default class PlayBestCardAction extends ActionHandler {
    * Cards types that are not in the playOrder will move to back.
    */
   sortHand (hand) {
-    return hand.cards.sort((a, b) => {
-      if (!(a.type in this.playOrder)) { return 1 }
-      else if (!(b.type in this.playOrder)) { return -1 }
+    this.sortCards(hand.cards)
+    return hand.cards
+  }
+
+  sortCards (cards) {
+    cards.sort((a, b) => {
+      if (!(a.type in this.cardPriority)) { return 1 }
+      else if (!(b.type in this.cardPriority)) { return -1 }
 
       if (a.type === b.type) {
         return b.value - a.value
       }
-      return this.playOrder[a.type] - this.playOrder[b.type]
+      return this.cardPriority[a.type] - this.cardPriority[b.type]
     })
   }
 
   isValidCard (card) {
-    return card.type in this.playOrder
+    return card.type in this.cardPriority
   }
 
   /**
@@ -294,6 +303,46 @@ export default class PlayBestCardAction extends ActionHandler {
         cardOwner: player,
         player: player,
         target: target
+      }
+    }
+    return undefined
+  }
+
+  /**
+   * Searches for cards based on the card priority.
+   * May not be optimal as it is not certain that the player will need this
+   * card, but it is a good default.
+   */
+  search (card, { player, deck }) {
+    for (const type in this.playOrder) {
+      const chosen = deck.find(c => c.type === type)
+      if (chosen) {
+        return {
+          type: 'playSearch',
+          player, card, cardOwner: player,
+          chosenCard: chosen, deck
+        }
+      }
+    }
+    return undefined
+  }
+
+  /**
+   * Sorts the top 5 cards according to it's play order.
+   * This is not optimal in beginner and standard games as the player won't
+   * be drawing every card themselves, but it will do for an easy default.
+   */
+  sort (card, { player, deck }) {
+    const sortedCards = deck.drawCards(card.value)
+    console.log(sortedCards.map(c => c.type))
+    this.sortCards(sortedCards)
+    console.log(sortedCards.map(c => c.type))
+
+    if (sortedCards) {
+      return {
+        type: 'playSort',
+        player, card, cardOwner: player,
+        sortedCards, deck
       }
     }
     return undefined

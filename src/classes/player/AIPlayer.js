@@ -13,7 +13,7 @@ export default class AIPlayer extends Player {
     return fact.newHandler(type)
   }
 
-  getPlay (players, scores) {
-    return this.handler.chooseAction(this, players, scores)
+  getPlay (players, scores, deck) {
+    return this.handler.chooseAction(this, players, scores, deck)
   }
 }

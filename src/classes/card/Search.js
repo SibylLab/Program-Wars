@@ -7,6 +7,7 @@ export default class Search extends Card {
 
   play ({ player, chosenCard, deck }) {
     player.hand.addCard(chosenCard)
+    deck.removeCard(chosenCard)
     deck.shuffle()
     return [this]
   }

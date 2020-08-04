@@ -160,7 +160,7 @@ export default class Game {
   }
 
   takeAITurn () {
-    const playInfo = this.currentPlayer().getPlay(this.players, this.scores)
+    const playInfo = this.currentPlayer().getPlay(this.players, this.scores, this.getDeck())
     setTimeout(() => {
       this.takeTurn(playInfo)
     }, AI_DELAY)
