@@ -43,18 +43,8 @@
   <effect-notifications/>
 
 </div>
-<!-- should probably be it's own component -->
-<div v-else id="reset">
-  <div id="container">
-    <h1> Oops... <br> Looks like something went wrong <br> Or you refreshed the page </h1>
-    <button class="btn btn-primary my-btn" v-on:click="leaveGame()">
-      Back To Home
-    </button>
-    <a class="btn btn-danger my-btn"
-        href="https://gitreports.com/issue/SibylLab/Program-Wars" target="_blank">
-       Report Issue 
-    </a>
-  </div>
+<div v-else>
+  <error-page/>
 </div>
 </template>
 
@@ -65,6 +55,7 @@ import PlayerArea from '@/components/playerArea/PlayerArea'
 import HandArea from '@/components/handArea/HandArea'
 import StackArea from '@/components/stackArea/StackArea'
 import EffectNotifications from '@/components/shared/EffectNotifications'
+import ErrorPage from '@/components/shared/ErrorPage'
 import { bus } from '@/components/shared/Bus'
 import { mapActions, mapGetters } from 'vuex'
 
@@ -76,7 +67,8 @@ export default {
     'player-area': PlayerArea,
     'hand-area': HandArea,
     'effect-notifications': EffectNotifications,
-    'stack-area': StackArea
+    'stack-area': StackArea,
+    'error-page': ErrorPage
   },
   computed: {
     ...mapGetters(['game', 'inGame'])
@@ -89,6 +81,10 @@ export default {
   },
   created () {
     bus.$on('game-over', this.showWinner)
+    // ensures we are always in a game mode when on this page.
+    if (!this.inGame) {
+      this.leaveGame()
+    }
   },
   beforeDestroy () {
     bus.$off('game-over', this.showWinner)
@@ -127,25 +123,6 @@ export default {
   top: 50%;
   width: 48%;
   height: 49%;
-}
-
-#reset {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to bottom right, purple, darkblue);
-}
-
-#container {
-  display: inline-block;
-  padding: 2%;
-  margin: 5%;
-  border-radius: 30px;
-  background-color: white;
-}
-
-.my-btn {
-  margin: 2%;
 }
 </style>
 

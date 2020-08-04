@@ -80,7 +80,7 @@ export default {
   position: absolute;
   top: 80px;
   width: 650px;
-  height: 540px;
+  height: 500px;
   background-color: white;
   border-radius: 30px;
 }
