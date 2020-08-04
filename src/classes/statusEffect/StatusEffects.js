@@ -8,12 +8,19 @@ export default class StatusEffects {
     this.positive = []
     this.negative = []
     this.bonus = []
+    this.coolDowns = []
     this.fact = new EffectFactory()
   }
 
   update () {
+    this.updateCoolDowns()
     let discards = this.updateEffects(this.positive) 
     return discards.concat(this.updateEffects(this.negative))
+  }
+
+  updateCoolDowns () {
+    this.coolDowns.map(cd => cd.update())
+    this.coolDowns = this.coolDowns.filter(cd => cd.isActive())
   }
 
   updateEffects (effects) {
@@ -115,5 +122,17 @@ export default class StatusEffects {
 
   removeBonus (effectId) {
     this.bonus = this.bonus.filter(b => b.effectId !== effectId)
+  }
+
+  addCoolDown (type) {
+    this.coolDowns.push(this.fact.newCoolDown(type, this.playerId))
+  }
+
+  hasCoolDown (type) {
+    return this.getCD(type) !== undefined
+  }
+
+  getCD (type) {
+    return this.coolDowns.find(cd => cd.type === type)
   }
 }

@@ -93,6 +93,7 @@ export default class Game {
   cardNotPlayed ({type, player, card, cardOwner}) {
     if (type === 'discardHand') {
       const cards = player.hand.takeAll()
+      player.effects.addCoolDown('REDRAW_CD')
       this.discardCards(cards)
     } else if (type === 'discardCard') {
       cardOwner.hand.removeCard(card)

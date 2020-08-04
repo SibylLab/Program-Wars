@@ -3,8 +3,10 @@
   <slot name="buttons">
     <button class="btn btn-sm btn-danger" v-on:click="redraw"
         style="border-radius: 40px; margin-top: 1%;"
-        title="Discard your hand and draw 5 new cards">
+        title="Discard your hand and draw 5 new cards"
+        :disabled="!canRedraw">
       <b>{{ redrawText }}</b>
+      <span v-if="!canRedraw"> (ready in {{ redrawCD }}) </span>
     </button>
   </slot>
 
@@ -60,6 +62,15 @@ export default {
         return 'PASS'
       }
       return 'REDRAW'
+    },
+    canRedraw () {
+      const player = this.game.currentPlayer()
+      // on DDoS player can pass so redraw cd does not affect the button
+      return player.hurtBy('DDOS') || !player.effects.hasCoolDown('REDRAW_CD')
+    },
+    redrawCD () {
+      const player = this.game.currentPlayer()
+      return player.effects.getCD('REDRAW_CD').turnsLeft
     }
   },
   methods: {
@@ -89,7 +100,7 @@ export default {
 
 #info {
   position: absolute;
-  right: 38%;
+  right: 30%;
   top: 1.5%;
 }
 

@@ -2,6 +2,7 @@ import StatusEffect from '@/classes/statusEffect/StatusEffect'
 import CyberAttack from '@/classes/statusEffect/CyberAttack'
 import AttackWithBonus from '@/classes/statusEffect/AttackWithBonus'
 import SqlEffect from '@/classes/statusEffect/SqlEffect'
+import CoolDown from '@/classes/statusEffect/CoolDown'
 
 const penalties = {
   'RANSOM': 10
@@ -11,8 +12,10 @@ const bonuses = {
   'RANSOM': 10
 }
 
+// spyware and redraw add +1 as they are updated once the turn they are played
 const turns = {
-  'SPYWARE': 6, 'STACK_OVERFLOW': 2, 'STACK_UNDERFLOW': 2, 'DDOS': 3
+  'SPYWARE': 6, 'STACK_OVERFLOW': 2, 'STACK_UNDERFLOW': 2, 'DDOS': 3,
+  'REDRAW_CD': 3
 }
 
 export default class EffectFactory {
@@ -35,6 +38,10 @@ export default class EffectFactory {
 
   newSqlEffect (card, playerId, attacker, method) {
     return new SqlEffect(card, playerId, attacker, method)
+  }
+
+  newCoolDown (type, playerId) {
+    return new CoolDown(type, this.getTurnsLeft(type), playerId)
   }
 
   getPenalty (type) {
