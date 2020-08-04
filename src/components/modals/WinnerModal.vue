@@ -4,14 +4,7 @@
       data-backdrop='static' data-keyboard='false'>
     <div class="modal-content" style="border-radius: 30px">
 
-      <div class="modal-header" style="padding-bottom: 0;">
-        <button type="button" class="close" data-dismiss="modal"
-            aria-label="Close" v-on:click="leaveGame">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body" style="padding-top: 0;">
+      <div class="modal-body">
         <h3 class="modal-title"><b>Game Over</b></h3>
         <div style="border: 6px ridge grey; padding: 5px; border-radius: 5px; background-color: royalblue;">
           <h5 style="color: white; font-size: 30px">{{ winnerText }}</h5>
@@ -21,19 +14,20 @@
       <div>
         <table class="table table-condensed" style="width: 90%; margin: auto">
           <thead>
-            <tr style="font-size: 20px"> <th>Players</th>
-              <th v-for="player in players" :key="player.id">{{ player.name }}</th>
+            <tr style="font-size: 24px"> <th>Players</th>
+              <th v-for="player in players" :key="player.id" style="text-align: center">
+                {{ player.name }} </th>
             </tr>
           </thead>
           
-          <tbody>
-            <tr> <th>Instruction Score</th>
+          <tbody style="font-size: 14px;">
+            <tr> <th>Score</th>
               <td v-for="player in players" :key="player.id">
                 {{ player.getScore() }} </td>
             </tr>
             <tr>
               <td colspan="5" style="text-align: left;">
-                <h5><b>Side Objectives</b></h5> </td>
+                <h5><b>Bonuses</b></h5> </td>
             </tr>
             <tr> <th>Repetition Bonus</th>
               <td v-for="player in players" :key="player.id">
@@ -63,7 +57,7 @@
               <td v-for="player in players" :key="player.id">
                 {{ bonuses[player.id].method }} </td>
             </tr>
-            <tr> <th style="font-size: 20px;">Final Score</th>
+            <tr> <th style="font-size: 24px;">Final Score</th>
               <td v-for="player in players" :key="player.id" style="font-size: 20px;">
                 {{ player.getScore() + bonuses[player.id].total }} </td>
             </tr>
@@ -97,9 +91,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['state']),
+    ...mapGetters(['game']),
     players () {
-      return this.state.players
+      return this.game.players
     },
     winnerText () {
       if (this.winners.length === 1) {
@@ -115,10 +109,10 @@ export default {
     ]),
     setWinner () {
       this.setBonuses()
-      this.winners = this.state.getWinners()
+      this.winners = this.game.getWinners()
     },
     setBonuses () {
-      this.bonuses = this.state.getBonuses()
+      this.bonuses = this.game.getBonuses()
     }
   },
   created ()  {
@@ -136,6 +130,11 @@ export default {
 <style scoped>
 th {
   text-align: left;
+  padding: 8px;
+}
+
+td {
+  padding: 8px;
 }
 
 h5 {

@@ -67,7 +67,7 @@ export default {
 
 #tabs {
   position: absolute;
-  top: -35px;
+  top: -30px;
 }
 
 .left {

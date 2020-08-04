@@ -17,13 +17,12 @@ const routes = [
     canReuse: false,
     component: () => import('@/pages/BeginnerGame.vue')
   },
-/*  {
+  {
     path: '/standard',
     name: 'Standard Game',
     canReuse: false,
     component: () => import('@/pages/StandardGame.vue')
   },
-*/
   {
     path: '*',
     redirect: '/'

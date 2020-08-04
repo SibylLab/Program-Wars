@@ -1,4 +1,5 @@
 import DeckFactory from '@/classes/deck/DeckFactory'
+import { isSafety } from '@/classes/card/cardData'
 import Game from '@/pages/pageStates/Game'
 
 // Side objective bonuses
@@ -19,7 +20,7 @@ export default class StandardGameState extends Game {
   constructor (players, level) {
     super(players)
     this.deck = new DeckFactory().standardDeck(level.id)
-    this.scoreLimit = 200
+    this.scoreLimit = 50
     this.refreshHands()
   }
 
@@ -34,7 +35,7 @@ export default class StandardGameState extends Game {
     const repeat = this.getTypeCount(plays, 'REPEAT') * REPEAT_BONUS
     const variable = this.getTypeCount(plays, 'VARIABLE') * VAR_BONUS
     const safety = this.getSafetyCount(plays) * SAFETY_BONUS
-    const method = player.stacks.method.isComplete() ? METHOD_BONUS : 0
+    const method = player.playField.method.isComplete() ? METHOD_BONUS : 0
     const clean = this.getCleanBonus(player)
     const defensive = this.getDefensiveBonus(player)
     const nested = this.getNestedBonus(player)
@@ -44,16 +45,16 @@ export default class StandardGameState extends Game {
   }
 
   getTypeCount (plays, type) {
-    return plays.filter(p => !p.type !== 'playMimic' && p.card.type === type).length
+    return plays.filter(p => !p.replaced && p.card.type === type).length
   }
 
   getSafetyCount (plays) {
-    return plays.filter(p => !p.type !== 'playMimic' && p.card.isSafety()).length
+    return plays.filter(p => !p.replaced && isSafety(p.card.type)).length
   }
 
   getCleanBonus (player) {
     const noNegativeEffects = player.effects.negative.length === 0
-    const noViruses = player.stacks.getStacksWithVirus().length === 0
+    const noViruses = player.playField.getStacksWithVirus().length === 0
     const noMimics = player.hand.getMimics().length === 0
     return noNegativeEffects && noViruses && noMimics ? CLEAN_BONUS : 0
   }
@@ -67,7 +68,7 @@ export default class StandardGameState extends Game {
   }
 
   getNestedBonus (player) {
-    return player.stacks.stacks.reduce((acc, stack) => {
+    return player.playField.stacks.reduce((acc, stack) => {
       return acc + (stack.isComplete() ? NESTED_BONUS : 0)
     }, 0)
   }
