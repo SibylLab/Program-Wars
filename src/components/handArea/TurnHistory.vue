@@ -5,7 +5,7 @@
       <img id="play-image" :src="image(play)">
       <img id="player-image" :src="playerImage(play)">
       <img id="target-image" v-if="hasTargetPlayer(play)" :src="targetImage(play)">
-      <img id="trojan-icon" v-if="play.type === 'playMimic'" :src="trojanIcon">
+      <img id="effect-icon" v-if="hasEffectIcon(play)" :src="effectImage(play)">
     </li>
   </ul>
 
@@ -40,8 +40,7 @@ export default {
       const end = this.game.turnHistory.length
       const start = end < 10 ? 0 : Math.abs(end - 10)
       return this.game.turnHistory.slice(start, end).reverse()
-    },
-    trojanIcon () { return 'static/cardImages/effects/TROJAN.png' }
+    }
   },
   methods: {
     /**
@@ -49,7 +48,6 @@ export default {
      * or effect.
      */
     image (play) {
-      const card = play.type === 'playMimic' ? play.playedCard : play.card
       let path = 'static/cardImages/effects/'
       if (play.type === "discardHand") {
         path += 'REDRAW'
@@ -57,11 +55,11 @@ export default {
         path += 'DISCARD'
       } else if (play.type === 'pass') {
         path += 'PASS'
-      } else if (isSpecial(card.type) || card.type === 'VIRUS'
-                 || card.type === 'METHOD'){
-        path += card.type
+      } else if (isSpecial(play.card.type) || play.card.type === 'VIRUS'
+                 || play.card.type === 'METHOD'){
+        path += play.card.type
       } else {
-        path += card.type + card.value
+        path += play.card.type + play.card.value
       }
 
       return path + '.png'
@@ -95,6 +93,26 @@ export default {
         return true
       }
       return false
+    },
+    hasEffectIcon (play) {
+      return (play.card && play.card.type === 'SCAN' && play.targetType !== 'player')
+          || play.replaced || play.scanned
+    },
+    effectImage (play) {
+      const path = 'static/cardImages/effects/'
+      if (play.card.type === 'SCAN') {
+        if (play.targetType === 'effect') {
+          return play.target.image
+        } else if (play.targetType === 'stack') {
+          return path + 'VIRUS.png'
+        } else {
+          return path + 'TROJAN.png'
+        }
+      } else if (play.replaced) {
+        return path + 'TROJAN.png'
+      } else if (play.scanned) {
+        return path + 'SCAN.png'
+      }
     }
   }
 }
@@ -142,7 +160,7 @@ export default {
   border: solid black 2px;
 }
 
-#trojan-icon {
+#effect-icon {
   position: absolute;
   top: 27px;
   left: -3px;
