@@ -20,7 +20,7 @@ export default class StandardGameState extends Game {
   constructor (players, level) {
     super(players)
     this.deck = new DeckFactory().standardDeck(level.id)
-    this.scoreLimit = 50
+    this.scoreLimit = 200
     this.refreshHands()
   }
 

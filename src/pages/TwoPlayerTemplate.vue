@@ -17,7 +17,7 @@
   </div>
 
   <div class="stacks-area" style="left: 1%">
-    <slot name="p1-stacks-area">
+    <slot name="p1-stack-area">
       <stack-area :player="game.getPlayer(0)" tabSide="right"/>
     </slot>
   </div>
@@ -35,7 +35,7 @@
   </div>
 
   <div class="stacks-area" style="right: 1%;">
-    <slot name="p2-stacks-area">
+    <slot name="p2-stack-area">
       <stack-area :player="game.getPlayer(1)" tabSide="left"/>
     </slot>
   </div>
