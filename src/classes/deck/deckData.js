@@ -16,7 +16,7 @@ const beginnerBase = [
   makeType('VARIABLE', 4, 4),
   makeType('VARIABLE', 5, 2),
   makeType('METHOD', 0, 12),
-  makeType('SCAN', 0, 50),
+  makeType('SCAN', 0, 3),
   makeType('SEARCH', 0, 2),
   makeType('SORT', 0, 2)
 ]

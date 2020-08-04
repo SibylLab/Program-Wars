@@ -5,6 +5,10 @@ export default {
     state.showBackstory = false
   },
 
+  setPage (state, { page }) {
+    state.page = page
+  },
+
   changePage (state, { page }) {
     state.page = page
     if (page === 'home') {

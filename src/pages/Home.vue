@@ -46,20 +46,17 @@ export default {
   methods: {
     ...mapActions([
       'startBeginnerGame',
-      'startRequirements',
       'startStandardGame'
     ]),
     playGame () {
-      if (!this.home.canStart()) { return }
-
-      if (this.home.mode === 'agile') {
-        this.startRequirements({players: this.home.players})
-      } else if (this.home.mode === 'beginner') {
-        this.startBeginnerGame({
-          players: this.home.createPlayers(), level: this.home.level })
-      } else {
-        this.startStandardGame({
-          players: this.home.createPlayers(), level: this.home.level })
+      if (this.home.canStart()) {
+        if (this.home.mode === 'beginner') {
+          this.startBeginnerGame({
+            players: this.home.createPlayers(), level: this.home.level })
+        } else {
+          this.startStandardGame({
+            players: this.home.createPlayers(), level: this.home.level })
+        }
       }
     }
   }

@@ -34,15 +34,13 @@ export default {
   computed: {
     ...mapGetters(['home']),
     getModes () {
-      return ['beginner', 'standard', 'agile']
+      return ['beginner', 'standard']
     },
     describe () {
       if (this.home.mode === 'beginner') {
         return 'Play with fewer card types and easier AI'
-      } else if (this.home.mode === 'standard') {
-        return 'Play with more card types and smarter AI'
       } else {
-        return 'Play to complete chosen goals with a customized deck'
+        return 'Play with more card types and smarter AI'
       }
     }
   }

@@ -38,7 +38,7 @@ export default {
   computed: {
     ...mapGetters(['home']),
     howManyPlayers () {
-      return this.home.mode === 'beginner' ? '2 players only' : '2 or 4 players'
+      return 'add 2 players'
     },
     inputPlaceholder () {
       return this.home.atPlayerLimit() ? "Reached Player Limit" : " Enter Human Name..."

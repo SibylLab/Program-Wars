@@ -6,12 +6,17 @@ import deckData from '@/classes/deck/deckData'
 // could change to just be names and set personality based on the
 // level instead. That way we could adjust difficulty beyond the cards
 // or at least taylor the personality to the cards being used.
-const botInfo = [
-  {name: 'n00b_b0t', personality: 'standard'},
-  {name: 'L33T_g3Ars', personality: 'aggresive'},
-  {name: 'RoboVaC', personality: 'defensive'},
-  {name: 'BlueScr33n', personality: 'standard'}
-]
+const botInfo = {
+  beginner: [
+    {name: 'n00b_b0t', personality: 'beginner'},
+    {name: ';;TLDR;;', personality: 'beginner'},
+  ],
+  standard: [
+    {name: 'L33T_g3Ars', personality: 'standard'},
+    {name: 'RoboVaC', personality: 'defensive'},
+    {name: 'BlueScr33n', personality: 'aggresive'}
+  ]
+}
 
 export default class HomeState {
   constructor () {
@@ -55,7 +60,7 @@ export default class HomeState {
   }
 
   addBot () {
-    for (let bot of botInfo) {
+    for (let bot of botInfo[this.mode]) {
       if (!this.nameInUse(bot.name)) {
         this.addPlayer(bot.name, true, bot.personality)
         return
@@ -84,20 +89,11 @@ export default class HomeState {
   }
 
   hasEnoughPlayers () {
-    if (this.players.length === 2) {
-      return true
-    } else if (this.players.length === 4) {
-      return this.mode !== 'beginner'
-    }
-    return false
+    return this.players.length === 2
   }
 
   atPlayerLimit () {
-    if (this.mode === "beginner") {
-      return this.players.length >= 2
-    } else {
-      return this.players.length >= 4
-    }
+    return this.players.length >= 2
   }
 
   nameInUse (name) {
