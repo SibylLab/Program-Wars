@@ -31,6 +31,10 @@ export default class Game {
     this.playerNum = this.playerNum % this.players.length
   }
 
+  getPlayerScore (playerId) {
+    return this.scores[playerId]
+  }
+
   setCurrentCard (card) {
     this.currentCard = card
   }
@@ -107,6 +111,7 @@ export default class Game {
     this.discardCards(discards)
     this.notifications(playInfo)
     playInfo.cardOwner.hand.removeCard(card)
+    bus.$emit('card-played', playInfo)
   }
 
   notifications (playInfo) {

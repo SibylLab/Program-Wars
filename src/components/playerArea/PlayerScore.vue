@@ -2,12 +2,12 @@
 <div id="player-score" :style="{ 'text-align': side }">
 
     <h5 class="score-title">
-      <b>Score:</b> <b>{{ player.getScore() }}/{{ game.scoreLimit }}</b>
+      <b>Score:</b> <b>{{ game.getPlayerScore(player.id) }}/{{ game.scoreLimit }}</b>
     </h5>
 
     <meter class="score-meter"
        :max="game.scoreLimit" min=0
-       :value="player.getScore()"
+       :value="game.getPlayerScore(player.id)"
        :high="game.scoreLimit * 0.66"
        :low="game.scoreLimit * 0.33"
        :optimum="game.scoreLimit * 0.9">

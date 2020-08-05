@@ -100,10 +100,11 @@ const standardBase = [
   makeType('REPEAT', 2, 5),
   makeType('REPEAT', 3, 4),
   makeType('REPEAT', 4, 2),
-  makeType('VARIABLE', 4, 4),
+  makeType('VARIABLE', 3, 2),
+  makeType('VARIABLE', 4, 3),
   makeType('VARIABLE', 5, 2),
   makeType('VARIABLE', 6, 1),
-  makeType('METHOD', 0, 14),
+  makeType('METHOD', 0, 6),
   makeType('SCAN', 0, 5),
   makeType('SEARCH', 0, 2),
   makeType('SORT', 0, 3)

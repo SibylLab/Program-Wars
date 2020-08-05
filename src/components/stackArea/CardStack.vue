@@ -126,13 +126,20 @@ export default {
     },
     refresh () {
       this.update = !this.update
+    },
+    cardPlayed (playInfo) {
+      if (playInfo.stack && playInfo.stack.id === this.stack.id) {
+        this.refresh()
+      }
     }
   },
   created () {
     bus.$on('select-card', this.refresh)
+    bus.$on('card-played', this.cardPlayed)
   },
   beforeDestroy () {
     bus.$off('select-card', this.refresh)
+    bus.$on('card-played', this.cardPlayed)
   }
 }
 </script>

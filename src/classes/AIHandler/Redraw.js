@@ -10,7 +10,7 @@ export default class Redraw extends ActionHandler {
    */
   handle(player) {
     if (player.effects.hasCoolDown('REDRAW_CD')) {
-      const idx = Math.floor(Math.random * player.hand.numCards())
+      const idx = Math.floor(Math.random() * player.hand.numCards())
       return {
         type: "discardCard",
         player: player,
