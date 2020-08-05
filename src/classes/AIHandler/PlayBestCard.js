@@ -119,12 +119,16 @@ export default class PlayBestCardAction extends ActionHandler {
 
     if (!player.playField.method.isComplete()
         && card.value <= player.playField.method.toLimit()) {
-      move.type = 'playOnStack'
-      move.stack = player.playField.method
-    } else {
-      move.type = 'newStack'
+      return {
+        type: 'playOnStack',
+        card: card,
+        cardOwner: player,
+        player: player,
+        stack: player.playField.method,
+        stackOwner: player
+      }
     }
-    return move
+    return undefined
   }
 
   method (card, { player }) {
@@ -330,7 +334,7 @@ export default class PlayBestCardAction extends ActionHandler {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
 
     for (const type in this.playOrder) {
-      const chosen = deck.find(c => c.type === type)
+      const chosen = deck.cards.find(c => c.type === type)
       if (chosen) {
         return {
           type: 'playSearch',

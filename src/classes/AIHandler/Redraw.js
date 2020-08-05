@@ -9,7 +9,7 @@ export default class Redraw extends ActionHandler {
    * Returns a redraw turn object for an ai player.
    */
   handle(player) {
-    if (player.hasCoolDown('REDRAW_CD')) {
+    if (player.effects.hasCoolDown('REDRAW_CD')) {
       const idx = Math.floor(Math.random * player.hand.numCards())
       return {
         type: "discardCard",
