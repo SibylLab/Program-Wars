@@ -11,7 +11,8 @@ export default class NegativeEffectCard extends Card {
       if (playInfo.target.helpedBy('SCAN')) {
         return this._blockedByScan(playInfo)
       }
-      playInfo.target.effects.addNegative(this, playInfo.player)
+      const extraTurns = playInfo.replaced ? 1 : 0
+      playInfo.target.effects.addNegative(this, playInfo.player, extraTurns)
       return []
     } else {
       return [this]

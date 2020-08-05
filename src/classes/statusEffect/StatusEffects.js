@@ -62,20 +62,23 @@ export default class StatusEffects {
   }
 
   // don't add cards that are already here
-  addPositive (card) {
+  addPositive (card, extraTurns = 0) {
     const effect = this.fact.newSafetyEffect(card, this.playerId)
+    effect.turnsLeft += extraTurns
     this.positive.push(effect)
   }
 
   // don't add cards that are already here
-  addNegative (card, attacker) {
+  addNegative (card, attacker, extraTurns = 0) {
     const effect = this.fact.newAttackEffect(card, this.playerId, attacker)  
+    effect.turnsLeft += extraTurns
     this.negative.push(effect)
   }
 
   // don't add cards that are already here
-  addSql (card, attacker, methodStack) {
+  addSql (card, attacker, methodStack, extraTurns = 0) {
     const effect = this.fact.newSqlEffect(card, this.playerId, attacker, methodStack)
+    effect.turnsLeft += extraTurns
     this.negative.push(effect)
   }
 
