@@ -11,7 +11,7 @@
     :disabled="home.atPlayerLimit()"> Add Human </button>
 
   <button type="button" class="btn btn-danger btn-sm" v-on:click="addBot()"
-    :disabled="home.atPlayerLimit()"> Add Bot </button>
+    :disabled="home.hasBot()"> Add Bot </button>
 
   <div class='section'>
     <ol id="player-list">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { bus } from '@/components/shared/Bus'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -48,7 +49,11 @@ export default {
     addPlayer () {
       let name = $('#enter-name').val()
       this.refresh()
-      if (!name) { return }
+
+      if (!name) {
+        this.home.message = 'Please enter a name'
+        return
+      }
 
       this.home.addPlayer(name)
     },
@@ -64,7 +69,16 @@ export default {
       this.home.message = ""
       $('#enter-name').val('')
       $('#enter-name').focus()
+    },
+    removeBots () {
+      this.home.removeBots()
     }
+  },
+  created () {
+    bus.$on('change-mode', this.removeBots)
+  },
+  beforeDestroy() {
+    bus.$off('change-mode', this.removeBots)
   }
 }
 </script>

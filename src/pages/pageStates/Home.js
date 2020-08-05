@@ -1,6 +1,7 @@
 import Player from '@/classes/player/Player'
 import AIPlayer from '@/classes/player/AIPlayer'
 import deckData from '@/classes/deck/deckData'
+import { bus } from '@/components/shared/Bus'
 
 // Information for creating computer opponents
 // could change to just be names and set personality based on the
@@ -32,6 +33,7 @@ export default class HomeState {
     }
     this.mode = newMode
     this.level = deckData[this.mode].levels[0]
+    bus.$emit('change-mode', this.mode)
   }
 
   getLevels () {
@@ -76,6 +78,10 @@ export default class HomeState {
     this.players = this.players.filter(p => p.name !== name)
   }
 
+  removeBots () {
+    this.players = this.players.filter(p => !p.isAI)
+  }
+
   canStart () {
     let result = true
     if (!this.hasEnoughPlayers()) {
@@ -102,6 +108,10 @@ export default class HomeState {
 
   hasHuman () {
     return this.players.find(p => !p.isAI) !== undefined
+  }
+
+  hasBot () {
+    return this.players.find(p => p.isAI) !== undefined
   }
 
   createPlayers () {
