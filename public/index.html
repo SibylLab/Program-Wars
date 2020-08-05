@@ -5,13 +5,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><%= htmlWebpackPlugin.options.title %></title>
 
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <!-- CDNs for Bootstrap, includes some modals and dropdown menus, and jquery -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+    <!-- Favicon link -->
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+
+    <!-- Prefetching images helps ensure they are loaded by the time the player
+         Starts the game. Otherwise the first time or two a person visits the
+         site images will take a visible amount of time to load during the game -->
+
+    <!-- Prefetching player images -->
+    <link rel="prefetch" href="<%= BASE_URL %>static/playerImages/player1.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/playerImages/player2.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/playerImages/player3.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/playerImages/player4.png">
+
+    <!-- Prefetching Card images -->
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/backOfCard.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/method.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/instruction1.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/instruction2.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/instruction3.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/repeat1.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/repeat2.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/repeat3.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/repeat4.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/variable3.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/variable4.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/variable5.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/variable6.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/antivirus.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/firewall.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/scan.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/search.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/sort.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/virus.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/trojan.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/spyware.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/ransom.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/stack_overflow.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/stack_underflow.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/sql_injection.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/ddos.png">
+    
   </head>
 
   <body>
