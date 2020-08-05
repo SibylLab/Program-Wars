@@ -11,7 +11,7 @@
     :disabled="home.atPlayerLimit()"> Add Human </button>
 
   <button type="button" class="btn btn-danger btn-sm" v-on:click="addBot()"
-    :disabled="home.hasBot()"> Add Bot </button>
+    :disabled="!canAddBot"> Add Bot </button>
 
   <div class='section'>
     <ol id="player-list">
@@ -43,6 +43,10 @@ export default {
     },
     inputPlaceholder () {
       return this.home.atPlayerLimit() ? "Reached Player Limit" : " Enter Human Name..."
+    },
+    canAddBot () {
+      // will need to be adjusted if more than 2 players are allowed
+      return !this.home.atPlayerLimit() && !this.home.hasBot()
     }
   },
   methods: {
