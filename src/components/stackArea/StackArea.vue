@@ -1,7 +1,7 @@
 <template>
 <div id='stacks-area' :key="activeTab" :class="{ play: showShadow }">
 
-  <div id="tabs" v-if="!game.currentPlayer().isAI" :class="tabSide">
+  <div id="tabs" v-if="!player.isAI" :class="tabSide">
     <ul>
       <li v-on:click="changeTab(1)" :class="['tab', { active: isActiveTab(1) }]">
         Stacks </li>
@@ -49,10 +49,17 @@ export default {
   },
   methods: {
     isActiveTab (tabNum) {
+      // If is so AI PlayField is always showing
+      if (this.player.isAI) {
+        return tabNum === 1
+      }
       return this.activeTab === tabNum
     },
     changeTab (tabNum) {
-      this.activeTab = tabNum
+      // If is so AI doesn't end up on a tab other than PlayField
+      if (!this.player.isAI) {
+        this.activeTab = tabNum
+      }
     }
   }
 }
