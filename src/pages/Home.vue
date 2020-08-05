@@ -79,8 +79,8 @@ export default {
 #game-setup {
   position: absolute;
   top: 80px;
-  width: 650px;
-  height: 500px;
+  width: 760px;
+  height: 510px;
   background-color: white;
   border-radius: 30px;
 }

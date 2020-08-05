@@ -5,7 +5,7 @@
 
 import ActionHandler from '@/classes/AIHandler/ActionHandler'
 import helpers from '@/classes/AIHandler/aiHelpers'
-import { isSafety, isAttack } from '@/classes/card/cardData'
+import { isSafety, isNegativeEffect } from '@/classes/card/cardData'
 
 /**
  * Attempts to play cards from an AI players hand based on a given
@@ -61,8 +61,8 @@ export default class PlayBestCardAction extends ActionHandler {
 
         if (isSafety(card.type)) {
           move = this.playSafety(card, args)
-        } else if (isAttack(card.type)) {
-          move = this.playAttack(card, args)
+        } else if (isNegativeEffect(card.type)) {
+          move = this.playNegativeEffect(card, args)
         } else if (type in this) {
           move = this[type](card, args)
         }
@@ -108,6 +108,8 @@ export default class PlayBestCardAction extends ActionHandler {
    * @return a move object for starting a new stack with the given card.
    */
   instruction (card, { player }) {
+    if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
+
     const move = {
       card: card,
       cardOwner: player,
@@ -126,6 +128,8 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   method (card, { player }) {
+    if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
+
     return {
       type: 'newStack',
       card: card,
@@ -144,6 +148,8 @@ export default class PlayBestCardAction extends ActionHandler {
    * no stack can be played on.
    */
   repeat (card, { player }) {
+    if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
+
     // get the stack with the largest score
     const stack = player.playField.stacks.filter((s) => {
       return s.willAccept(card)
@@ -173,6 +179,8 @@ export default class PlayBestCardAction extends ActionHandler {
    * no stack can be played on.
    */
   variable (card, { player }) {
+    if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
+
     const stacks = player.playField.stacks.filter((s) => {
       return s.willAccept(card)
     })
@@ -201,6 +209,8 @@ export default class PlayBestCardAction extends ActionHandler {
    * no stack can be attacked.
    */
   virus (card, { player, players }) {
+    if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
+
     const opponents = players.filter(p => p !== player)
     let stacks = []
     for (const player of opponents) {
@@ -289,7 +299,9 @@ export default class PlayBestCardAction extends ActionHandler {
    * @return a move object for playing an attack, or undefined
    * no target can be found.
    */
-  playAttack (card, { player, players, scores }) {
+  playNegativeEffect (card, { player, players, scores }) {
+    if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
+
     const opponents = players.filter(p => p !== player)
     const target = opponents.filter((p) => {
       return !p.hurtBy(card.type) && !p.protectedFrom(card.type)
@@ -315,6 +327,8 @@ export default class PlayBestCardAction extends ActionHandler {
    * card, but it is a good default.
    */
   search (card, { player, deck }) {
+    if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
+
     for (const type in this.playOrder) {
       const chosen = deck.find(c => c.type === type)
       if (chosen) {
@@ -334,10 +348,10 @@ export default class PlayBestCardAction extends ActionHandler {
    * be drawing every card themselves, but it will do for an easy default.
    */
   sort (card, { player, deck }) {
+    if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
+
     const sortedCards = deck.drawCards(card.value)
-    console.log(sortedCards.map(c => c.type))
     this.sortCards(sortedCards)
-    console.log(sortedCards.map(c => c.type))
 
     if (sortedCards) {
       return {
