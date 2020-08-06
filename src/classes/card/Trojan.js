@@ -13,18 +13,18 @@ export default class Trojan extends Card {
       this._blockedByScan(playInfo)
       this.discard()
     } else if (!playInfo.target.protectedFrom(this.type)) {
-      this._mimicCard(playInfo.target.hand) 
+      this._mimicCard(playInfo.target.hand, playInfo.player) 
     } else {
       this.discard()
     }
   }
 
-  _mimicCard (hand) {
+  _mimicCard (hand, player) {
     for (let i = 0; i < MAX_TRIES; i++) {
       const idx = Math.floor(Math.random() * hand.cards.length)
 
       if (!hand.cards[idx].isMimic) {
-        hand.cards[idx] = new MimicWrapper(hand.cards[idx], this)
+        hand.cards[idx] = new MimicWrapper(hand.cards[idx], this, player)
         return
       }
     }

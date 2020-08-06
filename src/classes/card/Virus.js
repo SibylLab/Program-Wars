@@ -6,7 +6,7 @@ export default class Virus extends Card {
   }
 
   play (playInfo) {
-    if (playInfo.stack.helpedBy('SCAN')) {
+    if (playInfo.stack.player.helpedBy('SCAN')) {
       this._blockedByScan(playInfo)
       this.discard()
     } else if (playInfo.stack.getTop().type !== 'VIRUS'

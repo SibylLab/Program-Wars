@@ -15,7 +15,8 @@ export default class NegativeEffectCard extends Card {
       } else {
         const extraTurns = playInfo.replaced ? 1 : 0
         const fact = new EffectFactory(playInfo.target)
-        const effect = fact.newNegativeFromCard(this, extraTurns, playInfo.player)
+        const attacker = playInfo.replaced ? playInfo.attacker : playInfo.player
+        const effect = fact.newNegativeFromCard(this, extraTurns, attacker)
         playInfo.target.effects.addNegative(effect)
       }
     } else {
