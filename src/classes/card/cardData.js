@@ -31,7 +31,7 @@ const attacks = [
 // all card types that use the NegativeEffectCard
 const negativeEffects = [
   ...malware.filter(m => m !== "VIRUS"),
-  ...hack.filter(h => h !== "SQL_INJECTION")
+  ...hack
 ]
 
 // all card types that use the PositiveEffectCard

@@ -5,7 +5,6 @@ import Variable from '@/classes/card/Variable'
 import Scan from '@/classes/card/Scan'
 import Virus from '@/classes/card/Virus'
 import Trojan from '@/classes/card/Trojan'
-import SqlInjection from '@/classes/card/SqlInjection'
 import NegativeEffectCard from '@/classes/card/NegativeEffectCard'
 import PositiveEffectCard from '@/classes/card/PositiveEffectCard'
 import Search from '@/classes/card/Search'
@@ -28,8 +27,6 @@ export default class CardFactory {
       return new Virus(deck)
     } else if (type === 'TROJAN') {
       return new Trojan(deck)
-    } else if (type === 'SQL_INJECTION') {
-      return new SqlInjection(deck)
     } else if (isNegativeEffect(type)) {
       return new NegativeEffectCard(type, deck)
     } else if (isPositiveEffect(type)) {

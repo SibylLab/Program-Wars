@@ -9,8 +9,6 @@ export default class StatusEffects {
   }
 
   update () {
-    console.log(this.positive)
-    console.log(this.negative)
     this.updateEffects(this.positive) 
     this.updateEffects(this.negative)
   }
