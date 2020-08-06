@@ -2,7 +2,7 @@ import StatusEffect from '@/classes/statusEffect/StatusEffect'
 import EffectWithCard from '@/classes/statusEffect/EffectWithCard'
 import CyberAttack from '@/classes/statusEffect/CyberAttack'
 import AttackWithBonus from '@/classes/statusEffect/AttackWithBonus'
-import BonusEffect from '@/classes/statusEffect/BonusEffect'
+import InvisibleBonusEffect from '@/classes/statusEffect/InvisibleBonusEffect'
 import SqlEffect from '@/classes/statusEffect/SqlEffect'
 
 const penalties = {
@@ -24,9 +24,9 @@ export default class EffectFactory {
     this.player = player
   }
 
-  newEffect (type, extraTurns) {
+  newEffect (type, extraTurns, hasImage = true) {
     const turns = this._getTurns(type, extraTurns)
-    return new StatusEffect(type, this.player, turns)
+    return new StatusEffect(type, this.player, turns, hasImage)
   }
 
   newPositiveFromCard (card, extraTurns) {
@@ -42,7 +42,7 @@ export default class EffectFactory {
     if (card.type === 'SQL_INJECTION') {
       return new SqlEffect(card, this.player, turns, attacker, penalty)
     } else if (bonus !== 0) {
-      const bonusEffect = new BonusEffect(card.type, this.player, turns, bonus)
+      const bonusEffect = new InvisibleBonusEffect(card.type, this.player, turns, bonus)
       return new AttackWithBonus(card, this.player, turns, attacker, penalty, bonusEffect)
     } else {
       return new CyberAttack(card, this.player, turns, attacker, penalty)

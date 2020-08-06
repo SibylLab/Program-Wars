@@ -1,12 +1,12 @@
 import StatusEffect from '@/classes/statusEffect/StatusEffect'
 
-export default class BonusEffect extends StatusEffect {
+export default class InvisibleBonusEffect extends StatusEffect {
   constructor (type, player, turns, amount) {
-    super(type, player, turns)
+    super(type, player, turns, false)
     this.amount = amount
   }
 
-  getAmount () {
+  getBonus () {
     return this.amount
   }
 }

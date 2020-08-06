@@ -21,8 +21,8 @@
             Clean </button>
         </div>
 
-        <div v-for="effect in attacks.effects" v-bind:key="effect.id" class="attack">
-          <img class="card" :src="effect.card.image">
+        <div v-for="effect in attacksEffects" v-bind:key="effect.id" class="attack">
+          <img class="card" :src="effect.image">
           <button v-on:click="playScan(effect, 'effect')" class="btn btn-success clean">
             Clean </button>
         </div>
@@ -48,6 +48,9 @@ export default {
     ...mapGetters(['game']),
     trojanImage () {
       return 'static/cardImages/effects/TROJAN.png'
+    },
+    attacksEffects () {
+      return this.attacks.effects.filter(e => e.image)
     }
   },
   methods: {

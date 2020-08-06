@@ -1,5 +1,4 @@
 import EffectFactory from '@/classes/statusEffect/EffectFactory'
-import BonusEffect from '@/classes/statusEffect/BonusEffect'
 import * as cardData from '@/classes/card/cardData'
 
 export default class StatusEffects {
@@ -10,6 +9,8 @@ export default class StatusEffects {
   }
 
   update () {
+    console.log(this.positive)
+    console.log(this.negative)
     this.updateEffects(this.positive) 
     this.updateEffects(this.negative)
   }
@@ -45,11 +46,11 @@ export default class StatusEffects {
   }
 
   hasPositive (effectType) {
-    return this.positive.filter(p => p.card.type === effectType).length > 0
+    return this.positive.filter(p => p.type === effectType).length > 0
   }
 
   hasNegative (effectType, attacker = null) {
-    const effects = this.negative.filter(n => n.card.type === effectType)
+    const effects = this.negative.filter(n => n.type === effectType)
     if (attacker) {
       return effects.filter(e => e.attacker && e.attacker === attacker).length > 0
     } else {
@@ -81,14 +82,14 @@ export default class StatusEffects {
   }
 
   removePositiveType (effectType) {
-    const effects = this.positive.filter(p => p.card.type === effectType)
-    this.positive = this.positive.filter(p => p.card.type !== effectType)
+    const effects = this.positive.filter(p => p.type === effectType)
+    this.positive = this.positive.filter(p => p.type !== effectType)
     effects.map(e => e.destroy())
   }
 
   removeNegativeType (effectType) {
-    const effects = this.negative.filter(n => n.card.type === effectType)
-    this.negative = this.negative.filter(n => n.card.type !== effectType)
+    const effects = this.negative.filter(n => n.type === effectType)
+    this.negative = this.negative.filter(n => n.type !== effectType)
     effects.map(e => e.destroy())
   }
 

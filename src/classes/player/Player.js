@@ -37,7 +37,7 @@ export default class Player {
   }
 
   getAllAttacks () {
-    const effects = this.effects.negative
+    const effects = this.effects.negative.filter(e => isAttack(e.type))
     const virusStacks = this.playField.getStacksWithVirus()
     const mimics = this.hand.getMimics()
     return { effects, virusStacks, mimics }
