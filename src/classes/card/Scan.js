@@ -1,4 +1,5 @@
 import Card from '@/classes/card/Card'
+import EffectFactory from '@/classes/statusEffect/EffectFactory'
 
 export default class Scan extends Card {
   constructor (deck) {
@@ -7,7 +8,8 @@ export default class Scan extends Card {
 
   play ({ player, target, targetType }) {
     if (targetType === 'player' && this._canAddScan(target)) {
-      target.effects.addPositive(this)
+      const fact = new EffectFactory(target)
+      target.effects.addPositive(fact.newPositiveFromCard(this, 0))
       return
     }
 

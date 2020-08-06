@@ -1,10 +1,13 @@
+// Function to create a unique object id
+const uuidV1 = require('uuid/v1')
+
 export default class StatusEffect {
-  constructor (card, player) {
-    this.id = card.id
-    this.card = card
+  constructor (type, player, turns) {
+    this.id = uuidV1()
+    this.type = type
     this.player = player
-    this.turnsLeft = -1
-    this.image = 'static/cardImages/effects/' + card.type + '.png'
+    this.turnsLeft = turns
+    this.image = 'static/cardImages/effects/' + type + '.png'
   }
 
   update () {
@@ -20,8 +23,14 @@ export default class StatusEffect {
     return true
   }
 
-  destroy () {
-    this.card.discard()
+  destroy () {}
+
+  getBonus () {
+    return 0
+  }
+
+  getPenalty () {
+    return 0
   }
 }
 

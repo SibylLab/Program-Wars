@@ -7,20 +7,11 @@ export default class StatusEffects {
     this.player = player
     this.positive = []
     this.negative = []
-    this.bonus = []
-    this.coolDowns = []
-    this.fact = new EffectFactory(this.player)
   }
 
   update () {
-    this.updateCoolDowns()
     this.updateEffects(this.positive) 
     this.updateEffects(this.negative)
-  }
-
-  updateCoolDowns () {
-    this.coolDowns.map(cd => cd.update())
-    this.coolDowns = this.coolDowns.filter(cd => cd.isActive())
   }
 
   updateEffects (effects) {
@@ -34,24 +25,36 @@ export default class StatusEffects {
   }
 
   getScoreAdjustment () {
-    let score = this.bonus.reduce((acc, b) => { return acc + b.amount }, 0)
+    let score = 0
 
-    const negatives = this.negative.filter(e => e.card.type !== 'SQL_INJECTION')
-    score -= negatives.reduce((acc, e) => { return acc + e.penalty }, 0)
+    const bonus = this.positive.map(b => {
+      return b.getBonus()
+    }).reduce((acc, scr) => {
+      return acc + scr
+    })
 
-    return score
+    const penalty = this.negatives.filter(e => {
+      return e.type !== 'SQL_INJECTION'
+    }).map(n => {
+      return n.getPenalty()
+    }).reduce((acc, scr) => {
+      return acc + scr
+    })
+
+    return score + bonus + penalty
   }
 
   hasPositive (effectType) {
     return this.positive.filter(p => p.card.type === effectType).length > 0
   }
 
-  hasNegative (effectType) {
-    return this.negative.filter(n => n.card.type === effectType).length > 0
-  }
-
-  getNegative (type, attacker) {
-    return this.negative.find(n => n.card.type === type && n.attacker === attacker)
+  hasNegative (effectType, attacker = null) {
+    const effects = this.negative.filter(n => n.card.type === effectType)
+    if (attacker) {
+      return effects.filter(e => e.attacker && e.attacker === attacker).length > 0
+    } else {
+      return effects.length > 0
+    }
   }
 
   hasProtectionFrom (effectType) {
@@ -59,33 +62,21 @@ export default class StatusEffects {
         || (cardData.isMalware(effectType) && this.hasPositive('ANTIVIRUS'))
   }
 
-  // don't add cards that are already here
-  addPositive (card, extraTurns = 0) {
-    const effect = this.fact.newSafetyEffect(card)
-    effect.turnsLeft += extraTurns
-    this.positive.push(effect)
+  addPositive (effect) {
+    if (!this.positive.find(e => e === effect)) {
+      this.positive.push(effect)
+    }
   }
 
-  // don't add cards that are already here
-  addNegative (card, attacker, extraTurns = 0) {
-    const effect = this.fact.newAttackEffect(card, attacker)  
-    effect.turnsLeft += extraTurns
-    this.negative.push(effect)
-  }
-
-  // don't add cards that are already here
-  addSql (card, attacker, extraTurns = 0) {
-    const effect = this.fact.newSqlEffect(card, attacker)
-    effect.turnsLeft += extraTurns
-    this.negative.push(effect)
+  addNegative (effect) {
+    if (!this.negative.find(e => e === effect)) {
+      this.negative.push(effect)
+    }
   }
 
   removeEffect (effect) {
-    if (cardData.isPositiveEffect(effect.card.type)) {
-      this.positive = this.positive.filter(e => e !== effect)
-    } else {
-      this.negative = this.negative.filter(e => e !== effect)
-    }
+    this.positive = this.positive.filter(e => e !== effect)
+    this.negative = this.negative.filter(e => e !== effect)
     effect.destroy()
   }
 
@@ -111,25 +102,5 @@ export default class StatusEffects {
     this.removeNegativeType('STACK_UNDERFLOW'),
     this.removeNegativeType('SQL_INJECTION'),
     this.removeNegativeType('DDOS')
-  }
-
-  addBonus (type, effectId, amount) {
-    this.bonus.push(new BonusEffect(type, effectId, amount))
-  }
-
-  removeBonus (effectId) {
-    this.bonus = this.bonus.filter(b => b.effectId !== effectId)
-  }
-
-  addCoolDown (type) {
-    this.coolDowns.push(this.fact.newCoolDown(type))
-  }
-
-  hasCoolDown (type) {
-    return this.getCD(type) !== undefined
-  }
-
-  getCD (type) {
-    return this.coolDowns.find(cd => cd.type === type)
   }
 }

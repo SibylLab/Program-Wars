@@ -1,3 +1,4 @@
+import EffectFactory from '@/classes/statusEffect/EffectFactory'
 import { bus } from '@/components/shared/Bus'
 
 const REDRAW_DELAY = 400
@@ -88,7 +89,8 @@ export default class Game {
   cardNotPlayed ({type, player, card, cardOwner}) {
     if (type === 'discardHand') {
       const cards = player.hand.takeAll()
-      player.effects.addCoolDown('REDRAW_CD')
+      const fact = new EffectFactory(player)
+      player.effects.addNegative(fact.newStatusEffect('REDRAW_CD', 1))
       this.discardCards(cards)
     } else if (type === 'discardCard') {
       cardOwner.hand.removeCard(card)

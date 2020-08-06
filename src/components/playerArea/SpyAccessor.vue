@@ -37,7 +37,7 @@ export default {
       return this.showHand ? 'Stop Spying' : 'Spy Hand'
     },
     canSpy () {
-      return this.player.effects.getNegative('SPYWARE', this.game.currentPlayer())
+      return this.player.effects.hasNegative('SPYWARE', this.game.currentPlayer())
     }
   },
   methods: {
@@ -71,9 +71,6 @@ export default {
   border: solid grey 3px;
   border-radius: 5px;
   z-index: 200;
-}
-
-.spy-button {
 }
 
 .spy-card {

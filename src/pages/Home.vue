@@ -21,7 +21,6 @@
 
 
 <script>
-import Home from '@/pages/pageStates/Home'
 import PageHeader from '@/components/shared/PageHeader'
 import GameMode from '@/components/setup/GameMode'
 import SelectLevel from '@/components/setup/SelectLevel'

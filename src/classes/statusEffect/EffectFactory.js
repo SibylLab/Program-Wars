@@ -1,11 +1,12 @@
 import StatusEffect from '@/classes/statusEffect/StatusEffect'
+import EffectWithCard from '@/classes/statusEffect/EffectWithCard'
 import CyberAttack from '@/classes/statusEffect/CyberAttack'
 import AttackWithBonus from '@/classes/statusEffect/AttackWithBonus'
+import BonusEffect from '@/classes/statusEffect/BonusEffect'
 import SqlEffect from '@/classes/statusEffect/SqlEffect'
-import CoolDown from '@/classes/statusEffect/CoolDown'
 
 const penalties = {
-  'RANSOM': 10
+  'RANSOM': -10, 'SQL_INJECTION': -2
 }
 
 const bonuses = {
@@ -23,29 +24,29 @@ export default class EffectFactory {
     this.player = player
   }
 
-  newSafetyEffect (card) {
-    return new StatusEffect(card, this.player)
+  newEffect (type, extraTurns) {
+    const turns = this._getTurns(type, extraTurns)
+    return new StatusEffect(type, this.player, turns)
   }
 
-  newAttackEffect (card, attacker) {
-    let effect
-    if (card.type in bonuses) {
-      effect = new AttackWithBonus(card, this.player, attacker, this._getBonus(card.type))
+  newPositiveFromCard (card, extraTurns) {
+    const turns = this._getTurns(card.type, extraTurns)
+    return new EffectWithCard(card, this.player, turns)
+  }
+
+  newNegativeFromCard (card, extraTurns, attacker) {
+    const turns = this._getTurns(card.type, extraTurns)
+    const penalty = this._getPenalty(card.type)
+    const bonus = this._getBonus(card.type)
+
+    if (card.type === 'SQL_INJECTION') {
+      return new SqlEffect(card, this.player, turns, attacker, penalty)
+    } else if (bonus !== 0) {
+      const bonusEffect = new BonusEffect(card.type, this.player, turns, bonus)
+      return new AttackWithBonus(card, this.player, turns, attacker, penalty, bonusEffect)
     } else {
-      effect = new CyberAttack(card, this.player, attacker)
+      return new CyberAttack(card, this.player, turns, attacker, penalty)
     }
-
-    effect.penalty = this._getPenalty(card.type)
-    effect.turnsLeft = this._getTurnsLeft(card.type)
-    return effect
-  }
-
-  newSqlEffect (card, attacker) {
-    return new SqlEffect(card, this.player, attacker)
-  }
-
-  newCoolDown (type) {
-    return new CoolDown(type, this._getTurnsLeft(type), this.player)
   }
 
   _getPenalty (type) {
@@ -56,7 +57,11 @@ export default class EffectFactory {
     return type in bonuses ? bonuses[type] : 0
   }
 
-  _getTurnsLeft (type) {
-    return type in turns ? turns[type] : -1
+  _getTurns (type, extraTurns) {
+    if (type in turns) {
+      return turns[type] + extraTurns
+    } else {
+      return -1
+    }
   }
 }

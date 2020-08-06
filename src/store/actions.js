@@ -1,4 +1,3 @@
-import Home from '@/pages/pageStates/Home'
 import BeginnerGame from '@/pages/pageStates/BeginnerGame'
 import StandardGame from '@/pages/pageStates/StandardGame'
 

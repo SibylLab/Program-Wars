@@ -6,7 +6,6 @@
 
 <script>
 import TwoPlayerTemplate from '@/pages/TwoPlayerTemplate.vue'
-import { bus } from '@/components/shared/Bus'
 
 export default {
   name: 'standard-game',

@@ -1,4 +1,5 @@
 import Card from '@/classes/card/Card'
+import EffectFactory from '@/classes/statusEffect/EffectFactory'
 
 export default class PositiveEffectCard extends Card {
   constructor (type, deck) {
@@ -7,7 +8,8 @@ export default class PositiveEffectCard extends Card {
 
   play ({ target }) {
     if (!target.helpedBy(this.type)) {
-      target.effects.addPositive(this)
+      const fact = new EffectFactory(target)
+      target.effects.addPositive(fact.newPositiveFromCard(this, 1))
 
       if (this.type === 'ANTIVIRUS') {
         target.hand.cleanMimics()

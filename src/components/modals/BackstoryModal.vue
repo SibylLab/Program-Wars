@@ -5,7 +5,7 @@
     <div class="modal-content" style="border-radius: 30px;">
 
       <div class="modal-header" style="border: none"> 
-        <h3 class="modal-title" style="border-radius">
+        <h3 class="modal-title" style="border-radius: 30px;">
           In the not too distant future... </h3>
       </div>
 

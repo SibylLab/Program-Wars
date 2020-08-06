@@ -1,4 +1,5 @@
 import Card from '@/classes/card/Card'
+import EffectFactory from '@/classes/statusEffect/EffectFactory'
 
 export default class NegativeEffectCard extends Card {
   constructor (type, deck) {
@@ -13,7 +14,9 @@ export default class NegativeEffectCard extends Card {
         this.discard()
       } else {
         const extraTurns = playInfo.replaced ? 1 : 0
-        playInfo.target.effects.addNegative(this, playInfo.player, extraTurns)
+        const fact = new EffectFactory(playInfo.target)
+        const effect = fact.newNegativeFromCard(this, extraTurns, playInfo.player)
+        playInfo.target.effects.addNegative(effect)
       }
     } else {
       this.discard()

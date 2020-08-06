@@ -35,7 +35,7 @@ export default {
     },
     showSpy () {
       if (this.player.hurtBy('SPYWARE')) {
-        return this.player.effects.getNegative('SPYWARE', this.game.currentPlayer())
+        return this.player.effects.hasNegative('SPYWARE', this.game.currentPlayer())
       }
       return false
     }
