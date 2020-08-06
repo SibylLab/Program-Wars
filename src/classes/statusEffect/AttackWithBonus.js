@@ -12,6 +12,6 @@ export default class AttackWithBonus extends CyberAttack {
 
   destroy () {
     this.attacker.effects.removeBonus(this.id)
-    return super.destroy()
+    super.destroy()
   }
 }

@@ -11,7 +11,7 @@ export default class SqlEffect extends CyberAttack {
 
   destroy () {
     this.method.adjustment += SQL_PENALTY
-    return super.destroy()
+    super.destroy()
   }
 }
 

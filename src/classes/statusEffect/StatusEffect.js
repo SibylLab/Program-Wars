@@ -21,7 +21,7 @@ export default class StatusEffect {
   }
 
   destroy () {
-    return this.card
+    this.card.discard()
   }
 }
 

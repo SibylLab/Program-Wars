@@ -14,8 +14,8 @@ export default class StatusEffects {
 
   update () {
     this.updateCoolDowns()
-    let discards = this.updateEffects(this.positive) 
-    return discards.concat(this.updateEffects(this.negative))
+    this.updateEffects(this.positive) 
+    this.updateEffects(this.negative)
   }
 
   updateCoolDowns () {
@@ -26,13 +26,11 @@ export default class StatusEffects {
   updateEffects (effects) {
     effects.map(e => e.update())
 
-    const discards = effects.filter(e => {
+    effects.filter(e => {
       return e.turnsLeft === 0
     }).map(e => {
-      return this.removeEffect(e)
+      this.removeEffect(e)
     })
-
-    return discards
   }
 
   getScoreAdjustment () {
@@ -88,35 +86,31 @@ export default class StatusEffects {
     } else {
       this.negative = this.negative.filter(e => e !== effect)
     }
-    return effect.destroy()
+    effect.destroy()
   }
 
   removePositiveType (effectType) {
     const effects = this.positive.filter(p => p.card.type === effectType)
     this.positive = this.positive.filter(p => p.card.type !== effectType)
-    return effects.map(e => e.destroy())
+    effects.map(e => e.destroy())
   }
 
   removeNegativeType (effectType) {
     const effects = this.negative.filter(n => n.card.type === effectType)
     this.negative = this.negative.filter(n => n.card.type !== effectType)
-    return effects.map(e => e.destroy())
+    effects.map(e => e.destroy())
   }
 
   cleanMalware () {
-    return [
-      ...this.removeNegativeType('RANSOM'),
-      ...this.removeNegativeType('SPYWARE')
-    ]
+    this.removeNegativeType('RANSOM'),
+    this.removeNegativeType('SPYWARE')
   }
 
   cleanHacks () {
-    return [
-      ...this.removeNegativeType('STACK_OVERFLOW'),
-      ...this.removeNegativeType('STACK_UNDERFLOW'),
-      ...this.removeNegativeType('SQL_INJECTION'),
-      ...this.removeNegativeType('DDOS')
-    ]
+    this.removeNegativeType('STACK_OVERFLOW'),
+    this.removeNegativeType('STACK_UNDERFLOW'),
+    this.removeNegativeType('SQL_INJECTION'),
+    this.removeNegativeType('DDOS')
   }
 
   addBonus (type, effectId, amount) {
