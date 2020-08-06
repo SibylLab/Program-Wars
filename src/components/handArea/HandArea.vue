@@ -66,11 +66,11 @@ export default {
     canRedraw () {
       const player = this.game.currentPlayer()
       // on DDoS player can pass so redraw cd does not affect the button
-      return player.hurtBy('DDOS') || !player.effects.hasCoolDown('REDRAW_CD')
+      return player.hurtBy('DDOS') || !player.hurtBy('REDRAW_CD')
     },
     redrawCD () {
       const player = this.game.currentPlayer()
-      return player.effects.getCD('REDRAW_CD').turnsLeft
+      return player.effects.negative.find(e => e.type === 'REDRAW_CD').turnsLeft
     }
   },
   methods: {

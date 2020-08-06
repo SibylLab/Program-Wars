@@ -31,15 +31,15 @@ export default class StatusEffects {
       return b.getBonus()
     }).reduce((acc, scr) => {
       return acc + scr
-    })
+    }, 0)
 
-    const penalty = this.negatives.filter(e => {
+    const penalty = this.negative.filter(e => {
       return e.type !== 'SQL_INJECTION'
     }).map(n => {
       return n.getPenalty()
     }).reduce((acc, scr) => {
       return acc + scr
-    })
+    }, 0)
 
     return score + bonus + penalty
   }

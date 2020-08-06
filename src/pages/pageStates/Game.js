@@ -90,7 +90,7 @@ export default class Game {
     if (type === 'discardHand') {
       const cards = player.hand.takeAll()
       const fact = new EffectFactory(player)
-      player.effects.addNegative(fact.newStatusEffect('REDRAW_CD', 1))
+      player.effects.addNegative(fact.newEffect('REDRAW_CD', 1))
       this.discardCards(cards)
     } else if (type === 'discardCard') {
       cardOwner.hand.removeCard(card)
