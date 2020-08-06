@@ -58,7 +58,7 @@ export default class Deck {
     this.discardPile.push(card)
   }
 
-  shuffle (times = 7) {
+  shuffle (times = 4) {
     for (let i = 0; i < times; i++) {
       this._shuffleCards(this.cards)
     }
@@ -68,7 +68,7 @@ export default class Deck {
     const fact = new CardFactory()
     for (const {type, val, num} of cardTypes) {
       for (let i = 0; i < num; i++) {
-        this.cards.push(fact.newCard(type, val))
+        this.cards.push(fact.newCard(type, val, this))
       }
     }
   }

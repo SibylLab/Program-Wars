@@ -1,5 +1,4 @@
 import Deck from '@/classes/deck/Deck'
-import AgileDeck from '@/classes/deck/AgileDeck'
 import deckData from '@/classes/deck/deckData'
 
 export default class DeckFactory {
@@ -21,16 +20,6 @@ export default class DeckFactory {
       data = deckData.standard.default
     }
     return new Deck(this._merge(data.base, data.extra))
-  }
-
-  agileDeck (type) {
-    let data
-    if (type in deckData.agile) {
-      data = deckData.agile[type]
-    } else {
-      data = deckData.agile.default
-    }
-    return new AgileDeck(this._merge(data.base, data.extra))
   }
 
   _merge (baseCards, extraCards) { 
