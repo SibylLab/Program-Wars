@@ -1,15 +1,15 @@
 import Card from '@/classes/card/Card'
 
 export default class Search extends Card {
-  constructor (ownerId = -1) {
-    super(0, 'SEARCH', Card.imgPath('search'), ownerId)
+  constructor (deck) {
+    super(0, 'SEARCH', deck, Card.imgPath('search'))
   }
 
   play ({ player, chosenCard, deck }) {
     player.hand.addCard(chosenCard)
     deck.removeCard(chosenCard)
     deck.shuffle()
-    return [this]
+    this.discard()
   }
 }
 

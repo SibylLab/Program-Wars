@@ -2,12 +2,12 @@ import Card from '@/classes/card/Card'
 
 export default class CardWrapper extends Card {
   constructor (card) {
-    super(card.value, card.type, card.image, card.ownerId)
+    super(card.value, card.type, card.deck, card.image)
     this.card = card
   }
 
-  getDiscards () {
-    return this.card.getDiscards()
+  discard () {
+    this.card.discard()
   }
 
   play (playInfo) {

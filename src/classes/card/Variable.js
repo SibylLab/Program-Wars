@@ -1,19 +1,18 @@
 import Card from '@/classes/card/Card'
 
 export default class Variable extends Card {
-  constructor (value, ownerId = -1) {
-    super(value, 'VARIABLE', Card.imgPath('variable' + value), ownerId)
+  constructor (value, deck) {
+    super(value, 'VARIABLE', deck, Card.imgPath('variable' + value))
   }
 
   play ({stack, stackOwner}) {
     if (stack.topIsRx()) {
       stackOwner.playField.addCardToStack(this, stack)
     } else if (stack.willAccept(this)) {  // this should explicitly check variable stuff
-      return [stack.replaceLowestVar(this)]
+      stack.replaceLowestVar(this).discard()
     } else {
-      return [this]
+      this.discard()
     }
-    return []
   }
 }
 

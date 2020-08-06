@@ -5,11 +5,11 @@ const uuidV1 = require('uuid/v1')
  * A Playing card.
  */
 export default class Card {
-  constructor (value, type, image, ownerId) {
+  constructor (value, type, deck, image) {
     this.value = value
     this.type = type
+    this.deck = deck
     this.image = image
-    this.ownerId = ownerId
     this.id = uuidV1()
     this.isMimic = false
   }
@@ -19,11 +19,11 @@ export default class Card {
   }
 
   play (playInfo) { // eslint-disable-line no-unused-vars
-    return []
+    this.discard()
   }
 
-  getDiscards () {
-    return [this]
+  discard () {
+    this.deck.discard(this)
   }
 
   static imgPath (cardName) {
@@ -33,9 +33,9 @@ export default class Card {
   _blockedByScan (playInfo) {
     playInfo.scanned = true
     if (this.type === 'VIRUS') {
-      return [...playInfo.stackOwner.effects.removePositiveType('SCAN'), this]
+      playInfo.stackOwner.effects.removePositiveType('SCAN')
     } else { 
-      return [...playInfo.target.effects.removePositiveType('SCAN'), this]
+      playInfo.target.effects.removePositiveType('SCAN')
     }
   }
 }

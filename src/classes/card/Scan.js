@@ -1,23 +1,25 @@
 import Card from '@/classes/card/Card'
 
 export default class Scan extends Card {
-  constructor (ownerId = -1) {
-    super(0, 'SCAN', Card.imgPath('scan'), ownerId)
+  constructor (deck) {
+    super(0, 'SCAN', deck, Card.imgPath('scan'))
   }
 
   play ({ player, target, targetType }) {
     if (targetType === 'player' && this._canAddScan(target)) {
       target.effects.addPositive(this)
-      return []
-    } else if (targetType === 'stack') {
-      return [target.popTop(), this]
+      return
+    }
+
+    if (targetType === 'stack') {
+      target.popTop().discard()
     } else if (targetType === 'mimic') {
       player.hand.removeCard(target)
-      return [target, this]
+      target.discard()
     } else if (targetType === 'effect') {
-      return [player.effects.removeEffect(target), this]
+      player.effects.removeEffect(target)
     }
-    return [this]
+    this.discard()
   }
 
   _canAddScan (target) {

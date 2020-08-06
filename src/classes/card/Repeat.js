@@ -1,16 +1,15 @@
 import Card from '@/classes/card/Card'
 
 export default class Repeat extends Card {
-  constructor (value, ownerId = -1) {
-    super(value, 'REPEAT', Card.imgPath('repeat' + value), ownerId)
+  constructor (value, deck) {
+    super(value, 'REPEAT', deck, Card.imgPath('repeat' + value))
   }
 
   play ({stack, stackOwner}) {
     if (!stack.isComplete()) {
       stackOwner.playField.addCardToStack(this, stack)
-      return []
     } else {
-      return [this]
+      this.discard()
     }
   }
 }

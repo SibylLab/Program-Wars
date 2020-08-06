@@ -11,9 +11,9 @@ export default class MimicWrapper extends CardWrapper {
     this.isMimic = true
   }
 
-  getDiscards () {
-    let discards = super.getDiscards()
-    return discards.concat(this.trojan.getDiscards())
+  discard () {
+    super.discard()
+    this.trojan.discard()
   }
 
   play (playInfo) {

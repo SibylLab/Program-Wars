@@ -13,31 +13,31 @@ import Sort from '@/classes/card/Sort'
 import { isNegativeEffect, isPositiveEffect } from '@/classes/card/cardData'
 
 export default class CardFactory {
-  newCard (type, value, ownerId = -1) {
+  newCard (type, value, deck) {
     if (type === 'INSTRUCTION') {
-      return new Instruction(value, ownerId)
+      return new Instruction(value, deck)
     } else if (type === 'METHOD') {
-      return new Method(value, ownerId)
+      return new Method(value, deck)
     } else if (type === 'REPEAT') {
-      return new Repeat(value, ownerId)
+      return new Repeat(value, deck)
     } else if (type === 'VARIABLE') {
-      return new Variable(value, ownerId)
+      return new Variable(value, deck)
     } else if (type === 'SCAN') {
-      return new Scan(ownerId)
+      return new Scan(deck)
     } else if (type === 'VIRUS') {
-      return new Virus(ownerId)
+      return new Virus(deck)
     } else if (type === 'TROJAN') {
-      return new Trojan(ownerId)
+      return new Trojan(deck)
     } else if (type === 'SQL_INJECTION') {
-      return new SqlInjection(ownerId)
+      return new SqlInjection(deck)
     } else if (isNegativeEffect(type)) {
-      return new NegativeEffectCard(type, ownerId)
+      return new NegativeEffectCard(type, deck)
     } else if (isPositiveEffect(type)) {
-      return new PositiveEffectCard(type, ownerId)
+      return new PositiveEffectCard(type, deck)
     } else if (type === 'SEARCH') {
-      return new Search(ownerId)
+      return new Search(deck)
     } else if (type === 'SORT') {
-      return new Sort(ownerId)
+      return new Sort(deck)
     } else {
       throw "CardFactory: Not a valid card type: " + type
     }
