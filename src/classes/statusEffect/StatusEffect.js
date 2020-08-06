@@ -1,8 +1,8 @@
 export default class StatusEffect {
-  constructor (card, playerId) {
+  constructor (card, player) {
     this.id = card.id
     this.card = card
-    this.playerId = playerId
+    this.player = player
     this.turnsLeft = -1
     this.image = 'static/cardImages/effects/' + card.type + '.png'
   }

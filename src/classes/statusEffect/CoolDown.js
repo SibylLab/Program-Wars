@@ -1,8 +1,8 @@
 export default class CoolDown {
-  constructor (type, turnsLeft, playerId) {
+  constructor (type, turnsLeft, player) {
     this.type = type
     this.turnsLeft = turnsLeft
-    this.playerId = playerId
+    this.player = player
     this.image = 'static/cardImages/effects/' + type + '.png'
   }
 

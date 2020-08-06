@@ -5,9 +5,9 @@ export default class Variable extends Card {
     super(value, 'VARIABLE', deck, Card.imgPath('variable' + value))
   }
 
-  play ({stack, stackOwner}) {
+  play ({ stack }) {
     if (stack.topIsRx()) {
-      stackOwner.playField.addCardToStack(this, stack)
+      stack.player.playField.addCardToStack(this, stack)
     } else if (stack.willAccept(this)) {  // this should explicitly check variable stuff
       stack.replaceLowestVar(this).discard()
     } else {

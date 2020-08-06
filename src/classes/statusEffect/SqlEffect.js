@@ -3,9 +3,9 @@ import CyberAttack from '@/classes/statusEffect/CyberAttack'
 const SQL_PENALTY = 2
 
 export default class SqlEffect extends CyberAttack {
-  constructor (card, playerId, attacker, method) {
-    super(card, playerId, attacker)
-    this.method = method
+  constructor (card, player, attacker) {
+    super(card, player, attacker)
+    this.method = this.player.playField.method
     this.method.adjustment -= SQL_PENALTY
   }
 

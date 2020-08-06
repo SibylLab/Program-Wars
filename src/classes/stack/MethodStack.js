@@ -9,8 +9,8 @@ const METHOD_LIMIT = 9
  * A stack of cards where the player can build a method.
  */
 export default class MethodStack extends Stack {
-  constructor (playerId) {
-    super(null, playerId)
+  constructor (player) {
+    super(null, player)
     this.isMethod = true
     this.adjustment = 0
   }

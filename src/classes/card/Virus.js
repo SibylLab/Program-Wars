@@ -6,11 +6,11 @@ export default class Virus extends Card {
   }
 
   play (playInfo) {
-    if (playInfo.stackOwner.helpedBy('SCAN')) {
+    if (playInfo.stack.helpedBy('SCAN')) {
       this._blockedByScan(playInfo)
       this.discard()
     } else if (playInfo.stack.getTop().type !== 'VIRUS'
-        && !playInfo.stackOwner.protectedFrom(this.type)) {
+        && !playInfo.stack.player.protectedFrom(this.type)) {
       playInfo.stack.addCard(this)
     } else {
       this.discard()

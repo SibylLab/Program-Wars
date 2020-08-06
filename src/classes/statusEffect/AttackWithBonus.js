@@ -1,8 +1,8 @@
 import CyberAttack from '@/classes/statusEffect/CyberAttack'
 
 export default class AttackWithBonus extends CyberAttack {
-  constructor (card, playerId, attacker, bonus = 0) {
-    super(card, playerId, attacker)
+  constructor (card, player, attacker, bonus = 0) {
+    super(card, player, attacker)
     this.addBonus(bonus)
   }
 

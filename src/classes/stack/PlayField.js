@@ -1,9 +1,9 @@
 import MethodStack from '@/classes/stack/MethodStack'
 
 export default class PlayField {
-  constructor (playerId) {
-    this.playerId = playerId
-    this.method = new MethodStack(playerId)
+  constructor (player) {
+    this.player = player
+    this.method = new MethodStack(player)
     this.stacks = []
   }
 

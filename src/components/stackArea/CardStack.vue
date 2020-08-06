@@ -39,18 +39,15 @@ export default {
   },
   computed: {
     ...mapGetters(['game']),
-    stackOwner () {
-      return this.game.getPlayer(this.stack.playerId)
-    },
     ownedByCurrentPlayer () {
-      return this.stackOwner === this.game.currentPlayer()
+      return this.stack.player === this.game.currentPlayer()
     },
     willAcceptVirus () {
-      return !this.ownedByCurrentPlayer && !this.stackOwner.protectedFrom('VIRUS')
+      return !this.ownedByCurrentPlayer && !this.stack.player.protectedFrom('VIRUS')
     },
     ownerHurtBySql () {
       return (this.stack.isMethod || this.stack.getBase().type === 'METHOD')
-          && this.stackOwner.hurtBy('SQL_INJECTION')
+          && this.stack.player.hurtBy('SQL_INJECTION')
     },
     /**
      * Determines the score color based on whether the stacks owner is under
@@ -119,8 +116,8 @@ export default {
         event.stopPropagation();
         this.game.takeTurn({
           type: "playOnStack", player: this.game.currentPlayer(),
-          stack: this.stack, stackOwner: this.stackOwner,
-          card: card, cardOwner: owner
+          card: card, cardOwner: owner,
+          stack: this.stack
         })
       }
     },

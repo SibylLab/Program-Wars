@@ -19,40 +19,44 @@ const turns = {
 }
 
 export default class EffectFactory {
-  newSafetyEffect (card, playerId) {
-    return new StatusEffect(card, playerId)
+  constructor (player) {
+    this.player = player
   }
 
-  newAttackEffect (card, playerId, attacker) {
+  newSafetyEffect (card) {
+    return new StatusEffect(card, this.player)
+  }
+
+  newAttackEffect (card, attacker) {
     let effect
     if (card.type in bonuses) {
-      effect = new AttackWithBonus(card, playerId, attacker, this.getBonus(card.type))
+      effect = new AttackWithBonus(card, this.player, attacker, this._getBonus(card.type))
     } else {
-      effect = new CyberAttack(card, playerId, attacker)
+      effect = new CyberAttack(card, this.player, attacker)
     }
 
-    effect.penalty = this.getPenalty(card.type)
-    effect.turnsLeft = this.getTurnsLeft(card.type)
+    effect.penalty = this._getPenalty(card.type)
+    effect.turnsLeft = this._getTurnsLeft(card.type)
     return effect
   }
 
-  newSqlEffect (card, playerId, attacker, method) {
-    return new SqlEffect(card, playerId, attacker, method)
+  newSqlEffect (card, attacker) {
+    return new SqlEffect(card, this.player, attacker)
   }
 
-  newCoolDown (type, playerId) {
-    return new CoolDown(type, this.getTurnsLeft(type), playerId)
+  newCoolDown (type) {
+    return new CoolDown(type, this._getTurnsLeft(type), this.player)
   }
 
-  getPenalty (type) {
+  _getPenalty (type) {
     return type in penalties ? penalties[type] : 0
   }
 
-  getBonus (type) {
+  _getBonus (type) {
     return type in bonuses ? bonuses[type] : 0
   }
 
-  getTurnsLeft (type) {
+  _getTurnsLeft (type) {
     return type in turns ? turns[type] : -1
   }
 }

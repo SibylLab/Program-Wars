@@ -110,13 +110,6 @@ export default class PlayBestCardAction extends ActionHandler {
   instruction (card, { player }) {
     if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
 
-    const move = {
-      card: card,
-      cardOwner: player,
-      player: player,
-      stackOwner: player
-    }
-
     if (!player.playField.method.isComplete()
         && card.value <= player.playField.method.toLimit()) {
       return {
@@ -125,7 +118,6 @@ export default class PlayBestCardAction extends ActionHandler {
         cardOwner: player,
         player: player,
         stack: player.playField.method,
-        stackOwner: player
       }
     }
     return undefined
@@ -139,7 +131,7 @@ export default class PlayBestCardAction extends ActionHandler {
       card: card,
       cardOwner: player,
       player: player,
-      stackOwner: player
+      playField: player.playField
     }
   }
 
@@ -167,8 +159,7 @@ export default class PlayBestCardAction extends ActionHandler {
         card: card,
         cardOwner: player,
         player: player,
-        stack: stack,
-        stackOwner: player
+        stack: stack
       }
     }
     return undefined
@@ -196,8 +187,7 @@ export default class PlayBestCardAction extends ActionHandler {
         card: card,
         cardOwner: player,
         player: player,
-        stack: stack,
-        stackOwner: player
+        stack: stack
       }
     }
     return undefined
@@ -235,8 +225,7 @@ export default class PlayBestCardAction extends ActionHandler {
         card: card,
         cardOwner: player,
         player: player,
-        stack: stack, 
-        stackOwner: players.find(p => p.id === stack.playerId)
+        stack: stack
       }
     }
     return undefined

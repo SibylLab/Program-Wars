@@ -62,8 +62,8 @@ export default {
         this.game.takeTurn({
           type: "newStack",
           player: this.game.currentPlayer(),
-          stackOwner: this.player,
-          card: card, cardOwner: owner
+          card: card, cardOwner: owner,
+          playField: this.player.playField
         })
       }
     }

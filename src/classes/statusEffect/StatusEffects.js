@@ -3,13 +3,13 @@ import BonusEffect from '@/classes/statusEffect/BonusEffect'
 import * as cardData from '@/classes/card/cardData'
 
 export default class StatusEffects {
-  constructor (playerId) {
-    this.playerId = playerId
+  constructor (player) {
+    this.player = player
     this.positive = []
     this.negative = []
     this.bonus = []
     this.coolDowns = []
-    this.fact = new EffectFactory()
+    this.fact = new EffectFactory(this.player)
   }
 
   update () {
@@ -61,21 +61,21 @@ export default class StatusEffects {
 
   // don't add cards that are already here
   addPositive (card, extraTurns = 0) {
-    const effect = this.fact.newSafetyEffect(card, this.playerId)
+    const effect = this.fact.newSafetyEffect(card)
     effect.turnsLeft += extraTurns
     this.positive.push(effect)
   }
 
   // don't add cards that are already here
   addNegative (card, attacker, extraTurns = 0) {
-    const effect = this.fact.newAttackEffect(card, this.playerId, attacker)  
+    const effect = this.fact.newAttackEffect(card, attacker)  
     effect.turnsLeft += extraTurns
     this.negative.push(effect)
   }
 
   // don't add cards that are already here
-  addSql (card, attacker, methodStack, extraTurns = 0) {
-    const effect = this.fact.newSqlEffect(card, this.playerId, attacker, methodStack)
+  addSql (card, attacker, extraTurns = 0) {
+    const effect = this.fact.newSqlEffect(card, attacker)
     effect.turnsLeft += extraTurns
     this.negative.push(effect)
   }
@@ -122,7 +122,7 @@ export default class StatusEffects {
   }
 
   addCoolDown (type) {
-    this.coolDowns.push(this.fact.newCoolDown(type, this.playerId))
+    this.coolDowns.push(this.fact.newCoolDown(type))
   }
 
   hasCoolDown (type) {

@@ -31,8 +31,7 @@ export default class MethodStackFirst extends ActionHandler {
         card: card,
         cardOwner: player,
         player: player,
-        stack: player.playField.method,
-        stackOwner: player
+        stack: player.playField.method
       }
     } else {
       return undefined

@@ -36,7 +36,7 @@ export default class Card {
   _blockedByScan (playInfo) {
     playInfo.scanned = true
     if (this.type === 'VIRUS') {
-      playInfo.stackOwner.effects.removePositiveType('SCAN')
+      playInfo.stack.player.effects.removePositiveType('SCAN')
     } else { 
       playInfo.target.effects.removePositiveType('SCAN')
     }

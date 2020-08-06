@@ -6,16 +6,16 @@ export default class Instruction extends Card {
     super(value, 'INSTRUCTION', deck, Card.imgPath('instruction' + value))
   }
 
-  play ({stack, stackOwner}) {
-    if (stack) {
-      if (stack.isMethod) {
-        stackOwner.playField.addCardToStack(this, stack)
+  play (playInfo) {
+    if (playInfo.stack) {
+      if (playInfo.stack.isMethod) {
+        playInfo.stack.player.playField.addCardToStack(this, playInfo.stack)
       } else {
         this.discard()
       }
     } else {
-      const newStack = new Stack(this, stackOwner.id)
-      stackOwner.playField.addStack(newStack)
+      const newStack = new Stack(this, playInfo.playField.player)
+      playInfo.playField.addStack(newStack)
     }
   }
 }
