@@ -124,7 +124,6 @@ export default class Game {
   endTurn () {
     this.wait = true
     bus.$emit('end-turn')
-    console.log(this.deck.discardPile.map(c => c.type))
 
     // timeout is asynchronus so both start their countdown at the same time
     setTimeout(() => {

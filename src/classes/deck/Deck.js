@@ -58,7 +58,7 @@ export default class Deck {
     this.discardPile.push(card)
   }
 
-  shuffle (times = 4) {
+  shuffle (times = 3) {
     for (let i = 0; i < times; i++) {
       this._shuffleCards(this.cards)
     }

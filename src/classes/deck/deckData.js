@@ -115,7 +115,7 @@ const std1Special = [
   makeType('RANSOM', 0, 2),
   makeType('VIRUS', 0, 2),
   makeType('TROJAN', 0, 2),
-  makeType('ANTIVIRUS', 0, 2)
+  makeType('ANTIVIRUS', 0, 1)
 ]
 
 const std2Special = [
@@ -123,7 +123,7 @@ const std2Special = [
   makeType('STACK_OVERFLOW', 0, 2),
   makeType('STACK_UNDERFLOW', 0, 2),
   makeType('SQL_INJECTION', 0, 2),
-  makeType('FIREWALL', 0, 2),
+  makeType('FIREWALL', 0, 1),
 ]
 
 const std3Special = [
@@ -131,8 +131,8 @@ const std3Special = [
   makeType('VIRUS', 0, 2),
   makeType('STACK_UNDERFLOW', 0, 2),
   makeType('SQL_INJECTION', 0, 2),
-  makeType('FIREWALL', 0, 2),
-  makeType('ANTIVIRUS', 0, 2)
+  makeType('FIREWALL', 0, 1),
+  makeType('ANTIVIRUS', 0, 1)
 ]
 
 const std4Special = [
@@ -140,8 +140,8 @@ const std4Special = [
   makeType('STACK_OVERFLOW', 0, 2),
   makeType('RANSOM', 0, 2),
   makeType('TROJAN', 0, 2),
-  makeType('FIREWALL', 0, 2),
-  makeType('ANTIVIRUS', 0, 2)
+  makeType('FIREWALL', 0, 1),
+  makeType('ANTIVIRUS', 0, 1)
 ]
 
 const stdMalware = {

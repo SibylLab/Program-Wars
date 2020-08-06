@@ -23,7 +23,7 @@ export default class MethodStackFirst extends ActionHandler {
       return c.type === "INSTRUCTION" && c.value <= player.playField.method.toLimit()
     })
 
-    if (instructions.length > 0) {
+    if (instructions.length > 0 && !player.hurtBy('STACK_OVERFLOW')) {
       instructions.sort((a,b) => { return b.value - a.value })
       let card = instructions.shift()
       return {
