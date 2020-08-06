@@ -9,8 +9,8 @@ export default class Player {
     this.name = name
     this.isAI = false
     this.hand = new Hand(id)
-    this.playField = new PlayField(id)
-    this.effects = new StatusEffects(id)
+    this.playField = new PlayField(this)
+    this.effects = new StatusEffects(this)
     this.image = 'static/playerImages/player' + id + '.png'
   }
 
