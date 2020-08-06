@@ -4,17 +4,19 @@ import MimicWrapper from '@/classes/card/MimicWrapper'
 const MAX_TRIES = 10
 
 export default class Trojan extends Card {
-  constructor (ownerId = -1) {
-    super(0, 'TROJAN', Card.imgPath('trojan'), ownerId)
+  constructor (deck) {
+    super(0, 'TROJAN', deck, Card.imgPath('trojan'))
   }
 
   play (playInfo) {
     if (playInfo.target.helpedBy('SCAN')) {
-      return this._blockedByScan(playInfo)
+      this._blockedByScan(playInfo)
+      this.discard()
     } else if (!playInfo.target.protectedFrom(this.type)) {
       this._mimicCard(playInfo.target.hand) 
+    } else {
+      this.discard()
     }
-    return [this]
   }
 
   _mimicCard (hand) {

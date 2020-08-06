@@ -1,4 +1,3 @@
-import { isSpecial } from '@/classes/card/cardData'
 import { bus } from '@/components/shared/Bus'
 
 const REDRAW_DELAY = 400
@@ -99,7 +98,7 @@ export default class Game {
 
   playCard (playInfo) {
     playInfo.card.play(playInfo)
-    playInfo.cardOwner.hand.removeCard(card)
+    playInfo.cardOwner.hand.removeCard(playInfo.card)
     this.notifications(playInfo)
   }
 
@@ -125,6 +124,7 @@ export default class Game {
   endTurn () {
     this.wait = true
     bus.$emit('end-turn')
+    console.log(this.deck.discardPile.map(c => c.type))
 
     // timeout is asynchronus so both start their countdown at the same time
     setTimeout(() => {

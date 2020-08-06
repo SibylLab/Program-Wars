@@ -7,6 +7,7 @@ export default class CardWrapper extends Card {
   }
 
   discard () {
+    console.log('wrapper-discard')
     this.card.discard()
   }
 

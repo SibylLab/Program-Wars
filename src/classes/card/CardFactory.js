@@ -17,7 +17,7 @@ export default class CardFactory {
     if (type === 'INSTRUCTION') {
       return new Instruction(value, deck)
     } else if (type === 'METHOD') {
-      return new Method(value, deck)
+      return new Method(deck)
     } else if (type === 'REPEAT') {
       return new Repeat(value, deck)
     } else if (type === 'VARIABLE') {

@@ -1,5 +1,4 @@
 import CardWrapper from '@/classes/card/CardWrapper'
-import ExtraCardWrapper from '@/classes/card/ExtraCardWrapper'
 import NegativeEffectCard from '@/classes/card/NegativeEffectCard'
 import Virus from '@/classes/card/Virus'
 import { isBase, isAttack } from '@/classes/card/cardData'
@@ -20,7 +19,8 @@ export default class MimicWrapper extends CardWrapper {
     const replacement = this._replace()
     playInfo.target = playInfo.player
     playInfo.replaced = true
-    return replacement.play(playInfo)
+    replacement.play(playInfo)
+    this.discard()
   }
 
   _replace () {
@@ -34,7 +34,8 @@ export default class MimicWrapper extends CardWrapper {
     } else {
       card = new NegativeEffectCard('RANSOM')
     }
-    return new ExtraCardWrapper(card)
+    card.isExtra = true
+    return card
   }
 }
 

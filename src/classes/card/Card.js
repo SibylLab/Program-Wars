@@ -12,6 +12,7 @@ export default class Card {
     this.image = image
     this.id = uuidV1()
     this.isMimic = false
+    this.isExtra = false
   }
 
   getValue () {
@@ -23,7 +24,9 @@ export default class Card {
   }
 
   discard () {
-    this.deck.discard(this)
+    if (!this.isExtra) {
+      this.deck.discard(this)
+    }
   }
 
   static imgPath (cardName) {
