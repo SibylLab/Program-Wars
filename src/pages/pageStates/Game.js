@@ -44,15 +44,7 @@ export default class Game {
   }
 
   discardCards (cards) {
-    cards.map(c => this.discardCard(c)) 
-  }
-
-  discardCard (card) {
-    card.getDiscards().map(c => this.discard(c))
-  }
-
-  discard (card) {
-    this.deck.discard(card)
+    cards.map(c => c.discard()) 
   }
 
   drawCards (player) {
@@ -101,17 +93,14 @@ export default class Game {
       this.discardCards(cards)
     } else if (type === 'discardCard') {
       cardOwner.hand.removeCard(card)
-      this.discardCard(card)
+      card.discard()
     } // else pass
   }
 
   playCard (playInfo) {
-    const card = playInfo.card
-    const discards = card.play(playInfo)
-    this.discardCards(discards)
-    this.notifications(playInfo)
+    playInfo.card.play(playInfo)
     playInfo.cardOwner.hand.removeCard(card)
-    bus.$emit('card-played', playInfo)
+    this.notifications(playInfo)
   }
 
   notifications (playInfo) {
@@ -120,11 +109,12 @@ export default class Game {
     } else if (playInfo.replaced) {
       bus.$emit('mimic-played')
     }
+    bus.$emit('card-played', playInfo)
   }
 
   update () {
     this.currentCard = null
-    this.discardCards(this.currentPlayer().update())
+    this.currentPlayer().update()
     this.scores = this.getScores()
 
     this.isOver = this.scores.reduce((acc, score) => {
@@ -168,7 +158,9 @@ export default class Game {
   }
 
   takeAITurn () {
-    const playInfo = this.currentPlayer().getPlay(this.players, this.scores, this.getDeck())
+    const player = this.currentPlayer()
+    const playInfo = player.getPlay(this.players, this.scores, this.getDeck())
+
     setTimeout(() => {
       this.takeTurn(playInfo)
     }, AI_DELAY)
