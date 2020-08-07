@@ -20,7 +20,7 @@ export default class StandardGameState extends Game {
   constructor (players, level) {
     super(players)
     this.deck = new DeckFactory().standardDeck(level.id)
-    this.scoreLimit = 200
+    this.scoreLimit = 20
     this.refreshHands()
   }
 
@@ -87,16 +87,22 @@ export default class StandardGameState extends Game {
 
     // Break ties with highes normal score and then by comparing bonuse types
     winners = this.highestScoringPlayers(winners)
+    console.log(winners)
     for (const type of TIE_BREAK_TYPES) {
       winners = this.tieBreak(winners, bonuses, type)
+      console.log(winners)
     }
     return winners
   }
 
   tieBreak (players, bonuses, bonusType) {
-    const scores = players.map(p => bonuses[p.id][bonusType])
-    const highest = Math.max(...scores)
-    return players.filter(p => scores[p.id] === highest)
+    const scores = players.reduce((acc, p) => {
+      acc[p.id] = bonuses[p.id][bonusType]
+      acc.max = Math.max(acc.max, acc[p.id])
+      return acc
+    }, {max: -100000})
+
+    return players.filter(p => bonuses[p.id][bonusType] === scores.max)
   }
 }
 
