@@ -45,6 +45,16 @@ const special = [
   ...malware.filter(m => m !== "VIRUS"),
 ]
 
+// Cards that can be played on a stack (when it has a base)
+const onStack = [
+  'REPEAT', 'VARIABLE', 'VIRUS'
+]
+
+// Cards that can be played on the method stack
+const onMethod = [
+  'INSTRUCTION'
+]
+
 // Returns a function to find if a card type is in the given typeList
 function _isType (typeList) {
   return type => typeList.find(t => t === type) !== undefined
@@ -61,6 +71,8 @@ const isNegativeEffect = _isType(negativeEffects)
 const isPositiveEffect = _isType(positiveEffects)
 const isSpecial = _isType(special)
 const isBase = _isType(base)
+const canPlayOnStack = _isType(onStack)
+const canPlayOnMethod = _isType(onMethod)
 
 export {
   isMalware,
@@ -71,5 +83,7 @@ export {
   isNegativeEffect,
   isPositiveEffect,
   isSpecial,
-  isBase
+  isBase,
+  canPlayOnStack,
+  canPlayOnMethod
 }

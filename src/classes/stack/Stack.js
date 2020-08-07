@@ -1,3 +1,5 @@
+import { isBase, canPlayOnStack } from '@/classes/card/cardData'
+
 // The maximum number of repeats allowed in a stack
 const MAX_REPEATS = 2
 
@@ -8,25 +10,9 @@ export default class Stack {
     this.isMethod = false
     if (baseCard) { this.addCard(baseCard) }
   }
-
+  
   addCard (card) {
     this.cards.push(card)
-  }
-
-  /**
-   * Calculates the stack's score.
-   * @return {int} the stack's total score.
-   */
-  getScore () {
-    let score = this.cards.length === 0 ? 0 : this.getBase().getValue()
-    for (let i = 1; i < this.cards.length; i++) {
-      if (this.cards[i].type === "VIRUS") {
-        score *= this.getBase().type === "METHOD" ? 0.5 : 0
-      } else {
-        score *= this.cards[i].getValue()
-      }
-    }
-    return Math.floor(score)
   }
 
   /**
@@ -49,22 +35,33 @@ export default class Stack {
     return this.cards.pop()
   }
 
-  /**
-   * Checks if the stack has the maximum allowed number of repeats.
-   * @return {bool} true if the max repeats has been reached, false otherwise.
-   */
-  hasMaxRepeats () {
-    let numRepeats = this.cards.reduce((acc, card) => {
-      return card.type === 'REPEAT' ? acc + 1 : acc
-    }, 0)
-    return numRepeats >= MAX_REPEATS
+  topIsRx () {
+    return this._isRx(this.getTop())
   }
 
   /**
    * Returns true if the stack has at least one variable card.
    */
   hasVariable () {
-    return this.cards.filter(c => c.type === "VARIABLE").length
+    return this.cards.filter(c => c.type === "VARIABLE").length > 0
+  }
+
+
+  /**
+   * Calculates the stack's score.
+   * @return {int} the stack's total score.
+   */
+  getScore () {
+    const score = this.cards.map(c => {
+      if (c.type === 'VIRUS' && this.getBase().type === 'METHOD') {
+        return 0.5
+      }
+      return c.getValue()
+    }).reduce((acc, scr) => {
+      return acc * scr
+    }, this.cards.length ? 1 : 0)
+
+    return Math.floor(score)
   }
 
   /**
@@ -73,30 +70,17 @@ export default class Stack {
    * @param card The variable card to replace with.
    */
   replaceLowestVar (card) {
-    // find the index and values of all variable cards
-    let vars = []
-    for (let idx in this.cards) {
-      if (this.cards[idx].type === "VARIABLE") {
-        vars.push({idx: idx, val: this.cards[idx].getValue()})
-      }
-    }
+    const vars = this.cards.filter(c => c.type === 'VARIABLE')
+    vars.push(card)
+    vars.sort((a,b) => { return a.getValue() - b.getValue() })
 
-    // If there are no variable cards just return the given card
-    if (vars.length === 0 || card.type !== "VARIABLE") {
-      return card
+    if (vars[0].getValue() < card.getValue()) {
+      const replace = vars[0]
+      const idx = this.cards.indexOf(replace)
+      this.cards[idx] = card
+      return replace
     }
-
-    // Find the min variable and replace it with the given card
-    let min = vars[0]
-    for (let v of vars) {
-      if (v.val < min.val) {
-        min = v
-      }
-    }
-
-    let replaced = this.cards[min.idx]
-    this.cards[min.idx] = card
-    return replaced 
+    return card
   }
 
   /**
@@ -105,30 +89,17 @@ export default class Stack {
    * @return {bool} true if the card can be added to the top, false otherwise.
    */
   willAccept (card) {
-    let top = this.getTop()
-    // stacks with virus on top cannot be played on, but otherwise always accept virus
-    if (top.type === "VIRUS") {
+    if (this.cards.length === 0) {
+      return isBase(card.type)
+    } else if (this.getTop().type === 'VIRUS') {
       return false
-    } else if (card.type === "VIRUS") {
-      return true
+    } else if (card.type === "VARIABLE") {
+      return this._willAcceptVar(card)
+    } else if (card.type === "REPEAT") {
+      return !this.topIsRx() && !this._hasMaxRepeats()
+    } else {
+      return canPlayOnStack(card.type)
     }
-    // Variable cards can only go on Rx cards or replace other variables
-    if (card.type === "VARIABLE") {
-      if (this.topIsRx()) {
-        return true
-      } else {
-        let vars = this.cards.filter(c => c.type === "VARIABLE")
-        let minVar = vars.reduce((acc, c) => {
-          return c.getValue() < acc ? c.getValue() : acc
-        }, 9999)
-        return minVar < card.getValue()
-      }
-    // Repeat cards can't be used if the top is Rx or there are alredy 2 repeats
-    } else if (card.type === "REPEAT" && !this.hasMaxRepeats()) {
-      return !this.topIsRx()
-    }
-    // Only variable and repeat cards can be put on a non-empty stack
-    return false
   }
 
   /**
@@ -137,34 +108,40 @@ export default class Stack {
    * where if a repeat card is an Rx it must be matched to a variable.
    */
   isComplete () {
-    if (this.getTop().type === 'VIRUS') {
+    if (this.cards.length === 0 || this.getTop().type === 'VIRUS'
+        || !this._hasMaxRepeats()) {
       return false
     }
-    // Checks to make sure there are no unpaired Rx cards
-    for (let idx in this.cards) {
-      let card = this.cards[idx]
-      if (this._isRx(card)) {
-        if (this.getTop() === card) {
-          return false
-        } 
-      }
-    }
-    // if max repeats then it is complete
-    return this.hasMaxRepeats()
+
+    // If we have max repeats make sure are all Rx cards paired with a Var
+    const numRx = this.cards.filter(c => this._isRx(c)).length
+    const numVar = this.cards.filter(c => c.type === 'VARIABLE').length
+    return numRx === numVar
   }
 
-  willReplace (card) {
-    if (this.getTop() && this.topIsRx()) {
-      return false
+  _willAcceptVar (card) {
+    if (this.topIsRx()) {
+      return true
     }
-    return card.type === "VARIABLE" && this.hasVariable()
-  }
 
-  topIsRx () {
-    return this._isRx(this.getTop())
+    const vars = this.cards.filter(c => c.type === 'VARIABLE')
+    vars.push(card)
+    vars.sort((a,b) => { return a.getValue() - b.getValue() })
+    return vars[0].getValue() < card.getValue()
   }
 
   _isRx (card) {
     return card.type === "REPEAT" && card.getValue() === 1
+  }
+
+  /**
+   * Checks if the stack has the maximum allowed number of repeats.
+   * @return {bool} true if the max repeats has been reached, false otherwise.
+   */
+  _hasMaxRepeats () {
+    let numRepeats = this.cards.reduce((acc, card) => {
+      return card.type === 'REPEAT' ? acc + 1 : acc
+    }, 0)
+    return numRepeats >= MAX_REPEATS
   }
 }
