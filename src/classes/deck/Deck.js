@@ -4,7 +4,7 @@ export default class Deck {
   constructor (cardTypes) {
     this.cards = []
     this.discardPile = []
-    this._addCards(cardTypes)
+    this._addCardTypes(cardTypes)
     this.shuffle()
   }
 
@@ -42,6 +42,7 @@ export default class Deck {
   }
 
   refresh () {
+    this._shuffleCards(this.discardPile)
     this.cards = this.cards.concat(this.discardPile)
     this.discardPile = []
   }
@@ -64,7 +65,7 @@ export default class Deck {
     }
   }
 
-  _addCards (cardTypes) {
+  _addCardTypes (cardTypes) {
     const fact = new CardFactory()
     for (const {type, val, num} of cardTypes) {
       for (let i = 0; i < num; i++) {

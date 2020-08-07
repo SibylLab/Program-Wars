@@ -1,4 +1,3 @@
-import EffectFactory from '@/classes/statusEffect/EffectFactory'
 import * as cardData from '@/classes/card/cardData'
 
 export default class StatusEffects {
