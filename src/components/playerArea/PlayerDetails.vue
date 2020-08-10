@@ -46,30 +46,30 @@ export default {
 <style scoped>
 #player-details {
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 100%;
   height: 100%;
 }
 
 .player-info {
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 55%;
   height: 100%;
 }
 
 .name {
   position: absolute;
-  top: 0px;
+  top: 0;
   color: black;
 }
 
 .avatar {
   position: absolute;
   bottom: 0;
-  height: 66%;
-  border: solid black 3px;
-  border-radius: 5px;
+  height: 72%;
+  border: solid black 0.3rem;
+  border-radius: 1rem;
 }
 
 .player-access {
@@ -88,8 +88,8 @@ export default {
 }
 
 .active {
-  -webkit-box-shadow: 0 0 10px 10px rgba(0,255,0,1);
-  -moz-box-shadow: 0 0 10px 10px rgba(0,255,0,1);
-  box-shadow: 0 0 10px 10px rgba(0,255,0,1);
+  -webkit-box-shadow: 0 0 1.2rem 0.7rem rgba(0,255,0,1);
+  -moz-box-shadow: 0 0 1.2rem 0.7rem rgba(0,255,0,1);
+  box-shadow: 0 0 1.2rem 0.7rem rgba(0,255,0,1);
 }
 </style>

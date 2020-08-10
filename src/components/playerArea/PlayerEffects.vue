@@ -79,9 +79,9 @@ export default {
 .effect {
   display: inline-block;
   position: relative;
-  width: 30px;
-  height: 30px;
-  margin: 5px;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.1rem;
 }
 
 .effect-icon {
@@ -91,20 +91,20 @@ export default {
 
 .turns {
   position: absolute;
-  font-size: 22px;
+  font-size: 1.3rem;
   top: -20%;
   right: -17%;
-  height: 27px;
+  height: 1.6rem;
   background-color: blue;
   color: white;
   padding: 0 0 0 0;
 }
 
 .left {
-  left: 0px;
+  left: 0;
 }
 
 .right {
-  right: 0px;
+  right: 0;
 }
 </style>

@@ -58,8 +58,8 @@ export default {
 }
 
 #info-button {
-  width: 20px;
-  height: 20px;
+  width: 1.3rem;
+  height: 1.3rem;
 }
 
 #info-popup {
@@ -76,16 +76,16 @@ export default {
   left: 25%;
   top: 7%;
   width: 50%;
-  min-width: 400px;
+  min-width: 45rem;
   max-height: 85%;
   overflow: auto;
-  border: ridge grey 5px;
-  border-radius: 10px;
+  border: ridge grey 0.5rem;
+  border-radius: 1rem;
   background-color: white;
   color: black;
-  padding: 10px;
+  padding: 1rem;
+  font-size: 1.2rem;
   text-align: left;
-  font-size: 20px;
   z-index: 1200;
 }
 
@@ -97,6 +97,6 @@ export default {
 
 .action {
   display: inline-block;
-  margin: 5px;
+  margin: 0.5rem;
 }
 </style>

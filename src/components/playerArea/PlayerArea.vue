@@ -62,7 +62,7 @@ export default {
 
 #details {
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 100%;
   height: 40%;
 }

@@ -43,10 +43,10 @@ export default {
 
 .score-meter {
   width: 80%;
-  height: 1em;
+  height: 1rem;
 }
 
 .score-meter::-webkit-meter-bar {
-  height: 1.5em;
+  height: 1rem;
 }
 </style>

@@ -97,23 +97,20 @@ export default {
 #two-player-game {
   position: absolute;
   top: 0;
-  width: 100%;
-  height: 100%;
-  min-width: 1350px;
-  min-height: 750px;
-  font-family: monospace;
+  width: 100vw;
+  height: 100vh;
 }
 
 .player {
   position: absolute;
-  top: 40px;
+  top: 5%;
   width: 25%;
   height: 45%;
 }
 
 .hand-area {
   position: absolute;
-  top: 40px;
+  top: 5%;
   left: 25%;
   width: 50%;
   height: 45%;
