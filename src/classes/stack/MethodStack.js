@@ -2,7 +2,8 @@ import Stack from '@/classes/stack/Stack'
 
 
 // The maximum score allowed for a method
-const METHOD_LIMIT = 9
+const SCORE_LIMIT = 9
+const CARD_LIMIT = 6
 
 
 /**
@@ -32,16 +33,17 @@ export default class MethodStack extends Stack {
   // only instruction cards that adding will keep below or at the limit
   willAccept (card) {
     const total = card.getValue() + this.getScore()
-    return card.type === 'INSTRUCTION' && total <= METHOD_LIMIT + this.adjustment
+    return card.type === 'INSTRUCTION' && total <= SCORE_LIMIT + this.adjustment
+        && this.cards.length < CARD_LIMIT
   }
 
   // is the method up to the limit yet
   isComplete () {
-    return this.getScore() >= METHOD_LIMIT
+    return this.getScore() >= SCORE_LIMIT
   }
 
   toLimit () {
-    return METHOD_LIMIT - this.getScore()
+    return SCORE_LIMIT - this.getScore()
   }
 }
 

@@ -119,6 +119,8 @@ export default {
           card: card, cardOwner: owner,
           stack: this.stack
         })
+      } else if (this.stack.isMethod) {
+        event.stopPropagation();
       }
     },
     refresh () {
