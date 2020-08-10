@@ -2,7 +2,7 @@ import Card from '@/classes/card/Card'
 
 export default class Search extends Card {
   constructor (deck) {
-    super(0, 'SEARCH', deck, Card.imgPath('search'))
+    super(10, 'SEARCH', deck, Card.imgPath('search'))
   }
 
   play ({ player, chosenCard, deck }) {

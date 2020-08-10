@@ -35,8 +35,8 @@ export default {
   computed: {
     ...mapGetters(['game']),
     deckCards () {
-      // don't allow searching for search cards
-      return this.deck.cards.filter(c => c.type !== 'SEARCH')
+      const cards = this.deck.cards.filter(c => c.type !== 'SEARCH')
+      return cards.slice(0, this.card.value)
     }
   },
   methods: {
