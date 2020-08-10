@@ -1,32 +1,32 @@
 import Stack from '@/classes/stack/Stack'
 
-// Some fake data
-const player = { name: 'player' }
-const baseI2 = { type: 'INSTRUCTION', getValue: () => { return 2 } }
-const baseM2 = { type: 'METHOD', getValue: () => { return 2 } }
-const R2 = { type: 'REPEAT', getValue: () => { return 2 } }
-const R3 = { type: 'REPEAT', getValue: () => { return 3 } }
-const Rx = { type: 'REPEAT', getValue: () => { return 1 } }
-const V3 = { type: 'VARIABLE', getValue: () => { return 3 } }
-const V4 = { type: 'VARIABLE', getValue: () => { return 4 } }
-const V5 = { type: 'VARIABLE', getValue: () => { return 5 } }
-const VIRUS = { type: 'VIRUS', getValue: () => { return 0 } }
-
 describe('Stack class', () => {
+  // fake data
+  const player = { name: 'player' }
+  const baseI2 = { type: 'INSTRUCTION', getValue: () => { return 2 } }
+  const baseM2 = { type: 'METHOD', getValue: () => { return 2 } }
+  const R2 = { type: 'REPEAT', getValue: () => { return 2 } }
+  const R3 = { type: 'REPEAT', getValue: () => { return 3 } }
+  const Rx = { type: 'REPEAT', getValue: () => { return 1 } }
+  const V3 = { type: 'VARIABLE', getValue: () => { return 3 } }
+  const V4 = { type: 'VARIABLE', getValue: () => { return 4 } }
+  const V5 = { type: 'VARIABLE', getValue: () => { return 5 } }
+  const VIRUS = { type: 'VIRUS', getValue: () => { return 0 } }
+
   describe('constructor, getBase, and getTop', () => {
-    test('create a new stack with a given base card', () => {
+    test('creating a new stack with a given base card', () => {
       const stack = new Stack(baseI2, player)
       expect(stack.getBase()).toBe(baseI2)
       expect(stack.getTop()).toBe(baseI2)
     })
 
-    test('create a new stack with no base card', () => {
+    test('creating a new stack with no base card', () => {
       const stack = new Stack(null, player)
       expect(stack.getTop()).toBeUndefined()
     })
   })
 
-  test('pop the top card from the stack', () => {
+  test('popping the top card from the stack', () => {
     const stack = new Stack(baseI2, player)
     expect(stack.popTop()).toBe(baseI2)
     expect(stack.cards).toHaveLength(0)
@@ -43,7 +43,7 @@ describe('Stack class', () => {
       expect(stack.topIsRx()).toBeFalsy()
     })
 
-    test('no, card is not even repeat', () => {
+    test('no, card is repeat', () => {
       const stack = new Stack(V3, player)
       expect(stack.topIsRx()).toBeFalsy()
     })
@@ -100,7 +100,7 @@ describe('Stack class', () => {
   })
 
   describe('replaceLowestVar', () => {
-    test('with a single lower variable', () => {
+    test('when there is a lower variable in the stack', () => {
       const stack = new Stack(baseI2, player)
       stack.addCard(Rx)
       stack.addCard(V3)
@@ -111,7 +111,7 @@ describe('Stack class', () => {
       expect(stack.cards).toHaveLength(3)
     })
 
-    test('with two variables, nested one lower, top one higher', () => {
+    test('when there are 2 Variables and the lower one is burried', () => {
       const stack = new Stack(baseI2, player)
       stack.addCard(Rx)
       stack.addCard(V3)
@@ -125,7 +125,7 @@ describe('Stack class', () => {
       expect(stack.cards).toHaveLength(5)
     })
 
-    test('with a single higher variable', () => {
+    test('when there is a higher variable in the stack', () => {
       const stack = new Stack(baseI2, player)
       stack.addCard(Rx)
       stack.addCard(V5)
@@ -136,7 +136,7 @@ describe('Stack class', () => {
       expect(stack.cards).toHaveLength(3)
     })
 
-    test('when there is no variable to replace', () => {
+    test('when there is no variable in the stack', () => {
       const stack = new Stack(baseI2, player)
 
       const replaced = stack.replaceLowestVar(V4)

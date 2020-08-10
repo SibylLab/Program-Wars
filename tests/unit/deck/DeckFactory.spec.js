@@ -18,6 +18,7 @@ describe('DeckFactory', () => {
       const fact = new DeckFactory()
       
       const deck = fact.beginnerDeck('hack1')
+      expect(deck).toBeDefined()  // it will be a mock, but it should still be there
       expect(Deck).toBeCalledTimes(1)
       expect(Deck).toBeCalledWith(cardTypes)
     })
@@ -29,6 +30,7 @@ describe('DeckFactory', () => {
       const fact = new DeckFactory()
       
       const deck = fact.beginnerDeck('invalid-type')
+      expect(deck).toBeDefined()
       expect(Deck).toBeCalledTimes(1)
       expect(Deck).toBeCalledWith(cardTypes)
       
@@ -43,6 +45,7 @@ describe('DeckFactory', () => {
       const fact = new DeckFactory()
       
       const deck = fact.standardDeck('stdCombined1')
+      expect(deck).toBeDefined()
       expect(Deck).toBeCalledTimes(1)
       expect(Deck).toBeCalledWith(cardTypes)
     })
@@ -54,9 +57,9 @@ describe('DeckFactory', () => {
       const fact = new DeckFactory()
       
       const deck = fact.standardDeck('invalid-type')
+      expect(deck).toBeDefined()
       expect(Deck).toBeCalledTimes(1)
       expect(Deck).toBeCalledWith(cardTypes)
-      
     })
   })
 })

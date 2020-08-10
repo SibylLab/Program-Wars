@@ -7,8 +7,8 @@ function makeType (type, val, num) {
 // Begginer Decks ////////////////////////////////////////////////////////////
 
 const beginnerBase = [
-  makeType('INSTRUCTION', 1, 6),
-  makeType('INSTRUCTION', 2, 12),
+  makeType('INSTRUCTION', 1, 8),
+  makeType('INSTRUCTION', 2, 14),
   makeType('INSTRUCTION', 3, 6),
   makeType('REPEAT', 1, 5),
   makeType('REPEAT', 2, 5),

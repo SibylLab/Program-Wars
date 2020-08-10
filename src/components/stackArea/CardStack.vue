@@ -77,7 +77,7 @@ export default {
         if (card.type === 'VIRUS') {
           return this.willAcceptVirus
         }
-        return true
+        return this.ownedByCurrentPlayer
       }
       return false
     },

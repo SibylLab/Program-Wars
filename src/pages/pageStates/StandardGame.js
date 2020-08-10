@@ -20,7 +20,7 @@ export default class StandardGameState extends Game {
   constructor (players, level) {
     super(players)
     this.deck = new DeckFactory().standardDeck(level.id)
-    this.scoreLimit = 20
+    this.scoreLimit = 200
     this.refreshHands()
   }
 
@@ -87,10 +87,8 @@ export default class StandardGameState extends Game {
 
     // Break ties with highes normal score and then by comparing bonuse types
     winners = this.highestScoringPlayers(winners)
-    console.log(winners)
     for (const type of TIE_BREAK_TYPES) {
       winners = this.tieBreak(winners, bonuses, type)
-      console.log(winners)
     }
     return winners
   }
