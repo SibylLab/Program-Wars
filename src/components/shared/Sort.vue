@@ -52,6 +52,7 @@ export default {
     onDrop (event, card) {
       const droppedId = event.dataTransfer.getData('cardId')
       const dropped = this.sortedCards.find(c => c.id === droppedId)
+      event.preventDefault()
 
       const idx = this.sortedCards.indexOf(card)
       this.sortedCards = this.sortedCards.filter(c => c !== dropped)
@@ -74,7 +75,7 @@ export default {
   position: absolute;
   top: 25%;
   left: 20%;
-  width: 60%;
+  width: 50%;
   height: 40%;
   border: ridge grey 4px;
   border-radius: 20px;

@@ -56,6 +56,7 @@ export default {
       const owner = this.game.getPlayer(id)
       const cardId = event.dataTransfer.getData('cardId')
       const card = owner.hand.getCardById(cardId)
+      event.preventDefault()
 
       if (this.isCurrentPlayer && isBase(card.type)) {
         event.stopPropagation();
