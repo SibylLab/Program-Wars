@@ -34,11 +34,11 @@ export default {
   computed: {
     ...mapGetters(['game']),
     /**
-     * Returns the last 10 plays that were made.
+     * Returns the last 8 plays that were made.
      */
     history () {
       const end = this.game.turnHistory.length
-      const start = end < 10 ? 0 : Math.abs(end - 10)
+      const start = end < 8 ? 0 : Math.abs(end - 8)
       return this.game.turnHistory.slice(start, end).reverse()
     }
   },

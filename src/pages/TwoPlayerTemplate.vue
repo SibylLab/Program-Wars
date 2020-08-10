@@ -1,7 +1,8 @@
 <template>
 <div id="two-player-game" v-if="inGame">
   <slot name="modals">
-    <winner-modal id="winner-modal" class="modal fade"/>
+    <winner-modal id="winner-modal" class="modal fade"
+      data-backdrop='static' data-keyboard='false'/>
   </slot>
 
   <slot name="page-header">
