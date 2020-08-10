@@ -57,7 +57,7 @@ export default {
                   val: this.bonuses.safety})
       conds.push({if: "nested_loop_made", reward: "+5 pts/stack",
                   val: this.bonuses.nested})
-      conds.push({if: "antivirus && firewall", reward: "+10 pts",
+      conds.push({if: "antivirus || firewall", reward: "+10 pts",
                   val: this.bonuses.defensive})
       conds.push({if: "no_malware && no_hacks", reward: "+10 pts",
                   val: this.bonuses.clean})

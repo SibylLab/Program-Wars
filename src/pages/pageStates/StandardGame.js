@@ -1,5 +1,5 @@
 import DeckFactory from '@/classes/deck/DeckFactory'
-import { isSafety } from '@/classes/card/cardData'
+import { isSafety, isNegativeEffect } from '@/classes/card/cardData'
 import Game from '@/pages/pageStates/Game'
 
 // Side objective bonuses
@@ -53,15 +53,18 @@ export default class StandardGameState extends Game {
   }
 
   getCleanBonus (player) {
-    const noNegativeEffects = player.effects.negative.length === 0
+    const negatives = player.effects.negative.filter(e => isNegativeEffect(e.type))
+
+    const noNegativeEffects = negatives.length === 0
     const noViruses = player.playField.getStacksWithVirus().length === 0
     const noMimics = player.hand.getMimics().length === 0
+
     return noNegativeEffects && noViruses && noMimics ? CLEAN_BONUS : 0
   }
 
   getDefensiveBonus (player) {
     let defensive = 0
-    if (player.helpedBy('ANTIVIRUS') && player.helpedBy('FIREWALL')) {
+    if (player.helpedBy('ANTIVIRUS') || player.helpedBy('FIREWALL')) {
       defensive = DEFENSIVE_BONUS
     }
     return defensive

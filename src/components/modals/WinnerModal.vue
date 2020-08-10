@@ -49,7 +49,7 @@
               <td v-for="player in players" :key="player.id">
                 {{ bonuses[player.id].defensive }} </td>
             </tr>
-            <tr> <th>Clean System (No Malware)</th>
+            <tr> <th>Clean System</th>
               <td v-for="player in players" :key="player.id">
                 {{ bonuses[player.id].clean }} </td>
             </tr>
