@@ -122,57 +122,54 @@ export default {
 <style scoped>
 #turn-history {
   position: relative;
-  left: 0px;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: #333333;
-  border: ridge grey 8px;
-  border-radius: 6px;
+  border: ridge grey 0.3rem;
+  border-radius: 0.5rem;
   color: #fff;
-  font-size: 18px;
   text-align: left;
-  line-height: 22px;
-  padding: 5px;
   overflow: hidden;
 }
 
 #play-image {
-  width: 50px;
-  height: 50px;
-  border: solid white 1px;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: solid white 0.05rem;
 }
 
 #player-image {
   position: absolute;
-  left: 35px;
-  top: 1px;
-  width: 27px;
-  height: 27px;
-  border: solid black 2px;
+  left: 2.2rem;
+  top: 0.1rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  border: solid black 0.05rem;
 }
 
 #target-image {
   position: absolute;
-  left: 38px;
-  top: 29px;
-  width: 20px;
-  height: 20px;
-  border: solid black 2px;
+  left: 2.35rem;
+  top: 1.85rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: solid black 0.05rem;
 }
 
 #effect-icon {
   position: absolute;
-  top: 27px;
-  left: -3px;
-  width: 20px;
-  height: 20px;
-  border: solid darkgrey 1px;
+  top: 2.35rem;
+  left: -0.3rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: solid darkgrey 0.05rem;
 }
 
 #info {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 0.2rem;
+  right: 0.2rem;
 }
 
 ul {
@@ -185,7 +182,7 @@ li {
   position: relative;
   display: inline-block;
   text-align: left;
-  margin: 3px 10px;
+  margin: 0.6rem;
 }
 </style>
 

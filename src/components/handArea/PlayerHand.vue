@@ -105,24 +105,22 @@ export default {
 <style scoped>
 #discard-button {
   position: absolute;
-  left: -8px;
-  top: -8px;
-  width: 25px;
-  height: 25px; 
+  left: -0.5rem;
+  top: -0.5rem;
+  width: 1.6rem;
+  height: 1.6rem; 
 }
 
 .player-card {
   position: relative;
   display: inline-block;
-  margin: 0.5em;
-  max-width: 90px;
-  max-height: 134px;
+  margin: 0 0.5rem;
 }
 
 .card {
   border: none;
-  max-width: 90px;
-  max-height: 134px;
+  height: 8rem;
+  width: auto;
 }
 
 .overlay {
@@ -133,14 +131,14 @@ export default {
 }
 
 .play {
-  -webkit-box-shadow: 0 0 10px 10px rgba(0,255,0,1);
-  -moz-box-shadow: 0 0 10px 10px rgba(0,255,0,1);
-  box-shadow: 0 0 10px 10px rgba(0,255,0,1);
+  -webkit-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  -moz-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
 }
 
 .no-play {
-  -webkit-box-shadow: 0 0 15px 10px rgba(255,0,0,1);
-  -moz-box-shadow: 0 0 15px 10px rgba(255,0,0,1);
-  box-shadow: 0 0 15px 10px rgba(255,0,0,1);
+  -webkit-box-shadow: 0 0 1rem 0.7rem rgba(255,0,0,1);
+  -moz-box-shadow: 0 0 1rem 0.7rem rgba(255,0,0,1);
+  box-shadow: 0 0 1rem 0.7rem rgba(255,0,0,1);
 }
 </style>

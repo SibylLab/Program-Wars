@@ -120,8 +120,8 @@ export default {
 }
 
 .my-btn {
-  border-radius: 4em;
-  margin-top: 0.5em;
-  margin-right: 0.5em;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
 }
 </style>

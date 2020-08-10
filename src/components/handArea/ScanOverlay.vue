@@ -67,8 +67,8 @@ export default {
 #scan-overlay {
   position: absolute;
   width: 100%;
-  border: solid black 2px;
-  border-radius: 5px;
+  border: solid black 0.1rem;
+  border-radius: 0.5rem;
   background-color: white;
   z-index: 100;
 }
@@ -76,7 +76,7 @@ export default {
 .my-btn {
   display: block;
   width: 96%;
-  margin: 2% 2%;
+  margin: 2%;
 }
 
 h5 {
