@@ -89,7 +89,7 @@ export default {
 
 <style scoped>
 #add-players {
-  margin: 2vh 2vw;
+  margin: 0.5rem 1rem;
 }
 
 #player-list {
@@ -110,7 +110,7 @@ export default {
 }
 
 .section {
-  margin: 1vh 2vw;
+  margin: 0.5rem 1rem;
 }
 
 .tag {
@@ -125,6 +125,6 @@ export default {
 }
 
 .btn {
-  margin-left: 1vw;
+  margin-left: 1rem;
 }
 </style>

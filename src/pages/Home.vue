@@ -73,24 +73,24 @@ export default {
 
 #game-setup {
   position: absolute;
-  top: 10vh;
-  width: 55vw;
+  top: 10%;
+  width: 55%;
   min-width: 52rem;
-  height: 72vh;
-  min-height: 33rem;
+  height: 67%;
+  min-height: 30rem;
   background-color: white;
   border-radius: 2rem;
 }
 
 #message {
   position: absolute;
-  bottom: 9vh;
+  bottom: 13%;
   color: red;
 }
 
 #go {
   position: absolute;
-  bottom: 2vh;
+  bottom: 2%;
 }
 
 .centered {
