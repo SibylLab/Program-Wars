@@ -7,7 +7,7 @@
 
   <!-- Side menu using a sidenav -->
   <input type='image'  src='static/miscIcons/burgerIcon.png'
-      v-on:click="openMenu()" style="width: 36px; height: 36px;">
+      v-on:click="openMenu()" style="width: 100%; height: 100%;">
   <div id="mySidenav" class="sidenav">
     <a class="closebtn menu-item" v-on:click="closeMenu()"> &times; </a>
     <a class="menu-item" v-if="inGame" v-on:click="leaveGame()"> New Game </a>
@@ -48,11 +48,11 @@ export default {
     ...mapActions(['leaveGame']),
     openMenu () {
       this.showMenu = true
-      $('.sidenav').width('250px')
+      $('.sidenav').width('20%')
     },
     closeMenu () {
       this.showMenu = false
-      $('.sidenav').width('0px')
+      $('.sidenav').width('0')
     }
   },
   mounted () {
@@ -72,24 +72,22 @@ export default {
 <style scoped>
 .sidenav {
   height: 100%;
-  width: 0px;
+  width: 0;
   position: fixed;
   top: 0;
   background-color: #111;
   overflow-x: hidden;
-  padding-top: 60px;
+  padding-top: 4%;
   transition: 0.5s;
   right: 0;
   z-index: 500;
 }
 
 .sidenav a {
-  padding: 0px 8px 8px 32px;
+  font-size: 2vw;
   text-decoration: none;
-  font-size: 25px;
   color: #818181;
   display: block;
-  transition: 0.3s;
 }
 
 .sidenav a:hover {
@@ -99,9 +97,8 @@ export default {
 .sidenav .closebtn {
   position: absolute;
   top: 0;
-  right: 3px;
-  font-size: 36px;
-  margin-left: 50px;
+  right: 5%;
+  font-size: 3vw;
 }
 
 .menu-item {
