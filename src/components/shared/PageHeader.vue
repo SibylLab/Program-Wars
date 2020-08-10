@@ -50,7 +50,6 @@ export default {
   left: 1%;
   bottom: 0;
   margin: 0;
-  font-size: 1.75vw;
 }
 
 #heading {
@@ -61,7 +60,6 @@ export default {
   margin: 0;
   margin-left: auto;
   margin-right: auto;
-  font-size: 2vw;
 }
 
 #menu {

@@ -48,7 +48,7 @@ export default {
     ...mapActions(['leaveGame']),
     openMenu () {
       this.showMenu = true
-      $('.sidenav').width('20%')
+      $('.sidenav').width('20rem')
     },
     closeMenu () {
       this.showMenu = false
@@ -71,34 +71,34 @@ export default {
 
 <style scoped>
 .sidenav {
-  height: 100%;
-  width: 0;
   position: fixed;
   top: 0;
-  background-color: #111;
+  right: 0;
+  height: 100%;
+  width: 0;
   overflow-x: hidden;
   padding-top: 4%;
+  background-color: #111;
   transition: 0.5s;
-  right: 0;
   z-index: 500;
 }
 
 .sidenav a {
-  font-size: 2vw;
+  font-size: 2rem;
   text-decoration: none;
-  color: #818181;
+  color: #fff;
   display: block;
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #0077ff;
 }
 
 .sidenav .closebtn {
   position: absolute;
   top: 0;
   right: 5%;
-  font-size: 3vw;
+  font-size: 2.5rem;
 }
 
 .menu-item {
