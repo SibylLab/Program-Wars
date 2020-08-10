@@ -68,7 +68,7 @@ export default {
   left: 0%;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 1100;
 }
 
 .container {
@@ -86,13 +86,13 @@ export default {
   padding: 10px;
   text-align: left;
   font-size: 20px;
-  z-index: 1000;
+  z-index: 1200;
 }
 
 .backdrop {
   width: 100%;
   height: 100%;
-  background: rgba(50, 50, 50, 0.4);
+  background: rgba(50, 50, 50, 0.7);
 }
 
 .action {
