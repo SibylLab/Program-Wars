@@ -36,6 +36,7 @@
 
 <script>
 import CardStack from '@/components/stackArea/CardStack'
+import { isNegativeEffect } from '@/classes/card/cardData'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -50,7 +51,7 @@ export default {
       return 'static/cardImages/effects/TROJAN.png'
     },
     attacksEffects () {
-      return this.attacks.effects.filter(e => e.image)
+      return this.attacks.effects.filter(e => e.image && isNegativeEffect(e.type))
     }
   },
   methods: {
@@ -85,20 +86,17 @@ export default {
   top: 10%;
   left: 35%;
   width: 30%;
-  height: 70%;
+  height: auto;
+  max-height: 80%;
+  overflow: auto;
   border: ridge grey 4px;
-  border-radius: 20px;
+  border-radius: 5px;
   background-color: white;
   z-index: 1000;
 }
 
 .content {
-  position: absolute;
-  top: 10%;
-  left: 5%;
-  width: 90%;
-  height: 88%;
-  overflow: auto;
+  margin: 5%;
   text-align: left;
 }
 
