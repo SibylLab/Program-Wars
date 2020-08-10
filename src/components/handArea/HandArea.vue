@@ -1,11 +1,15 @@
 <template>
 <div id="hand-area">
   <slot name="buttons">
-    <button class="btn btn-sm btn-danger" v-on:click="redraw"
-        style="border-radius: 40px; margin-top: 1%;"
+    <button class="btn btn-sm btn-primary my-btn"
+        v-if="canPass" v-on:click="pass"
+        title="Discard your hand and draw 5 new cards">
+      <b>PASS</b>
+    </button>
+    <button class="btn btn-sm btn-danger my-btn" v-on:click="redraw"
         title="Discard your hand and draw 5 new cards"
         :disabled="!canRedraw">
-      <b>{{ redrawText }}</b>
+      <b>REDRAW</b>
       <span v-if="!canRedraw"> (ready in {{ redrawCD }}) </span>
     </button>
   </slot>
@@ -57,12 +61,6 @@ export default {
   },
   computed: {
     ...mapGetters(['game']),
-    redrawText () {
-      if (this.game.currentPlayer().hurtBy('DDOS')) {
-        return 'PASS'
-      }
-      return 'REDRAW'
-    },
     canRedraw () {
       const player = this.game.currentPlayer()
       // on DDoS player can pass so redraw cd does not affect the button
@@ -71,18 +69,25 @@ export default {
     redrawCD () {
       const player = this.game.currentPlayer()
       return player.effects.negative.find(e => e.type === 'REDRAW_CD').turnsLeft
+    },
+    canPass () {
+      const player = this.game.currentPlayer()
+      return player.hurtBy('DDOS') || player.hurtBy('STACK_OVERFLOW')
+        || player.hurtBy('STACK_UNDERFLOW')
     }
   },
   methods: {
     redraw () {
       if (!this.game.currentPlayer().isAI) {
-        if (this.game.currentPlayer().hurtBy('DDOS')) {
-          this.game.takeTurn({
-            type: 'pass', player: this.game.currentPlayer()
-          })
-        }
         this.game.takeTurn({
           type: 'discardHand', player: this.game.currentPlayer()
+        })
+      }
+    },
+    pass () {
+      if (!this.game.currentPlayer().isAI) {
+        this.game.takeTurn({
+          type: 'pass', player: this.game.currentPlayer()
         })
       }
     }
@@ -91,28 +96,32 @@ export default {
 </script>
 
 <style scoped>
-#turn-area {
+#hand-area {
   position: relative;
-  left: 0px;
+  left: 0;
   width: 100%;
   height: 100%;
 }
 
 #info {
-  position: absolute;
-  right: 30%;
-  top: 1.5%;
+  display: inline-block;
 }
 
 #hand {
-  margin-top: 2%;
+  width: 96%;
+  height: 40%;
+  margin: 2%;
 }
 
 #turns {
-  position: absolute;
-  bottom: 17%;
-  left: 10%;
+  display: inline-block;
   width: 80%;
-  height: 80px;
+  height: 25%;
+}
+
+.my-btn {
+  border-radius: 4em;
+  margin-top: 0.5em;
+  margin-right: 0.5em;
 }
 </style>
