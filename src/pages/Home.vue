@@ -66,33 +66,31 @@ export default {
 <style scoped>
 #home-page {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  min-width: 1350px;
-  min-height: 750px;
+  width: 100vw;
+  height: 100vh;
   background-image: linear-gradient(to bottom right, purple, darkblue);
-  font-family: monospace;
-  font-size: 15px;
 }
 
 #game-setup {
   position: absolute;
-  top: 80px;
-  width: 760px;
-  height: 510px;
+  top: 10vh;
+  width: 55vw;
+  min-width: 52rem;
+  height: 72vh;
+  min-height: 33rem;
   background-color: white;
-  border-radius: 30px;
+  border-radius: 2rem;
 }
 
 #message {
   position: absolute;
-  bottom: 75px;
+  bottom: 9vh;
   color: red;
 }
 
 #go {
   position: absolute;
-  bottom: 20px;
+  bottom: 2vh;
 }
 
 .centered {

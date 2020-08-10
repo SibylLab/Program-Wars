@@ -45,7 +45,7 @@ export default {
 
 <style scoped>
 #select-level {
-  margin: 2%;
+  margin: 2vh 2vw;
 }
 
 .sub-heading {
@@ -55,11 +55,11 @@ export default {
 }
 
 .my-drop {
-  margin: 1%;
+  margin: 1vh 1vw;
 }
 
 .describe {
-  margin: 1%;
+  margin: 2vh 1vw;
 }
 </style>
 

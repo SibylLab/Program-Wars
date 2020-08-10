@@ -89,16 +89,17 @@ export default {
 
 <style scoped>
 #add-players {
-  margin: 2%;
+  margin: 2vh 2vw;
 }
 
 #player-list {
   margin: 0 25%;
+  padding: 0;
 }
 
 #enter-name{
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 0.1vh solid black;
   outline: none;
 }
 
@@ -109,7 +110,7 @@ export default {
 }
 
 .section {
-  margin: 15px;
+  margin: 1vh 2vw;
 }
 
 .tag {
@@ -124,6 +125,6 @@ export default {
 }
 
 .btn {
-  margin-left: 10px;
+  margin-left: 1vw;
 }
 </style>
