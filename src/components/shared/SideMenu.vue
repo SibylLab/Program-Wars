@@ -1,9 +1,9 @@
 <template>
 <div>
   <!-- Modals -->
-  <backstory-modal id="backstoryModal" class="modal fade backstory "/>
-  <rules-modal id="rulesModal" class="modal fade rules "/>
-  <credits-modal id="creditsModal" class="modal fade credits"/>
+  <backstory-modal id="backstoryModal" class="modal backstory "/>
+  <rules-modal id="rulesModal" class="modal rules "/>
+  <credits-modal id="creditsModal" class="modal credits"/>
 
   <!-- Side menu using a sidenav -->
   <input type='image'  src='static/miscIcons/burgerIcon.png'
