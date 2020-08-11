@@ -2,7 +2,7 @@
 <div id='sort'>
   <div class="backdrop">
 
-    <div class="container">
+    <div class="popup">
       <h3 style="margin-top: 2%;"> <b>Sort</b> </h3>
 
       <div class="content">
@@ -67,22 +67,20 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
-.container {
+.popup {
   position: absolute;
   top: 25%;
   left: 20%;
   width: 50%;
-  height: 40%;
-  border: ridge grey 4px;
-  border-radius: 20px;
+  height: 43%;
+  border: ridge grey 0.5rem;
+  border-radius: 1rem;
   background-color: white;
   z-index: 1000;
-  min-width: 800px;
-  min-height: 300px;
 }
 
 .title {
@@ -112,5 +110,6 @@ export default {
   display: inline-block;
   height: 80%;
   margin: 2%;
+  border: 0;
 }
 </style>

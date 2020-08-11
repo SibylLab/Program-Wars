@@ -47,7 +47,7 @@ export default {
   display: inline-block;
   padding: 2%;
   margin: 5%;
-  border-radius: 30px;
+  border-radius: 2rem;
   background-color: white;
 }
 

@@ -2,7 +2,7 @@
 <div id='search'>
   <div class="backdrop">
 
-    <div class="container">
+    <div class="popup">
       <h3 class="title"> <b>Search</b> </h3>
 
       <div class="content">
@@ -68,22 +68,21 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
-.container {
+.popup {
   position: absolute;
   top: 25%;
   left: 10%;
   width: 80%;
   height: 40%;
-  border: ridge grey 4px;
-  border-radius: 20px;
+  border: ridge grey 0.5rem;
+  border-radius: 1rem;
   background-color: white;
+  padding: 1rem;
   z-index: 1000;
-  min-width: 1000px;
-  min-height: 300px;
 }
 
 .title {
@@ -112,13 +111,14 @@ export default {
 .card {
   display: inline-block;
   height: 80%;
+  border: 0;
   margin: 2%;
 }
 
 .active {
-  -webkit-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
-  -moz-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
-  box-shadow: 0 0 24px 10px rgba(0,255,0,1);
+  -webkit-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  -moz-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
 }
 </style>
 

@@ -14,7 +14,7 @@ export default {
   data () {
     return {
       showing: false,
-      imagePath: 'static/cardImages/effects/',
+      imagePath: 'static/cardImages/effects/SCAN.png',
       timeout: 1000
     }
   },
@@ -61,10 +61,10 @@ export default {
 }
 
 .highlight {
-  -webkit-box-shadow: 0 0 60px 40px rgba(255,255,0,1);
-  -moz-box-shadow: 0 0 60px 40px rgba(255,255,0,1);
-  box-shadow: 0 0 60px 40px rgba(255,255,0,1);
-  border-radius: 20px;
+  -webkit-box-shadow: 0 0 1rem 3rem rgba(255,255,0,1);
+  -moz-box-shadow: 0 0 1rem 3rem rgba(255,255,0,1);
+  box-shadow: 0 0 1rem 3rem rgba(255,255,0,1);
+  border-radius: 2rem;
 }
 
 </style>

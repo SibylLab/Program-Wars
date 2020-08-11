@@ -51,7 +51,7 @@ export default {
 <style scoped>
 #player-area {
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 60%;
   height: 100%;
 }
@@ -60,28 +60,25 @@ export default {
   position: fixed;
   width: 45%;
   height: 30%;
-  min-width: 650px;
-  min-height: 200px;
-  top: 50px;
+  top: 5%;
   left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
   background-color: #333333;
-  border: solid grey 3px;
-  border-radius: 5px;
+  border: ridge grey 0.5rem;
+  border-radius: 1rem;
   z-index: 200;
 }
 
 .spy-card {
   display: inline;
-  width: 15%;
-  height: auto;
+  height: 8rem;
   margin: 0 2%;
 }
 
 .acs {
-  margin: 2px;
+  margin: 3%;
 }
 
 h3 {

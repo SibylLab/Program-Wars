@@ -2,7 +2,7 @@
 <div id='active-scan'>
   <div class="backdrop">
 
-    <div class="container">
+    <div class="popup">
       <h3 style="margin-top: 2%;"> <b>Active Scan</b> </h3>
 
       <div class="content">
@@ -81,7 +81,7 @@ export default {
   height: 100%;
 }
 
-.container {
+.popup {
   position: absolute;
   top: 10%;
   left: 35%;
@@ -89,8 +89,8 @@ export default {
   height: auto;
   max-height: 80%;
   overflow: auto;
-  border: ridge grey 4px;
-  border-radius: 5px;
+  border: ridge grey 0.5rem;
+  border-radius: 1rem;
   background-color: white;
   z-index: 1000;
 }
@@ -109,13 +109,15 @@ export default {
 .card-stack {
   position: relative;
   display: inline-block;
-  margin-left: 5px;
+  margin-left: 3%;
+  border: 0;
 }
 
 .card {
   display: inline;
   width: 22%;
   margin: 0 5%;
+  border: 0;
 }
 
 .clean {
@@ -134,5 +136,6 @@ export default {
   top: 35%;
   left: 22%;
   width: 10%;
+  border: 0;
 }
 </style>

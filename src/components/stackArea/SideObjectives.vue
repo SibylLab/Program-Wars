@@ -110,7 +110,7 @@ export default {
 
 ul {
   list-style: none;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   padding: 0.5rem;
 }
 
@@ -130,7 +130,7 @@ li {
 
 .have {
   color: lightgreen;
-  text-shadow: 0px 0.1rem 0.2rem green;
+  text-shadow: 0 0.1rem 0.2rem green;
 }
 
 .keyword {
