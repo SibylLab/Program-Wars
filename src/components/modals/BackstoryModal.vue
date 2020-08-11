@@ -1,16 +1,16 @@
 <template>
 <div id="rules-modal" style="color: initial;">
-  <div class="modal-dialog modal-lg" role="document"
+  <div class="modal-dialog" role="document"
       data-backdrop="static" data-keyboard="false">
-    <div class="modal-content" style="border-radius: 30px;">
+    <div class="modal-content my-content">
 
       <div class="modal-header" style="border: none"> 
-        <h3 class="modal-title" style="border-radius: 30px;">
-          In the not too distant future... </h3>
+        <h2 class="modal-title" style="border-radius: 1rem;">
+          In the not too distant future... </h2>
       </div>
 
       <div class="modal-body">
-        <p style="font-size: 20px;">
+        <p style="font-size: 1.3rem;">
           When artificial intelligence surpassed human intelligence,
           it didn’t take long before the robots rose up and enslaved humanity.
           We fought back but we were no match for their coding abilities.
@@ -28,7 +28,7 @@
 
       <div class="modal-footer" style="border: none">
         <button class="btn btn-primary" data-dismiss="modal"
-            style="float: right; margin: 5px;"> Let's go! </button>
+            style="float: right; margin: 1rem;"> Let's go! </button>
       </div>
 
     </div>
@@ -44,3 +44,21 @@ export default {
   name: 'backstory-modal'
 }
 </script>
+
+<style scoped>
+.my-content {
+  position: fixed;
+  width: 60%;
+  top: 5%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 2em;
+}
+
+h2 {
+  padding: 0;
+  margin: 0;
+}
+</style>

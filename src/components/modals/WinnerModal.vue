@@ -1,31 +1,31 @@
 <template>
 <div class="modal-dialog modal-lg" role="document">
-  <div class="modal-content" style="border-radius: 30px">
+  <div class="modal-content my-content">
 
     <div class="modal-body">
       <h3 class="modal-title"><b>Game Over</b></h3>
-      <div style="border: 6px ridge grey; padding: 5px; border-radius: 5px; background-color: royalblue;">
-        <h5 style="color: white; font-size: 30px">{{ winnerText }}</h5>
+      <div style="border: 0.5rem ridge grey; padding: 0.5rem; border-radius: 1rem; background-color: royalblue;">
+        <h3 style="color: white;">{{ winnerText }}</h3>
       </div>
     </div>
 
     <div>
       <table class="table table-condensed" style="width: 90%; margin: auto">
         <thead>
-          <tr style="font-size: 24px"> <th>Players</th>
+          <tr style="font-size: 1.4rem"> <th>Players</th>
             <th v-for="player in players" :key="player.id" style="text-align: center">
               {{ player.name }} </th>
           </tr>
         </thead>
         
-        <tbody style="font-size: 14px;">
+        <tbody style="font-size: 0.9rem;">
           <tr> <th>Score</th>
             <td v-for="player in players" :key="player.id">
               {{ player.getScore() }} </td>
           </tr>
           <tr>
             <td colspan="5" style="text-align: left;">
-              <h5><b>Bonuses</b></h5> </td>
+              <h4><b>Bonuses</b></h4> </td>
           </tr>
           <tr> <th>Repetition Bonus</th>
             <td v-for="player in players" :key="player.id">
@@ -55,8 +55,8 @@
             <td v-for="player in players" :key="player.id">
               {{ bonuses[player.id].method }} </td>
           </tr>
-          <tr> <th style="font-size: 24px;">Final Score</th>
-            <td v-for="player in players" :key="player.id" style="font-size: 20px;">
+          <tr style="font-size: 1.5rem;"> <th>Final Score</th>
+            <td v-for="player in players" :key="player.id">
               {{ player.getScore() + bonuses[player.id].total }} </td>
           </tr>
         </tbody>
@@ -125,16 +125,27 @@ export default {
 
 
 <style scoped>
+.my-content {
+  position: fixed;
+  width: 70%;
+  height: auto;
+  top: 5%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 2rem;
+}
+
 th {
   text-align: left;
-  padding: 8px;
 }
 
-td {
-  padding: 8px;
+td, th {
+  padding: 0.4rem;
 }
 
-h5 {
+h4, h3 {
   padding:0;
   margin: 0;
 }

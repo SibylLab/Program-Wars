@@ -1,20 +1,20 @@
 <template>
 <div>
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" style="border-radius: 30px">
+    <div class="modal-content my-content">
 
       <div class="modal-body">
         <h3 class="modal-title"> <b>Game Over</b> </h3>
 
-        <div style="border: 6px ridge grey; padding: 5px; border-radius: 5px; background-color: royalblue;">
-          <h5 style="color: white; font-size: 30px"> {{ winnerText }} </h5>
+        <div style="border: 0.5rem ridge grey; padding: 0.5rem; border-radius: 1rem; background-color: royalblue;">
+          <h3 style="color: white;"> {{ winnerText }} </h3>
         </div>
       </div>
 
       <div>
         <table class="table table-condensed" style="width: 90%; margin: auto">
           <thead>
-            <tr style="font-size: 24px"> <th>Players</th>
+            <tr style="font-size: 1.4rem"> <th>Players</th>
               <th v-for="player in game.players" :key="player.id" style="text-align: center">
                 {{ player.name }}
               </th>
@@ -22,7 +22,7 @@
           </thead>
           
           <tbody>
-            <tr style="font-size: 24px;"> <th>Final Score</th>
+            <tr style="font-size: 1.6rem;"> <th>Final Score</th>
               <td v-for="player in game.players" :key="player.id">
                 {{ player.getScore() }}
               </td>
@@ -85,11 +85,23 @@ export default {
 
 
 <style scoped>
+.my-content {
+  position: fixed;
+  width: 70%;
+  height: auto;
+  top: 5%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 2rem;
+}
+
 th {
   text-align: left;
 }
 
-h5 {
+h3, h4 {
   padding:0;
   margin: 0;
 }

@@ -1,7 +1,7 @@
 <template>
 <div style="color: initial;">
   <div class="modal-dialog" role="document">
-    <div class="modal-content" style="border-radius: 30px">
+    <div class="modal-content my-content">
 
       <div class="modal-header">
         <h3 class="modal-title"> Credits </h3>
@@ -31,15 +31,13 @@
       </div>
 
       <div class="modal-footer" style="justify-content: left;">
-        <p><b>Current Version: </b>
-          <a href="https://github.com/johnanvik/program-wars/releases/latest"
-              target="_blank">
-            <img src="https://img.shields.io/github/release/johnanvik/program-wars.svg"
-                alt="versionNumber">
-          </a>
-        </p>
+        <a href="https://github.com/johnanvik/program-wars/releases/latest"
+            target="_blank">
+          <img src="https://img.shields.io/github/release/johnanvik/program-wars.svg"
+              alt="versionNumber" class="badge">
+        </a>
         <button type="button" class="btn btn-secondary" data-dismiss="modal"
-            style="position: absolute; right: 20px;">Close</button>
+            style="position: absolute; right: 2rem;">Close</button>
       </div>
 
     </div>
@@ -53,3 +51,27 @@
  */
 export default {}
 </script>
+
+<style scoped>
+.my-content {
+  position: fixed;
+  width: 60%;
+  top: 5%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 2em;
+}
+
+.badge {
+  display: inline;
+  position: relative;
+  left: 2rem;
+  width: 8rem;
+}
+
+.badge:empty {
+  display: inline;
+}
+</style>
