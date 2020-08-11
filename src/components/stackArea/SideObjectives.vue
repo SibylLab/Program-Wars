@@ -88,8 +88,8 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #333333;
-  border: ridge #a0a0a0 8px;
-  border-radius: 6px;
+  border: ridge #a0a0a0 0.5rem;
+  border-radius: 0.5rem;
   overflow: auto;
   text-align: left;
   font-family: monospace;
@@ -97,21 +97,21 @@ export default {
 
 #title-text {
   margin: 0;
-  margin-top: 2px;
-  margin-left: 5px;
+  margin-top: 0.2rem;
+  margin-left: 0.2rem;
   color: #fff;
 }
 
 #info-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0.5rem;
+  right: 0.5rem;
 }
 
 ul {
   list-style: none;
-  padding: 10px 0 0 10px;
-  font-size: 18px;
+  font-size: 1.5rem;
+  padding: 0.5rem;
 }
 
 li {
@@ -130,7 +130,7 @@ li {
 
 .have {
   color: lightgreen;
-  text-shadow: 0px 2px 6px green;
+  text-shadow: 0px 0.1rem 0.2rem green;
 }
 
 .keyword {

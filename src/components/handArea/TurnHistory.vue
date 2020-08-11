@@ -159,8 +159,8 @@ export default {
 
 #effect-icon {
   position: absolute;
-  top: 2.35rem;
-  left: -0.3rem;
+  top: 1.85rem;
+  left: -0.2rem;
   width: 1.2rem;
   height: 1.2rem;
   border: solid darkgrey 0.05rem;

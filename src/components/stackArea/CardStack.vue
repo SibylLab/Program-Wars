@@ -3,7 +3,7 @@
     @dragover.prevent @dragenter.prevent>
 
   <div style="text-align: center">
-    <h5 style="margin:0; margin-top: 5px;" :class="[scoreColor]">
+    <h5 style="margin:0; margin-top: 0.2rem;" :class="[scoreColor]">
       {{ scoreText }}: {{ stack.getScore() }}
     </h5>
   </div>
@@ -65,7 +65,7 @@ export default {
       }
     },
     overlap () {
-      return this.stack.isMethod ? '-44px' : '-36px'
+      return this.stack.isMethod ? '-2.5rem' : '-2.2rem'
     },
     scoreText () {
       return this.stack.isMethod ? 'MethodStack' : 'Score'
@@ -146,16 +146,14 @@ export default {
 
 <style scoped>
 #stack {
-  width: 240px;
-  height: 150px;
+  width: 14rem;
+  height: 9rem;
 }
 
 .card {
   display: inline;
-  margin-right: -36px;
-  max-width: 90px;
-  max-height: 100px;
-  border: solid grey 1px;
+  height: 5.9rem;
+  border: solid white 0.05rem;
 }
 
 .score-normal {
@@ -171,20 +169,20 @@ export default {
 }
 
 .play {
-  -webkit-box-shadow: 0 0 15px 10px rgba(0,230,0,1);
-  -moz-box-shadow: 0 0 15px 10px rgba(0,230,0,1);
-  box-shadow: 0 0 15px 10px rgba(255,255,0,1);
+  -webkit-box-shadow: 0 0 0.7em 0.7em rgba(0,230,0,1);
+  -moz-box-shadow: 0 0 0.7em 0.7em rgba(0,230,0,1);
+  box-shadow: 0 0 0.7em 0.7em rgba(255,255,0,1);
 }
 
 .attack {
-  -webkit-box-shadow: 0 0 15px 10px rgba(255,0,0,1);
-  -moz-box-shadow: 0 0 15px 10px rgba(255,0,0,1);
-  box-shadow: 0 0 15px 10px rgba(255,0,0,1);
+  -webkit-box-shadow: 0 0 0.7em 0.7em rgba(255,0,0,1);
+  -moz-box-shadow: 0 0 0.7em 0.7em rgba(255,0,0,1);
+  box-shadow: 0 0 0.7em 0.7em rgba(255,0,0,1);
 }
 
-ul {
+#card-list {
   list-style: none;
-  margin: 10px;
+  margin: 0.5rem;
   padding: 0 0 0 0;
 }
 </style>

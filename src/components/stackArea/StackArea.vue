@@ -74,7 +74,8 @@ export default {
 
 #tabs {
   position: absolute;
-  top: -30px;
+  font-size: 0.7rem;
+  top: -1.8rem;
 }
 
 .left {
@@ -95,9 +96,9 @@ export default {
 }
 
 .play {
-  -webkit-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
-  -moz-box-shadow: 0 0 24px 10px rgba(0,255,0,1);
-  box-shadow: 0 0 24px 10px rgba(0,255,0,1);
+  -webkit-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  -moz-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
 }
 
 ul {
@@ -109,9 +110,9 @@ ul {
 li {
   position: relative;
   display: inline-block;
-  margin: 5px 1px;
-  padding: 2px 5px;
-  border: solid grey 2px;
+  margin: 0.1rem;
+  padding: 0.2rem;
+  border: solid grey 0.2rem;
   background-color: #333333;
   color: #fff;
   z-index: 40;

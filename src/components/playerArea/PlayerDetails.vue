@@ -88,8 +88,8 @@ export default {
 }
 
 .active {
-  -webkit-box-shadow: 0 0 1.2rem 0.7rem rgba(0,255,0,1);
-  -moz-box-shadow: 0 0 1.2rem 0.7rem rgba(0,255,0,1);
-  box-shadow: 0 0 1.2rem 0.7rem rgba(0,255,0,1);
+  -webkit-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  -moz-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
 }
 </style>

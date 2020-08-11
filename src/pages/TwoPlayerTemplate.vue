@@ -17,7 +17,7 @@
     </slot>
   </div>
 
-  <div class="stacks-area" style="left: 1%">
+  <div class="stacks-area" style="left: 0.5%">
     <slot name="p1-stack-area">
       <stack-area :player="game.getPlayer(0)" tabSide="right"/>
     </slot>
@@ -35,7 +35,7 @@
     </slot>
   </div>
 
-  <div class="stacks-area" style="right: 1%;">
+  <div class="stacks-area" style="right: 0.5%;">
     <slot name="p2-stack-area">
       <stack-area :player="game.getPlayer(1)" tabSide="left"/>
     </slot>
@@ -119,7 +119,7 @@ export default {
 .stacks-area {
   position: absolute;
   top: 50%;
-  width: 48%;
+  width: 49%;
   height: 49%;
 }
 </style>
