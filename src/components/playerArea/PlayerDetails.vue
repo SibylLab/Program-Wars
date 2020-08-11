@@ -68,8 +68,7 @@ export default {
   position: absolute;
   bottom: 0;
   height: 72%;
-  border: solid black 0.3rem;
-  border-radius: 1rem;
+  border: solid black 0.1rem;
 }
 
 .player-access {

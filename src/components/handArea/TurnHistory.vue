@@ -34,11 +34,11 @@ export default {
   computed: {
     ...mapGetters(['game']),
     /**
-     * Returns the last 8 plays that were made.
+     * Returns the last 15 plays that were made.
      */
     history () {
       const end = this.game.turnHistory.length
-      const start = end < 8 ? 0 : Math.abs(end - 8)
+      const start = end < 15 ? 0 : Math.abs(end - 15)
       return this.game.turnHistory.slice(start, end).reverse()
     }
   },
@@ -126,7 +126,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #333333;
-  border: ridge grey 0.3rem;
+  border: ridge grey 0.5rem;
   border-radius: 0.5rem;
   color: #fff;
   text-align: left;
@@ -182,7 +182,7 @@ li {
   position: relative;
   display: inline-block;
   text-align: left;
-  margin: 0.6rem;
+  margin: 0.45rem 0.6rem;
 }
 </style>
 

@@ -38,7 +38,7 @@ export default {
 
 .score-title {
   margin: 0;
-  margin-top: 5%;
+  margin-top: 1rem;
 }
 
 .score-meter {
@@ -47,6 +47,8 @@ export default {
 }
 
 .score-meter::-webkit-meter-bar {
+  position: relative;
+  top: -0.2rem;
   height: 1rem;
   border: 0;
 }
