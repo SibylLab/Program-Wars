@@ -344,9 +344,9 @@ export default class PlayBestCardAction extends ActionHandler {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
 
     const sortedCards = deck.drawCards(card.value)
-    this.sortCards(sortedCards)
-
     if (sortedCards) {
+      this.sortCards(sortedCards)
+
       return {
         type: 'playSort',
         player, card, cardOwner: player,
