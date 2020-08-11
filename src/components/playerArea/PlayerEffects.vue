@@ -81,7 +81,7 @@ export default {
   position: relative;
   width: 2rem;
   height: 2rem;
-  margin: 0.1rem;
+  margin: 0.2rem;
 }
 
 .effect-icon {
@@ -93,7 +93,7 @@ export default {
   position: absolute;
   font-size: 1.3rem;
   top: -20%;
-  right: -17%;
+  right: -10%;
   height: 1.6rem;
   background-color: blue;
   color: white;
