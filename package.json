@@ -17,6 +17,7 @@
     "core-js": "^3.6.4",
     "easytimer.js": "^2.2.3",
     "loglevel": "^1.6.8",
+    "raw-loader": "^4.0.1",
     "vue": "^2.6.11",
     "vue-markdown": "^2.2.4",
     "vue-router": "^3.4.3",

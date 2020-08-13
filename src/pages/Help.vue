@@ -1,42 +1,49 @@
 <template>
 <div id="help-page">
-  <!-- nav is not a separate component to make it easy to add new pages
-       and the links to them. -->
+
   <div class='side-nav'>
     <h2> Help Pages </h2>
     <br><br>
+
+    <!-- For your page to be viewable add a link like these. Just replace the
+         string in open() with a simple name for your page. -->
     <a v-on:click="open('intro')"> Introduction </a>
-    <a v-on:click="open('test')"> Test </a>
+    <a v-on:click="open('play')"> How To Play </a>
   </div>
 
   <div class='help-content'>
-    <help-intro v-if="isOpen('intro')"/>
-    <vue-markdown v-if="isOpen('test')" :source="helpIntro"/>
+    <!-- These create components using the markdown in your markdown file
+         for the page. Save the imported page into a data member and use it
+         as the source. The text in isOpen() should be the name you used with
+         your link in the nav list. -->
+    <vue-markdown v-if="isOpen('intro')" :source="intro"/>
+    <vue-markdown v-if="isOpen('play')" :source="play"/>
   </div>
 
 </div>
 </template>
 
 <script>
-import Intro from '@/components/help/Intro'
 import VueMarkdown from 'vue-markdown'
-// import helpIntro from '@/markdown/helpIntro.md'
+
+// Loading your markdown file requires the 'raw-loader!' prefix to load the
+// markdown as a string. Save the import into a data member so you can access it
+// in the component.
+import helpIntro from 'raw-loader!@/markdown/helpIntro.md'
+import howToPlay from 'raw-loader!@/markdown/howToPlay.md'
 
 export default {
   name: 'help-page',
   data () {
     return {
-      page: 'intro'
+      page: 'intro',
+      // Add your markdown page text to a member here
+      intro: helpIntro,
+      play: howToPlay
     }
   },
   components: {
-    'help-intro': Intro,
     'vue-markdown': VueMarkdown
-  },
-  computed: {
-    helpIntro () {
-      return "# Intro\nnew text for the intro"
-    }
   },
   methods: {
     open (page) {
