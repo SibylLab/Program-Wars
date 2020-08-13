@@ -2,7 +2,6 @@
 <div>
   <!-- Modals -->
   <backstory-modal id="backstoryModal" class="modal backstory "/>
-  <rules-modal id="rulesModal" class="modal rules "/>
   <credits-modal id="creditsModal" class="modal credits"/>
 
   <!-- Side menu using a sidenav -->
@@ -24,7 +23,6 @@
 
 <script>
 import BackstoryModal from '@/components/modals/BackstoryModal'
-import RulesModal from '@/components/modals/RulesModal'
 import CreditsModal from '@/components/modals/CreditsModal'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
@@ -36,7 +34,6 @@ export default {
   name: 'side-menu',
   components: {
     'backstory-modal': BackstoryModal,
-    'rules-modal': RulesModal,
     'credits-modal': CreditsModal
   },
   computed: {
