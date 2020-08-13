@@ -15,3 +15,12 @@ Or if you want to open them in a new tab you can make them in HTML with `target=
 <a href="http://google.com" target="_blank">Google</a>
 
 Tables are a bit akward but can be done like this
+I don't think it is possible to have vertical lines separating columns
+| column1 | column2 |
+| ------- | ------- |
+| some text | some other text |
+| more text | still other text |
+
+| aligned left | aligned center | aligned right | normal |
+| :-----       | :--------:     | -------:      | ---    |
+| some text    | some other     | and again     | back to left |

@@ -14,8 +14,7 @@ This is a list
 - item 3
 
 #### Sub Heading
-
 *italics*
-
 **Bold**
 
+~~strikethrough~~

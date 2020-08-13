@@ -57,6 +57,13 @@ export default {
 </script>
 
 <style scoped>
+#help-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 .side-nav {
   position: fixed;
   top: 0;
@@ -69,6 +76,7 @@ export default {
 }
 
 .side-nav a {
+  display: block;
   font-size: 1.5rem;
 }
 
@@ -83,5 +91,6 @@ export default {
   left: 20%;
   width: 80%;
   text-align: left;
+  padding: 1rem 3rem;
 }
 </style>
