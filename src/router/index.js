@@ -7,21 +7,26 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     canReuse: false,
     component: HomePage
   },
   {
     path: '/beginner',
-    name: 'Beginner Game',
+    name: 'beginnerGame',
     canReuse: false,
     component: () => import('@/pages/BeginnerGame.vue')
   },
   {
     path: '/standard',
-    name: 'Standard Game',
+    name: 'standardGame',
     canReuse: false,
     component: () => import('@/pages/StandardGame.vue')
+  },
+  {
+    path: '/help',
+    name: 'help',
+    component: () => import('@/pages/Help.vue')
   },
   {
     path: '*',
