@@ -6,10 +6,12 @@
     <h2> Help Pages </h2>
     <br><br>
     <a v-on:click="open('intro')"> Introduction </a>
+    <a v-on:click="open('test')"> Test </a>
   </div>
 
   <div class='help-content'>
     <help-intro v-if="isOpen('intro')"/>
+    <vue-markdown v-if="isOpen('test')" :source="helpIntro"/>
   </div>
 
 </div>
@@ -17,6 +19,8 @@
 
 <script>
 import Intro from '@/components/help/Intro'
+import VueMarkdown from 'vue-markdown'
+// import helpIntro from '@/markdown/helpIntro.md'
 
 export default {
   name: 'help-page',
@@ -26,7 +30,13 @@ export default {
     }
   },
   components: {
-    'help-intro': Intro
+    'help-intro': Intro,
+    'vue-markdown': VueMarkdown
+  },
+  computed: {
+    helpIntro () {
+      return "# Intro\nnew text for the intro"
+    }
   },
   methods: {
     open (page) {
@@ -65,5 +75,6 @@ export default {
   top: 0;
   left: 20%;
   width: 80%;
+  text-align: left;
 }
 </style>
