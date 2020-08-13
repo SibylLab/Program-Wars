@@ -4,7 +4,7 @@ import AIHandlerFactory from '@/classes/AIHandler/AIHandlerFactory'
 jest.mock('@/classes/AIHandler/AIHandlerFactory')
 
 describe('AIPlayer class', () => {
-  const action = { chooseAction: jest.fn((a,b,c) => { return 'action' }) }
+  const action = { chooseAction: jest.fn(() => { return 'action' }) }
 
   AIHandlerFactory.mockImplementation(() => {
     return {
