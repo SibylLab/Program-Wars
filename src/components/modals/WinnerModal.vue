@@ -13,7 +13,7 @@
       <table class="table table-condensed" style="width: 90%; margin: auto">
         <thead>
           <tr style="font-size: 1.4rem"> <th>Players</th>
-            <th v-for="player in players" :key="player.id" style="text-align: center">
+            <th v-for="player in getPlayers" :key="player.id" style="text-align: center">
               {{ player.name }} </th>
           </tr>
         </thead>
@@ -84,13 +84,19 @@ export default {
   data () {
     return {
       bonuses: [],
-      winners: []
+      winners: [],
     }
   },
   computed: {
     ...mapGetters(['game']),
     players () {
       return this.game.players
+    },
+    // called only once to ensure that setWinner is called when modal is
+    // displayed.
+    getPlayers () {
+      this.setWinner()
+      return this.players
     },
     winnerText () {
       if (this.winners.length === 1) {
@@ -111,14 +117,6 @@ export default {
     setBonuses () {
       this.bonuses = this.game.getBonuses()
     }
-  },
-  created ()  {
-    this.setBonuses()
-    this.setWinner()
-    bus.$on('game-over', this.setWinner)
-  },
-  beforeDestroy () {
-    bus.$off('game-over', this.setWinner)
   }
 }
 </script>
