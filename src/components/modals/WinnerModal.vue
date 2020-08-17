@@ -76,7 +76,6 @@
 
 
 <script>
-import { bus } from '@/components/shared/Bus'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
