@@ -1,0 +1,144 @@
+<template>
+<div id="player-hand" :key="update">
+
+  <div class="player-card" v-for="card in player.hand.cards" v-bind:key="card.id">
+    <img :src="cardImage(card)" :class="['card', cardShadow(card)]"
+      :draggable="canDrag(card)" v-on:dragstart="startDrag($event, card)"
+      v-on:mousemove="select(card)">
+
+    <input type="image" id="discard-button" title="Discard" v-if="isCurrentCard(card)"
+       src="static/miscIcons/trash.png" v-on:click="discard(card)">
+
+    <div class="overlay" v-if="showOverlay(card)">
+      <scan-overlay v-if="isScan(card.type)" :card="card" :player="player"/>
+      <algorithm-overlay v-if="isAlgorithm(card.type)" :card="card" :owner="player"/>
+      <target-overlay v-if="isOther(card.type)" :card="card" :player="player"/>
+    </div>
+  </div>
+
+</div>
+</template>
+
+<script>
+import TargetOverlay from '@/components/handArea/TargetOverlay'
+import ScanOverlay from '@/components/handArea/ScanOverlay'
+import AlgorithmOverlay from '@/components/handArea/AlgorithmOverlay'
+import { isSpecial, isAlgorithm } from '@/classes/card/cardData'
+import { bus } from '@/components/shared/Bus'
+import { mapGetters } from 'vuex'
+
+export default {
+  name: 'player-hand',
+  props: ['player'],
+  data () {
+    return {
+      update: true,
+      active: false
+    }
+  },
+  components: {
+    'target-overlay': TargetOverlay,
+    'scan-overlay': ScanOverlay,
+    'algorithm-overlay': AlgorithmOverlay
+  },
+  computed: {
+    ...mapGetters(['game'])
+  },
+  methods: {
+    isCurrentCard (card) {
+      return this.game.currentCard === card && !this.player.isAI
+    },
+    isScan (type) {
+      return type === 'SCAN'
+    },
+    isAlgorithm (type) {
+      return isAlgorithm(type)
+    },
+    isOther (type) {
+      return isSpecial(type) && !this.isScan(type) && !this.isAlgorithm(type)
+    },
+    canDrag (card) {
+      return !isSpecial(card.type) && this.player.canPlay(card)
+    },
+    showOverlay (card) {
+      return this.isCurrentCard(card) && isSpecial(card.type)
+          && this.player.canPlay(card.type)
+    },
+    cardImage (card) {
+      if (this.game.currentPlayer().isAI) {
+        return 'static/cardImages/backOfCard.png'
+      }
+      return card.image
+    },
+    cardShadow (card) {
+      if (!this.isCurrentCard(card)) {
+        return ''
+      }
+      return this.player.canPlay(card.type) ? 'play' : 'no-play'
+    },
+    select (card) {
+      if (!this.isCurrentCard(card)) {
+        this.game.setCurrentCard(card)
+        this.update = !this.update
+        bus.$emit('select-card')
+      }
+    },
+    discard (card) {
+      if (!this.player.isAi) {
+        this.game.takeTurn({
+          type: "discardCard",
+          player: this.player,
+          card: card, cardOwner: this.player
+        })
+      }
+    },
+    startDrag (event, card) {
+      event.dataTransfer.dropEffect = 'move'
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('cardId', card.id)
+      event.dataTransfer.setData('playerId', this.player.id)
+    }
+  }
+}
+</script>
+
+<style scoped>
+#discard-button {
+  position: absolute;
+  left: -0.5rem;
+  top: -0.5rem;
+  width: 1.6rem;
+  height: 1.6rem; 
+}
+
+.player-card {
+  position: relative;
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+.card {
+  border: none;
+  height: 8rem;
+  width: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 25%;
+  left: -15%;
+  width: 130%;
+}
+
+.play {
+  -webkit-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  -moz-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+}
+
+.no-play {
+  -webkit-box-shadow: 0 0 1rem 0.7rem rgba(255,0,0,1);
+  -moz-box-shadow: 0 0 1rem 0.7rem rgba(255,0,0,1);
+  box-shadow: 0 0 1rem 0.7rem rgba(255,0,0,1);
+}
+</style>

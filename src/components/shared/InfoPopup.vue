@@ -1,17 +1,23 @@
 <template>
 <div id="info-component">
-  <input v-if="!active" type='image' id='info-button' src='static/miscIcons/info.png'
+  <input type='image' id='info-button' src='static/miscIcons/info.png'
       v-on:click="active = true">
 
   <div id="info-popup" v-if="active">
-    <slot></slot>
-    <button class="btn btn-sm btn-info action" v-on:click="openRules">
-      More Info
-    </button>
-    <button class="btn btn-sm btn-primary action" v-on:click="active = false">
-      Close
-    </button>
+    <div class="backdrop">
+      <div class="container">
+        <slot></slot>
+
+        <button class="btn btn-sm btn-info action" v-on:click="openRules">
+          More Info
+        </button>
+        <button class="btn btn-sm btn-primary action" v-on:click="active = false">
+          Close
+        </button>
+      </div>
+    </div>
   </div>
+
 </div>
 </template>
 
@@ -51,33 +57,46 @@ export default {
   position: relative;
 }
 
-#info-popup {
-  position: fixed;
-  left: 30%;
-  top: 10%;
-  width: 40%;
-  min-width: 400px;
-  min-height: 300px;
-  max-height: 80%;
-  overflow: auto;
-  height: auto;
-  border: ridge grey 5px;
-  border-radius: 10px;
-  background-color: white;
-  color: black;
-  padding: 10px;
-  text-align: left;
-  font-size: 15px;
-  z-index: 2000;
+#info-button {
+  width: 1.3rem;
+  height: 1.3rem;
 }
 
-#info-button {
-  width: 20px;
-  height: 20px;
+#info-popup {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  z-index: 1100;
+}
+
+.container {
+  position: absolute;
+  left: 25%;
+  top: 7%;
+  width: 50%;
+  min-width: 45rem;
+  max-height: 85%;
+  overflow: auto;
+  border: ridge grey 0.5rem;
+  border-radius: 1rem;
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  font-size: 1.2rem;
+  text-align: left;
+  z-index: 1200;
+}
+
+.backdrop {
+  width: 100%;
+  height: 100%;
+  background: rgba(50, 50, 50, 0.7);
 }
 
 .action {
   display: inline-block;
-  margin: 5px;
+  margin: 0.5rem;
 }
 </style>

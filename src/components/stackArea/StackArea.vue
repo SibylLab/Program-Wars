@@ -1,0 +1,121 @@
+<template>
+<div id='stacks-area' :key="activeTab" :class="{ play: showShadow }">
+
+  <div id="tabs" v-if="!player.isAI" :class="tabSide">
+    <ul>
+      <li v-on:click="changeTab(1)" :class="['tab', { active: isActiveTab(1) }]">
+        Stacks </li>
+      <li v-on:click="changeTab(2)" :class="['tab', { active: isActiveTab(2) }]">
+        Bonus </li>
+    </ul>
+  </div>
+
+  <play-field v-if="isActiveTab(1)" :player="player"/>
+  <side-objectives v-if="isActiveTab(2)" :player="player"/>
+
+</div>
+</template>
+
+
+<script>
+import SideObjectives from '@/components/stackArea/SideObjectives'
+import PlayField from '@/components/stackArea/PlayField'
+import { mapGetters } from 'vuex'
+
+/**
+ * The area of the screen that holds a players play field and side objectives
+ * in tabs.
+ * Is higlighted when the components player is the active player.
+ * side property is to change some of the setup based on what side of the screen
+ * the component is on.
+ */
+export default {
+  name: 'stacks-area',
+  props: ['player', 'tabSide'],
+  data () {
+    return {
+      activeTab: 1
+    }
+  },
+  components: {
+    'play-field': PlayField,
+    'side-objectives': SideObjectives
+  },
+  computed: {
+    ...mapGetters(['game']),
+    showShadow () {
+      return this.player === this.game.currentPlayer()
+    }
+  },
+  methods: {
+    isActiveTab (tabNum) {
+      // If is so AI PlayField is always showing
+      if (this.player.isAI) {
+        return tabNum === 1
+      }
+      return this.activeTab === tabNum
+    },
+    changeTab (tabNum) {
+      // If is so AI doesn't end up on a tab other than PlayField
+      if (!this.player.isAI) {
+        this.activeTab = tabNum
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+#stacks-area {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#tabs {
+  position: absolute;
+  font-size: 0.7rem;
+  top: -1.8rem;
+}
+
+.left {
+  left: 1%;
+}
+
+.right {
+  right: 1%;
+}
+
+.tab {
+  cursor: pointer;
+}
+
+.active {
+  background-color: #fff;
+  color: #333333;
+}
+
+.play {
+  -webkit-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  -moz-box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+  box-shadow: 0 0 0.7rem 0.7rem rgba(0,255,0,1);
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  position: relative;
+  display: inline-block;
+  margin: 0.1rem;
+  padding: 0.2rem;
+  border: solid grey 0.2rem;
+  background-color: #333333;
+  color: #fff;
+  z-index: 40;
+}
+</style>
+

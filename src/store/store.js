@@ -1,3 +1,4 @@
+import Home from '@/pages/pageStates/Home'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -17,18 +18,10 @@ import getters from './getters'
  */
 export const store = new Vuex.Store({
   state: {
-    players: [],
-    stacks: [],
-    hands: [],
-    methods: [],
-    aiHanlders: [],
-    deck: undefined,
-    gameState: 'home',
-    activePlayer: undefined,
-    activeCard: undefined,
-    scoreLimit: 150,
-    showBackstory: true,
-    turnPlays: []
+    page: 'home',
+    home: new Home(),
+    game: null,
+    showBackstory: true
   },
 
   getters,

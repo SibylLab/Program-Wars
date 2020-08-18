@@ -1,44 +1,43 @@
 <template>
-<div>
+<div style="color: initial;">
   <div class="modal-dialog" role="document">
-    <div class="modal-content" style="border-radius: 30px">
+    <div class="modal-content my-content">
 
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h3 class="modal-title">Credits</h3>
+        <h3 class="modal-title"> Credits </h3>
       </div>
 
       <div class="modal-body">
-        <p><b>Game concept by</b> Dr. John Anvik</p>
-        <p><b>Version 1.0 coded by</b>
+        <p><b>Game concept by</b> Dr. John Anvik </p>
+        <p><b>Previous Versions by...</b>
           <br>
           Dustin Fowler, Jonathan Vos, Josh Vandenhoek,
-          Lance Chisholm, and Shaun Cullen
-        </p>
-        <p><b>Current version by</b>
           <br>
-          Jace Riehl, Vincent Cote, Shaun Cullen, and Dr. John Anvik
+          Lance Chisholm, Shaun Cullen, Austin Ball,
+          <br>
+          Jace Riehl, Vincent Cote, and Dr. John Anvik
         </p>
-        <p><b>Graphics by</b> John Anvik Jr., Katherine Hatton</p>
+        <p><b>Current version by...</b>
+          <br>
+          Tareque, Maimoona, and Steven
+        </p>
+        <p><b>Graphics by...</b>
+          <br>
+          John Anvik Jr. and Katherine Hatton
+        </p>
         <p><b>Follow the project page on </b>
           <a href="https://github.com/johnanvik/program-wars" target="_blank">GitHub</a>
         </p>
       </div>
 
-      <div class="modal-footer">
-        <div style="text-align: left; float: left; font-size: 85%">
-          <p><b>Current Version: </b>
-            <a href="https://github.com/johnanvik/program-wars/releases/latest"
-                target="_blank">
-              <img src="https://img.shields.io/github/release/johnanvik/program-wars.svg"
-                  alt="versionNumber">
-            </a>
-          </p>
-        </div>
+      <div class="modal-footer" style="justify-content: left;">
+        <a href="https://github.com/johnanvik/program-wars/releases/latest"
+            target="_blank">
+          <img src="https://img.shields.io/github/release/johnanvik/program-wars.svg"
+              alt="versionNumber" class="badge">
+        </a>
         <button type="button" class="btn btn-secondary" data-dismiss="modal"
-            style="float: right">Close</button>
+            style="position: absolute; right: 2rem;">Close</button>
       </div>
 
     </div>
@@ -52,3 +51,27 @@
  */
 export default {}
 </script>
+
+<style scoped>
+.my-content {
+  position: fixed;
+  width: 60%;
+  top: 5%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 2em;
+}
+
+.badge {
+  display: inline;
+  position: relative;
+  left: 2rem;
+  width: 8rem;
+}
+
+.badge:empty {
+  display: inline;
+}
+</style>

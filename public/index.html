@@ -2,42 +2,80 @@
 <html>
   <head>
     <meta charset='utf-8'>
-    <script src='https://www.gstatic.com/firebasejs/5.7.2/firebase.js'></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: 'AIzaSyCY69WOuaXGnceqA5oXEmw2mhn_g5nvh2I',
-        authDomain: 'program-wars.firebaseapp.com',
-        databaseURL: 'https://program-wars.firebaseio.com',
-        projectId: 'program-wars',
-        storageBucket: '',
-        messagingSenderId: '268876343967'
-      }
-      firebase.initializeApp(config)
-    </script>
-    <title>program-wars</title>
-    <script src='https://code.jquery.com/jquery-3.1.1.slim.min.js' integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n' crossorigin='anonymous'></script>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>
-    <!--Paper theme-->
-    <link rel='stylesheet' href='https://bootswatch.com/3/paper/bootstrap.min.css'>
-    <link rel='stylesheet'
-          href='https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css'>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <!-- CDNs for Bootstrap, includes some modals and dropdown menus, and jquery -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- Favicon link -->
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+
+    <!-- Prefetching images helps ensure they are loaded by the time the player
+         Starts the game. Otherwise the first time or two a person visits the
+         site images will take a visible amount of time to load during the game -->
+
+    <!-- Prefetching player images -->
+    <link rel="prefetch" href="<%= BASE_URL %>static/playerImages/player0.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/playerImages/player1.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/playerImages/player2.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/playerImages/player3.png">
+
+    <!-- Prefetching Card images -->
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/backOfCard.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/method.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/instruction1.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/instruction2.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/instruction3.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/repeat1.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/repeat2.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/repeat3.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/repeat4.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/variable3.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/variable4.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/variable5.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/variable6.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/antivirus.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/firewall.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/scan.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/search.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/sort.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/virus.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/trojan.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/spyware.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/ransom.png">
+
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/stack_overflow.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/stack_underflow.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/sql_injection.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/ddos.png">
+
+    <!-- Prefetch important effect images -->
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/effects/SCAN.png">
+    <link rel="prefetch" href="<%= BASE_URL %>static/cardImages/effects/TROJAN.png">
     
     <style>
-      #playfield::-webkit-scrollbar {
-        display: none;
+      html {
+        font-size: 2.2vh;
+        color: black;
       }
-
-      .cardImage {
-        width: 100px;
-        padding: 10px;
-      }
-  </style>
+    </style>
+    
   </head>
 
   <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
     <div id='app'></div>
     <!-- built files will be auto injected -->
   </body>

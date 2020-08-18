@@ -1,21 +1,21 @@
 <template>
 <div>
   <!-- Modals -->
-  <backstory-modal id="backstoryModal" class="modal fade backstory "></backstory-modal>
-  <rules-modal id="rulesModal" class="modal fade rules "></rules-modal>
-  <credits-modal id="creditsModal" class="modal fade credits"></credits-modal>
+  <backstory-modal id="backstoryModal" class="modal backstory "/>
+  <rules-modal id="rulesModal" class="modal rules "/>
+  <credits-modal id="creditsModal" class="modal credits"/>
 
   <!-- Side menu using a sidenav -->
   <input type='image'  src='static/miscIcons/burgerIcon.png'
-      v-on:click="openMenu" style="width: 36px; height: 36px;">
+      v-on:click="openMenu()" style="width: 100%; height: 100%;">
   <div id="mySidenav" class="sidenav">
-    <a class="closebtn menu-item" v-on:click="closeMenu">&times;</a>
-    <a class="menu-item" v-if="showNewGame" v-on:click="leaveGame">New Game</a>
-    <a class="menu-item" data-toggle="modal" data-target=".backstory">Backstory</a>
-    <a class="menu-item" data-toggle="modal" data-target=".rules">Rules</a>
-    <a class="menu-item" data-toggle="modal" data-target=".credits">Credits</a>
+    <a class="closebtn menu-item" v-on:click="closeMenu()"> &times; </a>
+    <a class="menu-item" v-if="inGame" v-on:click="leaveGame()"> New Game </a>
+    <a class="menu-item" data-toggle="modal" data-target=".backstory"> Backstory </a>
+    <a class="menu-item" data-toggle="modal" data-target=".rules"> Rules </a>
+    <a class="menu-item" data-toggle="modal" data-target=".credits"> Credits </a>
     <a class="menu-item" href="https://gitreports.com/issue/SibylLab/Program-Wars"
-        target="_blank">Report Issue</a>
+        target="_blank"> Report Issue </a>
   </div>
 
 </div>
@@ -26,7 +26,7 @@
 import BackstoryModal from '@/components/modals/BackstoryModal'
 import RulesModal from '@/components/modals/RulesModal'
 import CreditsModal from '@/components/modals/CreditsModal'
-import {mapActions, mapState, mapMutations} from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
 /**
  * The main game menu.
@@ -34,46 +34,35 @@ import {mapActions, mapState, mapMutations} from 'vuex'
  */
 export default {
   name: 'side-menu',
-  data () {
-    return {
-      showMenu: false
-    }
-  },
   components: {
     'backstory-modal': BackstoryModal,
     'rules-modal': RulesModal,
     'credits-modal': CreditsModal
   },
   computed: {
-    ...mapState([
-      'gameState',
-      'showBackstory'
-    ]),
-    showNewGame () {
-      return this.gameState !== "home"
-    }
+    ...mapState(['showBackstory']),
+    ...mapGetters(['inGame'])
   },
   methods: {
-    ...mapMutations([
-      'seenBackstory'
-    ]),
-    ...mapActions([
-      'leaveGame'
-    ]),
+    ...mapMutations(['seenBackstory']),
+    ...mapActions(['leaveGame']),
     openMenu () {
       this.showMenu = true
-      $('.sidenav').width('250px')
+      $('.sidenav').width('20rem')
     },
     closeMenu () {
       this.showMenu = false
-      $('.sidenav').width('0px')
+      $('.sidenav').width('0')
     }
   },
   mounted () {
-    // Show the backstory on first visit to the landing page
+    // Show the backstory on first visit to the game
     if (this.showBackstory) {
       $('#backstoryModal').modal('show')
       this.seenBackstory()
+    } else {
+      // prevent fade from blocking everything when backstory is not supposed to show
+      $('.modal-backdrop').remove()
     }
   }
 }
@@ -82,37 +71,34 @@ export default {
 
 <style scoped>
 .sidenav {
-  height: 100%;
-  width: 0px;
   position: fixed;
   top: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 60px;
-  transition: 0.5s;
   right: 0;
-  z-index: 1000;
+  height: 100%;
+  width: 0;
+  overflow-x: hidden;
+  padding-top: 4%;
+  background-color: #111;
+  transition: 0.5s;
+  z-index: 500;
 }
 
 .sidenav a {
-  padding: 0px 8px 8px 32px;
+  font-size: 2rem;
   text-decoration: none;
-  font-size: 25px;
-  color: #818181;
+  color: #fff;
   display: block;
-  transition: 0.3s;
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #0077ff;
 }
 
 .sidenav .closebtn {
   position: absolute;
   top: 0;
-  right: 3px;
-  font-size: 36px;
-  margin-left: 50px;
+  right: 5%;
+  font-size: 2.5rem;
 }
 
 .menu-item {

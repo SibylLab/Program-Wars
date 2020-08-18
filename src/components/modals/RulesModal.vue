@@ -1,6 +1,6 @@
 <template>
-<div>
-  <div class="modal-dialog modal-lg" role="document">
+<div style="color: initial;">
+  <div class="modal-dialog" role="document">
     <div class="modal-content" style="border-radius: 30px">
 
       <div class="modal-header">
