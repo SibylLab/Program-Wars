@@ -90,6 +90,5 @@ describe('Card class', () => {
       card._blockedByScan(playInfo)
       expect(playInfo.scanned).toBeFalsy()
     })
-
   })
 })

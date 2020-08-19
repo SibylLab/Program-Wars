@@ -52,5 +52,4 @@ describe('Instruction class', () => {
       expect(playField.addStack).toBeCalledWith(Stack.mock.instances[0])
     })
   })
-
 })
