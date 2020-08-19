@@ -11,32 +11,38 @@ import Search from '@/classes/card/Search'
 import Sort from '@/classes/card/Sort'
 import { isNegativeEffect, isPositiveEffect } from '@/classes/card/cardData'
 
+// Tables to associate a card type to it's constructor
+const needValueAndDeck = {
+  'INSTRUCTION': Instruction,
+  'REPEAT': Repeat,
+  'VARIABLE': Variable,
+}
+
+const needDeckOnly = {
+  'METHOD': Method,
+  'SCAN': Scan,
+  'VIRUS': Virus,
+  'TROJAN': Trojan,
+  'SEARCH': Search,
+  'SORT': Sort,
+}
+
 export default class CardFactory {
   newCard (type, value, deck) {
-    if (type === 'INSTRUCTION') {
-      return new Instruction(value, deck)
-    } else if (type === 'METHOD') {
-      return new Method(deck)
-    } else if (type === 'REPEAT') {
-      return new Repeat(value, deck)
-    } else if (type === 'VARIABLE') {
-      return new Variable(value, deck)
-    } else if (type === 'SCAN') {
-      return new Scan(deck)
-    } else if (type === 'VIRUS') {
-      return new Virus(deck)
-    } else if (type === 'TROJAN') {
-      return new Trojan(deck)
-    } else if (isNegativeEffect(type)) {
-      return new NegativeEffectCard(type, deck)
+    let card
+    if (isNegativeEffect(type)) {
+      card = new NegativeEffectCard(type, deck)
     } else if (isPositiveEffect(type)) {
-      return new PositiveEffectCard(type, deck)
-    } else if (type === 'SEARCH') {
-      return new Search(deck)
-    } else if (type === 'SORT') {
-      return new Sort(deck)
+      card = new PositiveEffectCard(type, deck)
+    } else if (type in needValueAndDeck) {
+      const constructor = needValueAndDeck[type]
+      card = new constructor(value, deck)
+    } else if (type in needDeckOnly) {
+      const constructor = needDeckOnly[type]
+      card = new constructor(deck)
     } else {
       throw "CardFactory: Not a valid card type: " + type
     }
+    return card
   }
 }

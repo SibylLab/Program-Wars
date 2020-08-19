@@ -30,7 +30,7 @@ const attacks = [
 
 // all card types that use the NegativeEffectCard
 const negativeEffects = [
-  ...malware.filter(m => m !== "VIRUS"),
+  ...malware.filter(m => m !== "VIRUS" && m !== "TROJAN"),
   ...hack
 ]
 
