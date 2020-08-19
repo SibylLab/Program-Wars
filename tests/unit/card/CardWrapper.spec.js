@@ -12,10 +12,9 @@ describe('CardWrapper class', () => {
     const card = { value: 2, type: 'some_type', deck: 'deck', image: 'img_path' }
     const wrapper = new CardWrapper(card)
     expect(wrapper.card).toBe(card)
-    expect(card.value).toEqual(2)
-    expect(card.type).toEqual('some_type')
-    expect(card.deck).toEqual('deck')
-    expect(card.image).toEqual('img_path')
+    expect(Card).toBeCalledTimes(1)
+    expect(Card).toBeCalledWith(card.value, card.type, card.deck, card.image)
+
   })
 
   test('discarding the card', () => {
