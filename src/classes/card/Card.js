@@ -1,3 +1,5 @@
+import { isAttack } from '@/classes/card/cardData'
+
 // Function to create a unique object id
 const uuidV1 = require('uuid/v1')
 
@@ -15,6 +17,10 @@ export default class Card {
     this.isExtra = false
   }
 
+  static imgPath (cardName) {
+    return 'static/cardImages/' + cardName + '.png'
+  }
+
   getValue () {
     return this.value
   }
@@ -29,16 +35,14 @@ export default class Card {
     }
   }
 
-  static imgPath (cardName) {
-    return 'static/cardImages/' + cardName + '.png'
-  }
-
   _blockedByScan (playInfo) {
-    playInfo.scanned = true
-    if (this.type === 'VIRUS') {
-      playInfo.stack.player.effects.removePositiveType('SCAN')
-    } else { 
-      playInfo.target.effects.removePositiveType('SCAN')
+    if (isAttack(this.type)) {
+      playInfo.scanned = true
+      if (this.type === 'VIRUS') {
+        playInfo.stack.player.effects.removePositiveType('SCAN')
+      } else { 
+        playInfo.target.effects.removePositiveType('SCAN')
+      }
     }
   }
 }
