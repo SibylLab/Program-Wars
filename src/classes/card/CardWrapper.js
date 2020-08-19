@@ -11,6 +11,6 @@ export default class CardWrapper extends Card {
   }
 
   play (playInfo) {
-    return this.card.play(playInfo)
+    this.card.play(playInfo)
   }
 }
