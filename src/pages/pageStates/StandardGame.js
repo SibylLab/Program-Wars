@@ -28,8 +28,7 @@ export default class StandardGameState extends Game {
 
   getPlayerBonuses (player) {
     const plays = this.turnHistory.filter((play) => {
-      return play.player === player && play.type !== 'discardHand'
-          && play.type !== 'discardCard'
+      return play.player === player && this.isValidPlay(play)
     })
 
     const repeat = this.getTypeCount(plays, 'REPEAT') * REPEAT_BONUS
@@ -44,12 +43,17 @@ export default class StandardGameState extends Game {
     return {total, repeat, variable, safety, defensive, clean, nested, method}
   }
 
+  isValidPlay(play) {
+    return play.card && !play.replaced && play.type !== 'discardHand'
+        && play.type !== 'discardCard'
+  }
+
   getTypeCount (plays, type) {
-    return plays.filter(p => !p.replaced && p.card.type === type).length
+    return plays.filter(p => p.card.type === type).length
   }
 
   getSafetyCount (plays) {
-    return plays.filter(p => !p.replaced && isSafety(p.card.type)).length
+    return plays.filter(p => isSafety(p.card.type)).length
   }
 
   getCleanBonus (player) {
