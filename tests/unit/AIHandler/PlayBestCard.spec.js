@@ -425,4 +425,41 @@ describe('PlayBestCard', () => {
       expect(result).toBeUndefined()
     })
   })
+
+  describe('sort', () => {
+
+    test('when we find a card in the play order in the cards we can search', () => {
+      const action = new PlayBestCard(order)
+      const player = { hurtBy: jest.fn(() => { return false }) }
+      const card = { value: 3 }
+      const cards = [ {type: 'SCAN'}, {type: 'REPEAT'}, {type: 'METHOD'} ]
+      const deck = { drawCards: jest.fn(() => { return cards }) }
+      const result = action.sort(card, { player, deck })
+
+      expect(deck.drawCards).toBeCalledTimes(1)
+      expect(deck.drawCards).toBeCalledWith(card.value)
+
+      expect(result.type).toEqual('playSort')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.deck).toEqual(deck)
+
+      expect(result.sortedCards).toEqual([
+        {type: 'METHOD'}, {type: 'REPEAT'}, {type: 'SCAN'}
+      ])
+    })
+
+    test('when player is hurt by stack underflow', () => {
+      const action = new PlayBestCard(order)
+
+      const player = { hurtBy: jest.fn(() => { return true }) }
+      const card = { value: 3 }
+      let result = action.sort(card, { player })
+
+      expect(player.hurtBy).toBeCalledTimes(1)
+      expect(player.hurtBy).toBeCalledWith('STACK_UNDERFLOW')
+      expect(result).toBeUndefined()
+    })
+  })
 })
