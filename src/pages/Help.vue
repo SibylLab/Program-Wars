@@ -8,7 +8,8 @@
     <!-- For your page to be viewable add a link like these. Just replace the
          string in open() with a simple name for your page. -->
     <a v-on:click="open('intro')"> Introduction </a>
-    <a v-on:click="open('play')"> How To Play </a>
+    <a v-on:click="open('play')"> Card Types</a>
+    <a v-on:click="open('game')"> Gameplay</a>
   </div>
 
   <div class='help-content'>
@@ -18,6 +19,7 @@
          your link in the nav list. -->
     <vue-markdown v-if="isOpen('intro')" :source="intro"/>
     <vue-markdown v-if="isOpen('play')" :source="play"/>
+    <vue-markdown v-if="isOpen('game')" :source="game"/>
   </div>
 
 </div>
@@ -31,6 +33,7 @@ import VueMarkdown from 'vue-markdown'
 // in the component.
 import helpIntro from 'raw-loader!@/markdown/helpIntro.md'
 import howToPlay from 'raw-loader!@/markdown/howToPlay.md'
+import gameplay from  'raw-loader!@/markdown/gameplay.md'
 
 export default {
   name: 'help-page',
@@ -39,7 +42,8 @@ export default {
       page: 'intro',
       // Add your markdown page text to a member here
       intro: helpIntro,
-      play: howToPlay
+      play: howToPlay,
+      game: gameplay
     }
   },
   components: {
