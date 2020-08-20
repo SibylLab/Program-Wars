@@ -56,7 +56,7 @@ To find out more about variables you can go to: here.
 
 - Method card:
 <br>
- <img src="static/cardImages/method.png" style="width: 10rem">
+ <img src="static/cardImages/sideNav/method.gif" style="width: 10rem">
   <br>
 
 1.	You add method card in the playfield, it reflects the scores that are present in the method stack.
@@ -241,7 +241,7 @@ To find out more about Scan you can go to: here.
 The use of algorithms is an essential part of any computer program. Two key types of algorithms in programming are searching, and sorting is introduced into PW. Searching and sorting cards are introduced into the gameplay to make users familiar with algorithms and built-in functions.
 - Search
   <br>
- <img src="static/cardImages/search.png" style="width: 10rem">
+ <img src="static/cardImages/sideNav/search.gif" style="width: 10rem">
 <br>
 This card allows the player to search for a specific card into the deck.
 
@@ -250,7 +250,7 @@ This card allows the player to search for a specific card into the deck.
 
 - Sort
 <br>
-<img src="static/cardImages/sort.png" style="width: 10rem">
+<img src="static/cardImages/sideNav/sort.gif" style="width: 10rem">
 <br>
 
 1.	Sort card allow a player to rearrange the top 5 cards of the deck. 
