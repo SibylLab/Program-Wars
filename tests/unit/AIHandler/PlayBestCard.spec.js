@@ -1,5 +1,11 @@
 import PlayBestCard from '@/classes/AIHandler/PlayBestCard'
 
+function fakeStack (score, accepts = true) {
+  return {
+    getScore: jest.fn(() => { return score }),
+    willAccept: jest.fn(() => { return accepts })
+  }
+}
 
 describe('PlayBestCard', () => {
   const order = [
@@ -122,10 +128,6 @@ describe('PlayBestCard', () => {
   })
 
   describe('instruction', () => {
-    const players = 'players'
-    const scores = 'scores'
-    const deck = 'deck'
-
     test('when instruction can be added to method stack', () => {
       const action = new PlayBestCard(order)
 
@@ -188,15 +190,87 @@ describe('PlayBestCard', () => {
     })
   }) 
 
-  /*
-  test('method', () => {
-    let result = action.method('card', 'state')
-    expect(result.playType).toEqual('startNewStack')
-    expect(result.card).toEqual('card')
-    expect(result.player).toEqual(player)
-    expect(result.target).toEqual(player)
+  describe('method', () => {
+    test('when method can start a new stack', () => {
+      const action = new PlayBestCard(order)
+
+      const player = { playField: {},  hurtBy: jest.fn(() => { return false }) }
+      const card = { value: 0 }
+      let result = action.method(card, { player })
+
+      expect(result.type).toEqual('newStack')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.playField).toEqual(player.playField)
+    })
+
+    test('when player is hurt by stack overflow', () => {
+      const action = new PlayBestCard(order)
+
+      const player = { hurtBy: jest.fn(() => { return true }) }
+      const card = { value: 3 }
+      let result = action.method(card, { player })
+
+      expect(player.hurtBy).toBeCalledTimes(1)
+      expect(player.hurtBy).toBeCalledWith('STACK_OVERFLOW')
+      expect(result).toBeUndefined()
+    })
   })
 
+  describe('repeat', () => {
+    const stackLow = fakeStack(5)
+    const stackHigh = fakeStack(10)
+
+    test('when repeat is played on stack with highest score', () => {
+      const action = new PlayBestCard(order)
+
+      const playField = { stacks: [stackLow, stackHigh] }
+      const player = { playField,  hurtBy: jest.fn(() => { return false }) }
+      const card = { value: 3 }
+      let result = action.repeat(card, { player })
+
+      expect(stackLow.willAccept).toBeCalledTimes(1)
+      expect(stackLow.willAccept).toBeCalledWith(card)
+      expect(stackLow.getScore).toHaveBeenCalled()
+
+      expect(stackHigh.willAccept).toBeCalledTimes(1)
+      expect(stackHigh.willAccept).toBeCalledWith(card)
+      expect(stackHigh.getScore).toHaveBeenCalled()
+
+      expect(result.type).toEqual('playOnStack')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.stack).toEqual(stackHigh)
+    })
+
+    test('when there are no stacks to play the repeat on', () => {
+      const action = new PlayBestCard(order)
+
+      const playField = { stacks: [] }
+      const player = { playField,  hurtBy: jest.fn(() => { return false }) }
+      const card = { value: 3 }
+      let result = action.repeat(card, { player })
+
+      expect(result).toBeUndefined()
+    })
+
+    test('when player is hurt by stack overflow', () => {
+      const action = new PlayBestCard(order)
+
+      const player = { hurtBy: jest.fn(() => { return true }) }
+      const card = { value: 3 }
+      let result = action.repeat(card, { player })
+
+      expect(player.hurtBy).toBeCalledTimes(1)
+      expect(player.hurtBy).toBeCalledWith('STACK_OVERFLOW')
+      expect(result).toBeUndefined()
+    })
+    
+  })
+
+  /*
   describe('card plays that filter and sort stacks', () => {
     const hand = 'hand'
     const players = 'players'
