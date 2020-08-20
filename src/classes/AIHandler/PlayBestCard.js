@@ -214,7 +214,7 @@ export default class PlayBestCardAction extends ActionHandler {
     }
 
     const stack = stacks.filter((s) => {
-      return s.cards.length > 1 && !s.isMethod
+      return s.cards.length > 1 && !s.isMethod && s.willAccept(card)
     }).sort((a, b) => {
       return b.getScore() - a.getScore()
     }).shift()

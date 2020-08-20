@@ -1,9 +1,11 @@
 import PlayBestCard from '@/classes/AIHandler/PlayBestCard'
 
-function fakeStack (score, accepts = true) {
+function fakeStack (score, accepts = true, isMethod = false) {
   return {
     getScore: jest.fn(() => { return score }),
-    willAccept: jest.fn(() => { return accepts })
+    willAccept: jest.fn(() => { return accepts }),
+    isMethod,
+    cards: { length: 2 }
   }
 }
 
@@ -267,124 +269,121 @@ describe('PlayBestCard', () => {
       expect(player.hurtBy).toBeCalledWith('STACK_OVERFLOW')
       expect(result).toBeUndefined()
     })
-    
   })
 
-  /*
-  describe('card plays that filter and sort stacks', () => {
-    const hand = 'hand'
-    const players = 'players'
-    const method = 'method'
-    const scores = 'scores'
+  describe('variable', () => {
+    const stack = fakeStack(5)
 
-    const stackScore_3 = {playerId: 0, willAccept: getValue(true), getScore: getValue(3)}
-    const stackScore_6 = {playerId: 0, willAccept: getValue(true), getScore: getValue(6)}
-    const stackNotPlayers = {playerId: 1, willAccept: getValue(true), getScore: getValue(4)}
-    const stackNoAccept = {playerId: 0, willAccept: getValue(false), getScore: getValue(5)} 
+    test('when variable can be played on one of the stacks', () => {
+      const action = new PlayBestCard(order)
 
-    test('repeat can play', () => {
-      const stacks = [stackNotPlayers, stackNoAccept, stackScore_3, stackScore_6]
-      let result = action.repeat('card', {hand, players, stacks, method, scores})
-      expect(result.playType).toEqual('playCardOnStack')
-      expect(result.card).toEqual('card')
+      const stacks = [stack]
+      stacks.sort = jest.fn(() => { return stacks }) // don't need to sort for this test
+      const player = {
+        playField: { stacks }, 
+        hurtBy: jest.fn(() => { return false })
+      }
+      const card = { value: 3 }
+      let result = action.variable(card, { player })
+
+      expect(stack.willAccept).toBeCalledTimes(1)
+      expect(stack.willAccept).toBeCalledWith(card)
+
+      expect(result.type).toEqual('playOnStack')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
       expect(result.player).toEqual(player)
-      expect(result.target).toEqual(stackScore_6)
+      expect(result.stack).toEqual(stack)
     })
-    test('repeat no play', () => {
-      const stacks = [stackNotPlayers, stackNoAccept]
-      let result = action.repeat('card', {hand, players, stacks, method, scores})
+
+    test('when there are no stacks to play on', () => {
+      const action = new PlayBestCard(order)
+
+      const stacks = []
+      stacks.sort = jest.fn(() => { return stacks }) // don't need to sort for this test
+      const player = {
+        playField: { stacks }, 
+        hurtBy: jest.fn(() => { return false })
+      }
+      const card = { value: 3 }
+      let result = action.variable(card, { player })
+
       expect(result).toBeUndefined()
     })
-    test('variable can play', () => {
-      let varStack = Object.assign(stackScore_3)
-      varStack.getTop = getValue("REPEAT")
-      const stacks = [stackNoAccept, varStack]
 
-      let result = action.variable('card', {hand, players, stacks, method, scores})
-      expect(result.playType).toEqual('playCardOnStack')
-      expect(result.card).toEqual('card')
-      expect(result.player).toEqual(player)
-      expect(result.target).toEqual(varStack)
-    })
-    test('variable no play', () => {
-      const stacks = [stackNotPlayers, stackNoAccept]
-      let result = action.variable('card', {hand, players, stacks, method, scores})
-      expect(result).toBeUndefined()
-    })
-    test('virus can play', () => {
-      let notEnoughCards = Object.assign({cards: ['c']}, stackScore_3)
-      notEnoughCards.playerId = 4
+    test('when player is hurt by stack overflow', () => {
+      const action = new PlayBestCard(order)
 
-      let hackStack_3 = Object.assign({
-        cards: ['c','c'], isHackable: getValue(true)
-      }, stackScore_3)
-      hackStack_3.playerId = 4
+      const player = { hurtBy: jest.fn(() => { return true }) }
+      const card = { value: 3 }
+      let result = action.variable(card, { player })
 
-      let hackStack_6 = Object.assign({
-        cards: ['c','c'], isHackable: getValue(true)
-      }, stackScore_6)
-      hackStack_6.playerId = 4
-
-      const stacks = [stackNoAccept, hackStack_3, notEnoughCards, hackStack_6]
-
-      let result = action.virus('card', {hand, players, stacks, method, scores})
-      expect(result.playType).toEqual('playCardOnStack')
-      expect(result.card).toEqual('card')
-      expect(result.player).toEqual(player)
-      expect(result.target).toEqual(hackStack_6)
-    })
-    test('virus no play', () => {
-      let noHack = Object.assign(stackScore_3)
-      noHack.cards = ['card', 'card']
-      noHack.isHackable = getValue(false)
-      const stacks = [stackNoAccept, noHack]
-
-      let result = action.virus('card', {hand, players, stacks, method, scores})
+      expect(player.hurtBy).toBeCalledTimes(1)
+      expect(player.hurtBy).toBeCalledWith('STACK_OVERFLOW')
       expect(result).toBeUndefined()
     })
   })
 
-  describe('play safety and attack cards', () => {
-    test('can play safety', () => {
-      player.helpedBy = getValue(false)
-      let result = action.playSafety({type: "ANTIVIRUS"})
-      expect(result.playType).toEqual('playSpecialCard')
-      expect(result.card).toEqual({type: "ANTIVIRUS"})
-      expect(result.player).toEqual(player)
-      expect(result.target).toEqual(player)
-      expect(player.helpedBy.mock.calls[0]).toEqual(["ANTIVIRUS"])
-    })    
-    test('cannot play safety', () => {
-      player.helpedBy = getValue(true)
-      let result = action.playSafety({type: "ANTIVIRUS"})
-      expect(result).toBeUndefined()
-    })    
-    test('can play attack', () => {
-      const isHurt = {id: 1, hurtBy: getValue(true)}
-      const isProtected = {id: 2, hurtBy: getValue(false), isProtectedFrom: getValue(true)}
-      const canAttack_3 = {id: 3, hurtBy: getValue(false), isProtectedFrom: getValue(false)}
-      const canAttack_6 = {id: 4, hurtBy: getValue(false), isProtectedFrom: getValue(false)}
-      const players = [isHurt, isProtected, canAttack_3, canAttack_6]
+  describe('virus', () => {
+    const stackLow = fakeStack(5)
+    const stackHigh = fakeStack(10)
 
-      let scores = {}
-      scores[canAttack_6.id] = {score: 6},
-      scores[canAttack_3.id] = {score: 3}
+    test('when virus can be played on one of the stacks', () => {
+      const action = new PlayBestCard(order)
 
-      let result = action.playAttack({type: "VIRUS"}, players, scores)
-      expect(result.playType).toEqual('playSpecialCard')
-      expect(result.card).toEqual({type: "VIRUS"})
+      const player = { hurtBy: jest.fn(() => { return false }) }
+
+      const stacks = [stackLow, stackHigh]
+      const opponent = {
+        playField: { stacks },
+        protectedFrom: jest.fn(() => { return false })
+      }
+
+      const players = [player, opponent]
+      const card = { value: 3 }
+      let result = action.virus(card, { player, players })
+
+      expect(stackLow.willAccept).toBeCalledTimes(1)
+      expect(stackLow.willAccept).toBeCalledWith(card)
+      expect(stackHigh.willAccept).toBeCalledTimes(1)
+      expect(stackHigh.willAccept).toBeCalledWith(card)
+
+      expect(result.type).toEqual('playOnStack')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
       expect(result.player).toEqual(player)
-      expect(result.target).toEqual(canAttack_6)
-    })    
-    test('cannot play attack', () => {
-      const isHurt = {id: 1, hurtBy: getValue(true)}
-      let result = action.playAttack({type: "ANTIVIRUS"}, [isHurt], 'scores')
+      expect(result.stack).toEqual(stackHigh)
+    })
+
+    test('when opponent is protected, then there are no stacks', () => {
+      const action = new PlayBestCard(order)
+
+      const player = { hurtBy: jest.fn(() => { return false }) }
+
+      const stacks = [stackLow, stackHigh]
+      const opponent = {
+        playField: { stacks },
+        protectedFrom: jest.fn(() => { return true })
+      }
+
+      const players = [player, opponent]
+      const card = { value: 3 }
+      let result = action.virus(card, { player, players })
+
       expect(result).toBeUndefined()
-    })    
-    test('cannot play attack on self', () => {
-      let result = action.playAttack({type: "ANTIVIRUS"}, [player], 'scores')
+    })
+
+
+    test('when player is hurt by stack overflow', () => {
+      const action = new PlayBestCard(order)
+
+      const player = { hurtBy: jest.fn(() => { return true }) }
+      const card = { value: 3 }
+      let result = action.virus(card, { player })
+
+      expect(player.hurtBy).toBeCalledTimes(1)
+      expect(player.hurtBy).toBeCalledWith('STACK_UNDERFLOW')
       expect(result).toBeUndefined()
-    })    
+    })
   })
-  */
 })
