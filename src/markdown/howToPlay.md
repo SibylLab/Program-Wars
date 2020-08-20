@@ -56,7 +56,7 @@ To find out more about variables you can go to: here.
 
 - Method card:
 <br>
- <img src="static/cardImages/sideNav/method.gif" style="width: 10rem">
+ <img src="static/cardImages/method.png" style="width: 10rem">
   <br>
 
 1.	You add method card in the playfield, it reflects the scores that are present in the method stack.
@@ -76,18 +76,21 @@ To find out more about these groups of instructions, you can go here.
 <br>
 
 - Malware
- 
+<br>
+ <img src="static/cardImages/sideNav/hack.gif" style="width: 10rem">
+  <br>
+
 1.	Malware cards let you infect another player's program, cutting their score by 25%.
 2.	When you play a Malware card, you choose which player will be infected.
 3.	You cannot infect someone with an Antivirus card played.
 Relation to computer programming: Sometimes a mean or mischievous computer programmer known as a hacker will send you a computer program called malware to have your computer do something it shouldn't, making your computer slower. Scanning your computer will clean the malware/ hack effect, which is why scan cards counter Virus cards in the game.
 <br>
-There are four types of malware: 
- <img src="static/cardImages/sideNav/hack.gif" style="width: 10rem">
-  <br>
 
 - Virus:
+
 <br>
+ <img src="static/cardImages/virus.png" style="width: 10rem">
+  <br>
 
 1.	You play virus on opponent stacks like hacking. 
 2.	If played on a stack starts with instruction card, it reduces a stack score to 0 and prevents any more cards from being played until it is effected by Virus, If the stack starts with a method card the reduction is by 50% instead.
@@ -98,6 +101,8 @@ To find out more about Virus you can go to: here.
 
 - Ransomware:
 <br>
+ <img src="static/cardImages/ransom.png" style="width: 10rem">
+  <br>
 
 1.	Played on an opponent to get 10 points from their scores.
 2.	Opponent player can recover their scores by playing Scan or Antivirus card.
@@ -107,6 +112,8 @@ To find out more about Ransomware you can go to: here.
 <br>
 	
 - Spyware:
+  <br>
+ <img src="static/cardImages/spyware.png" style="width: 10rem">
   <br>
 
 1.	Played on an opponent to spy on the cards in their hand.
@@ -119,6 +126,8 @@ To find out more about Spyware you can go to: here.
 <br>
 
 - Trojan:
+  <br>
+ <img src="static/cardImages/trojan.png" style="width: 10rem">
   <br>
 
 1.	When played on opponent it replace random card from opponent’s hand with one that mimics it.

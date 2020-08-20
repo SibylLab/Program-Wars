@@ -1,6 +1,6 @@
  <img src="static/cardImages/antivirus.png" style="width: 6rem">
  <img src="static/cardImages/sql_injection.png" style="width: 6rem">
- <img src="static/cardImages/VIRUS.png" style="width: 6rem">
+ <img src="static/cardImages/virus.png" style="width: 6rem">
  <img src="static/cardImages/search.png" style="width: 6rem">
  <img src="static/cardImages/trojan.png" style="width: 6rem">
  <img src="static/cardImages/method.png" style="width: 6rem">

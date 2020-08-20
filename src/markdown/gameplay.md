@@ -7,7 +7,7 @@ Program Wars provides two modes of gameplay:
 - **Standard**
 For each gameplay mode, the player can choose to playwith one of four different sets of cyberattack and cyberdefense cards.
 <p align="center">
-<img src="static/cardImages/sideNav/gameplay.png" style="width: 30rem">
+<img src="static/cardImages/sideNav/gameplay.PNG" style="width: 30rem">
 </p>
 <br>
  Players can select different levels of game difficulty.
@@ -25,7 +25,7 @@ need to be added in order to start the game.
 - **Or a computer opponent with human player**
 <br>
 <p align="center">
-<img src="static/cardImages/sideNav/play.png" style="width: 45rem">
+<img src="static/cardImages/sideNav/play.PNG" style="width: 45rem">
 </p>
 
 #### Quick Guide
@@ -45,7 +45,7 @@ The game is over if a player reaches the score limit.
 
 
 <p align="center">
-<img src="static/cardImages/sideNav/bonus.png" style="width: 50rem">
+<img src="static/cardImages/sideNav/bonus.PNG" style="width: 50rem">
 </p>
 <br>
 
