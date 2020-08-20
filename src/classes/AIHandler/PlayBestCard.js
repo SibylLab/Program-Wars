@@ -299,7 +299,7 @@ export default class PlayBestCardAction extends ActionHandler {
     const target = opponents.filter((p) => {
       return !p.hurtBy(card.type) && !p.protectedFrom(card.type)
     }).sort((a, b) => {
-      return scores[b.id] - scores[a.id]
+      return b.getScore() - a.getScore()
     }).shift()
 
     if (target) {

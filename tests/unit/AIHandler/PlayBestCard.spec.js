@@ -1,5 +1,14 @@
 import PlayBestCard from '@/classes/AIHandler/PlayBestCard'
 
+function fakePlayer (score, { helped, hurt, protect}) {
+  return {
+    getScore: jest.fn(() => { return score }),
+    helpedBy: jest.fn(() => { return helped || false }),
+    hurtBy: jest.fn(() => { return hurt || false }),
+    protectedFrom: jest.fn(() => { return protect || false }),
+  }
+}
+
 function fakeStack (score, accepts = true, isMethod = false) {
   return {
     getScore: jest.fn(() => { return score }),
@@ -380,6 +389,209 @@ describe('PlayBestCard', () => {
       const player = { hurtBy: jest.fn(() => { return true }) }
       const card = { value: 3 }
       let result = action.virus(card, { player })
+
+      expect(player.hurtBy).toBeCalledTimes(1)
+      expect(player.hurtBy).toBeCalledWith('STACK_UNDERFLOW')
+      expect(result).toBeUndefined()
+    })
+  })
+
+  describe('playSafety', () => {
+    test('when safety card is not scan', () => {
+      const action = new PlayBestCard(order)
+
+      const player = { helpedBy: jest.fn(() => { return false }) }
+      const card = { type: 'FIREWALL' }
+      const result = action.playSafety(card, { player })
+
+      expect(result.type).toEqual('playSpecialCard')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(player)
+      expect(result.targetType).toEqual('player')
+    })
+
+    test('when safety is scan and there are no attacks to scan', () => {
+      const action = new PlayBestCard(order)
+      const attacks = { effects: [], virusStacks: [], mimics: [] }
+      const player = {
+        helpedBy: jest.fn(() => { return false }),
+        getAllAttacks: jest.fn(() => { return attacks })
+      }
+      const card = { type: 'SCAN' }
+      const result = action.playSafety(card, { player })
+
+      expect(player.getAllAttacks).toBeCalledTimes(1)
+
+      expect(result.type).toEqual('playSpecialCard')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(player)
+      expect(result.targetType).toEqual('player')
+    })
+
+    test('when safety is scan and there are attacks to scan', () => {
+      const action = new PlayBestCard(order)
+      action.playScan = jest.fn(() => { return 'scanned' })
+
+      const attacks = { effects: ['effect'], virusStacks: [], mimics: [] }
+      const player = {
+        helpedBy: jest.fn(() => { return false }),
+        getAllAttacks: jest.fn(() => { return attacks })
+      }
+      const card = { type: 'SCAN' }
+      const result = action.playSafety(card, { player })
+
+      expect(player.getAllAttacks).toBeCalledTimes(1)
+      expect(action.playScan).toBeCalledTimes(1)
+      expect(action.playScan).toBeCalledWith(card, attacks, player)
+      expect(result).toEqual('scanned')
+    })
+
+    test('when player already has safety active', () => {
+      const action = new PlayBestCard(order)
+
+      const player = { helpedBy: jest.fn(() => { return true }) }
+      const card = { type: 'FIREWALL' }
+      const result = action.playSafety(card, { player })
+
+      expect(player.helpedBy).toBeCalledTimes(1)
+      expect(player.helpedBy).toBeCalledWith('FIREWALL')
+      expect(result).toBeUndefined()
+    })
+  })
+
+  describe('playScan', () => {
+    test('when player is hurt by overflow', () => {
+      const action = new PlayBestCard(order)
+      const player = 'player'
+      const card = { type: 'SCAN' }
+
+      const effect = { card: { type: 'STACK_OVERFLOW' } }
+      const attacks = { effects: [effect], virusStacks: [], mimics: [] }
+
+      const result = action.playScan(card, attacks, player)
+
+      expect(result.type).toEqual('playScan')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(effect)
+      expect(result.targetType).toEqual('effect')
+    })
+
+    test('when player has virus stacks', () => {
+      const action = new PlayBestCard(order)
+      const player = 'player'
+      const card = { type: 'SCAN' }
+
+      const stack_1 = fakeStack(5)
+      const stack_2 = fakeStack(30)
+      const stack_3 = fakeStack(10)
+      const attacks = {
+        effects: [], virusStacks: [stack_1, stack_2, stack_3], mimics: []
+      }
+
+      const result = action.playScan(card, attacks, player)
+
+      expect(result.type).toEqual('playScan')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(stack_2)
+      expect(result.targetType).toEqual('stack')
+    })
+
+    test('when player has a mimic in their hand', () => {
+      const action = new PlayBestCard(order)
+      const player = 'player'
+      const card = { type: 'SCAN' }
+
+      const attacks = { effects: [], virusStacks: [], mimics: ['m1', 'm2'] }
+
+      const result = action.playScan(card, attacks, player)
+
+      expect(result.type).toEqual('playScan')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual('m2')
+      expect(result.targetType).toEqual('mimic')
+    })
+
+    test('when there is any other negative effect', () => {
+      const action = new PlayBestCard(order)
+      const player = 'player'
+      const card = { type: 'SCAN' }
+
+      const effect_1 = { card: { type: 'RANSOM' } }
+      const effect_2 = { card: { type: 'DDOS' } }
+      const attacks = { effects: [effect_1, effect_2], virusStacks: [], mimics: [] }
+
+      const result = action.playScan(card, attacks, player)
+
+      expect(result.type).toEqual('playScan')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(effect_2)
+      expect(result.targetType).toEqual('effect')
+
+    })
+  })
+
+  describe('playNegativeEffect', () => {
+    test('when negative effect has 2 possible opponents', () => {
+      const action = new PlayBestCard(order)
+
+      const player = fakePlayer(3, {})
+      const opponent_1 = fakePlayer(10, {})
+      const opponent_2 = fakePlayer(45, {})
+      const players = [player, opponent_1, opponent_2]
+      const card = { type: 'RANSOM' }
+      let result = action.playNegativeEffect(card, { player, players })
+
+      expect(opponent_1.hurtBy).toBeCalledTimes(1)
+      expect(opponent_1.hurtBy).toBeCalledWith(card.type)
+      expect(opponent_2.hurtBy).toBeCalledTimes(1)
+      expect(opponent_2.hurtBy).toBeCalledWith(card.type)
+
+      expect(opponent_1.protectedFrom).toBeCalledTimes(1)
+      expect(opponent_1.protectedFrom).toBeCalledWith(card.type)
+      expect(opponent_2.protectedFrom).toBeCalledTimes(1)
+      expect(opponent_2.protectedFrom).toBeCalledWith(card.type)
+
+      expect(opponent_1.getScore).toHaveBeenCalled()
+      expect(opponent_2.getScore).toHaveBeenCalled()
+
+      expect(result.type).toEqual('playSpecialCard')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.target).toEqual(opponent_2)
+    })
+
+    test('when all opponents are protected or hurt by the effect already', () => {
+      const action = new PlayBestCard(order)
+
+      const player = fakePlayer(3, {})
+      const opponent_1 = fakePlayer(10, { hurt: true })
+      const opponent_2 = fakePlayer(45, { protect: true })
+      const players = [player, opponent_1, opponent_2]
+      const card = { type: 'RANSOM' }
+      const  result = action.playNegativeEffect(card, { player, players })
+
+      expect(result).toBeUndefined()
+    })
+
+    test('when player is hurt by stack underflow', () => {
+      const action = new PlayBestCard(order)
+
+      const player = fakePlayer(0, { hurt: true})
+      const card = { value: 3 }
+      let result = action.playNegativeEffect(card, { player })
 
       expect(player.hurtBy).toBeCalledTimes(1)
       expect(player.hurtBy).toBeCalledWith('STACK_UNDERFLOW')
