@@ -322,8 +322,8 @@ export default class PlayBestCardAction extends ActionHandler {
   search (card, { player, deck }) {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
 
-    for (const type in this.playOrder) {
-      const chosen = deck.cards.find(c => c.type === type)
+    for (const type of this.playOrder) {
+      const chosen = deck.cards.slice(0,card.value).find(c => c.type === type)
       if (chosen) {
         return {
           type: 'playSearch',

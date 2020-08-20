@@ -374,12 +374,51 @@ describe('PlayBestCard', () => {
     })
 
 
-    test('when player is hurt by stack overflow', () => {
+    test('when player is hurt by stack underflow', () => {
       const action = new PlayBestCard(order)
 
       const player = { hurtBy: jest.fn(() => { return true }) }
       const card = { value: 3 }
       let result = action.virus(card, { player })
+
+      expect(player.hurtBy).toBeCalledTimes(1)
+      expect(player.hurtBy).toBeCalledWith('STACK_UNDERFLOW')
+      expect(result).toBeUndefined()
+    })
+  })
+
+  describe('search', () => {
+    const cards = [ {type: 'NOT_IN_ORDER'}, {type: 'REPEAT'} ]
+    const deck = { cards }
+
+    test('when we find a card in the play order in the cards we can search', () => {
+      const action = new PlayBestCard(order)
+      const player = { hurtBy: jest.fn(() => { return false }) }
+      const card = { value: 2 } // search top 2 cards of deck
+      const result = action.search(card, { player, deck })
+
+      expect(result.type).toEqual('playSearch')
+      expect(result.card).toEqual(card)
+      expect(result.cardOwner).toEqual(player)
+      expect(result.player).toEqual(player)
+      expect(result.chosenCard).toEqual({type: 'REPEAT'})
+      expect(result.deck).toEqual(deck)
+    })
+
+    test('when we cannot find a card from the play order', () => {
+      const action = new PlayBestCard(order)
+      const player = { hurtBy: jest.fn(() => { return false }) }
+      const card = { value: 1 } // search only top card
+      const result = action.search(card, { player, deck })
+      expect(result).toBeUndefined()
+    })
+
+    test('when player is hurt by stack underflow', () => {
+      const action = new PlayBestCard(order)
+
+      const player = { hurtBy: jest.fn(() => { return true }) }
+      const card = { value: 3 }
+      let result = action.search(card, { player })
 
       expect(player.hurtBy).toBeCalledTimes(1)
       expect(player.hurtBy).toBeCalledWith('STACK_UNDERFLOW')
