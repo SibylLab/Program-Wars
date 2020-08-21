@@ -26,25 +26,20 @@ const CARD_ORDER = {
  */
 export default class AIHandlerFactory {
   /**
-   * @constructor AIHandlerFactory
-   */
-  constructor () {}
-
-  /**
    * Create and return an AIHandler of the given type for the given player.
    */
   newHandler (personality) {
     if (personality === 'beginner') {
-      return this.newBeginnerHandler()
+      return this._newBeginnerHandler()
     } else {
-      return this.newStandardHandler(personality)
+      return this._newStandardHandler(personality)
     }
   }
 
-  newStandardHandler (personality) {
+  _newStandardHandler (personality) {
     let actions = []
 
-    let cards = CARD_ORDER.basic
+    let cards = CARD_ORDER.standard
     if (personality in CARD_ORDER) {
       cards = CARD_ORDER[personality]
     }
@@ -54,7 +49,7 @@ export default class AIHandlerFactory {
     return handler
   }
 
-  newBeginnerHandler () {
+  _newBeginnerHandler () {
     return new AIHandler([new PlayRandomCard()])
   }
 }
