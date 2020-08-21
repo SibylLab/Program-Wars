@@ -2,7 +2,6 @@
  <img src="static/cardImages/sql_injection.png" style="width: 6rem">
  <img src="static/cardImages/virus.png" style="width: 6rem">
  <img src="static/cardImages/search.png" style="width: 6rem">
- <img src="static/cardImages/trojan.png" style="width: 6rem">
  <img src="static/cardImages/method.png" style="width: 6rem">
  <img src="static/cardImages/repeat1.png" style="width: 6rem">
  <img src="static/cardImages/instruction2.png" style="width: 6rem">
@@ -40,7 +39,7 @@ To build your program you will be using the basic building blocks of any program
   - Sort
   <br>
 + **Hack Cards**
-  - Denial of Service attack (DDoS)
+  - Distributed Denial of Service attack (DDoS)
   - Cross-site scripting
   - Buffer overflow
   - SQL injection

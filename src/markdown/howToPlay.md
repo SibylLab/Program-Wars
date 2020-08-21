@@ -1,6 +1,11 @@
 # Card Types
 
+<img src="static/cardImages/sideNav/All.png" style="width: 20rem">
+<img src="static/cardImages/sideNav/All2.png" style="width: 20rem">
+<br>
+
 There are five types of cards in this game:
+
 1. **program building cards** 
 2. **Malware cards** 
 3. **Cyber security**
@@ -37,7 +42,7 @@ There are five types of cards in this game:
 5.	You can’t replace a repetition card with another repetition card unless it is a variable card. 
 
 **Relation to computer programming:** Repetition cards represent special computer instructions called loops. Like a repetition card, a loop repeats one or more instructions. Two repetition cards on instruction or method card resembles to nested loop in programming.
-To understand the different types of loops in a computer program you can go here.
+To understand the different types of loops in a computer program you can go <a href="https://www.tutorialspoint.com/computer_programming/computer_programming_loops.htm" target="_blank">here</a>.
 <br>
 
 - Variable cards:
@@ -51,7 +56,7 @@ To understand the different types of loops in a computer program you can go here
 4.	A Variable Repetition card (Rx) card has no effect without a Variable.
 
 **Relation to computer programming:** A variable in a computer program is a piece of computer memory that holds a value. Variables are given names so the computer program can either get the value or change the value at the memory location. You can think of a variable as a small box with a label on it, and the computer program can change what is in the box at anytime.
-To find out more about variables you can go to: here.
+To find out more about variables you can go to <a href="https://www.tutorialspoint.com/computer_programming/computer_programming_variables.htm" target="_blank">here</a>.
 <br>
 
 - Method card:
@@ -64,7 +69,7 @@ To find out more about variables you can go to: here.
 3.	The combined total of the method card must be the same as the value of the method stack.
 4.	You place the method card in the playfield to begin the stack.
    Relation to computer programming: Computer programs are commonly broken up into functions, methods or procedures. All of these names mean the same thing - a group of instructions. This also introduces the software engineering principle of refactoring. Refactoring is restructuring code without changing what it does. Grouping refactors our code into small chunks that can be reused making it easier to change or maintain. Although our code will still do the same thing, refactoring makes it easier to change later on.
-To find out more about these groups of instructions, you can go here.
+To find out more about these groups of instructions, you can go <a href="https://www.tutorialspoint.com/python/python_functions.htm" target="_blank">here</a>.
 <br>
 
 
@@ -96,7 +101,7 @@ Relation to computer programming: Sometimes a mean or mischievous computer progr
 2.	If played on a stack starts with instruction card, it reduces a stack score to 0 and prevents any more cards from being played until it is effected by Virus, If the stack starts with a method card the reduction is by 50% instead.
 
 **Relation to cyberattack:** Computer virus is typically a computer program that replicates itself by modifying other programs.
-To find out more about Virus you can go to: here.
+To find out more about Virus you can go to <a href="https://searchsecurity.techtarget.com/definition/virus" target="_blank">here</a>.
 <br>
 
 - Ransomware:
@@ -108,7 +113,7 @@ To find out more about Virus you can go to: here.
 2.	Opponent player can recover their scores by playing Scan or Antivirus card.
 
 **Relation to cyberattack:** Ransomware is a malware which threatens to publish the affected individual data unless a specific payment or penalty is paid. It also involves the user’s files being encrypted and a key only provided when the “ransom” is paid. 
-To find out more about Ransomware you can go to: here.
+To find out more about Ransomware you can go to <a href="https://spinbackup.com/blog/10-ransomware-examples-to-stay-away-from/" target="_blank">here</a>.
 <br>
 	
 - Spyware:
@@ -122,7 +127,7 @@ To find out more about Ransomware you can go to: here.
 4.	Opponent can remove the effect by playing Scan or Antivirus card.
 
 **Relation to cyberattack:** Spyware is a malware used to gather information and send that information to another party without the host’s consent
-To find out more about Spyware you can go to: here.
+To find out more about Spyware you can go to <a href="https://www.managedsolution.com/4-common-types-of-spyware-and-how-to-detect-them/" target="_blank">here</a>.
 <br>
 
 - Trojan:
@@ -135,7 +140,7 @@ To find out more about Spyware you can go to: here.
 3.	Safety, method, and instruction will give the effect as if Ransomware is played, attack cards will mimic spyware. Repeat and variable cards will become virus cards.
 
 **Relation to cyberattack:** Trojan is a malware that misleads users as to its true intent.
- To find out more about Trojan you can go to: here.
+ To find out more about Trojan you can go to <a href="https://enterprise.comodo.com/what-is-the-trojan-horse-virus.php" target="_blank">here</a>.
  <br>
 
 | **CARD** | **TYPES** |
@@ -153,7 +158,7 @@ To find out more about Spyware you can go to: here.
 2.	If player is already infected by malware, Antivirus will remove all the negative effects.
 
 **Relation to protect from cyberattack:** Antivirus in general, protect you from viruses, making sure that your programs will run quickly. 
-To find out more about Antivirus you can go to: here.
+To find out more about Antivirus you can go to <a href="https://en.wikipedia.org/wiki/Antivirus_software" target="_blank">here</a>.
 <br>
 
 - Firewall:
@@ -166,7 +171,7 @@ To find out more about Antivirus you can go to: here.
 3.	It will recover the deducted scores.
 
 **Relation to protect from cyberattack:**Firewalls monitor and restrict what is coming into your local network. This will help protect from hacking attacks.
-To find out more about Firewall you can go to: here.
+To find out more about Firewall you can go to <a href="https://www.forcepoint.com/cyber-edu/firewall" target="_blank">here</a>..
 <br>
 
 - Scan:
@@ -178,12 +183,12 @@ To find out more about Firewall you can go to: here.
 2.	If the player has malware the scan removes malware effect. 
 3.	If the player has more than one malware or hacked effects, scan will remove any one of the effects at a time chosen by the player.
 **Relation to protect from cyberattack:** Like many computer antivirus, the game has this card to scan the user stack and find out any infected cards (i.e. different malwares).
-To find out more about Scan you can go to: here.
+To find out more about Scan you can go to <a href="https://antivirus.comodo.com/blog/comodo-news/what-is-virus-scanner/" target="_blank">here</a>.
 <br>
 
 | **CARD** | **TYPES** |
 | ------| -------- |
-| **Hack card** |  Denial of Service attack (DDoS), Cross-site scripting, Buffer overflow, SQL Injection|
+| **Hack card** |  Distributed Denial of Service attack (DDoS), Cross-site scripting, Buffer overflow, SQL Injection|
 | ||
 <br>
 <br>
@@ -197,6 +202,7 @@ To find out more about Scan you can go to: here.
 2.	If player cannot play any card, there is a “pass” button besides redraw that can pass the turn to other player.
 
 **Relation to computer programming:** if a program tries to utilize more space than is available on the call stack overflow then system protect itself by allowing no more code to be run. So in the gameplay, the stack overflow card prevents the affected player from playing cards to consume some space.
+To find out more about Buffer overflow you can go to <a href="https://www.imperva.com/learn/application-security/buffer-overflow/" target="_blank">here</a>.
 <br>
 
 - Cross-site scripting:
@@ -207,6 +213,7 @@ To find out more about Scan you can go to: here.
 3.	If player cannot play any card from their hand, there is a “pass” button besides redraw that can pass the turn to other player.
 
 **Relation to computer programming:** Cross-site Scripting is a code injection attack. The attack happens when the victim visits a web page or web application that administers the harmful code.
+To find out more about Cross-site scripting you can go to <a href="https://www.acunetix.com/websitesecurity/cross-site-scripting/" target="_blank">here</a>.
 <br>
 
 - DDoS Attack:
@@ -218,16 +225,18 @@ To find out more about Scan you can go to: here.
 4.	Player can only pass the turn or play remaining cards in the hand.
 5.	This effect last for three turns.
 **Relation to computer programming:** Distributed Denial of Service (DDoS) attacks happen where various machines are used to target one system to slow down or completely crash that system. 
+To find out more about DDoS you can go to <a href="https://us.norton.com/internetsecurity-emerging-threats-what-is-a-ddos-attack-30sectech-by-norton.html" target="_blank">here</a>.
 <br>
 
 - SQL Injection:
   <br>
-- 
+
 1.	It reduces the method stack by 2 points.
 2.	Deduction from method stack effects all the method cards being played in the playfield.
 3.	Safety cards remove the effect of SQL injection.
 
 **Relation to computer programming:** SQL injection uses a harmful SQL code for the backend database to obtain information that was not intended to be disclosed. By losing points from the core method section, relate the gameplay to the real world.
+To find out more about SQL injection you can go to <a href="https://www.acunetix.com/websitesecurity/sql-injection/" target="_blank">here</a>.
 <br>
 
 | **CARD** | **TYPES** |
@@ -246,6 +255,7 @@ The use of algorithms is an essential part of any computer program. Two key type
 This card allows the player to search for a specific card into the deck.
 
 **Relation to computer programming:** Searching algorithm enables to locate a particular element present in a given set of elements, which is quite similar to the game's searching card.
+To find out more about searching algorithm you can go to <a href="https://www.geeksforgeeks.org/searching-algorithms/" target="_blank">here</a>.
 <br>
 
 - Sort
@@ -258,7 +268,7 @@ This card allows the player to search for a specific card into the deck.
 3.	Player can use sorted cards for three turns.
 
 **Relation to computer programming:** The use of algorithms is an essential part of any computer program.  Sorting is arranging items into an ordered sequence.
-
+To find out more about Sorting algorithm you can go to <a href="https://www.geeksforgeeks.org/sorting-algorithms/" target="_blank">here</a>.
 
 
 
