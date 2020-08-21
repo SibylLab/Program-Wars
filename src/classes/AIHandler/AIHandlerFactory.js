@@ -1,12 +1,11 @@
 import AIHandler from '@/classes/AIHandler/AIHandler'
 import PlayBestCard from '@/classes/AIHandler/PlayBestCard'
 import PlayRandomCard from '@/classes/AIHandler/PlayRandomCard'
-import MethodStackFirst from '@/classes/AIHandler/MethodStackFirst'
 
 // card orders for different AI personalities
 const CARD_ORDER = {
   standard: [
-    "METHOD", "VARIABLE", "REPEAT", "INSTRUCTION", "SORT", "SEARCH",
+    "INSTRUCTION", "METHOD", "VARIABLE", "REPEAT", "SORT", "SEARCH",
     "ANTIVIRUS", "FIREWALL", "SCAN", "SQL_INJECTION", "RANSOM", "TROJAN",
     "VIRUS", "STACK_OVERFLOW", "DDOS", "STACK_UNDERFLOW", "SEARCH"
   ],
@@ -43,7 +42,7 @@ export default class AIHandlerFactory {
   }
 
   newStandardHandler (personality) {
-    let actions = [new MethodStackFirst()]
+    let actions = []
 
     let cards = CARD_ORDER.basic
     if (personality in CARD_ORDER) {
