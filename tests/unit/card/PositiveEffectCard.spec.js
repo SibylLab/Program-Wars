@@ -4,6 +4,10 @@ import EffectFactory from '@/classes/statusEffect/EffectFactory'
 jest.mock('@/classes/statusEffect/EffectFactory')
 
 describe('PositiveEffectCard', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('creating a new positive effect card', () => {
     const card = new PositiveEffectCard('SCAN', 'deck')
     expect(card.value).toEqual(0)
