@@ -30,16 +30,16 @@ const needDeckOnly = {
 export default class CardFactory {
   newCard (type, value, deck) {
     let card
-    if (isNegativeEffect(type)) {
-      card = new NegativeEffectCard(type, deck)
-    } else if (isPositiveEffect(type)) {
-      card = new PositiveEffectCard(type, deck)
-    } else if (type in needValueAndDeck) {
+    if (type in needValueAndDeck) {
       const constructor = needValueAndDeck[type]
       card = new constructor(value, deck)
     } else if (type in needDeckOnly) {
       const constructor = needDeckOnly[type]
       card = new constructor(deck)
+    } else if (isNegativeEffect(type)) {
+      card = new NegativeEffectCard(type, deck)
+    } else if (isPositiveEffect(type)) {
+      card = new PositiveEffectCard(type, deck)
     } else {
       throw "CardFactory: Not a valid card type: " + type
     }
