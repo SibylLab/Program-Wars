@@ -14,6 +14,10 @@ function mockGetAttacks ({ effects, virusStacks, mimics }) {
 }
 
 describe('Scan', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('creating a new scan card', () => {
     const card = new Scan('deck')
     expect(card.getValue()).toEqual(0)
