@@ -1,6 +1,5 @@
 import Card from '@/classes/card/Card'
 import Deck from '@/classes/deck/Deck'
-const uuidV1 = require('uuid/v1')
 
 jest.mock('uuid/v1', () => jest.fn(() => { return "mocked_id" }))
 jest.mock('@/classes/deck/Deck')

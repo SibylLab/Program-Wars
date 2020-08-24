@@ -1,6 +1,6 @@
 <template>
 <div id="play-field" :class="{ play: isCurrentPlayer }"
-    @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+    @drop="onDrop" @dragover.prevent @dragenter.prevent>
 
   <h3 id="main-func">{{ player.name }}_main:</h3>
 

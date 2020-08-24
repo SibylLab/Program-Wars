@@ -1,5 +1,5 @@
 <template>
-<div id="stack" :key="update" @drop="onDrop($event)"
+<div id="stack" :key="update" @drop="onDrop"
     @dragover.prevent @dragenter.prevent>
 
   <div style="text-align: center">

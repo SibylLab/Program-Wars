@@ -1,5 +1,4 @@
 import StatusEffect from '@/classes/statusEffect/StatusEffect'
-const uuidV1 = require('uuid/v1')
 
 jest.mock('uuid/v1', () => jest.fn(() => { return "mocked_id" }))
 
