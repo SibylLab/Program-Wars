@@ -12,7 +12,7 @@
     <a v-on:click="open('game')"> Gameplay</a>
   </div>
 
-  <div class='help-content'>
+  <div class="help-content">
     <!-- These create components using the markdown in your markdown file
          for the page. Save the imported page into a data member and use it
          as the source. The text in isOpen() should be the name you used with
@@ -52,6 +52,7 @@ export default {
   methods: {
     open (page) {
       this.page = page
+      window.scrollTo(0, 0) // move content back to top
     },
     isOpen (page) {
       return this.page === page

@@ -18,8 +18,10 @@ There are five types of cards in this game:
 | ||
 
 -  Instruction cards:
-<br>
-<img src="static/cardImages/sideNav/instruction.gif" style="width: 10rem">
+  <br>
+  <img src="static/cardImages/sideNav/instruction.gif" style="width: 10rem">
+  <br>
+
 1.	Instruction cards are the basic way by which you build your program. They contain value of 1, 2 or 3.
 2.	You place maximum 6 instruction cards in the method stack until the value reaches to maximum limit of 9.
 3.	You place an instruction card in the playfield to begin a stack.
@@ -29,10 +31,9 @@ There are five types of cards in this game:
 <br>
 
 - Repeat cards:
- <br>
-
-<img src="static/cardImages/sideNav/repeat.gif" style="width: 10rem">
-<br>
+  <br>
+  <img src="static/cardImages/sideNav/repeat.gif" style="width: 10rem">
+  <br>
 
 
 1.	Repetition cards allow you to repeat an instruction or a method card. They contain value of 2, 3, 4 or Rx.
@@ -60,8 +61,8 @@ To find out more about variables you can go to <a href="https://www.tutorialspoi
 <br>
 
 - Method card:
-<br>
- <img src="static/cardImages/sideNav/method.gif" style="width: 10rem">
+  <br>
+  <img src="static/cardImages/sideNav/method.gif" style="width: 10rem">
   <br>
 
 1.	You add method card in the playfield, it reflects the scores that are present in the method stack.
@@ -80,21 +81,9 @@ To find out more about these groups of instructions, you can go <a href="https:/
 | ||
 <br>
 
-- Malware
-<br>
- <img src="static/cardImages/sideNav/hack.gif" style="width: 10rem">
-  <br>
-
-1.	Malware cards let you infect another player's program, cutting their score by 25%.
-2.	When you play a Malware card, you choose which player will be infected.
-3.	You cannot infect someone with an Antivirus card played.
-Relation to computer programming: Sometimes a mean or mischievous computer programmer known as a hacker will send you a computer program called malware to have your computer do something it shouldn't, making your computer slower. Scanning your computer will clean the malware/ hack effect, which is why scan cards counter Virus cards in the game.
-<br>
-
 - Virus:
-
-<br>
- <img src="static/cardImages/virus.png" style="width: 10rem">
+  <br>
+  <img src="static/cardImages/virus.png" style="width: 10rem">
   <br>
 
 1.	You play virus on opponent stacks like hacking. 
@@ -105,8 +94,8 @@ To find out more about Virus you can go to <a href="https://searchsecurity.techt
 <br>
 
 - Ransomware:
-<br>
- <img src="static/cardImages/ransom.png" style="width: 10rem">
+  <br>
+  <img src="static/cardImages/ransom.png" style="width: 10rem">
   <br>
 
 1.	Played on an opponent to get 10 points from their scores.
@@ -118,7 +107,7 @@ To find out more about Ransomware you can go to <a href="https://spinbackup.com/
 	
 - Spyware:
   <br>
- <img src="static/cardImages/spyware.png" style="width: 10rem">
+  <img src="static/cardImages/spyware.png" style="width: 10rem">
   <br>
 
 1.	Played on an opponent to spy on the cards in their hand.
@@ -132,7 +121,7 @@ To find out more about Spyware you can go to <a href="https://www.managedsolutio
 
 - Trojan:
   <br>
- <img src="static/cardImages/trojan.png" style="width: 10rem">
+  <img src="static/cardImages/trojan.png" style="width: 10rem">
   <br>
 
 1.	When played on opponent it replace random card from opponent’s hand with one that mimics it.
@@ -151,7 +140,7 @@ To find out more about Spyware you can go to <a href="https://www.managedsolutio
 
 - Antivirus:
   <br>
- <img src="static/cardImages/sideNav/AV.gif" style="width: 10rem">
+  <img src="static/cardImages/sideNav/AV.gif" style="width: 10rem">
   <br>
 
 1.	It protects from all malware effects.
@@ -163,7 +152,7 @@ To find out more about Antivirus you can go to <a href="https://en.wikipedia.org
 
 - Firewall:
   <br>
- <img src="static/cardImages/sideNav/FW1.gif" style="width: 10rem">
+  <img src="static/cardImages/sideNav/FW1.gif" style="width: 10rem">
   <br>
   
 1.	It protects from being hacked.
@@ -175,8 +164,8 @@ To find out more about Firewall you can go to <a href="https://www.forcepoint.co
 <br>
 
 - Scan:
-   <br>
- <img src="static/cardImages/sideNav/scan.gif" style="width: 10rem">
+  <br>
+  <img src="static/cardImages/sideNav/scan.gif" style="width: 10rem">
   <br>
   
 1.	If the player has no malware this adds the scan effect to the player and blocks the next malware played on the player. 
@@ -188,15 +177,13 @@ To find out more about Scan you can go to <a href="https://antivirus.comodo.com/
 
 | **CARD** | **TYPES** |
 | ------| -------- |
-| **Hack card** |  Distributed Denial of Service attack (DDoS), Cross-site scripting, Buffer overflow, SQL Injection|
+| **Hack card** |  Denial of Service attack (DoS), Cross-site scripting, Buffer overflow, SQL Injection|
 | ||
-<br>
-<br>
- <img src="static/cardImages/sideNav/Dos.gif" style="width: 10rem">
-<br>
 
 - Buffer Overflow:
-<br>
+  <br>
+  <img src="static/cardImages/stack_overflow.png" style="width: 10rem">
+  <br>
   
 1.	Buffer overflow blocks the affected player from playing any Instruction, Repeat, Variable, and Method cards for two turns.
 2.	If player cannot play any card, there is a “pass” button besides redraw that can pass the turn to other player.
@@ -207,6 +194,8 @@ To find out more about Buffer overflow you can go to <a href="https://www.imperv
 
 - Cross-site scripting:
   <br>
+  <img src="static/cardImages/stack_underflow.png" style="width: 10rem">
+  <br>
 
 1.	If a player has been attacked with cross-site script cards it stops the player from playing all algorithms and attack cards. 
 2.	Player can only play a firewall and scan card.
@@ -216,10 +205,12 @@ To find out more about Buffer overflow you can go to <a href="https://www.imperv
 To find out more about Cross-site scripting you can go to <a href="https://www.acunetix.com/websitesecurity/cross-site-scripting/" target="_blank">here</a>.
 <br>
 
-- DDoS Attack:
+- DoS Attack:
+  <br>
+  <img src="static/cardImages/ddos.png" style="width: 10rem">
   <br>
 
-1.	A distributed denial of service (DDoS) attack card blocks a player from redrawing new cards at the end of their turn.
+1.	A denial of service (DoS) attack card blocks a player from redrawing new cards at the end of their turn.
 2.	With each turn the number of cards in affected player’s hand reduces.
 3.	Player cannot redraw the card.
 4.	Player can only pass the turn or play remaining cards in the hand.
@@ -229,6 +220,8 @@ To find out more about DDoS you can go to <a href="https://us.norton.com/interne
 <br>
 
 - SQL Injection:
+  <br>
+  <img src="static/cardImages/sql_injection.png" style="width: 10rem">
   <br>
 
 1.	It reduces the method stack by 2 points.
@@ -248,10 +241,12 @@ To find out more about SQL injection you can go to <a href="https://www.acunetix
 - Alogrithm/Library crads:
   <br>
 The use of algorithms is an essential part of any computer program. Two key types of algorithms in programming are searching, and sorting is introduced into PW. Searching and sorting cards are introduced into the gameplay to make users familiar with algorithms and built-in functions.
+
 - Search
   <br>
- <img src="static/cardImages/sideNav/search.gif" style="width: 10rem">
-<br>
+  <img src="static/cardImages/sideNav/search.gif" style="width: 10rem">
+  <br>
+
 This card allows the player to search for a specific card into the deck.
 
 **Relation to computer programming:** Searching algorithm enables to locate a particular element present in a given set of elements, which is quite similar to the game's searching card.
@@ -259,9 +254,9 @@ To find out more about searching algorithm you can go to <a href="https://www.ge
 <br>
 
 - Sort
-<br>
-<img src="static/cardImages/sideNav/sort.gif" style="width: 10rem">
-<br>
+  <br>
+  <img src="static/cardImages/sideNav/sort.gif" style="width: 10rem">
+  <br>
 
 1.	Sort card allow a player to rearrange the top 5 cards of the deck. 
 2.	Dragging a card onto another card will put it in the new spot.
@@ -271,35 +266,3 @@ To find out more about searching algorithm you can go to <a href="https://www.ge
 To find out more about Sorting algorithm you can go to <a href="https://www.geeksforgeeks.org/sorting-algorithms/" target="_blank">here</a>.
 
 
-
-
-
-
-
-
-<!-- Here is a page for how to play the game
-
-This is how to load an image
-
-![repeatx](static/cardImages/repeat1.png)
-
-But if it is not the right size you can use HTML image tag and style it. Just make sure to use relative sizes rem so that the size will scale with the screen.
-<img src="static/cardImages/FW.gif">
-<img src="static/cardImages/repeat1.png" style="width: 6rem">
-
-Links can be done like this
-[link text](https://github.com/SibylLab/Program-wars)
-
-Or if you want to open them in a new tab you can make them in HTML with `target='_blank'`
-<a href="http://google.com" target="_blank">Google</a>
-
-Tables are a bit akward but can be done like this
-I don't think it is possible to have vertical lines separating columns
-| column1 | column2 |
-| ------- | ------- |
-| some text | some other text |
-| more text | still other text |
-
-| aligned left | aligned center | aligned right | normal |
-| :-----       | :--------:     | -------:      | ---    |
-| some text    | some other     | and again     | back to left | -->
