@@ -76,7 +76,7 @@ const beginnerLevels = [
   {
     id: 'hack1',
     name: 'Hack 1',
-    description: 'Firewall, Stack Overflow, and DDoS'
+    description: 'Firewall, Buffer Overflow, and Denial of Service'
   },
   {
     id: 'malware2',
@@ -86,7 +86,7 @@ const beginnerLevels = [
   {
     id: 'hack2',
     name: 'Hack 2',
-    description: 'Firewall, Stack Underflow, and Sql Injection'
+    description: 'Firewall, Cross-Site Scripting, and Sql Injection'
   }
 ]
 
@@ -175,17 +175,17 @@ const standardLevels = [
   {
     id: 'stdHack',
     name: 'Only Hacks',
-    description: 'Firewall, Stack Overflow, Stack Underflow, Sql Injection, and DDoS'
+    description: 'Firewall, Buffer Overflow, Cross-Site Scripting, Sql Injection, and Denial of Service'
   },
   {
     id: 'stdCombined1',
     name: 'Combined 1',
-    description: 'Antivirus, Spyware, Virus, Firewall, Stack Overflow, and Sql Injection'
+    description: 'Antivirus, Spyware, Virus, Firewall, Cross-Site Scripting, and Sql Injection'
   },
   {
     id: 'stdCombined2',
     name: 'Combined 2',
-    description: 'Antivirus, Ransom, Trojan, Firewall, Stack Overflow, and DDoS'
+    description: 'Antivirus, Ransom, Trojan, Firewall, Buffer Overflow, and Denial of Service'
   }
 ]
 
