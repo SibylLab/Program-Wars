@@ -2,6 +2,7 @@
 
 <img src="static/cardImages/sideNav/All.png" style="width: 20rem">
 <img src="static/cardImages/sideNav/All2.png" style="width: 20rem">
+<img src="static/cardImages/sideNav/den.png" style="width: 30rem">
 <br>
 
 There are five types of cards in this game:
@@ -182,7 +183,7 @@ To find out more about Scan you can go to <a href="https://antivirus.comodo.com/
 
 - Buffer Overflow:
   <br>
-  <img src="static/cardImages/stack_overflow.png" style="width: 10rem">
+  <img src="static/cardImages/sideNav/bufferOverflow.png" style="width: 10rem">
   <br>
   
 1.	Buffer overflow blocks the affected player from playing any Instruction, Repeat, Variable, and Method cards for two turns.
@@ -194,7 +195,7 @@ To find out more about Buffer overflow you can go to <a href="https://www.imperv
 
 - Cross-site scripting:
   <br>
-  <img src="static/cardImages/stack_underflow.png" style="width: 10rem">
+  <img src="static/cardImages/sideNav/css.png" style="width: 10rem">
   <br>
 
 1.	If a player has been attacked with cross-site script cards it stops the player from playing all algorithms and attack cards. 
@@ -207,7 +208,7 @@ To find out more about Cross-site scripting you can go to <a href="https://www.a
 
 - DoS Attack:
   <br>
-  <img src="static/cardImages/ddos.png" style="width: 10rem">
+  <img src="static/cardImages/sideNav/dos.png" style="width: 10rem">
   <br>
 
 1.	A denial of service (DoS) attack card blocks a player from redrawing new cards at the end of their turn.
