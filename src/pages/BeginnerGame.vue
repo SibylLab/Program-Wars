@@ -3,7 +3,7 @@
 
   <two-player-template>
     <template v-slot:modals>
-      <winner-modal-beginner id="winner-modal" class="modal fade"
+      <winner-modal-beginner id="winner-modal" class="modal"
         data-backdrop='static' data-keyboard='false'/>
     </template>
 
