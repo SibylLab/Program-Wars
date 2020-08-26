@@ -11,13 +11,15 @@ import Search from '@/classes/card/Search'
 import Sort from '@/classes/card/Sort'
 import { isNegativeEffect, isPositiveEffect } from '@/classes/card/cardData'
 
-// Tables to associate a card type to it's constructor
+// Map of card types to their constructors for types that take
+// both a card value and a deck
 const needValueAndDeck = {
   'INSTRUCTION': Instruction,
   'REPEAT': Repeat,
   'VARIABLE': Variable,
 }
 
+// Map of card types to their constructors for types that take only a deck
 const needDeckOnly = {
   'METHOD': Method,
   'SCAN': Scan,
@@ -27,7 +29,17 @@ const needDeckOnly = {
   'SORT': Sort,
 }
 
-export default class CardFactory {
+/**
+ * Factory to cread new cards given a type, value, and deck.
+ */
+class CardFactory {
+  /**
+   * Creates a new card.
+   * @param {string} type - The type of card to create.
+   * @param {int} value - The value of the card. For cards that do not use a
+   * value set this to 0.
+   * @param {Deck} deck - The deck the card is in.
+   */
   newCard (type, value, deck) {
     let card
     if (type in needValueAndDeck) {
@@ -46,3 +58,5 @@ export default class CardFactory {
     return card
   }
 }
+
+export default CardFactory;
