@@ -77,6 +77,7 @@ class Card {
   /**
    * Takes care of removing a SCAN effect from the targeted player.
    * Sets playInfo.scanned to be true.
+   * @private
    * @param {Object} playInfo - The information object for the play that involves
    * this card.
    */
