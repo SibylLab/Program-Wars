@@ -18,10 +18,11 @@
   ],
   "templates": {
     "cleverLinks": false,
-    "monospaceLinks": false
+    "monospaceLinks": true
   },
   "opts": {
     "destination": "./docs/",
-    "recurse": true
+    "recurse": "true",
+    "template": "node_modules/minami"
   }
 }

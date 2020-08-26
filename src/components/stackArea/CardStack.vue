@@ -3,7 +3,7 @@
     @dragover.prevent @dragenter.prevent>
 
   <div style="text-align: center">
-    <h5 style="margin:0; margin-top: 0.2rem;" :class="[scoreColor]">
+    <h5 style="margin:0; margin-top: 0.2rem;" :class="[scoreClass]">
       {{ scoreText }}: {{ stack.getScore() }}
     </h5>
   </div>
@@ -28,6 +28,21 @@ import { mapGetters } from 'vuex'
  * an active effect on the player, but it will still show the full total.
  * Responsible for handling events when cards are dropped on the stack by
  * calling the appropriate actions.
+ *
+ * @vue-prop {Stack} stack - The stack to display
+ *
+ * @vue-computed {bool} ownedByCurrentPlayer - True if the stack is owned by the
+ * current player
+ * @vue-computed {bool} willAcceptVirus - True if this.stack will accept a virus card
+ * @vue-computed {bool} ownerHurtBySql - True if the player that owns the
+ * stack is hurt by an SQL effect
+ * @vue-computed {string} scoreClass - The CSS class to use for coloring score text.
+ * 'score-red' if the stack is not providing full value,
+ * 'score-green' if the stack is complete, and 'score-normal' otherwise.
+ * @vue-computed {string} overlap - How much to overlap the cards in the stack by
+ * in CSS units. Should be negative.
+ * @vue-computed {string} scoreText - The text to identify the stack score.
+ * 'Score' for normal stacks and 'MethodStack' for method stacks.
  */
 export default {
   name: 'card-stack',
@@ -49,12 +64,7 @@ export default {
       return (this.stack.isMethod || this.stack.getBase().type === 'METHOD')
           && this.stack.player.hurtBy('SQL_INJECTION')
     },
-    /**
-     * Determines the score color based on whether the stacks owner is under
-     * an effect that changes how much of the stack score is added to the
-     * players total score.
-     */
-    scoreColor () {
+    scoreClass () {
       const top = this.stack.getTop()
       if ((top && top.type  === 'VIRUS') || this.ownerHurtBySql) {
         return 'score-red'
@@ -72,6 +82,11 @@ export default {
     }
   },
   methods: {
+    /**
+     * Checks whether or not the given card can be played on the stack.
+     * @param {Card} card - The card to play on the stack
+     * @return {bool} True if the card can be played on the stack otherwise false
+     */
     canPlayOnStack (card) {
       if (this.stack.willAccept(card)) {
         if (card.type === 'VIRUS') {
@@ -81,13 +96,22 @@ export default {
       }
       return false
     },
+    /**
+     * Checks whether or not given card in the stack will accept the current
+     * selected card. This is used for higlighting a card in the stack when
+     * the current card can be played on the stack. As it is for the stack,
+     * only the top card is considered for highlighting.
+     * @return {bool} True if the card will accept the current card.
+     */
     cardWillAcceptCurrent (card) {
       return this.game.currentCard && !this.game.currentPlayer.isAI && !this.game.wait
           && card === this.stack.getTop() && this.canPlayOnStack(this.game.currentCard)
     },
     /**
-     * Decide what shadow the given card should have around it based on its
-     * type and position in the stack as well as the active card type.
+     * Decide what shadow CSS class the given card should have. This is based on the
+     * type and position in the stack as well as the currently selected card type.
+     * @param {Card} card - The card in the stack to check
+     * @return {string} The CSS class to give the card. 'attack', 'play' or ''.
      */
     shadow (card) {
       if (this.cardWillAcceptCurrent(card)) {
@@ -105,6 +129,7 @@ export default {
      * If the stack belongs to the current player and the card can be
      * added to the stack it is. The card will be removed from the players
      * hand and the player's turn will end.
+     * @param {Event} event - The drag event for a card being dropped on the stack
      */
     onDrop (event) {
       const id = event.dataTransfer.getData('playerId')
@@ -124,9 +149,17 @@ export default {
         event.stopPropagation();
       }
     },
+    // Forces the component to redraw itself. Update is the :key for the whole
+    // thing, so when its value changes the component will redraw. The value
+    // is unimportant all that matters is that it changes.
     refresh () {
       this.update = !this.update
     },
+    /**
+     * Refreshes the component if the card the play information for a played card
+     * affects the stack.
+     * @param {Object} playInfo - The play information for the play that was made
+     */
     cardPlayed (playInfo) {
       if (playInfo.stack && playInfo.stack.id === this.stack.id) {
         this.refresh()
@@ -134,12 +167,14 @@ export default {
     }
   },
   created () {
+    // Sets the component up to listen for these events
     bus.$on('select-card', this.refresh)
     bus.$on('card-played', this.cardPlayed)
   },
   beforeDestroy () {
+    // Removes listeners for these events when the component is destroyed
     bus.$off('select-card', this.refresh)
-    bus.$on('card-played', this.cardPlayed)
+    bus.$off('card-played', this.cardPlayed)
   }
 }
 </script>
