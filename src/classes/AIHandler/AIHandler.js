@@ -27,7 +27,7 @@ export default class AIHandler {
    * @param player The player taking the action. 
    * @param players A list of all players in the game.
    * @param scores A list of current player scores.
-   * @return a turn object {type, card, player, target}
+   * @return a turn object.
    */
   chooseAction(player, players, scores, deck) {
     // Try all the action handlers until one returns a turn object

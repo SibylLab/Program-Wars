@@ -10,6 +10,7 @@ npm-shrinkwrap.json
 coverage/
 .nyc_output/
 documents/
+docs/
 
 *.swp
 *.orig

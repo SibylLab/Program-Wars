@@ -19,7 +19,7 @@ export default class ActionHandler {
    * @param players A list of all players in the game.
    * @param scores A list of current player scores.
    * @param deck The deck the player is using.
-   * @return a turn object {playType, card, player, target} or undefined.
+   * @return a turn object
    */
   handle(player, players, scores, deck) {  // eslint-disable-line no-unused-vars
     return undefined
