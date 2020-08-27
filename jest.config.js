@@ -5,7 +5,7 @@ module.exports = {
     '**/*.{js,vue}',
     '!**/node_modules/**',
     '!**/dist/**',
-    '!**/documents/**',
+    '!**/docs/**',
     '!**/coverage/**',
     '!**/router/**',
     '!**/*.config.*',

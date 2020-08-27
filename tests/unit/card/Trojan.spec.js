@@ -92,12 +92,14 @@ describe('Trojan', () => {
 
     test('when there is no card to mimic', () => {
       const card = new Trojan('deck')
+      card.discard = jest.fn()
       const hand = {
         cards: [{ isMimic: true }]
       }
 
       card._mimicCard(hand, 'player')
       expect(MimicWrapper).not.toHaveBeenCalled()
+      expect(card.discard).toBeCalledTimes(1)
     })
   })
 })

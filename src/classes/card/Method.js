@@ -6,7 +6,7 @@ import Stack from '@/classes/stack/Stack'
  * Class for the Method card.
  * @extends Card
  */
-class MethodCard extends Card {
+class Method extends Card {
   /**
    * Creates a new Method card.
    * @param {Deck} deck - The deck the card is in.

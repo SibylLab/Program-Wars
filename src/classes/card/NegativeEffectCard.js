@@ -20,9 +20,9 @@ class NegativeEffectCard extends Card {
   /**
    * Plays a negative effect card.
    *
-   * If the player is affected by the effect already the card will simply
-   * be discarded. If the player has a scan active the card will be discarded
-   * and the scan effect will be removed.
+   * If the player is affected by the effect or is protected from it
+   * the card will be discarded. If the player has a `scan` active the card
+   * the `scan` effect will be removed and the negative effect card discarded.
    *
    * @param {Object} playInfo - Information about how the card was played.
    * @param {Player} playInfo.target - The target of the effect.
