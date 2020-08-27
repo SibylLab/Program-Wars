@@ -3,21 +3,37 @@ import { isBase, canPlayOnStack } from '@/classes/card/cardData'
 // The maximum number of repeats allowed in a stack
 const MAX_REPEATS = 2
 
-export default class Stack {
+/**
+ * Class representing a stack of Cards.
+ *
+ * @prop {Card[]} cards - The cards in the stack.
+ * @prop {bool} isMethod - True if the stack is a MethodStack.
+ */
+class Stack {
+  /**
+   * Creates a new Stack starting with the given baseCard.
+   * @param {Card} baseCard - The card to build the stack on. Can be
+   * explicity `undefined` and the stack will be empty.
+   * @param {Player} player - The player that owns the stack.
+   */
   constructor (baseCard, player) {
     this.player = player
     this.cards = []
     this.isMethod = false
     if (baseCard) { this.addCard(baseCard) }
   }
-  
+
+  /**
+   * Adds a given card to the top of the stack.
+   * @param {Card} card - The card to add.
+   */
   addCard (card) {
     this.cards.push(card)
   }
 
   /**
-   * Returns the base card of the stack, which is an instruction or method card.
-   * @returns {card} the base of the stack.
+   * Returns the base card of the stack, which is an `instruction` or `method` card.
+   * @returns {Card} the bottom card of the stack.
    */
   getBase () {
     return this.cards[0]
@@ -25,22 +41,33 @@ export default class Stack {
 
   /**
    * Returns the top card of the stack.
-   * @returns {card} the top card of the stack.
+   * @returns {Card} the top card of the stack.
    */
   getTop () {
     return this.cards[this.cards.length - 1]
   }
 
+  /**
+   * Removes and returns the top card of the stack.
+   * @return {Card|undefined} The top card of the stack, `undefined` if the
+   * stack is empty.
+   */
   popTop () {
     return this.cards.pop()
   }
 
+  /**
+   * Checks if the top of the stack is an `Rx` Card.
+   * @return {bool} True if the top is an `Rx` Card, false otherwise.
+   */
   topIsRx () {
     return this._isRx(this.getTop())
   }
 
   /**
-   * Returns true if the stack has at least one variable card.
+   * Checks if the stack has a `variable` card in it.
+   * @return {bool} True if there is a `variable` card anywhere in the stack,
+   * false otherwise.
    */
   hasVariable () {
     return this.cards.filter(c => c.type === "VARIABLE").length > 0
@@ -48,7 +75,7 @@ export default class Stack {
 
 
   /**
-   * Calculates the stack's score.
+   * Calculates the total number of points the stack is worth.
    * @return {int} the stack's total score.
    */
   getScore () {
@@ -65,9 +92,11 @@ export default class Stack {
   }
 
   /**
-   * Replaces the lowest variable card in the stack with the given card.
-   * Returns the replaced card.
-   * @param card The variable card to replace with.
+   * Replaces the lowest `variable` card in the stack with the given card.
+   * @param {Variable} card - The replacement card.
+   * @return {Variable} The replaced Card, unless the given card is the lowest,
+   * or only, `variable`. Then nothing will be replaced and the given card
+   * will be returned.
    */
   replaceLowestVar (card) {
     const vars = this.cards.filter(c => c.type === 'VARIABLE')
@@ -84,9 +113,9 @@ export default class Stack {
   }
 
   /**
-   * Checks to see if a stack can have a given card placed on top of it.
-   * @param {Card} card the card to check.
-   * @return {bool} true if the card can be added to the top, false otherwise.
+   * Checks to see if the given Card can be added to the top of the stack.
+   * @param {Card} card - The card to check.
+   * @return {bool} True if the card can be added to the top, false otherwise.
    */
   willAccept (card) {
     if (this.cards.length === 0) {
@@ -103,9 +132,13 @@ export default class Stack {
   }
 
   /**
-   * Checks to see if the stack is a complete program (nested loops).
-   * A complete program is one with the max number of repeat cards
-   * where if a repeat card is an Rx it must be matched to a variable.
+   * Checks to see if the stack is a complete program.
+   *
+   * A stack is complete if it has 2 `repeat` cards on it. However, if any
+   * `repeat` cards are `Rx` cards they only count towards the limit if they
+   * are paired with a `variable` card.
+   *
+   * @return {bool} True if the stack is complete, false otherwise.
    */
   isComplete () {
     if (this.cards.length === 0 || this.getTop().type === 'VIRUS'
@@ -113,12 +146,18 @@ export default class Stack {
       return false
     }
 
-    // If we have max repeats make sure are all Rx cards paired with a Var
+    // If we have max repeats make sure are all Rx cards are paired with a Var
     const numRx = this.cards.filter(c => this._isRx(c)).length
     const numVar = this.cards.filter(c => c.type === 'VARIABLE').length
     return numRx === numVar
   }
 
+  /**
+   * Checks to see if the stack will accept a `variable` card.
+   * @param {Varaible} card - The card to check.
+   * @return {bool} True if the stack will accept the card, false otherwise.
+   * @private
+   */
   _willAcceptVar (card) {
     if (this.topIsRx()) {
       return true
@@ -130,13 +169,20 @@ export default class Stack {
     return vars[0].getValue() < card.getValue()
   }
 
+  /**
+   * Checks if a given card is an `Rx` card.
+   * @param {Card} card - The card to check.
+   * @return {bool} True if the card is an `Rx`, false otherwise.
+   * @private
+   */
   _isRx (card) {
     return card.type === "REPEAT" && card.getValue() === 1
   }
 
   /**
    * Checks if the stack has the maximum allowed number of repeats.
-   * @return {bool} true if the max repeats has been reached, false otherwise.
+   * @return {bool} True if the max repeats have been reached, false otherwise.
+   * @private
    */
   _hasMaxRepeats () {
     let numRepeats = this.cards.reduce((acc, card) => {
@@ -145,3 +191,5 @@ export default class Stack {
     return numRepeats >= MAX_REPEATS
   }
 }
+
+export default Stack;
