@@ -26,8 +26,8 @@ class CardWrapper extends Card {
   }
 
   /**
-   * Plays the wrapped card by default.
-   * Should be overridden.
+   * Plays the wrapped card.
+   * @param {Object} playInfo - Information about how the card was played.
    */
   play (playInfo) {
     this.card.play(playInfo)

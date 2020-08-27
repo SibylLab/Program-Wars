@@ -18,7 +18,9 @@
   ],
   "templates": {
     "cleverLinks": false,
-    "monospaceLinks": true
+    "monospaceLinks": true,
+    "useLongNameInNav": false,
+    "showInheritedInNav": false
   },
   "opts": {
     "destination": "./docs/",
