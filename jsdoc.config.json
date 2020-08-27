@@ -14,6 +14,7 @@
     "excludePattern": "(^|\\/|\\\\)_"
   },
   "plugins": [
+    "plugins/markdown",
     "node_modules/jsdoc-vuejs"
   ],
   "templates": {
