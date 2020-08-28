@@ -24,9 +24,11 @@ const CARD_ORDER = {
 /**
  * A factory to create different types of AIHandlers.
  */
-export default class AIHandlerFactory {
+class AIHandlerFactory {
   /**
-   * Create and return an AIHandler of the given type for the given player.
+   * Create and return an AIHandler with the given personality.
+   * @param {string} personality - The personality for the handler to use.
+   * @return {AIHandler} The new AIHandler.
    */
   newHandler (personality) {
     if (personality === 'beginner') {
@@ -36,6 +38,10 @@ export default class AIHandlerFactory {
     }
   }
 
+  /**
+   * Creates a new standard handler with the given personality (card priority list name).
+   * @private
+   */
   _newStandardHandler (personality) {
     let actions = []
 
@@ -49,8 +55,13 @@ export default class AIHandlerFactory {
     return handler
   }
 
+  /**
+   * Creates a new beginner AIHandler with just the PlayRandomCard action handler.
+   * @private
+   */
   _newBeginnerHandler () {
     return new AIHandler([new PlayRandomCard()])
   }
 }
 
+export default AIHandlerFactory;
