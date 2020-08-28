@@ -25,29 +25,31 @@ import Redraw from '@/classes/AIHandler/Redraw'
  * More information can be
  * gathered by inspecting {@link PlayBestCard}, Card subclass' `play` methods,
  * and some of the vue modules responsible for responding to player actions.
+ * This is something that works, but may be a good candidate for improvement in
+ * the future to give it a more stable standardized design.
  *
  * Required attributes:
  * ```
  * {
- *   type // The type of play made (see below)
- *   card // The card that was played (except for 'pass' and 'discardHand')
+ *   type      // The type of play made (see below)
+ *   card      // The card that was played (except for 'pass' and 'discardHand')
  *   cardOwner // The player that owns the card (except for 'pass' and 'discardHand')
- *   player // The player that made the play
+ *   player    // The player that made the play
  * }
  * ```
  *
  * Attributes dependent on what type of play is being made:
  * ```
  * {
- *   stack // The stack the play uses (only for plays that add cards to stacks)
- *   playField // The play field to play a card on (only when adding a new stack)
+ *   stack       // The stack the play uses (only for plays that add cards to stacks)
+ *   playField   // The play field to play a card on (only when adding a new stack)
  *
- *   target // The target player for effects, or the target object for SCAN
- *   targetType // what type the target is for SCAN
+ *   target      // The target player for effects, or the target object for SCAN
+ *   targetType  // what type the target is for SCAN
  *
- *   chosenCard // Card chosen with SEARCH
+ *   chosenCard  // Card chosen with SEARCH
  *   sortedCards // List of cards sorted with SORT
- *   deck // If the play affects a deck (SEARCH and SORT)
+ *   deck        // If the play affects a deck (SEARCH and SORT)
  * }
  * ```
  *
