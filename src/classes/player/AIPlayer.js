@@ -26,8 +26,8 @@ class AIPlayer extends Player {
    * @param {Scores[]} scores - All the player's scores.
    * @param {Deck} deck - The deck the player is using.
    * @return {Object} a playInfo object that contains information about the play.
-   * This information varies based on the type of play. More info on what it
-   * may contain can be found in {@link Game} and the AI `ActionHandler` modules.
+   * This information varies based on the type of play. See {@link AIHandler} for
+   * more information about the `playInfo` object.
    */
   getPlay (players, scores, deck) {
     return this.handler.chooseAction(this, players, scores, deck)

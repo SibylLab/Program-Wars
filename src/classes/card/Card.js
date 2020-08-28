@@ -62,7 +62,9 @@ class Card {
    * discards the card.
    *
    * @param {Object} playInfo - Information needed to play the card. This will
-   * be determined by the card type and what it needs to be played.
+   * be determined by the card type and what it needs to be played. See
+   * {@link AIHandler} for more information on the `playInfo` object. As well
+   * as individual cards `play` methods.
    */
   play (playInfo) { // eslint-disable-line no-unused-vars
     this.discard()
