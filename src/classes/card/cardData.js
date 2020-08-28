@@ -1,7 +1,4 @@
 /**
- * @module classes/card/cardData
- *
- * @fileOverview
  * Helper functions to make it easier to help check what catergories a card
  * type may fall into.
  *
@@ -10,8 +7,9 @@
  * all `safety`, `malware`, `hack`, and `algorithm` cards are `special` cards
  * except for `VIRUS`.
  *
- * @exports isMalware, isHack, isSafety, isAlgorithm, isAttack, isNegativeEffect,
- * isPositiveEffect, isSpecial, isBase, canPlayOnStack, canPlayOnMethod
+ * Functions need to be imported like this `import { isHack } from`.
+ *
+ * @module cardData
  */
 
 // All malware card types

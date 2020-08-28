@@ -1,7 +1,5 @@
 /**
- * @module deckData
  *
- * @fileOverview
  * Contains information on what cards to use in a deck.
  *
  * I ended up with a layout that did not work well for proper documentation
@@ -59,7 +57,7 @@
  * }
  * ```
  *
- * @exports deckData
+ * @module deckData
  */
 
 // make an object to record the type value and number of a card that

@@ -1,9 +1,7 @@
 /**
- * @file aiHelpers.js file
- * @author Steven on 2020-06-11
+ * A few helper functions needed for making AI decisions.
  *
- * A collection of helper functions for comparisons and other general tasks
- * related to AI decision making.
+ * @module aiHelpers
  */
 
 
