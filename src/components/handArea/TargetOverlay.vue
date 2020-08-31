@@ -18,11 +18,18 @@ import { isSafety } from '@/classes/card/cardData'
 import { mapGetters } from 'vuex'
 
 /**
- * Displays buttons for targeting players or activating special cards, or
- * text to indicate the card can't be played.
- * Attached to a card and is visible when a special card is active.
- * Responsible for getting possible targets for a card and calling the
- * appropriate actions when a special card is played.
+ * The overlay that appears over an attack or safety card to allow players to play it.
+ *
+ * Displays buttons for each attackable target that when clicked will add the
+ * attack the that player. Right now safety cards can only work for the card owner
+ * so a button appears that just says 'OK', if they can play it on themselves.
+ *
+ * @vue-prop {Card} card - The attack card to overlay.
+ * @vue-prop {Player} owner - The player that the card belongs to.
+ * @vue-computed {string} titleText - For safety cards either 'Activate' or 'Protected,
+ * and for attack cards either 'Targets' or 'No Targets'.
+ * @vue-computed {Players[]} targetPlayers - Returns a list of players that the card
+ * can be played on, can be empty if there are no valid players.
  */
 export default {
   name: 'target-overlay',
@@ -36,12 +43,6 @@ export default {
         return this.game.getAttackablePlayers(this.card.type).length > 0 ? 'Targets' : 'No Targets'
       }
     },
-    noButtonsText () {
-      if (!isSafety(this.card.type)) {
-        return 'None'
-      }
-      return ''
-    },
     targetPlayers () {
       if (isSafety(this.card.type)) {
         return [this.game.currentPlayer()]
@@ -51,12 +52,23 @@ export default {
     }
   },
   methods: {
+    /**
+     * Gives the text to put on the button for the player.
+     *
+     * If the card is a safety card this is 'OK', otherwise it is the player's name.
+     * @param {Player} player - The player to provide button text for.
+     * @return {string} The text to put on a button for the given player.
+     */
     buttonText (player) {
       if (isSafety(this.card.type)) {
         return 'OK'
       }
       return player.name
     },
+    /**
+     * Takes a turn for the current player to play the card on the given target player.
+     * @param {Player} player - The player the card is being played on.
+     */
     playSpecialCard (player) {
       if (!this.game.currentPlayer().isAi) {
         this.game.takeTurn({
