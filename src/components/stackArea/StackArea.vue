@@ -23,11 +23,16 @@ import PlayField from '@/components/stackArea/PlayField'
 import { mapGetters } from 'vuex'
 
 /**
- * The area of the screen that holds a players play field and side objectives
- * in tabs.
- * Is higlighted when the components player is the active player.
- * side property is to change some of the setup based on what side of the screen
- * the component is on.
+ * Holds the PlayField and SideObjectives components for a player and adds tabs
+ * to switch between them.
+ *
+ * @vue-prop {Player} player - The player the playField belongs to.
+ * @vue-prop {string} tabSide - A string indicating the side to put the tabs on
+ * `left | right`.
+ * @vue-data {int} activeTab - The number of the tab that is active, (starts at 1).
+ *
+ * @vue-computed {bool} showShadow - True if the player is the current player and
+ * the play area should be highlighted.
  */
 export default {
   name: 'stacks-area',
@@ -48,15 +53,30 @@ export default {
     }
   },
   methods: {
+    /**
+     * Checks to see if the given tab number is the active tab.
+     * @param {int} tabNum - The tab number to check.
+     * @return {bool} True if the tabNum tab is the active tab.
+     */
     isActiveTab (tabNum) {
-      // If is so AI PlayField is always showing
+      // so AI PlayField is always showing for AI players
       if (this.player.isAI) {
         return tabNum === 1
       }
       return this.activeTab === tabNum
     },
+    /**
+     * Changes the active tab to the given tabNum.
+     *
+     * This is added in the template above to a tab button. If there is no component
+     * that has been given that tabNum then it will break and show nothing. This could
+     * be improved upon if tabs were added programmatically instead of as HTML in the
+     * template, but for a small number of tabs this works.
+     *
+     * @param {int} tabNum - The number of the tab to change to.
+     */
     changeTab (tabNum) {
-      // If is so AI doesn't end up on a tab other than PlayField
+      // so AI doesn't end up on a tab other than PlayField
       if (!this.player.isAI) {
         this.activeTab = tabNum
       }

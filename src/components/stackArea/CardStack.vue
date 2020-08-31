@@ -23,9 +23,11 @@ import { mapGetters } from 'vuex'
 
 /**
  * Displays a stack of cards and its total score.
+ *
  * Lights up when the active card can be played on it. Score is displayed
  * in red if the stack is not counting for its full amount because of
  * an active effect on the player, but it will still show the full total.
+ *
  * Responsible for handling events when cards are dropped on the stack by
  * calling the appropriate actions.
  *
