@@ -14,23 +14,24 @@
     </button>
   </slot>
 
-  <slot id="info">
-    <div id="info">
+  <div id="info">
+    <slot id="info">
       <turn-area-info/>
-    </div>
-  </slot>
+    </slot>
+  </div>
 
-  <slot name="hand">
-    <div id="hand">
+  <div id="hand">
+    <slot name="hand">
       <player-hand :player="game.currentPlayer()"/>
-    </div>
-  </slot>
+    </slot>
+  </div>
 
-  <slot name="history">
-    <div id="turns">
+  <div id="turns">
+    <slot name="history">
       <turn-history/>
-    </div>
-  </slot>
+    </slot>
+  </div>
+
 </div>
 </template>
 

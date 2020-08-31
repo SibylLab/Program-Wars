@@ -35,6 +35,29 @@ import PlayerScore from '@/components/playerArea/PlayerScore'
 import PlayerEffects from '@/components/playerArea/PlayerEffects'
 import PlayerAreaInfo from '@/components/info/PlayerAreaInfo'
 
+/**
+ * This area of the screen holds all the information about a player inlcuding
+ * name and image, score, and status effects.
+ *
+ * ### Slots
+ * - **details**
+ *    + **default:** {@link PlayerDetails}
+ *    + **purpose:** Holds the player's details like name and image.
+ * - **score**
+ *    + **default:** {@link PlayerScore}
+ *    + **purpose:** Holds the player's score information.
+ * - **effects**
+ *    + **default:** {@link PlayerEffects}
+ *    + **purpose:** Holds the players active status effects.
+ * - **info**
+ *    + **default:** {@link PlayerAreaInfo}
+ *    + **purpose:** Holds an info popup component for this area.
+ *
+ * @vue-prop {Player} player - The player the details are for.
+ * @vue-prop {string} side - The side of the screen it is on `left | right`.
+ * @vue-computed {bool} showInfobutton - True if player is the first player, as
+ * we only need to display an info button for a single player area.
+ */
 export default {
   name: 'player-area',
   props: ['player', 'side'],
