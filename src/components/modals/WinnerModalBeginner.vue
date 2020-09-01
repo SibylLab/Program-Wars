@@ -48,6 +48,15 @@
 import { mapActions, mapGetters } from 'vuex'
 import { bus } from '@/components/shared/Bus'
 
+/**
+ * Shows the winners for the game.
+ *
+ * Catches the `game-over` event to update the list of winners when before it
+ * is made visible.
+ *
+ * @vue-data {Player[]} winners - A list of all winning players.
+ * @vue-computed {string} winnerText - A string of the name(s) of the winners.
+ */
 export default {
   name: 'winner-modal-beginner',
   data () {
@@ -69,15 +78,20 @@ export default {
     ...mapActions([
       'leaveGame'
     ]),
+    /**
+     * Updates the winners to the current winners in the game.
+     */
     setWinners () {
       this.winners = this.game.getWinners()
     }
   },
   created () {
+    // Set winners list and add a listener to update it when the game ends.
     this.setWinners()
     bus.$on('game-over', this.setWinners)
   },
   beforeDestroy () {
+    // Remove the listener for game-over events
     bus.$off('game-over', this.setWinners)
   }
 }
