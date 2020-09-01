@@ -25,6 +25,12 @@ import WinnerModalBeginner from '@/components/modals/WinnerModalBeginner'
 import PlayField from '@/components/stackArea/PlayField'
 import { mapGetters } from 'vuex'
 
+/**
+ * The main page component for Beginner games.
+ *
+ * Uses the {@link TwoPlayerTemplate} and replaces a couple default slots
+ * for a different winner modal and stack area.
+ */
 export default {
   name: 'beginner-game',
   components: {

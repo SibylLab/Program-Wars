@@ -28,8 +28,7 @@ import AddPlayers from '@/components/setup/AddPlayers'
 import { mapActions, mapGetters } from 'vuex'
 
 /**
- * The main landing page for the game.
- * Uses a gameSetup component to get user info and start a new game.
+ * The main landing page component for Program Wars where players set up and start games.
  */
 export default {
   name: 'home-page',
@@ -47,6 +46,13 @@ export default {
       'startBeginnerGame',
       'startStandardGame'
     ]),
+    /**
+     * Starts a new game using the information from the home page state.
+     *
+     * This is where new game modes will need to be added with their
+     * appropriate actions for routing to their specific game page with
+     * the appropriate game state.
+     */
     playGame () {
       if (this.home.canStart()) {
         if (this.home.mode === 'beginner') {

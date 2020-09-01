@@ -60,6 +60,23 @@ import ErrorPage from '@/components/shared/ErrorPage'
 import { bus } from '@/components/shared/Bus'
 import { mapActions, mapGetters } from 'vuex'
 
+/**
+ * Template component for 2 player games.
+ *
+ * Has slots for all the main areas of the game page. These can be replaced when
+ * the component is used to add custom components for different game modes.
+ * Currently the defaults are all set up for the `standard` mode game. Using a
+ * slot wil replace the default completely.
+ *
+ * ### Slots
+ * - `modals` - Holds all the modals needed for the page.
+ * - `page-header` - Holds the page header component to use.
+ * - `player-1` - Holds the player area for the left player (player 1).
+ * - `player-2` - Holds the player area for the right player (player 2).
+ * - `hand-area` - Holds the hand area for the current player, along with turn history.
+ * - `p1-stack-area` - Holds the stack area for the left player.
+ * - `p2-stack-area` - Holds the stack area for the right player.
+ */
 export default {
   name: 'beginner-game',
   components: {
@@ -76,18 +93,23 @@ export default {
   },
   methods: {
     ...mapActions(['leaveGame']),
+    /**
+     * Opens the winner modal.
+     */
     showWinner () {
       $('#winner-modal').modal('show')
     }
   },
   created () {
+    // Add a 'game-over' listener to show the winner modal
     bus.$on('game-over', this.showWinner)
-    // ensures we are always in a game mode when on this page.
+    // Ensures we are always in a game mode when on this page
     if (!this.inGame) {
       this.leaveGame()
     }
   },
   beforeDestroy () {
+    // Remove the listener when the component is destroyed
     bus.$off('game-over', this.showWinner)
   }
 }
