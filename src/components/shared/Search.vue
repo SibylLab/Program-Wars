@@ -24,9 +24,25 @@
 <script>
 import { mapGetters } from 'vuex'
 
+/**
+ * Displays the top `N` cards of the deck so the player can select one of them
+ * to add to their hand.
+ *
+ * `N` is the value of the search card or the number of card remaining in the deck,
+ * whichever is smaller. `search` cards are not included in the cards being searched.
+ *
+ * @vue-prop {Player} cardOwner - The owner of the search card.
+ * @vue-prop {Card} card - The search card.
+ * @vue-prop {Deck} deck - The deck being searched.
+ * @vue-data {Card} [selected=null] - The selected card. If it is null
+ * then the player will not be able to continue, until a card is selected.
+ *
+ * @vue-computed {Card[]} deckCards - The top `N` cards of the deck, or if there
+ * are not `N` cards, the remaining cards in the deck. Exculding `search` cards.
+ */
 export default {
   name: 'search',
-  props: ['cardOwner', 'card', 'deck', 'cancel'],
+  props: ['cardOwner', 'card', 'deck'],
   data () {
     return {
       selected: null,
@@ -40,12 +56,22 @@ export default {
     }
   },
   methods: {
+    /**
+     * True if the given card is the currently selected card.
+     */
     isSelected (card) {
       return card === this.selected
     },
+    /**
+     * Sets the given card as the selected card.
+     */
     select (card) {
       this.selected = card
     },
+    /**
+     * Takes a turn for playing the `search` card and adding the `selected`
+     * card to the player's hand.
+     */
     choose () {
       this.game.takeTurn({
         type: 'playSearch',
@@ -56,6 +82,7 @@ export default {
     }
   },
   created () {
+    // Ensures that there are cards to search
     if (this.deckCards === 0) {
       this.deck.refresh()
     }

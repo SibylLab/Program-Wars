@@ -20,8 +20,17 @@ import { mapGetters } from 'vuex'
 /**
  * A component for placing a title bar for the game on top of a page.
  *
- * Displays the game title and a button for the menu at all times. In
- * game it will also display the scoreLimit and a game tips toggle.
+ * ### Slots
+ * - `pageHeading`
+ *    + **default:** `empty`
+ *    + **purpose:** Allow page specific information to be added to the top
+ *                   of the page over the center of the page header. A way to
+ *                   add a title for the page, or the score limit for the game.
+ *
+ * @example
+ * <page-header>
+ *   <template v-slot:pageHeading> Welcome to Program Wars! </template>
+ * </page-header>
  */
 export default {
   name: 'page-header',

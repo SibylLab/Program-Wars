@@ -8,9 +8,6 @@
       <div class="container">
         <slot></slot>
 
-        <button class="btn btn-sm btn-info action" v-on:click="openRules">
-          More Info
-        </button>
         <button class="btn btn-sm btn-primary action" v-on:click="active = false">
           Close
         </button>
@@ -25,28 +22,32 @@
 /**
  * A popup component to display concise help information for a component.
  *
- * This component is made with the <slot> tag to allow it to have HTML written
- * inside of it in the parent. This allows the popup to have nicely styled
- * text and keeps the text from adding to the code, though it does add to the
- * parents HTML. These popups will scroll if the content is too large, but
- * they are not meant to have a lot of info. Detailed info should be contained
- * in other help components.
+ * This component is used with a default `<slot>` tag to allow the specific
+ * content to be added to it with HTML. This allows the text to be styled
+ * differently for each popup, as needed for the specific content. It does not
+ * contain any information itself.
  *
- * Uses a position:fixed for the popup so that it will appear in the same place
- * every time. This could be changed, but then the component may be placed
- * inside other components, which can be akward.
+ * The component itself is a button, that when clicked will show the popup.
+ * Any positioning of the element will move the button around. The popup uses
+ * `fixed` positioning to keep it in the center of the screen, and blocks
+ * clicks to elements outside of it until closed.
+ *
+ * The example below shows simple usage, but as the content of the popup uses
+ * HTML you can make it as elaborate or complex as needed. Though the intent of
+ * these popups is to be short descriptions of a portion of the screen, detailed
+ * help information should be kept on the help pages.
+ *
+ * @example
+ * <info-popup>
+ *   <h3> Some title for the popup </h3>
+ *   <p> A paragraph of content for the popup </p>
+ * </info-popup>
  */
 export default {
   name: 'info-popup',
   data () {
     return {
       active: false
-    }
-  },
-  methods: {
-    openRules () {
-      this.active = false
-      $('#rulesModal').modal('show')
     }
   }
 }
