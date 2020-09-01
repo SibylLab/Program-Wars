@@ -4,7 +4,7 @@ import deckData from '@/classes/deck/deckData'
 /**
  * Factory class to create decks for different modes
  */
-export default class DeckFactory {
+class DeckFactory {
   /**
    * Creates a new beginner deck from a given deck type.
    * @param {string} type - The type of deck to create.
@@ -35,3 +35,5 @@ export default class DeckFactory {
     return new Deck(data.base.concat(data.extra))
   }
 }
+
+export default DeckFactory;

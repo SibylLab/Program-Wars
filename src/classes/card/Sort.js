@@ -6,7 +6,7 @@ import Card from '@/classes/card/Card'
  * N is **5** and can be obtained through `getValue()`.
  * @extends Card
  */
-export default class Sort extends Card {
+class Sort extends Card {
   /**
    * Creates a new Sort card.
    * @param {Deck} deck - The deck the card is in.
@@ -31,4 +31,4 @@ export default class Sort extends Card {
   }
 }
 
-
+export default Sort;
