@@ -32,7 +32,7 @@ import { mapGetters } from 'vuex'
 /**
  * Displays the game modes and allows the player to change between them.
  *
- * The mode is set by the home state and is not stored in this component.
+ * The mode and it's related info is stored in the home state and not this component.
  *
  * @vue-computed {string[]} getModes - A list of string names for available
  * game modes.

@@ -42,10 +42,10 @@ export default {
   computed: {
     ...mapGetters(['home'])
   },
-  /**
-   * Sets the home state's level to the given level.
-   */
   methods: {
+    /**
+     * Sets the home state's level to the given level.
+     */
     select (level) {
       this.home.level = level
     }
