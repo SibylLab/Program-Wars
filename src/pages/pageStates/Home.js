@@ -165,6 +165,13 @@ class Home {
   }
 
   /**
+   * Returns true if number of players is at the limit.
+   */
+  atPlayerLimit () {
+    return this.players.length >= 2
+  }
+
+  /**
    * Checks to see if a given name is already in use.
    * @param {string} name - The name to check.
    * @return {bool} True if the name is already being used.
