@@ -110,15 +110,22 @@ export default {
       this.home.message = ""
       $('#enter-name').val('')
       $('#enter-name').focus()
+    },
+    /**
+     * Wrapper for `home.removeBots` to use it as a callback for listening
+     * for `change-mode` events.
+     */
+    removeBots () {
+      this.home.removeBots
     }
   },
   created () {
     // Add a listener to remove all AI players when mode is changed
-    bus.$on('change-mode', this.home.removeBots)
+    bus.$on('change-mode', this.removeBots)
   },
   beforeDestroy() {
     // Remove listener when component is destroyed
-    bus.$off('change-mode', this.home.removeBots)
+    bus.$off('change-mode', this.removeBots)
   }
 }
 </script>

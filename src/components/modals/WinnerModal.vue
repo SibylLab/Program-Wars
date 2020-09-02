@@ -13,7 +13,7 @@
       <table class="table table-condensed" style="width: 90%; margin: auto">
         <thead>
           <tr style="font-size: 1.4rem"> <th>Players</th>
-            <th v-for="player in setPlayers" :key="player.id" style="text-align: center">
+            <th v-for="player in players" :key="player.id" style="text-align: center">
               {{ player.name }} </th>
           </tr>
         </thead>
@@ -77,10 +77,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { bus } from '@/components/shared/Bus'
 
 /**
  * displays the winners for a `standard` mode game, along with scores, bonuses,
  * and final scores.
+ *
+ * Catches the `game-over` event to update the list of winners when before it
+ * is made visible.
  *
  * @vue-data {Object[]} bonuses - A list of bonus objects for each player, indexed
  * by player ID. See {@link StandardGame#getBonuses} for more information on the
@@ -116,23 +120,21 @@ export default {
       'leaveGame'
     ]),
     /**
-     * Refreshes the components data and returns the players.
-     *
-     * This needs to be used at least once in the template as it updates data.
-     * It is necessary because modals must be created at the start of the game
-     * and then made visible at the end of the game. There is no vue function for
-     * for on show, so this is necessary. It is probably easiest to use it as it is
-     * for the first collection of players in the template to ensure the data is
-     * refreshed before it is displayed, but it may only matter that it is called
-     * at least once.
-     *
-     * @return {Player[]} A list of players in the game.
+     * Updates the winners to the current winners in the game.
      */
-    setPlayers () {
+    setWinners () {
       this.bonuses = this.game.getBonuses()
       this.winners = this.game.getWinners()
-      return this.players
     }
+  },
+  created () {
+    // Set winners list and add a listener to update it when the game ends.
+    this.setWinners()
+    bus.$on('game-over', this.setWinners)
+  },
+  beforeDestroy () {
+    // Remove the listener for game-over events
+    bus.$off('game-over', this.setWinners)
   }
 }
 </script>
