@@ -100,6 +100,7 @@ export default {
 }
 
 .centered {
+  display: inline-block;
   left: 0;
   right: 0;
   margin-left: auto;
