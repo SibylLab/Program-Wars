@@ -7,6 +7,7 @@ export default class EffectWithCard extends StatusEffect {
   }
 
   destroy () {
+    super.destroy()
     this.card.discard()
   }
 }

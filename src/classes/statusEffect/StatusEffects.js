@@ -91,14 +91,14 @@ export default class StatusEffects {
   }
 
   cleanMalware () {
-    this.removeNegativeType('RANSOM'),
+    this.removeNegativeType('RANSOM')
     this.removeNegativeType('SPYWARE')
   }
 
   cleanHacks () {
-    this.removeNegativeType('STACK_OVERFLOW'),
-    this.removeNegativeType('STACK_UNDERFLOW'),
-    this.removeNegativeType('SQL_INJECTION'),
+    this.removeNegativeType('STACK_OVERFLOW')
+    this.removeNegativeType('STACK_UNDERFLOW')
+    this.removeNegativeType('SQL_INJECTION')
     this.removeNegativeType('DDOS')
   }
 }

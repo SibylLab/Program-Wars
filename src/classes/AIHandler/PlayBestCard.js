@@ -214,7 +214,7 @@ export default class PlayBestCardAction extends ActionHandler {
     }
 
     const stack = stacks.filter((s) => {
-      return s.cards.length > 1 && !s.isMethod
+      return s.cards.length > 1 && !s.isMethod && s.willAccept(card)
     }).sort((a, b) => {
       return b.getScore() - a.getScore()
     }).shift()
@@ -299,7 +299,7 @@ export default class PlayBestCardAction extends ActionHandler {
     const target = opponents.filter((p) => {
       return !p.hurtBy(card.type) && !p.protectedFrom(card.type)
     }).sort((a, b) => {
-      return scores[b.id] - scores[a.id]
+      return b.getScore() - a.getScore()
     }).shift()
 
     if (target) {
@@ -322,8 +322,8 @@ export default class PlayBestCardAction extends ActionHandler {
   search (card, { player, deck }) {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
 
-    for (const type in this.playOrder) {
-      const chosen = deck.cards.find(c => c.type === type)
+    for (const type of this.playOrder) {
+      const chosen = deck.cards.slice(0,card.value).find(c => c.type === type)
       if (chosen) {
         return {
           type: 'playSearch',
@@ -343,17 +343,15 @@ export default class PlayBestCardAction extends ActionHandler {
   sort (card, { player, deck }) {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
 
-    const sortedCards = deck.drawCards(card.value)
-    if (sortedCards) {
-      this.sortCards(sortedCards)
+    const cardsToSort = deck.drawCards(card.value)
+    this.sortCards(cardsToSort)
 
-      return {
-        type: 'playSort',
-        player, card, cardOwner: player,
-        sortedCards, deck
-      }
+    return {
+      type: 'playSort',
+      card, cardOwner: player,
+      sortedCards: cardsToSort,
+      player, deck
     }
-    return undefined
   }
 }
 

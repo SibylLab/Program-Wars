@@ -17,7 +17,8 @@ export default class PlayRandomCard extends PlayBestCard {
   }
 
   search (card, { player, deck }) {
-    const idx = Math.floor(Math.random() * deck.cards.length)
+    const length = Math.min(card.value, deck.cards.length)
+    const idx = Math.floor(Math.random() * length)
     const chosen = deck.takeCardAt(idx)
 
     if (chosen) {
