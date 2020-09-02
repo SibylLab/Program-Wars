@@ -292,7 +292,7 @@ export default class PlayBestCardAction extends ActionHandler {
    * @return a move object for playing an attack, or undefined
    * no target can be found.
    */
-  playNegativeEffect (card, { player, players, scores }) {
+  playNegativeEffect (card, { player, players }) {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
 
     const opponents = players.filter(p => p !== player)

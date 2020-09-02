@@ -8,9 +8,9 @@
     <meter class="score-meter"
        :max="game.scoreLimit" min=0
        :value="game.getPlayerScore(player.id)"
-       :high="game.scoreLimit * 0.66"
-       :low="game.scoreLimit * 0.33"
-       :optimum="game.scoreLimit * 0.9">
+       :high="game.scoreLimit * 0.75"
+       :low="game.scoreLimit * 0.50"
+       :optimum="game.scoreLimit">
     </meter>
 
 </div>

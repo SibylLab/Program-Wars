@@ -10,7 +10,7 @@
         title="Discard your hand and draw 5 new cards"
         :disabled="!canRedraw">
       <b>REDRAW</b>
-      <span v-if="!canRedraw"> (ready in {{ redrawCD }}) </span>
+      <span v-if="redrawOnCD"> (ready in {{ redrawCD }}) </span>
     </button>
   </slot>
 
@@ -51,7 +51,7 @@ export default {
   name: 'hand-area',
   data () {
     return {
-      update: 1,
+      update: 1
     }
   },
   components: {
@@ -63,12 +63,14 @@ export default {
     ...mapGetters(['game']),
     canRedraw () {
       const player = this.game.currentPlayer()
-      // on DDoS player can pass so redraw cd does not affect the button
-      return player.hurtBy('DDOS') || !player.hurtBy('REDRAW_CD')
+      return !player.hurtBy('DDOS') && !player.hurtBy('REDRAW_CD')
     },
     redrawCD () {
       const player = this.game.currentPlayer()
       return player.effects.negative.find(e => e.type === 'REDRAW_CD').turnsLeft
+    },
+    redrawOnCD () {
+      return this.game.currentPlayer().hurtBy('REDRAW_CD')
     },
     canPass () {
       const player = this.game.currentPlayer()

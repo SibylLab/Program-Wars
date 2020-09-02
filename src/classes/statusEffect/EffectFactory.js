@@ -13,7 +13,7 @@ const bonuses = {
   'RANSOM': 10
 }
 
-// spyware and redraw add +1 as they are updated once the turn they are played
+// spyware adds +1 as it updates once before you can use its effect
 const turns = {
   'SPYWARE': 6, 'STACK_OVERFLOW': 2, 'STACK_UNDERFLOW': 2, 'DDOS': 3,
   'REDRAW_CD': 3
