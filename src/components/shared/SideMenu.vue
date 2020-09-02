@@ -2,7 +2,6 @@
 <div>
   <!-- Modals -->
   <backstory-modal id="backstoryModal" class="modal backstory "/>
-  <rules-modal id="rulesModal" class="modal rules "/>
   <credits-modal id="creditsModal" class="modal credits"/>
 
   <!-- Side menu using a sidenav -->
@@ -12,7 +11,7 @@
     <a class="closebtn menu-item" v-on:click="closeMenu()"> &times; </a>
     <a class="menu-item" v-if="inGame" v-on:click="leaveGame()"> New Game </a>
     <a class="menu-item" data-toggle="modal" data-target=".backstory"> Backstory </a>
-    <a class="menu-item" data-toggle="modal" data-target=".rules"> Rules </a>
+    <a class="menu-item" v-on:click="openHelp()"> Rules </a>
     <a class="menu-item" data-toggle="modal" data-target=".credits"> Credits </a>
     <a class="menu-item" href="https://gitreports.com/issue/SibylLab/Program-Wars"
         target="_blank"> Report Issue </a>
@@ -24,7 +23,6 @@
 
 <script>
 import BackstoryModal from '@/components/modals/BackstoryModal'
-import RulesModal from '@/components/modals/RulesModal'
 import CreditsModal from '@/components/modals/CreditsModal'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
@@ -36,7 +34,6 @@ export default {
   name: 'side-menu',
   components: {
     'backstory-modal': BackstoryModal,
-    'rules-modal': RulesModal,
     'credits-modal': CreditsModal
   },
   computed: {
@@ -53,6 +50,10 @@ export default {
     closeMenu () {
       this.showMenu = false
       $('.sidenav').width('0')
+    },
+    openHelp () {
+      const route = this.$router.resolve({name: 'help'})
+      window.open(route.href, '_blank')
     }
   },
   mounted () {

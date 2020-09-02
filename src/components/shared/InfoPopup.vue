@@ -8,9 +8,6 @@
       <div class="container">
         <slot></slot>
 
-        <button class="btn btn-sm btn-info action" v-on:click="openRules">
-          More Info
-        </button>
         <button class="btn btn-sm btn-primary action" v-on:click="active = false">
           Close
         </button>
@@ -24,29 +21,12 @@
 <script>
 /**
  * A popup component to display concise help information for a component.
- *
- * This component is made with the <slot> tag to allow it to have HTML written
- * inside of it in the parent. This allows the popup to have nicely styled
- * text and keeps the text from adding to the code, though it does add to the
- * parents HTML. These popups will scroll if the content is too large, but
- * they are not meant to have a lot of info. Detailed info should be contained
- * in other help components.
- *
- * Uses a position:fixed for the popup so that it will appear in the same place
- * every time. This could be changed, but then the component may be placed
- * inside other components, which can be akward.
  */
 export default {
   name: 'info-popup',
   data () {
     return {
       active: false
-    }
-  },
-  methods: {
-    openRules () {
-      this.active = false
-      $('#rulesModal').modal('show')
     }
   }
 }
