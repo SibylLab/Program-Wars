@@ -95,12 +95,12 @@ export default {
 }
 
 #go {
+  display: inline-block;
   position: absolute;
   bottom: 2%;
 }
 
 .centered {
-  display: inline-block;
   left: 0;
   right: 0;
   margin-left: auto;
