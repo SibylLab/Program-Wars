@@ -51,6 +51,7 @@ export default {
     },
     canSpy () {
       return this.player.effects.hasNegative('SPYWARE', this.game.currentPlayer())
+          && !this.game.currentPlayer().isAI
     }
   },
   methods: {
