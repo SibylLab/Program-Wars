@@ -4,7 +4,7 @@
   <div class="player-card" v-for="card in player.hand.cards" v-bind:key="card.id">
     <img :src="cardImage(card)" :class="['card', cardShadow(card)]"
       :draggable="canDrag(card)" v-on:dragstart="startDrag($event, card)"
-      v-on:mousemove="select(card)">
+      v-on:mouseover="select(card)">
 
     <input type="image" id="discard-button" title="Discard" v-if="isCurrentCard(card)"
        src="static/miscIcons/trash.png" v-on:click="discard(card)">
