@@ -55,8 +55,8 @@ class MethodStack extends Stack {
    */
   willAccept (card) {
     const total = card.getValue() + this.getScore()
-    return card.type === 'INSTRUCTION' && total <= SCORE_LIMIT + this.adjustment
-        && this.cards.length < CARD_LIMIT
+    return card.type === 'INSTRUCTION' && !this.isComplete()
+      && total <= SCORE_LIMIT + this.adjustment
   }
 
   /**
@@ -68,7 +68,8 @@ class MethodStack extends Stack {
    * @return {bool} True if the stack is complete, false otherwise.
    */
   isComplete () {
-    return this.getScore() >= SCORE_LIMIT || this.cards.length === CARD_LIMIT
+    return this.getScore() >= SCORE_LIMIT + this.adjustment
+        || this.cards.length >= CARD_LIMIT
   }
 
   /**
