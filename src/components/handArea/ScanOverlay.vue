@@ -16,6 +16,23 @@
 import ActiveScan from '@/components/shared/ActiveScan'
 import { mapGetters } from 'vuex'
 
+/**
+ * The overlay that appears over the scan card to allow players to play it.
+ * 
+ * @vue-prop {Card} card - The scan card to overlay.
+ * @vue-prop {Player} owner - The player that the card belongs to.
+ * @vue-data {bool} [activeScan=false] - When true the `ActiveScan` component will be
+ * displayed to let the player choose an attack to clean. If there are no attacks
+ * to scan this will be false.
+ *
+ * @vue-computed {bool} canScan - True if the player does not already have an
+ * active scan effect.
+ * @vue-computed {string} titleText - 'Scan' if the player can scan, 'Scan Active'
+ * if the player already has a scan effect active.
+ * @vue-computed {Object} getAttacks - Returns an object with `effects`, `virusStacks`,
+ * and `mimics` that each list all of the attacks of their type on the player.
+ * @vue-computed {bool} needToClean - True if there are any attakcs on the player.
+ */
 export default {
   name: 'scan-overlay',
   props: ['card', 'player'],
@@ -45,6 +62,14 @@ export default {
     }  
   },
   methods: {
+    /**
+     * Takes a turn to play the scan card.
+     *
+     * If the card is a mimic or the player has no attacks to clean it will
+     * be played as a special card. The mimic will be resolved or it will be
+     * added as a positive effect. Otherwise, the `ActiveScan` component will
+     * be displayed and the player can choose an effect to clean.
+     */
     playScan () {
       if (!this.card.isMimic && this.needToClean) {
         this.activeScan = true

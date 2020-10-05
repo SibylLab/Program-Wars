@@ -26,12 +26,12 @@ describe('StatusEffects', () => {
 
   test('updating the effects', () => {
     const effects = new StatusEffects('player')
-    effects.updateEffects = jest.fn()
+    effects._updateEffects = jest.fn()
     effects.update()
 
-    expect(effects.updateEffects).toBeCalledTimes(2)
-    expect(effects.updateEffects).toBeCalledWith(effects.positive)
-    expect(effects.updateEffects).toBeCalledWith(effects.negative)
+    expect(effects._updateEffects).toBeCalledTimes(2)
+    expect(effects._updateEffects).toBeCalledWith(effects.positive)
+    expect(effects._updateEffects).toBeCalledWith(effects.negative)
   })
 
   test('updating a list of effects', () => {
@@ -43,7 +43,7 @@ describe('StatusEffects', () => {
       fakeEffect({ left: 0 }),
       fakeEffect({ left: 2})
     ]
-    effects.updateEffects(effectList)
+    effects._updateEffects(effectList)
 
     expect(effectList[0].update).toBeCalledTimes(1)
     expect(effectList[1].update).toBeCalledTimes(1)

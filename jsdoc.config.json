@@ -8,20 +8,25 @@
   },
   "source": {
     "include": [
-      "./src"
+      "./src",
+      "./README.md"
     ],
     "includePattern": "\\.(vue|js)$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
   "plugins": [
+    "plugins/markdown",
     "node_modules/jsdoc-vuejs"
   ],
   "templates": {
     "cleverLinks": false,
-    "monospaceLinks": false
+    "monospaceLinks": true,
+    "useLongNameInNav": false,
+    "showInheritedInNav": false
   },
   "opts": {
-    "destination": "./documents/",
-    "recurse": true
+    "destination": "./docs/",
+    "recurse": true,
+    "template": "node_modules/minami"
   }
 }

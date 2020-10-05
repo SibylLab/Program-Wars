@@ -19,6 +19,12 @@
 <script>
 import { mapGetters } from 'vuex'
 
+/**
+ * Displays the players score along with a meter indicating how far the score is
+ * from the game's score limit.
+ * @vue-prop {Player} player - The player the details are for.
+ * @vue-prop {string} side - The side of the screen it is on `left | right`.
+ */
 export default {
   name: 'player-score',
   props: ['player', 'side'],

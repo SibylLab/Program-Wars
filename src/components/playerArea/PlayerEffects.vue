@@ -26,6 +26,17 @@
 <script>
 import tooltips from '@/components/tooltips'
 
+/**
+ * Displays the active status effects on the player using small card icons.
+ *
+ * @vue-prop {Player} player - The player the details are for.
+ * @vue-prop {string} side - The side of the screen it is on `left | right`.
+ *
+ * @vue-computed {StatusEffect[]} positiveEffects - A list of all positive
+ * status effects on the player that should be displayed, i.e. have an image.
+ * @vue-computed {StatusEffect[]} negativeEffects - A list of all negative
+ * status effects on the player that should be displayed, i.e. have an image.
+ */
 export default {
   name: 'player-effect',
   props: ['player', 'side'],
@@ -38,9 +49,19 @@ export default {
     }
   },
   methods: {
+    /**
+     * Returns the text for an effect's tooltip that shows on mouseover.
+     * @param {StatusEffect} effect - The effect to get the tooltip for.
+     * @return {string} The text for the effect's tooltip.
+     */
     tooltip (effect) {
       return tooltips.effects[effect.card.type]
     },
+    /**
+     * Checks if an effect has a turn limit.
+     * @param {StatusEffect} effect - the effect to check.
+     * @return {bool} True if the given effect is not permanent.
+     */
     hasLimit (effect) {
       return effect.turnsLeft !== -1
     }

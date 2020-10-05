@@ -26,8 +26,17 @@ import {bus} from '@/components/shared/Bus'
 import { mapGetters } from 'vuex'
 
 /**
- * Displays available side objectives and a players progress by higlighting
- * objectives that have been achieved.
+ * Displays the `standard` mode bonus objectives.
+ *
+ * Indicates the total bonus score for the player. Shows each bonus in a
+ * C style pseudo code `if` statement. The condition body changes from `red` to
+ * `green` in color when a condition is met, and back again if it is lost.
+ *
+ * @vue-prop {Player} player - The player the playField belongs to.
+ * @vue-data {Object} bonuses - Object holding player bonus scores for each category.
+ * 
+ * @vue-computed {Object[]} conditions - A list of objects that contain info for
+ * a conditional statement. `{if: condition text, reward: body text, val: points given}`.
  */
 export default {
   name: 'side-objectives',
@@ -42,11 +51,6 @@ export default {
   },
   computed: {
     ...mapGetters(['game']),
-    /**
-     * Returns a list of all the condition data.
-     * Each item text for in the if statement, text for in the body,
-     * and a value to use to check if an item has any bonus points.
-     */
     conditions () {
       let conds = []
       conds.push({if: "repeat_card_played", reward: "+3 pts/card",
@@ -67,15 +71,20 @@ export default {
     }
   },
   methods: {
+    /**
+     * Sets `bonuses` with the bonuses for the player.
+     */
     setBonuses () {
       this.bonuses = this.game.getPlayerBonuses(this.player)
     }
   },
   created () {
+    // Set bonuses and add listener to update bonuses on 'end-turn' events
     this.setBonuses()
     bus.$on('end-turn', this.setBonuses)
   },
   beforeDestroy () {
+    // Remove listener for 'end-turn' events when destroyed
     bus.$off('end-turn', this.setBonuses)
   }
 }

@@ -20,6 +20,19 @@
 <script>
 import { mapGetters } from 'vuex'
 
+/**
+ * Displays a button that when clicked will show the player's cards on the screen.
+ *
+ * @vue-prop {Player} player - The player the details are for.
+ * @vue-data {bool} showHand - True if the player's cards should be shown.
+ *
+ * @vue-computed {string} spyStyle - The CSS class to apply to the button to
+ * change its color whether it will open or close the view of the hand.
+ * @vue-computed {string} spyText - The text to show on the button, 'Spy Hand' when
+ * the hand is not shown and 'Stop Spying' when the hand is being shown.
+ * @vue-computed {bool} canSpy - True if the player can be spied on. I.e. has
+ * the spyware effect on them.
+ */
 export default {
   name: 'spy-accessor',
   props: ['player'],
@@ -41,6 +54,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Toggles the state of showHand to open or close the view of the player's hand.
+     */
     spy () {
       this.showHand = !this.showHand
     }

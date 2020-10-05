@@ -21,13 +21,12 @@
 <script>
 import InfoPopup from '@/components/shared/InfoPopup'
 
+/**
+ * Displays some basic help information for the {@link TurnHistory} area of the
+ * game screen using an {@link InfoPopup}.
+ */
 export default {
   name: 'turn-history-info',
-  data () {
-    return {
-      pageState: this.$store.state.pageState
-    }
-  },
   components: {
     'info-popup': InfoPopup
   }

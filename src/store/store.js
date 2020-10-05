@@ -1,3 +1,10 @@
+/**
+ * Storage for persistent application state.
+ *
+ * See {@link  https://vuex.vuejs.org/guide/state.html} for more information.
+ * @module store
+ */
+
 import Home from '@/pages/pageStates/Home'
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -10,11 +17,20 @@ import getters from './getters'
 
 
 /**
- * Holds all game objects and state.
- * Should only be used for data that needs to be used by many components.
- * If a component needs to keep track of something keep it in the component and
- * pass it out if and when it is necessary.
- * ie) player information in GameSetup.
+ * The store for persistent application state.
+ *
+ * @prop {Object} state - The persistent application state.
+ * ```
+ * {
+ *   page          // The current page.
+ *   home          // The state for the home page.
+ *   game          // The game state for the game page.
+ *   showBackstory // True if we have not displayed the backstory to the player yet.
+ * }
+ * ```
+ * @prop {Object} getters - vuex getters {@link getters}
+ * @prop {Object} mutations - vuex mutations {@link mutations}
+ * @prop {Object} actions -vuex actions {@link actions}
  */
 export const store = new Vuex.Store({
   state: {

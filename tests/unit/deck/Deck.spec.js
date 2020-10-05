@@ -45,7 +45,7 @@ describe('Deck class', () => {
       const deck = new Deck([]) 
 
       const card = deck.draw()
-      expect(card).toBeNull()
+      expect(card).toBeUndefined()
       expect(deck.cards).toHaveLength(0)
       expect(deck.discardPile).toHaveLength(0)
     })

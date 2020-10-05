@@ -21,6 +21,27 @@
 <script>
 /**
  * A popup component to display concise help information for a component.
+ *
+ * This component is used with a default `<slot>` tag to allow the specific
+ * content to be added to it with HTML. This allows the text to be styled
+ * differently for each popup, as needed for the specific content. It does not
+ * contain any information itself.
+ *
+ * The component itself is a button, that when clicked will show the popup.
+ * Any positioning of the element will move the button around. The popup uses
+ * `fixed` positioning to keep it in the center of the screen, and blocks
+ * clicks to elements outside of it until closed.
+ *
+ * The example below shows simple usage, but as the content of the popup uses
+ * HTML you can make it as elaborate or complex as needed. Though the intent of
+ * these popups is to be short descriptions of a portion of the screen, detailed
+ * help information should be kept on the help pages.
+ *
+ * @example
+ * <info-popup>
+ *   <h3> Some title for the popup </h3>
+ *   <p> A paragraph of content for the popup </p>
+ * </info-popup>
  */
 export default {
   name: 'info-popup',

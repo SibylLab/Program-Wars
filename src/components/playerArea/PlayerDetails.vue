@@ -19,6 +19,17 @@
 import SpyAccessor from '@/components/playerArea/SpyAccessor.vue'
 import { mapGetters } from 'vuex'
 
+/**
+ * Displays the player's name, player image, and buttons for spying on the player's hand.
+ *
+ * @vue-prop {Player} player - The player the details are for.
+ * @vue-prop {string} side - The side of the screen it is on `left | right`.
+ *
+ * @vue-computed {bool} isCurrentPlayer - True if the player is the current player.
+ * @vue-computed {string} oppSide - Returns the string for the opposite of
+ * `left | right`.
+ * @vue-computed {bool} showSpy - True if a player should have a spy button shown.
+ */
 export default {
   name: 'player-details',
   props: ['player', 'side'],

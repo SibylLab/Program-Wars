@@ -3,6 +3,7 @@ import MethodStack from '@/classes/stack/MethodStack'
 describe('MethodStack class', () => {
   // fake data
   const player = { name: 'player' }
+  const I1 = { type: 'INSTRUCTION', getValue: () => { return 1 } }
   const I2 = { type: 'INSTRUCTION', getValue: () => { return 2 } }
   const I3 = { type: 'INSTRUCTION', getValue: () => { return 3 } }
 
@@ -34,14 +35,6 @@ describe('MethodStack class', () => {
   test('hasMaxReapeats is always true', () => {
     const stack = new MethodStack(player)
     expect(stack.hasMaxRepeats()).toBeTruthy()
-  })
-
-  test('hasVariable is always false', () => {
-    const stack = new MethodStack(player)
-    // the stack will not accept this card in general, but we want to
-    // make sure that even when there is a varaible it is false
-    stack.addCard({ type: 'VARIABLE', value: 3 })
-    expect(stack.hasVariable()).toBeFalsy()
   })
 
   describe('willAccept', () => {
@@ -87,11 +80,23 @@ describe('MethodStack class', () => {
   })
 
   describe('is the stack complete?', () => {
-    test('yes', () => {
+    test('when the stack has reached the score limit', () => {
       const stack = new MethodStack(player)
       stack.addCard(I3)
       stack.addCard(I3)
       stack.addCard(I3)
+      expect(stack.isComplete()).toBeTruthy()
+    })
+
+    test('when the stack has reached the card limit', () => {
+      const stack = new MethodStack(player)
+      stack.addCard(I1)
+      stack.addCard(I1)
+      stack.addCard(I1)
+      expect(stack.isComplete()).toBeFalsy()
+      stack.addCard(I1)
+      stack.addCard(I1)
+      stack.addCard(I1)
       expect(stack.isComplete()).toBeTruthy()
     })
 

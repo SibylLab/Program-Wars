@@ -27,6 +27,14 @@
 <script>
 import { mapActions } from 'vuex'
 
+/**
+ * Displays an error message indicating that something has gone wrong and
+ * gives a button to go back to the home page.
+ *
+ * With the current setup this likely won't show, but it is available in case
+ * to let players know that pressing back, forward, or refresh can cause problems
+ * in the game.
+ */
 export default {
   name: 'error-page',
   methods: {

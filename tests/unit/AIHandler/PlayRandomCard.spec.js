@@ -13,7 +13,7 @@ describe('PlayRandomCard class', () => {
     const nums = Array(10000).keys() // array from 0 to 9999
 
     const action = new PlayRandomCard()
-    const result = action.sortCards([...nums])
+    const result = action._sortCards([...nums])
     expect(result).not.toEqual(nums)
   })
 

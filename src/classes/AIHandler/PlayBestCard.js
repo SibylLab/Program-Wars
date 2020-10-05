@@ -1,40 +1,54 @@
-/**
- * @file PlayBestCardAction.js file
- * @author Steven on 2020-06-10
- */
-
 import ActionHandler from '@/classes/AIHandler/ActionHandler'
 import helpers from '@/classes/AIHandler/aiHelpers'
 import { isSafety, isNegativeEffect } from '@/classes/card/cardData'
 
 /**
- * Attempts to play cards from an AI players hand based on a given
+ * Attempts to play cards from an AI players hand based on a given card
  * piority. Each card has a reasonable but simple strategy for attempting
- * to play it.
+ * to play it. If a card type is not included in the priority list cards of that
+ * type will never be played.
  *
- * If a card type is not included in the priority it will not be played
- * even if it is in the hand. This make it possible to make more complicated
- * ActionHandlers that can be added to the AIHandler if desired.
+ * This is sort of a mini version of the AIHandler except with methods instead
+ * of modules. Its main purpose was to make a quick and easy ActionHandler
+ * to cover most situations, but as such it is a large class and will get
+ * out of hand quickly if a lot more unique cards are added. It does this
+ * by using strings to index the object's instance to call methods for different
+ * card types. This works, but feels a little complicated and different.
+ * So with it's size and complexity it should probably be replaced with individual
+ * handlers for card types eventually. Or maybe be used as a last link in the chain
+ * before the default handler with handlers that target specific types of plays
+ * rather than focusing on a single card type.
+ *
+ * [`handle`]{@link PlayBestCard#handle} is probably the only method that should be
+ * considered **public**, but the others are left in the documentation to aid in
+ * understanding class, and to show what type of `playInfo` object they return.
+ * See {@link AIHandler} for more information on `playInfo` objects.
+ *
+ * @prop {Object} cardPriority - Maps card types to numerical priorities.
+ * @extends ActionHandler
  */
-export default class PlayBestCardAction extends ActionHandler {
+class PlayBestCard extends ActionHandler {
   /**
-   * Creates a new PlayBestCardAction class
-   * @constructor PlayBestCardAction
-   * @param player The player that this handler is for.
-   * @param playOrder A list of cards type in the order that they should be
-   * considered for play. Types not in the order will never be played.
+   * Creates a new PlayBestCardAction handler.
+   * @param {Player} player - The player that this handler is for.
+   * @param {string[]} playOrder - A list of cards type in the order that they should be
+   * considered for play. Types not in the order will **never** be played.
    */
   constructor (playOrder) {
     super()
     this.playOrder = playOrder
-    this.cardPriority = this.createOrder()
+    this.cardPriority = this._createOrder()
   }
 
   /**
-   * Creates an object that maps card types to priorities to be used when
-   * sorting the players hand.
+   * Creates an object from the playOrder list of types that maps these types
+   * to priorities to be used to sort the players hand.
+   * @return {Object} A map of card types to their numerical priorities.
+   * These numbers start at 0 (play first) and end with the length of the
+   * playOrder list - 1.
+   * @private
    */
-  createOrder () {
+  _createOrder () {
     const cardOrder = {}
     for (let i = 0; i < this.playOrder.length; i++) {
       cardOrder[this.playOrder[i]] = i
@@ -43,11 +57,14 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   /**
-   * Returns an move object for playing the higest priority card in the
-   * players hand or undefined if none of them can be played.
+   * Attempts to make a valid turn choice for the player.
    *
-   * A mini chain of responsibility for cards that uses internal functions for
-   * each card type for now.
+   * @param {Player} player - The player taking the action. 
+   * @param {Player[]} players - A list of all players in the game.
+   * @param {int[]} scores - A list of current player scores.
+   * @param {Deck} deck - The deck the player is using.
+   * @return {Object|undefined} A playInfo object for a turn, or `undefined`
+   * if no valid play can be made.
    */
   handle (player, players, scores, deck) {
     const cards = this.sortHand(player.hand)
@@ -74,16 +91,29 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   /**
-   * Returns a sorted list of the cards in a players hand.
-   * Sorts by lowest order value and then by highest card value.
-   * Cards types that are not in the playOrder will move to back.
+   * Sorts the cards in the hand according to the card priorities.
+   *
+   * Does change the hand.
+   *
+   * @param {Hand} hand - The hand to sort.
+   * @return {Card[]} The sorted list of cards.
    */
   sortHand (hand) {
-    this.sortCards(hand.cards)
+    this._sortCards(hand.cards)
     return hand.cards
   }
 
-  sortCards (cards) {
+  /**
+   * Sorts a list of cards using the `cardPriority` object.
+   *
+   * Sorts by lowest priority and then by highest card value.
+   * Cards types with no priority will move to back.
+   * Modifies the given cards list.
+   *
+   * @param {Card[]} cards - The list of cards to sort.
+   * @private
+   */
+  _sortCards (cards) {
     cards.sort((a, b) => {
       if (!(a.type in this.cardPriority)) { return 1 }
       else if (!(b.type in this.cardPriority)) { return -1 }
@@ -95,17 +125,25 @@ export default class PlayBestCardAction extends ActionHandler {
     })
   }
 
+  /**
+   * Checks to see if the given card's type is in the card priority list.
+   * @param {Card} card - The card to check.
+   * @return {bool} True if the type is in the priority list, false otherwise.
+   */
   isValidCard (card) {
     return card.type in this.cardPriority
   }
 
   /**
-   * Make a move for an instruction card.
-   * It is currently always possible to start a new instruction if a player
-   * has an instruction card.
-   * @param card The card to attempt to play.
-   * @param state an object with all the state needed to make a decision
-   * @return a move object for starting a new stack with the given card.
+   * Make a playInfo object for an instruction card if it can be played.
+   *
+   * Will only play on the method stack.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @return {Object|undefined} A `playOnStack` playInfo object if a play could be made,
+   * `undefined` otherwise.
    */
   instruction (card, { player }) {
     if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
@@ -123,6 +161,15 @@ export default class PlayBestCardAction extends ActionHandler {
     return undefined
   }
 
+  /**
+   * Make a playInfo object for an method card if it can be played.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @return {Object|undefined} A `new stack` playInfo object if a play could be made,
+   * `undefined` otherwise.
+   */
   method (card, { player }) {
     if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
 
@@ -136,12 +183,15 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   /**
-   * Make a move for adding a repeat card to the largest stack that
-   * is available.
-   * @param card The card to attempt to play.
-   * @param state an object with all the state needed to make a decision
-   * @return a move object for adding a repeat to a stack, or undefined if
-   * no stack can be played on.
+   * Make a playInfo object for an repeat card if it can be played.
+   *
+   * Always chooses the stack that will result in the largest point value.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @return {Object|undefined} A `playOnStack` playInfo object if a play could be made,
+   * `undefined` otherwise.
    */
   repeat (card, { player }) {
     if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
@@ -166,12 +216,16 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   /**
-   * Make a move for adding a variable card to the best stack available.
-   * Prioritizes unmatched Rx cards, then stack with lowest variable in it.
-   * @param card The card to attempt to play.
-   * @param state an object with all the state needed to make a decision
-   * @return a move object for adding a variable to a stack, or undefined if
-   * no stack can be played on.
+   * Make a playInfo object for an repeat card if it can be played.
+   *
+   * Will always choose unpaired `Rx` cards first, then it will look for stacks
+   * with lower value `variable` cards to replace.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @return {Object|undefined} A `playOnStack` playInfo object if a play could be made,
+   * `undefined` otherwise.
    */
   variable (card, { player }) {
     if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
@@ -194,13 +248,16 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   /**
-   * play a virus on another players stack under specific conditions.
-   * Will not attack single card stacks as this is a waste. Picks the biggest
-   * stack available that meets the criteria.
-   * @param card The card to attempt to play.
-   * @param state an object with all the state needed to make a decision
-   * @return a move object for hacking a stack, or undefined if
-   * no stack can be attacked.
+   * Make a playInfo object for an virus card if it can be played.
+   *
+   * Will chose the largest stack from all unprotected opponents.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @param {Player[]} state.players - All players in the game.
+   * @return {Object|undefined} A `playOnStack` playInfo object if a play could be made,
+   * `undefined` otherwise.
    */
   virus (card, { player, players }) {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
@@ -232,11 +289,13 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   /**
-   * Play a safety card on oneself if not already protected.
-   * @param card The card to attempt to play.
-   * @param state an object with all the state needed to make a decision
-   * @return a move object for playing a safety, or undefined
-   * if the player is already protected.
+   * Make a playInfo object for to play a safety card on the player.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @return {Object|undefined} A `playSpecial` or `playScan` playInfo object
+   * if a play could be made, `undefined` otherwise.
    */
   playSafety (card, { player }) {
     if (!player.helpedBy(card.type)) {
@@ -261,6 +320,21 @@ export default class PlayBestCardAction extends ActionHandler {
     return undefined
   }
 
+  /**
+   * Make a playInfo object for to play a safety card on the player.
+   *
+   * Prioritizes `BUFFER_OVERFLOW` (STACK_OVERFLOW still), then viruses,
+   * then mimics, and then just removes the first negative effect on the player.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} attacks - All attacks on the player.
+   * @param {StatusEffect[]} attacks.effects - List of negative effects on the player.
+   * @param {Stack[]} attacks.virusStacks - List of the player's stacks that have viruses.
+   * @param {Card[]} attacks.mimics - List of the player's mimicked cards.
+   * @param {Player} player - The player being scanned.
+   * @return {Object|undefined} A `playScan` playInfo object if a play could be made,
+   * `undefined` otherwise.
+   */
   playScan (card, attacks, player) {
     const play = { type: 'playScan', player, card, cardOwner: player }
 
@@ -285,12 +359,16 @@ export default class PlayBestCardAction extends ActionHandler {
   }
  
   /**
-   * Play an attack card on the opponent with the highest score that
-   * is not already attacked by or protected from the card.
-   * @param card The card to attempt to play.
-   * @param state an object with all the state needed to make a decision
-   * @return a move object for playing an attack, or undefined
-   * no target can be found.
+   * Make a playInfo object for adding a negative effect to an opponent if possible.
+   *
+   * Will chose the opponent with the highest total score that is not protected.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @param {Player[]} state.players - All players in the game.
+   * @return {Object|undefined} A `playSpecial` playInfo object if a play could be made,
+   * `undefined` otherwise.
    */
   playNegativeEffect (card, { player, players }) {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
@@ -315,9 +393,19 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   /**
-   * Searches for cards based on the card priority.
-   * May not be optimal as it is not certain that the player will need this
-   * card, but it is a good default.
+   * Make a playInfo object for searching the top N cards of the deck.
+   *
+   * Uses the the card priority to decide what order to look for cards. If it
+   * can't find a card in the priority it will not play the card. This is a little
+   * different than human players who if they activate the card must choose
+   * something.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @param {Deck} state.deck - The deck to search.
+   * @return {Object|undefined} A `playSearch` playInfo object if a play could be made,
+   * `undefined` otherwise.
    */
   search (card, { player, deck }) {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
@@ -336,15 +424,25 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 
   /**
-   * Sorts the top 5 cards according to it's play order.
-   * This is not optimal in beginner and standard games as the player won't
-   * be drawing every card themselves, but it will do for an easy default.
+   * Make a playInfo object for sorting the top N cards of the deck.
+   *
+   * Uses the same priority as it does to sort a hand. This is not perfect
+   * for games where all players share a deck, but will perform better
+   * for modes where each player has their own deck. However, it is good
+   * enough for both and simple.
+   *
+   * @param {Card} card - The card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @param {Deck} state.deck - The deck to sort cards from.
+   * @return {Object|undefined} A `playSort` playInfo object if a play could be made,
+   * `undefined` otherwise.
    */
   sort (card, { player, deck }) {
     if (player.hurtBy('STACK_UNDERFLOW')) { return undefined }
 
     const cardsToSort = deck.drawCards(card.value)
-    this.sortCards(cardsToSort)
+    this._sortCards(cardsToSort)
 
     return {
       type: 'playSort',
@@ -355,3 +453,4 @@ export default class PlayBestCardAction extends ActionHandler {
   }
 }
 
+export default PlayBestCard;

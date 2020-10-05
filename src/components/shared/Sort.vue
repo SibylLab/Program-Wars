@@ -24,6 +24,17 @@
 <script>
 import { mapGetters } from 'vuex'
 
+/**
+ * Displays the to `N` cards from the deck and allows the player to arrange
+ * them however they want.
+ *
+ * When finished the arranged cards will be placed back on top of the deck with
+ * the leftmost card on top.
+ *
+ * @vue-prop {Player} cardOwner - The owner of the sort card.
+ * @vue-prop {Card} card - The sort card.
+ * @vue-prop {Deck} deck - The deck being sorted.
+ */
 export default {
   name: 'search',
   props: ['cardOwner', 'card', 'deck'],
@@ -36,6 +47,9 @@ export default {
     ...mapGetters(['game'])
   },
   methods: {
+    /**
+     * Takes a turn to sort the cards and put them back on top of the deck.
+     */
     finish () {
       this.game.takeTurn({
         type: 'playSort',
@@ -44,11 +58,31 @@ export default {
         sortedCards: this.sortedCards, deck: this.deck
       })
     },
+    /**
+     * Sets up the `event` to move a given card to a new position in the list.
+     * @param {event} event - The event being set up. Has `cardId` with the given
+     * card id added to the `dataTransfer` property.
+     * @param {Card} card - The card being dragged.
+     */
     startDrag (event, card) {
       event.dataTransfer.dropEffect = 'move'
       event.dataTransfer.effectAllowed = 'move'
       event.dataTransfer.setData('cardId', card.id)
     },
+    /**
+     * Resolves a drop event on top of a given card.
+     *
+     * This puts the dropped card in the place of the given card in the list.
+     * If the dropped card was originally left of the given card the given
+     * card and all other cards will be moved left one spot. If the dropped
+     * card was to the right the given card and cards between it and the dropped
+     * card's original position will be move to the right.
+     *
+     * @param {event} event - The event containing the id of the card to be moved.
+     * Will have `cardId` in the `dataTransfer` property to indicate which card
+     * is being dropped.
+     * @param {Card} card - The card that the dropped card is being dropped on.
+     */
     onDrop (event, card) {
       const droppedId = event.dataTransfer.getData('cardId')
       const dropped = this.sortedCards.find(c => c.id === droppedId)

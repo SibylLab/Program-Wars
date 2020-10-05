@@ -1,7 +1,15 @@
 import Deck from '@/classes/deck/Deck'
 import deckData from '@/classes/deck/deckData'
 
-export default class DeckFactory {
+/**
+ * Factory class to create decks for different modes
+ */
+class DeckFactory {
+  /**
+   * Creates a new beginner deck from a given deck type.
+   * @param {string} type - The type of deck to create.
+   * @return {Deck} A new deck with cards determined by the given type.
+   */
   beginnerDeck (type) {
     let data
     if (type in deckData.beginner) {
@@ -9,9 +17,14 @@ export default class DeckFactory {
     } else {
       data = deckData.beginner.default
     }
-    return new Deck(this._merge(data.base, data.extra))
+    return new Deck(data.base.concat(data.extra))
   }
 
+  /**
+   * Creates a new standard deck from a given deck type.
+   * @param {string} type - The type of deck to create.
+   * @return {Deck} A new deck with cards determined by the given type.
+   */
   standardDeck (type) {
     let data
     if (type in deckData.standard) {
@@ -19,10 +32,8 @@ export default class DeckFactory {
     } else {
       data = deckData.standard.default
     }
-    return new Deck(this._merge(data.base, data.extra))
-  }
-
-  _merge (baseCards, extraCards) { 
-    return baseCards.concat(extraCards)
+    return new Deck(data.base.concat(data.extra))
   }
 }
+
+export default DeckFactory;

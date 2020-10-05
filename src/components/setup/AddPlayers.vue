@@ -34,6 +34,24 @@
 import { bus } from '@/components/shared/Bus'
 import { mapGetters } from 'vuex'
 
+/**
+ * Allows user to add players during game setup.
+ *
+ * Only allows 2 players total right now and only 1 can be an AI.
+ * The home state keeps track of all of the player information so this component
+ * only interacts with that page state. The component displays the player list
+ * and calls page state methods to add and remove players. These methods will
+ * actually do any work updating the state or validating the data given to them.
+ * The methods in this component work mostly as callbacks that refresh the input
+ * box after passing the data on to the state.
+ *
+ * @vue-computed {string} howManyPlayers - A string indicating how many
+ * players can be added total.
+ * @vue-computed {string} inputPlaceholder - The string to show in the player
+ * name input box when there is not name in it. Changes when the max number of
+ * players has been reached.
+ * @vue-computed {bool} canAddBot - True if an AI player can be added.
+ */
 export default {
   name: 'add-players',
   computed: {
@@ -50,6 +68,11 @@ export default {
     }
   },
   methods: {
+    /**
+     * Adds a human player to the list of players if a name was entered.
+     *
+     * The addition of the player will be validated by the page state.
+     */
     addPlayer () {
       let name = $('#enter-name').val()
       this.refresh()
@@ -61,27 +84,47 @@ export default {
 
       this.home.addPlayer(name)
     },
+    /**
+     * Adds an AI player to the list of players.
+     *
+     * The addition of the bot will be validated by the page state.
+     */
     addBot () {
       this.home.addBot()
       this.refresh()
     },
+    /**
+     * Removes a player with the given name from the list of players.
+     * @param {string} name - The name of the player to remove.
+     */
     removePlayer (name) {
       this.home.removePlayer(name)
       this.refresh()
     },
+    /**
+     * Clears the home state's message and the player name input box, and sets
+     * focus back to the input so that players can add more names without having
+     * to click it again.
+     */
     refresh () {
       this.home.message = ""
       $('#enter-name').val('')
       $('#enter-name').focus()
     },
+    /**
+     * Wrapper for `home.removeBots` to use it as a callback for listening
+     * for `change-mode` events.
+     */
     removeBots () {
-      this.home.removeBots()
+      this.home.removeBots
     }
   },
   created () {
+    // Add a listener to remove all AI players when mode is changed
     bus.$on('change-mode', this.removeBots)
   },
   beforeDestroy() {
+    // Remove listener when component is destroyed
     bus.$off('change-mode', this.removeBots)
   }
 }

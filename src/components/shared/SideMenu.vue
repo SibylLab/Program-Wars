@@ -27,8 +27,16 @@ import CreditsModal from '@/components/modals/CreditsModal'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
 /**
- * The main game menu.
- * Contains any modals that the menu has links to.
+ * Displays the main game menu.
+ *
+ * The menu is hidden until the icon is clicked and will 'slide' out from the
+ * right side of the screen. It then has a button to hide it again. Any positioning
+ * done to the component when it is used will position the button and not the
+ * sliding menu.
+ *
+ * Contains links to the Backstory, the Rules, the Credits, and Reporting an Issue.
+ * It also will contain a link to create a new game when the menu is opened during
+ * a game. This link takes the player back to the home screen to setup the new game.
  */
 export default {
   name: 'side-menu',
@@ -43,10 +51,16 @@ export default {
   methods: {
     ...mapMutations(['seenBackstory']),
     ...mapActions(['leaveGame']),
+    /**
+     * Opens the side menu.
+     */
     openMenu () {
       this.showMenu = true
       $('.sidenav').width('20rem')
     },
+    /**
+     * Closes the side menu.
+     */
     closeMenu () {
       this.showMenu = false
       $('.sidenav').width('0')

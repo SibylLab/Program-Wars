@@ -1,12 +1,16 @@
 import ActionHandler from '@/classes/AIHandler/ActionHandler'
 
 /**
- * Takes a Redraw action for the ai players turn.
- * If the player has a redraw cooldown then a random card is discarded.
+ * A hanlder to redraw a players hand, if the player's redraw is on unavailable
+ * then it will discard a random card.
+ * @extends ActionHandler
  */
-export default class Redraw extends ActionHandler {
+class Redraw extends ActionHandler {
   /**
    * Returns a redraw turn object for an ai player.
+   * @param {Player} player - The player taking the action.
+   * @param {Object} a `discardHand` or `discardCard` playInfo object is
+   * guaranteed.
    */
   handle(player) {
     if (player.hurtBy('REDRAW_CD')) {
@@ -26,3 +30,4 @@ export default class Redraw extends ActionHandler {
   }
 }
 
+export default Redraw;

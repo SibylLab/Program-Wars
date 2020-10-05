@@ -39,6 +39,19 @@ import CardStack from '@/components/stackArea/CardStack'
 import { isNegativeEffect } from '@/classes/card/cardData'
 import { mapGetters } from 'vuex'
 
+/**
+ * Displays all the current attacks on a player and allows them to choose one to clean.
+ *
+ * @vue-prop {Player} cardOwner - The player that owns the `scan` card.
+ * @vue-prop {Card} card - The `scan` card that is being used.
+ * @vue-prop {Object} attacks - The attacks that are on the player. Has `effects`,
+ * `virusStacks`, and `mimics` that hold lists of all the attacks of those kinds
+ * that are currently affecting the player.
+ *
+ * @vue-computed {string} trojanImage - The image path for the trojan effect image.
+ * @vue-computed {StatusEffect[]} attacksEffects - All the valid negative status
+ * effects that have images on the player.
+ */
 export default {
   name: 'active-scan',
   props: ['cardOwner', 'card', 'attacks'],
@@ -55,17 +68,18 @@ export default {
     }
   },
   methods: {
+    /**
+     * Takes a turn to play the scan card and clean a given target attack.
+     *
+     * @param {Stack|Card|StatusEffect} target - The target of the scan
+     * which can be a different type depending on the attack it is cleaning.
+     * @param {string} type - The type of the target `stack`, `mimic`, or `effect`.
+     */
     playScan (target, type) {
       this.game.takeTurn({
         type: "playScan", player: this.game.currentPlayer(),
         card: this.card, cardOwner: this.cardOwner,
         target: target, targetType: type
-      })
-    },
-    discardScan () {
-      this.game.takeTurn({
-        type: 'discardCard', card: this.card, cardOwner: this.cardOwner,
-        player: this.game.currentPlayer()
       })
     }
   }

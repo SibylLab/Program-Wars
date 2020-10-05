@@ -28,9 +28,13 @@ import { isBase } from '@/classes/card/cardData'
 import { mapGetters } from 'vuex'
 
 /**
- * A component to hold all of the players card stacks during a game.
- * Responsible for handling drop events for cards that can start new stacks
- * and calling the appropriate actions to deal with them.
+ * Displays the player's method stack and all their other card stacks.
+ *
+ * Responsible for handling events to drop cards that will add new stacks to
+ * the player's playField.
+ *
+ * @vue-prop {Player} player - The player the playField belongs to.
+ * @vue-computed {bool} isCurrentPlayer - True if the player is the current player.
  */
 export default {
   name: 'play-field',
@@ -47,9 +51,13 @@ export default {
   },
   methods: {
     /**
-     * Handles events when a card is dropped in the playing feild.
-     * If the card is an instruction it cannot be placed on any stacks,
-     * So instead we add a new stack containing the card.
+     * Handles a given event when a card is dropped in the playField.
+     *
+     * Only adds new stacks for valid cards `instruction` and `method` when the
+     * player is the current player.
+     *
+     * @param {event} event - The event to handle. Must have the `dataTransfer`
+     * properties `cardId` and `playerId`.
      */
     onDrop (event) {
       const id = event.dataTransfer.getData('playerId')

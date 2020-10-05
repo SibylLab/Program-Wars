@@ -30,12 +30,22 @@
 <script>
 import { mapGetters } from 'vuex'
 
+/**
+ * Displays card levels available for the current game mode and allows the
+ * player to select between them.
+ *
+ * Also, displays the description for the currently selected level. All data
+ * is kept in the home state and not in this component.
+ */
 export default {
   name: 'select-level',
   computed: {
     ...mapGetters(['home'])
   },
   methods: {
+    /**
+     * Sets the home state's level to the given level.
+     */
     select (level) {
       this.home.level = level
     }

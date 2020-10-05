@@ -1,28 +1,27 @@
 /**
- * @file ActionHandler.js file
- * @author Steven on 2020-06-10
- */
-
-/**
  * An abstract handler class to deal with possible AI player actions.
- * These are the chain of responsibility objects that can handle a
- * turn or not. If they can they pass a turn object back to AiHandler
- * and it passes it back to the client to take the turn, if the action handler
- * cannot handle the event it can return undefined and the AiHandler will
- * move to the next action handler.
+ * These are the chain of responsibility objects that can attempt to handle
+ * the AI player's turn. See {@link AIHandler}.
  */
-export default class ActionHandler {
+class ActionHandler {
   /**
-   * Handles the request to take the ActionHandlers specific action.
-   * Must be implemented in the subclasses.
-   * @param player The player taking the action. 
-   * @param players A list of all players in the game.
-   * @param scores A list of current player scores.
-   * @param deck The deck the player is using.
-   * @return a turn object {playType, card, player, target} or undefined.
+   * Attempts to handle a request to take a player's turn.
+   *
+   * If it can create a valid play for the turn it will return a playInfo
+   * object for it. If there is no valid action to take of this type then
+   * returns undefined.
+   *
+   * **Overridde** in subclasses as this version always returns `undefined`.
+   *
+   * @param {Player} player - The player taking the action. 
+   * @param {Player[]} players - A list of all players in the game.
+   * @param {int[]} scores - A list of current player scores.
+   * @param {Deck} deck - The deck the player is using.
+   * @return {Object|undefined} A playInfo object for a turn, or `undefined`.
    */
   handle(player, players, scores, deck) {  // eslint-disable-line no-unused-vars
     return undefined
   }
 }
 
+export default ActionHandler;
