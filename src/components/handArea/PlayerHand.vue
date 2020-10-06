@@ -4,7 +4,7 @@
   <div class="player-card" v-for="card in player.hand.cards" v-bind:key="card.id">
     <img :src="cardImage(card)" :class="['card', cardShadow(card)]"
       :draggable="canDrag(card)" v-on:dragstart="startDrag($event, card)"
-      v-on:mousemove="select(card)">
+      v-on:mouseover="select(card)">
 
     <input type="image" id="discard-button" title="Discard" v-if="isCurrentCard(card)"
        src="static/miscIcons/trash.png" v-on:click="discard(card)">
@@ -96,6 +96,7 @@ export default {
      */
     canDrag (card) {
       return !isSpecial(card.type) && this.player.canPlay(card)
+          && !this.game.wait
     },
     /**
      * Checks whether or not a a given card should have an overlay.
@@ -105,7 +106,7 @@ export default {
      */
     showOverlay (card) {
       return this.isCurrentCard(card) && isSpecial(card.type)
-          && this.player.canPlay(card.type)
+          && this.player.canPlay(card.type) && !this.game.wait
     },
     /**
      * Gets the image path for the given card.
@@ -138,7 +139,7 @@ export default {
      * @param {Card} card - The card to select.
      */
     select (card) {
-      if (!this.isCurrentCard(card)) {
+      if (!this.isCurrentCard(card) && !this.game.wait) {
         this.game.setCurrentCard(card)
         this.update = !this.update
         bus.$emit('select-card')

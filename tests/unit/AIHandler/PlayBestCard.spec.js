@@ -142,15 +142,13 @@ describe('PlayBestCard', () => {
     test('when instruction can be added to method stack', () => {
       const action = new PlayBestCard(order)
 
-      const method = {
-        isComplete: jest.fn(() => { return false }),
-        toLimit: jest.fn(() => { return 5 })
-      }
+      const method = { willAccept: jest.fn(() => { return true }) }
       const player = { playField: { method }, hurtBy: jest.fn(() => { return false }) }
       const card = { value: 2 }
       let result = action.instruction(card, { player })
 
-      expect(method.isComplete).toBeCalledTimes(1)
+      expect(method.willAccept).toBeCalledTimes(1)
+      expect(method.willAccept).toBeCalledWith(card)
       expect(result.type).toEqual('playOnStack')
       expect(result.card).toEqual(card)
       expect(result.cardOwner).toEqual(player)
@@ -158,33 +156,16 @@ describe('PlayBestCard', () => {
       expect(result.stack).toEqual(method)
     })
 
-    test('when method is already complete', () => {
+    test('when method will not accept the card', () => {
       const action = new PlayBestCard(order)
 
-      const method = {
-        isComplete: jest.fn(() => { return true }),
-        toLimit: jest.fn(() => { return 5 })
-      }
+      const method = { willAccept: jest.fn(() => { return false }) }
       const player = { playField: { method }, hurtBy: jest.fn(() => { return false }) }
       const card = { value: 2 }
       let result = action.instruction(card, { player })
 
-      expect(method.isComplete).toBeCalledTimes(1)
-      expect(result).toBeUndefined()
-    })
-
-    test('when method is not complete, but card is to large', () => {
-      const action = new PlayBestCard(order)
-
-      const method = {
-        isComplete: jest.fn(() => { return false }),
-        toLimit: jest.fn(() => { return 1 })
-      }
-      const player = { playField: { method }, hurtBy: jest.fn(() => { return false }) }
-      const card = { value: 3 }
-      let result = action.instruction(card, { player })
-
-      expect(method.isComplete).toBeCalledTimes(1)
+      expect(method.willAccept).toBeCalledTimes(1)
+      expect(method.willAccept).toBeCalledWith(card)
       expect(result).toBeUndefined()
     })
 

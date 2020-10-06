@@ -95,6 +95,7 @@ export default {
 }
 
 #go {
+  display: inline-block;
   position: absolute;
   bottom: 2%;
 }

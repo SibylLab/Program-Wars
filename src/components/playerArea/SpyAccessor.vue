@@ -51,6 +51,7 @@ export default {
     },
     canSpy () {
       return this.player.effects.hasNegative('SPYWARE', this.game.currentPlayer())
+          && !this.game.currentPlayer().isAI
     }
   },
   methods: {
@@ -65,17 +66,10 @@ export default {
 </script>
 
 <style scoped>
-#player-area {
-  position: absolute;
-  top: 0;
-  width: 60%;
-  height: 100%;
-}
-
 #hand-box {
   position: fixed;
-  width: 45%;
-  height: 30%;
+  width: 50%;
+  height: 33%;
   top: 5%;
   left: 0;
   right: 0;
@@ -85,6 +79,8 @@ export default {
   border: ridge grey 0.5rem;
   border-radius: 1rem;
   z-index: 200;
+  overflow: auto;
+  white-space: nowrap;
 }
 
 .spy-card {

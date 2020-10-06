@@ -148,8 +148,7 @@ class PlayBestCard extends ActionHandler {
   instruction (card, { player }) {
     if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
 
-    if (!player.playField.method.isComplete()
-        && card.value <= player.playField.method.toLimit()) {
+    if (player.playField.method.willAccept(card)) {
       return {
         type: 'playOnStack',
         card: card,

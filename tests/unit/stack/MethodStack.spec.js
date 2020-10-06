@@ -100,6 +100,16 @@ describe('MethodStack class', () => {
       expect(stack.isComplete()).toBeTruthy()
     })
 
+    test('when stack is at limit, but the adjustment puts it below', () => {
+      const stack = new MethodStack(player)
+      stack.addCard(I3)
+      stack.addCard(I3)
+      stack.addCard(I3)
+      expect(stack.isComplete()).toBeTruthy()
+      stack.adjustment = -2
+      expect(stack.isComplete()).toBeTruthy()
+    })
+
     test('no', () => {
       const stack = new MethodStack(player)
       stack.addCard(I3)

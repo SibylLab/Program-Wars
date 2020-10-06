@@ -5,7 +5,7 @@
     "coverage/**",
     "dist/*",
     "dist/**",
-    "documents/*",
-    "documents/**"
+    "docs/*",
+    "docs/**"
   ]
 }

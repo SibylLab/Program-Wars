@@ -21,13 +21,13 @@ describe('CardFactory class', () => {
 
   describe('newCard', () => {
     test('when type is negative effect', () => {
-      const card = factory.newCard('RANSOM', value, deck)
+      factory.newCard('RANSOM', value, deck)
       expect(NegativeEffectCard).toBeCalledTimes(1)
       expect(NegativeEffectCard).toBeCalledWith('RANSOM', deck)
     })
 
     test('when type is positive effect', () => {
-      const card = factory.newCard('ANTIVIRUS', value, deck)
+      factory.newCard('ANTIVIRUS', value, deck)
       expect(PositiveEffectCard).toBeCalledTimes(1)
       expect(PositiveEffectCard).toBeCalledWith('ANTIVIRUS', deck)
     })
@@ -38,13 +38,13 @@ describe('CardFactory class', () => {
     })
 
     test('when type is one that needs a value and a deck', () => {
-      const card = factory.newCard('INSTRUCTION', value, deck)
+      factory.newCard('INSTRUCTION', value, deck)
       expect(Instruction).toBeCalledTimes(1)
       expect(Instruction).toBeCalledWith(value, deck)
     })
 
     test('when type is one that only needs the deck', () => {
-      const card = factory.newCard('VIRUS', value, deck)
+      factory.newCard('VIRUS', value, deck)
       expect(Virus).toBeCalledTimes(1)
       expect(Virus).toBeCalledWith(deck)
     })

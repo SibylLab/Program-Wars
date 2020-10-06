@@ -17,7 +17,7 @@ describe('AIHandlerFactory', () => {
     test('creating a new beginner handler', () => {
       const beginSpy = jest.spyOn(AIHandlerFactory.prototype, '_newBeginnerHandler')
       const factory = new AIHandlerFactory()
-      const handler = factory.newHandler('beginner')
+      factory.newHandler('beginner')
 
       expect(beginSpy).toBeCalledTimes(1)
       expect(PlayRandomCard).toBeCalledTimes(1)
@@ -29,7 +29,7 @@ describe('AIHandlerFactory', () => {
     test('creating a new standard handler', () => {
       const factory = new AIHandlerFactory()
       factory._newStandardHandler = jest.fn()
-      const handler = factory.newHandler('standard')
+      factory.newHandler('standard')
 
       expect(factory._newStandardHandler).toBeCalledTimes(1)
       expect(factory._newStandardHandler).toBeCalledWith('standard')
@@ -39,7 +39,7 @@ describe('AIHandlerFactory', () => {
   describe('_newStandardHandler', () => {
     test('when the personality is valid and not standard', () => {
       const factory = new AIHandlerFactory()
-      const handler = factory._newStandardHandler('aggresive')
+      factory._newStandardHandler('aggresive')
 
       expect(PlayBestCard).toBeCalledTimes(1)
       const arg = PlayBestCard.mock.calls[0][0]
@@ -54,7 +54,7 @@ describe('AIHandlerFactory', () => {
 
     test('when the personality is valid and not standard', () => {
       const factory = new AIHandlerFactory()
-      const handler = factory._newStandardHandler('aggresive')
+      factory._newStandardHandler('aggresive')
 
       expect(PlayBestCard).toBeCalledTimes(1)
       const arg = PlayBestCard.mock.calls[0][0]
@@ -69,7 +69,7 @@ describe('AIHandlerFactory', () => {
 
     test('when the personality is invalid', () => {
       const factory = new AIHandlerFactory()
-      const handler = factory._newStandardHandler('invalid')
+      factory._newStandardHandler('invalid')
 
       expect(PlayBestCard).toBeCalledTimes(1)
       const arg = PlayBestCard.mock.calls[0][0]
