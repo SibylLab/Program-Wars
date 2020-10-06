@@ -116,7 +116,7 @@ export default {
      * for `change-mode` events.
      */
     removeBots () {
-      this.home.removeBots()
+      this.home.removeBots
     }
   },
   created () {
