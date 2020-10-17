@@ -16,15 +16,15 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "easytimer.js": "^2.2.3",
-    "loglevel": "^1.6.8",
-    "raw-loader": "^4.0.1",
-    "vue": "^2.6.11",
+    "loglevel": "^1.7.0",
+    "raw-loader": "^4.0.2",
+    "vue": "^2.6.12",
     "vue-markdown": "^2.2.4",
-    "vue-router": "^3.4.3",
+    "vue-router": "^3.4.7",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
-    "@vue/cli": "^4.5.3",
+    "@vue/cli": "^4.5.7",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
     "@vue/cli-plugin-router": "~4.3.0",
@@ -37,11 +37,11 @@
     "easytimer": "^1.1.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "jsdoc": "^3.6.5",
-    "jsdoc-vuejs": "^3.0.8",
+    "jsdoc": "^3.6.6",
+    "jsdoc-vuejs": "^3.0.9",
     "minami": "^1.2.3",
-    "stylelint": "^13.6.1",
+    "stylelint": "^13.7.2",
     "stylelint-config-recommended": "^3.0.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   }
 }
