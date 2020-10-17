@@ -218,7 +218,9 @@ export default {
 }
 
 #last-move-image {
-  margin: 0.45rem 0.6rem;
+  position: absolute;
+  top: 10%;
+  left: 13%;
 }
 
 #prev-moves {
