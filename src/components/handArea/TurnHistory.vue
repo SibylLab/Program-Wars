@@ -1,13 +1,25 @@
 <template>
 <div id="turn-history">
-  <ul>
-    <li v-for="play in history" v-bind:key="play.type + Math.random()">
-      <img id="play-image" :src="image(play)">
-      <img id="player-image" :src="playerImage(play)">
-      <img id="target-image" v-if="hasTargetPlayer(play)" :src="targetImage(play)">
-      <img id="effect-icon" v-if="hasEffectIcon(play)" :src="effectImage(play)">
-    </li>
-  </ul>
+  <div id="tag"><b>Last Play</b></div>
+  <div id="last-move">
+    <div id="last-move-image" v-if="firstPlay">
+      <img id="play-image" :src="image(firstPlay)">
+      <img id="player-image" :src="playerImage(firstPlay)">
+      <img id="target-image" v-if="hasTargetPlayer(firstPlay)" :src="targetImage(firstPlay)">
+      <img id="effect-icon" v-if="hasEffectIcon(firstPlay)" :src="effectImage(firstPlay)">
+    </div>
+  </div>
+
+  <div id="prev-moves">
+    <ul>
+      <li v-for="play in history" v-bind:key="play.type + Math.random()">
+        <img id="play-image" :src="image(play)">
+        <img id="player-image" :src="playerImage(play)">
+        <img id="target-image" v-if="hasTargetPlayer(play)" :src="targetImage(play)">
+        <img id="effect-icon" v-if="hasEffectIcon(play)" :src="effectImage(play)">
+      </li>
+    </ul>
+  </div>
 
   <div id="info">
     <turn-history-info/>
@@ -44,8 +56,16 @@ export default {
   },
   computed: {
     ...mapGetters(['game']),
+    firstPlay () {
+      const len = this.game.turnHistory.length
+      if (len > 0) {
+        return this.game.turnHistory[len - 1]
+      } else {
+        return null
+      }
+    },
     history () {
-      const end = this.game.turnHistory.length
+      const end = this.game.turnHistory.length - 1
       const start = end < 15 ? 0 : Math.abs(end - 15)
       return this.game.turnHistory.slice(start, end).reverse()
     }
@@ -175,6 +195,39 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+#tag {
+  position: absolute;
+  left: 0rem;
+  bottom: -1.4rem;
+}
+
+#last-move {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5.7rem;
+  height: 100%;
+  background-color: #333333;
+  border: ridge grey 0.5rem;
+  border-radius: 0.5rem;
+  color: #fff;
+  text-align: left;
+  overflow: hidden;
+}
+
+#last-move-image {
+  position: absolute;
+  top: 10%;
+  left: 13%;
+}
+
+#prev-moves {
+  position: absolute;
+  left: 6rem;
+  width: 84%;
+  height: 100%;
   background-color: #333333;
   border: ridge grey 0.5rem;
   border-radius: 0.5rem;
@@ -218,8 +271,8 @@ export default {
 
 #info {
   position: absolute;
-  top: 0.2rem;
-  right: 0.2rem;
+  top: 0.5rem;
+  left: -1.5rem;
 }
 
 ul {
