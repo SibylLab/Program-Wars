@@ -7,7 +7,7 @@
   <div id="req-content" class="centered">
     <h4 id="phase-info" class="centered">
       <div class="name">{{ pageState.currentPlayer().name.toUpperCase() }}</div>
-      Select Your Requirement
+      Requirments and Goals for each sprints 
     </h4>
 
     <div id="req-cards" class="centered">
@@ -21,8 +21,10 @@
     <div id="buttons" class="centered">
       <button class="btn btn-success my-btn" v-on:click="premade()">
         Use Pre-built Deck </button>
+       <!--  
       <button class="btn btn-primary my-btn" v-on:click="next()">
         Customize Deck </button>
+      -->
     </div>
   </div>
 

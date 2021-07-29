@@ -12,7 +12,7 @@
   <input type="radio" class="form-check-input" id="pick-agile" name="game-type"
     v-on:click="changeMode('agile')">
   <label for="pick-agile">
-    <b>Agile: </b>Play to complete requirements during 3 sprints
+    <b>SDLC: </b>Play to complete requirements during 3 sprints
   </label>
 
 </div>
