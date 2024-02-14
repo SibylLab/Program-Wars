@@ -16,6 +16,8 @@ cards allow the player to change the number of repetitions using “variable” 
 portions of their program from being cyberattacked (i.e. “hacked”). Players can also use other cyberattacks (Malware and Power Outage) to stop their opponents from winning.
 
 To play Program Wars go to [https://program-wars.firebaseapp.com](https://program-wars.firebaseapp.com)
+  
+   * Version 1.5 can be played at [here](https://programming-wars.firebaseapp.com).
 
 To access the current dev version go to [https://program-wars-dev.firebaseapp.com](https://program-wars-dev.firebaseapp.com)
 
