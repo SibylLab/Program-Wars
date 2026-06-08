@@ -7,11 +7,51 @@
         class="requirement-row"
       >
         <span class="requirement-name">{{ entry.player.name }}</span>
-        
-        <span>M {{ entry.model }}/4</span>
-        <span>V {{ entry.view }}/2</span>
-        <span>C {{ entry.controller }}/5</span>
-        <span>D {{ entry.defensive }}/2</span>
+
+        <div class="requirement-group">
+          <span class="requirement-label">M</span>
+          <span class="requirement-boxes">
+            <span
+              v-for="index in 4"
+              :key="`model-${entry.player.id}-${index}`"
+              :class="['requirement-box', { filled: index <= entry.model }]"
+            />
+          </span>
+        </div>
+
+        <div class="requirement-group">
+          <span class="requirement-label">V</span>
+          <span class="requirement-boxes">
+            <span
+              v-for="index in 2"
+              :key="`view-${entry.player.id}-${index}`"
+              :class="['requirement-box', { filled: index <= entry.view }]"
+            />
+          </span>
+        </div>
+
+        <div class="requirement-group">
+          <span class="requirement-label">C</span>
+          <span class="requirement-boxes">
+            <span
+              v-for="index in 5"
+              :key="`controller-${entry.player.id}-${index}`"
+              :class="['requirement-box', { filled: index <= entry.controller }]"
+            />
+          </span>
+        </div>
+
+        <div class="requirement-group">
+          <span class="requirement-label">D</span>
+          <span class="requirement-boxes">
+            <span
+              v-for="index in 2"
+              :key="`defensive-${entry.player.id}-${index}`"
+              :class="['requirement-box', { filled: index <= entry.defensive }]"
+            />
+          </span>
+        </div>
+
         <span :class="entry.ready ? 'requirement-ready' : 'requirement-not-ready'">
           {{ entry.ready ? 'Ready' : 'Pending' }}
         </span>
@@ -83,6 +123,37 @@ export default {
 .requirement-name {
   min-width: 5rem;
   font-weight: 700;
+}
+
+.requirement-group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.requirement-label {
+  min-width: 1rem;
+  font-weight: 700;
+}
+
+.requirement-boxes {
+  display: inline-flex;
+  gap: 0.18rem;
+}
+
+.requirement-box {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 0.08rem solid #bdbdbd;
+  border-radius: 0.15rem;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.requirement-box.filled {
+  background: #8bff8b;
+  border-color: #8bff8b;
+  box-shadow: 0 0 0.25rem rgba(139, 255, 139, 0.45);
 }
 
 .requirement-ready {
