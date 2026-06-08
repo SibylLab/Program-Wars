@@ -1,41 +1,27 @@
 <template>
   <div id="turn-history">
-    <ul>
-      <li
-        v-for="play in history"
-        :key="play.type + Math.random()"
+    <template v-if="requirementProgress.length">
+      <div
+        v-for="entry in requirementProgress"
+        :key="entry.player.id"
+        class="requirement-row"
       >
-        <img
-          id="play-image"
-          :src="image(play)"
-        >
-        <img
-          id="player-image"
-          :src="playerImage(play)"
-        >
-        <img
-          v-if="hasTargetPlayer(play)"
-          id="target-image"
-          :src="targetImage(play)"
-        >
-        <img
-          v-if="hasEffectIcon(play)"
-          id="effect-icon"
-          :src="effectImage(play)"
-        >
-      </li>
-    </ul>
-
-    <div id="info">
-      <turn-history-info />
-    </div>
+        <span class="requirement-name">{{ entry.player.name }}</span>
+        
+        <span>M {{ entry.model }}/4</span>
+        <span>V {{ entry.view }}/2</span>
+        <span>C {{ entry.controller }}/5</span>
+        <span>D {{ entry.defensive }}/2</span>
+        <span :class="entry.ready ? 'requirement-ready' : 'requirement-not-ready'">
+          {{ entry.ready ? 'Ready' : 'Pending' }}
+        </span>
+      </div>
+    </template>
   </div>
 </template>
 
 
 <script>
-import TurnHistoryInfo from '@/components/info/TurnHistoryInfo'
-import { isAttack, isSpecial } from '@/classes/card/cardData'
 import { mapGetters } from 'vuex'
 
 /**
@@ -56,142 +42,14 @@ import { mapGetters } from 'vuex'
  */
 export default {
   name: 'TurnHistory',
-  components: {
-    'turn-history-info': TurnHistoryInfo,
-  },
   computed: {
     ...mapGetters(['game']),
-    history () {
-      const end = this.game.turnHistory.length
-      const start = end < 15 ? 0 : Math.abs(end - 15)
-      return this.game.turnHistory.slice(start, end).reverse()
-    }
-  },
-  methods: {
-    /**
-     * Returns an image path for the card icon of the given play.
-     * @param {Object} play - The `playInfo` object for a play.
-     * @param {string} play.type - The card type for the play.
-     * @param {int} play.value - The value of the card that was played.
-     * @return {string} An image path for the card icon.
-     */
-    image (play) {
-      let path = 'static/cardImages/effects/'
-      if (play.type === "discardHand") {
-        path += 'REDRAW'
-      } else if (play.type === "discardCard") {
-        path += 'DISCARD'
-      } else if (play.type === 'pass') {
-        path += 'PASS'
-      } else if (isAttack(play.card.type)) {
-        // Attack cards are in the attack directory
-        path = 'static/cardImages/attack/'
-        path += play.card.type.toLowerCase()
-      } else if (['MODEL', 'VIEW', 'CONTROLLER'].includes(play.card.type)) {
-        // Component cards are in their own type directories
-        const typeFolder = play.card.type.toLowerCase()
-        path = `static/cardImages/${typeFolder}/${play.card.componentName}`
-
-
-      } else if (['INTERFACE', 'POLYMORPHISM', 'GIT', 'ERROR_HANDLING', 'LOGGER'].includes(play.card.type)) {
-        return play.card.image
-      } else if (isSpecial(play.card.type) || play.card.type === 'VIRUS'
-                 || play.card.type === 'METHOD'){
-        path += play.card.type
-      } else {
-        path += play.card.type + play.card.value
+    requirementProgress () {
+      if (!this.game || !this.game.getRequirementProgress) {
+        return []
       }
 
-      return path + '.png'
-    },
-    /**
-     * Returns the path to the image for the player who made the given play.
-     * @param {Object} play - The `playInfo` object for a play.
-     * @param {Player} play.player - The player who made the play.
-     */
-    playerImage (play) {
-      let path = 'static/playerImages/player'
-      return path + play.player.id + '.png'
-    },
-    /**
-     * Checks to see if a play should have a target player.
-     * @param {Object} play - The play to check.
-     * @param {string} play.type - The type of the play.
-     * @param {Card} play.card - The card that was part of the play (if applicable).
-     * @return {bool} True if the play type can have a target player, false otherwise.
-     */
-    hasTargetPlayer (play) {
-      if (play.type !== 'discardCard' && play.card
-          && isAttack(play.card.type)) {
-        return true
-      }
-      return false
-    },
-    /**
-     * Returns the path to the image for the player who was the target of the given play.
-     *
-     * The caller is responsible for making sure the given play had a target before
-     * calling this method.
-     *
-     * @param {Object} play - The `playInfo` object for a play.
-     * @param {string} play.type - The card type for the play.
-     * @param {Stack} play.stack - The stack that was the target of the play, which
-     * will contain the player who owns it and is the target for the attack. Only
-     * present if the card type is `VIRUS`.
-     * @param {Player} play.target - The player that is the target of the play.
-     * @return {string} The image path for the target player.
-     */
-    targetImage (play) {
-      let path = 'static/playerImages/player'
-      let id
-      if (play.card.type === 'VIRUS') {
-        id = play.stack.player.id
-      } else {
-        id = play.target.id
-      }
-      return path + id + '.png'
-    },
-    /**
-     * Checks the given play to see if it should have an effect icon in the lower
-     * left corner.
-     * @param {Object} play - The play object to check. The possible members are not
-     * listed as the choice is made based on whether or not they are there, non are
-     * required.
-     * @return {bool} True if the play should have an effect icon, i.e. `SCAN`.
-     */
-    hasEffectIcon (play) {
-      return (play.card && play.card.type === 'SCAN' && play.targetType !== 'player')
-          || play.replaced || play.scanned
-    },
-    /**
-     * Returns the path to the image for an effect icon that will be placed in
-     * the lower right corner.
-     *
-     * The caller is responsible for making sure that the play has an effect image
-     * before calling this function or the resulting image path will be `undefined`.
-     *
-     * @param {Object} play - The `playInfo` object for a play.
-     * @param {card} play.card - The card that was played, **required**.
-     * @param {string} play.targetType - The type of the target that was scanned,
-     * if applicable.
-     * @return {string|undefined} The path to the image for the effect, or `undefined`
-     * if the play does not need an effect image.
-     */
-    effectImage (play) {
-      const path = 'static/cardImages/effects/'
-      if (play.card.type === 'SCAN') {
-        if (play.targetType === 'effect') {
-          return play.target.image
-        } else if (play.targetType === 'stack') {
-          return path + 'VIRUS.png'
-        } else {
-          return path + 'TROJAN.png'
-        }
-      } else if (play.replaced) {
-        return path + 'TROJAN.png'
-      } else if (play.scanned) {
-        return path + 'SCAN.png'
-      }
+      return this.game.players.map(player => this.game.getRequirementProgress(player.id))
     }
   }
 }
@@ -212,56 +70,29 @@ export default {
   overflow: hidden;
 }
 
-#play-image {
-  width: 3.2rem;
-  height: 3.2rem;
-  border: solid white 0.05rem;
+.requirement-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  margin: 0.35rem 0.6rem;
+  font-size: 0.92rem;
+  line-height: 1.2;
 }
 
-#player-image {
-  position: absolute;
-  left: 2.2rem;
-  top: 0.1rem;
-  width: 1.55rem;
-  height: 1.55rem;
-  border: solid black 0.05rem;
+.requirement-name {
+  min-width: 5rem;
+  font-weight: 700;
 }
 
-#target-image {
-  position: absolute;
-  left: 2.35rem;
-  top: 1.85rem;
-  width: 1.2rem;
-  height: 1.2rem;
-  border: solid black 0.05rem;
+.requirement-ready {
+  color: #8bff8b;
+  font-weight: 700;
 }
 
-#effect-icon {
-  position: absolute;
-  top: 1.85rem;
-  left: -0.2rem;
-  width: 1.2rem;
-  height: 1.2rem;
-  border: solid darkgrey 0.05rem;
-}
-
-#info {
-  position: absolute;
-  top: 0.2rem;
-  right: 0.2rem;
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  position: relative;
-  display: inline-block;
-  text-align: left;
-  margin: 0.45rem 0.6rem;
+.requirement-not-ready {
+  color: #ffc46b;
+  font-weight: 700;
 }
 </style>
 

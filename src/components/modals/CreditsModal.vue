@@ -11,55 +11,21 @@
           </h3>
         </div>
 
-        <div class="modal-body">
-          <p><b>Game concept by</b> Dr. John Anvik </p>
+        <div class="modal-body" style="text-align: center;">
           <p>
-            <b>Previous Versions by...</b>
+            <b>Game concept by</b>
             <br>
-            Dustin Fowler, Jonathan Vos, Josh Vandenhoek,
-            <br>
-            Lance Chisholm, Shaun Cullen, Austin Ball,
-            <br>
-            Jace Riehl, Vincent Cote, and Dr. John Anvik
-          </p>
-          <p>
-            <b>Current version by...</b>
-            <br>
-            Tareque, Maimoona, and Steven
-          </p>
-          <p>
-            <b>Graphics by...</b>
-            <br>
-            John Anvik Jr. and Katherine Hatton
-          </p>
-          <p>
-            <b>Follow the project page on </b>
-            <a
-              href="https://github.com/johnanvik/program-wars"
-              target="_blank"
-            >GitHub</a>
+            <a href="https://www.ulethbridge.ca/directory/person/john.anvik" target="_blank" rel="noopener">Dr. John Anvik</a>
+            & 
+            <a href="https://www.jamiur.xyz/" target="_blank" rel="noopener">Md Jamiur Rahman Rifat</a>
           </p>
         </div>
 
-        <div
-          class="modal-footer"
-          style="justify-content: left;"
-        >
-          <a
-            href="https://github.com/johnanvik/program-wars/releases/latest"
-            target="_blank"
-          >
-            <img
-              src="https://img.shields.io/github/release/johnanvik/program-wars.svg"
-              alt="versionNumber"
-              class="badge"
-            >
-          </a>
+        <div class="modal-footer" style="justify-content: center;">
           <button
             type="button"
             class="btn btn-secondary"
             data-dismiss="modal"
-            style="position: absolute; right: 2rem;"
           >
             Close
           </button>
