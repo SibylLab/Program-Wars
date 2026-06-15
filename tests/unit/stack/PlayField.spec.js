@@ -24,9 +24,11 @@ describe('PlayField class', () => {
   test('creating a new PlayField', () => {
     const field = new PlayField(player)
     expect(field.player).toBe(player)
+    expect(field.lanes).toHaveLength(3)
     expect(field.stacks).toHaveLength(0)
-    expect(MethodStack).toHaveBeenCalledTimes(1)
-    expect(MethodStack).toHaveBeenCalledWith(player)
+    // Each of the 3 lanes creates its own MethodStack.
+    expect(MethodStack).toHaveBeenCalledTimes(3)
+    expect(MethodStack).toHaveBeenCalledWith(player, 0)
   })
 
   describe('addCardToStack', () => {
@@ -34,34 +36,34 @@ describe('PlayField class', () => {
     beforeEach(() => {
       field = new PlayField(player)
       otherStack = makeStack({complete: false})
-      field.stacks.push(otherStack)
+      field.lanes[0].stacks.push(otherStack)
     })
-    
+
     test('when card won\'t complete the stack', () => {
       const stack = makeStack({complete: false})
-      field.stacks.unshift(stack)
+      field.lanes[0].stacks.unshift(stack)
 
       field.addCardToStack(card, stack)
       expect(stack.cards).toEqual([card])
-      expect(field.stacks).toEqual([stack, otherStack])
+      expect(field.lanes[0].stacks).toEqual([stack, otherStack])
     })
 
     test('when card completes the stack', () => {
       const stack = makeStack({complete: true})
-      field.stacks.unshift(stack)
+      field.lanes[0].stacks.unshift(stack)
 
       field.addCardToStack(card, stack)
       expect(stack.cards).toEqual([card])
-      expect(field.stacks).toEqual([otherStack, stack])
+      expect(field.lanes[0].stacks).toEqual([otherStack, stack])
     })
 
-    test('when card completes the stack, but it is the fields method', () => {
+    test('when card completes the stack, but it is the lane method', () => {
       const stack = makeStack({complete: true})
-      field.method = stack
+      field.lanes[0].method = stack
 
       field.addCardToStack(card, stack)
       expect(stack.cards).toEqual([card])
-      expect(field.stacks).toEqual([otherStack])
+      expect(field.lanes[0].stacks).toEqual([otherStack])
     })
   })
 
@@ -69,56 +71,53 @@ describe('PlayField class', () => {
     test('when there is an incomplete stack', () => {
       const field = new PlayField(player)
       const otherStack = makeStack({complete: false})
-      field.stacks.push(otherStack)
+      field.lanes[0].stacks.push(otherStack)
 
       const stack = makeStack({baseType: 'METHOD'})
       field.addStack(stack)
-      expect(field.stacks).toEqual([otherStack, stack])
+      expect(field.lanes[0].stacks).toEqual([otherStack, stack])
     })
 
     test('when there is a complete stack', () => {
       const field = new PlayField(player)
       const complete = makeStack({complete: true})
-      field.stacks.push(complete)
+      field.lanes[0].stacks.push(complete)
 
       const stack = makeStack({baseType: 'METHOD'})
       field.addStack(stack)
-      expect(field.stacks).toEqual([stack, complete])
+      expect(field.lanes[0].stacks).toEqual([stack, complete])
     })
 
     test('when base is METHOD and there is an single INSTRUCTION stack', () => {
       const field = new PlayField(player)
       const otherStack = makeStack({complete: false, baseType: 'INSTRUCTION'})
       otherStack.cards.push(card)
-      field.stacks.push(otherStack)
+      field.lanes[0].stacks.push(otherStack)
 
       const stack = makeStack({baseType: 'METHOD'})
       field.addStack(stack)
-      expect(field.stacks).toEqual([stack, otherStack])
+      expect(field.lanes[0].stacks).toEqual([stack, otherStack])
     })
 
     test('when base is INSTRUCTION and there is an single INSTRUCTION stack', () => {
       const field = new PlayField(player)
       const otherStack = makeStack({complete: false, baseType: 'INSTRUCTION'})
       otherStack.cards.push(card)
-      field.stacks.push(otherStack)
+      field.lanes[0].stacks.push(otherStack)
 
       const stack = makeStack({baseType: 'INSTRUCTION'})
       field.addStack(stack)
-      expect(field.stacks).toEqual([otherStack, stack])
+      expect(field.lanes[0].stacks).toEqual([otherStack, stack])
     })
   })
 
   test('getting score of all the stacks', () => {
     const field = new PlayField(player)
-    // we set method to make sure that it's score is not added to the total directly
-    const method = makeStack({score: 6})
-    field.method = method
-
+    // The method stack's score is not added to the lane total directly.
     const stack1 = makeStack({score: 25})
     const stack2 = makeStack({score: 15})
-    field.stacks.push(stack1)
-    field.stacks.push(stack2)
+    field.lanes[0].stacks.push(stack1)
+    field.lanes[0].stacks.push(stack2)
     expect(field.getScore()).toEqual(40)
   })
 
@@ -127,8 +126,8 @@ describe('PlayField class', () => {
     const virus = {type: 'VIRUS'}
     const virusStack = makeStack({topType: 'VIRUS', cards: [virus]})
     const stack = makeStack({topType: 'REPEAT', cards: [card]})
-    field.stacks.push(virusStack)
-    field.stacks.push(stack)
+    field.lanes[0].stacks.push(virusStack)
+    field.lanes[0].stacks.push(stack)
 
     const viruses = field.cleanViruses()
     expect(viruses).toEqual([virus])

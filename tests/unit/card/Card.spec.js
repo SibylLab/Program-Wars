@@ -72,27 +72,19 @@ describe('Card class', () => {
       }
     })
 
-    test('when card is Virus', () => {
-      const card = new Card(0, "VIRUS", mockDeck, "image_path")
-      card._blockedByScan(playInfo)
-      expect(playInfo.scanned).toBeTruthy()
-      expect(playInfo.stack.player.effects.removePositiveType).toBeCalledTimes(1)
-      expect(playInfo.stack.player.effects.removePositiveType).toBeCalledWith('SCAN')
-      
-    })
-
-    test('when card is any other attack', () => {
-      const card = new Card(0, "TROJAN", mockDeck, "image_path")
+    test('when card is an attack the scan is consumed from the target', () => {
+      const card = new Card(0, "SQL_INJECTION", mockDeck, "image_path")
       card._blockedByScan(playInfo)
       expect(playInfo.scanned).toBeTruthy()
       expect(playInfo.target.effects.removePositiveType).toBeCalledTimes(1)
       expect(playInfo.target.effects.removePositiveType).toBeCalledWith('SCAN')
     })
 
-    test('when card is not an attack', () => {
+    test('when card is not an attack nothing happens', () => {
       const card = new Card(0, "METHOD", mockDeck, "image_path")
       card._blockedByScan(playInfo)
       expect(playInfo.scanned).toBeFalsy()
+      expect(playInfo.target.effects.removePositiveType).not.toBeCalled()
     })
   })
 })

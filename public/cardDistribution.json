@@ -1,0 +1,44 @@
+{
+  "$comment": "LIVE card distribution config. Edit these numbers and reload the game to change how often each card is drawn - no rebuild needed. 'deckSize' is the target deck size. Each category gets a relative 'share' of the deck; within a category each card type gets a relative 'weight'. Counts are derived proportionally and spread across each type's variants. Tiers, most -> least: component > defensive > attacking > destructive. METHOD is the Inheritance / stack-starter card; it sits in 'defensive' with a high weight so stacks stay startable. MODEL is the most common component; GIT is the rarest defensive. RANSOM (Ransomware) is an attack card. The destructive tier is only Bug and Disaster. If this file is missing or invalid the game falls back to DEFAULT_DISTRIBUTION in src/classes/deck/distributionConfig.js (keep them in sync).",
+  "deckSize": 72,
+  "categories": {
+    "component": {
+      "share": 50,
+      "cards": {
+        "MODEL": 5,
+        "CONTROLLER": 4,
+        "VIEW": 3
+      }
+    },
+    "defensive": {
+      "share": 32,
+      "cards": {
+        "METHOD": 11,
+        "INTERFACE": 4,
+        "POLYMORPHISM": 3,
+        "ERROR_HANDLING": 2,
+        "LOGGER": 2,
+        "GIT": 1
+      }
+    },
+    "attacking": {
+      "share": 15,
+      "cards": {
+        "DOS": 1,
+        "SQL_INJECTION": 1,
+        "XSS": 1,
+        "CSRF": 1,
+        "MALWARE": 1,
+        "UNAUTHORIZED_ACCESS": 1,
+        "RANSOM": 1
+      }
+    },
+    "destructive": {
+      "share": 3,
+      "cards": {
+        "BUG": 1,
+        "DISASTER": 1
+      }
+    }
+  }
+}

@@ -127,7 +127,7 @@ describe('StatusEffects', () => {
       const effects = new StatusEffects('player')
       effects.positive = [fire]
       expect(effects.hasProtectionFrom('VIRUS')).toBeFalsy()
-      expect(effects.hasProtectionFrom('STACK_OVERFLOW')).toBeTruthy()
+      expect(effects.hasProtectionFrom('SQL_INJECTION')).toBeTruthy()
     })
 
     test('when has no protection', () => {

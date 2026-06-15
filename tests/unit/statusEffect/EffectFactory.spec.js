@@ -61,7 +61,7 @@ describe('EffectFactory', () => {
   })
 
   describe('newNegativeFromCard', () => {
-    test('when card is an SQL injection', () => {
+    test('when card is an SQL injection (a plain cyber attack)', () => {
       const fact = new EffectFactory('player')
       fact._getTurns = jest.fn(() => { return 2 })
       fact._getPenalty = jest.fn(() => { return -2 })
@@ -77,9 +77,9 @@ describe('EffectFactory', () => {
       expect(fact._getBonus).toBeCalledTimes(1)
       expect(fact._getBonus).toBeCalledWith(card.type)
 
-      expect(SqlEffect).toBeCalledTimes(1)
-      expect(SqlEffect).toBeCalledWith(card, 'player', 2, 'attacker', -2)
-      expect(effect).toBeInstanceOf(SqlEffect)
+      expect(CyberAttack).toBeCalledTimes(1)
+      expect(CyberAttack).toBeCalledWith(card, 'player', 2, 'attacker', -2)
+      expect(effect).toBeInstanceOf(CyberAttack)
     })
 
     test('when card also adds a bonus effect', () => {

@@ -23,7 +23,7 @@ describe('NegativeEffectCard', () => {
     expect(card.value).toEqual(0)
     expect(card.type).toEqual('RANSOM')
     expect(card.deck).toEqual('deck')
-    expect(card.image).toEqual('static/cardImages/ransom.png')
+    expect(card.image).toEqual('static/cardImages/attack/ransom.png')
   })
 
   describe('play', () => {

@@ -40,14 +40,14 @@ describe('PlayBestCard', () => {
     const scores = 'scores'
     const deck = 'deck'
 
-    test('with saftey card in hand', () => {
+    test('with negative effect card in hand', () => {
       const action = new PlayBestCard(order)
-      action.playSafety = jest.fn(() => { return 'saftey' })
+      action.playNegativeEffect = jest.fn(() => { return 'negativeEffect' })
 
       const sortSpy = jest.spyOn(PlayBestCard.prototype, 'sortHand')
       const validSpy = jest.spyOn(PlayBestCard.prototype, 'isValidCard')
 
-      const card = { type: 'FIREWALL' }
+      const card = { type: 'RANSOM' }
       const hand = { cards: [card] }
       const player = { hand }
       const args = { player, players, scores, deck }
@@ -57,21 +57,6 @@ describe('PlayBestCard', () => {
       expect(sortSpy).toBeCalledWith(hand)
       expect(validSpy).toBeCalledTimes(1)
       expect(validSpy).toBeCalledWith(card)
-
-      expect(action.playSafety).toBeCalledTimes(1)
-      expect(action.playSafety).toBeCalledWith(card, args)
-      expect(result).toEqual('saftey')
-    })
-
-    test('with negative effect card in hand', () => {
-      const action = new PlayBestCard(order)
-      action.playNegativeEffect = jest.fn(() => { return 'negativeEffect' })
-
-      const card = { type: 'RANSOM' }
-      const hand = { cards: [card] }
-      const player = { hand }
-      const args = { player, players, scores, deck }
-      let result = action.handle(player, players, scores, deck)
 
       expect(action.playNegativeEffect).toBeCalledTimes(1)
       expect(action.playNegativeEffect).toBeCalledWith(card, args)
@@ -143,7 +128,7 @@ describe('PlayBestCard', () => {
       const action = new PlayBestCard(order)
 
       const method = { willAccept: jest.fn(() => { return true }) }
-      const player = { playField: { method }, hurtBy: jest.fn(() => { return false }) }
+      const player = { playField: { lanes: [{ method }] }, hurtBy: jest.fn(() => { return false }) }
       const card = { value: 2 }
       let result = action.instruction(card, { player })
 
@@ -160,7 +145,7 @@ describe('PlayBestCard', () => {
       const action = new PlayBestCard(order)
 
       const method = { willAccept: jest.fn(() => { return false }) }
-      const player = { playField: { method }, hurtBy: jest.fn(() => { return false }) }
+      const player = { playField: { lanes: [{ method }] }, hurtBy: jest.fn(() => { return false }) }
       const card = { value: 2 }
       let result = action.instruction(card, { player })
 
@@ -186,7 +171,10 @@ describe('PlayBestCard', () => {
     test('when method can start a new stack', () => {
       const action = new PlayBestCard(order)
 
-      const player = { playField: {},  hurtBy: jest.fn(() => { return false }) }
+      const player = {
+        playField: { lanes: [{ method: { isComplete: () => { return false } } }] },
+        hurtBy: jest.fn(() => { return false })
+      }
       const card = { value: 0 }
       let result = action.method(card, { player })
 

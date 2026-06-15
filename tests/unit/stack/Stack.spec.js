@@ -241,16 +241,16 @@ describe('Stack class', () => {
       })
     })
 
-    describe('Virus', () => {
+    describe('Virus (no longer playable onto stacks)', () => {
       const card = Object.assign({}, VIRUS)
 
-      test('when top is not Virus', () => {
+      test('is not accepted even when the top is a normal card', () => {
         const stack = new Stack(baseM2, player)
         stack.addCard(R2)
-        expect(stack.willAccept(card)).toBeTruthy()
+        expect(stack.willAccept(card)).toBeFalsy()
       })
 
-      test('when top is already Virus', () => {
+      test('is not accepted when the top is already a Virus', () => {
         const stack = new Stack(baseM2, player)
         stack.addCard(VIRUS)
         expect(stack.willAccept(card)).toBeFalsy()

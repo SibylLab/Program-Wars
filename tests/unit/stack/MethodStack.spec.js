@@ -6,6 +6,10 @@ describe('MethodStack class', () => {
   const I1 = { type: 'INSTRUCTION', getValue: () => { return 1 } }
   const I2 = { type: 'INSTRUCTION', getValue: () => { return 2 } }
   const I3 = { type: 'INSTRUCTION', getValue: () => { return 3 } }
+  // A lane-0 MethodStack only accepts its component type (MODEL), so the
+  // willAccept tests below use MODEL cards.
+  const M2 = { type: 'MODEL', getValue: () => { return 2 } }
+  const M3 = { type: 'MODEL', getValue: () => { return 3 } }
 
   test('calling the constructor', () => {
     const stack = new MethodStack(player)
@@ -40,41 +44,46 @@ describe('MethodStack class', () => {
   describe('willAccept', () => {
     test('adding a card that will not put it over the limit', () => {
       const stack = new MethodStack(player)
-      expect(stack.willAccept(I2)).toBeTruthy()
+      expect(stack.willAccept(M2)).toBeTruthy()
     })
 
     test('adding a card that will put it over the limit', () => {
       const stack = new MethodStack(player)
-      stack.addCard(I3)
-      stack.addCard(I3)
-      stack.addCard(I3)
-      expect(stack.willAccept(I2)).toBeFalsy()
+      stack.addCard(M3)
+      stack.addCard(M3)
+      stack.addCard(M3)
+      expect(stack.willAccept(M2)).toBeFalsy()
     })
 
     test('adding a card that fits only with the current negative adjustment', () => {
       const stack = new MethodStack(player)
-      stack.addCard(I3)
-      stack.addCard(I3)
-      stack.addCard(I3)
+      stack.addCard(M3)
+      stack.addCard(M3)
+      stack.addCard(M3)
       stack.adjustment = -2
-      expect(stack.willAccept(I2)).toBeFalsy()
+      expect(stack.willAccept(M2)).toBeFalsy()
     })
 
     test('adding a card that fits without current positive adjustment', () => {
       // Positive adjustments are allowed to put score over the limit
       const stack = new MethodStack(player)
-      stack.addCard(I3)
-      stack.addCard(I3)
+      stack.addCard(M3)
+      stack.addCard(M3)
       stack.adjustment = 3
-      expect(stack.willAccept(I2)).toBeTruthy()
+      expect(stack.willAccept(M2)).toBeTruthy()
     })
 
     test('adding a card that does not fit without current positive adjustment', () => {
       const stack = new MethodStack(player)
-      stack.addCard(I3)
-      stack.addCard(I3)
-      stack.addCard(I2)
+      stack.addCard(M3)
+      stack.addCard(M3)
+      stack.addCard(M2)
       stack.adjustment = 3
+      expect(stack.willAccept(M2)).toBeFalsy()
+    })
+
+    test('rejects a card that does not match the lane component type', () => {
+      const stack = new MethodStack(player)
       expect(stack.willAccept(I2)).toBeFalsy()
     })
   })

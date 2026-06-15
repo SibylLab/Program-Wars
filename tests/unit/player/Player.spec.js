@@ -128,7 +128,7 @@ describe('Player class', () => {
       expect(spyHurtBy).toBeCalledWith('STACK_UNDERFLOW')
     })
 
-    test('with algorithm card types', () => {
+    test('with search and sort card types (treated as non-special)', () => {
       const spyHurtBy = jest.spyOn(Player.prototype, 'hurtBy')
 
       const player = new Player(0, 'test')
@@ -136,7 +136,7 @@ describe('Player class', () => {
       player.canPlay('SORT')
 
       expect(spyHurtBy).toBeCalledTimes(2)
-      expect(spyHurtBy).toBeCalledWith('STACK_UNDERFLOW')
+      expect(spyHurtBy).toBeCalledWith('STACK_OVERFLOW')
     })
 
     test('with non-special card types', () => {

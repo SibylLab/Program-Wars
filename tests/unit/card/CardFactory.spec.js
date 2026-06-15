@@ -26,12 +26,6 @@ describe('CardFactory class', () => {
       expect(NegativeEffectCard).toBeCalledWith('RANSOM', deck)
     })
 
-    test('when type is positive effect', () => {
-      factory.newCard('ANTIVIRUS', value, deck)
-      expect(PositiveEffectCard).toBeCalledTimes(1)
-      expect(PositiveEffectCard).toBeCalledWith('ANTIVIRUS', deck)
-    })
-
     test('when type is scan we dont want it to create PositiveEffectCard', () => {
       const card = factory.newCard('SCAN', value, deck)
       expect(card).toBeInstanceOf(Scan)

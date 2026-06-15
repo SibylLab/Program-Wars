@@ -45,7 +45,7 @@ describe('AIHandlerFactory', () => {
       const arg = PlayBestCard.mock.calls[0][0]
       expect(arg[0]).toEqual('SORT')
       expect(arg[5]).toEqual('RANSOM')
-      expect(arg[11]).toEqual('INSTRUCTION')
+      expect(arg[11]).toEqual('POLYMORPHISM')
       
       const playBestInstance = PlayBestCard.mock.instances[0]
       expect(AIHandler).toBeCalledTimes(1)
@@ -60,7 +60,7 @@ describe('AIHandlerFactory', () => {
       const arg = PlayBestCard.mock.calls[0][0]
       expect(arg[0]).toEqual('SORT')
       expect(arg[5]).toEqual('RANSOM')
-      expect(arg[11]).toEqual('INSTRUCTION')
+      expect(arg[11]).toEqual('POLYMORPHISM')
       
       const playBestInstance = PlayBestCard.mock.instances[0]
       expect(AIHandler).toBeCalledTimes(1)
@@ -74,8 +74,8 @@ describe('AIHandlerFactory', () => {
       expect(PlayBestCard).toBeCalledTimes(1)
       const arg = PlayBestCard.mock.calls[0][0]
       expect(arg[0]).toEqual('INSTRUCTION')
-      expect(arg[4]).toEqual('SORT')
-      expect(arg[10]).toEqual('RANSOM')
+      expect(arg[4]).toEqual('POLYMORPHISM')
+      expect(arg[10]).toEqual('ANTIVIRUS')
       
       const playBestInstance = PlayBestCard.mock.instances[0]
       expect(AIHandler).toBeCalledTimes(1)

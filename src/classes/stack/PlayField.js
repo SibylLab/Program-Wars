@@ -1,4 +1,3 @@
-import MethodStack from '@/classes/stack/MethodStack'
 import Lane from '@/classes/stack/Lane'
 
 /**

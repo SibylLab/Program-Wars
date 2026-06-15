@@ -78,7 +78,7 @@ describe('MimicWrapper', () => {
     test('when the card type is attack', () => {
       const wrapper = new MimicWrapper('card', trojan, player)
       // Super is mocked so we have to set wrapper.card manually (not ideal)
-      wrapper.card = { type: 'VIRUS' }
+      wrapper.card = { type: 'SQL_INJECTION' }
 
       const replacement = wrapper._replace()
       expect(NegativeEffectCard).toBeCalledTimes(1)

@@ -1,5 +1,4 @@
 import Stack from '@/classes/stack/Stack'
-import { canPlayOnMethod } from '@/classes/card/cardData'
 
 // The maximum score allowed for a method
 const SCORE_LIMIT = 9

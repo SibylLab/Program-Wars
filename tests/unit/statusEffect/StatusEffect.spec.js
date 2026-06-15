@@ -13,7 +13,7 @@ describe('StatusEffect', () => {
     expect(effect.type).toEqual('RANSOM')
     expect(effect.player).toEqual('player')
     expect(effect.turnsLeft).toEqual(3)
-    expect(effect.image).toEqual('static/cardImages/effects/RANSOM.png')
+    expect(effect.image).toEqual('static/cardImages/attack/ransom.png')
   })
 
   test('creating a new status effect with no image', () => {

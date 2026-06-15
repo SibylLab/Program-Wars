@@ -1,39 +1,24 @@
 import Deck from '@/classes/deck/Deck'
-import deckData from '@/classes/deck/deckData'
+import cardCatalog from '@/classes/deck/cardCatalog'
+import { buildCardTypes } from '@/classes/deck/distributionBuilder'
+import { getDistribution } from '@/classes/deck/distributionConfig'
 
 /**
- * Factory class to create decks for different modes
+ * Factory class to create decks for different modes.
+ *
+ * Deck composition is driven by the weighted distribution config (see
+ * `public/cardDistribution.json` and {@link module:distributionConfig}) rather
+ * than a hard-coded card list, so card frequencies can be tuned without code
+ * changes.
  */
 class DeckFactory {
   /**
-   * Creates a new beginner deck from a given deck type.
-   * @param {string} type - The type of deck to create.
-   * @return {Deck} A new deck with cards determined by the given type.
+   * Creates a new beginner deck from the active card distribution.
+   * @return {Deck} A new deck whose composition matches the distribution config.
    */
-  beginnerDeck (type) {
-    let data
-    if (type in deckData.beginner) {
-      data = deckData.beginner[type]
-    } else {
-      data = deckData.beginner.default
-    }
-    return new Deck(data.base.concat(data.extra))
-  }
-
-  /**
-   * Creates a new standard deck from a given deck type.
-   * @param {string} type - The type of deck to create.
-   * @return {Deck} A new deck with cards determined by the given type.
-   */
-  standardDeck (type) {
-    let data
-    if (type in deckData.standard) {
-      data = deckData.standard[type]
-    } else {
-      data = deckData.standard.default
-    }
-    return new Deck(data.base.concat(data.extra))
+  beginnerDeck () {
+    return new Deck(buildCardTypes(getDistribution(), cardCatalog))
   }
 }
 
-export default DeckFactory;
+export default DeckFactory
