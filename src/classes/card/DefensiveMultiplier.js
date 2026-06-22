@@ -2,7 +2,6 @@ import Card from '@/classes/card/Card'
 
 const DEFENSIVE_IMAGE_NAMES = {
   INTERFACE: 'interface',
-  POLYMORPHISM: 'polymorphism',
   GIT: 'Git',
   ERROR_HANDLING: 'error_handling'
 }

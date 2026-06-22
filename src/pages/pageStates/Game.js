@@ -169,6 +169,7 @@ class Game {
   _applyAutoHazard (player, card) {
     const defenseMatch = player.getDefenseCardForAttack(card.type)
 
+    let penalty = 0
     if (defenseMatch) {
       const { card: defenseCard, stack } = defenseMatch
       if (stack) {
@@ -176,7 +177,7 @@ class Game {
         defenseCard.discard()
       }
     } else {
-      const penalty = -Math.floor(player.getScore() * 0.5)
+      penalty = -Math.floor(player.getScore() * 0.5)
       if (penalty !== 0) {
         const penaltyType = card.type + '_PENALTY'
         player.effects.addNegative(new FixedPenaltyEffect(penaltyType, player, penalty))
@@ -185,7 +186,7 @@ class Game {
 
     const fact = new EffectFactory(player)
     player.effects.addNegative(fact.newEffect(card.type, 0, false))
-    bus.emit('hazard-applied', { type: card.type })
+    bus.emit('hazard-applied', { type: card.type, defended: !!defenseMatch, penalty })
     card.discard()
   }
 

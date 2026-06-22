@@ -75,6 +75,7 @@
     </div>
 
     <effect-notifications />
+    <polymorph-modal />
   </div>
   <div v-else>
     <error-page />
@@ -88,6 +89,7 @@ import PlayerArea from '@/components/playerArea/PlayerArea'
 import HandArea from '@/components/handArea/HandArea'
 import StackArea from '@/components/stackArea/StackArea'
 import EffectNotifications from '@/components/shared/EffectNotifications'
+import PolymorphModal from '@/components/modals/PolymorphModal'
 import ErrorPage from '@/components/shared/ErrorPage'
 import { bus } from '@/components/shared/Bus'
 import { mapActions, mapGetters } from 'vuex'
@@ -117,6 +119,7 @@ export default {
     'player-area': PlayerArea,
     'hand-area': HandArea,
     'effect-notifications': EffectNotifications,
+    'polymorph-modal': PolymorphModal,
     'stack-area': StackArea,
     'error-page': ErrorPage
   },

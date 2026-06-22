@@ -48,7 +48,11 @@
 import CardStack from '@/components/stackArea/CardStack'
 import PlayFieldInfo from '@/components/info/PlayFieldInfo'
 import { isBase } from '@/classes/card/cardData'
+import { bus } from '@/components/shared/Bus'
 import { mapGetters } from 'vuex'
+
+// Lane index -> component type a Polymorphism card can morph into.
+const LANE_TYPES = ['MODEL', 'VIEW', 'CONTROLLER']
 
 /**
  * Displays the player's method stack and all their other card stacks.
@@ -98,7 +102,24 @@ export default {
       const card = owner.hand.getCardById(cardId)
       event.preventDefault()
 
-      if (this.isCurrentPlayer && isBase(card.type)) {
+      if (!this.isCurrentPlayer || this.game.wait) {
+        return
+      }
+
+      // Polymorphism morphs into a chosen component of the lane it lands in -
+      // open the picker instead of playing immediately.
+      if (card.type === 'POLYMORPHISM') {
+        event.stopPropagation();
+        bus.emit('polymorph-choose', {
+          card,
+          owner,
+          laneIndex,
+          laneType: LANE_TYPES[laneIndex]
+        })
+        return
+      }
+
+      if (isBase(card.type)) {
         event.stopPropagation();
         this.game.takeTurn({
           type: "newStack",

@@ -11,6 +11,7 @@
       <img
         :src="cardImage(card)"
         :class="['card', cardShadow(card)]"
+        :title="cardDescription(card)"
         :draggable="canDrag(card)"
         @dragstart="startDrag($event, card)"
         @mouseover="select(card)"
@@ -54,6 +55,7 @@ import TargetOverlay from '@/components/handArea/TargetOverlay'
 import ScanOverlay from '@/components/handArea/ScanOverlay'
 import AlgorithmOverlay from '@/components/handArea/AlgorithmOverlay'
 import { isSpecial, isAlgorithm } from '@/classes/card/cardData'
+import { describeCard } from '@/classes/card/cardDescriptions'
 import { bus } from '@/components/shared/Bus'
 import { mapGetters } from 'vuex'
 
@@ -149,6 +151,18 @@ export default {
         return 'static/cardImages/backOfCard.png'
       }
       return card.image
+    },
+    /**
+     * Gets the hover-tooltip description for a card. Hidden while the hand is
+     * face-down on an AI player's turn so it does not reveal hidden cards.
+     * @param {Card} card - The card to describe.
+     * @return {string} The description text, or '' when it should be hidden.
+     */
+    cardDescription (card) {
+      if (this.game.currentPlayer().isAI) {
+        return ''
+      }
+      return describeCard(card)
     },
     /**
      * Determines the CSS class for the higlight to show around the card.

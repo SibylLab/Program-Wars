@@ -64,13 +64,13 @@ export default {
       timeout: 1000,
       showingHazard: false,
       hazardMessage: '',
-      hazardTimeout: 1600,
+      hazardTimeout: 7500,
       audioContext: null,
       showingCollision: false,
       collisionLeft: '',
       collisionRight: '',
       collisionMessage: '',
-      collisionTimeout: 4800
+      collisionTimeout: 7200 // on screen hold
     }
   },
   computed: {
@@ -113,10 +113,35 @@ export default {
      */
     hazardApplied (payload) {
       const type = payload && payload.type ? payload.type : 'HAZARD'
-      this.hazardMessage = type === 'BUG' ? 'BUG HAPPENED' : 'DISASTER HAPPENED'
+      this.hazardMessage = this._hazardMessage(type, payload)
       this.showingHazard = true
       this.playHazardBeep()
       setTimeout(() => { this.showingHazard = false }, this.hazardTimeout)
+    },
+    /**
+     * Builds a message explaining the consequence of a hazard card.
+     * @param {string} type - The hazard type ('BUG' or 'DISASTER').
+     * @param {Object} payload - The hazard payload (defended flag, penalty).
+     * @return {string} The message to display.
+     */
+    _hazardMessage (type, payload) {
+      const defended = payload && payload.defended
+      const points = payload && payload.penalty ? Math.abs(payload.penalty) : 0
+      if (type === 'BUG') {
+        if (defended) {
+          return 'BUG BLOCKED! Your Logger card caught the defect and protected your score.'
+        }
+        const lost = points > 0 ? `cost you ${points} points (half your score) and ` : ''
+        return `BUG! A code defect ${lost}disrupts your next turns. Tip: a Logger card defends against Bugs.`
+      }
+      if (type === 'DISASTER') {
+        if (defended) {
+          return 'DISASTER AVERTED! Your Git backup restored your work and protected your score.'
+        }
+        const lost = points > 0 ? `wiped out ${points} points (half your score) and ` : ''
+        return `DISASTER! It ${lost}disrupts your next turns. Tip: a Git card defends against Disasters.`
+      }
+      return `${type} happened`
     },
     playHazardBeep () {
       try {
@@ -179,17 +204,20 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   z-index: 130;
-  padding: 1rem 2rem;
+  max-width: 30rem;
+  padding: 1rem 1.6rem;
   border-radius: 1rem;
   background: rgba(184, 10, 10, 0.96);
   border: 2px solid rgba(255, 214, 0, 0.75);
   box-shadow: 0 0 2rem rgba(255, 214, 0, 0.5);
   color: #fff;
-  font-size: 2rem;
-  font-weight: 900;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
   text-shadow: 0 0 1rem rgba(0, 0, 0, 0.8);
-  letter-spacing: 0.08rem;
-  animation: hazard-pop 1.6s ease-out;
+  letter-spacing: 0.02rem;
+  animation: hazard-pop 0.6s ease-out;
   pointer-events: none;
 }
 
@@ -236,12 +264,12 @@ export default {
 
 .collision-card.left {
   left: 0;
-  animation: collide-left 2.2s ease-out;
+  animation: collide-left 3.3s ease-out;
 }
 
 .collision-card.right {
   right: 0;
-  animation: collide-right 2.2s ease-out;
+  animation: collide-right 3.3s ease-out;
 }
 
 .collision-message {
@@ -253,7 +281,7 @@ export default {
   padding: 0.5rem 1rem;
   border-radius: 0.7rem;
   border: 1px solid rgba(255, 214, 0, 0.6);
-  animation: message-pop 3.6s ease-out;
+  animation: message-pop 5.4s ease-out;
 }
 
 @keyframes collide-left {

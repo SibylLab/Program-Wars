@@ -20,7 +20,7 @@ describe('DefensiveMultiplier class', () => {
         }
       }
 
-      const card = new DefensiveMultiplier('POLYMORPHISM', 'deck')
+      const card = new DefensiveMultiplier('INTERFACE', 'deck')
       card.play(playInfo)
 
       expect(playField.addCardToStack).toBeCalledTimes(1)

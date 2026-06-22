@@ -22,6 +22,7 @@
         :src="card.image"
         :class="['card', shadow(card)]"
         :style="{'margin-right': overlap}"
+        :title="cardDescription(card)"
         draggable="false"
       >
     </ul>
@@ -31,6 +32,10 @@
 <script>
 import { bus } from '@/components/shared/Bus'
 import { mapGetters } from 'vuex'
+import { describeCard } from '@/classes/card/cardDescriptions'
+
+// Lane index -> component type a Polymorphism card can morph into.
+const LANE_TYPES = ['MODEL', 'VIEW', 'CONTROLLER']
 
 /**
  * Displays a stack of cards and its total score.
@@ -105,6 +110,14 @@ export default {
   },
   methods: {
     /**
+     * Gets the hover-tooltip description explaining what a card represents.
+     * @param {Card} card - The card to describe.
+     * @return {string} The description text, or '' when none is found.
+     */
+    cardDescription (card) {
+      return describeCard(card)
+    },
+    /**
      * Checks whether or not the given card can be played on the stack.
      * @param {Card} card - The card to play on the stack
      * @return {bool} True if the card can be played on the stack otherwise false
@@ -159,6 +172,24 @@ export default {
       const cardId = event.dataTransfer.getData('cardId')
       const card = owner.hand.getCardById(cardId)
       event.preventDefault()
+
+      // Polymorphism dropped on the inheritance (method) stack: open the picker
+      // and play the chosen component onto this stack to accumulate points.
+      if (card.type === 'POLYMORPHISM') {
+        if (this.ownedByCurrentPlayer && this.stack.isMethod && !this.stack.isComplete()) {
+          event.stopPropagation();
+          bus.emit('polymorph-choose', {
+            card,
+            owner,
+            mode: 'onStack',
+            stack: this.stack,
+            laneType: LANE_TYPES[this.stack.laneIndex]
+          })
+        } else if (this.stack.isMethod) {
+          event.stopPropagation();
+        }
+        return
+      }
 
       if (this.canPlayOnStack(card)) {
         event.stopPropagation();

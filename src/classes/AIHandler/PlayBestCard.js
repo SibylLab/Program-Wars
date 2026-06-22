@@ -1,5 +1,6 @@
 import ActionHandler from '@/classes/AIHandler/ActionHandler'
 import helpers from '@/classes/AIHandler/aiHelpers'
+import cardCatalog from '@/classes/deck/cardCatalog'
 import { isSafety, isNegativeEffect } from '@/classes/card/cardData'
 
 /**
@@ -193,6 +194,46 @@ class PlayBestCard extends ActionHandler {
       player: player,
       playField: player.playField,
       laneIndex: laneIndex
+    }
+  }
+
+  /**
+   * Make a playInfo object for a Polymorphism card if it can be played.
+   *
+   * Morphs the card into a component of whichever lane the player has the
+   * fewest components in, then starts a stack in that lane.
+   *
+   * @param {Card} card - The Polymorphism card to attempt to play.
+   * @param {Object} state - An object with the state info needed to make this decision.
+   * @param {Player} state.player - The player making the play.
+   * @return {Object|undefined} A `newStack` playInfo object if a play could be
+   * made, `undefined` otherwise.
+   */
+  polymorphism (card, { player }) {
+    if (player.hurtBy('STACK_OVERFLOW')) { return undefined }
+
+    // Count collected components so the AI morphs into the type it needs most.
+    const counts = { MODEL: 0, VIEW: 0, CONTROLLER: 0 }
+    for (const stack of player.playField.getAllStacks()) {
+      for (const c of stack.cards) {
+        if (counts[c.type] !== undefined) { counts[c.type]++ }
+      }
+    }
+    const type = ['MODEL', 'VIEW', 'CONTROLLER'].reduce((a, b) => {
+      return counts[a] <= counts[b] ? a : b
+    })
+
+    const names = cardCatalog[type] || []
+    if (names.length === 0) { return undefined }
+    card.morph(type, names[0])
+
+    return {
+      type: 'newStack',
+      card: card,
+      cardOwner: player,
+      player: player,
+      playField: player.playField,
+      laneIndex: card.getLaneIndex()
     }
   }
 

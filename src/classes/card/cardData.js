@@ -31,9 +31,11 @@ const safety = [
 const algorithm = [
 ]
 
-// Defensive cards that act like repeat multipliers on stacks
+// Defensive cards that act like repeat multipliers on stacks.
+// Note: POLYMORPHISM is no longer a multiplier - it is a wildcard component
+// card (see {@link Polymorphism}).
 const defensiveMultipliers = [
-  'INTERFACE', 'POLYMORPHISM', 'GIT', 'ERROR_HANDLING', 'LOGGER'
+  'INTERFACE', 'GIT', 'ERROR_HANDLING', 'LOGGER'
 ]
 
 // Attack counters based on component cards or special defense types

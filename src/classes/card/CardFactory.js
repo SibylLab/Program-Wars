@@ -11,6 +11,7 @@ import Search from '@/classes/card/Search'
 import Sort from '@/classes/card/Sort'
 import ComponentCard from '@/classes/card/ComponentCard'
 import DefensiveMultiplier from '@/classes/card/DefensiveMultiplier'
+import Polymorphism from '@/classes/card/Polymorphism'
 import Logger from '@/classes/card/Logger'
 import Bug from '@/classes/card/Bug'
 import Disaster from '@/classes/card/Disaster'
@@ -35,10 +36,11 @@ const needDeckOnly = {
   'LOGGER': Logger,
   'BUG': Bug,
   'DISASTER': Disaster,
+  'POLYMORPHISM': Polymorphism,
 }
 
 // Defensive multiplier card types that need a type and a deck
-const defensiveMultiplierTypes = ['INTERFACE', 'POLYMORPHISM', 'GIT', 'ERROR_HANDLING']
+const defensiveMultiplierTypes = ['INTERFACE', 'GIT', 'ERROR_HANDLING']
 
 // Component card types that require a name
 const componentTypes = ['MODEL', 'VIEW', 'CONTROLLER']

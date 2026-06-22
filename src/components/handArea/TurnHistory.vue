@@ -52,8 +52,8 @@
           </span>
         </div>
 
-        <span :class="entry.ready ? 'requirement-ready' : 'requirement-not-ready'">
-          {{ entry.ready ? 'Ready' : 'Pending' }}
+        <span :class="entry.cardsComplete ? 'requirement-ready' : 'requirement-not-ready'">
+          {{ entry.cardsComplete ? 'Done' : 'Pending' }}
         </span>
       </div>
     </template>

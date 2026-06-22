@@ -8,7 +8,7 @@ const REQUIRED_COMPONENT_COUNTS = {
 }
 
 const REQUIRED_DEFENSIVE_COUNTS = 2
-const REQUIRED_DEFENSIVE_TYPES = ['INTERFACE', 'POLYMORPHISM', 'GIT', 'ERROR_HANDLING', 'LOGGER']
+const REQUIRED_DEFENSIVE_TYPES = ['INTERFACE', 'GIT', 'ERROR_HANDLING', 'LOGGER']
 
 /**
  * Page state to go with the {@link BeginnerGame.vue}
@@ -48,6 +48,7 @@ class BeginnerGame extends Game {
       view: 0,
       controller: 0,
       defensive: 0,
+      cardsComplete: false,
       ready: false
     }
 
@@ -80,16 +81,27 @@ class BeginnerGame extends Game {
       })
     }
 
+    progress.cardsComplete = this.meetsCardRequirements(progress)
     progress.ready = this.meetsVictoryRequirements(progress)
     return progress
   }
 
-  meetsVictoryRequirements (progress) {
-    return progress.score >= this.scoreLimit
-      && progress.model >= REQUIRED_COMPONENT_COUNTS.MODEL
+  /**
+   * Checks if a player has collected all the required component and defensive
+   * cards, ignoring score.
+   * @param {Object} progress - A requirement progress object.
+   * @return {bool} True if all card minimums are met.
+   */
+  meetsCardRequirements (progress) {
+    return progress.model >= REQUIRED_COMPONENT_COUNTS.MODEL
       && progress.view >= REQUIRED_COMPONENT_COUNTS.VIEW
       && progress.controller >= REQUIRED_COMPONENT_COUNTS.CONTROLLER
       && progress.defensive >= REQUIRED_DEFENSIVE_COUNTS
+  }
+
+  meetsVictoryRequirements (progress) {
+    return progress.score >= this.scoreLimit
+      && this.meetsCardRequirements(progress)
   }
 
   getWinners () {

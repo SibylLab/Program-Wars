@@ -102,7 +102,7 @@ describe('BeginnerGame victory requirements', () => {
       { player: players[1], card: { type: 'CONTROLLER' } },
       { player: players[1], card: { type: 'CONTROLLER' } },
       { player: players[1], card: { type: 'CONTROLLER' } },
-      { player: players[1], card: { type: 'POLYMORPHISM' } },
+      { player: players[1], card: { type: 'ERROR_HANDLING' } },
       { player: players[1], card: { type: 'LOGGER' } }
     ]
     const game = makeGame({
