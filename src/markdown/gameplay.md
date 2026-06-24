@@ -1,91 +1,62 @@
 ## Overview
-<br>
-Program Wars provides two modes of gameplay:
-<br>
 
-- **Beginner** 
-- **Standard**
-For each gameplay mode, the player can choose to playwith one of four different sets of cyberattack and cyberdefense cards.
-<p align="center">
-<img src="static/cardImages/sideNav/gameplay.PNG" style="width: 30rem">
-</p>
-<br>
- Players can select different levels of game difficulty.
- <br>
- Beginner level has simpler cards, while game gets complicated in standard mode.
- <br>
- Standard mode has Bonuses and score limit is 200, while Beginner mode does not have bonuses and score limit is 100.
+MVC-ARENA is a two-player game. You can play against another person or against the
+computer. The goal is to build a complete and secure **MVC architecture** before
+your opponent does.
 
-<br>
 
-- After selecting a game mode and difficulty level, two players
-need to be added in order to start the game.
+- After starting, two players are added: **two human players**, or **one human
+player and a computer opponent**.
+- Each player builds in three lanes: **Model**, **View**, and **Controller**.
+- The score limit is **25**. To win, you also need a minimum number of components.
 
-- **Two human players** 
-- **Or a computer opponent with human player**
-<br>
-<p align="center">
-<img src="static/cardImages/sideNav/play.PNG" style="width: 45rem">
-</p>
+
 
 #### Quick Guide
 
-when the game starts, each player has five cards and at the end of each turn the player receives another card from the deck. A player can either play or discard a card from their hand or redraw their whole hand.
-**On each turn:**
-Players can drag and drop the playable card (the card will glow to “green” color) to the main stack or method stack.
-Ideally, Add instruction cards to the method stack and make it to 9 points. Maximum 6 cards can be added to the method stack.
-Method card reflects the score of method stack.
-There is a message box which graphically shows the previous card played by each player.
-To show the bonus score there is a separate tab named “bonus”
-The game is over if a player reaches the score limit.
-- **How to win**
-  * To win, a player needs to create a program that reaches the score Limit before the opponent player, with the points being the total number of instructions that would be executed by the computer based on the cards in play. 
-  * In standard mode current scores and bonus scores makes total score, so players have to gain bonus to win the game.
-  <br>
+When the game starts, each player has **five cards**. At the end of every turn you
+draw one new card. On your turn you can:
+
+- **Play** a card (drag it onto the board; a playable card glows green),
+- **Discard** a single card, or
+- **Redraw** your whole hand.
+
+**Building your program**
+
+- Drag a **component** card into its lane (Model, View, or Controller), or onto the
+**inheritance stack** at the top of the lane to add points.
+- An inheritance stack can hold up to **6 cards** and a maximum of **9 points**.
+- Each component is worth **1 point**.
+- **Defensive** cards (Interface, Git, Error Handling, Logger) **double** the points
+of the stack you play them on.
+- **Polymorphism** is a wildcard: drop it into a lane and choose which component it
+becomes.
+
+**Attacks and hazards**
+
+- **Attack** cards reduce a player's points. If the target has the matching
+defending component, the attack is **blocked** (an "encounter" animation plays) and
+the defending card is used up instead.
+- **Destructive events** (Bug and Disaster) take effect immediately when drawn. If
+you have no protecting card, you lose **half of your points** and your next turn is
+restricted. A **Logger** protects against Bugs, and **Git** protects against
+Disasters.
 
 
-<p align="center">
-<img src="static/cardImages/sideNav/bonus.PNG" style="width: 50rem">
-</p>
-<br>
 
-- **Bonus Scores**
-Various cards, good coding practices, or game play types will give you bonus points to reward good programming practices!
-Although these bonuses are not directly added to the main score, they are invisible bonuses that are added to the final score, you can check bonuses by clicking the "Bonus" tab on the top right of playing field.
-Points in bonus tab turns green from red when the Bonus is achieved.
+#### How to win
 
-| **BONUS** | **SCORES** |
-| ------| -------- |
-| Repitition | 3 bonus points every time a repeat card is played. |
-| Variables |  2 bonus points every time a repeat card is played. |
-| Safety card | 3 points for playing safety card i.e Scan card. |
-| Nested loop| 5 bonus points per stack, when a stack has 2 repeat cards it is called nested loop. |
-| Antivirus OR Firewall | 10 Bonus points if Antivirus or Firewall is avtive. |
-| No Malware && Hack card | 10 Bonus points if the system is clean and there is no active threat. |
-| Compelete Method | 10 Bonus points when a method stack reaches to maximum points that is 9. |
+To win, a player must collect the required components **and** reach the score limit:
+
+| **Requirement** | **Needed** |
+| --------------- | ---------- |
+| Model components | 4 |
+| View components | 2 |
+| Controller components | 5 |
+| Defensive cards | 2 |
+| Score | 25 |
 |||
-<br>
 
-- **Basic Scores**
-   + Program Building cards score patterns :
-
-1. *Instructions:*
-Instructions being the basis of the programs will be the initial score of the stacks depending upon the value of instruction card that is 1, 2 or 3.
-2. *Repeat:*
-Repeat cards multiply the current stack score by the value of the repeat card, i.e 2 or 3.
-3. *Method:*
-Initially method card has zero score, its scores depends on method stack.
-Method is the base card of new stack.
-4. *Variable:*
-Varible card is played on a Repeat card that is Rx, Without Rx a variable card is useless. The value of Variable card is 3,4,5 or 6.
-
-<p align="center">
-<img src="static/cardImages/sideNav/safety.png" style="width: 20rem">
-</p>
-
-- How to prevent Cyberattack
-  
-  Hack and Malware cards are ready to ruin your game, to combat the attackers Activate Firewall, Antivirus or Scan cards.
-  Antivirus will prevent the system from hacking.
-  Firewall will provide protection against Malware.
-  If these two are not active and player is being attacked by malicious cards, Scan card will remove the negative effects.
+The **requirement tracker** on screen shows your progress. Each group fills as you
+collect cards, and your status changes from **Pending** to **Done** when all the
+card requirements are met.

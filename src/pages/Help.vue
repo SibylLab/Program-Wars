@@ -107,4 +107,11 @@ export default {
   text-align: left;
   padding: 1rem 3rem;
 }
+
+/* Markdown-rendered card images are generated nodes, so :deep() is needed to
+   size them down (they render at full size otherwise). */
+.help-content :deep(img) {
+  width: 6rem;
+  height: auto;
+}
 </style>
